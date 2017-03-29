@@ -1,0 +1,231 @@
+<datasets>
+  <constant name="organismAbbrev" value="mmusC57BL6J"/>
+  <constant name="referenceStrainOrganismAbbrev" value="mmusC57BL6J"/>
+  <constant name="familyRepOrganismAbbrev" value="mmusC57BL6J"/>
+  <constant name="strainAbbrev" value="C57BL6J"/>
+  <constant name="projectName" value="HostDB"/>
+  <constant name="ncbiTaxonId" value="9000000052"/>
+  <constant name="speciesNcbiTaxonId" value="10090"/>
+  <constant name="genomeVersion" value="GRCm38"/>
+  <constant name="familyNcbiTaxonIds" value="10066"/>
+  <constant name="source" value="gencode"/>
+
+<!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">$$source$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="soTerm">chromosome</prop>
+    <prop name="sourceIdRegex">>(\S+)</prop>
+    <prop name="releaseDate">10-MAR-16</prop>
+  </dataset>
+
+  <dataset class="NoPreprocess_primary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">M9</prop>
+    <prop name="soTerm">chromosome</prop>
+    <prop name="source">$$source$$</prop>
+    <prop name="mapFile">HostDB/gencodeGFF3Features2Gus.xml</prop>
+  </dataset>
+
+  <dataset class="fasta_secondary_genome">
+    <prop name="name">$$source$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">supercontig</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+  </dataset>
+
+  <dataset class="NoPreprocess_secondary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">M9</prop>
+    <prop name="soTerm">supercontig</prop>
+    <prop name="name">$$source$$</prop>
+    <prop name="mapFile">HostDB/gencodeGFF3Features2Gus.xml</prop>
+  </dataset>
+
+  <dataset class="fasta_organelle_genome">
+    <prop name="name">$$source$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">mitochondrial_chromosome</prop>
+    <prop name="sourceIdRegex">>(\S+)</prop>
+    <prop name="organelle">mitochondrion</prop>
+  </dataset>
+
+  <dataset class="NoPreprocess_organelle_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">M9</prop>
+    <prop name="soTerm">mitochondrial_chromosome</prop>
+    <prop name="name">$$source$$</prop>
+    <prop name="mapFile">HostDB/gencodeGFF3Features2Gus.xml</prop>
+  </dataset>
+
+  <dataset class="geneName">
+    <prop name="name">$$source$$</prop>
+    <prop name="version">M9</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="GeneOntologyAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">ensembl</prop>
+  </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">havanaGeneId</prop>
+    <prop name="version">M9</prop>
+    <prop name="idType">alternate id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">ucscId</prop>
+    <prop name="version">2016-06-24</prop>
+    <prop name="idType">alternate id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">simple_gene2Genbank</prop>
+    <prop name="version">2016-06-24</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.ncbi.nlm.nih.gov/gene/?term=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">simple_transcript2Genbank</prop>
+    <prop name="version">2016-06-24</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.ncbi.nlm.nih.gov/nuccore/EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">simple_gene2Uniprot</prop>
+    <prop name="version">2016-06-24</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">gene2Entrez</prop>
+    <prop name="version">2016-06-24</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.ncbi.nlm.nih.gov/gene/?term=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">transcript2PDB</prop>
+    <prop name="version">2016-06-27</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.rcsb.org/pdb/explore/explore.do?&pdbId=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="productNames">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">ensembl</prop>
+  </dataset>
+  
+  <dataset class="EnzymeCommissionAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">ensembl</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Saeij_Jeroen_strains</prop>
+    <prop name="version">1.0_gus4</prop>
+    <prop name="limitNU">30</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">macrophage_Lmexicana</prop>
+    <prop name="version">2015-10-09</prop>
+    <prop name="limitNU">30</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+</datasets>
+

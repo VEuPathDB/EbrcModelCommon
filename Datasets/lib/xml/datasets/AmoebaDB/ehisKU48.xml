@@ -1,0 +1,38 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="ehisKU48"/>
+  <constant name="referenceStrainOrganismAbbrev" value="ehisHM1IMSS"/>
+  <constant name="strainAbbrev" value="KU48"/>
+  <constant name="projectName" value="AmoebaDB"/>
+  <constant name="ncbiTaxonId" value="885312"/>
+  <constant name="speciesNcbiTaxonId" value="5759"/>
+  <constant name="genomeVersion" value="2010-08-17"/>
+  <constant name="familyRepOrganismAbbrev" value="ehisHM1IMSS"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">JCVI</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="releaseDate">2010-08-17</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>

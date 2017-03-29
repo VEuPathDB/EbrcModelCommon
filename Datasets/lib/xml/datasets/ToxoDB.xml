@@ -1,0 +1,1008 @@
+<datasets>
+  <constant name="projectName" value="ToxoDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ccayCHN_HEN01</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000084</prop>
+    <prop name="publicOrganismAbbrev">ccayCHN_HEN01</prop>
+    <prop name="organismFullName">Cyclospora cayetanensis strain CHN_HEN01</prop>
+    <prop name="organismNameForFiles">CcayetanensisCHN_HEN01</prop>
+    <prop name="speciesNcbiTaxonId">88456</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ccayCHN_HEN01</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ccay</prop>
+    <prop name="strainAbbrev">CHN_HEN01</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cyclospora</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2016-09-22</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ccayCHN_HEN01</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">572307</prop>
+    <prop name="publicOrganismAbbrev">ncLIV</prop>
+    <prop name="organismFullName">Neospora caninum Liverpool</prop>
+    <prop name="organismNameForFiles">NcaninumLIV</prop>
+    <prop name="speciesNcbiTaxonId">29176</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ncanLIV</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ncan</prop>
+    <prop name="strainAbbrev">LIV</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Neospora</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2015-02-27</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">etenHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">413949</prop>
+    <prop name="publicOrganismAbbrev">etenHoughton</prop>
+    <prop name="organismFullName">Eimeria tenella strain Houghton</prop>
+    <prop name="organismNameForFiles">EtenellaHoughton</prop>
+    <prop name="speciesNcbiTaxonId">5802</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">etenHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">eten</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds">5799</prop>
+    <prop name="familyNameForFiles">Eimeriidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">etenHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">eaceHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000044</prop>
+    <prop name="publicOrganismAbbrev">eaceHoughton</prop>
+    <prop name="organismFullName">Eimeria acervulina Houghton</prop>
+    <prop name="organismNameForFiles">EacervulinaHoughton</prop>
+    <prop name="speciesNcbiTaxonId">5801</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">eaceHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">eace</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">eaceHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ebruHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000046</prop>
+    <prop name="publicOrganismAbbrev">ebruHoughton</prop>
+    <prop name="organismFullName">Eimeria brunetti Houghton</prop>
+    <prop name="organismNameForFiles">EbrunettiHoughton</prop>
+    <prop name="speciesNcbiTaxonId">51314</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ebruHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ebru</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ebruHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">efalBayerHaberkorn1970</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000081</prop>
+    <prop name="publicOrganismAbbrev">efalBayerHaberkorn1970</prop>
+    <prop name="organismFullName">Eimeria falciformis Bayer Haberkorn 1970</prop>
+    <prop name="organismNameForFiles">EfalciformisBayerHaberkorn1970</prop>
+    <prop name="speciesNcbiTaxonId">84963</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">efalBayerHaberkorn1970</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">efal</prop>
+    <prop name="strainAbbrev">BayerHaberkorn1970</prop>
+    <prop name="genomeSource">DieterichLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-02-10</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">efalBayerHaberkorn1970</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">emaxWeybridge</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000045</prop>
+    <prop name="publicOrganismAbbrev">emaxWeybridge</prop>
+    <prop name="organismFullName">Eimeria maxima Weybridge</prop>
+    <prop name="organismNameForFiles">EmaximaWeybridge</prop>
+    <prop name="speciesNcbiTaxonId">5804</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">emaxWeybridge</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">emax</prop>
+    <prop name="strainAbbrev">Weybridge</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">emaxWeybridge</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">emitHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000047</prop>
+    <prop name="publicOrganismAbbrev">emitHoughton</prop>
+    <prop name="organismFullName">Eimeria mitis Houghton</prop>
+    <prop name="organismNameForFiles">EmitisHoughton</prop>
+    <prop name="speciesNcbiTaxonId">44415</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">emitHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">emit</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">emitHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">enecHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000048</prop>
+    <prop name="publicOrganismAbbrev">enecHoughton</prop>
+    <prop name="organismFullName">Eimeria necatrix Houghton</prop>
+    <prop name="organismNameForFiles">EnecatrixHoughton</prop>
+    <prop name="speciesNcbiTaxonId">51315</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">enecHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">enec</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-01-28</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">enecHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">epraHoughton</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000049</prop>
+    <prop name="publicOrganismAbbrev">epraHoughton</prop>
+    <prop name="organismFullName">Eimeria praecox Houghton</prop>
+    <prop name="organismNameForFiles">EpraecoxHoughton</prop>
+    <prop name="speciesNcbiTaxonId">51316</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">epraHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">epra</prop>
+    <prop name="strainAbbrev">Houghton</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Eimeria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">etenHoughton</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">epraHoughton</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">508771</prop>
+    <prop name="publicOrganismAbbrev">tgME49</prop>
+    <prop name="organismFullName">Toxoplasma gondii ME49</prop>
+    <prop name="organismNameForFiles">TgondiiME49</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgon</prop>
+    <prop name="strainAbbrev">ME49</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2015-03-22</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds">5809</prop>
+    <prop name="familyNameForFiles">Sarcocystidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonGT1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">507601</prop>
+    <prop name="publicOrganismAbbrev">tgGT1</prop>
+    <prop name="organismFullName">Toxoplasma gondii GT1</prop>
+    <prop name="organismNameForFiles">TgondiiGT1</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tggt</prop>
+    <prop name="strainAbbrev">GT1</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-07-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonVEG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">432359</prop>
+    <prop name="publicOrganismAbbrev">tgVEG</prop>
+    <prop name="organismFullName">Toxoplasma gondii VEG</prop>
+    <prop name="organismNameForFiles">TgondiiVEG</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgve</prop>
+    <prop name="strainAbbrev">VEG</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-11-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonRH</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">383379</prop>
+    <prop name="publicOrganismAbbrev">tgRH</prop>
+    <prop name="organismFullName">Toxoplasma gondii RH</prop>
+    <prop name="organismNameForFiles">TgondiiRH</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgrh</prop>
+    <prop name="strainAbbrev">RH</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2006-09-25</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonp89</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943119</prop>
+    <prop name="publicOrganismAbbrev">tgp89</prop>
+    <prop name="organismFullName">Toxoplasma gondii p89</prop>
+    <prop name="organismNameForFiles">Tgondiip89</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgop</prop>
+    <prop name="strainAbbrev">p89</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonFOU</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943167</prop>
+    <prop name="publicOrganismAbbrev">tgFOU</prop>
+    <prop name="organismFullName">Toxoplasma gondii FOU</prop>
+    <prop name="organismNameForFiles">TgondiiFOU</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgfo</prop>
+    <prop name="strainAbbrev">FOU</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonMAS</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943118</prop>
+    <prop name="publicOrganismAbbrev">tgMAS</prop>
+    <prop name="organismFullName">Toxoplasma gondii MAS</prop>
+    <prop name="organismNameForFiles">TgondiiMAS</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgma</prop>
+    <prop name="strainAbbrev">MAS</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-15</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonRUB</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">935652</prop>
+    <prop name="publicOrganismAbbrev">tgRUB</prop>
+    <prop name="organismFullName">Toxoplasma gondii RUB</prop>
+    <prop name="organismNameForFiles">TgondiiRUB</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgru</prop>
+    <prop name="strainAbbrev">RUB</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonVAND</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">933077</prop>
+    <prop name="publicOrganismAbbrev">tgVAND</prop>
+    <prop name="organismFullName">Toxoplasma gondii VAND</prop>
+    <prop name="organismNameForFiles">TgondiiVAND</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgva</prop>
+    <prop name="strainAbbrev">VAND</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-15</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonTgCATBr9</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943120</prop>
+    <prop name="publicOrganismAbbrev">tgTgCATBr9</prop>
+    <prop name="organismFullName">Toxoplasma gondii TgCATBr9</prop>
+    <prop name="organismNameForFiles">TgondiiTgCATBr9</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgta</prop>
+    <prop name="strainAbbrev">TgCATBr9</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2011-06-23</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+ <dataset class="organism">
+    <prop name="organismAbbrev">tgonTgCkUg2</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000041</prop>
+    <prop name="publicOrganismAbbrev">tgTgCkUg2</prop>
+    <prop name="organismFullName">Toxoplasma gondii TgCkUg2</prop>
+    <prop name="organismNameForFiles">TgondiiTgCkUg2</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tgtk</prop>
+    <prop name="strainAbbrev">TgCkUg2</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2009-05-04</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonCAST</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943122</prop>
+    <prop name="publicOrganismAbbrev">tgonCAST</prop>
+    <prop name="organismFullName">Toxoplasma gondii CAST</prop>
+    <prop name="organismNameForFiles">TgondiiCAST</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgca</prop>
+    <prop name="strainAbbrev">CAST</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2012-03-27</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">hhamHH34</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000042</prop>
+    <prop name="publicOrganismAbbrev">hhamHH34</prop>
+    <prop name="organismFullName">Hammondia hammondi strain H.H.34</prop>
+    <prop name="organismNameForFiles">HhammondiHH34</prop>
+    <prop name="speciesNcbiTaxonId">99158</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">hhamHH34</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">hhhh</prop>
+    <prop name="strainAbbrev">HH34</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Hammondia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-06-30</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">hhamHH34</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonCtCo5</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1194599</prop>
+    <prop name="publicOrganismAbbrev">tgonCtCo5</prop>
+    <prop name="organismFullName">Toxoplasma gondii CtCo5</prop>
+    <prop name="organismNameForFiles">TgondiiCtCo5</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgct</prop>
+    <prop name="strainAbbrev">CtCo5</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2012-07-17</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonTgCatPRC2</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1130821</prop>
+    <prop name="publicOrganismAbbrev">tgonTgCatPRC2</prop>
+    <prop name="organismFullName">Toxoplasma gondii TgCatPRC2</prop>
+    <prop name="organismNameForFiles">TgondiiTgCatPRC2</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgtg</prop>
+    <prop name="strainAbbrev">TgCatPRC2</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2016-03-23</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonCOUG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1074873</prop>
+    <prop name="publicOrganismAbbrev">tgonCOUG</prop>
+    <prop name="organismFullName">Toxoplasma gondii COUG</prop>
+    <prop name="organismNameForFiles">TgondiiCOUG</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgco</prop>
+    <prop name="strainAbbrev">COUG</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2013-02-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonGAB2-2007-GAL-DOM2</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1130820</prop>
+    <prop name="publicOrganismAbbrev">tgonGAB2-2007-GAL-DOM2</prop>
+    <prop name="organismFullName">Toxoplasma gondii GAB2-2007-GAL-DOM2</prop>
+    <prop name="organismNameForFiles">TgondiiGAB2-2007-GAL-DOM2</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tggd</prop>
+    <prop name="strainAbbrev">GAB2-2007-GAL-DOM2</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2014-08-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonTgCATBr5</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">943121</prop>
+    <prop name="publicOrganismAbbrev">tgonTgCATBr5</prop>
+    <prop name="organismFullName">Toxoplasma gondii TgCATBr5</prop>
+    <prop name="organismNameForFiles">TgondiiTgCATBr5</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgcb</prop>
+    <prop name="strainAbbrev">TgCATBr5</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2011-08-26</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgonARI</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1074872</prop>
+    <prop name="publicOrganismAbbrev">tgonARI</prop>
+    <prop name="organismFullName">Toxoplasma gondii ARI</prop>
+    <prop name="organismNameForFiles">TgondiiARI</prop>
+    <prop name="speciesNcbiTaxonId">5811</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgonME49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tgar</prop>
+    <prop name="strainAbbrev">ARI</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Toxoplasma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2016-03-14</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">sneuSN3</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000043</prop>
+    <prop name="publicOrganismAbbrev">sneuSN3</prop>
+    <prop name="organismFullName">Sarcocystis neurona SN3</prop>
+    <prop name="organismNameForFiles">SneuronaSN3</prop>
+    <prop name="speciesNcbiTaxonId">42890</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sneuSN3</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">sneu</prop>
+    <prop name="strainAbbrev">SN3</prop>
+    <prop name="genomeSource">KissingerLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Eucoccidiorida Sarcocystis</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2015-04-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sneuSN3</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">sneuSOSN1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000085</prop>
+    <prop name="publicOrganismAbbrev">sneuSOSN1</prop>
+    <prop name="organismFullName">Sarcocystis neurona SO SN1</prop>
+    <prop name="organismNameForFiles">SneuronaSOSN1</prop>
+    <prop name="speciesNcbiTaxonId">42890</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">sneuSN3</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">snsn</prop>
+    <prop name="strainAbbrev">SOSN1</prop>
+    <prop name="genomeSource">ParkinsonLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Eucoccidiorida Sarcocystis</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2015-07-23</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tgonME49</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">6.1</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">6.1</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">6.1</prop>
+  </dataset>
+<!--TODO: check for GUS4
+  <dataset class="customOntologyEntries">
+    <prop name="version">1.0</prop>
+  </dataset>
+-->
+<!--
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gubbels_RH_HTS</prop>
+    <prop name="experimentVersion">2010-06-29</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">1.0</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">tgonGT1</prop>
+    <prop name="experimentName">reference_genome</prop>
+    <prop name="experimentVersion">2012-06-27</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">tgonVEG</prop>
+    <prop name="experimentName">reference_genome</prop>
+    <prop name="experimentVersion">2012-06-27</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">hhamHH34</prop>
+    <prop name="experimentName">Boyle_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-04-30</prop>
+  </dataset>
+-->
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-06-30</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+ <dataset class="ISA"/>
+ <dataset class="ISASimple"/>
+
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+  <dataset class="StudyResultsLiteral">
+    <prop name="name">Menezes_chicken_RFLP</prop>
+    <prop name="version">2016-07-12</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="StudyResultsLiteral">
+    <prop name="name">ChunleiSu_RFLP</prop>
+    <prop name="version">2016-07-20</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+</datasets>

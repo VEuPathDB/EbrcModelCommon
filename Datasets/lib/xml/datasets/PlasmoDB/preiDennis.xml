@@ -1,0 +1,83 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="preiDennis"/>
+  <constant name="referenceStrainOrganismAbbrev" value="preiDennis"/>
+  <constant name="familyRepOrganismAbbrev" value="pfal3D7"/>
+  <constant name="strainAbbrev" value="Dennis"/>
+  <constant name="projectName" value="PlasmoDB"/>
+  <constant name="ncbiTaxonId" value="9000000031"/>
+  <constant name="speciesNcbiTaxonId" value="5854"/>
+  <constant name="genomeVersion" value="2004-03-11"/>
+
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+ <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">psu</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="releaseDate"></prop>
+  </dataset>
+
+  <dataset class="genbank_organelle_genome">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">gb</prop>
+    <prop name="version">2010-02-01</prop>
+    <prop name="soTerm">mitochondrial_chromosome</prop>
+    <prop name="mapFile">organellarGenbank2gus.xml</prop>
+    <prop name="organelle">mitochondrion</prop>
+  </dataset>
+
+  <dataset class="productNames">
+    <prop name="name">gb</prop>
+    <prop name="version">2010-02-01</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="geneName">
+    <prop name="name">gb</prop>
+    <prop name="version">2010-02-01</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+<!--excluded from bld 26,  we loaded this by a reference organism for each project in bld 22
+  <dataset class="EnzymeCommissionAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">2014-02-21</prop>
+    <prop name="name">OrthoMCLDerived</prop>
+  </dataset>
+-->
+
+  <dataset class="referenceStrain-dbEST">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>

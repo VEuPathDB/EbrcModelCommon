@@ -1,0 +1,48 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="aalgUndeen"/>
+  <constant name="referenceStrainOrganismAbbrev" value="aalgPRA109"/>
+  <constant name="strainAbbrev" value="Undeen"/>
+  <constant name="projectName" value="MicrosporidiaDB"/>
+  <constant name="ncbiTaxonId" value="1150868"/>
+  <constant name="speciesNcbiTaxonId" value="723287"/>
+  <constant name="genomeVersion" value="2012-06-01"/>
+  <constant name="familyRepOrganismAbbrev" value="aalgPRA109"/>
+  <constant name="familyNcbiTaxonIds" value="307623"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">genbank</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">>.+\|gb\|(\S+)\|</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="releaseDate">2012-06-01</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>

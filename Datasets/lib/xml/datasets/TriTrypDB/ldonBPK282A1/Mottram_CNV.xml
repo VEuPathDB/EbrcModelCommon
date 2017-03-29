@@ -1,0 +1,17 @@
+<datasets>
+    <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Mottram_CNV</prop>
+      <prop name="experimentVersion">2014-10-14</prop>
+      <prop name="sampleName">BPK206_CNV</prop>
+    </dataset>
+
+    <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Mottram_CNV</prop>
+      <prop name="experimentVersion">2014-10-14</prop>
+      <prop name="sampleName">LV9_CNV</prop>
+    </dataset>
+</datasets>

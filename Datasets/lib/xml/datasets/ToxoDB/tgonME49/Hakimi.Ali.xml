@@ -1,0 +1,57 @@
+<datasets>
+
+
+  <dataset class="chipChipSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Hakimi.Ali</prop>
+    <prop name="sampleName">7924102_ratio</prop>
+    <prop name="LifeCycleStage"></prop>
+    <prop name="Antibody">H4(K5-K8-K12-K16)ac</prop>
+    <prop name="Genotype"></prop>
+    <prop name="Replicate">1</prop>
+    <prop name="Strain">RH</prop>
+    <prop name="Treatment">DMSO control</prop>
+    <prop name="CellType"></prop>
+  </dataset>
+
+  <dataset class="chipChipSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Hakimi.Ali</prop>
+    <prop name="sampleName">7924502_ratio</prop>
+    <prop name="LifeCycleStage"></prop>
+    <prop name="Antibody">H4(K5-K8-K12-K16)ac</prop>
+    <prop name="Genotype"></prop>
+    <prop name="Replicate">1</prop>
+    <prop name="Strain">RH</prop>
+    <prop name="Treatment">FR2352222 (Drug A)</prop>
+    <prop name="CellType"></prop>
+  </dataset>
+
+
+  <dataset class="chipChipSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Hakimi.Ali</prop>
+    <prop name="sampleName">7924902_ratio</prop>
+    <prop name="LifeCycleStage"></prop>
+    <prop name="Antibody">H4(K5-K8-K12-K16)ac</prop>
+    <prop name="Genotype"></prop>
+    <prop name="Replicate">1</prop>
+    <prop name="Strain">RH</prop>
+    <prop name="Treatment">DMSO control</prop>
+    <prop name="CellType"></prop>
+  </dataset>
+
+  <dataset class="chipChipSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Hakimi.Ali</prop>
+    <prop name="sampleName">7926902_ratio</prop>
+    <prop name="LifeCycleStage"></prop>
+    <prop name="Antibody">H4(K5-K8-K12-K16)ac</prop>
+    <prop name="Genotype"></prop>
+    <prop name="Replicate">1</prop>
+    <prop name="Strain">RH</prop>
+    <prop name="Treatment">FR2352222 (Drug A)</prop>
+    <prop name="CellType"></prop>
+  </dataset>
+
+</datasets>

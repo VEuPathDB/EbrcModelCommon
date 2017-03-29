@@ -1,0 +1,127 @@
+<datasets>
+
+  <dataset class="geneOntology">
+    <prop name="version">2015-11-17</prop>
+  </dataset>
+
+  <dataset class="enzymeDB">
+  </dataset>
+
+  <dataset class="PDBProteinSequences">
+  </dataset>
+
+  <dataset class="taxonomy">
+  </dataset>
+
+  <dataset class="updatePDBTaxon">
+  </dataset>
+
+  <dataset class="sequenceOntology">
+    <prop name="version">2015-05-15</prop>
+  </dataset>
+
+  <dataset class="ontologyRelationshipTypes">
+    <prop name="version">1.3</prop>
+  </dataset>
+
+
+  <dataset class="oboOntology">
+    <prop name="name">obi</prop>
+  </dataset>
+
+  <!--We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology.-->
+  <dataset class="oboOntologyDummy">
+    <prop name="name">ido</prop>
+    <prop name="url">http://infectious-disease-ontology.googlecode.com/svn/releases/2010-12-02/ido.owl</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">eco</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">pato</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">opl</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">envo</prop>
+  </dataset>
+
+
+  <dataset class="oboOntology">
+    <prop name="name">uberon</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">po</prop>
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">omp</prop>
+  </dataset> 
+
+  <dataset class="OBO_Ontology_efo">
+  </dataset>
+
+  <dataset class="oboOntology">
+    <prop name="name">uo</prop>
+  </dataset>
+
+
+  <dataset class="ontologyFromTabDelim">
+    <prop name="name">gaz</prop>
+    <prop name="version">2015-11</prop>
+  </dataset>
+
+  <dataset class="ontologyFromTabDelim">
+    <prop name="name">icemr</prop>
+    <prop name="version">2016-03</prop>
+  </dataset>
+
+  <dataset class="ontologyFromTabDelim">
+    <prop name="name">eupathUserDefined</prop>
+    <prop name="version">2016-08-08</prop>
+  </dataset>
+
+  <dataset class="ontologyFromTabDelim">
+    <prop name="name">ptmt</prop>
+    <prop name="version">2017-01-19</prop>
+  </dataset>
+
+  <dataset class="geneOntologyEvidenceCodes">
+    <prop name="version">2.00</prop>
+  </dataset>
+
+  <dataset class="interproscanData">
+    <prop name="version">57.0</prop>
+  </dataset>
+
+  <dataset class="NRDB">
+  </dataset>
+
+  <dataset class="blatAlignmentQuality">
+    <prop name="version">2010-02-01</prop>
+  </dataset>
+
+  <dataset class="isolateGeographicLocationGPS">
+    <prop name="name">isolateGeographicLocationGPS</prop>
+    <prop name="version">2016-05-19</prop>
+  </dataset>
+
+
+  <dataset class="eupathOntologyTerms">
+    <prop name="version">20160509</prop>
+  </dataset>
+
+
+  <dataset class="chEBI_Compounds">
+    <prop name="version">2015-06-01</prop>
+  </dataset>
+
+
+
+</datasets>

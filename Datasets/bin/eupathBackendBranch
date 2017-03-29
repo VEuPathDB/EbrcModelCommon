@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+use FgpUtil::Util::ProjectBrancher;
+use strict;
+
+my ($branch, $comment, $delete) = @ARGV;
+
+my @projects = ('EuPathDatasets:apidb', ApiCommonWorkflow::Main::GetProjects::getProjects(), ApiCommonWorkflow::Main::GetProjects::getClusterProjects());
+
+my @uniqueProjects = keys %{{ map { $_ => 1 } @projects }};
+
+FgpUtil::Util::ProjectBrancher::branch($branch, $comment, $delete, \@uniqueProjects);
+
+

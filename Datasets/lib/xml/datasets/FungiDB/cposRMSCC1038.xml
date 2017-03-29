@@ -1,0 +1,62 @@
+<datasets>
+  <constant name="organismAbbrev" value="cposRMSCC1038"/>
+  <constant name="strainAbbrev" value="RMSCC1038"/>
+  <constant name="referenceStrainOrganismAbbrev" value="cposSilveira"/>
+  <constant name="familyRepOrganismAbbrev" value="cimmRS"/>
+  <constant name="projectName" value="FungiDB"/>
+  <constant name="ncbiTaxonId" value="490066"/>
+  <constant name="speciesNcbiTaxonId" value="199306"/>
+  <constant name="familyNcbiTaxonIds" value="5500"/>  <!-- use genus as familyRepOrganism here -->
+  <constant name="genomeVersion" value="2015-07-13"/>
+  <constant name="soTerm" value="supercontig"/>
+  <constant name="source" value="GenBank"/>
+  <constant name="idPrefix" value=""/>
+
+  <dataset class="validateOrganismInfo">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">$$source$$</prop>
+    <prop name="soTerm">$$soTerm$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="releaseDate">2015-07-13</prop>
+  </dataset>
+
+  <dataset class="fasta_organelle_genome">
+    <prop name="name">$$source$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">mitochondrial_chromosome</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="organelle">mitochondrion</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>
+

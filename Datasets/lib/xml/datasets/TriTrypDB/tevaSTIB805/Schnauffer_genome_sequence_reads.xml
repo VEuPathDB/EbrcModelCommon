@@ -1,0 +1,18 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">tevaSTIB805</prop>
+    <prop name="experimentName">Schnauffer_genome_sequence_reads</prop>
+    <prop name="snpStrainAbbrev">STIB805_reference1</prop>
+    <prop name="sraQueryString">ERX000545</prop>
+  </dataset>
+
+   <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">tevaSTIB805</prop>
+      <prop name="experimentName">Schnauffer_genome_sequence_reads</prop>
+      <prop name="experimentVersion">2009-11-27</prop>
+      <prop name="sampleName">STIB805_reference1</prop>
+  </dataset>
+
+</datasets>

@@ -1,0 +1,21 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Duffy</prop>
+    <prop name="sampleName">PL01</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Duffy</prop>
+    <prop name="sampleName">PL02</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Duffy</prop>
+    <prop name="sampleName">3D7</prop>
+  </dataset>
+
+</datasets>

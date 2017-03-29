@@ -1,0 +1,161 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="afumAf293"/>
+  <constant name="experimentName" value="JCVI_HTS_SNP"/>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">AF10</prop>
+    <prop name="sraQueryString">SRX093407</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F12865</prop>
+    <prop name="sraQueryString">SRX097019</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F15861</prop>
+    <prop name="sraQueryString">SRX053432</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F11628</prop>
+    <prop name="sraQueryString">SRX097018</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F15767</prop>
+    <prop name="sraQueryString">SRX097021</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B6074</prop>
+    <prop name="sraQueryString">SRX097012</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B6078</prop>
+    <prop name="sraQueryString">SRX097013</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B6079</prop>
+    <prop name="sraQueryString">SRX097015</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5868</prop>
+    <prop name="sraQueryString">SRX097010</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5859</prop>
+    <prop name="sraQueryString">SRX097007</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5863</prop>
+    <prop name="sraQueryString">SRX097008</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F14946</prop>
+    <prop name="sraQueryString">SRX053431</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5866</prop>
+    <prop name="sraQueryString">SRX097009</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">AF293_resequence1</prop>
+    <prop name="sraQueryString">SRX028561</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">AF210</prop>
+    <prop name="sraQueryString">SRX028560</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5856</prop>
+    <prop name="sraQueryString">SRX097006</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5854</prop>
+    <prop name="sraQueryString">SRX097005</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B5852</prop>
+    <prop name="sraQueryString">SRX097004</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F11698</prop>
+    <prop name="sraQueryString">SRX053430</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">F16867</prop>
+    <prop name="sraQueryString">SRX053433</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B6081</prop>
+    <prop name="sraQueryString">SRX097016</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">B6069</prop>
+    <prop name="sraQueryString">SRX097011</prop>
+  </dataset>
+
+</datasets>
+

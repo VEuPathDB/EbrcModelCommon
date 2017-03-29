@@ -1,0 +1,908 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="tbruTREU927"/>
+  <constant name="referenceStrainOrganismAbbrev" value="tbruTREU927"/>
+  <constant name="familyRepOrganismAbbrev" value="lmajFriedlin"/>
+  <constant name="strainAbbrev" value="TREU927"/>
+  <constant name="projectName" value="TriTrypDB"/>
+  <constant name="ncbiTaxonId" value="185431"/>
+  <constant name="speciesNcbiTaxonId" value="5691"/>
+  <constant name="genomeVersion" value="2016-05-19"/>
+  <constant name="functAnnotVersion" value="2017-03-11"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">GeneDB</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">chromosome</prop>
+    <prop name="sourceIdRegex">>(\S+?)(\|\d+$|$)</prop>
+    <prop name="releaseDate">2017-01-09</prop>
+  </dataset>
+
+  <dataset class="fasta_secondary_genome">
+    <prop name="name">GeneDB</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">>(\S+?)(\|\d+$|$)</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+  </dataset>
+
+  <dataset class="GeneDB_GFF_primary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">GeneDB</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="soTerm">chromosome</prop>
+  </dataset>
+
+  <dataset class="GeneDB_GFF_secondary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="soTerm">contig</prop>
+  </dataset>
+
+<!-- this is only for load CDS only, do not need them in real load -->
+<!--
+  <dataset class="GeneDB_GFF_needMapFile_primary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">GeneDB</prop>
+    <prop name="version">2017-01-09_CDSOnly</prop>
+    <prop name="soTerm">chromosome</prop>
+    <prop name="mapFile">TriTrypDB/geneDBGffCDSOnly2Gus.xml</prop>
+  </dataset>
+
+  <dataset class="GeneDB_GFF_needMapFile_secondary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">2017-01-09_CDSOnly</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="mapFile">TriTrypDB/geneDBGffCDSOnly2Gus.xml</prop>
+  </dataset>
+-->
+
+  <dataset class="EnzymeCommissionAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="name">GeneDB</prop>
+  </dataset>
+
+  <dataset class="GeneOntologyAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="name">GeneDB</prop>
+  </dataset>
+
+  <dataset class="productNames">
+    <prop name="name">GeneDB</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="geneName">
+    <prop name="name">GeneDB</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="dbxref_synonym">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="name">GeneDB</prop>
+  </dataset>
+
+  <dataset class="comments">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">GeneDB_transcript</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+   </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">previousGeneIdsFromAnnot</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="idType">previous id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+<prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">pmid_from_annotation</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.ncbi.nlm.nih.gov/pubmed/?term=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+    <prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">embl_from_annotation</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.ebi.ac.uk/Tools/dbfetch/emblfetch?style=html&id=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+<prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+   <dataset class="dbxref_simple">
+    <prop name="name">pdb_from_annotation</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://www.rcsb.org/pdb/search/structidSearch.do?structureId=EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+<prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">pfam_from_annotation</prop>
+    <prop name="version">2017-01-09</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"><![CDATA[http://pfam.xfam.org/family/EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+<prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="dbxref_simple">
+    <prop name="name">EuPathDB_comment</prop>
+    <prop name="version">$$functAnnotVersion$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId">false</prop>
+<prop name="viewName">Transcript</prop>
+  </dataset>
+
+
+  <dataset class="dbxref_gene2Entrez">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2017-01-30</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2Uniprot">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2017-01-30</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2PubmedFromNcbi">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2017-01-30</prop>
+  </dataset>
+
+  <dataset class="ECAssocFromUniprot">
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">TODAY</prop>
+  </dataset> 
+
+  <dataset class="dbxref_unity">
+    <prop name="name">GeneDB</prop>
+    <prop name="url"><![CDATA[http://www.genedb.org/Query/quickSearch?pseudogenes=true&product=true&allNames=true&searchText=EXTERNAL_ID_HERE]]></prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="dbxref_unity">
+    <prop name="name">TrypsNetDB</prop>
+    <prop name="url"><![CDATA[http://trypsnetdb.org/extQuery.aspx?Id=EXTERNAL_ID_HERE]]></prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="dbxref_unity">
+    <prop name="name">TDR_Targets</prop>
+    <prop name="url"><![CDATA[http://tdrtargets.org/targets/view?gene_name=EXTERNAL_ID_HERE]]></prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-dbEST">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-clonedInsertEnds">
+    <prop name="name">Genbank_BACEnds</prop>
+    <prop name="version">2008-12-08</prop>
+    <prop name="soTermName">clone_insert_end</prop>
+    <prop name="sourceIdRegex">^>gi\\|\\d+\\|gb\\|\\w+\\S+\\|\\w+\\d+\\s(RPCI\\S+)\\s</prop>
+    <prop name="secondaryIdRegex">^>gi\\|\\d+\\|gb\\|\\w+\\S+\\|(\\w+\\d+)\\sRPCI\\S+\\s</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+  </dataset>
+
+  <dataset class="clonedInsertEndsFromReferenceStrain">
+    <prop name="name">Genbank_BACEnds</prop>
+    <prop name="version">2008-12-08</prop>
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Procyclic_Form</prop>
+    <prop name="version">2008-12-17</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Ferguson_Phospho</prop>
+    <prop name="version">2009-04-04</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Almeida_Proteomics</prop>
+    <prop name="version">2010-12-30</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Urbaniak_CompProt</prop>
+    <prop name="version">1.0</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Hill_Flagellum_Surface_And_Matrix_Proteomes</prop>
+    <prop name="version">1.0</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Price_Flagellar_Proteomics</prop>
+    <prop name="version">2011-12-01</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Broadhead_Flagellar_Proteomics</prop>
+    <prop name="version">2006-03-09</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Read_Mitochondrial_Argenine_Methylation</prop>
+    <prop name="version">2014-02-07</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Niemann_Mitochondrial_Outer_Membrane_Proteome</prop>
+    <prop name="version">2012-12-06</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Urbaniak_BSF_PCF_PhosphoProteomics</prop>
+    <prop name="version">1.0</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Gunasekera_Three_Stages_Proteome</prop>
+    <prop name="version">2012-10-16</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+   <dataset class="quantitativeMassSpecProfiles">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Urbaniak_CompProt</prop>
+    <prop name="version">1.0_gus4</prop>
+    <prop name="hasTimeSeries">false</prop>
+  </dataset>
+
+   <dataset class="quantitativeMassSpecProfiles">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Urbaniak_BSF_PCF_PhosphoProteomics</prop>
+    <prop name="version">1.0_gus4</prop>
+    <prop name="hasTimeSeries">false</prop>
+  </dataset>
+
+   <dataset class="quantitativeMassSpecProfiles">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Butter_Two_Stages</prop>
+    <prop name="version">2013-02-14_gus4</prop>
+    <prop name="hasTimeSeries">false</prop>
+  </dataset>
+
+  <dataset class="quantitativeMassSpecProfiles">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Gunasekera_LS_SS_comparison</prop>
+    <prop name="version">2012-10-16_gus4</prop>
+    <prop name="hasTimeSeries">true</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-epitope_sequences_IEDB">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="version">2.4</prop>
+  </dataset>
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">George_Cross</prop>
+    <prop name="version">2009-07-29_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Clayton_mRNADegradation</prop>
+    <prop name="version">2011-3-25_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+<!-- undone because tbruTREU annotation has a problem with 3' UTRs and will need to be redone - the interpretation of the data by Clayton apparently uses the UTRs
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Clayton_mRNADegradation_halfLife</prop>
+    <prop name="version">2014-09-15</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+-->
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Archer_Stuart_CellCycle</prop>
+    <prop name="version">2010-11-23_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+      <prop name="projectName">$$projectName$$</prop>
+      <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+      <prop name="name">PF_BF_Ribosome_Profiling</prop>
+      <prop name="version">2014-04_gus4</prop>
+      <prop name="limitNU">14</prop>
+      <prop name="hasPairedEnds">false</prop>
+      <prop name="isStrandSpecific">true</prop>
+      <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="chipSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">George_Cross_chipSeq</prop>
+    <prop name="version">2010-03-09</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="extraBowtieParams">-f</prop>
+    <prop name="experimentType">histonemod</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">RNAi_Horn</prop>
+    <prop name="version">1.0_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">RNAi_Horn_CDS</prop>
+    <prop name="version">1.0_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">true</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Tschudi_Transcriptome</prop>
+    <prop name="version">2010-03-24_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <dataset class="microarrayPlatform">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">A-MEXP-1112_JCVI_37K_v2</prop>
+    <prop name="version">1.0</prop>
+    <prop name="isAffymetrixGeneArray">false</prop>
+    <prop name="isNimbleGenGeneArray">false</prop>
+    <prop name="vendorMappingFileName">NA</prop>
+    <prop name="probeRows">NA</prop>
+    <prop name="probeCols">NA</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="numInsertions">1</prop>
+    <prop name="variableLengthReads">false</prop>
+  </dataset>
+
+  <dataset class="microarrayPlatform">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">A-MEXP-1512_JCVI_19K_v3</prop>
+    <prop name="version">1.0</prop>
+    <prop name="isAffymetrixGeneArray">false</prop>
+    <prop name="isNimbleGenGeneArray">false</prop>
+    <prop name="vendorMappingFileName">NA</prop>
+    <prop name="probeRows">NA</prop>
+    <prop name="probeCols">NA</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="numInsertions">1</prop>
+    <prop name="variableLengthReads">false</prop>
+  </dataset>
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Dickens_ORC1_RNAi_Knockdown</prop>
+    <prop name="version">2012-07-26_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">false</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+  <!-- TODO pulled this data from Bld23, refs #18096 do we want this
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">H1_RNAi_Depleted</prop>
+    <prop name="version">2014-07-04</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="hasVariableLengthReads">false</prop>
+    <prop name="hasTimeSeries">false</prop> 
+    <prop name="numInsertions">1</prop>
+    <prop name="isStrandSpecific">true</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+-->
+
+  <dataset class="microarrayPlatform">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">GPL9285_Parsons</prop>
+    <prop name="version">2009-09-24</prop>
+    <prop name="isAffymetrixGeneArray">false</prop>
+    <prop name="isNimbleGenGeneArray">true</prop>
+    <prop name="vendorMappingFileName">080924_T_brucei_DS_EXP.ndf</prop>
+    <prop name="probeRows">NA</prop>
+    <prop name="probeCols">NA</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="numInsertions">1</prop>
+    <prop name="variableLengthReads">true</prop>
+  </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">Clayton_Christine</prop>
+    <prop name="experimentVersion">1.0_gus4</prop>
+    <prop name="microarrayPlatformName">GPL9285_Parsons</prop>
+    <prop name="microarrayPlatformVersion">2009-09-24</prop>
+    <prop name="doExpressionAnalysis">false</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">true</prop>
+ </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">E-MEXP-2026_DHH1_mutant_pLEW100_24H</prop>
+    <prop name="experimentVersion">1.0</prop>
+    <prop name="microarrayPlatformName">A-MEXP-1512_JCVI_19K_v3</prop>
+    <prop name="microarrayPlatformVersion">1.0</prop>
+    <prop name="doExpressionAnalysis">true</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">false</prop>
+ </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">E-MEXP-1476_heat_shock_stress</prop>
+    <prop name="experimentVersion">1.0</prop>
+    <prop name="microarrayPlatformName">A-MEXP-1112_JCVI_37K_v2</prop>
+    <prop name="microarrayPlatformVersion">1.0</prop>
+    <prop name="doExpressionAnalysis">true</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">false</prop>
+ </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">GSE17026_Matthews_Keith</prop>
+    <prop name="experimentVersion">1.0</prop>
+    <prop name="microarrayPlatformName">A-MEXP-1512_JCVI_19K_v3</prop>
+    <prop name="microarrayPlatformVersion">1.0</prop>
+    <prop name="doExpressionAnalysis">false</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">false</prop>
+ </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">GSE8734_Estevez_Antonio</prop>
+    <prop name="experimentVersion">1.0_gus4</prop>
+    <prop name="microarrayPlatformName">A-MEXP-1512_JCVI_19K_v3</prop>
+    <prop name="microarrayPlatformVersion">1.0</prop>
+    <prop name="doExpressionAnalysis">false</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">false</prop>
+ </dataset>
+
+  <dataset class="microarrayExpressionExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">GSE18049_Parsons_Marilyn</prop>
+    <prop name="experimentVersion">1.0</prop>
+    <prop name="microarrayPlatformName">GPL9285_Parsons</prop>
+    <prop name="microarrayPlatformVersion">2009-09-24</prop>
+    <prop name="doExpressionAnalysis">true</prop>
+    <prop name="usesAffymetrixGeneArray">false</prop>
+    <prop name="usesNimbleGenGeneArray">true</prop>
+ </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Urbaniak_BSF_Unenriched_And_Kinobead_Enriche_Proteome</prop>
+    <prop name="version">2011-05-23</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Lott_MethylArgenine_Proteome</prop>
+    <prop name="version">2013-04-25</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+   <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Gowthaman_Spliced_Leaders</prop>
+    <prop name="version">2014-05-24_gus4</prop>
+    <prop name="type">Splice Site</prop>
+  </dataset>
+
+
+  <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Tschudi_Transcriptome_Spliced_Leaders</prop>
+    <prop name="version">2016-08-01_gus4</prop>
+    <prop name="type">Splice Site</prop>
+  </dataset>
+
+   <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Tschudi_Transcriptome_PolyA</prop>
+    <prop name="version">2010-03-24_gus4</prop>
+    <prop name="type">Poly A</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Nilsson_Spliced_Leader</prop>
+    <prop name="version">2010-07-14_gus</prop>
+    <prop name="type">Splice Site</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">George_Cross_PolyA</prop>
+    <prop name="version">2013-02-13_gus</prop>
+    <prop name="type">Poly A</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSplicedLeaderAndPolyASitesExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">George_Cross_Splice_Leader</prop>
+    <prop name="version">2013-02-13_gus</prop>
+    <prop name="type">Splice Site</prop>
+  </dataset>
+
+ 
+  <dataset class="phenotype">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Sanger_siRNA</prop>
+    <prop name="version">2016-08-17_gus4/</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Experiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Tb427_GeorgeCross</prop>
+    <prop name="version">2012-01-31</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="snpPercentCutoff">20</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">Tb427_GeorgeCross</prop>
+    <prop name="experimentVersion">2012-01-31</prop>
+    <prop name="ploidy">2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Experiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Tb_gambiense_GeorgeCross</prop>
+    <prop name="version">2012-01-31</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="snpPercentCutoff">20</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">Tb_gambiense_GeorgeCross</prop>
+    <prop name="experimentVersion">2012-01-31</prop>
+    <prop name="ploidy">2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Experiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Foth_HTS_SNPs</prop>
+    <prop name="version">2011-01-24</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="snpPercentCutoff">20</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">Foth_HTS_SNPs</prop>
+    <prop name="experimentVersion">2011-01-24</prop>
+    <prop name="ploidy">2</prop>
+  </dataset>
+
+ <dataset class="chipChipPlatform">
+    <prop name="name">McCulloch_Orc1Cdc6</prop>
+    <prop name="version">2013-07-10</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="chipChipExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">McCulloch_Orc1Cdc6</prop>
+    <prop name="experimentVersion">2013-07-10</prop>
+    <prop name="chipChipPlatformName">McCulloch_Orc1Cdc6</prop>
+    <prop name="chipChipPlatformVersion">2013-07-10</prop>
+    <prop name="peakFinderArgs">0.9 4 500 200</prop>
+    <prop name="loadPeakCalls">true</prop>
+  </dataset>
+ 
+  <dataset class="originsOfReplicationExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">McCulloch_Origins</prop>
+    <prop name="experimentVersion">2013-11-28</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="removePCRDuplicates">true</prop>
+    <prop name="coverageWindowSize">2500</prop>
+    <prop name="extraBowtieParams">--local -D 20 -R 3 -N 1 -L 20 -i S,1,0.50 -k 1 -I 0 -X 1000</prop>
+  </dataset>
+
+  <dataset class="originsOfReplicationExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">McCulloch_Origins_Replicate</prop>
+    <prop name="experimentVersion">2015-09-04</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="removePCRDuplicates">true</prop>
+    <prop name="coverageWindowSize">2500</prop>
+    <prop name="extraBowtieParams">--local -D 20 -R 3 -N 1 -L 20 -i S,1,0.50 -k 1 -I 0 -X 1000</prop>
+  </dataset>
+
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Gowthaman_mRNA</prop>
+    <prop name="version">2014-05-24_gus4</prop>
+    <prop name="limitNU">14</prop>
+    <prop name="isStrandSpecific">true</prop>
+    <prop name="hasPairedEnds">false</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+  
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Docampo_Acidocalcisome_Proteomics</prop>
+    <prop name="version">2014-12-11</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Bastin_detached_intact_flagellum</prop>
+    <prop name="version">2014-04-16</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="genericProfiles">
+     <prop name="projectName">$$projectName$$</prop>
+     <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+     <prop name="name">Clayton_mRNADegradation_halfLife</prop>
+     <prop name="version">2014-03-18_gus4</prop>
+     <prop name="technologyType">RNASeq</prop>
+  </dataset>
+
+  <dataset class="genericProfiles">
+     <prop name="projectName">$$projectName$$</prop>
+     <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+     <prop name="name">Guther_glycosomal_proteome</prop>
+     <prop name="version">2014-06-06</prop>
+     <prop name="technologyType">quantitative_massSpec</prop>
+  </dataset>
+
+
+  <dataset class="GeneOntologyAssociations">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">2017-03-15</prop>
+    <prop name="name">TrypTag</prop>
+  </dataset> 
+
+  <dataset class="GeneImage">
+     <prop name="projectName">$$projectName$$</prop>
+     <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+     <prop name="version">2017-03-15</prop>
+     <prop name="name">DBP</prop>
+  </dataset> 
+
+</datasets>

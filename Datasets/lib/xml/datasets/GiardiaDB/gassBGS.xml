@@ -1,0 +1,162 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="gassBGS"/>
+  <constant name="referenceStrainOrganismAbbrev" value="gassAWB"/>
+  <constant name="familyRepOrganismAbbrev" value="gassAWB"/>
+  <constant name="strainAbbrev" value="GS"/>
+  <constant name="projectName" value="GiardiaDB"/>
+  <constant name="ncbiTaxonId" value="598745"/>
+  <constant name="speciesNcbiTaxonId" value="9100000002"/>
+  <constant name="genomeVersion" value="2009-07-13"/>
+  <constant name="familyNcbiTaxonIds" value="5739"/>
+
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="genbank_primary_genome">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">GenBank</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="mapFile">genbankGenbank2Gus.xml</prop>
+    <prop name="releaseDate">2009-07-13</prop>
+  </dataset>
+
+  <dataset class="productNames">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">GenBank</prop>
+  </dataset>
+
+  <dataset class="comments">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="name">GenBank_transcript</prop>
+  </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">gbProteinId</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="idType">alternate id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"><![CDATA[http://www.ncbi.nlm.nih.gov/protein/EXTERNAL_ID_HERE]]></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="viewName">Transcript</prop>
+  </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">previousProteinId</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="idType">alternate id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+
+  <dataset class="dbxref_gene2PubmedFromNcbi">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2Entrez">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2Uniprot">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="ECAssocFromUniprot">
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">TODAY</prop>
+  </dataset> 
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+<!-- pull from bld 31, refs #25063 
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Trophozoite_Secretome</prop>
+    <prop name="version">2016-10-29</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+-->
+
+  <dataset class="rnaSeqExperiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Svard</prop>
+    <prop name="version">2012-10-03_gus4</prop>
+    <prop name="limitNU">30</prop>
+    <prop name="isStrandSpecific">true</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="alignWithCdsCoordinates">false</prop>
+  </dataset>
+
+<!-- undo it in bld 23, Task #18057, will load again in bld 25
+  <dataset class="SNPs_HTS_Experiment">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="name">Jex_NGS_SNP</prop>
+    <prop name="version">2014-07-31</prop>
+    <prop name="hasPairedEnds">true</prop>
+    <prop name="isColorspace">false</prop>
+    <prop name="snpPercentCutoff">20</prop>
+  </dataset>
+-->
+
+<!-- not load in bld 31
+  <dataset class="quantitativeMassSpecProfiles">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Trophozoite_Expression</prop>
+    <prop name="version">2016-10-29</prop>>
+    <prop name="hasTimeSeries">false</prop>
+  </dataset>
+-->
+
+</datasets>

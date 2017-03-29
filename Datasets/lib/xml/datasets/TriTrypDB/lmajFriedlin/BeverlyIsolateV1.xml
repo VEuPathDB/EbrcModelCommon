@@ -1,0 +1,18 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">lmajFriedlin</prop>
+    <prop name="experimentName">BeverlyIsolateV1</prop>
+    <prop name="snpStrainAbbrev">V1</prop>
+    <prop name="sraQueryString">SRR611711,SRR611712</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">lmajFriedlin</prop>
+      <prop name="experimentName">BeverlyIsolateV1</prop>
+      <prop name="experimentVersion">2011-08-05</prop>
+      <prop name="sampleName">V1</prop>
+  </dataset>
+
+</datasets>

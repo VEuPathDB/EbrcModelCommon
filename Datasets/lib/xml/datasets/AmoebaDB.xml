@@ -1,0 +1,981 @@
+<datasets>
+  <constant name="projectName" value="AmoebaDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisHM1IMSS</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">294381</prop>
+    <prop name="publicOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="organismFullName">Entamoeba histolytica HM-1:IMSS</prop>
+    <prop name="organismNameForFiles">EhistolyticaHM1IMSS</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehis</prop>
+    <prop name="strainAbbrev">HM1IMSS</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2009-11-27</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds">33084</prop>
+    <prop name="familyNameForFiles">Entamoebidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">edisSAW760</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">370354</prop>
+    <prop name="publicOrganismAbbrev">edisSAW760</prop>
+    <prop name="organismFullName">Entamoeba dispar SAW760</prop>
+    <prop name="organismNameForFiles">EdisparSAW760</prop>
+    <prop name="speciesNcbiTaxonId">46681</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">edisSAW760</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">edis</prop>
+    <prop name="strainAbbrev">SAW760</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2009-11-27</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">edisSAW760</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">einvIP1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">370355</prop>
+    <prop name="publicOrganismAbbrev">einvIP1</prop>
+    <prop name="organismFullName">Entamoeba invadens IP1</prop>
+    <prop name="organismNameForFiles">EinvadensIP1</prop>
+    <prop name="speciesNcbiTaxonId">33085</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">einvIP1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">einv</prop>
+    <prop name="strainAbbrev">IP1</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">einvIP1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">enutP19</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1076696</prop>
+    <prop name="publicOrganismAbbrev">enutP19</prop>
+    <prop name="organismFullName">Entamoeba nuttalli P19</prop>
+    <prop name="organismNameForFiles">EnuttalliP19</prop>
+    <prop name="speciesNcbiTaxonId">412467</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">enutP19</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">enut</prop>
+    <prop name="strainAbbrev">P19</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>  
+    <prop name="genomeVersion">2015-03-18</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">enutP19</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisDS4</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885310</prop>
+    <prop name="publicOrganismAbbrev">ehisDS4</prop>
+    <prop name="organismFullName">Entamoeba histolytica DS4-868</prop>
+    <prop name="organismNameForFiles">EhistolyticaDS4</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehid</prop>
+    <prop name="strainAbbrev">DS4</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-08-04</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisKU50</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885313</prop>
+    <prop name="publicOrganismAbbrev">ehisKU50</prop>
+    <prop name="organismFullName">Entamoeba histolytica KU50</prop>
+    <prop name="organismNameForFiles">EhistolyticaKU50</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehkf</prop>
+    <prop name="strainAbbrev">KU50</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-08-04</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisMS96</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885314</prop>
+    <prop name="publicOrganismAbbrev">ehisMS96</prop>
+    <prop name="organismFullName">Entamoeba histolytica MS96-3382</prop>
+    <prop name="organismNameForFiles">EhistolyticaMS96</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehim</prop>
+    <prop name="strainAbbrev">MS96</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-08-24</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisHM1CA</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000012</prop>
+    <prop name="publicOrganismAbbrev">ehisHM1CA</prop>
+    <prop name="organismFullName">Entamoeba histolytica HM-1:CA</prop>
+    <prop name="organismNameForFiles">EhistolyticaHM1CA</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ehih</prop>
+    <prop name="strainAbbrev">HM1CA</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-08-04</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisKU48</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885312</prop>
+    <prop name="publicOrganismAbbrev">ehisKU48</prop>
+    <prop name="organismFullName">Entamoeba histolytica KU48</prop>
+    <prop name="organismNameForFiles">EhistolyticaKU48</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehkr</prop>
+    <prop name="strainAbbrev">KU48</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-08-17</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisKU27</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885311</prop>
+    <prop name="publicOrganismAbbrev">ehisKU27</prop>
+    <prop name="organismFullName">Entamoeba histolytica KU27</prop>
+    <prop name="organismNameForFiles">EhistolyticaKU27</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehik</prop>
+    <prop name="strainAbbrev">KU27</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisHM1IMSS-A</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885318</prop>
+    <prop name="publicOrganismAbbrev">ehisHM1IMSS-A</prop>
+    <prop name="organismFullName">Entamoeba histolytica HM-1:IMSS-A</prop>
+    <prop name="organismNameForFiles">EhistolyticaHM1IMSS-A</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehia</prop>
+    <prop name="strainAbbrev">HM1IMSS-A</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-21</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisHM1IMSS-B</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885319</prop>
+    <prop name="publicOrganismAbbrev">ehisHM1IMSS-B</prop>
+    <prop name="organismFullName">Entamoeba histolytica HM-1:IMSS-B</prop>
+    <prop name="organismNameForFiles">EhistolyticaHM1IMSS-B</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehib</prop>
+    <prop name="strainAbbrev">HM1IMSS-B</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisHM3IMSS</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">885315</prop>
+    <prop name="publicOrganismAbbrev">ehisHM3IMSS</prop>
+    <prop name="organismFullName">Entamoeba histolytica HM-3:IMSS</prop>
+    <prop name="organismNameForFiles">EhistolyticaHM3IMSS</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ehhi</prop>
+    <prop name="strainAbbrev">HM3IMSS</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-20</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ehisRahman</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000011</prop>
+    <prop name="publicOrganismAbbrev">ehisRahman</prop>
+    <prop name="organismFullName">Entamoeba histolytica Rahman</prop>
+    <prop name="organismNameForFiles">EhistolyticaRahman</prop>
+    <prop name="speciesNcbiTaxonId">5759</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ehir</prop>
+    <prop name="strainAbbrev">Rahman</prop>
+    <prop name="genomeSource">JCVI</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2011-02-02</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">emosLaredo</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000013</prop>
+    <prop name="publicOrganismAbbrev">emosLaredo</prop>
+    <prop name="organismFullName">Entamoeba moshkovskii Laredo</prop>
+    <prop name="organismNameForFiles">EmoshkovskiiLaredo</prop>
+    <prop name="speciesNcbiTaxonId">41668</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">emosLaredo</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">emos</prop>
+    <prop name="strainAbbrev">Laredo</prop>
+    <prop name="genomeSource">liverpool</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Archamoebae Entamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2012-10-15</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ehisHM1IMSS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">emosLaredo</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">acasNeff</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1257118</prop>
+    <prop name="publicOrganismAbbrev">acasNeff</prop>
+    <prop name="organismFullName">Acanthamoeba castellanii str. Neff</prop>
+    <prop name="organismNameForFiles">AcastellaniiNeff</prop>
+    <prop name="speciesNcbiTaxonId">5755</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">acasNeff</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">acas</prop>
+    <prop name="strainAbbrev">Neff</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-19</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds">33677</prop>
+    <prop name="familyNameForFiles">Acanthamoebidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acasNeff</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">nfowATCC30863</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000014</prop>
+    <prop name="publicOrganismAbbrev">nfowATCC30863</prop>
+    <prop name="organismFullName">Naegleria fowleri ATCC 30863</prop>
+    <prop name="organismNameForFiles">NfowleriATCC30863</prop>
+    <prop name="speciesNcbiTaxonId">5763</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">nfowATCC30863</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">nfow</prop>
+    <prop name="strainAbbrev">ATCC30863</prop>
+    <prop name="genomeSource">Wittwer</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Schizopyrenida Naegleria</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-11-05</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">nfowATCC30863</prop>
+    <prop name="familyNcbiTaxonIds">5765</prop>
+    <prop name="familyNameForFiles">Vahlkampfiidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">nfowATCC30863</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">aastUnknown</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000215</prop>
+    <prop name="publicOrganismAbbrev">aastUnknown</prop>
+    <prop name="organismFullName">Acanthamoeba astronyxis Unknown</prop>
+    <prop name="organismNameForFiles">AastronyxisUnknown</prop>
+    <prop name="speciesNcbiTaxonId">65658</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aastUnknown</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">aast</prop>
+    <prop name="strainAbbrev">Unknown</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aastUnknown</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">acasMa</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000216</prop>
+    <prop name="publicOrganismAbbrev">acasMa</prop>
+    <prop name="organismFullName">Acanthamoeba castellanii Ma</prop>
+    <prop name="organismNameForFiles">AcastellaniiMa</prop>
+    <prop name="speciesNcbiTaxonId">5755</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">acasNeff</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">acan</prop>
+    <prop name="strainAbbrev">Ma</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-02-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+
+<dataset class="organism">
+    <prop name="organismAbbrev">acspGalka</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000217</prop>
+    <prop name="publicOrganismAbbrev">acspGalka</prop>
+    <prop name="organismFullName">Acanthamoeba sp Galka</prop>
+    <prop name="organismNameForFiles">AspGalka</prop>
+    <prop name="speciesNcbiTaxonId">5756</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">acspGalka</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">acsg</prop>
+    <prop name="strainAbbrev">Galka</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acspGalka</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">acspIncertae_sedis</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000218</prop>
+    <prop name="publicOrganismAbbrev">acspIncertae_sedis</prop>
+    <prop name="organismFullName">Acanthamoeba sp Incertae sedis</prop>
+    <prop name="organismNameForFiles">AspIncertaesedis</prop>
+    <prop name="speciesNcbiTaxonId">5756</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">acspGalka</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">acsi</prop>
+    <prop name="strainAbbrev">Incertae_sedis</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acspIncertae_sedis</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">acspT4B-type</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000219</prop>
+    <prop name="publicOrganismAbbrev">acspT4B-type</prop>
+    <prop name="organismFullName">Acanthamoeba sp T4b-type</prop>
+    <prop name="organismNameForFiles">AspT4b-type</prop>
+    <prop name="speciesNcbiTaxonId">5756</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">acspGalka</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">actb</prop>
+    <prop name="strainAbbrev">T4B-type</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acspT4B-type</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">aculA1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000220</prop>
+    <prop name="publicOrganismAbbrev">aculA1</prop>
+    <prop name="organismFullName">Acanthamoeba culbertsoni A1</prop>
+    <prop name="organismNameForFiles">AculbertsoniA1</prop>
+    <prop name="speciesNcbiTaxonId">43142</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aculA1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">acul</prop>
+    <prop name="strainAbbrev">A1</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aculA1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">alenPD2S</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000221</prop>
+    <prop name="publicOrganismAbbrev">alenPD2S</prop>
+    <prop name="organismFullName">Acanthamoeba lenticulata PD2S</prop>
+    <prop name="organismNameForFiles">AlenticulataPD2S</prop>
+    <prop name="speciesNcbiTaxonId">29196</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">alenPD2S</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">alep</prop>
+    <prop name="strainAbbrev">PD2S</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">alenPD2S</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">alugL3a</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000222</prop>
+    <prop name="publicOrganismAbbrev">alugL3a</prop>
+    <prop name="organismFullName">Acanthamoeba lugdunensis L3a</prop>
+    <prop name="organismNameForFiles">AlugdunensisL3a</prop>
+    <prop name="speciesNcbiTaxonId">61605</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">alugL3a</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">alul</prop>
+    <prop name="strainAbbrev">L3a</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">alugL3a</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">amau1652</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000223</prop>
+    <prop name="publicOrganismAbbrev">amau1652</prop>
+    <prop name="organismFullName">Acanthamoeba mauritaniensis 1652</prop>
+    <prop name="organismNameForFiles">Amauritaniensis1652</prop>
+    <prop name="speciesNcbiTaxonId">196912</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">amau1652</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">amau</prop>
+    <prop name="strainAbbrev">1652</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">amau1652</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">apalReich</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000224</prop>
+    <prop name="publicOrganismAbbrev">apalReich</prop>
+    <prop name="organismFullName">Acanthamoeba palestinensis Reich</prop>
+    <prop name="organismNameForFiles">ApalestinensisReich</prop>
+    <prop name="speciesNcbiTaxonId">28015</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">apalReich</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">apal</prop>
+    <prop name="strainAbbrev">Reich</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">apalReich</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">aquiVil3</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000225</prop>
+    <prop name="publicOrganismAbbrev">aquiVil3</prop>
+    <prop name="organismFullName">Acanthamoeba quina Vil3</prop>
+    <prop name="organismNameForFiles">AquinaVil3</prop>
+    <prop name="speciesNcbiTaxonId">211522</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aquiVil3</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">aqui</prop>
+    <prop name="strainAbbrev">Vil3</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-02-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aquiVil3</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">arhySingh</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000226</prop>
+    <prop name="publicOrganismAbbrev">arhySingh</prop>
+    <prop name="organismFullName">Acanthamoeba rhysodes Singh</prop>
+    <prop name="organismNameForFiles">ArhysodesSingh</prop>
+    <prop name="speciesNcbiTaxonId">32599</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">arhySingh</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">arhs</prop>
+    <prop name="strainAbbrev">Singh</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">arhySingh</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+<dataset class="organism">
+    <prop name="organismAbbrev">atriSH621</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000227</prop>
+    <prop name="publicOrganismAbbrev">atriSH621</prop>
+    <prop name="organismFullName">Acanthamoeba triangularis SH621</prop>
+    <prop name="organismNameForFiles">AtriangularisSH621</prop>
+    <prop name="speciesNcbiTaxonId">146752</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">atriSH621</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">atri</prop>
+    <prop name="strainAbbrev">SH621</prop>
+    <prop name="genomeSource">genbank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Centramoebida Acanthamoeba</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-31</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acasNeff</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">atriSH621</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.6</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.6</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.6</prop>
+  </dataset>
+
+<!--
+  <dataset class="customOntologyEntries">
+    <prop name="version">1.0</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">ehisHM1IMSS</prop>
+    <prop name="experimentName">Weedall_SOLID_htsSNPs</prop>
+    <prop name="experimentVersion">2011-02-11</prop>
+  </dataset>
+-->
+
+  <!-- load of all KEGG pathways -->
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+<!--
+  <dataset class="PathwayCompounds">
+    <prop name="name">pubchem</prop>
+    <prop name="version">2012.11</prop>
+  </dataset>
+-->
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-06-30</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="ISA"/>
+ <dataset class="ISASimple"/>
+
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+</datasets>

@@ -1,0 +1,27 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="experimentName">Lind_SecondaryMetabolism_Anid</prop>
+    <prop name="sampleName">mtfA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="experimentName">Lind_SecondaryMetabolism_Anid</prop>
+    <prop name="sampleName">wt_mtfA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="experimentName">Lind_SecondaryMetabolism_Anid</prop>
+    <prop name="sampleName">veA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="experimentName">Lind_SecondaryMetabolism_Anid</prop>
+    <prop name="sampleName">wt_veA</prop>
+  </dataset>
+
+</datasets>

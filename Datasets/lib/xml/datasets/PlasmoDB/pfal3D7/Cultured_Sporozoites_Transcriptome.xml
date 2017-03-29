@@ -1,0 +1,21 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Cultured_Sporozoites_Transcriptome</prop>
+    <prop name="sampleName">Sporozoites</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Cultured_Sporozoites_Transcriptome</prop>
+    <prop name="sampleName">Cultured_Sporozoites</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Cultured_Sporozoites_Transcriptome</prop>
+    <prop name="sampleName">Asexual_Stage_Parasites</prop>
+  </dataset>
+
+</datasets>

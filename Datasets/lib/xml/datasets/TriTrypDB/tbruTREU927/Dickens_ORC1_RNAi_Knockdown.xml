@@ -1,0 +1,14 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Dickens_ORC1_RNAi_Knockdown</prop>
+    <prop name="sampleName">knockdown</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Dickens_ORC1_RNAi_Knockdown</prop>
+    <prop name="sampleName">wt</prop>
+  </dataset>
+
+</datasets>

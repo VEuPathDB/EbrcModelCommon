@@ -1,0 +1,52 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">5prime-triphosphate-end-enriched_1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">5prime-triphosphate-end-enriched_2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">3prime-end-enriched-random-primed_1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">3prime-end-enriched-random-primed_2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">3prime-end-enriched-dT-primed_1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">3prime-end-enriched-dT-primed_2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">5prime-SL-end-enriched_1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">5prime-SL-end-enriched_2</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="experimentName">Tschudi_Transcriptome</prop>
+    <prop name="sampleName">5prime-SL-end-enriched_3</prop>
+  </dataset>
+
+</datasets>

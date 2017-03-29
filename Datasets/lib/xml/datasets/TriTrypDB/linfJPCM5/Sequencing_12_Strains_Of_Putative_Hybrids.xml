@@ -1,0 +1,183 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK1</prop>
+    <prop name="sraQueryString">ERS026255</prop>
+  </dataset>
+
+   <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK2</prop>
+    <prop name="sraQueryString">ERS026256</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK3</prop>
+    <prop name="sraQueryString">ERS026257</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK3</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK4</prop>
+    <prop name="sraQueryString">ERS026258</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK4</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK5</prop>
+    <prop name="sraQueryString">ERS026259</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK5</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK6</prop>
+    <prop name="sraQueryString">ERS026260</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK6</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK7</prop>
+    <prop name="sraQueryString">ERS026261</prop>
+  </dataset>
+  
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK7</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK8</prop>
+    <prop name="sraQueryString">ERS026262</prop>
+  </dataset>
+  
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK8</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK9</prop>
+    <prop name="sraQueryString">ERS026263</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK9</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK10</prop>
+    <prop name="sraQueryString">ERS026264</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK10</prop>
+  </dataset>
+  
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK11</prop>
+    <prop name="sraQueryString">ERS026265</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK11</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+    <prop name="snpStrainAbbrev">CUK12</prop>
+    <prop name="sraQueryString">ERS026266</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TritrypDB</prop>
+      <prop name="organismAbbrev">linfJPCM5</prop>
+      <prop name="experimentName">Sequencing_12_Strains_Of_Putative_Hybrids</prop>
+      <prop name="experimentVersion">2013-08-17</prop>
+      <prop name="sampleName">CUK12</prop>
+  </dataset>
+
+</datasets>

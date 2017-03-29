@@ -1,0 +1,66 @@
+<datasets>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">infected_rep1</prop>
+    <prop name="sraQueryString">ERX1790327</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">infected_rep2</prop>
+    <prop name="sraQueryString">ERX1790328</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">infected_rep3</prop>
+    <prop name="sraQueryString">ERX1790329</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">infected_rep4</prop>
+    <prop name="sraQueryString">ERX1790330</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">uninfected_rep1</prop>
+    <prop name="sraQueryString">ERX1790331</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">uninfected_rep2</prop>
+    <prop name="sraQueryString">ERX1790332</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">uninfected_rep3</prop>
+    <prop name="sraQueryString">ERX1790333</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">uninfected_rep4</prop>
+    <prop name="sraQueryString">ERX1790334</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample_QuerySRA">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_IntraExtra_Cellular_Stages</prop>
+    <prop name="sampleName">oocysts</prop>
+    <prop name="sraQueryString">ERX1790335</prop>
+  </dataset> 
+
+</datasets>

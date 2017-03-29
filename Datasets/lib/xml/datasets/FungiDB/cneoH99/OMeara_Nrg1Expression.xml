@@ -1,0 +1,21 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">cneoH99</prop>
+    <prop name="experimentName">OMeara_Nrg1Expression</prop>
+    <prop name="sampleName">H99_wildtype</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">cneoH99</prop>
+    <prop name="experimentName">OMeara_Nrg1Expression</prop>
+    <prop name="sampleName">nrg1_KO</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">cneoH99</prop>
+    <prop name="experimentName">OMeara_Nrg1Expression</prop>
+    <prop name="sampleName">nrg1_ovrExp</prop>
+  </dataset>
+
+</datasets>

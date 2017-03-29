@@ -1,0 +1,18 @@
+<datasets>
+    
+    <dataset class="smallNcRnaSamples">
+        <prop name="projectName">AmoebaDB</prop>
+        <prop name="organismAbbrev">ehisHM1IMSS</prop>
+        <prop name="experimentName">Singh_Small_RNA</prop>
+        <prop name="experimentVersion">1.0</prop>
+        <prop name="sampleName">HM1IMSS_Ago2IP</prop>
+    </dataset>
+   
+     <dataset class="smallNcRnaSamples">
+        <prop name="projectName">AmoebaDB</prop>
+        <prop name="organismAbbrev">ehisHM1IMSS</prop>
+        <prop name="experimentName">Singh_Small_RNA</prop>
+        <prop name="experimentVersion">1.0</prop>
+        <prop name="sampleName">Rahman</prop>
+    </dataset>
+</datasets>

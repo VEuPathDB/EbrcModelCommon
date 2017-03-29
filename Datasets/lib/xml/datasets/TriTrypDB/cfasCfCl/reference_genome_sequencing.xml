@@ -1,0 +1,10 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">cfasCfCl</prop>
+    <prop name="experimentName">reference_genome_sequencing</prop>
+    <prop name="snpStrainAbbrev">CfCl_resequence1</prop>
+    <prop name="sraQueryString">SRX717747,SRX271575</prop>
+  </dataset>
+
+</datasets>

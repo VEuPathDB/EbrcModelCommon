@@ -1,0 +1,13 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="afumAf293"/>
+  <constant name="experimentName" value="JCVI_HTS_SNP_PE"/>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="snpStrainAbbrev">A1163</prop>
+    <prop name="sraQueryString">SRX028559</prop>
+  </dataset>
+
+</datasets>

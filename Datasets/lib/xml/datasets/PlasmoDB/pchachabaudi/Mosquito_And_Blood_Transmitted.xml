@@ -1,0 +1,29 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pchachabaudi</prop>
+    <prop name="experimentName">Mosquito_And_Blood_Transmitted</prop>
+    <prop name="sampleName">Mosquito_transmitted_rep1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pchachabaudi</prop>
+    <prop name="experimentName">Mosquito_And_Blood_Transmitted</prop>
+    <prop name="sampleName">Mosquito_transmitted_rep2</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pchachabaudi</prop>
+    <prop name="experimentName">Mosquito_And_Blood_Transmitted</prop>
+    <prop name="sampleName">Blood_transmitted_rep1</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pchachabaudi</prop>
+    <prop name="experimentName">Mosquito_And_Blood_Transmitted</prop>
+    <prop name="sampleName">Blood_transmitted_rep2</prop>
+  </dataset>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pchachabaudi</prop>
+    <prop name="experimentName">Mosquito_And_Blood_Transmitted</prop>
+    <prop name="sampleName">Blood_transmitted_rep3</prop>
+  </dataset>
+
+</datasets>

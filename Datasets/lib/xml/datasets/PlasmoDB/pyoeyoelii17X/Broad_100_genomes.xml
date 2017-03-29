@@ -1,0 +1,18 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pyoeyoelii17X</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">17X_resequence1</prop>
+    <prop name="sraQueryString">SRX271788,SRX176489,SRX160068,SRX158279</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pyoeyoelii17X</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-01-10</prop>
+      <prop name="sampleName">17X_resequence1</prop>
+  </dataset>
+
+</datasets>

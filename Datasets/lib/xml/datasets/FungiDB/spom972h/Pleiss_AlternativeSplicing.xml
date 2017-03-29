@@ -1,0 +1,15 @@
+<datasets>
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">spom972h</prop>
+    <prop name="experimentName">Pleiss_AlternativeSplicing</prop>
+    <prop name="sampleName">GSM1181875</prop>
+    <prop name="sampleOrder">1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">spom972h</prop>
+    <prop name="experimentName">Pleiss_AlternativeSplicing</prop>
+    <prop name="sampleName">GSM1181876</prop>
+    <prop name="sampleOrder">2</prop>
+  </dataset>
+</datasets>

@@ -1,0 +1,693 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">5.1</prop>
+    <prop name="sraQueryString">SRX176490,SRX160066,SRX158281</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">5.1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">7G8_2</prop>
+    <prop name="sraQueryString">SRX208839,SRX113476,SRX111831</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">7G8_2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">G224</prop>
+    <prop name="sraQueryString">SRX271791,SRX271790</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">G224</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">H209</prop>
+    <prop name="sraQueryString">SRX271792,SRX271789</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">H209</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">M113-A</prop>
+    <prop name="sraQueryString">SRX377630,SRX377617,SRX377571</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">M113-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">M219-D</prop>
+    <prop name="sraQueryString">SRX377620,SRX377590,SRX377581</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">M219-D</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">M271-D</prop>
+    <prop name="sraQueryString">SRX377629,SRX377607,SRX377595</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">M271-D</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">M312-D</prop>
+    <prop name="sraQueryString">SRX377626,SRX377586,SRX377578</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">M312-D</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N011-A</prop>
+    <prop name="sraQueryString">SRX377625,SRX377614,SRX377599</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N011-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N023-A</prop>
+    <prop name="sraQueryString">SRX377632,SRX377596,SRX377594</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N023-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N071-I</prop>
+    <prop name="sraQueryString">SRX377621,SRX377601,SRX377570</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N071-I</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N164-A</prop>
+    <prop name="sraQueryString">SRX377628,SRX377605,SRX377579</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N164-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N497-C</prop>
+    <prop name="sraQueryString">SRX377622,SRX377608,SRX377597</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N497-C</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">N579-A</prop>
+    <prop name="sraQueryString">SRX377624,SRX377623,SRX377582</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">N579-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">O079-B</prop>
+    <prop name="sraQueryString">SRX377627,SRX377609,SRX377580</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">O079-B</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">O141-A</prop>
+    <prop name="sraQueryString">SRX377618,SRX377611,SRX377575</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">O141-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">O222-A</prop>
+    <prop name="sraQueryString">SRX377610,SRX377592,SRX377588</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">O222-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">O306-A</prop>
+    <prop name="sraQueryString">SRX377612,SRX377606,SRX377589</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">O306-A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">O314</prop>
+    <prop name="sraQueryString">SRX377615,SRX377600,SRX377593</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">O314</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">P164-C</prop>
+    <prop name="sraQueryString">SRX377591,SRX377583,SRX377573</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">P164-C</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">P167-B</prop>
+    <prop name="sraQueryString">SRX377603,SRX377602,SRX377574</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">P167-B</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">P196J3-C</prop>
+    <prop name="sraQueryString">SRX377616,SRX377587,SRX377572</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">P196J3-C</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">P237-C</prop>
+    <prop name="sraQueryString">SRX377631,SRX377604,SRX377584</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">P237-C</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">P241-D</prop>
+    <prop name="sraQueryString">SRX377613,SRX377598,SRX377585</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">P241-D</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS097</prop>
+    <prop name="sraQueryString">SRX117965</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS097</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS103</prop>
+    <prop name="sraQueryString">SRX117964</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS103</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS122_G11</prop>
+    <prop name="sraQueryString">SRX117962</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS122_G11</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS149</prop>
+    <prop name="sraQueryString">SRX117963</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS149</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS170</prop>
+    <prop name="sraQueryString">SRX117967</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS170</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS183</prop>
+    <prop name="sraQueryString">SRX117966</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS183</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS186</prop>
+    <prop name="sraQueryString">SRX117968</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS186</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS189</prop>
+    <prop name="sraQueryString">SRX117961</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS189</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS206_E11</prop>
+    <prop name="sraQueryString">SRX117960</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS206_E11</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">PS250</prop>
+    <prop name="sraQueryString">SRX117969</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">PS250</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">SEV2_H5</prop>
+    <prop name="sraQueryString">SRX377576</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">SEV2_H5</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">SantaLucia_SalvadorI</prop>
+    <prop name="sraQueryString">SRX208844,SRX113471,SRX110287</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">SantaLucia_SalvadorI</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_396.1</prop>
+    <prop name="sraQueryString">SRX006181</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_396.1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_408.2</prop>
+    <prop name="sraQueryString">SRX006734</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_408.2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_432.4</prop>
+    <prop name="sraQueryString">SRX006178</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_432.4</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_443.2</prop>
+    <prop name="sraQueryString">SRX006665</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_443.2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_659.1</prop>
+    <prop name="sraQueryString">SRX006184</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_659.1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_661.1</prop>
+    <prop name="sraQueryString">SRX007633</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_661.1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_674.4</prop>
+    <prop name="sraQueryString">SRX007630</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_674.4</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_707.3</prop>
+    <prop name="sraQueryString">SRX006745</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_707.3</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_730.2</prop>
+    <prop name="sraQueryString">SRX006735</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_730.2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Broad_100_genomes</prop>
+    <prop name="snpStrainAbbrev">UGK_815.1</prop>
+    <prop name="sraQueryString">SRX006740</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Broad_100_genomes</prop>
+      <prop name="experimentVersion">2013-11-14</prop>
+      <prop name="sampleName">UGK_815.1</prop>
+  </dataset>
+
+</datasets>

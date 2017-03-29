@@ -1,0 +1,21 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Boothroyd_oocyst</prop>
+    <prop name="sampleName">day0</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Boothroyd_oocyst</prop>
+    <prop name="sampleName">day4</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Boothroyd_oocyst</prop>
+    <prop name="sampleName">day10</prop>
+  </dataset>
+
+</datasets>

@@ -1,0 +1,49 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+    <prop name="snpStrainAbbrev">2001</prop>
+    <prop name="sraQueryString">SRR315354</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+      <prop name="experimentVersion">2011-07-22</prop>
+      <prop name="sampleName">2001</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+    <prop name="snpStrainAbbrev">39</prop>
+    <prop name="sraQueryString">SRR315353</prop>
+  </dataset>
+
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+      <prop name="experimentVersion">2001</prop>
+      <prop name="sampleName">39</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+    <prop name="snpStrainAbbrev">BHU-1095</prop>
+    <prop name="sraQueryString">SRR408586</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Indian_SOLiD_Isolates</prop>
+      <prop name="experimentVersion">2001</prop>
+      <prop name="sampleName">BHU-1095</prop>
+  </dataset>
+
+</datasets>

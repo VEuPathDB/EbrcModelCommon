@@ -1,0 +1,1310 @@
+<datasets>
+  <constant name="projectName" value="TriTrypDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">bayaB08-376</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000068</prop>
+    <prop name="publicOrganismAbbrev">bayaB08-376</prop>
+    <prop name="organismFullName">Blechomonas ayalai B08-376</prop>
+    <prop name="organismNameForFiles">BayalaiB08-376</prop>
+    <prop name="speciesNcbiTaxonId">1463230</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">bayaB08-376</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">baya</prop>
+    <prop name="strainAbbrev">B08-376</prop>
+    <prop name="genomeSource">YurchenkoLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Blechomonas</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="genomeVersion">2017-01-18</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">bayaB08-376</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lseyATCC30220</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000067</prop>
+    <prop name="publicOrganismAbbrev">lseyATCC30220</prop>
+    <prop name="organismFullName">Leptomonas seymouri ATCC 30220</prop>
+    <prop name="organismNameForFiles">LseymouriATCC30220</prop>
+    <prop name="speciesNcbiTaxonId">5684</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lseyATCC30220</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lsey</prop>
+    <prop name="strainAbbrev">ATCC30220</prop>
+    <prop name="genomeSource">YurchenkoLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leptomonas</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-05-06</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lseyATCC30220</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lpyrH10</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000066</prop>
+    <prop name="publicOrganismAbbrev">lpyrH10</prop>
+    <prop name="organismFullName">Leptomonas pyrrhocoris H10</prop>
+    <prop name="organismNameForFiles">LpyrrhocorisH10</prop>
+    <prop name="speciesNcbiTaxonId">157538</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lpyrH10</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lpyr</prop>
+    <prop name="strainAbbrev">H10</prop>
+    <prop name="genomeSource">LukesLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leptomonas</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-05-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lpyrH10</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">435258</prop>
+    <prop name="publicOrganismAbbrev">linfJPCM5</prop>
+    <prop name="organismFullName">Leishmania infantum JPCM5</prop>
+    <prop name="organismNameForFiles">LinfantumJPCM5</prop>
+    <prop name="speciesNcbiTaxonId">5671</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">linfJPCM5</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">linf</prop>
+    <prop name="strainAbbrev">JPCM5</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-12-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">linfJPCM5</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cfasCfCl</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000026</prop>
+    <prop name="publicOrganismAbbrev">cfasCfCl</prop>
+    <prop name="organismFullName">Crithidia fasciculata strain Cf-Cl</prop>
+    <prop name="organismNameForFiles">CfasciculataCfCl</prop>
+    <prop name="speciesNcbiTaxonId">5656</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cfasCfCl</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">cfas</prop>
+    <prop name="strainAbbrev">CfCl</prop>
+    <prop name="genomeSource">BeverleyLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Crithidia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-06-01</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cfasCfCl</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tranSC58</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">429131</prop>
+    <prop name="publicOrganismAbbrev">tranSC58</prop>
+    <prop name="organismFullName">Trypanosoma rangeli SC58</prop>
+    <prop name="organismNameForFiles">TrangeliSC58</prop>
+    <prop name="speciesNcbiTaxonId">5698</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tranSC58</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tran</prop>
+    <prop name="strainAbbrev">SC58</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-10-30</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tranSC58</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tgraANR4</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000064</prop>
+    <prop name="publicOrganismAbbrev">tgraANR4</prop>
+    <prop name="organismFullName">Trypanosoma grayi ANR4</prop>
+    <prop name="organismNameForFiles">TgrayiANR4</prop>
+    <prop name="speciesNcbiTaxonId">71804</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tgraANR4</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tgra</prop>
+    <prop name="strainAbbrev">ANR4</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-06-17</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tgraANR4</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">emonLV88</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000016</prop>
+    <prop name="publicOrganismAbbrev">emonLV88</prop>
+    <prop name="organismFullName">Endotrypanum monterogeii strain LV88</prop>
+    <prop name="organismNameForFiles">EmonterogeiiLV88</prop>
+    <prop name="speciesNcbiTaxonId">5705</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">emonLV88</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">emon</prop>
+    <prop name="strainAbbrev">LV88</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Endotrypanum</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">emonLV88</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lpanMHOMCOL81L13</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1295824</prop>
+    <prop name="publicOrganismAbbrev">lpanMHOMCOL81L13</prop>
+    <prop name="organismFullName">Leishmania panamensis MHOM/COL/81/L13</prop>
+    <prop name="organismNameForFiles">LpanamensisMHOMCOL81L13</prop>
+    <prop name="speciesNcbiTaxonId">5679</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lpanMHOMCOL81L13</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lpan</prop>
+    <prop name="strainAbbrev">MHOMCOL81L13</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lpanMHOMCOL81L13</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lspMARLEM2494</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1303197</prop>
+    <prop name="publicOrganismAbbrev">lspMARLEM2494</prop>
+    <prop name="organismFullName">Leishmania sp. MAR LEM2494</prop>
+    <prop name="organismNameForFiles">LspMARLEM2494</prop>
+    <prop name="speciesNcbiTaxonId">40283</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lspMARLEM2494</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lspm</prop>
+    <prop name="strainAbbrev">LEM2494</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lspMARLEM2494</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">laetL147</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1206056</prop>
+    <prop name="publicOrganismAbbrev">laetL147</prop>
+    <prop name="organismFullName">Leishmania aethiopica L147</prop>
+    <prop name="organismNameForFiles">LaethiopicaL147</prop>
+    <prop name="speciesNcbiTaxonId">5667</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">laetL147</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">laet</prop>
+    <prop name="strainAbbrev">L147</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">laetL147</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lamaMHOMBR71973M2269</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000063</prop>
+    <prop name="publicOrganismAbbrev">lamaMHOMBR71973M2269</prop>
+    <prop name="organismFullName">Leishmania amazonensis MHOM/BR/71973/M2269</prop>
+    <prop name="organismNameForFiles">LamazonensisMHOMBR71973M2269</prop>
+    <prop name="speciesNcbiTaxonId">5659</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lamaMHOMBR71973M2269</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lama</prop>
+    <prop name="strainAbbrev">MHOMBR71973M2269</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-07-18</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lamaMHOMBR71973M2269</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">laraLEM1108</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000028</prop>
+    <prop name="publicOrganismAbbrev">laraLEM1108</prop>
+    <prop name="organismFullName">Leishmania arabica strain LEM1108</prop>
+    <prop name="organismNameForFiles">LarabicaLEM1108</prop>
+    <prop name="speciesNcbiTaxonId">40284</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">laraLEM1108</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lara</prop>
+    <prop name="strainAbbrev">LEM1108</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">laraLEM1108</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lenrLEM3045</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000029</prop>
+    <prop name="publicOrganismAbbrev">lenrLEM3045</prop>
+    <prop name="organismFullName">Leishmania enriettii strain LEM3045</prop>
+    <prop name="organismNameForFiles">LenriettiiLEM3045</prop>
+    <prop name="speciesNcbiTaxonId">5663</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lenrLEM3045</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lenr</prop>
+    <prop name="strainAbbrev">LEM3045</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lenrLEM3045</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lgerLEM452</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000061</prop>
+    <prop name="publicOrganismAbbrev">lgerLEM452</prop>
+    <prop name="organismFullName">Leishmania gerbilli strain LEM452</prop>
+    <prop name="organismNameForFiles">LgerbilliLEM452</prop>
+    <prop name="speciesNcbiTaxonId">40285</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lgerLEM452</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">lger</prop>
+    <prop name="strainAbbrev">LEM452</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lgerLEM452</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ltroL590</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1206058</prop>
+    <prop name="publicOrganismAbbrev">ltroL590</prop>
+    <prop name="organismFullName">Leishmania tropica L590</prop>
+    <prop name="organismNameForFiles">LtropicaL590</prop>
+    <prop name="speciesNcbiTaxonId">5666</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ltroL590</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ltro</prop>
+    <prop name="strainAbbrev">L590</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ltroL590</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lturLEM423</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000062</prop>
+    <prop name="publicOrganismAbbrev">lturLEM423</prop>
+    <prop name="organismFullName">Leishmania turanica strain LEM423</prop>
+    <prop name="organismNameForFiles">LturanicaLEM423</prop>
+    <prop name="speciesNcbiTaxonId">62297</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lturLEM423</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ltur</prop>
+    <prop name="strainAbbrev">LEM423</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lturLEM423</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lbraMHOMBR75M2904</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">420245</prop>
+    <prop name="publicOrganismAbbrev">lbraMHOMBR75M2904</prop>
+    <prop name="organismFullName">Leishmania braziliensis MHOM/BR/75/M2904</prop>
+    <prop name="organismNameForFiles">LbraziliensisMHOMBR75M2904</prop>
+    <prop name="speciesNcbiTaxonId">5660</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lbraMHOMBR75M2904</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lbra</prop>
+    <prop name="strainAbbrev">MHOMBR75M2904</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-28</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lbraMHOMBR75M2904</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lbraMHOMBR75M2903</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1295825</prop>
+    <prop name="publicOrganismAbbrev">lbraMHOMBR75M2903</prop>
+    <prop name="organismFullName">Leishmania braziliensis MHOM/BR/75/M2903</prop>
+    <prop name="organismNameForFiles">LbraziliensisMHOMBR75M2903</prop>
+    <prop name="speciesNcbiTaxonId">5660</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">lbraMHOMBR75M2904</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lbrm</prop>
+    <prop name="strainAbbrev">MHOMBR75M2903</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lmajFriedlin</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">347515</prop>
+    <prop name="publicOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="organismFullName">Leishmania major strain Friedlin</prop>
+    <prop name="organismNameForFiles">LmajorFriedlin</prop>
+    <prop name="speciesNcbiTaxonId">5664</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lmaj</prop>
+    <prop name="strainAbbrev">Friedlin</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-28</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds">5654</prop>
+    <prop name="familyNameForFiles">Trypanosomatidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lmajFriedlin</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lmajLV39c5</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">860569</prop>
+    <prop name="publicOrganismAbbrev">lmajLV39c5</prop>
+    <prop name="organismFullName">Leishmania major strain LV39c5</prop>
+    <prop name="organismNameForFiles">LmajorLV39c5</prop>
+    <prop name="speciesNcbiTaxonId">5664</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lmjl</prop>
+    <prop name="strainAbbrev">LV39c5</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lmajSD75.1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">860570</prop>
+    <prop name="publicOrganismAbbrev">lmajSD75.1</prop>
+    <prop name="organismFullName">Leishmania major strain SD 75.1</prop>
+    <prop name="organismNameForFiles">LmajorSD75.1</prop>
+    <prop name="speciesNcbiTaxonId">5664</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lmjs</prop>
+    <prop name="strainAbbrev">SD75.1</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-01-16</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">lmexMHOMGT2001U1103</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">929439</prop>
+    <prop name="publicOrganismAbbrev">lmexMHOMGT2001U1103</prop>
+    <prop name="organismFullName">Leishmania mexicana MHOM/GT/2001/U1103</prop>
+    <prop name="organismNameForFiles">LmexicanaMHOMGT2001U1103</prop>
+    <prop name="speciesNcbiTaxonId">5665</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">lmexMHOMGT2001U1103</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">lmex</prop>
+    <prop name="strainAbbrev">MHOMGT2001U1103</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-28</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">lmexMHOMGT2001U1103</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ltarParrotTarII</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000019</prop>
+    <prop name="publicOrganismAbbrev">ltarParrotTarII</prop>
+    <prop name="organismFullName">Leishmania tarentolae Parrot-TarII</prop>
+    <prop name="organismNameForFiles">LtarentolaeParrotTarII</prop>
+    <prop name="speciesNcbiTaxonId">5689</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ltarParrotTarII</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ltar</prop>
+    <prop name="strainAbbrev">ParrotTarII</prop>
+    <prop name="genomeSource">ULAVAL</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2011-06-22</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ltarParrotTarII</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">185431</prop>
+    <prop name="publicOrganismAbbrev">tbrucei927</prop>
+    <prop name="organismFullName">Trypanosoma brucei brucei TREU927</prop>
+    <prop name="organismNameForFiles">TbruceiTREU927</prop>
+    <prop name="speciesNcbiTaxonId">5691</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tbruTREU927</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tbrt</prop>
+    <prop name="strainAbbrev">TREU927</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-19</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tbruTREU927</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tbruLister427</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000020</prop>
+    <prop name="publicOrganismAbbrev">tbruLister427</prop>
+    <prop name="organismFullName">Trypanosoma brucei Lister strain 427</prop>
+    <prop name="organismNameForFiles">TbruceiLister427</prop>
+    <prop name="speciesNcbiTaxonId">5691</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tbruTREU927</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tbrl</prop>
+    <prop name="strainAbbrev">Lister427</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-10-20</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tbrugambienseDAL972</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">679716</prop>
+    <prop name="publicOrganismAbbrev">tbrugambienseDAL972</prop>
+    <prop name="organismFullName">Trypanosoma brucei gambiense DAL972</prop>
+    <prop name="organismNameForFiles">TbruceigambienseDAL972</prop>
+    <prop name="speciesNcbiTaxonId">5691</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tbruTREU927</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tbrg</prop>
+    <prop name="strainAbbrev">gambienseDAL972</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-28</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000024</prop>
+    <prop name="publicOrganismAbbrev">tcruziCLBrenerEsmeraldo-like</prop>
+    <prop name="organismFullName">Trypanosoma cruzi CL Brener Esmeraldo-like</prop>
+    <prop name="organismNameForFiles">TcruziCLBrenerEsmeraldo-like</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tcrl</prop>
+    <prop name="strainAbbrev">CLBrenerEsmeraldo-like</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-12-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruCLBrenerNon-Esmeraldo-like</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000025</prop>
+    <prop name="publicOrganismAbbrev">tcruziCLBrenerNon-Esmeraldo-like</prop>
+    <prop name="organismFullName">Trypanosoma cruzi CL Brener Non-Esmeraldo-like</prop>
+    <prop name="organismNameForFiles">TcruziCLBrenerNon-Esmeraldo-like</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tcrn</prop>
+    <prop name="strainAbbrev">CLBrenerNon-Esmeraldo-like</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-12-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruCLBrener</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">353153</prop>
+    <prop name="publicOrganismAbbrev">tcruziCLBrener</prop>
+    <prop name="organismFullName">Trypanosoma cruzi strain CL Brener</prop>
+    <prop name="organismNameForFiles">TcruziCLBrener</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcrc</prop>
+    <prop name="strainAbbrev">CLBrener</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-12-07</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruEsmeraldo</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">366581</prop>
+    <prop name="publicOrganismAbbrev">tcruziEsmeraldo</prop>
+    <prop name="organismFullName">Trypanosoma cruzi strain Esmeraldo</prop>
+    <prop name="organismNameForFiles">TcruziEsmeraldo</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcre</prop>
+    <prop name="strainAbbrev">Esmeraldo</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-01-02</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruJRcl4</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">914063</prop>
+    <prop name="publicOrganismAbbrev">tcruziJRcl4</prop>
+    <prop name="organismFullName">Trypanosoma cruzi JR cl. 4</prop>
+    <prop name="organismNameForFiles">TcruziJRcl4</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcrj</prop>
+    <prop name="strainAbbrev">JRcl4</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-01-11</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruTulacl2</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1206070</prop>
+    <prop name="publicOrganismAbbrev">tcruTulacl2</prop>
+    <prop name="organismFullName">Trypanosoma cruzi Tula cl2</prop>
+    <prop name="organismNameForFiles">TcruziTulacl2</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcrt</prop>
+    <prop name="strainAbbrev">Tulacl2</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-06-26</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruSylvioX10-1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000022</prop>
+    <prop name="publicOrganismAbbrev">tcruSylvioX10-1</prop>
+    <prop name="organismFullName">Trypanosoma cruzi Sylvio X10/1</prop>
+    <prop name="organismNameForFiles">TcruziSylvioX10-1</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tcrs</prop>
+    <prop name="strainAbbrev">SylvioX10-1</prop>
+    <prop name="genomeSource">AnderssonLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="genomeVersion">2017-03-18</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcruDm28c</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1416333</prop>
+    <prop name="publicOrganismAbbrev">tcruDm28c</prop>
+    <prop name="organismFullName">Trypanosoma cruzi Dm28c</prop>
+    <prop name="organismNameForFiles">TcruziDm28c</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcrd</prop>
+    <prop name="strainAbbrev">Dm28c</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-11-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tcrumarinkelleiB7</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000021</prop>
+    <prop name="publicOrganismAbbrev">tcrumarinkelleiB7</prop>
+    <prop name="organismFullName">Trypanosoma cruzi marinkellei strain B7</prop>
+    <prop name="organismNameForFiles">TcruzimarinkelleiB7</prop>
+    <prop name="speciesNcbiTaxonId">5693</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">tcruCLBrenerEsmeraldo-like</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">tcrm</prop>
+    <prop name="strainAbbrev">marinkelleiB7</prop>
+    <prop name="genomeSource">Franzen</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">1.0</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">981087</prop>
+    <prop name="publicOrganismAbbrev">ldonBPK282A1</prop>
+    <prop name="organismFullName">Leishmania donovani BPK282A1</prop>
+    <prop name="organismNameForFiles">LdonovaniBPK282A1</prop>
+    <prop name="speciesNcbiTaxonId">5661</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ldonBPK282A1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ldon</prop>
+    <prop name="strainAbbrev">BPK282A1</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-05-28</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ldonBHU1220</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000065</prop>
+    <prop name="publicOrganismAbbrev">ldonBHU1220</prop>
+    <prop name="organismFullName">Leishmania donovani strain BHU 1220</prop>
+    <prop name="organismNameForFiles">LdonovaniBHU1220</prop>
+    <prop name="speciesNcbiTaxonId">5661</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">ldonBPK282A1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ldbh</prop>
+    <prop name="strainAbbrev">BHU1220</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Leishmania</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-11-06</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tevaSTIB805</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000023</prop>
+    <prop name="publicOrganismAbbrev">tevaSTIB805</prop>
+    <prop name="organismFullName">Trypanosoma evansi strain STIB 805</prop>
+    <prop name="organismNameForFiles">TevansiSTIB805</prop>
+    <prop name="speciesNcbiTaxonId">5697</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tevaSTIB805</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">teva</prop>
+    <prop name="strainAbbrev">STIB805</prop>
+    <prop name="genomeSource">Schnaufer</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-06-03</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tevaSTIB805</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tconIL3000</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1068625</prop>
+    <prop name="publicOrganismAbbrev">tconIL3000</prop>
+    <prop name="organismFullName">Trypanosoma congolense IL3000</prop>
+    <prop name="organismNameForFiles">TcongolenseIL3000</prop>
+    <prop name="speciesNcbiTaxonId">5692</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tconIL3000</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tcon</prop>
+    <prop name="strainAbbrev">IL3000</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-06-06</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tconIL3000</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">tvivY486</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1055687</prop>
+    <prop name="publicOrganismAbbrev">tvivY486</prop>
+    <prop name="organismFullName">Trypanosoma vivax Y486</prop>
+    <prop name="organismNameForFiles">TvivaxY486</prop>
+    <prop name="speciesNcbiTaxonId">5699</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tvivY486</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">tviv</prop>
+    <prop name="strainAbbrev">Y486</prop>
+    <prop name="genomeSource">GeneDB</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Kinetoplastida Trypanosoma</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">2000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2016-06-06</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">lmajFriedlin</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tvivY486</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.9</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.9</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.9</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">TrypanoCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">LeishCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-03-11</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+ <dataset class="ISA"/>
+ <dataset class="ISASimple"/>
+
+
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+</datasets>

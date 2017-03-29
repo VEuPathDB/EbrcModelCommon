@@ -1,0 +1,92 @@
+<datasets>
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_ATCC_30222</prop>
+    <prop name="sraQueryString">SRS444559</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_ATCC_30222</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_ATCC_PRA-99</prop>
+    <prop name="sraQueryString">SRS444900</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_ATCC_PRA-99</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_GI</prop>
+    <prop name="sraQueryString">SRS444536</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_GI</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_GreenwichYale_Lab_Strain_1</prop>
+    <prop name="sraQueryString">SRS444889</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_GreenwichYale_Lab_Strain_1</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_Nan_Hs_2011_N11-50</prop>
+    <prop name="sraQueryString">SRS444714</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_Nan_Hs_2011_N11-50</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">EBABE_Naushon</prop>
+    <prop name="sraQueryString">SRS444538</prop>
+  </dataset> 
+
+  <dataset class="copyNumberVariationSamples">
+    <prop name="projectName">PiroplasmaDB</prop>
+    <prop name="organismAbbrev">bmicRI</prop>
+    <prop name="experimentName">WhitePaper_HTS_SNP</prop>
+    <prop name="experimentVersion">2013-06-13</prop>
+    <prop name="sampleName">EBABE_Naushon</prop>
+  </dataset>
+
+</datasets>

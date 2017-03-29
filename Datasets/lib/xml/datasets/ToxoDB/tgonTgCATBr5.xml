@@ -1,0 +1,43 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="tgonTgCATBr5"/>
+  <constant name="referenceStrainOrganismAbbrev" value="tgonME49"/>
+  <constant name="familyRepOrganismAbbrev" value="tgonME49"/>
+  <constant name="strainAbbrev" value="TgCATBr5"/>
+  <constant name="projectName" value="ToxoDB"/>
+  <constant name="ncbiTaxonId" value="943121"/>
+  <constant name="speciesNcbiTaxonId" value="5811"/>
+  <constant name="genomeVersion" value="2011-08-26"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">gb</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">^>.+\|gb\|(\w+\d+)</prop>
+    <prop name="releaseDate">2011-08-26</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>

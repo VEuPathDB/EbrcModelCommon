@@ -1,0 +1,39 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">VL-Pro</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">VL-Ax</prop>
+  </dataset> 
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">VL-Am</prop>
+  </dataset> 
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">CL-Pro</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">CL-Ax</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_vs_Cutaneous_Leishmaniasis</prop>
+      <prop name="sampleName">CL-Am</prop>
+  </dataset> 
+
+</datasets>

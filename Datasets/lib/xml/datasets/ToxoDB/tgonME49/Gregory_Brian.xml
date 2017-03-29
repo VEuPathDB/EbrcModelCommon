@@ -1,0 +1,44 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">ME49_mRAN</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">ME49_ncRNA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">Oocyst_mRNA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">RH_mRNA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">RH_ncRNA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">VEG_mRNA</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_Brian</prop>
+    <prop name="sampleName">VEG_mRNA_New</prop>
+  </dataset>
+</datasets>

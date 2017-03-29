@@ -1,0 +1,27 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Su_strand_specific</prop>
+    <prop name="sampleName">lateTroph</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Su_strand_specific</prop>
+    <prop name="sampleName">schizont</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Su_strand_specific</prop>
+    <prop name="sampleName">gametocyteII</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Su_strand_specific</prop>
+    <prop name="sampleName">gametocyteV</prop>
+  </dataset>
+
+</datasets>

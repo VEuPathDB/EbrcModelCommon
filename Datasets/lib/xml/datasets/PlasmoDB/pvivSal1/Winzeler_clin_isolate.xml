@@ -1,0 +1,20 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">pvivSal1</prop>
+    <prop name="experimentName">Winzeler_clin_isolate</prop>
+    <prop name="snpStrainAbbrev">IQ07</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pvivSal1</prop>
+      <prop name="experimentName">Winzeler_clin_isolate</prop>
+      <prop name="experimentVersion">2012-01-11</prop>
+      <prop name="sampleName">IQ07</prop>
+  </dataset>
+
+</datasets>
+
+
+ 

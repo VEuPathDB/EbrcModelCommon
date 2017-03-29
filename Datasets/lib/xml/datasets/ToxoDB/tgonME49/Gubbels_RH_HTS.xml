@@ -1,0 +1,16 @@
+<datasets>
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gubbels_RH_HTS</prop>
+    <prop name="snpStrainAbbrev">RH</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">tgonME49</prop>
+      <prop name="experimentName">Gubbels_RH_HTS</prop>
+      <prop name="experimentVersion">2010-06-29</prop>
+      <prop name="sampleName">RH</prop>
+  </dataset>
+
+</datasets>

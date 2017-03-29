@@ -1,0 +1,16 @@
+<datasets>
+    <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">lpanMHOMCOL81L13</prop>
+    <prop name="experimentName">LpanMHOMPA94PSC-1</prop>
+    <prop name="snpStrainAbbrev">MHOMPA94PSC-1</prop>
+    <prop name="sraQueryString">SRR1552486</prop>
+  </dataset>
+
+    <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypB</prop>
+      <prop name="organismAbbrev">lpanMHOMCOL81L13</prop>
+      <prop name="experimentName">LpanMHOMPA94PSC-1</prop>
+      <prop name="experimentVersion">2015-01-15</prop>
+      <prop name="sampleName">MHOMPA94PSC-1</prop>
+    </dataset>
+</datasets>

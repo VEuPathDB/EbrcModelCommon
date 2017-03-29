@@ -1,0 +1,514 @@
+<datasets>
+  <constant name="projectName" value="CryptoDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cand30847</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000108</prop>
+    <prop name="publicOrganismAbbrev">cand30847</prop>
+    <prop name="organismFullName">Cryptosporidium andersoni isolate 30847</prop>
+    <prop name="organismNameForFiles">Candersoni30847</prop>
+    <prop name="speciesNcbiTaxonId">117008</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cand30847</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">cand</prop>
+    <prop name="strainAbbrev">30847</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2016-11-03</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cand30847</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cubi39726</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000107</prop>
+    <prop name="publicOrganismAbbrev">cubi39726</prop>
+    <prop name="organismFullName">Cryptosporidium ubiquitum isolate 39726</prop>
+    <prop name="organismNameForFiles">Cubiquitum39726</prop>
+    <prop name="speciesNcbiTaxonId">857276</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cubi39726</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">cubi</prop>
+    <prop name="strainAbbrev">39726</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2016-11-03</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cubi39726</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gnipUnknown</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000082</prop>
+    <prop name="publicOrganismAbbrev">gnipUnknown</prop>
+    <prop name="organismFullName">Gregarina niphandrodes Unknown strain</prop>
+    <prop name="organismNameForFiles">GniphandrodesUnknown</prop>
+    <prop name="speciesNcbiTaxonId">110365</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">gnipUnknown</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">gnip</prop>
+    <prop name="strainAbbrev">Unknown</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Gregarina</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-04-09</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">gnipUnknown</prop>
+    <prop name="familyNcbiTaxonIds">35088</prop>
+    <prop name="familyNameForFiles">Gregarinidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">gnipUnknown</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cvelCCMP2878</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1169474</prop>
+    <prop name="publicOrganismAbbrev">cvelCCMP2878</prop>
+    <prop name="organismFullName">Chromera velia CCMP2878</prop>
+    <prop name="organismNameForFiles">CveliaCCMP2878</prop>
+    <prop name="speciesNcbiTaxonId">505693</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cvelCCMP2878</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">cvel</prop>
+    <prop name="strainAbbrev">CCMP2878</prop>
+    <prop name="genomeSource">PainLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Chromerida Chromerida</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">true</prop>
+    <prop name="maxIntronSize">30000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-05-15</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">cvelCCMP2878</prop>
+    <prop name="familyNcbiTaxonIds">877183</prop>
+    <prop name="familyNameForFiles">Chromerida</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cvelCCMP2878</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">vbraCCMP3155</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1169540</prop>
+    <prop name="publicOrganismAbbrev">vbraCCMP3155</prop>
+    <prop name="organismFullName">Vitrella brassicaformis CCMP3155</prop>
+    <prop name="organismNameForFiles">VbrassicaformisCCMP3155</prop>
+    <prop name="speciesNcbiTaxonId">1169539</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">vbraCCMP3155</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">vbra</prop>
+    <prop name="strainAbbrev">CCMP3155</prop>
+    <prop name="genomeSource">PainLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Chromerida Vitrella</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">true</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-05-15</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cvelCCMP2878</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">vbraCCMP3155</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">353152</prop>
+    <prop name="publicOrganismAbbrev">cparIowaII</prop>
+    <prop name="organismFullName">Cryptosporidium parvum Iowa II</prop>
+    <prop name="organismNameForFiles">CparvumIowaII</prop>
+    <prop name="speciesNcbiTaxonId">5807</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cparIowaII</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">cpar</prop>
+    <prop name="strainAbbrev">IowaII</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2007-02-23</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds">35082</prop>
+    <prop name="familyNameForFiles">Cryptosporidiidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cmurRN66</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">441375</prop>
+    <prop name="publicOrganismAbbrev">cmurRN66</prop>
+    <prop name="organismFullName">Cryptosporidium muris RN66</prop>
+    <prop name="organismNameForFiles">CmurisRN66</prop>
+    <prop name="speciesNcbiTaxonId">5808</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cmurRN66</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">cmur</prop>
+    <prop name="strainAbbrev">RN66</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cmurRN66</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cbaiTAMU-09Q1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000101</prop>
+    <prop name="publicOrganismAbbrev">cbaiTAMU-09Q1</prop>
+    <prop name="organismFullName">Cryptosporidium baileyi TAMU-09Q1</prop>
+    <prop name="organismNameForFiles">CbaileyiTAMU-09Q1</prop>
+    <prop name="speciesNcbiTaxonId">27987</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cbaiTAMU-09Q1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">cbai</prop>
+    <prop name="strainAbbrev">TAMU-09Q1</prop>
+    <prop name="genomeSource">WidmerLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-05-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cbaiTAMU-09Q1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">cmelUKMEL1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000102</prop>
+    <prop name="publicOrganismAbbrev">cmelUKMEL1</prop>
+    <prop name="organismFullName">Cryptosporidium meleagridis UKMEL1</prop>
+    <prop name="organismNameForFiles">CmeleagridisUKMEL1</prop>
+    <prop name="speciesNcbiTaxonId">93969</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cmelUKMEL1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">cmel</prop>
+    <prop name="strainAbbrev">UKMEL1</prop>
+    <prop name="genomeSource">WidmerLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-05-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cmelUKMEL1</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">chomTU502</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">353151</prop>
+    <prop name="publicOrganismAbbrev">chomTU502</prop>
+    <prop name="organismFullName">Cryptosporidium hominis TU502</prop>
+    <prop name="organismNameForFiles">ChominisTU502</prop>
+    <prop name="speciesNcbiTaxonId">237895</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">chom</prop>
+    <prop name="strainAbbrev">TU502</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2004-10-17</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">chomUKH1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000103</prop>
+    <prop name="publicOrganismAbbrev">chomUKH1</prop>
+    <prop name="organismFullName">Cryptosporidium hominis UKH1</prop>
+    <prop name="organismNameForFiles">ChominisUKH1</prop>
+    <prop name="speciesNcbiTaxonId">237895</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">chou</prop>
+    <prop name="strainAbbrev">UKH1</prop>
+    <prop name="genomeSource">WidmerLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-05-29</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">chomTU502_2012</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000104</prop>
+    <prop name="publicOrganismAbbrev">chomTU502_2012</prop>
+    <prop name="organismFullName">Cryptosporidium hominis isolate TU502_2012</prop>
+    <prop name="organismNameForFiles">ChominisTU502_2012</prop>
+    <prop name="speciesNcbiTaxonId">237895</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">chot</prop>
+    <prop name="strainAbbrev">TU502_2012</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="genomeVersion">2017-01-06</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">chom37999</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000105</prop>
+    <prop name="publicOrganismAbbrev">chom37999</prop>
+    <prop name="organismFullName">Cryptosporidium hominis 37999</prop>
+    <prop name="organismNameForFiles">Chominis37999</prop>
+    <prop name="speciesNcbiTaxonId">237895</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">chon</prop>
+    <prop name="strainAbbrev">37999</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2014-12-18</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+ <dataset class="organism">
+    <prop name="organismAbbrev">chomUdeA01</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000106</prop>
+    <prop name="publicOrganismAbbrev">chomUdeA01</prop>
+    <prop name="organismFullName">Cryptosporidium hominis UdeA01</prop>
+    <prop name="organismNameForFiles">ChominisUdeA01</prop>
+    <prop name="speciesNcbiTaxonId">237895</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">chomTU502</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">chod</prop>
+    <prop name="strainAbbrev">UdeA01</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Apicomplexa Cryptosporidium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">20000</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-12-03</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cparIowaII</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.3</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.3</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.3</prop>
+  </dataset>
+
+
+  <dataset class="copyAndFormatDownloadFilesFromManualDelivery">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="relativeManualDeliveryDir">CryptosporidiidaeReference/final</prop>
+    <prop name="relativeDownloadSiteDir">CryptosporidiidaeReference/fasta</prop>
+    <prop name="relativeWebServiceDir">CryptosporidiidaeReference/blast</prop>
+    <prop name="datasetName">CryptosporidiidaeReference</prop>
+    <prop name="formatDownloadFile">true</prop>
+    <prop name="argsOfFormatingDownloadFile">-dbtype nucl</prop>
+    <prop name="formattedOutputName">CryptosporidiidaeReferenceIsolates</prop>
+    <prop name="inputFileNameRegex">\.fasta</prop>
+  </dataset>
+
+<!--
+  <dataset class="customOntologyEntries">
+    <prop name="version">1.0</prop>
+  </dataset>
+-->
+<!--
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">cparIowaII</prop>
+    <prop name="experimentName">Widmer_HTS</prop>
+    <prop name="experimentVersion">2011-09-21</prop>
+  </dataset>
+-->
+
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+<!--
+  <dataset class="PathwayCompounds">
+    <prop name="name">pubchem</prop>
+    <prop name="version">2012.11</prop>
+  </dataset>
+-->
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-03-11</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="ISA"/>
+  <dataset class="ISASimple"/>
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+</datasets>

@@ -1,0 +1,33 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">DBP_Hehl-Grigg</prop>
+    <prop name="sampleName">day3</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">DBP_Hehl-Grigg</prop>
+    <prop name="sampleName">day5</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">DBP_Hehl-Grigg</prop>
+    <prop name="sampleName">day7</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">DBP_Hehl-Grigg</prop>
+    <prop name="sampleName">Tachyzoite_rep1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">DBP_Hehl-Grigg</prop>
+    <prop name="sampleName">Tachyzoite_rep2</prop>
+  </dataset>
+
+</datasets>

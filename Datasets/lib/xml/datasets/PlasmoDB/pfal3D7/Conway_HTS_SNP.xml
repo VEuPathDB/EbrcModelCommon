@@ -1,0 +1,977 @@
+<datasets>
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3606</prop>
+    <prop name="sraQueryString">ERS010116</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3606</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3614</prop>
+    <prop name="sraQueryString">ERS010126</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3614</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3642</prop>
+    <prop name="sraQueryString">ERS010043</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3642</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3650</prop>
+    <prop name="sraQueryString">ERS010127</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3650</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3687</prop>
+    <prop name="sraQueryString">ERS010044</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3687</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3701</prop>
+    <prop name="sraQueryString">ERS010045</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3701</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3703</prop>
+    <prop name="sraQueryString">ERS010128</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3703</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3714</prop>
+    <prop name="sraQueryString">ERS010046</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3714</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3735</prop>
+    <prop name="sraQueryString">ERS010047</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3735</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3737</prop>
+    <prop name="sraQueryString">ERS010048</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3737</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3740</prop>
+    <prop name="sraQueryString">ERS010129</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3740</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3766</prop>
+    <prop name="sraQueryString">ERS011006</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3766</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3600</prop>
+    <prop name="sraQueryString">ERS010049</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3600</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3610</prop>
+    <prop name="sraQueryString">ERS010038</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3610</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3611</prop>
+    <prop name="sraQueryString">ERS009726</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3611</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3630</prop>
+    <prop name="sraQueryString">ERS010130</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3630</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3635</prop>
+    <prop name="sraQueryString">ERS010117</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3635</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3637</prop>
+    <prop name="sraQueryString">ERS010039</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3637</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3655</prop>
+    <prop name="sraQueryString">ERS010040</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3655</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3671</prop>
+    <prop name="sraQueryString">ERS010041</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3671</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3672</prop>
+    <prop name="sraQueryString">ERS009729</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3672</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3673</prop>
+    <prop name="sraQueryString">ERS009966</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3673</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3675</prop>
+    <prop name="sraQueryString">ERS010118</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3675</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3695</prop>
+    <prop name="sraQueryString">ERS010119</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3695</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3696</prop>
+    <prop name="sraQueryString">ERS010120</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3696</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3702</prop>
+    <prop name="sraQueryString">ERS009731</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3702</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3708</prop>
+    <prop name="sraQueryString">ERS009732</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3708</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3717</prop>
+    <prop name="sraQueryString">ERS009733</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3717</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3721</prop>
+    <prop name="sraQueryString">ERS010113</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3721</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3729</prop>
+    <prop name="sraQueryString">ERS010071</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3729</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3730</prop>
+    <prop name="sraQueryString">ERS009669</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3730</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3731</prop>
+    <prop name="sraQueryString">ERS011004</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3731</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3736</prop>
+    <prop name="sraQueryString">ERS010070</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3736</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3739</prop>
+    <prop name="sraQueryString">ERS009967</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3739</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3741</prop>
+    <prop name="sraQueryString">ERS011013</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3741</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3764</prop>
+    <prop name="sraQueryString">ERS011002</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3764</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">RV_3769</prop>
+    <prop name="sraQueryString">ERS011016</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">RV_3769</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">BM_0009</prop>
+    <prop name="sraQueryString">ERS011009</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">BM_0009</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">BM_0008</prop>
+    <prop name="sraQueryString">ERS009670</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">BM_0008</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_364</prop>
+    <prop name="sraQueryString">ERS011012</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_364</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_410</prop>
+    <prop name="sraQueryString">ERS010079</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_410</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_437</prop>
+    <prop name="sraQueryString">ERS011019</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_437</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_467</prop>
+    <prop name="sraQueryString">ERS009970</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_467</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_470</prop>
+    <prop name="sraQueryString">ERS009971</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_470</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_474</prop>
+    <prop name="sraQueryString">ERS010078</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_474</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_480</prop>
+    <prop name="sraQueryString">ERS010076</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_480</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_487</prop>
+    <prop name="sraQueryString">ERS010069</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_487</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_490</prop>
+    <prop name="sraQueryString">ERS010074</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_490</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_499</prop>
+    <prop name="sraQueryString">ERS011014</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_499</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_501</prop>
+    <prop name="sraQueryString">ERS011008</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_501</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_504</prop>
+    <prop name="sraQueryString">ERS009676</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_504</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_301</prop>
+    <prop name="sraQueryString">ERS009972</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_301</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_303</prop>
+    <prop name="sraQueryString">ERS009672</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_303</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_331</prop>
+    <prop name="sraQueryString">ERS011011</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_331</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_355</prop>
+    <prop name="sraQueryString">ERS011010</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_355</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_433</prop>
+    <prop name="sraQueryString">ERS009973</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_433</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_440</prop>
+    <prop name="sraQueryString">ERS010068</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_440</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_456</prop>
+    <prop name="sraQueryString">ERS010077</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_456</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_461</prop>
+    <prop name="sraQueryString">ERS011005</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_461</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_700</prop>
+    <prop name="sraQueryString">ERS011018</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_700</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_704</prop>
+    <prop name="sraQueryString">ERS010080</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_704</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_708</prop>
+    <prop name="sraQueryString">ERS011020</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_708</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_759</prop>
+    <prop name="sraQueryString">ERS009975</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_759</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_373</prop>
+    <prop name="sraQueryString">ERS009673</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_373</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Conway_HTS_SNP</prop>
+    <prop name="snpStrainAbbrev">TRIPS_482</prop>
+    <prop name="sraQueryString">ERS011015</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Conway_HTS_SNP</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">TRIPS_482</prop>
+  </dataset>
+
+</datasets>

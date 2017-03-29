@@ -1,0 +1,33 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="experimentName">Zhang_Visceral_Leishmaniasis</prop>
+    <prop name="snpStrainAbbrev">MON-37CL</prop>
+    <prop name="sraQueryString">SRR1254940</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_Leishmaniasis</prop>
+      <prop name="experimentVersion">2013-07-02</prop>
+      <prop name="sampleName">MON-37CL</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">ldonBPK282A1</prop>
+    <prop name="experimentName">Zhang_Visceral_Leishmaniasis</prop>
+    <prop name="snpStrainAbbrev">MON-37VL</prop>
+    <prop name="sraQueryString">SRR1254938</prop>
+  </dataset>
+
+   <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">ldonBPK282A1</prop>
+      <prop name="experimentName">Zhang_Visceral_Leishmaniasis</prop>
+      <prop name="experimentVersion">2013-07-02</prop>
+      <prop name="sampleName">MON-37VL</prop>
+  </dataset>
+
+</datasets>

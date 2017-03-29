@@ -1,0 +1,262 @@
+<datasets>
+  <constant name="projectName" value="GiardiaDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ssalATCC50377</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000073</prop>
+    <prop name="publicOrganismAbbrev">ssalATCC50377</prop>
+    <prop name="organismFullName">Spironucleus salmonicida ATCC50377</prop>
+    <prop name="organismNameForFiles">SsalmonicidaATCC50377</prop>
+    <prop name="speciesNcbiTaxonId">348837</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ssalATCC50377</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">ssal</prop>
+    <prop name="strainAbbrev">ATCC50377</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Spironucleus</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ssalATCC50377</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gassAWB</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">184922</prop>
+    <prop name="publicOrganismAbbrev">gassAWB</prop>
+    <prop name="organismFullName">Giardia Assemblage A isolate WB</prop>
+    <prop name="organismNameForFiles">GintestinalisAssemblageAWB</prop>
+    <prop name="speciesNcbiTaxonId">5741</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">gass</prop>
+    <prop name="strainAbbrev">WB</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Giardia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-03-10</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds">5739</prop>
+    <prop name="familyNameForFiles">Hexamitidae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gassA2DH</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000071</prop>
+    <prop name="publicOrganismAbbrev">gassA2DH</prop>
+    <prop name="organismFullName">Giardia Assemblage A2 isolate DH</prop>
+    <prop name="organismNameForFiles">GintestinalisAssemblageADH</prop>
+    <prop name="speciesNcbiTaxonId">5741</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">gadh</prop>
+    <prop name="strainAbbrev">DH</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Giardia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-11-25</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gassBGS</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">598745</prop>
+    <prop name="publicOrganismAbbrev">gassBGS</prop>
+    <prop name="organismFullName">Giardia Assemblage B isolate GS</prop>
+    <prop name="organismNameForFiles">GintestinalisAssemblageBGS</prop>
+    <prop name="speciesNcbiTaxonId">9100000002</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">gasb</prop>
+    <prop name="strainAbbrev">GS</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Giardia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2009-07-13</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gassBGS_B</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">9000000072</prop>
+    <prop name="publicOrganismAbbrev">gassBGS_B</prop>
+    <prop name="organismFullName">Giardia Assemblage B isolate GS_B</prop>
+    <prop name="organismNameForFiles">GintestinalisAssemblageBGS_B</prop>
+    <prop name="speciesNcbiTaxonId">9100000002</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="orthomclAbbrev">gabb</prop>
+    <prop name="strainAbbrev">GS_B</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Giardia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2013-11-25</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">gassEP15</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">658858</prop>
+    <prop name="publicOrganismAbbrev">gassEP15</prop>
+    <prop name="organismFullName">Giardia Assemblage E isolate P15</prop>
+    <prop name="organismNameForFiles">GintestinalisAssemblageEP15</prop>
+    <prop name="speciesNcbiTaxonId">9100000003</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">gassAWB</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">gase</prop>
+    <prop name="strainAbbrev">P15</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Hexamitidae Giardia</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="maxIntronSize">500</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="genomeVersion">2010-10-05</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">gassAWB</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.16</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.16</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.16</prop>
+  </dataset>
+
+  <!-- load of all KEGG pathways -->
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <!-- load of all KEGG substances and compounds -->
+<!--
+  <dataset class="PathwayCompounds">
+    <prop name="name">pubchem</prop>
+    <prop name="version">2012.11</prop>
+  </dataset>
+-->
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-06-30</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+<!-- undo this data in bld 23, Task #18057
+  <dataset class="customOntologyEntries">
+    <prop name="version">1.0</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">gassAWB</prop>
+    <prop name="experimentName">Jex_NGS_SNP</prop>
+    <prop name="experimentVersion">2014-07-31</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">gassBGS</prop>
+    <prop name="experimentName">Jex_NGS_SNP</prop>
+    <prop name="experimentVersion">2014-07-31</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">gassEP15</prop>
+    <prop name="experimentName">Jex_NGS_SNP</prop>
+    <prop name="experimentVersion">2014-07-31</prop>
+  </dataset>
+-->
+
+  <dataset class="ISA"/>
+  <dataset class="ISASimple"/>
+
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+</datasets>

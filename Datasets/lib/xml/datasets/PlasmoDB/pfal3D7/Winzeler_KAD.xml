@@ -1,0 +1,35 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Winzeler_KAD</prop>
+    <prop name="snpStrainAbbrev">707A</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Winzeler_KAD</prop>
+    <prop name="snpStrainAbbrev">Dd2-1</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Winzeler_KAD</prop>
+      <prop name="experimentVersion">2012-01-11</prop>
+      <prop name="sampleName">707A</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Winzeler_KAD</prop>
+      <prop name="experimentVersion">2012-01-11</prop>
+      <prop name="sampleName">Dd2-1</prop>
+  </dataset>
+
+
+</datasets>
+
+
+ 

@@ -1,0 +1,24 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">rdelRA99-880</prop>
+    <prop name="experimentName">Stajich_HyphalGrowth</prop>
+    <prop name="sampleName">RO3H</prop>
+    <prop name="sampleOrder">1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">rdelRA99-880</prop>
+    <prop name="experimentName">Stajich_HyphalGrowth</prop>
+    <prop name="sampleName">RO5H</prop>
+    <prop name="sampleOrder">2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">rdelRA99-880</prop>
+    <prop name="experimentName">Stajich_HyphalGrowth</prop>
+    <prop name="sampleName">RO20H</prop>
+    <prop name="sampleOrder">3</prop>
+  </dataset>
+
+</datasets>

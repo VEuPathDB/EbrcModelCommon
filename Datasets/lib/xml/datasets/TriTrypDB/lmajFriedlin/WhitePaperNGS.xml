@@ -1,0 +1,31 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">lmajFriedlin</prop>
+    <prop name="experimentName">WhitePaperNGS</prop>
+    <prop name="snpStrainAbbrev">LV39cl5</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">lmajFriedlin</prop>
+      <prop name="experimentName">WhitePaperNGS</prop>
+      <prop name="experimentVersion">2011-03-15</prop>
+      <prop name="sampleName">LV39cl5</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">lmajFriedlin</prop>
+    <prop name="experimentName">WhitePaperNGS</prop>
+    <prop name="snpStrainAbbrev">Seidman751</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">TriTrypDB</prop>
+      <prop name="organismAbbrev">lmajFriedlin</prop>
+      <prop name="experimentName">WhitePaperNGS</prop>
+      <prop name="experimentVersion">2011-03-15</prop>
+      <prop name="sampleName">Seidman751</prop>
+  </dataset>
+
+</datasets>

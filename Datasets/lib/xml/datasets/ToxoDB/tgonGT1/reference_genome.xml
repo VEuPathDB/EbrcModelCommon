@@ -1,0 +1,19 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample">
+    <prop name="organismAbbrev">tgonGT1</prop>
+    <prop name="experimentName">reference_genome</prop>
+    <prop name="snpStrainAbbrev">GT1_reference_reads</prop>
+  </dataset>
+
+<!--need to confirm with DD
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">tgonGT1</prop>
+      <prop name="experimentName">reference_genome</prop>
+      <prop name="experimentVersion">2012-06-27</prop>
+      <prop name="sampleName">GT1_reference_reads</prop>
+  </dataset>
+-->
+
+</datasets>

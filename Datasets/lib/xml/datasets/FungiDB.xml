@@ -1,0 +1,2947 @@
+<datasets>
+  <constant name="projectName" value="FungiDB"/>
+  <constant name="genbankIsolateMapperVersion" value="2015-11"/>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">ffujIMI58289</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">1279085</prop>
+    <prop name="publicOrganismAbbrev">ffujIMI58289</prop>
+    <prop name="organismFullName">Fusarium fujikuroi IMI 58289</prop>
+    <prop name="organismNameForFiles">FfujikuroiIMI58289</prop>
+    <prop name="speciesNcbiTaxonId">5127</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ffujIMI58289</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">ffuj</prop>
+    <prop name="strainAbbrev">IMI58289</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Fusarium</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+    <prop name="genomeVersion">2016-01-12</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">fgraPH-1</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ffujIMI58289</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+ <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Paracoccidioides lutzii Pb01</prop>
+    <prop name="ncbiTaxonId">502779</prop>
+    <prop name="speciesNcbiTaxonId">1048829</prop>
+    <prop name="organismAbbrev">plutPb01</prop>
+    <prop name="publicOrganismAbbrev">plutPb01</prop>
+    <prop name="organismNameForFiles">PlutziiPb01</prop>
+    <prop name="strainAbbrev">Pb01</prop>
+    <prop name="orthomclAbbrev">plut</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Paracoccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-11-03</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">plutPb01</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pbraPb03</prop>
+    <prop name="familyNcbiTaxonIds"></prop>  <!-- use genus ncbi taxonID here -->
+    <prop name="familyNameForFiles"></prop> <!-- use genus name here because there is no family in taxonomy  -->
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">plutPb01</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Paracoccidioides brasiliensis Pb03</prop>
+    <prop name="ncbiTaxonId">482561</prop>
+    <prop name="speciesNcbiTaxonId">121759</prop>
+    <prop name="organismAbbrev">pbraPb03</prop>
+    <prop name="publicOrganismAbbrev">pbraPb03</prop>
+    <prop name="organismNameForFiles">PbrasiliensisPb03</prop>
+    <prop name="strainAbbrev">Pb03</prop>
+    <prop name="orthomclAbbrev">pbra</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Paracoccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-11-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pbraPb03</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pbraPb03</prop>
+    <prop name="familyNcbiTaxonIds">38946</prop>  <!-- use genus ncbi taxonID here -->
+    <prop name="familyNameForFiles">Paracoccidioides</prop> <!-- use genus name here because there is no family in taxonomy  -->
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pbraPb03</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+ <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Paracoccidioides brasiliensis Pb18</prop>
+    <prop name="ncbiTaxonId">502780</prop>
+    <prop name="speciesNcbiTaxonId">121759</prop>
+    <prop name="organismAbbrev">pbraPb18</prop>
+    <prop name="publicOrganismAbbrev">pbraPb18</prop>
+    <prop name="organismNameForFiles">PbrasiliensisPb18</prop>
+    <prop name="strainAbbrev">Pb18</prop>
+    <prop name="orthomclAbbrev">pbrb</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Paracoccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-10-24</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">pbraPb03</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pbraPb03</prop>
+    <prop name="familyNcbiTaxonIds"></prop>  <!-- use genus ncbi taxonID here -->
+    <prop name="familyNameForFiles"></prop> <!-- use genus name here because there is no family in taxonomy  -->
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus oryzae RIB40</prop>
+    <prop name="ncbiTaxonId">510516</prop>
+    <prop name="speciesNcbiTaxonId">5062</prop>
+    <prop name="organismAbbrev">aoryRIB40</prop>
+    <prop name="publicOrganismAbbrev">aoryRIB40</prop>
+    <prop name="organismNameForFiles">AoryzaeRIB40</prop>
+    <prop name="strainAbbrev">RIB40</prop>
+    <prop name="orthomclAbbrev">aory</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">AspGD</prop>
+    <prop name="genomeVersion">2015-10-04</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aoryRIB40</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aoryRIB40</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Botrytis cinerea B05.10</prop>
+    <prop name="ncbiTaxonId">332648</prop>
+    <prop name="speciesNcbiTaxonId">40559</prop>
+    <prop name="organismAbbrev">bcinB05-10</prop>
+    <prop name="publicOrganismAbbrev">bcinB05-10</prop>
+    <prop name="organismNameForFiles">BcinereaB05-10</prop>
+    <prop name="strainAbbrev">B05-10</prop>
+    <prop name="orthomclAbbrev">bfuc</prop>  <!-- changed organism name but not orthomcAbbrev in gus4 -->
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Botrytis</prop>
+    <prop name="genomeSource">Broad</prop>
+    <prop name="genomeVersion">2015-07-30</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">bcinB05-10</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">sscl1980UF-70</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+  
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">bcinB05-10</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Sclerotinia sclerotiorum 1980 UF-70</prop>
+    <prop name="ncbiTaxonId">665079</prop>
+    <prop name="speciesNcbiTaxonId">5180</prop>
+    <prop name="organismAbbrev">sscl1980UF-70</prop>
+    <prop name="publicOrganismAbbrev">sscl1980UF-70</prop>
+    <prop name="organismNameForFiles">Ssclerotiorum1980UF-70</prop>
+    <prop name="strainAbbrev">1980UF-70</prop>
+    <prop name="orthomclAbbrev">sscl</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Sclerotinia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sscl1980UF-70</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">sscl1980UF-70</prop>
+    <prop name="familyNcbiTaxonIds">28983</prop>  <!-- use family NcbiTaxonId here -->
+    <prop name="familyNameForFiles">Sclerotiniaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sscl1980UF-70</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus carbonarius ITEM 5010</prop>
+    <prop name="ncbiTaxonId">602072</prop>
+    <prop name="speciesNcbiTaxonId">40993</prop>
+    <prop name="organismAbbrev">acarITEM5010</prop>
+    <prop name="publicOrganismAbbrev">acarITEM5010</prop>
+    <prop name="organismNameForFiles">AcarbonariusITEM5010</prop>
+    <prop name="strainAbbrev">ITEM5010</prop>
+    <prop name="orthomclAbbrev">acar</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">3</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">acarITEM5010</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acarITEM5010</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus fumigatus Af293</prop>
+    <prop name="ncbiTaxonId">330879</prop>
+    <prop name="speciesNcbiTaxonId">746128</prop>
+    <prop name="organismAbbrev">afumAf293</prop>
+    <prop name="publicOrganismAbbrev">afumAf293</prop>
+    <prop name="organismNameForFiles">AfumigatusAf293</prop>
+    <prop name="strainAbbrev">Af293</prop>
+    <prop name="orthomclAbbrev">afum</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">AspGD</prop>
+    <prop name="genomeVersion">2015-09-27</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">afumAf293</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">afumAf293</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus clavatus NRRL 1</prop>
+    <prop name="ncbiTaxonId">344612</prop>
+    <prop name="speciesNcbiTaxonId">5057</prop>
+    <prop name="organismAbbrev">aclaNRRL1</prop>
+    <prop name="publicOrganismAbbrev">aclaNRRL1</prop>
+    <prop name="organismNameForFiles">AclavatusNRRL1</prop>
+    <prop name="strainAbbrev">NRRL1</prop>
+    <prop name="orthomclAbbrev">acla</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2013-01-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aclaNRRL1</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aclaNRRL1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus flavus NRRL3357</prop>
+    <prop name="ncbiTaxonId">332952</prop>
+    <prop name="speciesNcbiTaxonId">5059</prop>
+    <prop name="organismAbbrev">aflaNRRL3357</prop>
+    <prop name="publicOrganismAbbrev">aflaNRRL3357</prop>
+    <prop name="organismNameForFiles">AflavusNRRL3357</prop>
+    <prop name="strainAbbrev">NRRL3357</prop>
+    <prop name="orthomclAbbrev">afla</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-06-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aflaNRRL3357</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aflaNRRL3357</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus nidulans FGSC A4</prop>
+    <prop name="ncbiTaxonId">227321</prop>
+    <prop name="speciesNcbiTaxonId">162425</prop>
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="publicOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="organismNameForFiles">AnidulansFGSCA4</prop>
+    <prop name="strainAbbrev">FGSCA4</prop>
+    <prop name="orthomclAbbrev">anid</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">AspGD</prop>
+    <prop name="genomeVersion">2015-10-04</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds">5052</prop>  <!--  use genus NcbiTaxonId here  -->
+    <prop name="familyNameForFiles">Aspergillaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">anidFGSCA4</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus niger CBS 513.88</prop>
+    <prop name="ncbiTaxonId">425011</prop>
+    <prop name="speciesNcbiTaxonId">5061</prop>
+    <prop name="organismAbbrev">anigCBS513-88</prop>
+    <prop name="publicOrganismAbbrev">anigCBS513-88</prop>
+    <prop name="organismNameForFiles">AnigerCBS513-88</prop>
+    <prop name="strainAbbrev">CBS513-88</prop>
+    <prop name="orthomclAbbrev">anig</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">AspGD</prop>
+    <prop name="genomeVersion">2015-09-14</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">anigCBS513-88</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">anigCBS513-88</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus niger ATCC 1015</prop>
+    <prop name="ncbiTaxonId">380704</prop>
+    <prop name="speciesNcbiTaxonId">5061</prop>
+    <prop name="organismAbbrev">anigATCC1015</prop>
+    <prop name="publicOrganismAbbrev">anigATCC1015</prop>
+    <prop name="organismNameForFiles">AnigerATCC1015</prop>
+    <prop name="strainAbbrev">ATCC1015</prop>
+    <prop name="orthomclAbbrev">anih</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2011-10-12</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">anigCBS513-88</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus terreus NIH2624</prop>
+    <prop name="ncbiTaxonId">341663</prop>
+    <prop name="speciesNcbiTaxonId">33178</prop>
+    <prop name="organismAbbrev">aterNIH2624</prop>
+    <prop name="publicOrganismAbbrev">aterNIH2624</prop>
+    <prop name="organismNameForFiles">AterreusNIH2624</prop>
+    <prop name="strainAbbrev">NIH2624</prop>
+    <prop name="orthomclAbbrev">ater</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aterNIH2624</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aterNIH2624</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus aculeatus ATCC 16872</prop>
+    <prop name="ncbiTaxonId">690307</prop>
+    <prop name="speciesNcbiTaxonId">5053</prop>
+    <prop name="organismAbbrev">aacuATCC16872</prop>
+    <prop name="publicOrganismAbbrev">aacuATCC16872</prop>
+    <prop name="organismNameForFiles">AaculeatusATCC16872</prop>
+    <prop name="strainAbbrev">ATCC16872</prop>
+    <prop name="orthomclAbbrev">aacu</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">1.1</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aacuATCC16872</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aacuATCC16872</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aspergillus fischeri NRRL 181</prop>
+    <prop name="ncbiTaxonId">331117</prop>
+    <prop name="speciesNcbiTaxonId">36630</prop>
+    <prop name="organismAbbrev">afisNRRL181</prop>
+    <prop name="publicOrganismAbbrev">afisNRRL181</prop>
+    <prop name="organismNameForFiles">AfischeriNRRL181</prop>
+    <prop name="strainAbbrev">NRRL181</prop>
+    <prop name="orthomclAbbrev">afis</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aspergillus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2008-04-18</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">afisNRRL181</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">anidFGSCA4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">afisNRRL181</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Talaromyces marneffei ATCC 18224</prop>
+    <prop name="ncbiTaxonId">441960</prop>
+    <prop name="speciesNcbiTaxonId">37727</prop>
+    <prop name="organismAbbrev">tmarATCC18224</prop>
+    <prop name="publicOrganismAbbrev">tmarATCC18224</prop>
+    <prop name="organismNameForFiles">TmarneffeiATCC18224</prop>
+    <prop name="strainAbbrev">ATCC18224</prop>
+    <prop name="orthomclAbbrev">tmar</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Talaromyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tmarATCC18224</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">tmarATCC18224</prop>
+    <prop name="familyNcbiTaxonIds">5094</prop>  <!-- use genus ncbiTaxonId here  -->
+    <prop name="familyNameForFiles">Trichocomaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tmarATCC18224</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Talaromyces stipitatus ATCC 10500</prop>
+    <prop name="ncbiTaxonId">441959</prop>
+    <prop name="speciesNcbiTaxonId">28564</prop>
+    <prop name="organismAbbrev">tstiATCC10500</prop>
+    <prop name="publicOrganismAbbrev">tstiATCC10500</prop>
+    <prop name="organismNameForFiles">TstipitatusATCC10500</prop>
+    <prop name="strainAbbrev">ATCC10500</prop>
+    <prop name="orthomclAbbrev">tsti</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Talaromyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tstiATCC10500</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">tmarATCC18224</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tstiATCC10500</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides immitis RS</prop>
+    <prop name="ncbiTaxonId">246410</prop>
+    <prop name="speciesNcbiTaxonId">5501</prop>
+    <prop name="organismAbbrev">cimmRS</prop>
+    <prop name="publicOrganismAbbrev">cimmRS</prop>
+    <prop name="organismNameForFiles">CimmitisRS</prop>
+    <prop name="strainAbbrev">RS</prop>
+    <prop name="orthomclAbbrev">cimm</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-12</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cimmRS</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds">5500</prop>  <!--use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Coccidioides</prop> <!-- use genus name here -->
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cimmRS</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides immitis H538.4</prop>
+    <prop name="ncbiTaxonId">396776</prop>
+    <prop name="speciesNcbiTaxonId">5501</prop>
+    <prop name="organismAbbrev">cimmH538-4</prop>
+    <prop name="publicOrganismAbbrev">cimmH538-4</prop>
+    <prop name="organismNameForFiles">CimmitisH538-4</prop>
+    <prop name="strainAbbrev">H538-4</prop>
+    <prop name="orthomclAbbrev">cimh</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-10</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cimmRS</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides immitis RMSCC 2394</prop>
+    <prop name="ncbiTaxonId">404692</prop>
+    <prop name="speciesNcbiTaxonId">5501</prop>
+    <prop name="organismAbbrev">cimmRMSCC2394</prop>
+    <prop name="publicOrganismAbbrev">cimmRMSCC2394</prop>
+    <prop name="organismNameForFiles">CimmitisRMSCC2394</prop>
+    <prop name="strainAbbrev">RMSCC2394</prop>
+    <prop name="orthomclAbbrev">cimr</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cimmRS</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides immitis RMSCC 3703</prop>
+    <prop name="ncbiTaxonId">454286</prop>
+    <prop name="speciesNcbiTaxonId">5501</prop>
+    <prop name="organismAbbrev">cimmRMSCC3703</prop>
+    <prop name="publicOrganismAbbrev">cimmRMSCC3703</prop>
+    <prop name="organismNameForFiles">CimmitisRMSCC3703</prop>
+    <prop name="strainAbbrev">RMSCC3703</prop>
+    <prop name="orthomclAbbrev">cirm</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cimmRS</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii str. Silveira</prop>
+    <prop name="ncbiTaxonId">443226</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposSilveira</prop>
+    <prop name="publicOrganismAbbrev">cposSilveira</prop>
+    <prop name="organismNameForFiles">CposadasiiSilveira</prop>
+    <prop name="strainAbbrev">Silveira</prop>
+    <prop name="orthomclAbbrev">cpsi</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cposSilveira</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii C735 delta SOWgp</prop>
+    <prop name="ncbiTaxonId">222929</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposC735deltSOWgp</prop>
+    <prop name="publicOrganismAbbrev">cposC735deltSOWgp</prop>
+    <prop name="organismNameForFiles">CposadasiiC735deltSOWgp</prop>
+    <prop name="strainAbbrev">C735deltSOWgp</prop>
+    <prop name="orthomclAbbrev">cpos</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2009-06-17</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii RMSCC 3488</prop>
+    <prop name="ncbiTaxonId">454284</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposRMSCC3488</prop>
+    <prop name="publicOrganismAbbrev">cposRMSCC3488</prop>
+    <prop name="organismNameForFiles">CposadasiiRMSCC3488</prop>
+    <prop name="strainAbbrev">RMSCC3488</prop>
+    <prop name="orthomclAbbrev">cprm</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-06-29</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii RMSCC 1037</prop>
+    <prop name="ncbiTaxonId">490065</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposRMSCC1037</prop>
+    <prop name="publicOrganismAbbrev">cposRMSCC1037</prop>
+    <prop name="organismNameForFiles">CposadasiiRMSCC1037</prop>
+    <prop name="strainAbbrev">RMSCC1037</prop>
+    <prop name="orthomclAbbrev">cpra</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii RMSCC 1038</prop>
+    <prop name="ncbiTaxonId">490066</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposRMSCC1038</prop>
+    <prop name="publicOrganismAbbrev">cposRMSCC1038</prop>
+    <prop name="organismNameForFiles">CposadasiiRMSCC1038</prop>
+    <prop name="strainAbbrev">RMSCC1038</prop>
+    <prop name="orthomclAbbrev">cprb</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii RMSCC 2133</prop>
+    <prop name="ncbiTaxonId">469470</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposRMSCC2133</prop>
+    <prop name="publicOrganismAbbrev">cposRMSCC2133</prop>
+    <prop name="organismNameForFiles">CposadasiiRMSCC2133</prop>
+    <prop name="strainAbbrev">RMSCC2133</prop>
+    <prop name="orthomclAbbrev">cprc</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii RMSCC 3700</prop>
+    <prop name="ncbiTaxonId">469471</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposRMSCC3700</prop>
+    <prop name="publicOrganismAbbrev">cposRMSCC3700</prop>
+    <prop name="organismNameForFiles">CposadasiiRMSCC3700</prop>
+    <prop name="strainAbbrev">RMSCC3700</prop>
+    <prop name="orthomclAbbrev">cprd</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii CPA 0001</prop>
+    <prop name="ncbiTaxonId">469472</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposCPA0001</prop>
+    <prop name="publicOrganismAbbrev">cposCPA0001</prop>
+    <prop name="organismNameForFiles">CposadasiiCPA0001</prop>
+    <prop name="strainAbbrev">CPA0001</prop>
+    <prop name="orthomclAbbrev">cpca</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii CPA 0020</prop>
+    <prop name="ncbiTaxonId">490068</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposCPA0020</prop>
+    <prop name="publicOrganismAbbrev">cposCPA0020</prop>
+    <prop name="organismNameForFiles">CposadasiiCPA0020</prop>
+    <prop name="strainAbbrev">CPA0020</prop>
+    <prop name="orthomclAbbrev">cpcb</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coccidioides posadasii CPA 0066</prop>
+    <prop name="ncbiTaxonId">490069</prop>
+    <prop name="speciesNcbiTaxonId">199306</prop>
+    <prop name="organismAbbrev">cposCPA0066</prop>
+    <prop name="publicOrganismAbbrev">cposCPA0066</prop>
+    <prop name="organismNameForFiles">CposadasiiCPA0066</prop>
+    <prop name="strainAbbrev">CPA0066</prop>
+    <prop name="orthomclAbbrev">cpcp</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coccidioides</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-13</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cposSilveira</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cimmRS</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">false</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+ </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Histoplasma capsulatum NAm1</prop>
+    <prop name="ncbiTaxonId">339724</prop>
+    <prop name="speciesNcbiTaxonId">5037</prop>
+    <prop name="organismAbbrev">hcapNAm1</prop>
+    <prop name="publicOrganismAbbrev">hcapNAm1</prop>
+    <prop name="organismNameForFiles">HcapsulatumNAm1</prop>
+    <prop name="strainAbbrev">NAm1</prop>
+    <prop name="orthomclAbbrev">acap</prop>  <!-- changed organism name but not orthomcAbbrev in gus4 -->
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Histoplasma</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">hcapNAm1</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">hcapNAm1</prop>
+    <prop name="familyNcbiTaxonIds">5036</prop>  <!--use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Ajellomycetaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">hcapNAm1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Histoplasma capsulatum G186AR</prop>
+    <prop name="ncbiTaxonId">447093</prop>
+    <prop name="speciesNcbiTaxonId">5037</prop>
+    <prop name="organismAbbrev">hcapG186AR</prop>
+    <prop name="publicOrganismAbbrev">hcapG186AR</prop>
+    <prop name="organismNameForFiles">HcapsulatumG186AR</prop>
+    <prop name="strainAbbrev">G186AR</prop>
+    <prop name="orthomclAbbrev">acaq</prop>  <!-- changed organism name but not orthomcAbbrev in gus4 -->
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Histoplasma</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">hcapNAm1</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">hcapNAm1</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Neurospora crassa OR74A</prop>
+    <prop name="ncbiTaxonId">367110</prop>
+    <prop name="speciesNcbiTaxonId">5141</prop>
+    <prop name="organismAbbrev">ncraOR74A</prop>
+    <prop name="publicOrganismAbbrev">ncraOR74A</prop>
+    <prop name="organismNameForFiles">NcrassaOR74A</prop>
+    <prop name="strainAbbrev">OR74A</prop>
+    <prop name="orthomclAbbrev">ncra</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Neurospora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ncraOR74A</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">ncraOR74A</prop>
+    <prop name="familyNcbiTaxonIds">5148</prop>  <!-- use familyNcbiTaxonIds since fung-inc uses it -->
+    <prop name="familyNameForFiles">Sordariaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ncraOR74A</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Neurospora tetrasperma FGSC 2508</prop>
+    <prop name="ncbiTaxonId">510951</prop>
+    <prop name="speciesNcbiTaxonId">40127</prop>
+    <prop name="organismAbbrev">ntetFGSC2508</prop>
+    <prop name="publicOrganismAbbrev">ntetFGSC2508</prop>
+    <prop name="organismNameForFiles">NtetraspermaFGSC2508</prop>
+    <prop name="strainAbbrev">FGSC2508</prop>
+    <prop name="orthomclAbbrev">ntet</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Neurospora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ntetFGSC2508</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ncraOR74A</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ntetFGSC2508</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Neurospora discreta FGSC 8579</prop>
+    <prop name="ncbiTaxonId">510953</prop>
+    <prop name="speciesNcbiTaxonId">29879</prop>
+    <prop name="organismAbbrev">ndisFGSC8579</prop>
+    <prop name="publicOrganismAbbrev">ndisFGSC8579</prop>
+    <prop name="organismNameForFiles">NdiscretaFGSC8579</prop>
+    <prop name="strainAbbrev">FGSC8579</prop>
+    <prop name="orthomclAbbrev">ndis</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Neurospora</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">1</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ndisFGSC8579</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ncraOR74A</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ndisFGSC8579</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Sordaria macrospora k-hell</prop>
+    <prop name="ncbiTaxonId">771870</prop>
+    <prop name="speciesNcbiTaxonId">5147</prop>
+    <prop name="organismAbbrev">smack-hell</prop>
+    <prop name="publicOrganismAbbrev">smack-hell</prop>
+    <prop name="organismNameForFiles">Smacrosporak-hell</prop>
+    <prop name="strainAbbrev">k-hell</prop>
+    <prop name="orthomclAbbrev">smac</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Sordaria</prop>
+    <prop name="genomeSource">Bochum</prop>
+    <prop name="genomeVersion">2015-08-25</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">smack-hell</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">ncraOR74A</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">smack-hell</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Magnaporthe oryzae 70-15</prop>
+    <prop name="ncbiTaxonId">242507</prop>
+    <prop name="speciesNcbiTaxonId">318829</prop>
+    <prop name="organismAbbrev">mory70-15</prop>
+    <prop name="publicOrganismAbbrev">mory70-15</prop>
+    <prop name="organismNameForFiles">Moryzae70-15</prop>
+    <prop name="strainAbbrev">70-15</prop>
+    <prop name="orthomclAbbrev">mory</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Magnaporthe</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2016-03-31</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">mory70-15</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">mory70-15</prop>
+    <prop name="familyNcbiTaxonIds">148303</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Magnaporthaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">mory70-15</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Fusarium oxysporum f. sp. lycopersici 4287</prop>
+    <prop name="ncbiTaxonId">426428</prop>
+    <prop name="speciesNcbiTaxonId">5507</prop>
+    <prop name="organismAbbrev">foxy4287</prop>
+    <prop name="publicOrganismAbbrev">foxy4287</prop>
+    <prop name="organismNameForFiles">Foxysporum4287</prop>
+    <prop name="strainAbbrev">4287</prop>
+    <prop name="orthomclAbbrev">foxy</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Fusarium</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-08-20</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">foxy4287</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">fgraPH-1</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">foxy4287</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="organismAbbrev">fgraPH-1</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">229533</prop>
+    <prop name="publicOrganismAbbrev">fgraPH-1</prop>
+    <prop name="organismFullName">Fusarium graminearum PH-1</prop>
+    <prop name="organismNameForFiles">FgraminearumPH-1</prop>
+    <prop name="speciesNcbiTaxonId">5518</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">fgraPH-1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="orthomclAbbrev">fgra</prop>
+    <prop name="strainAbbrev">PH-1</prop>
+    <prop name="genomeSource">HammondKosackLab</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Fusarium</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+    <prop name="genomeVersion">2017-01-25</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">fgraPH-1</prop>
+    <prop name="familyNcbiTaxonIds">5506</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Nectriaceae</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">fgraPH-1</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Fusarium verticillioides 7600</prop>
+    <prop name="ncbiTaxonId">334819</prop>
+    <prop name="speciesNcbiTaxonId">117187</prop>
+    <prop name="organismAbbrev">fver7600</prop>
+    <prop name="publicOrganismAbbrev">fver7600</prop>
+    <prop name="organismNameForFiles">Fverticillioides7600</prop>
+    <prop name="strainAbbrev">7600</prop>
+    <prop name="orthomclAbbrev">fver</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Fusarium</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">fver7600</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">fgraPH-1</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">fver7600</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Trichoderma reesei QM6a</prop>
+    <prop name="ncbiTaxonId">431241</prop>
+    <prop name="speciesNcbiTaxonId">51453</prop>
+    <prop name="organismAbbrev">treeQM6a</prop>
+    <prop name="publicOrganismAbbrev">treeQM6a</prop>
+    <prop name="organismNameForFiles">TreeseiQM6a</prop>
+    <prop name="strainAbbrev">QM6a</prop>
+    <prop name="orthomclAbbrev">tree</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Trichoderma</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-14</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">treeQM6a</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">treeQM6a</prop>
+    <prop name="familyNcbiTaxonIds">5543</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Hypocreaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">treeQM6a</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Saccharomyces cerevisiae S288c</prop>
+    <prop name="ncbiTaxonId">559292</prop>
+    <prop name="speciesNcbiTaxonId">4932</prop>
+    <prop name="organismAbbrev">scerS288c</prop>
+    <prop name="publicOrganismAbbrev">scerS288c</prop>
+    <prop name="organismNameForFiles">ScerevisiaeS288c</prop>
+    <prop name="strainAbbrev">S288c</prop>
+    <prop name="orthomclAbbrev">scer</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Saccharomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2016-03-08</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">scerS288c</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">scerS288c</prop>
+    <prop name="familyNcbiTaxonIds">4893</prop>  <!-- use familyNcbiTaxonIds in live site -->
+    <prop name="familyNameForFiles">Saccharomycetaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">scerS288c</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Candida albicans SC5314</prop>
+    <prop name="ncbiTaxonId">237561</prop>
+    <prop name="speciesNcbiTaxonId">5476</prop>
+    <prop name="organismAbbrev">calbSC5314</prop>
+    <prop name="publicOrganismAbbrev">calbSC5314</prop>
+    <prop name="organismNameForFiles">CalbicansSC5314</prop>
+    <prop name="strainAbbrev">SC5314</prop>
+    <prop name="orthomclAbbrev">calb</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Candida</prop>
+    <prop name="genomeSource">CGD</prop>
+    <prop name="genomeVersion">A22-s06-m01-r06</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">calbSC5314</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">calbSC5314</prop>
+    <prop name="familyNcbiTaxonIds">1535326</prop> <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Saccharomycetales</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">calbSC5314</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Candida albicans SC5314_B</prop>
+    <prop name="ncbiTaxonId">9200000005</prop>
+    <prop name="speciesNcbiTaxonId">5476</prop>
+    <prop name="organismAbbrev">calbSC5314_B</prop>
+    <prop name="publicOrganismAbbrev">calbSC5314_B</prop>
+    <prop name="organismNameForFiles">CalbicansSC5314_B</prop>
+    <prop name="strainAbbrev">SC5314_B</prop>
+    <prop name="orthomclAbbrev">cabb</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Candida</prop>
+    <prop name="genomeSource">CGD</prop>
+    <prop name="genomeVersion">A22-s06-m01-r06</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">calbSC5314</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">calbSC5314</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Candida glabrata CBS 138</prop>
+    <prop name="ncbiTaxonId">284593</prop>
+    <prop name="speciesNcbiTaxonId">5478</prop>
+    <prop name="organismAbbrev">cglaCBS138</prop>
+    <prop name="publicOrganismAbbrev">cglaCBS138</prop>
+    <prop name="organismNameForFiles">CglabrataCBS138</prop>
+    <prop name="strainAbbrev">CBS138</prop>
+    <prop name="orthomclAbbrev">cgla</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Candida</prop>
+    <prop name="genomeSource">CGD</prop>
+    <prop name="genomeVersion">s02-m07-r06</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cglaCBS138</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">scerS288c</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cglaCBS138</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Yarrowia lipolytica CLIB122</prop>
+    <prop name="ncbiTaxonId">284591</prop>
+    <prop name="speciesNcbiTaxonId">4952</prop>
+    <prop name="organismAbbrev">ylipCLIB122</prop>
+    <prop name="publicOrganismAbbrev">ylipCLIB122</prop>
+    <prop name="organismNameForFiles">YlipolyticaCLIB122</prop>
+    <prop name="strainAbbrev">CLIB122</prop>
+    <prop name="orthomclAbbrev">ylip</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Yarrowia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-02-27</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ylipCLIB122</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">ylipCLIB122</prop>
+    <prop name="familyNcbiTaxonIds">4951</prop> <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Dipodascaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ylipCLIB122</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pneumocystis jirovecii SE8</prop>
+    <prop name="ncbiTaxonId">1209962</prop>
+    <prop name="speciesNcbiTaxonId">42068</prop>
+    <prop name="organismAbbrev">pjirSE8</prop>
+    <prop name="publicOrganismAbbrev">pjirSE8</prop>
+    <prop name="organismNameForFiles">PjiroveciiSE8</prop>
+    <prop name="strainAbbrev">SE8</prop>
+    <prop name="orthomclAbbrev">pjir</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pneumocystis</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2012-12-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pjirSE8</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pjirSE8</prop>
+    <prop name="familyNcbiTaxonIds">4753</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Pneumocystidaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pjirSE8</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Schizosaccharomyces japonicus yFS275</prop>
+    <prop name="ncbiTaxonId">402676</prop>
+    <prop name="speciesNcbiTaxonId">4897</prop>
+    <prop name="organismAbbrev">sjapyFS275</prop>
+    <prop name="publicOrganismAbbrev">sjapyFS275</prop>
+    <prop name="organismNameForFiles">SjaponicusyFS275</prop>
+    <prop name="strainAbbrev">yFS275</prop>
+    <prop name="orthomclAbbrev">sjap</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Schizosaccharomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-22</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sjapyFS275</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">spom972h</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sjapyFS275</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Schizosaccharomyces octosporus yFS286</prop>
+    <prop name="ncbiTaxonId">483514</prop>
+    <prop name="speciesNcbiTaxonId">4899</prop>
+    <prop name="organismAbbrev">soctyFS286</prop>
+    <prop name="publicOrganismAbbrev">soctyFS286</prop>
+    <prop name="organismNameForFiles">SoctosporusyFS286</prop>
+    <prop name="strainAbbrev">yFS286</prop>
+    <prop name="orthomclAbbrev">soct</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Schizosaccharomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-22</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">soctyFS286</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">spom972h</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">soctyFS286</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Schizosaccharomyces pombe 972h-</prop>
+    <prop name="ncbiTaxonId">284812</prop>
+    <prop name="speciesNcbiTaxonId">4896</prop>
+    <prop name="organismAbbrev">spom972h</prop>
+    <prop name="publicOrganismAbbrev">spom972h</prop>
+    <prop name="organismNameForFiles">Spombe972h</prop>
+    <prop name="strainAbbrev">972h</prop>
+    <prop name="orthomclAbbrev">spom</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Schizosaccharomyces</prop>
+    <prop name="genomeSource">PomBase</prop>
+    <prop name="genomeVersion">2016-04-12</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">spom972h</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">spom972h</prop>
+    <prop name="familyNcbiTaxonIds">4895</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Schizosaccharomycetaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">spom972h</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phanerochaete chrysosporium RP-78</prop>
+    <prop name="ncbiTaxonId">273507</prop>
+    <prop name="speciesNcbiTaxonId">5306</prop>
+    <prop name="organismAbbrev">pchrRP-78</prop>
+    <prop name="publicOrganismAbbrev">pchrRP-78</prop>
+    <prop name="organismNameForFiles">PchrysosporiumRP-78</prop>
+    <prop name="strainAbbrev">RP-78</prop>
+    <prop name="orthomclAbbrev">pchr</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phanerochaete</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">2.2</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pchrRP-78</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pchrRP-78</prop>
+    <prop name="familyNcbiTaxonIds">5305</prop>  <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Corticiaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pchrRP-78</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Coprinopsis cinerea okayama7#130</prop>
+    <prop name="ncbiTaxonId">240176</prop>
+    <prop name="speciesNcbiTaxonId">5346</prop>
+    <prop name="organismAbbrev">ccinokay7-130</prop>
+    <prop name="publicOrganismAbbrev">ccinokay7-130</prop>
+    <prop name="organismNameForFiles">Ccinereaokay7-130</prop>
+    <prop name="strainAbbrev">okay7-130</prop>
+    <prop name="orthomclAbbrev">ccin</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Coprinopsis</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2010-06-16</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ccinokay7-130</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">ccinokay7-130</prop>
+    <prop name="familyNcbiTaxonIds">184431</prop>  <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Psathyrellaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ccinokay7-130</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Cryptococcus neoformans var. neoformans JEC21</prop>
+    <prop name="ncbiTaxonId">214684</prop>
+    <prop name="speciesNcbiTaxonId">5207</prop>
+    <prop name="organismAbbrev">cneoJEC21</prop>
+    <prop name="publicOrganismAbbrev">cneoJEC21</prop>
+    <prop name="organismNameForFiles">CneoformansJEC21</prop>
+    <prop name="strainAbbrev">JEC21</prop>
+    <prop name="orthomclAbbrev">cneo</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Cryptococcus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2016-06-16</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cneoJEC21</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds">5215</prop>
+    <prop name="familyNameForFiles">Tremellaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cneoJEC21</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Cryptococcus neoformans var. neoformans B-3501A</prop>
+    <prop name="ncbiTaxonId">283643</prop>
+    <prop name="speciesNcbiTaxonId">5207</prop>
+    <prop name="organismAbbrev">cneoB-3501A</prop>
+    <prop name="publicOrganismAbbrev">cneoB-3501A</prop>
+    <prop name="organismNameForFiles">CneoformansB-3501A</prop>
+    <prop name="strainAbbrev">B-3501A</prop>
+    <prop name="orthomclAbbrev">cnep</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Cryptococcus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-21</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cneoJEC21</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Cryptococcus neoformans var. grubii H99</prop>
+    <prop name="ncbiTaxonId">235443</prop>
+    <prop name="speciesNcbiTaxonId">5207</prop>
+    <prop name="organismAbbrev">cneoH99</prop>
+    <prop name="publicOrganismAbbrev">cneoH99</prop>
+    <prop name="organismNameForFiles">CneoformansH99</prop>
+    <prop name="strainAbbrev">H99</prop>
+    <prop name="orthomclAbbrev">cneq</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Cryptococcus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-04-01</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">cneoJEC21</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Cryptococcus gattii WM276</prop>
+    <prop name="ncbiTaxonId">367775</prop>
+    <prop name="speciesNcbiTaxonId">37769</prop>
+    <prop name="organismAbbrev">cgatWM276</prop>
+    <prop name="publicOrganismAbbrev">cgatWM276</prop>
+    <prop name="organismNameForFiles">CgattiiWM276</prop>
+    <prop name="strainAbbrev">WM276</prop>
+    <prop name="orthomclAbbrev">cgat</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Cryptococcus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-10-01</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cgatWM276</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cgatWM276</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Cryptococcus deuterogattii R265</prop>
+    <prop name="ncbiTaxonId">294750</prop>
+    <prop name="speciesNcbiTaxonId">1859096</prop>
+    <prop name="organismAbbrev">cdeuR265</prop>
+    <prop name="publicOrganismAbbrev">cdeuR265</prop>
+    <prop name="organismNameForFiles">CdeuterogattiiR265</prop>
+    <prop name="strainAbbrev">R265</prop>
+    <prop name="orthomclAbbrev">cdeu</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Filobasidiella</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-08-05</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">cdeuR265</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">cdeuR265</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Tremella mesenterica DSM 1558</prop>
+    <prop name="ncbiTaxonId">578456</prop>
+    <prop name="speciesNcbiTaxonId">5217</prop>
+    <prop name="organismAbbrev">tmesDSM1558</prop>
+    <prop name="publicOrganismAbbrev">tmesDSM1558</prop>
+    <prop name="organismNameForFiles">TmesentericaDSM1558</prop>
+    <prop name="strainAbbrev">DSM1558</prop>
+    <prop name="orthomclAbbrev">tmes</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Tremella</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-18</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">tmesDSM1558</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">cneoJEC21</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">tmesDSM1558</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Melampsora larici-populina 98AG31</prop>
+    <prop name="ncbiTaxonId">747676</prop>
+    <prop name="speciesNcbiTaxonId">203908</prop>
+    <prop name="organismAbbrev">mlar98AG31</prop>
+    <prop name="publicOrganismAbbrev">mlar98AG31</prop>
+    <prop name="organismNameForFiles">Mlarici-populina98AG31</prop>
+    <prop name="strainAbbrev">98AG31</prop>
+    <prop name="orthomclAbbrev">mlar</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Melampsora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">mlar98AG31</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">mlar98AG31</prop>
+    <prop name="familyNcbiTaxonIds">5260</prop> <!-- use genus as familNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Melampsoraceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">mlar98AG31</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Puccinia graminis f. sp. tritici CRL 75-36-700-3</prop>
+    <prop name="ncbiTaxonId">418459</prop>
+    <prop name="speciesNcbiTaxonId">5297</prop>
+    <prop name="organismAbbrev">pgraCRL75-36-700-3</prop>
+    <prop name="publicOrganismAbbrev">pgraCRL75-36-700-3</prop>
+    <prop name="organismNameForFiles">PgraminisCRL75-36-700-3</prop>
+    <prop name="strainAbbrev">CRL75-36-700-3</prop>
+    <prop name="orthomclAbbrev">pgra</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Puccinia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-11</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pgraCRL75-36-700-3</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pgraCRL75-36-700-3</prop>
+    <prop name="familyNcbiTaxonIds">5296</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Pucciniaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pgraCRL75-36-700-3</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Ustilago maydis 521</prop>
+    <prop name="ncbiTaxonId">237631</prop>
+    <prop name="speciesNcbiTaxonId">5270</prop>
+    <prop name="organismAbbrev">umay521</prop>
+    <prop name="publicOrganismAbbrev">umay521</prop>
+    <prop name="organismNameForFiles">Umaydis521</prop>
+    <prop name="strainAbbrev">521</prop>
+    <prop name="orthomclAbbrev">umay</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Ustilago</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-02-18</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">umay521</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">umay521</prop>
+    <prop name="familyNcbiTaxonIds">5268</prop>
+    <prop name="familyNameForFiles">Ustilaginaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">umay521</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Sporisorium reilianum SRZ2</prop>
+    <prop name="ncbiTaxonId">999809</prop>
+    <prop name="speciesNcbiTaxonId">72558</prop>
+    <prop name="organismAbbrev">sreiSRZ2</prop>
+    <prop name="publicOrganismAbbrev">sreiSRZ2</prop>
+    <prop name="organismNameForFiles">SreilianumSRZ2</prop>
+    <prop name="strainAbbrev">SRZ2</prop>
+    <prop name="orthomclAbbrev">srei</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Sporisorium</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-02-27</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sreiSRZ2</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">umay521</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sreiSRZ2</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Malassezia globosa CBS 7966</prop>
+    <prop name="ncbiTaxonId">425265</prop>
+    <prop name="speciesNcbiTaxonId">76773</prop>
+    <prop name="organismAbbrev">mgloCBS7966</prop>
+    <prop name="publicOrganismAbbrev">mgloCBS7966</prop>
+    <prop name="organismNameForFiles">MglobosaCBS7966</prop>
+    <prop name="strainAbbrev">CBS7966</prop>
+    <prop name="orthomclAbbrev">mglo</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Malassezia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2007-11-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">mgloCBS7966</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">mgloCBS7966</prop>
+    <prop name="familyNcbiTaxonIds">55193</prop>  <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Malasseziaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">mgloCBS7966</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Allomyces macrogynus ATCC 38327</prop>
+    <prop name="ncbiTaxonId">578462</prop>
+    <prop name="speciesNcbiTaxonId">28583</prop>
+    <prop name="organismAbbrev">amacATCC38327</prop>
+    <prop name="publicOrganismAbbrev">amacATCC38327</prop>
+    <prop name="organismNameForFiles">AmacrogynusATCC38327</prop>
+    <prop name="strainAbbrev">ATCC38327</prop>
+    <prop name="orthomclAbbrev">amac</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Allomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-31</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">amacATCC38327</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">amacATCC38327</prop>
+    <prop name="familyNcbiTaxonIds">28581</prop>    <!--use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Blastocladiaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">amacATCC38327</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Batrachochytrium dendrobatidis JEL423</prop>
+    <prop name="ncbiTaxonId">403673</prop>
+    <prop name="speciesNcbiTaxonId">109871</prop>
+    <prop name="organismAbbrev">bdenJEL423</prop>
+    <prop name="publicOrganismAbbrev">bdenJEL423</prop>
+    <prop name="organismNameForFiles">BdendrobatidisJEL423</prop>
+    <prop name="strainAbbrev">JEL423</prop>
+    <prop name="orthomclAbbrev">bden</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Batrachochytrium</prop>
+    <prop name="genomeSource">Broad</prop>
+    <prop name="genomeVersion">1</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">bdenJEL423</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">bdenJEL423</prop>
+    <prop name="familyNcbiTaxonIds">100474</prop>  <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Rhizophydiales</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">bdenJEL423</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Spizellomyces punctatus DAOM BR117</prop>
+    <prop name="ncbiTaxonId">645134</prop>
+    <prop name="speciesNcbiTaxonId">109760</prop>
+    <prop name="organismAbbrev">spunDAOMBR117</prop>
+    <prop name="publicOrganismAbbrev">spunDAOMBR117</prop>
+    <prop name="organismNameForFiles">SpunctatusDAOMBR117</prop>
+    <prop name="strainAbbrev">DAOMBR117</prop>
+    <prop name="orthomclAbbrev">spun</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Spizellomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-07-29</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">spunDAOMBR117</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">spunDAOMBR117</prop>
+    <prop name="familyNcbiTaxonIds">4815</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Spizellomycetaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">spunDAOMBR117</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Mucor circinelloides f. lusitanicus CBS 277.49</prop>
+    <prop name="ncbiTaxonId">747725</prop>
+    <prop name="speciesNcbiTaxonId">36080</prop>
+    <prop name="organismAbbrev">mcirCBS277-49</prop>
+    <prop name="publicOrganismAbbrev">mcirCBS277-49</prop>
+    <prop name="organismNameForFiles">McircinelloidesCBS277-49</prop>
+    <prop name="strainAbbrev">CBS277-49</prop>
+    <prop name="orthomclAbbrev">mcir</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Mucor</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">2</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">mcirCBS277-49</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">mcirCBS277-49</prop>
+    <prop name="familyNcbiTaxonIds">4830</prop>  <!-- use genus ncbiTaxonId here -->
+    <prop name="familyNameForFiles">Mucoraceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">mcirCBS277-49</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phycomyces blakesleeanus NRRL 1555(-)</prop>
+    <prop name="ncbiTaxonId">763407</prop>
+    <prop name="speciesNcbiTaxonId">4837</prop>
+    <prop name="organismAbbrev">pblaNRRL1555</prop>
+    <prop name="publicOrganismAbbrev">pblaNRRL1555</prop>
+    <prop name="organismNameForFiles">PblakesleeanusNRRL1555</prop>
+    <prop name="strainAbbrev">NRRL1555</prop>
+    <prop name="orthomclAbbrev">pbla</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phycomyces</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">2</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pblaNRRL1555</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pblaNRRL1555</prop>
+    <prop name="familyNcbiTaxonIds">4836</prop>  <!-- use genus ncbiTaxonId here --> 
+    <prop name="familyNameForFiles">Phycomycetaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pblaNRRL1555</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Rhizopus delemar RA 99-880</prop>
+    <prop name="ncbiTaxonId">246409</prop>
+    <prop name="speciesNcbiTaxonId">936053</prop>
+    <prop name="organismAbbrev">rdelRA99-880</prop>
+    <prop name="publicOrganismAbbrev">rdelRA99-880</prop>
+    <prop name="organismNameForFiles">RdelemarRA99-880</prop>
+    <prop name="strainAbbrev">RA99-880</prop>
+    <prop name="orthomclAbbrev">rdel</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Rhizopus</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">rdelRA99-880</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">rdelRA99-880</prop>
+    <prop name="familyNcbiTaxonIds">4842</prop>   <!-- use genus NcbiTaxonId here -->
+    <prop name="familyNameForFiles">Rhizopodaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">rdelRA99-880</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora infestans T30-4</prop>
+    <prop name="ncbiTaxonId">403677</prop>
+    <prop name="speciesNcbiTaxonId">4787</prop>
+    <prop name="organismAbbrev">pinfT30-4</prop>
+    <prop name="publicOrganismAbbrev">pinfT30-4</prop>
+    <prop name="organismNameForFiles">PinfestansT30-4</prop>
+    <prop name="strainAbbrev">T30-4</prop>
+    <prop name="orthomclAbbrev">pinf</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-12</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pinfT30-4</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds">4783</prop>  <!-- use genus NcbiTaxonId here -->
+    <prop name="familyNameForFiles">Peronosporales</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pinfT30-4</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora capsici LT1534</prop>
+    <prop name="ncbiTaxonId">763924</prop>
+    <prop name="speciesNcbiTaxonId">4784</prop>
+    <prop name="organismAbbrev">pcapLT1534</prop>
+    <prop name="publicOrganismAbbrev">pcapLT1534</prop>
+    <prop name="organismNameForFiles">PcapsiciLT1534</prop>
+    <prop name="strainAbbrev">LT1534</prop>
+    <prop name="orthomclAbbrev">pcap</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">11</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pcapLT1534</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pcapLT1534</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora ramorum strain Pr102</prop>
+    <prop name="ncbiTaxonId">9200000003</prop>
+    <prop name="speciesNcbiTaxonId">164328</prop>
+    <prop name="organismAbbrev">pramPr-102</prop>
+    <prop name="publicOrganismAbbrev">pramPr-102</prop>
+    <prop name="organismNameForFiles">PramorumPr-102</prop>
+    <prop name="strainAbbrev">Pr-102</prop>
+    <prop name="orthomclAbbrev">pram</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">1.1</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pramPr-102</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pramPr-102</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora sojae strain P6497</prop>
+    <prop name="ncbiTaxonId">9200000004</prop>
+    <prop name="speciesNcbiTaxonId">67593</prop>
+    <prop name="organismAbbrev">psojP6497</prop>
+    <prop name="publicOrganismAbbrev">psojP6497</prop>
+    <prop name="organismNameForFiles">PsojaeP6497</prop>
+    <prop name="strainAbbrev">P6497</prop>
+    <prop name="orthomclAbbrev">psoj</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-14</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">psojP6497</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">psojP6497</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora parasitica INRA-310</prop>
+    <prop name="ncbiTaxonId">761204</prop>
+    <prop name="speciesNcbiTaxonId">4792</prop>
+    <prop name="organismAbbrev">pparINRA-310</prop>
+    <prop name="publicOrganismAbbrev">pparINRA-310</prop>
+    <prop name="organismNameForFiles">PparasiticaINRA-310</prop>
+    <prop name="strainAbbrev">INRA-310</prop>
+    <prop name="orthomclAbbrev">ppar</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pparINRA-310</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pparINRA-310</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Phytophthora cinnamomi var. cinnamomi CBS 144.22</prop>
+    <prop name="ncbiTaxonId">1048749</prop>
+    <prop name="speciesNcbiTaxonId">4785</prop>
+    <prop name="organismAbbrev">pcinCBS144-22</prop>
+    <prop name="publicOrganismAbbrev">pcinCBS144-22</prop>
+    <prop name="organismNameForFiles">PcinnamomiCBS144-22</prop>
+    <prop name="strainAbbrev">CBS144-22</prop>
+    <prop name="orthomclAbbrev">pcin</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Phytophthora</prop>
+    <prop name="genomeSource">JGI</prop>
+    <prop name="genomeVersion">1</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pcinCBS144-22</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pinfT30-4</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pcinCBS144-22</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Hyaloperonospora arabidopsidis Emoy2</prop>
+    <prop name="ncbiTaxonId">559515</prop>
+    <prop name="speciesNcbiTaxonId">272952</prop>
+    <prop name="organismAbbrev">haraEmoy2</prop>
+    <prop name="publicOrganismAbbrev">haraEmoy2</prop>
+    <prop name="organismNameForFiles">HarabidopsidisEmoy2</prop>
+    <prop name="strainAbbrev">Emoy2</prop>
+    <prop name="orthomclAbbrev">hara</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Hyaloperonospora</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">haraEmoy2</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">haraEmoy2</prop>
+    <prop name="familyNcbiTaxonIds">184462</prop>  <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Hyaloperonospora</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">haraEmoy2</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium ultimum DAOM BR144</prop>
+    <prop name="ncbiTaxonId">431595</prop>
+    <prop name="speciesNcbiTaxonId">65071</prop>
+    <prop name="organismAbbrev">pultDAOMBR144</prop>
+    <prop name="publicOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="organismNameForFiles">PultimumDAOMBR144</prop>
+    <prop name="strainAbbrev">DAOMBR144</prop>
+    <prop name="orthomclAbbrev">pult</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds">4797</prop> <!-- use genus as familyNcbiTaxonIds here -->
+    <prop name="familyNameForFiles">Pythiaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pultDAOMBR144</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium ultimum var. sporangiiferum BR650</prop>
+    <prop name="ncbiTaxonId">1223559</prop>
+    <prop name="speciesNcbiTaxonId">65071</prop>
+    <prop name="organismAbbrev">pultBR650</prop>
+    <prop name="publicOrganismAbbrev">pultBR650</prop>
+    <prop name="organismNameForFiles">PultimumBR650</prop>
+    <prop name="strainAbbrev">BR650</prop>
+    <prop name="orthomclAbbrev">pulu</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">MSU</prop>
+    <prop name="genomeVersion">2013-05-23</prop>
+    <prop name="isReferenceStrain">false</prop>
+    <prop name="referenceStrainOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium irregulare DAOM BR486</prop>
+    <prop name="ncbiTaxonId">1223557</prop>
+    <prop name="speciesNcbiTaxonId">36331</prop>
+    <prop name="organismAbbrev">pirrDAOMBR486</prop>
+    <prop name="publicOrganismAbbrev">pirrDAOMBR486</prop>
+    <prop name="organismNameForFiles">PirregulareDAOMBR486</prop>
+    <prop name="strainAbbrev">DAOMBR486</prop>
+    <prop name="orthomclAbbrev">pirr</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pirrDAOMBR486</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pirrDAOMBR486</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium iwayamai DAOM BR242034</prop>
+    <prop name="ncbiTaxonId">1223558</prop>
+    <prop name="speciesNcbiTaxonId">115417</prop>
+    <prop name="organismAbbrev">piwaDAOMBR242034</prop>
+    <prop name="publicOrganismAbbrev">piwaDAOMBR242034</prop>
+    <prop name="organismNameForFiles">PiwayamaiDAOMBR242034</prop>
+    <prop name="strainAbbrev">DAOMBR242034</prop>
+    <prop name="orthomclAbbrev">piwa</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">MSU</prop>
+    <prop name="genomeVersion">2013-08-09</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">piwaDAOMBR242034</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">piwaDAOMBR242034</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium arrhenomanes ATCC 12531</prop>
+    <prop name="ncbiTaxonId">1223556</prop>
+    <prop name="speciesNcbiTaxonId">82932</prop>
+    <prop name="organismAbbrev">parrATCC12531</prop>
+    <prop name="publicOrganismAbbrev">parrATCC12531</prop>
+    <prop name="organismNameForFiles">ParrhenomanesATCC12531</prop>
+    <prop name="strainAbbrev">ATCC12531</prop>
+    <prop name="orthomclAbbrev">parr</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">parrATCC12531</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">parrATCC12531</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium aphanidermatum DAOM BR444</prop>
+    <prop name="ncbiTaxonId">1223555</prop>
+    <prop name="speciesNcbiTaxonId">65070</prop>
+    <prop name="organismAbbrev">paphDAOMBR444</prop>
+    <prop name="publicOrganismAbbrev">paphDAOMBR444</prop>
+    <prop name="organismNameForFiles">PaphanidermatumDAOMBR444</prop>
+    <prop name="strainAbbrev">DAOMBR444</prop>
+    <prop name="orthomclAbbrev">paph</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Pythium</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">paphDAOMBR444</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">paphDAOMBR444</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Pythium vexans DAOM BR484</prop>
+    <prop name="ncbiTaxonId">1223560</prop>
+    <prop name="speciesNcbiTaxonId">907947</prop>
+    <prop name="organismAbbrev">pvexDAOMBR484</prop>
+    <prop name="publicOrganismAbbrev">pvexDAOMBR484</prop>
+    <prop name="organismNameForFiles">PvexansDAOMBR484</prop>
+    <prop name="strainAbbrev">DAOMBR484</prop>
+    <prop name="orthomclAbbrev">pvex</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Oomycetes Phytopythium</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">pvexDAOMBR484</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">pultDAOMBR144</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">pvexDAOMBR484</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Saprolegnia parasitica CBS 223.65</prop>
+    <prop name="ncbiTaxonId">695850</prop>
+    <prop name="speciesNcbiTaxonId">101203</prop>
+    <prop name="organismAbbrev">sparCBS223-65</prop>
+    <prop name="publicOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="organismNameForFiles">SparasiticaCBS223-65</prop>
+    <prop name="strainAbbrev">CBS223-65</prop>
+    <prop name="orthomclAbbrev">spar</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Saprolegnia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-23</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="familyNcbiTaxonIds">4764</prop> <!-- use family ncbiTaxonId here --> 
+    <prop name="familyNameForFiles">Saprolegniaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sparCBS223-65</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Saprolegnia diclina VS20</prop>
+    <prop name="ncbiTaxonId">1156394</prop>
+    <prop name="speciesNcbiTaxonId">112098</prop>
+    <prop name="organismAbbrev">sdicVS20</prop>
+    <prop name="publicOrganismAbbrev">sdicVS20</prop>
+    <prop name="organismNameForFiles">SdiclinaVS20</prop>
+    <prop name="strainAbbrev">VS20</prop>
+    <prop name="orthomclAbbrev">sdic</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Saprolegnia</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2015-03-19</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">sdicVS20</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">sdicVS20</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aphanomyces astaci strain APO3</prop>
+    <prop name="ncbiTaxonId">9200000002</prop>
+    <prop name="speciesNcbiTaxonId">112090</prop>
+    <prop name="organismAbbrev">aastAPO3</prop>
+    <prop name="publicOrganismAbbrev">aastAPO3</prop>
+    <prop name="organismNameForFiles">AastaciAPO3</prop>
+    <prop name="strainAbbrev">APO3</prop>
+    <prop name="orthomclAbbrev">aast</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aphanomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-01-14</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">aastAPO3</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">aastAPO3</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Aphanomyces invadans NJM9701</prop>
+    <prop name="ncbiTaxonId">9200000001</prop>
+    <prop name="speciesNcbiTaxonId">157072</prop>
+    <prop name="organismAbbrev">ainvNJM9701</prop>
+    <prop name="publicOrganismAbbrev">ainvNJM9701</prop>
+    <prop name="organismNameForFiles">AinvadansNJM9701</prop>
+    <prop name="strainAbbrev">NJM9701</prop>
+    <prop name="orthomclAbbrev">ainv</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Aphanomyces</prop>
+    <prop name="genomeSource">GenBank</prop>
+    <prop name="genomeVersion">2014-01-15</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">ainvNJM9701</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">sparCBS223-65</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">true</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">ainvNJM9701</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Albugo candida 2VRR</prop>
+    <prop name="ncbiTaxonId">911350</prop>
+    <prop name="speciesNcbiTaxonId">65357</prop>
+    <prop name="organismAbbrev">acan2VRR</prop>
+    <prop name="publicOrganismAbbrev">acan2VRR</prop>
+    <prop name="organismNameForFiles">Acandida2VRR</prop>
+    <prop name="strainAbbrev">2VRR</prop>
+    <prop name="orthomclAbbrev">acan</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Albugo</prop>
+    <prop name="genomeSource">Saskatchewan</prop>
+    <prop name="genomeVersion">2014-05-13</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">acan2VRR</prop>
+    <prop name="isFamilyRepresentative">true</prop>
+    <prop name="familyRepOrganismAbbrev">acan2VRR</prop>
+    <prop name="familyNcbiTaxonIds">65356</prop>  <!-- use genus ncbiTaxonID here -->
+    <prop name="familyNameForFiles">Albuginaceae</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">false</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">acan2VRR</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+
+  <dataset class="organism">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismFullName">Albugo laibachii Nc14</prop>
+    <prop name="ncbiTaxonId">890382</prop>
+    <prop name="speciesNcbiTaxonId">653948</prop>
+    <prop name="organismAbbrev">alaiNc14</prop>
+    <prop name="publicOrganismAbbrev">alaiNc14</prop>
+    <prop name="organismNameForFiles">AlaibachiiNc14</prop>
+    <prop name="strainAbbrev">Nc14</prop>
+    <prop name="orthomclAbbrev">alai</prop>
+    <prop name="taxonHierarchyForBlastxFilter">Eukaryota Fungi Albugo</prop>
+    <prop name="genomeSource">Ensembl</prop>
+    <prop name="genomeVersion">2016-03-02</prop>
+    <prop name="isReferenceStrain">true</prop>
+    <prop name="referenceStrainOrganismAbbrev">alaiNc14</prop>
+    <prop name="isFamilyRepresentative">false</prop>
+    <prop name="familyRepOrganismAbbrev">acan2VRR</prop>
+    <prop name="familyNcbiTaxonIds"></prop>
+    <prop name="familyNameForFiles"></prop>
+    <prop name="isAnnotatedGenome">true</prop>
+    <prop name="annotationIncludesTRNAs">true</prop>
+    <prop name="hasTemporaryNcbiTaxonId">false</prop>
+    <prop name="runExportPred">false</prop>
+    <prop name="isHugeGenome">false</prop>
+    <prop name="maxIntronSize">1000</prop>
+  </dataset>
+
+  <dataset class="referenceStrain">
+    <prop name="organismAbbrev">alaiNc14</prop>
+    <prop name="isAnnotatedGenome">true</prop>
+  </dataset>
+<!--
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">afumAf293</prop>
+    <prop name="experimentName">JCVI_HTS_SNP</prop>
+    <prop name="experimentVersion">2011-09-14</prop>
+  </dataset>
+
+  <dataset class="SnpMetaData">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">afumAf293</prop>
+    <prop name="experimentName">JCVI_HTS_SNP_PE</prop>
+    <prop name="experimentVersion">2010-10-14</prop>
+  </dataset>
+-->
+  <dataset class="orthomcl">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.12</prop>
+  </dataset>
+
+  <dataset class="orthomclPhyletic">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.12</prop>
+  </dataset>
+
+  <dataset class="orthomclTree">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">5.12</prop>
+  </dataset>
+<!--
+  <dataset class="customOntologyEntries">
+    <prop name="version">1.0</prop>
+  </dataset>
+-->
+
+  <dataset class="Pathways">
+    <prop name="version">2013.07</prop>
+    <prop name="format">KEGG</prop>
+    <prop name="source">KEGG</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+  
+  <dataset class="Pathways">
+    <prop name="version">2017.02.07</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">MetaCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+<!--eliminate FungiCyc, refs #24903
+  <dataset class="Pathways">
+    <prop name="version">2016.11.29</prop>
+    <prop name="format">BioCyc</prop>
+    <prop name="source">FungiCyc</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+-->
+
+  <dataset class="ReactionsXRefs">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="version">2016-02-09</prop>
+    <prop name="source">Henry</prop>
+  </dataset>
+
+<!-- NOT loading pathway compounds anymore, switched to chEBI compounds
+  <dataset class="PathwayCompounds">
+    <prop name="name">pubchem</prop>
+    <prop name="version">2012.11</prop>
+  </dataset>
+-->
+
+
+  <dataset class="EcNumberGenus">
+    <prop name="version">2015-03-11</prop>
+    <prop name="projectName">$$projectName$$</prop>
+  </dataset>
+
+  <dataset class="ISA"/>
+  <dataset class="ISASimple"/>
+
+  <!--Release here is from svn url.  Exampoe: https://www.cbil.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/20150706 -->
+
+  <dataset class="dumpMissingGenbankIsolateMappers">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+  </dataset>
+
+  <dataset class="ontologySynonyms">
+    <prop name="version">$$genbankIsolateMapperVersion$$</prop>
+    <prop name="name">genbankIsolates</prop>
+  </dataset>
+
+</datasets>
+

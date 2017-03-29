@@ -1,0 +1,27 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="experimentName">Reid_tachy</prop>
+    <prop name="sampleName">day3_rep1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="experimentName">Reid_tachy</prop>
+    <prop name="sampleName">day3_rep2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="experimentName">Reid_tachy</prop>
+    <prop name="sampleName">day4_rep1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">ncanLIV</prop>
+    <prop name="experimentName">Reid_tachy</prop>
+    <prop name="sampleName">day4_rep2</prop>
+  </dataset>
+
+</datasets>

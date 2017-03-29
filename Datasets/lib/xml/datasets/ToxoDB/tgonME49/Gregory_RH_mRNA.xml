@@ -1,0 +1,21 @@
+<datasets>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_RH_mRNA</prop>
+    <prop name="sampleName">2h</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_RH_mRNA</prop>
+    <prop name="sampleName">22h</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">tgonME49</prop>
+    <prop name="experimentName">Gregory_RH_mRNA</prop>
+    <prop name="sampleName">36h</prop>
+  </dataset>
+
+</datasets>

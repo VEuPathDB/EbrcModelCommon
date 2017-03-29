@@ -1,0 +1,272 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="tvagG3"/>
+  <constant name="referenceStrainOrganismAbbrev" value="tvagG3"/>
+  <constant name="familyRepOrganismAbbrev" value="tvagG3"/>
+  <constant name="strainAbbrev" value="G3"/>
+  <constant name="projectName" value="TrichDB"/>
+  <constant name="ncbiTaxonId" value="412133"/>
+  <constant name="speciesNcbiTaxonId" value="5722"/>
+  <constant name="genomeVersion" value="2014-09-12"/>
+  <constant name="familyNcbiTaxonIds" value="181550"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="name">JCarltonLab</prop>
+    <prop name="soTerm">supercontig</prop>
+    <prop name="sourceIdRegex">>(\S+)</prop>
+    <prop name="releaseDate">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="NoPreprocess_primary_genome_features">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">supercontig</prop>
+    <prop name="source">JCarltonLab</prop>
+    <prop name="mapFile">genemRNAExonCdsWTEG2Gus.xml</prop>
+  </dataset>
+
+  <dataset class="productNames">
+    <prop name="name">JCarltonLab</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="aliases">
+    <prop name="name">PreviousGeneIDs</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="idType">previous id</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="columnSpec">primary_identifier</prop>
+    <prop name="url"></prop>
+    <prop name="urlUsesSecondaryId"></prop>
+    <prop name="target">NAFeature</prop>
+    <prop name="viewName">GeneFeature</prop>
+  </dataset>
+
+  <dataset class="ECAssocGeneFeatureMappings">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">2007-01-11</prop>
+    <prop name="name">AnnotationCenter</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2Entrez">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2Uniprot">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="dbxref_gene2PubmedFromNcbi">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="version">2016-07-12</prop>
+  </dataset>
+
+  <dataset class="ECAssocFromUniprot">
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="version">TODAY</prop>
+  </dataset> 
+
+  <dataset class="referenceStrain-dbEST">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-epitope_sequences_IEDB">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="version">2.4</prop>
+  </dataset>
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="familyRepresentative-isolatesGenbank">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$familyNcbiTaxonIds$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="massSpecPreprocessedNoOrfs">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="name">Johnson_FullPeptideData</prop>
+    <prop name="version">2009-05-27</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+    <prop name="fileNameRegex">\.tab$</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvCS</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage">Pseudocyst stage</prop>
+    <prop name="libraryName">Cold-induced pseudocyst (TvCS)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvG2M</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage">G1/S phase</prop>
+    <prop name="libraryName">G2/M trophozoite (TvG2M)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvVEC</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage">Amoeboid stage</prop>
+    <prop name="libraryName">VEC-mediated cytoadherence (TvVEC)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvFN</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage">Amoeboid stage</prop>
+    <prop name="libraryName">Fibronectin-mediated cytoadherence (TvFN)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvLG</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage"></prop>
+    <prop name="libraryName">Low glucose culture (TvLG)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvLI</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage"></prop>
+    <prop name="libraryName">Low iron culture (TvLI)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <dataset class="referenceStrain-ESTsFromFasta">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="name">TvEST</prop>
+    <prop name="version">2007-08-21</prop>
+    <prop name="sourceIdRegex">^>(\S+)</prop>
+    <prop name="soTerm">EST</prop>
+    <prop name="isPutativeFullLength">false</prop>
+    <prop name="libraryVector">Uni-ZAP XR (Stratagene)</prop>
+    <prop name="libraryStage">Unsynchronized culture</prop>
+    <prop name="libraryName">Normal unsynchronized culture (TvEST)</prop>
+    <prop name="libraryDesc"></prop>
+    <prop name="contactName">Petrus Tang</prop>
+    <prop name="contactAddress1">Molecular Regulation and Bioinformatics Laboratory, College of Medicine; Chang Gung University</prop>
+    <prop name="contactAddress2">259 Wenhwa 1st. Road, Kweishan, Taoyuan 333, TAIWAN</prop>
+  </dataset>
+
+  <!-- OldName: RAD.SAGETag   OldVersion: continuous -->
+  <!-- OldName: G. lamblia Phylogenetic Trees   OldVersion: 2007-07-19  G.lamblia data does not need to load-->
+  <!-- OldName: G. lamblia contigs   OldVersion: 2007-07-17  G.lamblia data does not need to load -->
+  <!-- OldName: marbilab   OldVersion: unknown -->
+
+</datasets>

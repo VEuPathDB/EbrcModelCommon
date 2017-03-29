@@ -1,0 +1,126 @@
+<datasets>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">7G8</prop>
+    <prop name="sraQueryString">ERS010596</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">7G8</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">CS2</prop>
+    <prop name="sraQueryString">ERS016366</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">CS2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">GB4</prop>
+    <prop name="sraQueryString">ERS010597</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">GB4</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">T9_94</prop>
+    <prop name="sraQueryString">ERS016365</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">T9_94</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">V1_S</prop>
+    <prop name="sraQueryString">ERS010509</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">V1_S</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">Dd2-2</prop>
+    <prop name="sraQueryString">ERS010540,ERS010593,ERS010594,ERS010595,ERS013842</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">Dd2-2</prop>
+  </dataset>
+
+  <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">HB3</prop>
+    <prop name="sraQueryString">ERS010000,ERS010420</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">HB3</prop>
+  </dataset>
+
+ <dataset class="SNPs_HTS_Sample_QuerySRA">
+    <prop name="organismAbbrev">pfal3D7</prop>
+    <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+    <prop name="snpStrainAbbrev">IT</prop>
+    <prop name="sraQueryString">ERS010294,ERS013850</prop>
+  </dataset>
+
+  <dataset class="copyNumberVariationSamples">
+      <prop name="projectName">PlasmoDB</prop>
+      <prop name="organismAbbrev">pfal3D7</prop>
+      <prop name="experimentName">Sanger_HTS_Isolates_QuerySRA</prop>
+      <prop name="experimentVersion">1.0</prop>
+      <prop name="sampleName">IT</prop>
+  </dataset>
+
+</datasets>
+
+
+ 

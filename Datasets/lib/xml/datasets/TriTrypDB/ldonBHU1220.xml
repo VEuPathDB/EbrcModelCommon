@@ -1,0 +1,59 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="ldonBHU1220"/>
+  <constant name="referenceStrainOrganismAbbrev" value="ldonBPK282A1"/>
+  <constant name="strainAbbrev" value="BHU1220"/>
+  <constant name="projectName" value="TriTrypDB"/>
+  <constant name="ncbiTaxonId" value="9000000065"/>
+  <constant name="speciesNcbiTaxonId" value="5661"/>
+  <constant name="genomeVersion" value="2013-11-06"/>
+  <constant name="familyRepOrganismAbbrev" value="lmajFriedlin"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">GenBank</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">>.+\|gb\|(\w+\d+\.\d)\|</prop>
+    <prop name="releaseDate">2013-11-06</prop>
+  </dataset>
+
+  <dataset class="primaryVirtualGenome">
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="virtualSeqSOTerm">chromosome</prop>
+    <prop name="sourceIdPrefix">""</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="epitopesFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="isolatesFromFamilyRepresentative">
+    <prop name="name">genbank</prop>
+    <prop name="familyRepOrganismAbbrev">$$familyRepOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>
+

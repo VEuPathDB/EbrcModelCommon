@@ -1,0 +1,45 @@
+<datasets>
+
+  <constant name="organismAbbrev" value="tcruziSylvioX10"/>
+  <constant name="referenceStrainOrganismAbbrev" value="tcruziSylvioX10"/>
+  <constant name="familyRepOrganismAbbrev" value="linfantum"/>
+  <constant name="strainAbbrev" value="SylvioX10"/>
+  <constant name="projectName" value="TriTrypDB"/>
+  <constant name="ncbiTaxonId" value="9000000009"/>
+  <constant name="speciesNcbiTaxonId" value="5693"/>
+  <constant name="genomeVersion" value="2010-12-13"/>
+
+  <!-- validate that this info agrees with the same as provided in the project -->
+  <dataset class="validateOrganismInfo">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="strainAbbrev">$$strainAbbrev$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="speciesNcbiTaxonId">$$speciesNcbiTaxonId$$</prop>
+    <prop name="genomeVersion">$$genomeVersion$$</prop>
+  </dataset>
+
+  <dataset class="fasta_primary_genome_sequence">
+    <prop name="name">GeneDB</prop>
+    <prop name="table">DoTS::ExternalNASequence</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="projectName">$$projectName$$</prop>
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="ncbiTaxonId">$$ncbiTaxonId$$</prop>
+    <prop name="version">$$genomeVersion$$</prop>
+    <prop name="soTerm">contig</prop>
+    <prop name="sourceIdRegex">>(\S+)</prop>
+    <prop name="releaseDate">13-DEC-10</prop>
+  </dataset>
+
+  <dataset class="transcriptsFromReferenceStrain">
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+  <dataset class="clonedInsertEndsFromReferenceStrain">
+    <prop name="name">CHORI105_BACEnds</prop>
+    <prop name="version">2008-12-04</prop>
+    <prop name="referenceStrainOrganismAbbrev">$$referenceStrainOrganismAbbrev$$</prop>
+  </dataset>
+
+</datasets>

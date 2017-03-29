@@ -1,0 +1,26 @@
+<datasets>
+  <constant name="organismAbbrev" value="psojP6497"/>
+  <constant name="experimentName" value="Tyler_Infection"/>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="sampleName">mycelia</prop>
+    <prop name="sampleOrder">1</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="sampleName">cyst</prop>
+    <prop name="sampleOrder">2</prop>
+  </dataset>
+
+  <dataset class="rnaSeqSample">
+    <prop name="organismAbbrev">$$organismAbbrev$$</prop>
+    <prop name="experimentName">$$experimentName$$</prop>
+    <prop name="sampleName">infected</prop>
+    <prop name="sampleOrder">3</prop>
+  </dataset>
+
+</datasets>
