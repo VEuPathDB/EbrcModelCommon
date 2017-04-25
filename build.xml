@@ -1,0 +1,4 @@
+<project name="EbrcModelCommon" default="Installation" basedir=".">
+  <target name="EbrcModelCommon-ChildCheckout"></target>
+  <target name="EbrcModelCommon-ChildUpdate"></target>
+</project>
