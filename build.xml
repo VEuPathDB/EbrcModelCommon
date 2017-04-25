@@ -1,4 +1,10 @@
 <project name="EbrcModelCommon" default="Installation" basedir=".">
   <target name="EbrcModelCommon-ChildCheckout"></target>
   <target name="EbrcModelCommon-ChildUpdate"></target>
+  <target name="EbrcModelCommon-Installation">
+    <antcall target="buildInfo">
+      <param name="project" value="EbrcModelCommon"/>
+    </antcall>
+    <echo message="Nothing to do..."/>
+  </target>
 </project>
