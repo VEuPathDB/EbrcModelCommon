@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE xml [
+  <!ENTITY nbsp "&#160;">
+  <!ENTITY lt   "&#60;">
+  <!ENTITY gt   "&#62;">
+]>
+
+<wdkModel>
+
+    <xmlRecordClassSet name="XmlRecordClasses">
+
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Genome & Data Type Summary -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="GenomeDataTypeRecord"
+        	type="GenomeDataType"
+        	idPrefix="GDT."
+        	delimiter="@">
+            <xmlAttribute name="Website"/>
+            <xmlAttribute name="Genus"/>
+            <xmlAttribute name="Species"/>
+            <xmlAttribute name="Strain"/>
+            <xmlAttribute name="URLGenomeFasta"/>
+            <xmlAttribute name="URLgff"/>
+            <xmlAttribute name="Taxon_ID"/>
+            <xmlAttribute name="Data_Source"/>
+            <xmlAttribute name="Genome_Version"/>
+            <xmlAttribute name="Genome_Size"/>
+            <xmlAttribute name="Gene_Count"/>
+            <xmlAttribute name="Organellar_Genomes"/>
+            <xmlAttribute name="Isolates"/>
+            <xmlAttribute name="SNPs"/>
+            <xmlAttribute name="ESTs"/>
+            <xmlAttribute name="Microarray"/>
+            <xmlAttribute name="Proteomics"/>
+            <xmlAttribute name="ChIP_chip"/>
+            <xmlAttribute name="RNA_Seq"/>
+            <xmlAttribute name="RT_PCR"/>
+            <xmlAttribute name="Chip_Seq"/>
+            <xmlAttribute name="Pathways"/>
+      </xmlRecordClass>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Gene Metrics -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="GeneMetricsRecord"
+        	type="GeneMetrics"
+        	idPrefix="GMX."
+        	delimiter="@">
+            <xmlAttribute name="Metric_Type"/>
+            <xmlAttribute name="Description"/>
+            <xmlAttribute name="Acanthamoeba castellanii str. Neff"/>
+            <xmlAttribute name="Babesia bovis T2Bo"/>
+            <xmlAttribute name="Babesia microti strain RI"/>
+            <xmlAttribute name="Cryptosporidium hominis TU502"/>
+            <xmlAttribute name="Cryptosporidium muris RN66"/>
+            <xmlAttribute name="Cryptosporidium parvum Iowa II"/>
+            <xmlAttribute name="Eimeria tenella strain Houghton"/>
+            <xmlAttribute name="Encephalitozoon cuniculi EC1"/>
+            <xmlAttribute name="Encephalitozoon cuniculi EC2"/>
+            <xmlAttribute name="Encephalitozoon cuniculi EC3"/>
+            <xmlAttribute name="Encephalitozoon cuniculi GB-M1"/>
+            <xmlAttribute name="Encephalitozoon hellem ATCC 50504"/>
+            <xmlAttribute name="Encephalitozoon hellem Swiss"/>
+            <xmlAttribute name="Encephalitozoon intestinalis ATCC 50506"/>
+            <xmlAttribute name="Encephalitozoon romaleae SJ-2008"/>
+            <xmlAttribute name="Entamoeba dispar SAW760"/>
+            <xmlAttribute name="Entamoeba histolytica HM-1:IMSS"/>
+            <xmlAttribute name="Entamoeba invadens IP1"/>
+            <xmlAttribute name="Entamoeba moshkovskii Laredo"/>
+            <xmlAttribute name="Entamoeba nuttalli P19"/>
+            <xmlAttribute name="Enterocytozoon bieneusi H348"/>
+            <xmlAttribute name="Giardia Assemblage A isolate WB"/>
+            <xmlAttribute name="Giardia Assemblage B isolate GS"/>
+            <xmlAttribute name="Giardia Assemblage E isolate P15"/>
+            <xmlAttribute name="Leishmania braziliensis MHOM/BR/75/M2904"/>
+            <xmlAttribute name="Leishmania donovani BPK282A1"/>
+            <xmlAttribute name="Leishmania infantum JPCM5"/>
+            <xmlAttribute name="Leishmania major strain Friedlin"/>
+            <xmlAttribute name="Leishmania mexicana MHOM/GT/2001/U1103"/>
+            <xmlAttribute name="Leishmania tarentolae Parrot-TarII"/>
+            <xmlAttribute name="Nematocida parisii ERTm1"/>
+            <xmlAttribute name="Nematocida parisii ERTm3"/>
+            <xmlAttribute name="Nematocida sp. 1 ERTm2"/>
+            <xmlAttribute name="Neospora caninum Liverpool"/>
+            <xmlAttribute name="Nosema ceranae BRL01"/>
+            <xmlAttribute name="Plasmodium berghei ANKA"/>
+            <xmlAttribute name="Plasmodium chabaudi chabaudi"/>
+            <xmlAttribute name="Plasmodium cynomolgi strain B"/>
+            <xmlAttribute name="Plasmodium falciparum 3D7"/>
+            <xmlAttribute name="Plasmodium falciparum IT"/>
+            <xmlAttribute name="Plasmodium knowlesi strain H"/>
+            <xmlAttribute name="Plasmodium vivax Sal-1"/>
+            <xmlAttribute name="Plasmodium yoelii yoelii 17XNL"/>
+            <xmlAttribute name="Plasmodium yoelii yoelii YM"/>
+            <xmlAttribute name="Theileria annulata strain Ankara"/>
+            <xmlAttribute name="Theileria parva strain Muguga"/>
+            <xmlAttribute name="Toxoplasma gondii GT1"/>
+            <xmlAttribute name="Toxoplasma gondii ME49"/>
+            <xmlAttribute name="Toxoplasma gondii RH"/>
+            <xmlAttribute name="Toxoplasma gondii VEG"/>
+            <xmlAttribute name="Trichomonas vaginalis G3"/>
+            <xmlAttribute name="Trypanosoma brucei Lister strain 427"/>
+            <xmlAttribute name="Trypanosoma brucei TREU927"/>
+            <xmlAttribute name="Trypanosoma brucei gambiense DAL972"/>
+            <xmlAttribute name="Trypanosoma congolense IL3000"/>
+            <xmlAttribute name="Trypanosoma cruzi CL Brener Esmeraldo-like"/>
+            <xmlAttribute name="Trypanosoma cruzi CL Brener Non-Esmeraldo-like"/>
+						<xmlAttribute name="Trypanosoma cruzi marinkellei strain B7"/>
+						<xmlAttribute name="Trypanosoma cruzi Sylvio X10/1"/>
+            <xmlAttribute name="Trypanosoma cruzi strain CL Brener"/>
+            <xmlAttribute name="Trypanosoma vivax Y486"/>
+            <xmlAttribute name="Vavraia culicis floridensis"/>
+            <xmlAttribute name="Vittaforma corneae ATCC 50505"/>
+
+         </xmlRecordClass>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- EuPathDB Pubs -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="EuPathDBPubsRecord"
+        	type="EuPathDBPubs"
+        	idPrefix="EUPATHDBPUBS."
+        	delimiter="@">
+            <xmlAttribute name="record_date"/>
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="reference"/>
+            <xmlAttribute name="links"/>
+            <xmlAttribute name="authors"/>
+            <xmlAttribute name="pmid"/>
+            <xmlAttribute name="isbn"/>
+            <xmlAttribute name="tag"/>
+            <xmlAttribute name="abstract"/>
+         </xmlRecordClass>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Glossary -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="GlossaryRecord"
+        	type="Glossary"
+        	idPrefix="GLSS."
+        	delimiter="@">
+            <xmlAttribute name="term"/>
+            <xmlAttribute name="definition"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- News -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="NewsRecord"
+        	type="News"
+        	idPrefix="NEWS."
+        	delimiter="@">
+            <xmlAttribute name="headline"/>
+            <xmlAttribute name="date"/>
+            <xmlAttribute name="item"/>
+            <xmlAttribute name="tag"/>
+            <xmlAttribute name="category"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Releases  -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+            name="ReleasesRecord"
+            type="Releases"
+            idPrefix="RELEASE.."
+            delimiter="@">
+            <xmlAttribute name="headline"/>
+            <xmlAttribute name="date"/>
+            <xmlAttribute name="item"/>
+            <xmlAttribute name="tag"/>
+            <xmlAttribute name="category"/>
+         </xmlRecordClass>
+
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Coming soon -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass includeProjects="PlasmoDB,ToxoDB"
+        	name="ComingSoonRecord"
+        	type="ComingSoon"
+        	idPrefix="CS."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="tag"/>
+            <xmlTable name="list">
+              <xmlAttribute name="headline"/>
+              <xmlAttribute name="item"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Methods -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+         <xmlRecordClass
+        	name="Methods"
+        	type="Methods"
+        	idPrefix="MTHD."
+        	delimiter="@">
+             <xmlAttribute name="name" displayName="Method"/>
+             <xmlAttribute name="input" displayName="Input"/>
+             <xmlAttribute name="output" displayName="Output"/>
+             <xmlAttribute name="descrip" displayName="Details"/>
+             <xmlTable name="tools" displayName="Tools">
+                 <xmlAttribute name="name" displayName="Tool"/>
+                 <xmlAttribute name="version" displayName="Version"/>
+                 <xmlAttribute name="params" displayName="Parameters"/>
+                 <xmlAttribute name="url" displayName="URL"/>
+                 <xmlAttribute name="pubmedIds" displayName="PubMed&nbsp;IDs"/>
+                 <xmlAttribute name="credits" displayName="Credits"/>
+             </xmlTable>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Data sources -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass   
+                name="DatasetsRecord"
+        	type="Data Set"
+        	idPrefix="DS."
+        	delimiter="@">
+            <xmlAttribute name="resource"/>
+            <xmlAttribute name="version"/>
+            <xmlAttribute name="publicUrl"/>
+            <xmlAttribute name="organisms"/>
+            <xmlAttribute name="category"/>
+            <xmlAttribute name="description"/>
+            <xmlAttribute name="display"/>
+            <xmlTable name="publications">
+               <xmlAttribute name="pmid"/>
+               <xmlAttribute name="pmauthors"/>
+               <xmlAttribute name="pmtitle"/>
+               <xmlAttribute name="pmdetails"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- About -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="AboutRecord"
+        	type="About"
+        	idPrefix="ABOUT."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="text"/>
+            <xmlAttribute name="tag"/>
+         </xmlRecordClass>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- AboutAll -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="AboutAllRecord"
+        	type="AboutAll"
+        	idPrefix="ABOUTALL."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="text"/>
+            <xmlAttribute name="tag"/>
+         </xmlRecordClass>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Infrastructdure -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="InfrastructureRecord"
+        	type="Infrastructure"
+        	idPrefix="INFRASTRUCTURE."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="text"/>
+            <xmlAttribute name="tag"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- FAQ -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass  includeProjects="PlasmoDB,ToxoDB"
+        	name="FAQRecord"
+        	type="FAQ"
+        	idPrefix="FAQ."
+        	delimiter="@">
+            <xmlAttribute name="didYouKnow"/>
+            <xmlAttribute name="question"/>
+            <xmlAttribute name="answer"/>
+            <xmlAttribute name="tag"/>
+            <xmlAttribute name="category"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- WdkVerbiage -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="WdkVerbiageRecord"
+        	type="Verbiage"
+        	idPrefix="Verb."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="content"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- SiteVerbiage -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="SiteVerbiageRecord"
+        	type="Verbiage"
+        	idPrefix="Verb."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="content"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- StrategiesHelp -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="StrategiesHelpRecord"
+        	type="StrategiesHelp"
+        	idPrefix="StrategiesHelp."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="tip"/>
+            <xmlAttribute name="image"/>
+            <xmlAttribute name="showTipAsDidYouKnow"/>
+            <xmlAttribute name="body"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Tutorials -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="TutorialsRecord"
+        	type="Tutorial"
+        	idPrefix="Tut."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="description"/>
+            <xmlAttribute name="uid"/> 
+            <xmlTable name="files">
+              <xmlAttribute name="projects"/>
+	      <xmlAttribute name="fileName.mov"/>
+              <xmlAttribute name="fileName.avi"/>
+              <xmlAttribute name="fileName.flv"/>
+              <xmlAttribute name="fileName.pdf"/>
+              <xmlAttribute name="duration"/>
+              <xmlAttribute name="size"/>
+            </xmlTable>
+        </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- External links -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass includeProjects="PlasmoDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="relatedLinks" displayName="Related Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="generalInfo" displayName="General Information">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="chromosomeMaps" displayName="Chromosome Maps">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="blastTools" displayName="BLAST Tools">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="otherDbSearches" displayName="Other database searches">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="pfSeqCenters" displayName="Plasmodium falciparum Sequencing Centers">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="otherSeqCenters" displayName="Other Plasmodium spp. Sequencing Centers">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="plasmoDbs" displayName="Plasmodium Sequence Databases">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="vectorDbs" displayName="Vector Databases">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="malariaBio" displayName="Malaria Biology">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="malariaGeneral" displayName="Malaria General">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="funding" displayName="Funding">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+        <xmlRecordClass includeProjects="ToxoDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="relatedLinks" displayName="Related Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="tgSeqCenters" displayName="Toxoplasma Sequencing Centers">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="toxoDbs" displayName="Toxoplasma Sequence Databases">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="toxoBiology" displayName="Toxoplasma Biology">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+            <xmlTable name="funding" displayName="Funding">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+
+ <xmlRecordClass includeProjects="TriTrypDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+
+         </xmlRecordClass>
+
+
+ <xmlRecordClass includeProjects="CryptoDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+
+         </xmlRecordClass>
+
+
+<xmlRecordClass includeProjects="GiardiaDB"
+                name="ExternalLinksRecord"
+                type="ExternalLinks"
+                idPrefix="EL."
+                delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+
+         </xmlRecordClass>
+
+
+<xmlRecordClass includeProjects="TrichDB"
+                name="ExternalLinksRecord"
+                type="ExternalLinks"
+                idPrefix="EL."
+                delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+
+         </xmlRecordClass>
+
+
+<xmlRecordClass includeProjects="EuPathDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+
+         </xmlRecordClass>
+
+	 <xmlRecordClass includeProjects="AmoebaDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+	 <xmlRecordClass includeProjects="MicrosporidiaDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+	 </xmlRecordClass>
+
+	 <xmlRecordClass includeProjects="FungiDB,HostDB,SchistoDB,InitDB,PiroplasmaDB,MicrobiomeDB"
+        	name="ExternalLinksRecord"
+        	type="ExternalLinks"
+        	idPrefix="EL."
+        	delimiter="@">
+            <xmlTable name="communityLinks" displayName="Community Links">
+               <xmlAttribute name="title"/>
+               <xmlAttribute name="url"/>
+            </xmlTable>
+         </xmlRecordClass>
+
+
+    </xmlRecordClassSet>
+
+</wdkModel>
+

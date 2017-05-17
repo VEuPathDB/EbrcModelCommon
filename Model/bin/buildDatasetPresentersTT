@@ -1,0 +1,125 @@
+#!/usr/bin/perl
+
+use strict;
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use File::Temp qw/ tempdir /;
+
+use Data::Dumper;
+
+use Getopt::Long qw(GetOptions);
+
+use ApiCommonModel::Model::tmUtils;
+use CBIL::Util::PropertySet;
+
+use DBI;
+
+#my ($propfile, $instance, $schema, $suffix, $debug);
+my ($propfile, $instance, $schema, $suffix, $debug, $report);
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "debug!" => \$debug,
+           "report!" => \$report,
+	  );
+die "required parameter missing" unless ($propfile && $instance && ($suffix || $report));
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+
+my $dbh = ApiCommonModel::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+$|=1;
+
+
+my $sql;
+if ($PROJECT_HOME =~ /\/eupa/ ){
+  $sql = <<SQL;
+    select project_id, lower(project_id) as lower_project_id
+      from (select distinct project_id from ApidbTuning.GenomicSeqAttributes)
+SQL
+} else {
+  $sql = <<SQL;
+    select project_id, lower(project_id) as lower_project_id
+      from (select distinct pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
+    where ed.row_project_id = pi.project_id)
+SQL
+}
+my $projectQuery = $dbh->prepare($sql);
+
+my $TEMPDIR = tempdir( CLEANUP => 1 );
+
+
+mkdir "$TEMPDIR/dsp";
+mkdir "$TEMPDIR/etc";
+
+
+my $presentersProjectBase ="ApiCommonPresenters";
+
+$projectQuery->execute() or die "getting a list of project IDs";
+my @presenterFiles;
+
+while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
+  my $projectXmlFile = "${project}.xml";
+  my $projectXmlPath = "$TEMPDIR/dsp/$projectXmlFile";
+
+  if ($lowerProject =~/microbiome/) {
+    $presentersProjectBase = "MicrobiomePresenters";
+  }
+
+  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
+
+
+  unless(-e $projectXmlPath) {
+    die "Dataset Presenter file $projectXmlPath could not be found.\n";
+  }
+}
+
+$projectQuery->finish();
+
+
+my $globalXmlFile = "global.xml";
+my $globalXmlPath = "$TEMPDIR/dsp/$globalXmlFile";
+
+my $dtdFile = "datasetPresenters.dtd";
+my $dtdPath = "$TEMPDIR/dsp/$dtdFile";
+
+my $refFile = "datasetReferences.tab";
+my $refPath = "$TEMPDIR/etc/$refFile";
+
+my $linksFile = "datasetLinks.xml";
+my $linksPath = "$TEMPDIR/etc/$linksFile";
+
+system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+
+system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$dtdFile $dtdPath");
+system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$refFile $refPath");
+system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$linksFile $linksPath");
+
+my $contactsXmlFile = "contacts.xml";
+my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
+
+system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+
+if($report) {
+  $suffix = 1234;
+}
+
+my $command = "presenterWriteToDb -presentersDir $TEMPDIR/dsp -contactsXmlFile $contactsXmlPath -tuningPropsXmlFile $propfile -instance $instance -suffix $suffix -defaultInjectorClassesFile $refPath -defaultHyperLinksFile $linksPath";
+
+if($report) {
+  $command = $command . " -report";
+}
+
+my $systemResult = system($command);
+
+$dbh->disconnect();
+
+unless($systemResult / 256 == 0) {
+  die "Failed Running Program";
+}
+
+
+
+

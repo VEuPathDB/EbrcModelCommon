@@ -1,0 +1,212 @@
+<wdkModel>
+
+  <xmlQuestionSet name="XmlQuestions" displayName="">
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Genome & Data Type Summary  -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="GenomeDataType"
+                  displayName="Genome and Data Type Summary"
+                  recordClassRef="XmlRecordClasses.GenomeDataTypeRecord"
+                  xmlDataURL="genomedatatypes.xml">
+        </xmlQuestion>
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Gene metrics  -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="GeneMetrics"
+                  displayName="Gene Metrics"
+                  recordClassRef="XmlRecordClasses.GeneMetricsRecord"
+                  xmlDataURL="genemetrics.xml">
+        </xmlQuestion>
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- EuPathDB Publications -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="EuPathDBPubs" 
+                  displayName="EuPathDB BRC Publications"
+                  recordClassRef="XmlRecordClasses.EuPathDBPubsRecord"
+                  xmlDataURL="eupathdbpubs.xml">
+        </xmlQuestion>
+
+        <xmlQuestion name="PublicationsRss" 
+                  displayName="EuPathDB BRC Publications"
+                  recordClassRef="XmlRecordClasses.EuPathDBPubsRecord"
+                  xmlDataURL="eupathdbpubs.xml">
+        </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Glossary -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="Glossary"
+                  displayName="Glossary"
+                  recordClassRef="XmlRecordClasses.GlossaryRecord"
+                  xmlDataURL="glossary.xml">
+        </xmlQuestion>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Coming soon -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="ComingSoon" includeProjects="PlasmoDB,ToxoDB"
+                  displayName="@PROJECT_ID@ Upcoming Features"
+                  recordClassRef="XmlRecordClasses.ComingSoonRecord"
+                  xmlDataURL="@PROJECT_ID@/comingSoon.xml">
+        </xmlQuestion>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- News -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="News"
+                  displayName="@PROJECT_ID@ News"
+                  recordClassRef="XmlRecordClasses.NewsRecord"
+                  xmlDataURL="@PROJECT_ID@/news.xml">
+        </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- News RSS -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="NewsRss" 
+                  displayName="@PROJECT_ID@ News"
+                  recordClassRef="XmlRecordClasses.NewsRecord"
+                  xmlDataURL="@PROJECT_ID@/news.xml">
+        </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Releases RSS -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="ReleasesRss" 
+                  displayName="@PROJECT_ID@ Releases"
+                  recordClassRef="XmlRecordClasses.ReleasesRecord"
+                  xmlDataURL="@PROJECT_ID@/news.xml">
+        </xmlQuestion>
+  
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Methods -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+       <xmlQuestion name="Methods" 
+                  displayName="Methods"
+                  recordClassRef="XmlRecordClasses.Methods"
+                  xmlDataURL="methods.xml">
+        </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Data sets -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+         <!-- NOT sure why the portal needs this ?? -->
+         <!-- new getDatasetAction checks if this exists, to proceed or not with the datasetPresenter system -->
+<!--
+        <xmlQuestion name="Datasets" includeProjects="TrichDB"
+                  displayName="Data Sets for TrichDB"
+                  recordClassRef="XmlRecordClasses.DatasetsRecord"
+                  xmlDataURL="trichResources-pubmed.xml"
+                  xslURL="resources2records.xsl">
+        </xmlQuestion>
+-->
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- About -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="About" 
+                  displayName="About @PROJECT_ID@"
+                  recordClassRef="XmlRecordClasses.AboutRecord"
+                  xmlDataURL="@PROJECT_ID@/about.xml">
+        </xmlQuestion>
+
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- AboutAll -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="AboutAll" 
+                  displayName="About @PROJECT_ID@"
+                  recordClassRef="XmlRecordClasses.AboutAllRecord"
+                  xmlDataURL="aboutall.xml">
+        </xmlQuestion>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Infrastructure -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="Infrastructure" 
+                  displayName="EuPathDB Infrastructure"
+                  recordClassRef="XmlRecordClasses.InfrastructureRecord"
+                  xmlDataURL="infrastructure.xml">
+        </xmlQuestion>
+
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- TUTORIALS -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="Tutorials" 
+                 displayName="Tutorials" 
+                 recordClassRef="XmlRecordClasses.TutorialsRecord" 
+                 xmlDataURL="tutorials.xml"> 
+       </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- FAQ -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+       <xmlQuestion name="FAQ" includeProjects="PlasmoDB,ToxoDB"
+                  displayName="Frequently Asked Questions (FAQ)"
+                  recordClassRef="XmlRecordClasses.FAQRecord"
+                  xmlDataURL="@PROJECT_ID@/faq.xml">
+        </xmlQuestion>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+ <!-- WdkVerbiage -->
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <xmlQuestion name="WdkVerbiage"
+                 displayName="Verbiage"
+                 recordClassRef="XmlRecordClasses.WdkVerbiageRecord"
+                 xmlDataURL="verbiage.xml">
+       </xmlQuestion>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+ <!-- SiteVerbiage -->
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <xmlQuestion name="SiteVerbiage"
+                 displayName="Verbiage"
+                 recordClassRef="XmlRecordClasses.SiteVerbiageRecord"
+                 xmlDataURL="siteVerbiage.xml">
+       </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Strategies Help -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="StrategiesHelp" 
+                  displayName="Strategies Help"
+                  recordClassRef="XmlRecordClasses.StrategiesHelpRecord"
+                  xmlDataURL="apiHelp.xml">
+        </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- External links -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="ExternalLinks"
+                  displayName="Community Links"
+                  recordClassRef="XmlRecordClasses.ExternalLinksRecord"
+                  xmlDataURL="@PROJECT_ID@/externalLinks.xml">
+        </xmlQuestion>
+
+    </xmlQuestionSet>
+</wdkModel>

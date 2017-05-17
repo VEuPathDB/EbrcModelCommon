@@ -1,0 +1,65 @@
+#!/usr/bin/perl
+
+use strict;
+use File::stat;
+use lib "$ENV{GUS_HOME}/lib/perl";
+use ReFlow::DatasetClass::Dataset2PropsFile;
+
+my ($project) = @ARGV;
+usage() unless $project;
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+my $GUS_HOME = $ENV{GUS_HOME};
+my ($classes, $datasetClassCategories);
+
+print "$PROJECT_HOME\n";
+print "$GUS_HOME\n";
+
+my $cmd = "validateXmlWithRng  $GUS_HOME/lib/rng/datasetClass.rng $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml";
+system($cmd) && die "failed running '$cmd'\n";
+
+my $dir = "$PROJECT_HOME/$project/Datasets/lib/xml/datasets/";
+chdir $dir || die "Can't chdir to '$dir'\n";
+
+my $datasetCategoriesFilePath = "$PROJECT_HOME/EbrcModelCommon/Model/lib/wdk/ontology/datasetClassCategories.txt";
+
+my $categoryNamesFilePath = "$PROJECT_HOME/EbrcModelCommon/Model/lib/wdk/ontology/annotation.txt";
+
+my @datasets = `find . -name "*.xml" | grep -v Deprecated`;
+foreach my $datasetFile (@datasets) {
+  chomp $datasetFile;
+  my $propFileName = $datasetFile;
+  $propFileName =~ s/.xml$/.prop/;
+  my $propFilePath = "$GUS_HOME/lib/prop/datasetProperties/$propFileName";
+  my $datasetFilePath = "$PROJECT_HOME/$project/Datasets/lib/xml/datasets/$datasetFile";
+  my $propFileModTime = (stat $propFilePath)[9];
+  if (! -e $propFilePath || (stat $datasetFilePath)[9] > $propFileModTime ||
+      (stat $datasetCategoriesFilePath)[9] > $propFileModTime ||
+      (stat $categoryNamesFilePath)[9] > $propFileModTime) {
+    my $classesFile = "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml";
+    init($classesFile, $datasetCategoriesFilePath, $categoryNamesFilePath); # set $classes and $datasetClassCategories, if not already
+    print "workflowDataset2PropsFile \$PROJECT_HOME/$project/Datasets/lib/xml/datasets/$datasetFile \$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml\n";
+    ReFlow::DatasetClass::Dataset2PropsFile->dataset2PropsFile($datasetFilePath, $classes, $datasetClassCategories);
+
+  } else {
+    print "$propFileName already up to date\n";
+  }
+}
+
+sub init {
+  my ($classesFile, $datasetCategoriesFile, $categoryNamesFile) = @_;
+  if (!$classes) {
+    ($classes, $datasetClassCategories) =  ReFlow::DatasetClass::Dataset2PropsFile->initializeForDatasets2PropsFile($classesFile, $datasetCategoriesFile, $categoryNamesFile, 1);
+  }
+}
+
+sub usage {
+die  "
+Generate simple property files from dataset files for a provided project.
+
+Usage: propertiesFromDatasets projectName
+
+Where:
+   projectName: the project containing the dataset files, eg ApiCommonDatasets.  This project must contain Datasets/lib/xml where the dataset XML files are.
+";
+}

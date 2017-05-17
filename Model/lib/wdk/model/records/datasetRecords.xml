@@ -1,0 +1,991 @@
+<wdkModel>
+
+  <recordClassSet name="DatasetRecordClasses">
+
+
+<!-- ============== a class with only one member.  the primary key is always 111 ===========  -->
+
+   <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Data Set Release Notes">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+        <columnRef>release_notes_id</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="Release Notes ID">
+        <text>
+          <![CDATA[
+            $$release_notes_id$$
+          ]]>
+        </text>
+      </idAttribute>
+
+      <table name="ReleaseNotes"
+             displayName="Dataset Release Notes"
+             queryRef="DatasetReleaseNotesTables.ReleaseNotes">
+        <columnAttribute name="build_number" displayName="EuPathDB Build #"/>
+        <columnAttribute name="release_date" displayName="Release Date"/>
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="note" displayName="Notes"/>
+      </table>
+
+    </recordClass>
+
+<!-- ======================================= DATA SETS =========================================================== -->
+
+   <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset">
+           <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
+
+     <testParamValues >
+       <paramValue name="dataset_id">1</paramValue>
+     </testParamValues>
+
+      <!-- primary key definition
+           NOTE:  the name here is from apidbtuning.DatasetPresenter NOT apidb.datasource
+      -->
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+          <columnRef>dataset_id</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="Data Set"
+                   help="Click a data set to go to the full data set record">
+          <text>
+              <![CDATA[ $$display_name$$ ]]>
+          </text>
+      </idAttribute>
+
+
+      <!-- =============================================================== -->
+      <!--   Reporters -->  
+      <!-- =============================================================== -->
+
+          <reporter name="attributesTabular" displayName="Summary - tab delimited" scopes="results"
+                    implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
+             <property name="page_size">500</property>
+          </reporter>
+          <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results" excludeProjects="EuPathDB" 
+                    implementation="org.gusdb.wdk.model.report.TableTabularReporter">
+             <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
+          </reporter>
+
+          <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" scopes="record"
+                    implementation="org.gusdb.wdk.model.report.FullRecordReporter">
+          </reporter>
+
+          <reporter name="xml"  displayName="XML: choose from columns and/or tables" scopes=""
+                   implementation="org.gusdb.wdk.model.report.XMLReporter">
+          </reporter>
+          <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
+                    implementation="org.gusdb.wdk.model.report.JSONReporter">
+          </reporter>
+
+      <!-- =============================================================== -->
+      <!--   Filters -->
+      <!-- =============================================================== -->
+
+
+      <!-- =================================================================== -->
+      <!--  Text Attributes  ++++++++-->
+      <!-- =================================================================== -->
+    
+
+       <attributeQueryRef ref="DatasetAttributes.Organisms">
+         <columnAttribute name="organism_prefix" displayName="Organism(s) (source or reference)" 
+                          help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
+       </attributeQueryRef>
+
+<!--
+
+       <attributeQueryRef ref="DatasetAttributes.Category">
+         <columnAttribute name="category" displayName="Category" inReportMaker="false"
+                          help= "Datasets are assigned to categories based on the biological attributes of the data." />
+       </attributeQueryRef>
+-->
+
+       <attributeQueryRef ref="DatasetAttributes.NewCategory">
+         <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
+                          help= "Datasets are assigned to categories based on the biological attributes of the data." />
+       </attributeQueryRef>
+
+<!--
+      <attributeQueryRef ref="DatasetAttributes.ExpTechnique">
+         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that EuPathDB made to the data (e.g. link outs to other data bases.)"/>
+       </attributeQueryRef>
+-->
+
+       <attributeQueryRef ref="DatasetAttributes.All">
+         <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
+         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
+         <columnAttribute name="short_display_name" internal="true"/>
+         <columnAttribute name="description" displayName="Description" sortable="false"
+                          help="A full description of the dataset."/>
+         <columnAttribute name="protocol" internal="true"/>
+         <columnAttribute name="usage" internal="true"/>
+         <columnAttribute name="caveat" internal="true"/>
+         <columnAttribute name="acknowledgement" internal="true"/>
+         <columnAttribute name="is_species_scope" internal="true"/> 
+         <columnAttribute name="build_number_introduced" internal="true"/>
+         <columnAttribute name="type" internal="true"/>
+         <columnAttribute name="eupath_release" displayName="Release # / Date" 
+                          help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
+         <columnAttribute name="summary" displayName="Summary" sortable="false"
+                          help= "A short description of the dataset."/>
+         <columnAttribute name="release_policy"  displayName="Release Policy"
+                          help= "A request from the data provider stipulating the proper use of unpublished data. "  />
+       </attributeQueryRef>
+
+       <attributeQueryRef ref="DatasetAttributes.Contacts">
+         <columnAttribute name="contact" displayName="Contact" 
+                          help="The person or organization that serves as a source of information concerning this dataset."/>  
+         <columnAttribute name="institution" displayName="Contact Institution"
+                          help="The institution where the Contact is located. "/>  
+         <columnAttribute name="short_attribution" internal="true"/>
+       </attributeQueryRef>
+
+     
+
+
+        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact"/>
+
+
+<!-- to add a column to link somewhere, for example pubmed publication
+          <textAttribute name="" displayName="" help="">
+           <text>
+                 <![CDATA[
+                <a href="bla">linkName</a>
+                ]]>
+            </text>
+         </textAttribute>
+
+OR if the linkName and or URL require access to other attributes....also how to define the same column differently for downloads vs results page
+
+            <columnAttribute name="uniprot_id" internal="true" displayName="UniProt ID" inReportMaker="true" attributeCategory="ids"/>
+            <columnAttribute name="uniprot_id_internal"  internal="true" inReportMaker="false" />
+            <linkAttribute name="uniprot_link" displayName="UniProt ID" inReportMaker="false" sortable="false" attributeCategory="ids">
+                <displayText>
+                    <![CDATA[$$uniprot_id$$]]>
+                </displayText>
+                <url>
+                    <![CDATA[http://www.uniprot.org/uniprot/?query=$$uniprot_id_internal$$]]>
+                </url>
+            </linkAttribute>
+
+-->
+
+  <!-- =================================================================================== -->
+  <!-- TABLES ++++++++-->
+  <!-- ================================================================================= -->
+
+     <!-- =================================================================== -->
+     <!-- Example Graphs ++++++++-->
+     <!-- =================================================================== -->
+
+      <table name="ExampleGraphs"
+	     displayName="Example Graphs"
+	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
+  <textAttribute name="thumbnail" displayName="Preview">
+              <text>
+                   <![CDATA[
+                   <img src="/cgi-bin/dataPlotter.pl?project_id=@PROJECT_ID@&id=$$default_graph_id$$&type=$$module$$&fmt=png&template=$$template$$&h=35&w=70&compact=1&datasetId=$$dataset_id$$&default=1"/>
+                    ]]>
+              </text>
+            </textAttribute>
+            <columnAttribute internal="true" displayName="source_id" name="source_id"/>
+            <columnAttribute internal="true" displayName="project_id" name="project_id"/>
+            <columnAttribute internal="true" displayName="graph_ids" name="graph_ids"/>
+            <columnAttribute internal="true" displayName="module" name="module"/>
+            <columnAttribute internal="true" displayName="mainOpen" name="mainOpen"/>
+            <columnAttribute internal="true" displayName="dataOpen" name="dataOpen"/>
+            <columnAttribute displayName="Name" name="display_name"/>
+            <columnAttribute internal="true" displayName="description" name="description"/>
+            <columnAttribute internal="true" displayName="x_axis" name="x_axis"/>
+            <columnAttribute internal="true" displayName="y_axis" name="y_axis"/>
+            <columnAttribute internal="true" displayName="has_graph_data" name="has_graph_data"/>
+            <columnAttribute internal="true" displayName="has_meta_data" name="has_meta_data"/>
+            <columnAttribute internal="true" displayName="meta_data_categories" name="meta_data_categories"/>
+            <columnAttribute internal="true" displayName="dataset_name" name="dataset_name"/>
+            <columnAttribute internal="true" displayName="dataset_id" name="dataset_id"/>
+            <columnAttribute internal="true" displayName="is_graph_custom" name="is_graph_custom"/>
+       <!--     <columnAttribute displayName="Summary" name="summary"/>
+            <columnAttribute displayName="Attribution" name="short_attribution"/>
+            <columnAttribute displayName="Assay Type" name="assay_type"/>
+          -->  <columnAttribute internal="true"  displayName="Template" name="template"/>
+            <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
+         <propertyList name="excludeFromDumper"><value>true</value></propertyList>
+      </table>
+
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Contacts -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="Contacts"
+               displayName="Principal Investigator and Collaborators"
+               queryRef="DatasetTables.Contacts">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="contact_name" displayName="Investigator"/>
+            <columnAttribute name="affiliation" displayName="Affiliation"/>
+        </table>  
+
+       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Isolates / Samples -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!--
+        <table name="Isolates"
+               displayName="Isolates / Samples"
+               queryRef="DatasetTables.Isolates">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="source_id" inReportMaker="true" internal="true"/>
+            <columnAttribute name="strain" inReportMaker="true" internal="true"/>
+            <columnAttribute name="contact_name" inReportMaker="true" internal="true"/>
+            <linkAttribute name="isolate_link" inReportMaker="false" internal="false"
+                           displayName="Isolate Source Id">
+
+                 <displayText>
+                    <![CDATA[
+                    $$source_id$$ - ($$strain$$) $$contact_name$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[ @WEBAPP_BASE_URL@/record/isolate/$$source_id$$ ]]>
+                 </url>
+            </linkAttribute>
+        </table>  
+-->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Publications -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="Publications"
+               displayName="Associated Publications"
+               queryRef="DatasetTables.Publications">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
+            <columnAttribute name="citation" internal="true"/>
+
+
+            <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
+                           displayName="PubMed Link">
+
+                 <displayText>
+                    <![CDATA[
+                    $$citation$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                             http://www.ncbi.nlm.nih.gov/pubmed/$$pmid$$
+                    ]]>
+                 </url>
+            </linkAttribute>
+
+
+        </table>  
+
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- External Links -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="HyperLinks"
+               displayName="Link Outs"
+               queryRef="DatasetTables.HyperLinks">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="text" displayName="Description"/>
+            <columnAttribute name="url" internal="true"/>
+
+            <columnAttribute name="description" internal="true"/>
+
+
+            <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
+                           displayName="Link Out">
+
+                 <displayText>
+                    <![CDATA[
+                    $$text$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                          $$url$$
+                    ]]>
+                 </url>
+            </linkAttribute>
+
+
+        </table>  
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- History -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!--
+        <table name="History"
+               displayName="Release History"
+               queryRef="DatasetTables.History">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="build" displayName="EuPathDB Build #"/>
+            <columnAttribute name="release_date" displayName="Release Date"/>
+            <columnAttribute name="note" displayName="Note"/>
+        </table>  
+-->
+        <table name="GenomeHistory"
+               displayName="Data Set Release History"
+               queryRef="DatasetTables.GenomeHistory">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="build" displayName="EuPathDB Build"/>
+            <columnAttribute name="release_date" displayName="Release Date"/>
+            <columnAttribute name="release_number" displayName="Release"/>
+            <columnAttribute name="project" displayName="Project"/>
+            <columnAttribute name="genome_source" displayName="Genome Source"/>
+            <columnAttribute name="genome_version" displayName="Genome Version"/>
+            <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
+            <columnAttribute name="annotation_version" displayName="Structural Annotation Version"/>
+            <columnAttribute name="functional_annotation_source" displayName="Functional Annotation Source"/>
+            <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
+            <columnAttribute name="note" displayName="Note"/>
+        </table>  
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- References -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="References"
+               displayName="Searches that use this Data Set"
+               queryRef="DatasetTables.References">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="record_type" displayName="Record Type" />
+            <columnAttribute name="target_type" displayName="Type of Reference"/>
+            <columnAttribute name="target_name" displayName="Name"/>
+        </table>  
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Version   -->  
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+       <table name="Version"
+               displayName="Provider's Version"
+               queryRef="DatasetTables.Version">
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="organism" displayName="Organism"/>
+            <columnAttribute name="version" displayName="Version"/>
+        </table>  
+
+      <table name="DatasetGeneTable"
+             displayName="Dataset Gene Table" 
+             queryRef="DatasetTables.DatasetGeneTable">
+        <columnAttribute name="dataset_name" displayName="Dataset Name"/>
+        <columnAttribute name="source_id" displayName="Gene ID"/>
+        <columnAttribute name="fdiff" displayName="Fold Difference"/>
+        <columnAttribute name="min_value" displayName="Min value"/>
+        <columnAttribute name="min_timepoint" displayName="Min timepoint"/>
+        <columnAttribute name="max_value" displayName="Max value"/>
+        <columnAttribute name="max_timepoint" displayName="Max timepoint"/>
+      </table>
+        
+      </recordClass>
+    </recordClassSet>
+
+
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Attribute queries -->  
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"  
+              isCacheable='false'>
+
+      <testRowCountSql>
+        select count(*) from ApidbTuning.DatasetPresenter
+      </testRowCountSql>
+
+      <sqlQuery name="ExpTechnique" isCacheable="false">
+         <column name="exp_technique"/>
+         <column name="dataset_id"/>
+         <sql>
+           <![CDATA[
+                   select dsp.dataset_presenter_id as dataset_id, 
+                      nvl(
+                           nvl(
+                           decode(dsp.subtype,  -- using terms defined in Ontology OBI
+                                  'array','transcription profiling by array',
+                                  'rnaseq','RNA-seq',
+                                  'chip_chip','ChIP-chip',
+                                  'chipseq','ChIP-seq',
+                                  'rtpcr','transcription profiling by RT-PCR',
+                                  'sage_tag','serial analysis of gene expression',	
+                                  'smallNcRna','RNA-Seq',
+                                  'cgh_array','comparative genomic hybridization by array',
+                                  'copyNumberVariation','copy number variation profiling',
+                                  'originsOfReplication','DNA sequencing',
+	                                'immune_response','proteomic profiling by array',
+	                                '3k_chip','genotyping by SNP array',
+                                  'HTS_SNP','genotyping by high throughput sequencing',
+                                  'barcode','genotyping',
+                                  'hd_array','genotyping by SNP array',
+                                  'sequencing_typed','genotyping',
+                                  'quantitative','mass spectrometry',
+                                   null),
+                           decode(dsp.type,
+                                  'EST','EST sequencing', -- using terms defined in Experimental Factor Ontology (EFO) 
+                                 'SNP','genotyping', 
+                                 'protein_expression','mass spectrometry',
+                                 'dbxref', 'Link Outs',
+                                 null)
+                            ),
+
+                           decode(dsp.display_category,
+                                'External Links','Link Outs',
+                                'Genomes and Annotation: Microsatellite Markers','Microsatellite Markers',
+                                'Genomes and Annotation: Genetic Map','Genetic Map',
+                                'Genomes and Annotation: Old Annotations','Old Annotations',
+                                'Genomes and Annotation: TF Binding Sites','TF Binding Sites',
+                                'Genomes and Annotation:Organellar','Organellar',
+                                null)
+                      )
+                      as exp_technique
+                    from ApidbTuning.DatasetPresenter dsp
+                  ]]>
+            </sql>
+      </sqlQuery>
+
+
+      <sqlQuery name="Category" isCacheable="false">
+         <column name="category"/>
+         <column name="dataset_id"/>
+         <sql>
+           <![CDATA[
+                   select dsp.dataset_presenter_id as dataset_id, 
+                           nvl(  -- dsp.display_category, 
+                               decode(dsp.display_category,
+                                  'Comparative Genomics','Comparative Genomics',
+                                  'Compounds and Metabolic Pathways','Compounds and Metabolic Pathways',
+                                  'Compounds and Metabolic pathways','Compounds and Metabolic Pathways',
+                                  --'External Links','External Links',
+                                  'Function','Function',
+                                  'Gene Expression: eQTL','Transcript Expression',
+                                  'General','General',
+                                  'Genomes and Annotation','Genomes and Annotation',
+                                  'Genomes and Annotation: Genetic Map','Genomes and Annotation',
+                                  'Genomes and Annotation: Microsatellite Markers','Genomes and Annotation',
+                                  'Genomes and Annotation: Old Annotations','Genomes and Annotation',
+                                  'Genomes and Annotation: TF Binding Sites','Genomes and Annotation',
+                                  'Genomes and Annotation:Organellar','Genomes and Annotation',
+                                  'Genomics','Comparative Genomics',
+                                  'Host Response','Host Response',
+                                  'Interactions and Cellular Location','Interactions and Cellular Location',
+                                  'Ontology','Ontology',
+                                  'Phenotype','Phenotype',
+                                  'Population Biology','Population Biology',
+                                  'Protein Expression','Protein Expression',
+                                  'Protein Interactions','Protein Interactions',
+                                  'Protein Structure','Protein Structure',
+                                  'RNA Structure','RNA Structure',
+                                  'Subcellular localization','Subcellular Localization',
+                                  'Taxonomy and Phylogeny','Taxonomy and Phylogeny',
+                                  'Transcript Expression','Transcript Expression',
+                                   null),  
+                               decode(dsp.type,
+                                      'epitope', 'Genomes and Annotation',
+                                      -- 'dbxref', 'External Links',
+                                      'isolates', 'Population Biology',
+                                      'organellar_genome', 'Genomes and Annotation',
+                                      'genome', 'Genomes and Annotation',
+                                      'EST', 'Transcript Expression',
+                                      'alias', 'Genomes and Annotation',
+                                      'gene_annotation', 'Genomes and Annotation',
+                                      'subcellular_localization', 'Subcellular Localization',
+                                      -- 'aligned_sequence', 'Miscellaneous',
+                                      'orthology', 'Taxonomy and Phylogeny',
+                                      'function', 'Function',
+                                      -- 'external_sequences', 'External Sequences',
+                                      -- 'feature', 'Miscellaneous',
+                                      'sres', 'Ontology',
+                                      'transcript_expression', 'Transcript Expression',
+                                      'transcript_expression_platform', 'Transcript Expression',
+                                      'protein_expression', 'Protein Expression',
+                                      'isolates', 'Population Biology',
+                                      'SNP', 'Population Biology',
+                                      'population_biology', 'Population Biology',
+                                      'resequencing', 'Comparative Genomics', --TODO will need to decode based on subtype at some point
+                                      null)
+                                      ) as category
+                    from ApidbTuning.DatasetPresenter dsp
+                  ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="NewCategory" isCacheable="false">
+         <column name="newcategory"/>
+         <column name="dataset_id"/>
+         <sql>
+           <![CDATA[
+                       select dsp.dataset_presenter_id as dataset_id, 
+                              nvl(dsp.display_category, dsp.category) as newcategory
+                         from ApidbTuning.DatasetPresenter dsp
+                ]]>
+        </sql>
+      </sqlQuery>
+
+
+      <sqlQuery name="All"  isCacheable="false">
+         <column name="dataset_id"/>
+         <column name="dataset_name"/>
+         <column name="dataset_name_pattern"/>
+         <column name="display_name" ignoreCase="true"/>
+         <column name="short_display_name"/>
+         <column name="description"/>
+         <column name="summary"/>
+         <column name="protocol"/>
+         <column name="usage"/>
+         <column name="caveat"/>
+         <column name="acknowledgement"/> 
+         <column name="release_policy"/>
+         <column name="type"/>
+         <column name="is_species_scope"/>
+         <column name="build_number_introduced"/>
+         <column name="eupath_release" sortingColumn="build_number_introduced"/>
+            <sql>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   dsp.name as dataset_name, dsp.dataset_name_pattern,
+                   dsp.display_name,
+                   dsp.short_display_name, dsp.description,
+                   nvl(dsp.summary, dsp.description) as summary,
+                   dsp.protocol, dsp.usage, dsp.caveat, dsp.acknowledgement,
+                   dsp.release_policy, dsp.type,
+                   dsp.is_species_scope, 
+                   dsp.build_number_introduced,
+                   nvl2(
+                     -- NULL if build_number_introduced is 0 or 1
+                     DECODE(dsp.build_number_introduced,
+                            0, NULL,
+                            1, NULL,
+                               dsp.build_number_introduced),
+                     '@PROJECT_ID@ ' || bd.release_number || ' / ' || bd.release_date,
+                     NULL
+                   ) as eupath_release
+            from ApidbTuning.DatasetPresenter dsp left join ApidbTuning.EupathBuildDates bd
+               on dsp.build_number_introduced = bd.build_number
+              and bd.project = '@PROJECT_ID@'
+            ]]>
+            </sql>
+      </sqlQuery>
+
+
+
+      <sqlQuery name="Contacts"  isCacheable="false">
+	    <column name="dataset_id"/>
+		<column name="contact"/>
+        <column name="institution"/>
+        <column name="short_attribution"/>
+            <sql>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   CASE WHEN  dsc.name is not null THEN dsc.name
+                        WHEN dsc.affiliation is not null THEN dsc.affiliation
+                        ELSE '<a href="http://eupathdb.org/eupathdb/contact.do" class="new-window" data-name="contact_us">Contact EuPathDB for more details</a>' 
+                   END as contact,
+                    CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                        ELSE   dsc.affiliation END as institution,
+                    nvl(dsp.short_attribution, dsc.name) as short_attribution
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
+            where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
+            and dsc.is_primary_contact = 1
+ ]]>
+            </sql>
+      </sqlQuery>
+
+           
+
+
+      <sqlQuery name="Organisms"  isCacheable="false">
+        <column name="dataset_id"/>
+        <column name="organism_prefix"/>
+
+            <sql excludeProjects="EuPathDB">
+            <![CDATA[
+select dataset_id, listagg(org, '<br>') within group (order by org) as organism_prefix
+from (
+select distinct dsnt.dataset_presenter_id as dataset_id
+ , case when tn.name is null then null
+        else '<i>' || substr(tn.name, 1, 1) || '.' ||
+                                     substr(tn.name, instr(tn.name, ' ', 1, 1), decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)) - instr(tn.name, ' ', 1, 1)) || '</i>' ||
+                                     substr(tn.name, decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)))
+              end as org
+from apidbtuning.datasetnametaxon dsnt
+ , sres.taxonname tn
+ where dsnt.taxon_id = tn.taxon_id (+)
+ and tn.name_class (+) = 'scientific name'
+ )
+ group by dataset_id
+            ]]>
+            </sql>
+
+           <sql includeProjects="EuPathDB">
+            <![CDATA[
+          select distinct dataset_id, expects_multiple,
+                  case when organism_count = 1 and oa.organism_name is not null and expects_multiple = 0
+                       then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
+                                     substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>' ||
+                                     substr(oa.organism_name, decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)))
+                       when expects_multiple=1 and organism_count > 1 and (regexp_count(oa.organism_name, substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2)))) = organism_count
+                       then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
+                                     substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'
+                       else '' end as organism_prefix
+                       
+           from (
+            select dsp.dataset_presenter_id as dataset_id, dsp.type, 
+                     count(*) as organism_count,
+                     -- if the dataset_name_pattern starts w/ a % we won't append an organism prefix to the datasetDisplayName
+                     case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or dsp.type = 'isolates'
+                      then 1
+                      else 0
+                      end as expects_multiple
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
+            where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
+            group by dsp.type, dsp.dataset_presenter_id, dsp.dataset_name_pattern
+            )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
+            where dsp.dataset_id = dsnt.dataset_presenter_id (+)
+            and dsnt.taxon_id = oa.component_taxon_id (+)
+            ]]>
+            </sql>
+      </sqlQuery>
+
+    </querySet>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Table queries -->  
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <querySet name="DatasetTables" queryType="table" 
+              isCacheable='false'>
+
+      <sqlQuery name="Publications"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="pmid"/>
+            <column name="citation"/>
+            <sql>
+            <![CDATA[
+             select dataset_presenter_id as dataset_id, pmid, citation
+             from ApidbTuning.DatasetPublication
+             where pmid is not null
+            ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="History"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="build"/>
+            <column name="release_date"/>
+            <column name="note"/>
+            <sql>
+            <![CDATA[
+             select dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
+             from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
+             where dh.build_number = bd.build_number
+               and bd.project = '@PROJECT_ID@'
+             order by bd.build_number
+            ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="GenomeHistory"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="build"/>
+            <column name="release_date"/>
+            <column name="project"/>
+            <column name="release_number"/>
+            <column name="genome_source"/>
+            <column name="genome_version"/>
+            <column name="annotation_source"/>
+            <column name="annotation_version"/>
+            <column name="functional_annotation_source"/>
+            <column name="functional_annotation_version"/>
+            <column name="note"/>
+            <sql>
+            <![CDATA[
+             select dh.dataset_presenter_id as dataset_id, bd.build_number as build, to_char(bd.release_date, 'yyyy-mm-dd') as release_date, 
+                    bd.project, bd.release_number, dh.genome_source, 
+	                  dh.genome_version, dh.annotation_source, dh.annotation_version, 
+                    dh.functional_annotation_source, dh.functional_annotation_version,dh.note
+             from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
+             where dh.build_number = bd.build_number
+               and bd.project = '@PROJECT_ID@'
+             order by bd.build_number
+            ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="Contacts"  isCacheable='false'>
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="contact_name"/>
+            <column name="affiliation"/>
+            <sql>
+            <![CDATA[
+                     select dsp.name as dataset_name, dsp.dataset_presenter_id as dataset_id,
+                            dsc.name as contact_name, dsc.affiliation
+                     from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
+                     where dsp.dataset_presenter_id = dsc.dataset_presenter_id
+                     order by dsc.is_primary_contact desc, dsc.dataset_contact_id asc
+            ]]>
+            </sql>
+      </sqlQuery>
+
+
+
+      <sqlQuery name="Isolates"  isCacheable='false' excludeProjects="MicrobiomeDB">
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="source_id"/>
+            <column name="strain"/>
+            <column name="contact_name"/>
+            <sql excludeProjects="Piroplasma,EuPathDB">
+            <![CDATA[
+                     select ia.source_id, 
+                     ia.project_id, 
+                     ds.name as dataset_name, 
+                     iads.dataset_presenter_id as dataset_id,
+                     ia.strain, 
+                     listagg(iac.name, ',') within group (order by iac.name) as contact_name
+                     from study.Study s, apidb.Datasource ds, sres.ExternalDatabase d,
+                          sres.ExternalDatabaseRelease r, rad.StudyBiomaterial sb,
+                          ApidbTuning.PopsetAttributes ia,
+                          ApidbTuning.DatasetNameTaxon iads,
+                          ApidbTuning.DatasetContact iac
+                     where s.external_database_release_id = r.external_database_release_id
+                     and r.external_database_id = d.external_database_id
+                     and ds.name = d.name
+                     and ds.version = r.version
+                     and s.study_id = sb.study_id
+                     and sb.bio_material_id = ia.bio_material_id
+                     and ia.experiment_external_db_name = iads.name
+                     and iads.dataset_presenter_id = iac.dataset_presenter_id (+)
+                     group by iads.dataset_presenter_id, ia.source_id, ia.project_id, ds.name, ia.strain
+            ]]>
+            </sql>
+            <sql includeProjects="EuPathDB">
+            <![CDATA[
+                     select '' as source_id, 
+                     '' as project_id, 
+                     name as dataset_name, 
+                     dataset_presenter_id as dataset_id,
+                     '' as strain, 
+                     '' as  contact_name
+                     from ApidbTuning.DatasetPresenter ds
+                     where ds.name = 'no isolates for portal'
+            ]]>
+            </sql>
+
+      </sqlQuery>
+
+
+
+      <sqlQuery name="HyperLinks"  isCacheable='false'>
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="text"/>
+            <column name="url"/>
+            <column name="description"/>
+            <sql excludeProjects="EuPathDB">
+              SELECT dataset_id, dataset_name, text, url, description
+              FROM ApidbTuning.DatasetHyperLinks
+            </sql>
+
+            <sql includeProjects="EuPathDB">
+              SELECT dataset_id, dataset_name, text, url, description
+              FROM ApidbTuning.DatasetHyperLinks
+              WHERE url NOT LIKE '/cgi-bin/gbrowse/%'
+            </sql>
+      </sqlQuery>
+
+
+      <sqlQuery name="References"  isCacheable='false'>
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="record_type"/>
+            <column name="target_type"/>
+            <column name="target_name"/>
+            <sql>
+            <![CDATA[
+                     select dsp.dataset_presenter_id as dataset_id, dsp.name as dataset_name, ref.record_type, ref.target_type, 
+                     replace (ref.target_name, ':', '') as target_name
+                     from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
+                     where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                    order by dsp.name, ref.target_type, ref.record_type, ref.target_name
+            ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="Version"  isCacheable='false'>
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="version"/>
+            <column name="organism"/>
+            <sql excludeProjects="EuPathDB">
+            <![CDATA[
+                    with TaxonScientificName as (
+                    select taxon_id,name
+                    from sres.taxonname where 
+                    name_class = 'scientific name')
+                    select dataset_name, dataset_id,organism, version from (
+                      select distinct dnt.name as dataset_name, 
+                           dnt.dataset_presenter_id as dataset_id,  
+                           case when dnt.taxon_id = 0
+                           then 'ALL' 
+                           else tn.name 
+                           end as organism,
+                            replace (ds.version, '_gus4','') as version
+                      from TaxonScientificName tn, ApidbTuning.DatasetNameTaxon dnt, 
+                          apidb.datasource ds
+                      where dnt.taxon_id = tn.taxon_id(+)
+                      and   ds.name = dnt.name
+                      order by dnt.name
+                    )
+
+            ]]>
+            </sql>
+            <sql includeProjects="EuPathDB">
+              select dsp.dataset_presenter_id as dataset_id, dsp.name as dataset_name, '' as version, '' as organism
+              from ApidbTuning.DatasetPresenter dsp
+              where dsp.name = 'no version for portal'
+            </sql>
+      </sqlQuery>
+
+
+
+
+
+      <sqlQuery name="ExampleGraphs">
+            <column name="source_id" />
+            <column name="project_id" />
+            <column name="graph_ids" />
+            <column name="default_graph_id" />
+            <column name="module" />
+            <column name="mainOpen" />
+            <column name="dataOpen" />
+            <column name="display_name" />
+            <column name="description" />
+            <column name="x_axis" />
+            <column name="y_axis" />
+            <column name="has_graph_data"/>
+	    <column name="has_meta_data"/>
+	    <column name="meta_data_categories"/>
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="is_graph_custom"/>
+            <column name="template"/>
+
+            <sql includeProjects="EuPathDB">
+            <![CDATA[
+ select '' as source_id,
+            '' as project_id,
+            '' as graph_ids,
+            '' as default_graph_id,
+            '' as module,
+            '' as mainOpen,
+            '' as dataOpen,
+            '' as display_name,
+            '' as description,
+            '' as x_axis,
+            '' as y_axis,
+            '' as has_graph_data,
+            '' as has_meta_data,
+            '' as meta_data_categories,
+            '' as is_graph_custom,
+            '' as summary,
+            '' as short_attribution,
+            '' as assay_type,
+            '' as template,
+                     name as dataset_name, 
+                     dataset_presenter_id as dataset_id
+                     from ApidbTuning.DatasetPresenter ds
+                     where ds.name = 'no graphs for portal'
+
+            ]]>
+            </sql>
+
+            <sql excludeProjects="EuPathDB">
+            <![CDATA[
+
+select g.*, decode(lower(is_graph_custom), 'false', 1, 0) as template, regexp_substr(graph_ids, '[^,]*') as default_graph_id
+from (
+select 
+p.example_source_id as source_id,
+       '@PROJECT_ID@' as project_id,
+       graph_descrip.dataset as dataset_name,
+       p.example_source_id as graph_ids,
+       dnt.dataset_presenter_id as dataset_id,
+       '1' as has_graph_data, 
+       'FALSE' as has_meta_data,
+       '' as graph_organism,
+       'TRUE' as mainOpen, 
+       'FALSE' as dataOpen, 
+       '' as meta_data_categories,      
+       graph_descrip.*--,
+
+from ( 
+
+select '' as dataset,
+       '' as display_name,
+       '' as description,
+       '' as module,
+       '' as x_axis,
+       '' y_axis,
+       '' as is_graph_custom,
+       1 as order_num
+       
+       from dual
+      -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
+       ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
+       ApidbTuning.datasetnametaxon dnt
+where p.dataset = graph_descrip.dataset
+and graph_descrip.dataset = dnt.name) g
+             ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="DatasetGeneTable"  isCacheable='false'>
+        <column name="dataset_id"/>
+        <column name="source_id"/>
+        <column name="fdiff"/>
+        <column name="min_value"/>
+        <column name="min_timepoint"/>
+        <column name="max_value"/>
+        <column name="max_timepoint"/>
+        <sql>
+        <![CDATA[
+          select dataset_presenter_id as dataset_id, dataset_name, source_id,
+                 fdiff, min_value, min_timepoint, max_value, max_timepoint
+          from ApidbTuning.DatasetGeneList
+        ]]>
+       </sql>
+      </sqlQuery>
+
+    </querySet>
+
+    <querySet name="DatasetReleaseNotesTables" queryType="table" 
+              isCacheable='false'>
+
+
+      <sqlQuery name="ReleaseNotes"  isCacheable='false'>
+            <column name="release_notes_id"/>
+            <column name="build_number"/>
+            <column name="release_date"/>
+            <column name="dataset_id"/>
+            <column name="dataset_name"/>
+            <column name="note"/>
+            <sql>
+            <![CDATA[
+             select '111' as release_notes_id, bd.build_number, bd.release_date,
+                    dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, dh.note
+             from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,
+                  ApidbTuning.DatasetPresenter dp
+             where dh.build_number = bd.build_number
+             and dh.dataset_presenter_id = dp.dataset_presenter_id
+             order by dh.build_number
+            ]]>
+            </sql>
+      </sqlQuery>
+
+    </querySet>
+
+</wdkModel>

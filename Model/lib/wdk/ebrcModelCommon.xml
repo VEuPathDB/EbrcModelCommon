@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE xml [
+  <!ENTITY nbsp "&#160;">
+  <!ENTITY lt   "&#60;">
+  <!ENTITY gt   "&#62;">
+]>
+
+<wdkModel>
+
+
+    <!-- the order of datatypes is the order in which we show the      -->
+    <!--  tabs in All tab and Basket pages (in the strategy workspace) -->
+
+    <!-- XML -->
+    <import file="model/records/xmlRecords.xml"/>
+    <import file="model/questions/xmlQuestions.xml"/>
+
+
+    <!-- Categories -->
+    <!--import file="model/questions/categories.xml"/-->
+
+
+    <!-- UI Configuration -->
+   <!--
+    <import file="apiCommonModel/uiConfig.xml"/>
+    -->
+
+    <!-- Step Analysis Plugins -->
+    <!--
+    <import file="apiCommonModel/stepAnalysisPlugins.xml"/>
+    -->
+
+
+    <!-- Data Sets -->
+    <import file="model/questions/datasetQuestions.xml"/>
+    <import file="model/questions/queries/datasetQueries.xml"/>
+    <import file="model/questions/params/datasetParams.xml"/>
+    <import file="model/records/datasetRecords.xml"/>
+
+</wdkModel>

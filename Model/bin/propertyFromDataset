@@ -1,0 +1,30 @@
+#!/bin/bash
+set -e
+
+datasetFile=$1
+
+if [ ! $datasetFile ]
+then 
+  echo "
+Generate a simple property file from a dataset file for a provided project.
+
+Usage: propertiesFromDatasets projectName datasetFile
+
+Where:
+   projectName: the project containing the dataset files, eg ApiCommonDatasets.  This project must contain Datasets/lib/xml where the dataset XML files are.
+"
+  exit 1
+fi
+
+    # get the file name only, to be used to form the name of prop file
+    fileName=${datasetFile##*/}
+    propFile=${fileName%.xml}.prop   # replace .xml at end of name with .prop
+
+  if [ $datasetFile -nt "$GUS_HOME/lib/prop/datasetProperties/$propFile" ]
+  then
+      echo "workflowDataset2PropsFile $datasetFile \$PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetClass/classes.xml"
+      workflowDataset2PropsFile  $datasetFile $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetClass/classes.xml -skipXmlValidation
+  else 
+      echo "$propFile already up to date"
+  fi    
+

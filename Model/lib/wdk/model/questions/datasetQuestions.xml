@@ -1,0 +1,184 @@
+<wdkModel>
+
+  <questionSet name="DatasetQuestions" displayName="Search for Data sets">
+
+    <!-- ************************************************************ -->
+    <!-- SourceId -->  
+    <!-- ************************************************************ -->
+    
+    <question name="AllDatasets"
+      displayName="Data Sets"
+      shortDisplayName="All DS"
+      fullAnswer="true"
+      queryRef="DatasetIds.AllDatasets"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc,display_name asc" />
+      <description>
+         Find all data sets.
+      </description>
+    </question>
+     
+    <question name="DatasetsByDatasetNames"
+      displayName="Data Sets by dataset names"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByExternalDatabaseNames"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+      </description>
+    </question>
+   
+    <question name="DatasetsByReferenceName"
+      displayName="Data Sets used in a search"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByReferenceName"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+      </description>
+    </question>
+    
+    <question name="DatasetsByQuestionName"
+      displayName="Data Sets used in a search"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByQuestionName"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="display_name asc" />
+      <description>
+        Find data sets that are associated with a particular search.
+      </description>
+    </question>
+
+    
+    <question name="DatasetsById"
+      displayName="Data Sets by ID"
+      shortDisplayName="ID"
+      fullAnswer="true"
+      queryRef="DatasetIds.ById"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="display_name asc" />
+      <description>
+         Find data sets by ID
+      </description>
+    </question>
+
+    
+    <question name="DatasetsByRecordClass"
+      displayName="Data Sets used on a record page for an organism"
+      shortDisplayName="Record"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByRecordClass"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with a particular record type and organism, to be used in an a record page.
+      </description>
+    </question>
+
+    
+    <question name="DatasetsByType"
+      displayName="Data Sets used on a record page for a type"
+      shortDisplayName="Type"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByType"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with a particular data set type.
+      </description>
+    </question>
+
+    
+    <question name="DatasetsByTypeAndSubtype"
+      displayName="Data Sets used on a record page for a type and subtype"
+      shortDisplayName="TypeAndSubtype"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByTypeAndSubtype"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with a particular data set type and subtype
+      </description>
+    </question>
+
+    <question name="DatasetsByCategoryAndSubtype"
+      displayName="Data Sets used on a record page for a category and subtype"
+      shortDisplayName="CategoryAndSubtype"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByCategoryAndSubtype"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find data sets that are associated with a particular data set type and subtype
+      </description>
+    </question>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Text search -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+
+    <question name="DatasetsByTextSearch"
+      displayName="Text (keyword)"
+      shortDisplayName="Text"
+      fullAnswer="false"
+      queryRef="DatasetIds.ByKeyword"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true"
+      excludeProjects="MicrobiomeDB">
+      <attributesList
+         summary="display_name,contact,institution"
+         sorting="display_name asc" />
+        <summary>
+             Find data sets by keyword search. Use * as a wildcard
+         </summary>
+         <description>
+           <![CDATA[
+             Find data sets by keyword search. Use * as a wildcard
+          ]]>
+         </description>
+    </question>    
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- search of Gene List -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <question name="DatasetsByGeneList"
+      displayName="Data Sets by gene list"
+      shortDisplayName="GeneList"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByGeneList"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true" 
+      excludeProjects="MicrobiomeDB">
+      <attributesList
+         summary="hit_count,percent_count,display_name,contact,institution"
+         sorting="percent_count desc, display_name asc" />
+      <description>
+         Find RNA Seq data sets with high change of expression in the provided gene list.
+      </description>
+       <dynamicAttributes>
+         <columnAttribute name="hit_count" displayName="# Valid Input Genes"  align="center" help="Number of gene identifiers from the input list that could be mapped to this organism by checking for valid IDs or ortholog transform"/>
+         <columnAttribute name="percent_count" displayName="Match Percentage"  align="center" help="Percentage of matches from the Input Valid Gene List"/>
+      </dynamicAttributes>
+
+    </question>
+
+
+
+  </questionSet>
+</wdkModel>

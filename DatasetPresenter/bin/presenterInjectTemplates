@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+use FgpUtil::Util::CommandHelper;
+
+my $GUS_HOME = $ENV{GUS_HOME};
+my $CLASSPATH = &FgpUtil::Util::CommandHelper::getJavaClasspath($GUS_HOME);
+my $sysProps = &FgpUtil::Util::CommandHelper::getSystemProps($GUS_HOME, 'presenterInjectTemplates');
+my $args = &FgpUtil::Util::CommandHelper::getJavaArgs(@ARGV);
+
+my $cmd = "java $sysProps -classpath $CLASSPATH org.apidb.apicommon.datasetPresenter.TemplatesInjector $args";
+
+system($cmd);
+
+exit($? >> 8);

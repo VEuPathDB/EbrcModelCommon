@@ -1,0 +1,257 @@
+<wdkModel>
+
+  <!-- This set of queries is isCacheable=false because during development, and possibly into a release, we might add a dataset -->
+
+  <querySet name="DatasetIds" queryType="id" isCacheable="false">
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- Source id  -->
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <sqlQuery name="AllDatasets">
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+                   select dataset_presenter_id as dataset_id from apidbtuning.datasetpresenter
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByReferenceName">
+        <testParamValues>
+            <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>
+            <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+            <paramValue name="taxon">any</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.reference_name"/>
+        <paramRef ref="datasetParams.record_class"/>        
+        <paramRef ref="datasetParams.taxon"/>        
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
+                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
+                   where ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID 
+                   and ('any' = '$$taxon$$' or (dnt.taxon_id = 0 or dnt.taxon_id = $$taxon$$))
+                   and ref.target_name = $$reference_name$$
+                   and ref.record_type = $$record_class$$
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ById">
+        <testParamValues>
+            <paramValue name="dataset_id">DS_20c45d8ed1</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.dataset_id"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+          select distinct dataset_presenter_id as dataset_id
+          from APIDBTUNING.datasetnametaxon
+          where dataset_presenter_id in ($$dataset_id$$)
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    
+    <sqlQuery name="ByExternalDatabaseNames">
+        <testParamValues>
+            <paramValue name="dataset_name">taxonomy_RSRC</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.dataset_name"/>
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+          select distinct dataset_presenter_id as dataset_id
+          from APIDBTUNING.datasetnametaxon 
+          where name IN ($$dataset_name$$)
+          ]]>
+       </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="ByQuestionName">
+        <testParamValues>
+            <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>
+        </testParamValues>     
+
+        <paramRef ref="datasetParams.question_name"/>
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+                   select dsp.dataset_presenter_id as dataset_id 
+                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                   and ref.target_name = $$question_name$$
+                   and ref.target_type = 'question'
+          ]]>
+       </sql>
+    </sqlQuery>
+
+
+    <!-- JB:  Weird that profile_graph is included here -->
+    <sqlQuery name="ByRecordClass">
+        <testParamValues>
+          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.record_class"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                   and ref.record_type = $$record_class$$
+                   and ref.target_type IN ('table', 'attribute','profile_graph')
+          ]]>
+       </sql>
+
+    </sqlQuery>
+
+    <sqlQuery name="ByType">
+        <testParamValues>
+          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+          <paramValue name="dataset_type">transcript_expression</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.record_class"/>
+        <paramRef ref="datasetParams.dataset_type"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                   and ref.record_type = $$record_class$$
+                   and dsp.type = $$dataset_type$$
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByTypeAndSubtype">
+        <testParamValues>
+          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+          <paramValue name="dataset_type">transcript_expression</paramValue>
+          <paramValue name="dataset_subtype">array</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.record_class"/>
+        <paramRef ref="datasetParams.dataset_type"/>
+        <paramRef ref="datasetParams.dataset_subtype"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                   and ref.record_type = $$record_class$$
+                   and dsp.type = $$dataset_type$$
+                   and (dsp.subtype = $$dataset_subtype$$
+                       or dsp.display_category = $$dataset_subtype$$)
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByCategoryAndSubtype">
+        <testParamValues>
+          <paramValue name="dataset_category">transcript_expression</paramValue>
+          <paramValue name="dataset_subtype">array</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.dataset_category"/>
+        <paramRef ref="datasetParams.dataset_subtype"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id
+                   from apidbtuning.datasetpresenter dsp
+                   where nvl(dsp.display_category, dsp.category) = $$dataset_category$$
+                   and lower(dsp.subtype) like lower($$dataset_subtype$$)
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB">
+        <testParamValues>
+          <paramValue name="text_expression">GeneDB*</paramValue>
+        </testParamValues>
+
+        <paramRef ref="sharedParams.text_expression"/>
+        <column name="dataset_id"/>
+
+        <sql>
+          <![CDATA[
+                   select DISTINCT dataset_presenter_id as dataset_id 
+                   from apidbtuning.datasetdetail
+                   where contains(search_string,replace(lower($$text_expression$$),'*','%'),1)>0
+          ]]>
+       </sql>
+    </sqlQuery>
+                   
+
+    <sqlQuery name="ByGeneList" excludeProjects="MicrobiomeDB">
+        <paramRef ref="sharedParams.ds_gene_ids"/>
+        <paramRef ref="datasetParams.threshold"/>
+        <paramRef ref="datasetParams.orthologyFlag"/>
+
+        <column name="dataset_id"/>
+        <column name="hit_count"/>
+        <column name="percent_count"/>
+        <sql>
+          <![CDATA[
+       WITH inList as (
+         SELECT DISTINCT gi.gene,ga.organism,ga.orthomcl_name
+         FROM apidbtuning.GeneId gi, apidbtuning.geneattributes ga,
+         ($$ds_gene_ids$$)  ds
+         WHERE LOWER(gi.id) = LOWER(ds.gene_source_id)
+         AND ga.source_id = gi.gene
+         )
+         SELECT dsp.dataset_presenter_id  as dataset_id, 
+                 inTable.in_count as hit_count,
+                 (r.hit_count/inTable.in_count)*100 as percent_count
+          FROM  apidbtuning.DatasetPresenter dsp,(SELECT organism,count(*) AS in_count from inList group by organism) inTable,                
+                (SELECT  gl.organism, gl.dataset_name, COUNT(distinct gl.source_id) AS hit_count
+                 FROM ApidbTuning.DatasetGeneList gl, inList l
+                 WHERE l.gene = gl.source_id                 
+                GROUP BY gl.organism,gl.dataset_name) R
+          WHERE dsp.name = r.dataset_name
+          AND R.organism = inTable.organism
+          GROUP BY dsp.dataset_presenter_id, r.hit_count, inTable.in_count
+          HAVING (r.hit_count/inTable.in_count)*100 >= $$threshold$$
+          UNION
+          SELECT dsp.dataset_presenter_id  as dataset_id, 
+                 orTable.in_count as hit_count,
+                 (r.hit_count/orTable.in_count)*100 as percent_count
+          FROM  apidbtuning.DatasetPresenter dsp,
+                (SELECT gac.organism,count(distinct gac.source_id) AS in_count from inList lc, apidbtuning.geneattributes gac 
+                WHERE lc.orthomcl_name = gac.orthomcl_name
+                 AND gac.organism not in (select distinct organism from inList)
+                 group by gac.organism
+                ) orTable,               
+                (SELECT  gl.organism, gl.dataset_name, COUNT(distinct gl.source_id) AS hit_count
+                 FROM ApidbTuning.DatasetGeneList gl, inList l
+                 WHERE l.orthomcl_name = gl.orthomcl_name
+                 AND gl.organism not in (select distinct organism from inList)
+                GROUP BY gl.organism,gl.dataset_name) R
+          WHERE  $$orthologyFlag$$ = 'yes'
+          AND dsp.name = r.dataset_name
+          AND R.organism = orTable.organism
+          GROUP BY dsp.dataset_presenter_id, r.hit_count, orTable.in_count
+          HAVING (r.hit_count/orTable.in_count)*100 >= $$threshold$$
+          ]]>
+       </sql>
+    </sqlQuery>
+
+
+  </querySet>
+</wdkModel>
