@@ -342,6 +342,40 @@ WHERE
   </tuningTable>
 
 
+  <tuningTable name="ProtocolAppNodeRecord" prefixEnabled="false">
+   <comment>Input to pan meta data tables</comment>
+    <externalDependency name="study.protocolappnode"/>
+    <externalDependency name="sres.ontologyterm"/>
+    <externalDependency name="study.studylink"/>
+    <externalDependency name="study.study"/>
+    <externalDependency name="sres.externaldatabase"/>
+    <externalDependency name="sres.externaldatabaserelease"/>
+    <sql>
+      <![CDATA[
+create table ProtocolAppNodeRecord&1 as
+select distinct pan.PROTOCOL_APP_NODE_ID, pan.name as pan_name, ot.name as type
+from study.protocolappnode pan
+   , sres.ontologyterm ot
+   , study.studylink sl
+   , study.study s
+   , sres.externaldatabase d
+   , SRES.EXTERNALDATABASERELEASE r
+where ot.ONTOLOGY_TERM_ID = pan.type_id
+and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
+and sl.study_id = s.study_id
+and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
+and r.EXTERNAL_DATABASE_ID = d.external_database_id
+and d.name = 'JB_PRISM_META_DATA'
+and ot.name in ('study participant information',
+                'clinical visit information',
+                'specimen',
+                'dwelling',
+                'CDC light trap assay')
+      ]]>
+    </sql>
+  </tuningTable>
+
+
   <tuningTable name="ProtocolAppNodeResults" prefixEnabled="false">
     <comment>Table of protocol app node ids and the name of the result table where they are referenced
     </comment>
@@ -468,6 +502,7 @@ WHERE
     <comment>
     </comment>
     <internalDependency name="ProtocolAppNodeResults"/>
+    <internalDependency name="ProtocolAppNodeRecord"/>
     <internalDependency name="SampleId"/>
     <externalDependency name="apidb.Datasource"/>
     <externalDependency name="sres.ExternalDatabase"/>
@@ -606,6 +641,35 @@ select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attri
           and ds.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
  and (mt.name is not null or attribute_term.name = 'average mapping coverage' or attribute_term.name ='proportion mapped reads') --temporary may need adjusting for RNASeq      
+ UNION
+select pan.protocol_app_node_id, mt.name as category, attribute_term.name as term,
+               attribute_term.ontology_term_id as term_id, 
+               case when c.value is not null and LENGTH(TRIM(TRANSLATE(c.value, ' +-.0123456789', ' '))) is null 
+                    then to_char(nvl(round(c.value, 2), 0))
+                    else nvl(c.value, value_term.name)
+               end as value,
+               c.characteristic_id,
+               'TODO' as dataset_name, pan.name as pan_name, 'TODO' as type,
+'JB_PRISM_ONTOLOGY' as hierarchy_dataset_name, -- TODO... fix when reload
+               'TODO' as subtype, null as organism,
+               study_release.study_name, study_release.investigation_name
+        from protocolappnoderecord&1 panrec, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
+             sres.ontologyTerm mt, study.StudyLink sl,
+             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
+             (  select s.study_id, i.external_database_release_id,
+                       s.name as study_name, i.name as investigation_name
+                from study.Study s, study.Study i
+                where s.investigation_id = i.study_id
+             ) study_release
+        where pan.protocol_app_node_id = c.protocol_app_node_id
+          and pan.type_id = mt.ontology_term_id (+)
+          and c.ontology_term_id = value_term.ontology_term_id(+)
+          and c.qualifier_id = attribute_term.ontology_term_id(+)
+          and panrec.protocol_app_node_id = pan.protocol_app_node_id
+          and panrec.protocol_app_node_id = sl.protocol_app_node_id
+          and sl.study_id = study_release.study_id
+          and study_release.external_database_release_id = edr.external_database_release_id
+          and edr.external_database_id = ed.external_database_id
  ]]>
     </sql>
     <sql>
