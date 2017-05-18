@@ -1,0 +1,239 @@
+[URI of the OWL(RDF/XML) output file]
+http://purl.obolibrary.org/obo/eupath/category/categories.owl
+
+[Source ontology]
+EDAM
+
+[Low level source term URIs]
+
+http://edamontology.org/topic_3050 # Biodiversity
+http://edamontology.org/topic_3697 # Microbial Ecology
+http://edamontology.org/data_0916 # Gene Report
+http://edamontology.org/data_2711 # Genome Report
+http://edamontology.org/topic_0607 # Laboratory resources
+http://edamontology.org/topic_0102 # Linkage Mapping
+http://edamontology.org/topic_0632 # Probe Design
+http://edamontology.org/topic_0196 # Sequence Assembly
+http://edamontology.org/topic_0157 # Sequence composition, complexity and repeats
+http://edamontology.org/topic_0798 # Mobile Genetic Elements
+http://edamontology.org/topic_3125 # DNA Binding sites
+http://edamontology.org/topic_0749 # Transcrioption Factors and regulatory sites
+http://edamontology.org/topic_3127 # DNA replication and recombination
+http://edamontology.org/topic_0114 # Gene Structure
+http://edamontology.org/topic_3512 # Transcripts
+http://edamontology.org/topic_1302 # Poly A
+http://edamontology.org/topic_2754 # Introns
+http://edamontology.org/topic_1307 # Splice sites
+http://edamontology.org/topic_0081 # Structure Analysis
+http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_0159 # Sequence comparison
+http://edamontology.org/topic_3346 # Sequence search
+http://edamontology.org/data_2976 #Protein Sequence
+http://edamontology.org/data_2977 #NA Sequence
+
+http://edamontology.org/data_2044 #Sequence
+http://edamontology.org/topic_3068 #Literature 
+http://edamontology.org/topic_0199 #Genetic Variation
+http://edamontology.org/topic_0140 #Protein Localization
+http://edamontology.org/topic_1775 #Function analysis
+
+http://edamontology.org/topic_0128 #Protein interactions
+http://edamontology.org/topic_0089 #Ontology and terminology
+http://edamontology.org/topic_0108 #Protein expression
+http://edamontology.org/topic_0121 #Proteomics
+http://edamontology.org/topic_0123 #Protein properties
+http://edamontology.org/topic_0140 #Protein targeting and localization
+http://edamontology.org/topic_0219 #Annotation and curation
+http://edamontology.org/topic_0601 #Protein modifications
+http://edamontology.org/topic_0602 #Molecular interactions
+http://edamontology.org/topic_0637 #Taxonomy
+http://edamontology.org/topic_0753 #Metabolic pathways
+http://edamontology.org/topic_0754 #Signaling pathways
+http://edamontology.org/topic_0804 #Imunology
+http://edamontology.org/topic_2259 #Systems biology
+http://edamontology.org/topic_2885 # DNA polymorphism
+http://edamontology.org/topic_3172 #Metabolomics
+http://edamontology.org/topic_3174 #Metagenomics
+http://edamontology.org/topic_3175 #Structural variation
+
+http://edamontology.org/topic_3173 #Epigenomics
+http://edamontology.org/topic_3298 #Phenomics
+http://edamontology.org/topic_3299 #Evolutionary biology
+http://edamontology.org/topic_3308 #Transcriptomics
+http://edamontology.org/topic_3345 #Identity and mapping
+http://edamontology.org/topic_0160 # Sequence sites, features and motifs
+
+[Top level source term URIs and target direct superclass URIs]
+
+http://edamontology.org/topic_3050 # Biodiversity
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3697 # Microbial Ecology
+subClassOf http://www.w3.org/2002/07/owl#Thing
+
+http://edamontology.org/data_0916 # Gene Report
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/data_2711 # Genome Report
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0607 # Laboratory resources
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0102 # Linkage Mapping
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_0632 # Probe Design
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_0196 # Sequence Assembly
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_0157 # Sequence composition, complexity and repeats
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_0798 # Mobile Genetic Elements
+subClassOf http://edamontology.org/topic_0160 # Sequence sites, features and motifs
+http://edamontology.org/topic_3125 # DNA Binding sites
+subClassOf http://edamontology.org/topic_0160 # Sequence sites, features and motifs
+http://edamontology.org/topic_0749 # Transcrioption Factors and regulatory sites
+subClassOf http://edamontology.org/topic_3125 # DNA Binding sites
+http://edamontology.org/topic_3127 # DNA replication and recombination
+subClassOf http://edamontology.org/topic_3125 # DNA Binding sites
+http://edamontology.org/topic_0114 # Gene Structure
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3513 # Transcripts
+subClassOf http://edamontology.org/topic_0114 # Gene Structure
+http://edamontology.org/topic_1302 # Poly A
+subClassOf http://edamontology.org/topic_0114 # Gene Structure
+http://edamontology.org/topic_2754 # Introns
+subClassOf http://edamontology.org/topic_0114 # Gene Structure
+http://edamontology.org/topic_1307 # Splice sites
+subClassOf http://edamontology.org/topic_0114 # Gene Structure
+
+http://edamontology.org/topic_0081 # Structure Analysis
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0080 # Sequence Analysis
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0159 # Sequence comparison
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_3346 # Sequence search
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/topic_3068 #Literature 
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0140 #Protein Localization
+subClassOf http://edamontology.org/topic_0121 #Proteomics
+http://edamontology.org/topic_0128 #Protein interactions
+subClassOf http://edamontology.org/topic_0602
+
+http://edamontology.org/data_2044 #Sequence
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/data_2977 #NA Sequence
+subClassOf http://edamontology.org/data_2044 #Sequence
+http://edamontology.org/topic_0089 #Ontology and terminology
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0108 #Protein expression
+subClassOf http://edamontology.org/topic_0121 #Proteomics
+http://edamontology.org/topic_0121 #Proteomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0123 #Protein properties
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0140 #Protein targeting and localization
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_1775 #Function analysis
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0219 #Annotation and curation
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0601 #Protein modifications
+subClassOf http://edamontology.org/topic_0121 #Proteomics
+http://edamontology.org/topic_0602 #Molecular interactions
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0637 #Taxonomy
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0753 #Metabolic pathways
+subClassOf http://edamontology.org/topic_0602
+http://edamontology.org/topic_0754 #Signaling pathways
+subClassOf http://edamontology.org/topic_0602
+http://edamontology.org/topic_2259 #Systems biology
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3172 #Metabolomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3174 #Metagenomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3298 #Phenomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0199 #Genetic Variation
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_2885 # DNA polymorphism
+subClassOf http://edamontology.org/topic_0199
+http://edamontology.org/topic_3175 #Structural variation
+subClassOf http://edamontology.org/topic_0199
+http://edamontology.org/topic_3299 #Evolutionary biology
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3308 #Transcriptomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3173 #Epigenomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_3345 #Identity and mapping
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0804 #Imunology
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0160 # Sequence sites, features and motifs
+subClassOf http://edamontology.org/topic_0080 # Sequence Analysis
+http://edamontology.org/data_2976 #Protein Sequence
+subClassOf http://edamontology.org/data_2044 #Sequence
+
+
+[Source term retrieval setting]
+includeNoIntermediates
+
+[Source annotation URIs]
+http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym
+http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+http://www.geneontology.org/formats/oboInOwl#hasNarrowSynonym
+http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym
+http://www.w3.org/2000/01/rdf-schema#label
+http://www.geneontology.org/formats/oboInOwl#hasDefinition
+copyTo http://purl.obolibrary.org/obo/IAO_0000115
+
+[Source ontology]
+OBI
+
+[Low level source term URIs]
+http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
+http://purl.obolibrary.org/obo/OBI_0001204 #SNP Microarray
+http://purl.obolibrary.org/obo/OBI_0400148 #DNA Microarray
+http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
+http://purl.obolibrary.org/obo/OBI_0000716 #CHIP Seq
+http://purl.obolibrary.org/obo/OBI_0001248 # chip chip
+http://purl.obolibrary.org/obo/OBI_0001247 # NGS SNP
+http://purl.obolibrary.org/obo/OBI_0001393 # CGH Array
+http://purl.obolibrary.org/obo/OBI_0000537 # CNV
+
+[Top level source term URIs and target direct superclass URIs]
+http://purl.obolibrary.org/obo/OBI_0001204 #SNP Microarray
+subClassOf http://edamontology.org/topic_2885 # DNA polymorphism
+http://purl.obolibrary.org/obo/OBI_0001247 # NGS SNP
+subClassOf http://edamontology.org/topic_2885 # DNA polymorphism
+http://purl.obolibrary.org/obo/OBI_0400148 #DNA Microarray
+subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
+subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
+subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/OBI_0000537 # CNV
+subClassOf http://edamontology.org/topic_3175 #Structural variation
+http://purl.obolibrary.org/obo/OBI_0001393 # CGH Array
+subClassOf http://edamontology.org/topic_3175 #Structural variation
+http://purl.obolibrary.org/obo/OBI_0000716 #CHIP Seq
+subClassOf http://edamontology.org/topic_3173 #Epigenomics
+http://purl.obolibrary.org/obo/OBI_0001248 # chip chip
+subClassOf http://edamontology.org/topic_3173 #Epigenomics
+
+[Source annotation URIs]
+http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym
+http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+http://www.geneontology.org/formats/oboInOwl#hasNarrowSynonym
+http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym
+http://www.w3.org/2000/01/rdf-schema#label
+http://www.geneontology.org/formats/oboInOwl#hasDefinition
+
+
+
+
+
