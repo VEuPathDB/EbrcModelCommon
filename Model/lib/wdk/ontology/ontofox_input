@@ -6,6 +6,7 @@ EDAM
 
 [Low level source term URIs]
 
+http://edamontology.org/topic_3305 # Public health and epidemiology
 http://edamontology.org/topic_3050 # Biodiversity
 http://edamontology.org/topic_3697 # Microbial Ecology
 http://edamontology.org/data_0916 # Gene Report
@@ -64,6 +65,9 @@ http://edamontology.org/topic_3345 #Identity and mapping
 http://edamontology.org/topic_0160 # Sequence sites, features and motifs
 
 [Top level source term URIs and target direct superclass URIs]
+
+http://edamontology.org/topic_3305 # Public health and epidemiology
+subClassOf http://www.w3.org/2002/07/owl#Thing
 
 http://edamontology.org/topic_3050 # Biodiversity
 subClassOf http://www.w3.org/2002/07/owl#Thing
