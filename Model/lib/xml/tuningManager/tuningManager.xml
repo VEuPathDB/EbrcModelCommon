@@ -540,7 +540,7 @@ and ot.name in ('study participant information',
         create table PANProtocolMetadata&1 nologging as
    with node_inputs
         as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-            from ProtocolAppNodeIO
+            from ProtocolAppNodeIO&1
             start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults)
             connect by prior input_node_id = output_node_id
             )
