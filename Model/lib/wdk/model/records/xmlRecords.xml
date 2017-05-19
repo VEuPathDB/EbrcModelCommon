@@ -550,7 +550,7 @@
             </xmlTable>
 	 </xmlRecordClass>
 
-	 <xmlRecordClass includeProjects="FungiDB,HostDB,SchistoDB,InitDB,PiroplasmaDB,MicrobiomeDB"
+	 <xmlRecordClass includeProjects="FungiDB,HostDB,SchistoDB,InitDB,PiroplasmaDB,MicrobiomeDB,ClinEpiDB"
         	name="ExternalLinksRecord"
         	type="ExternalLinks"
         	idPrefix="EL."
