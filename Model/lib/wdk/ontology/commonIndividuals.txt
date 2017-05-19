@@ -1,0 +1,34 @@
+DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
+DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
+DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs						results	record	download
+DatasetRecordClasses.DatasetRecordClass.Contacts	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Contacts						results	record	download
+DatasetRecordClasses.DatasetRecordClass.Isolates	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Isolates						results	record	download
+DatasetRecordClasses.DatasetRecordClass.Publications	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Publications						results	record	download
+DatasetRecordClasses.DatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	HyperLinks						results	record	download
+DatasetRecordClasses.DatasetRecordClass.GenomeHistory	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	GenomeHistory						results	record	download
+DatasetRecordClasses.DatasetRecordClass.References	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	References						results	record	download
+DatasetRecordClasses.DatasetRecordClass.Version	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Version						results	record	download
+DatasetRecordClasses.DatasetRecordClass.DatasetGeneTable	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	DatasetGeneTable								download
+DatasetRecordClasses.DatasetRecordClass.primary_key			DatasetRecordClasses.DatasetRecordClass	attribute	primary_key						results	record	download
+DatasetRecordClasses.DatasetRecordClass.organism_prefix	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	
+DatasetRecordClasses.DatasetRecordClass.category	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	category						results	record	
+DatasetRecordClasses.DatasetRecordClass.dataset_id	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_id								
+DatasetRecordClasses.DatasetRecordClass.dataset_name	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name								
+DatasetRecordClasses.DatasetRecordClass.dataset_name_pattern	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name_pattern								download
+DatasetRecordClasses.DatasetRecordClass.display_name	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	display_name								download
+DatasetRecordClasses.DatasetRecordClass.short_display_name	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_display_name								download
+DatasetRecordClasses.DatasetRecordClass.description	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description						results	record	download
+DatasetRecordClasses.DatasetRecordClass.protocol	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	protocol								download
+DatasetRecordClasses.DatasetRecordClass.usage	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	usage								download
+DatasetRecordClasses.DatasetRecordClass.caveat	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	caveat								download
+DatasetRecordClasses.DatasetRecordClass.acknowledgement	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	acknowledgement								download
+DatasetRecordClasses.DatasetRecordClass.is_species_scope	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	is_species_scope								download
+DatasetRecordClasses.DatasetRecordClass.build_number_introduced	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	build_number_introduced								download
+DatasetRecordClasses.DatasetRecordClass.type	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	type								download
+DatasetRecordClasses.DatasetRecordClass.eupath_release	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eupath_release						results	record	download
+DatasetRecordClasses.DatasetRecordClass.summary	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	summary						results	record	download
+DatasetRecordClasses.DatasetRecordClass.release_policy	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	release_policy						results	record	download
+DatasetRecordClasses.DatasetRecordClass.contact	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	contact						results	record	download
+DatasetRecordClasses.DatasetRecordClass.institution	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	institution						results	record	download
+DatasetRecordClasses.DatasetRecordClass.short_attribution	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_attribution								download
+DatasetRecordClasses.DatasetRecordClass.exp_technique	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	exp_technique						results	record	download

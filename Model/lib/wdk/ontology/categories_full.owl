@@ -10,6 +10,7 @@
      xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
 
     <owl:Ontology rdf:about="http://purl.obolibrary.org/obo/eupath/category/categories_full.owl">
+       <owl:imports rdf:resource="http://purl.obolibrary.org/obo/eupath/category/commonIndividuals.owl"/>
        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/eupath/category/individuals.owl"/>
        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/eupath/category/categories.owl"/>
        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/eupath/category/annotation.owl"/>
