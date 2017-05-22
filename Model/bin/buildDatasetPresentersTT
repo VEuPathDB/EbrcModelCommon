@@ -66,6 +66,8 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
 
   if ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
+  } elsif ($lowerProject =~/clinepidb/) {
+    $presentersProjectBase = "ClinEpiPresenters";
   }
 
   system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
