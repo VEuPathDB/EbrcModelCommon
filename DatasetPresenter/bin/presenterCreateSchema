@@ -4,7 +4,7 @@ use strict;
 use lib "$ENV{GUS_HOME}/lib/perl";
 
 use DBI;
-use ApiCommonModel::Model::tmUtils;
+use EbrcModelCommon::Model::tmUtils;
 
 usage() unless scalar(@ARGV) >= 4;
 
@@ -14,7 +14,7 @@ usage() unless ($mode eq '-create' || $mode eq '-drop' || $mode eq '-dropConstra
 
 my $schema = "ApidbTuning";
 
-my $dbh = ApiCommonModel::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 
 $|=1;
 
