@@ -9,7 +9,7 @@ use Data::Dumper;
 
 use Getopt::Long qw(GetOptions);
 
-use EbrcCommonModel::Model::tmUtils;
+use EbrcModelCommon::Model::tmUtils;
 use CBIL::Util::PropertySet;
 
 use DBI;
@@ -28,7 +28,7 @@ die "required parameter missing" unless ($propfile && $instance && ($suffix || $
 
 my $PROJECT_HOME = $ENV{PROJECT_HOME};
 
-my $dbh = ApiCommonModel::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 
 $|=1;
 
