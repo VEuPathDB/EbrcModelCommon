@@ -1,4 +1,4 @@
-package ApiCommonModel::Model::tmUtils;
+package EbrcModelCommon::Model::tmUtils;
 
 use strict;
 use DBI;

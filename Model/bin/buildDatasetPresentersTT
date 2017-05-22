@@ -9,7 +9,7 @@ use Data::Dumper;
 
 use Getopt::Long qw(GetOptions);
 
-use ApiCommonModel::Model::tmUtils;
+use EbrcCommonModel::Model::tmUtils;
 use CBIL::Util::PropertySet;
 
 use DBI;
