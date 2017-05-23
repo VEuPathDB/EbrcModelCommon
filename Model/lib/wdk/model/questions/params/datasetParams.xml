@@ -1,0 +1,159 @@
+<wdkModel>
+
+  <paramSet name="datasetParams">
+        <stringParam name="reference_name"
+                     prompt="Reference name"
+                     number="false">
+            <help>The internal full name of a WDK question</help>
+        </stringParam>
+
+        <stringParam name="question_name"
+                     prompt="Question name"
+                     number="false">
+            <help>The internal full name of a WDK question</help>
+        </stringParam>
+
+        <stringParam name="record_class"
+                     prompt="Record class"
+                     number="false">
+            <help>The internal full name of a WDK record</help>
+        </stringParam>
+
+        <stringParam name="organism"
+                     prompt="Organism"
+                     number="false">
+            <help>The organsim name, in the form used in the resources xml files </help>
+        </stringParam>
+        
+        <stringParam name="dataset_category"
+                     prompt="Data set category"
+                     number="false">
+            <help>The category of data in the dataset </help>
+        </stringParam>
+        
+        <stringParam name="dataset_type"
+                     prompt="Data set type"
+                     number="false">
+            <help>The type of data in the dataset </help>
+        </stringParam>
+        
+        <stringParam name="dataset_subtype"
+                     prompt="Data set subtype"
+                     number="false">
+            <help>The technology used to obtain data in the dataset </help>
+        </stringParam>
+        
+        <stringParam name="threshold"
+                     prompt="Threshold >="
+                     number="true">
+            <help>Enter a non-negative number.</help> 
+            <suggest default="2.0"/>
+        </stringParam>
+
+    <enumParam name="orthologyFlag"
+                     prompt="Use orthology?"
+                     multiPick="false"
+                     quote="true">
+      <noTranslation value="true" includeProjects="EuPathDB" />
+      <help>Yes/No to use of orthology to match experiments</help>
+      <enumList>
+        <enumValue>
+          <term>yes</term>
+          <internal>yes</internal>
+        </enumValue>
+        <enumValue default="true">
+          <term>no</term>
+          <internal>no</internal>
+        </enumValue>  
+      </enumList>
+    </enumParam>
+
+
+
+
+        <flatVocabParam name="dataset_name"
+                     queryRef="datasetVQ.extDbNames"
+                     prompt="Data set INTERNAL name"
+                     multiPick="true">
+                     <help>
+                     The comma delimited list of data set names
+                     </help>    
+        </flatVocabParam>
+
+
+
+        <flatVocabParam name="taxon"
+                     queryRef="datasetVQ.taxon"
+                     prompt="Taxa associated with datsets"
+                     quote="false"
+                     multiPick="false">
+                     <help>
+                     </help>    
+        </flatVocabParam>
+
+
+
+
+
+
+        <flatVocabParam name="dataset_id"
+                     queryRef="datasetVQ.ids"
+                     prompt="Dataset ID input set"
+                     multiPick="true">
+            <help><![CDATA[Enter a comma-separated list of ids]]></help>
+        </flatVocabParam>
+  </paramSet>
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!--  Vocab queries-->  
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+ <querySet name="datasetVQ" queryType="vocab" isCacheable="true">
+
+   <sqlQuery name="taxon">
+            <column name="internal"/>
+            <column name="term"/>
+            <sql>
+         <![CDATA[
+select distinct organism_name as term, oa.COMPONENT_TAXON_ID as internal
+from apidbtuning.organismattributes oa
+, apidbtuning.datasetnametaxon dnt
+where dnt.taxon_id = oa.COMPONENT_TAXON_ID
+union
+select 'any', -1 from dual
+         ]]>
+            </sql>
+   </sqlQuery>
+
+   <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
+            <column name="internal"/>
+            <column name="term"/>
+            <sql>
+         <![CDATA[
+                  select distinct name as term, name as internal from apidb.datasource
+         ]]>
+            </sql>
+   </sqlQuery>
+
+   <processQuery name="extDbNames" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
+            <wsColumn name="internal" width="200"/>
+            <wsColumn name="term" width="200"/>
+   </processQuery>
+
+   <sqlQuery name="ids" excludeProjects="EuPathDB">
+             <column name="internal"/>
+             <column name="term"/>
+            <sql>
+         <![CDATA[
+                  select distinct dataset_presenter_id as term, dataset_presenter_id as internal from APIDBTUNING.datasetnametaxon
+         ]]>
+            </sql>
+   </sqlQuery>
+
+   <processQuery name="ids" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
+            <wsColumn name="term" width="200"/>
+            <wsColumn name="internal" width="200"/>
+   </processQuery>
+  </querySet>    
+
+</wdkModel>

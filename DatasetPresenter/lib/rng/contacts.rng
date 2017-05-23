@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="contacts">
+      <oneOrMore>
+        <element name="contact">
+          <element name="contactId">
+            <text/>
+          </element>
+          <element name="name">
+            <text/>
+          </element>
+          <element name="institution">
+            <text/>
+          </element>
+	  <optional>
+	    <element name="email">
+	      <text/>
+	    </element>
+	  </optional>
+	  <optional>
+	    <element name="address">
+	      <text/>
+	    </element>
+	  </optional>
+	  <optional>
+	    <element name="city">
+	      <text/>
+	    </element>
+	  </optional>
+	  <optional>
+	    <element name="state">
+	      <text/>
+	    </element>
+	  </optional>
+	  <optional>
+	    <element name="zip">
+	      <text/>
+	    </element>
+	  </optional>
+	  <optional>
+	    <element name="country">
+	      <text/>
+	    </element>
+	  </optional>
+	</element>
+      </oneOrMore>
+    </element>
+  </start>
+</grammar>
