@@ -41,7 +41,7 @@ public class GeneListTypeHandler extends UserDatasetTypeHandler {
   }
 
   @Override
-  public String[] getUninstallInAppDbCommand(Integer userDatasetId, String projectId) {
+  public String[] getUninstallInAppDbCommand(Long userDatasetId, String projectId) {
     String[] cmd = {"uninstallGeneListUserDataset", userDatasetId.toString(), projectId};
     return cmd;
   }
