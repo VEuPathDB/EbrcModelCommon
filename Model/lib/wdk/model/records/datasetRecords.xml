@@ -132,6 +132,8 @@
                           help= "A short description of the dataset."/>
          <columnAttribute name="release_policy"  displayName="Release Policy"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
+         <columnAttribute name="pmids" displayName="Publications" sortable="false"
+                          help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Contacts">
@@ -143,9 +145,9 @@
        </attributeQueryRef>
 
      
+        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
 
-
-        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact"/>
+        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
@@ -543,6 +545,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="is_species_scope"/>
          <column name="build_number_introduced"/>
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
+         <column name="pmids"/>
             <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
@@ -562,10 +565,16 @@ OR if the linkName and or URL require access to other attributes....also how to 
                                dsp.build_number_introduced),
                      '@PROJECT_ID@ ' || bd.release_number || ' / ' || bd.release_date,
                      NULL
-                   ) as eupath_release
-            from ApidbTuning.DatasetPresenter dsp left join ApidbTuning.EupathBuildDates bd
-               on dsp.build_number_introduced = bd.build_number
-              and bd.project = '@PROJECT_ID@'
+                   ) as eupath_release,
+                  pubs.pmids
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.EupathBuildDates bd,
+                 (select dataset_presenter_id,
+                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids
+                  from ApidbTuning.DatasetPublication
+                  group by dataset_presenter_id) pubs
+            where dsp.build_number_introduced = bd.build_number(+)
+              and bd.project(+) = '@PROJECT_ID@'
+              and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
             ]]>
             </sql>
       </sqlQuery>
