@@ -95,7 +95,7 @@ my $linksPath = "$TEMPDIR/etc/$linksFile";
 
 system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$dtdFile $dtdPath");
+system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/$dtdFile $dtdPath");
 system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$refFile $refPath");
 system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$linksFile $linksPath");
 
