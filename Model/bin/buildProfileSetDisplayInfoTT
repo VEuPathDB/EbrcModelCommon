@@ -32,7 +32,7 @@ GetOptions("propfile=s" => \$propfile,
 die "required parameter missing" unless ($propfile && $instance && $suffix);
 
 my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
-my $tabFileLocation = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/data/ProfileSetDisplayInfo.xls";
+my $tabFileLocation = "$ENV{PROJECT_HOME}/EbrcModelCommon/Model/data/ProfileSetDisplayInfo.xls";
 
 &run();
 

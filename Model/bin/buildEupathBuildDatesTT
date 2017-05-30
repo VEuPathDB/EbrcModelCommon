@@ -55,6 +55,9 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   if ($lowerProject =~/microbiomedb/) {
     $presentersProjectBase = "MicrobiomePresenters";
     last;
+  } elsif ($lowerProject =~/clineipdb/) {
+    $presentersProjectBase = "ClinEpiPresenters";
+    last;
   }
 }
 my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
