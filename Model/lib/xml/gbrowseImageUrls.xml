@@ -711,20 +711,21 @@
 <!-- MicrosporidiaDB -->
 
   <subtrackSet project="MicrosporidiaDB" name="main_gene" suffixes="_span;_gene">
-    <track>aalgPRA109</track>
-    <track>aalgPRA339</track>
-    <track>eaedUSNM41457</track>
     <track>ecunEC1</track>
     <track>ehelATCC50504</track>
     <track>eintATCC50506</track>
     <track>eromSJ2008</track>
     <track>ebieH348</track>
-    <track>mdapUGP3</track>
     <track>ncerBRL01</track>
     <track>nbomCQ1</track>
+    <track>vcorATCC50505</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="EdMiOrPs_gene" suffixes="_span;_gene">
+    <track>eaedUSNM41457</track>
+    <track>mdapUGP3</track>
     <track>ocolOC4</track>
     <track>pneuMK1</track>
-    <track>vcorATCC50505</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="Anncaliia_gene" suffixes="_span;_gene">
@@ -761,23 +762,33 @@
     <track>vculfloridensis</track>
   </subtrackSet>
 
-
   <url project="MicrosporidiaDB" type="synteny">
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
+    <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
+    <org organism="Ordospora colligata OC4" abbrev="ocolOC4" />
+    <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="EdMiOrPs_gene" />
+      <subtrack set="main_gene" />
+      <subtrack set="Nematocida_gene" />
+      <subtrack set="Anncaliia_gene" />
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
     <org organism="Encephalitozoon cuniculi EC1" abbrev="ecunEC1" />
     <org organism="Encephalitozoon hellem ATCC 50504" abbrev="ehelATCC50504" />
     <org organism="Encephalitozoon intestinalis ATCC 50506" abbrev="eintATCC50506" />
     <org organism="Encephalitozoon romaleae SJ-2008" abbrev="eromSJ2008" />
     <org organism="Enterocytozoon bieneusi H348" abbrev="ebieH348" />
-    <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
     <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
-    <org organism="Ordospora colligata OC4" abbrev="ocolOC4" />
-    <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="main_gene" />
+      <subtrack set="EdMiOrPs_gene" />
       <subtrack set="Nematocida_gene" />
     </track>
   </url>
@@ -790,6 +801,7 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Nematocida_gene" />
+      <subtrack set="EdMiOrPs_gene" />
       <subtrack set="SpTrVa_gene" />
     </track>
   </url>
@@ -801,6 +813,7 @@
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Anncaliia_gene" />
       <subtrack set="main_gene" />
+      <subtrack set="EdMiOrPs_gene" />
     </track>
   </url>
 
