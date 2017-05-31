@@ -653,7 +653,7 @@ select pan.protocol_app_node_id, mt.name as category, attribute_term.name as ter
 'JB_PRISM_ONTOLOGY' as hierarchy_dataset_name, -- TODO... fix when reload
                'TODO' as subtype, null as organism,
                study_release.study_name, study_release.investigation_name
-        from protocolappnoderecord&1 panrec, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
+        from ProtocolAppNodeRecord panrec, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
              sres.ontologyTerm mt, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
              (  select s.study_id, i.external_database_release_id,
