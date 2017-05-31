@@ -55,7 +55,7 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   if ($lowerProject =~/microbiomedb/) {
     $presentersProjectBase = "MicrobiomePresenters";
     last;
-  } elsif ($lowerProject =~/clineipdb/) {
+  } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
     last;
   }
