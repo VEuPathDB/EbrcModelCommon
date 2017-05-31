@@ -59,8 +59,8 @@
   <!-- oooooooooooooooooooooooooo  Installation  oooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
-  <target name="EbrcModelCommon-Installation" depends="EbrcModelCommon/Model-Installation,
-                                            EbrcModelCommon/DatasetPresenter-Installation,
+  <target name="EbrcModelCommon-Installation" depends="EbrcModelCommon/DatasetPresenter-Installation,
+                                            EbrcModelCommon/Model-Installation,
                                             ReFlow-Installation,
                                             WDK-Installation" >
 
