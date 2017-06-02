@@ -3,12 +3,12 @@
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="lib" path="lib/java/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/java/gdata-core-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/java/guava-11.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/java/jackson-annotations-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/java/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/java/jackson-databind-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/java/mybatis-3.2.8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wdk-model"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EbrcModelCommon DatasetPresenter"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

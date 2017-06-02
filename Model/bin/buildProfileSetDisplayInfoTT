@@ -1,0 +1,126 @@
+#!/usr/bin/perl
+
+use strict;
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use XML::Simple;
+
+use File::Basename;
+
+use DBI;
+use DBD::Oracle;
+
+use Getopt::Long qw(GetOptions);
+
+use Data::Dumper;
+
+use Spreadsheet::ParseExcel;
+
+use EbrcModelCommon::Model::tmUtils;
+
+my ($help, $propfile, $instance, $schema, $suffix, $debug);
+
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "debug!" => \$debug,
+           "help|h" => \$help,
+          );
+
+die "required parameter missing" unless ($propfile && $instance && $suffix);
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+my $tabFileLocation = "$ENV{PROJECT_HOME}/EbrcModelCommon/Model/data/ProfileSetDisplayInfo.xls";
+
+&run();
+
+sub run{
+
+  unless (-e $tabFileLocation)  {
+    die "Tab file :$tabFileLocation does not exist";
+  }
+
+  if($help) {
+    &usage();
+  }
+
+  my $failures = 0;
+
+  # parse Tab file
+
+  my $insertStatement = "INSERT INTO ProfileSetDisplayInfo$suffix(dataset_name, profile_set_name, profile_set_display_name) VALUES (?,?,?)";
+  my $insertRow = $dbh->prepare($insertStatement);
+  my @lines = [];
+  createEmptyTable($dbh,$suffix);
+  if ($tabFileLocation =~ /\.xls$/ || $tabFileLocation =~ /\.xlsx$/) {
+    eval {
+      require Spreadsheet::ParseExcel;
+    };
+    if($@) {
+      die "Spreadsheet::ParseExcel is a required package when loading from a .xls file";
+    }
+    else {
+      my $oExcel = new Spreadsheet::ParseExcel;
+      my $oBook = $oExcel->Parse($tabFileLocation);
+
+      for(my $iSheet=0; $iSheet < $oBook->{SheetCount} ; $iSheet++) {
+        my $oSheet = $oBook->{Worksheet}[$iSheet];
+        my $minRow = $oSheet->{MinRow};
+        my $maxRow = $oSheet->{MaxRow};
+        my $minCol = $oSheet->{MinCol};
+        my $maxCol = $oSheet->{MaxCol};
+        if($maxRow) {
+          for(my $i = $minRow; $i <= $maxRow; $i++) {
+            # skip comments / header
+            my @row;
+            for(my $j = $minCol; $j <= $maxCol; $j++) {
+              my $oCell = $oSheet->{Cells}[$i][$j];
+              my $cellValue = $oCell ? $oCell->Value : undef;
+              $cellValue =~ s/["\']//g;
+              push(@row, $cellValue);
+            }
+            push @lines, join("\t", @row);
+          }
+        }
+      }
+    }
+  }
+
+  foreach my $line (@lines) {
+    next if($line=~/^#/);
+
+    my ($ext_db_name, $profileSetName, $profileSetDisplayName ) = split("\t",$line) ;
+    if ($ext_db_name) {
+      $insertRow->execute($ext_db_name, $profileSetName, $profileSetDisplayName);
+    }
+  }
+    
+  $dbh->commit();
+  $dbh->disconnect();
+}
+
+sub createEmptyTable {
+     my ($dbh, $suffix) = @_;
+
+    $dbh->do(<<SQL) or die "creating table";
+     create table ProfileSetDisplayInfo$suffix (
+       dataset_name varchar2(255),
+	profile_set_name       varchar2(255),
+	profile_set_display_name       varchar2(255)
+  ) nologging
+SQL
+$dbh->{PrintError} = 0;
+}
+
+sub usage {
+  my $e = shift;
+  if($e) {
+    print STDERR $e . "\n";
+  }
+  print STDERR "usage:  buildSampleDisplayInfo.pl -instance <instance> -propfile <file> -suffix <NNNN> [ -schema <login> ] [ -debug ] [ -help ] \n";
+  exit;
+}
+
+1;

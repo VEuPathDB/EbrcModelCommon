@@ -3,7 +3,7 @@
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="datasetPresenters">
-      <oneOrMore>
+      <zeroOrMore>
         <element name="datasetPresenter">
           <attribute name="name" />
           <attribute name="projectName" />
@@ -129,7 +129,7 @@
 	    </element>
           </optional>
         </element>
-      </oneOrMore>
+      </zeroOrMore>
       <zeroOrMore>
         <element name="internalDataset">
           <attribute name="name"/>

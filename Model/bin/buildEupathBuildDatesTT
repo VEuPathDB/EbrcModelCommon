@@ -1,0 +1,132 @@
+#!/usr/bin/perl
+
+use strict;
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use DBI;
+use DBD::Oracle;
+use YAML qw/LoadFile/;
+use Getopt::Long qw(GetOptions);
+use Data::Dumper;
+use EbrcModelCommon::Model::tmUtils;
+
+my ($help, $propfile, $instance, $schema, $suffix, $debug);
+
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "debug!" => \$debug,
+           "help|h" => \$help,
+          );
+
+die "required parameter missing" unless ($propfile && $instance && $suffix);
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+$|=1;
+
+
+my $sql;
+if ($PROJECT_HOME =~ /\/eupa/ ){
+  $sql = <<SQL;
+    select project_id, lower(project_id) as lower_project_id
+      from (select distinct project_id from ApidbTuning.GenomicSeqAttributes)
+SQL
+} else {
+  $sql = <<SQL;
+    select project_id, lower(project_id) as lower_project_id
+      from (select distinct pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
+    where ed.row_project_id = pi.project_id)
+SQL
+}
+my $projectQuery = $dbh->prepare($sql);
+
+my $presentersProjectBase ="ApiCommonPresenters"; 
+
+$projectQuery->execute() or die "getting a list of project IDs";
+my @presenterFiles;
+
+while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
+  if ($lowerProject =~/microbiomedb/) {
+    $presentersProjectBase = "MicrobiomePresenters";
+    last;
+  } elsif ($lowerProject =~/clinepidb/) {
+    $presentersProjectBase = "ClinEpiPresenters";
+    last;
+  }
+}
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+my $yamlFile = "$ENV{PROJECT_HOME}/$presentersProjectBase/Model/lib/yaml/eupathBuildDates.yaml";
+my $build_number;
+my $release_date;
+my $project;
+my $release_number;
+
+&run();
+
+sub run{
+  unless(-e $yamlFile) { # yaml file is not found
+    die "ERROR: file \"$yamlFile\" not found";
+  }
+
+  &usage() if ($help);
+
+  my $insertStatement = "INSERT INTO EupathBuildDates$suffix (build_number, release_date, project, release_number) VALUES (?,?,?,?)";
+  my $insertRow = $dbh->prepare($insertStatement);
+  &createEmptyTable($dbh,$suffix);
+
+  open(my $fh, $yamlFile) || die "Can't open $yamlFile\n";
+  my $stuff = LoadFile($fh);
+
+	foreach my $buildDate (@{$stuff->{buildDates}}) {
+		$build_number = $buildDate->{build};
+		$release_date = $buildDate->{relDate};
+		for (keys %{$buildDate->{projects}}) {
+			$project = $_;
+			$release_number = $buildDate->{projects}->{$_};
+      $insertRow->execute($build_number, $release_date, $project, $release_number);
+		}
+	}
+
+  $dbh->commit();
+  $dbh->disconnect();
+}
+
+sub createEmptyTable {
+     my ($dbh, $suffix) = @_;
+
+    $dbh->do(<<SQL) or die "creating table";
+     create table EuPathBuildDates$suffix (
+	      build_number     varchar2(5),
+        release_date         date,
+        project    varchar2(20),
+        release_number    varchar2(10)
+  ) nologging
+SQL
+$dbh->{PrintError} = 0;
+
+}
+
+
+sub usage {
+  my $e = shift;
+  if($e) {
+    print STDERR $e . "\n";
+  }
+  print STDERR "
+Read \$PROJECT_HOME/ApiCommonPresenters/Model/lib/yaml/eupathBuildDates.yaml file which contains a mapping from
+EuPathDB build number to release dates, and write that info to the EupathBuildDates tuning table.
+
+usage:  buildEupathBuildDatesTT --propfile prop_file --instance instance --schema schema --suffix suffix  [--debug] [--help]
+";
+  exit;
+}
+
+1;
+

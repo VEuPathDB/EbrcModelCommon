@@ -56,6 +56,7 @@ mkdir "$TEMPDIR/etc";
 
 
 my $presentersProjectBase ="ApiCommonPresenters";
+my $modelProjectBase ="ApiCommonModel";
 
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
@@ -66,8 +67,10 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
 
   if ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
+    $modelProjectBase = "MicrobiomeModel";
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
+    $modelProjectBase = "ClinEpiModel";
   }
 
   system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
@@ -93,11 +96,11 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$dtdFile $dtdPath");
-system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$refFile $refPath");
-system("cp $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetPresenters/$linksFile $linksPath");
+system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/$dtdFile $dtdPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$refFile $refPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$linksFile $linksPath");
 
 my $contactsXmlFile = "contacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
