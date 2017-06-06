@@ -9,6 +9,7 @@
 	<classpathentry kind="lib" path="lib/java/mybatis-3.2.8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wdk-model"/>
+	<classpathentry kind="lib" path="/EbrcModelCommon DatasetPresenter/lib/java/guava-11.0.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EbrcModelCommon DatasetPresenter"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
