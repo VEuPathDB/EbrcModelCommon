@@ -483,7 +483,7 @@ and ot.name in ('study participant information',
            )
 select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
                attribute_term.ontology_term_id as term_id, 
-               case when c.value is not null and LENGTH(TRIM(TRANSLATE(c.value, ' +-.0123456789', ' '))) is null 
+               case when apidb.is_number(c.value) = 1
                     then to_char(nvl(round(c.value, 2), 0))
                     else nvl(c.value, value_term.name)
                end as value,
@@ -527,7 +527,7 @@ select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attri
  UNION
 select pan.protocol_app_node_id, mt.name as category, attribute_term.name as term,
                attribute_term.ontology_term_id as term_id, 
-               case when c.value is not null and LENGTH(TRIM(TRANSLATE(c.value, ' +-.0123456789', ' '))) is null 
+               case when apidb.is_number(c.value) = 1
                     then to_char(nvl(round(c.value, 2), 0))
                     else nvl(c.value, value_term.name)
                end as value,
@@ -708,6 +708,7 @@ WHERE
       ]]>
     </sql>
   </tuningTable>
+
 
   <tuningTable name="FallbackMetadata">
     <comment>
@@ -1027,6 +1028,45 @@ UNION
       ]]>
     </sql>
   </tuningTable>
+
+
+  <tuningTable name="MetadataOntology">
+    <comment>Wide, strongly-typed metadata ontology for new-style filter params
+    </comment>
+    <internalDependency name="MetadataSpec"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE MetadataOntology&1 NOLOGGING AS
+        SELECT SUBSTR(property, 1, 80) AS ontology_term_name,
+               SUBSTR(parent_ontology_term_name, 1, 80) AS parent_ontology_term_name,
+               SUBSTR(display_name, 1, 80) AS display_name, 
+               SUBSTR(description, 1, 500) AS description,
+               SUBSTR(units, 1, 40) AS units,
+               SUBSTR(organism, 1, 80) AS organism,
+               SUBSTR(dataset_name, 1, 80) AS dataset_name,
+               SUBSTR(dataset_type, 1, 40) AS dataset_type,
+               SUBSTR(subtype, 1, 40) AS subtype,
+               CASE WHEN type IS NULL THEN 'string' ELSE SUBSTR(type, 1, 10) END AS type,
+               CASE WHEN range = 'range' THEN 1 ELSE 0 END AS is_range, 
+               CASE WHEN type = 'number' THEN 1 ELSE null END AS precision
+        FROM (SELECT DISTINCT property, spec_property, spec_value, organism, dataset_name, subtype, type as dataset_type
+              FROM MetadataSpec)
+        PIVOT (MAX(spec_value)
+               FOR spec_property
+                 IN ('parent' AS parent_ontology_term_name, 'display' AS display_name,
+                     'description' as description, 'type' as type, 'units' as units,
+                     'filter' as range, 'categorized' as is_categorized))
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index moix1&1
+        on MetadataOntology&1 (dataset_name, organism, ontology_term_name)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
 
   <tuningTable name="TaxonAbundanceSpec">
     <internalDependency name="TaxonAbundance"/>
@@ -1453,12 +1493,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
            ),
         term_attributes
         AS (SELECT term,
-                   MAX(CASE
-                         -- leaving how shon had this... when value is null, treating as numeric
-                         WHEN value is null OR LENGTH(TRIM(TRANSLATE(value, ' +-.0123456789', ' '))) is null
-                           THEN 0
-                         ELSE 1
-                       END) AS is_string
+                   -- IS_NUMBER() returns 0 or 1. Flip its value by subtracting from 1
+                   MAX(1 - apidb.is_number(value)) AS is_string
             FROM metadata
             GROUP BY term
            )
