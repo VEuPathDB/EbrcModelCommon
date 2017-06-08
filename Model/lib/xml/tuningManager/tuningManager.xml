@@ -248,7 +248,7 @@ and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
 and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and d.name = 'JB_PRISM_META_DATA'
+and d.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
 and ot.name in ('study participant information',
                 'clinical visit information',
                 'specimen',
@@ -533,7 +533,7 @@ select pan.protocol_app_node_id, mt.name as category, attribute_term.name as ter
                end as value,
                c.characteristic_id,
                'TODO' as dataset_name, pan.name as pan_name, 'TODO' as type,
-'JB_PRISM_ONTOLOGY' as hierarchy_dataset_name, -- TODO... fix when reload
+'Ontology_prism_RSRC' as hierarchy_dataset_name, -- TODO... fix when reload
                'TODO' as subtype, null as organism,
                study_release.study_name, study_release.investigation_name
         from ProtocolAppNodeRecord panrec, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
