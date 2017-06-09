@@ -8,17 +8,19 @@
     <sql>
       <![CDATA[
 create table SampleId&1 as 
-select protocol_app_node_id, name from study.protocolappnode where isa_type = 'Sample'
+select pan.protocol_app_node_id, pan.name, pi.name as project_id from study.protocolappnode pan, core.projectinfo pi where pan.isa_type = 'Sample' and pan.ROW_PROJECT_ID = pi.PROJECT_ID
 union
-select pan.protocol_app_node_id, pan.name
+select pan.protocol_app_node_id, pan.name, pi.name as project_id
 from study.study s
    , sres.externaldatabase d
    , sres.externaldatabaserelease r
    , study.protocolappnode pan
    , study.studylink sl
+   , core.projectinfo pi
 where s.external_database_release_id = r.external_database_release_id
 and r.external_database_id = d.external_database_id
 and s.study_id = sl.study_id
+and pan.ROW_PROJECT_ID = pi.PROJECT_ID
 and sl.protocol_app_node_id = pan.protocol_app_node_id
 and d.name like '%isolates_genbank_RSRC'
       ]]>
@@ -248,7 +250,6 @@ and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
 and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and d.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
 and ot.name in ('study participant information',
                 'clinical visit information',
                 'specimen',
@@ -404,8 +405,6 @@ and ot.name in ('study participant information',
     <externalDependency name="study.ProtocolAppParam"/>
     <ancillaryTable name="ProtocolAppNodeIO"/>
     <ancillaryTable name="PANCharacteristicMetadata"/>
-    <ancillaryTable name="SampleCharMetadata"/>
-    <ancillaryTable name="SampleProtocolMetadata"/>
     <ancillaryTable name="SampleDownstream"/>
     <ancillaryTable name="PANExternalDatabaseRelease"/>
     <ancillaryTable name="PANParameterValues"/>
@@ -424,7 +423,10 @@ and ot.name in ('study participant information',
    with node_inputs
         as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
             from ProtocolAppNodeIO&1
-            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults)
+            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults
+                                          union 
+                                          select protocol_app_node_id from sampleid where project_id not in ('ClinEpiDB')
+                                          )
             connect by prior input_node_id = output_node_id
             )
          ,param_term_id
@@ -476,12 +478,20 @@ and ot.name in ('study participant information',
       <![CDATA[
         create table PANCharacteristicMetadata&1 nologging as
         with node_inputs
-        as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-            from ProtocolAppNodeIO&1
-            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults)
+        as (-- for nodes which have data and for sample/specimen nodes (excluding ClinEpi), get all upstream characteristics
+            select connect_by_root output_node_id as protocol_app_node_id, input_node_id
+            from protocolappnodeio&1
+            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults
+                                          union 
+                                          select protocol_app_node_id from sampleid where project_id not in ('ClinEpiDB')
+                                          )
             connect by prior input_node_id = output_node_id
+            union
+            select protocol_app_node_id, protocol_app_node_id as input_node_id from sampleid
+            union
+            select protocol_app_node_id, protocol_app_node_id as input_node_id from ProtocolAppNodeRecord where type != 'specimen'
            )
-select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
+select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_pan.isa_type as protocol_app_node_isa_type, pan.protocol_app_node_id as ancestor_protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
                attribute_term.ontology_term_id as term_id, 
                case when apidb.is_number(c.value) = 1
                     then to_char(nvl(round(c.value, 2), 0))
@@ -494,6 +504,8 @@ select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attri
                             then 'Ontology_icemr_RSRC'
                        when lower(ds.name) like 'otu%'
                             then 'Ontology_microbiomeHierarchy_RSRC'
+                       when ds.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                            then 'Ontology_prism_RSRC'
                        else null
                        end as hierarchy_dataset_name,
                ds.subtype, tn.name as organism,
@@ -501,7 +513,7 @@ select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attri
         from node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
              sres.ontologyTerm mt, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
-             apidb.Datasource ds, sres.TaxonName tn, study.ProtocolAppNode sample_pan,
+             apidb.Datasource ds, sres.TaxonName tn, study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
              (  select s.study_id, i.external_database_release_id,
                        s.name as study_name, i.name as investigation_name
                 from study.Study s, study.Study i
@@ -521,103 +533,11 @@ select sample_pan.protocol_app_node_id, nvl(mt.name, 'assay') as category, attri
           and edr.external_database_id = ed.external_database_id
           and ed.name = ds.name
           and node_inputs.protocol_app_node_id = sample_pan.protocol_app_node_id
+          and sample_pan.type_id = sample_ot.ontology_term_id (+)
           and ds.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
  and (mt.name is not null or attribute_term.name = 'average mapping coverage' or attribute_term.name ='proportion mapped reads') --temporary may need adjusting for RNASeq      
- UNION
-select pan.protocol_app_node_id, mt.name as category, attribute_term.name as term,
-               attribute_term.ontology_term_id as term_id, 
-               case when apidb.is_number(c.value) = 1
-                    then to_char(nvl(round(c.value, 2), 0))
-                    else nvl(c.value, value_term.name)
-               end as value,
-               c.characteristic_id,
-               'TODO' as dataset_name, pan.name as pan_name, 'TODO' as type,
-'Ontology_prism_RSRC' as hierarchy_dataset_name, -- TODO... fix when reload
-               'TODO' as subtype, null as organism,
-               study_release.study_name, study_release.investigation_name
-        from ProtocolAppNodeRecord panrec, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
-             sres.ontologyTerm mt, study.StudyLink sl,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
-             (  select s.study_id, i.external_database_release_id,
-                       s.name as study_name, i.name as investigation_name
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-             ) study_release
-        where pan.protocol_app_node_id = c.protocol_app_node_id
-          and pan.type_id = mt.ontology_term_id (+)
-          and c.ontology_term_id = value_term.ontology_term_id(+)
-          and c.qualifier_id = attribute_term.ontology_term_id(+)
-          and panrec.protocol_app_node_id = pan.protocol_app_node_id
-          and panrec.protocol_app_node_id = sl.protocol_app_node_id
-          and sl.study_id = study_release.study_id
-          and study_release.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
  ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-      create table SampleCharMetadata&1 nologging as
-     with node_inputs
-        as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-            from protocolappnodeio&1
-            start with output_node_id in (select protocol_app_node_id from sampleid)
-            connect by prior input_node_id = output_node_id
-           )
-        select sample_pan.protocol_app_node_id, mt.name as category, attribute_term.name as term,
-               attribute_term.ontology_term_id as term_id, nvl(c.value, value_term.name) as value, c.characteristic_id,
-                sample_pan.name as pan_name
-        from node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
-             sres.ontologyterm mt, 
-             sres.ontologyterm attribute_term,
-             study.ProtocolAppNode sample_pan
-        where pan.protocol_app_node_id = c.protocol_app_node_id
-          and pan.type_id = mt.ontology_term_id
-          and c.ontology_term_id = value_term.ontology_term_id(+)
-          and c.qualifier_id = attribute_term.ontology_term_id(+)
-          and node_inputs.input_node_id = pan.protocol_app_node_id
-          and node_inputs.protocol_app_node_id = sample_pan.protocol_app_node_id
-        union
-       select pan.protocol_app_node_id, mt.name, ot.name, ot.ontology_term_id, nvl(c.value, vot.name) as value, c.characteristic_id, pan.name
-        from study.protocolappnode pan
-           , sres.ontologyterm mt
-           , study.characteristic c
-           , sres.ontologyterm ot
-           , sres.ontologyterm vot
-        where pan.protocol_app_node_id in  (select protocol_app_node_id from sampleid)
-         and pan.protocol_app_node_id = c.protocol_app_node_id
-         and c.qualifier_id = ot.ontology_term_id
-         and c.ontology_term_id = vot.ontology_term_id (+)
-         and pan.type_id = mt.ontology_term_id
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-      create table SampleProtocolMetadata&1 nologging as
-        with node_inputs
-        as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-            from protocolappnodeio&1
-            start with output_node_id in (select protocol_app_node_id from sampleid)
-            connect by prior input_node_id = output_node_id
-           )
-        select node_inputs.protocol_app_node_id, 
-               p.name as category, 
-               pan.name as pan_name, 
-               pp.name as term,
-               pap.value, 
-               pap.protocol_app_param_id
-        from node_inputs
-           , study.protocolappparam pap
-           , study.protocolparam pp
-           , study.protocol p
-           , study.ProtocolAppNode pan
-        where node_inputs.protocol_app_id = pap.protocol_app_id
-          and pap.protocol_param_id = pp.protocol_param_id
-          and pp.protocol_id = p.protocol_id
-          and node_inputs.protocol_app_node_id = pan.protocol_app_node_id
-          and p.name not like '%::%' -- avoid Perl class names
-          and p.name not like '%data transformation'
-      ]]>
     </sql>
 
     <sql>
