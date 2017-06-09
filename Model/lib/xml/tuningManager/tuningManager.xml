@@ -1286,6 +1286,10 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
   <tuningTable name="SampleAttributes" alwaysUpdate="true">
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
+    <ancillaryTable name="ParticipantAttributes"/>
+    <ancillaryTable name="ClinicalVisitAttributes"/>
+    <ancillaryTable name="LightTrapAttributes"/>
+    <ancillaryTable name="DwellingAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
   </tuningTable>
 
