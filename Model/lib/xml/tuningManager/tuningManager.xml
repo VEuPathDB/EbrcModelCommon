@@ -740,9 +740,9 @@ UNION ALL
   <tuningTable name="MetadataSpec">
     <comment>
     </comment>
-    <internalDependency name="FallbackMetadata"/>
+<!--    <internalDependency name="FallbackMetadata"/>
     <internalDependency name="PANProtocolMetadata"/>
-    <internalDependency name="MetadataType"/>
+    <internalDependency name="MetadataType"/> -->
     <sql>
       <![CDATA[
         create table MetadataSpec&1 nologging as
@@ -750,14 +750,14 @@ UNION ALL
         with hierarchy_mapping
         as (select dataset_name,
                case
-                       when lower(ds.name) like '%microarrayantibody%'
+                       when lower(dataset_name) like '%microarrayantibody%'
                             then 'Ontology_icemr_RSRC'
-                       when lower(ds.name) like 'otu%'
+                       when lower(dataset_name) like 'otu%'
                             then 'Ontology_microbiomeHierarchy_RSRC'
-                       when ds.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                       when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                             then 'Ontology_prism_RSRC'
                        else null
-                       end as hierarchy_dataset_name,
+                       end as hierarchy_dataset_name
             from (  select dataset_name
                     from FallbackMetadata
                   union
@@ -835,8 +835,9 @@ UNION ALL
               from leaf_term
             ),
         fallback
-        as (select distinct dataset_name, type, subtype, organism, hierarchy_dataset_name, term_name as property
-            from FallbackMetadata
+        as (select distinct fm.dataset_name, type, subtype, organism, term_name as property, hierarchy_dataset_name
+            from FallbackMetadata fm, hierarchy_mapping hm
+            where fm.dataset_name = hm.dataset_name
            )
         -- END OF WITH CLAUSES (whew!)
         -- parent
