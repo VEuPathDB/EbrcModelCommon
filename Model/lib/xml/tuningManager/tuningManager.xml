@@ -683,12 +683,12 @@ WHERE
           and ds.taxon_id = tn.taxon_id(+)
           and ds.name = dsp.name (+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
-UNION
+UNION ALL
         -- special query for reference strain
         select ed.name as dataset_name, 'SNP' as type, 'HTS_SNP' as subtype, tn.name as organism,
                null as hierarchy_dataset_name,
-               o.strain_abbrev as pan_name, pan.protocol_app_node_id, 'dataset' as term_name,
-               study_release.study_name, study_release.investigation_name, 'Reference Genome'
+               o.strain_abbrev as pan_name, pan.protocol_app_node_id, 'parasite organism' as term_name,
+               study_release.study_name, study_release.investigation_name, tn.name as value
         from study.ProtocolAppNode pan, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, apidb.Organism o,
@@ -720,6 +720,7 @@ UNION
     <comment>
       Metadata table for new, wide, strongly-typed filter param
     </comment>
+    <internalDependency name="FallbackMetadata"/>
     <internalDependency name="MetadataType"/>
     <internalDependency name="PANProtocolMetadata"/>
     <sql>
@@ -744,10 +745,17 @@ UNION
               union
                 select  type, subtype, organism, dataset_name, hierarchy_dataset_name,
                        investigation_name, study_name, protocol_app_node_id, pan_name,
-                       'fallback' as category, 'fallback' as term, cast(null as number) as term_id, value
+                       null as category, term_name as term, cast(null as number) as term_id, value
                 from FallbackMetadata
              ) m
         where m.term = mt.property
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index md_ixone&1
+        on Metadata&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
+        tablespace indx
       ]]>
     </sql>
   </tuningTable>
@@ -1432,12 +1440,14 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
         AS ( SELECT 'age' AS property, 'number' AS type, 'range' AS filter FROM dual
             UNION
               SELECT 'name' AS property, 'string' AS type, 'membership' AS filter FROM dual
-            union   
+            UNION   
               SELECT 'studyid' AS property, 'string' AS type, 'membership' AS filter FROM dual
-           union   
+            UNION   
               SELECT 'taxon_id' AS property, 'number' AS type, 'membership' AS filter FROM dual
-          union
+            UNION
              SELECT 'proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
+            UNION
+              SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
            ),
         metadata
         AS (  SELECT term, value
