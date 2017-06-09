@@ -715,6 +715,42 @@ UNION
     </sql>
   </tuningTable>
 
+  <tuningTable name="Metadata">
+    <comment>
+      Metadata table for new, wide, strongly-typed filter param
+    </comment>
+    <internalDependency name="MetadataType"/>
+    <internalDependency name="PANProtocolMetadata"/>
+    <sql>
+      <![CDATA[
+        create table Metadata&1 nologging as
+        select m.type as dataset_type, subtype, organism, dataset_name, hierarchy_dataset_name,
+               investigation_name, study_name, protocol_app_node_id, pan_name,
+               category, term, term_id,
+               substr(value, 1, 250) as string_value,
+               case when mt.type = 'number' then to_number(m.value) else cast(null as number) end as number_value,
+               case when mt.type = 'date' then to_date(m.value, 'mm/dd/yyyy') else cast(null as date) end as date_value
+        from MetadataType mt,
+             (  select type, subtype, organism, dataset_name, hierarchy_dataset_name,
+                       investigation_name, study_name, protocol_app_node_id, pan_name,
+                       category, term, term_id, value
+                from PANProtocolMetadata
+              union
+                select type, subtype, organism, dataset_name, hierarchy_dataset_name,
+                       investigation_name, study_name, protocol_app_node_id, pan_name,
+                       category, term, term_id, value
+                from PANCharacteristicMetadata
+              union
+                select  type, subtype, organism, dataset_name, hierarchy_dataset_name,
+                       investigation_name, study_name, protocol_app_node_id, pan_name,
+                       'fallback' as category, 'fallback' as term, cast(null as number) as term_id, value
+                from FallbackMetadata
+             ) m
+        where m.term = mt.property
+      ]]>
+    </sql>
+  </tuningTable>
+
 
   <tuningTable name="MetadataSpec">
     <comment>
@@ -1413,23 +1449,25 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
            ),
         term_attributes
         AS (SELECT term,
-                   -- IS_NUMBER() returns 0 or 1. Flip its value by subtracting from 1
-                   MAX(1 - apidb.is_number(value)) AS is_string
+                   MIN(apidb.is_number(value)) AS is_number,
+                   MIN(apidb.is_date(value)) AS is_date
             FROM metadata
             GROUP BY term
            )
      SELECT * FROM override
  UNION ALL
    SELECT term AS property,
-          CASE is_string
-            WHEN 1
-              THEN 'string'
-            ELSE 'number'
+          CASE
+            WHEN is_date = 1
+              THEN 'date'
+            WHEN is_number = 1
+              THEN 'number'
+            ELSE 'string'
           END AS type,
-          CASE is_string
-            WHEN 1
-              THEN 'membership'
-            ELSE 'range' 
+          CASE
+            WHEN is_date = 1 OR is_number = 1
+              THEN 'range'
+            ELSE 'membership' 
           END AS filter
    FROM term_attributes
        ]]>
