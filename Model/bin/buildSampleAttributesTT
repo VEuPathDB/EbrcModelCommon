@@ -43,7 +43,7 @@ sub run{
       );
 
 
-  foreach my $type (keys @types) {
+  foreach my $type (keys %types) {
     my $record = $types{$type};
 
     # for SampleAttributes, we cannot rely on the type_id.  (lots of more specific types of samples like "blood specimen" ...)
