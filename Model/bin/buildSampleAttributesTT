@@ -132,7 +132,7 @@ SQL
 
     $dbh->commit();
 
-    createIndexes($dbh, $suffix);
+    createIndexes($dbh, $suffix, $record);
   }
 
   $dbh->disconnect();
