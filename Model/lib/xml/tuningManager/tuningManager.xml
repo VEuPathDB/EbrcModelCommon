@@ -740,9 +740,9 @@ UNION ALL
   <tuningTable name="MetadataSpec">
     <comment>
     </comment>
-<!--    <internalDependency name="FallbackMetadata"/>
+    <internalDependency name="FallbackMetadata"/>
     <internalDependency name="PANProtocolMetadata"/>
-    <internalDependency name="MetadataType"/> -->
+    <internalDependency name="MetadataType"/>
     <sql>
       <![CDATA[
         create table MetadataSpec&1 nologging as
