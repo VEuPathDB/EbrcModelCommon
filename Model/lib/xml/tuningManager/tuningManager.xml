@@ -436,13 +436,6 @@ and ot.name in ('study participant information',
               group by pp.protocol_param_id
               )
         select node_inputs.protocol_app_node_id, ot.protocol_app_node_type, pan.protocol_app_node_isa_type, ds.name as dataset_name,
-               case
-                       when lower(ds.name) like '%microarrayantibody%'
-                            then 'Ontology_icemr_RSRC'
-                       when lower(ds.name) like 'otu%'
-                            then 'Ontology_microbiomeHierarchy_RSRC'
-                       else null
-                       end as hierarchy_dataset_name,
                p.name as category, pan.name as pan_name, pp.name as term, param_term_id.ontology_term_id as term_id,
                pap.value, pap.protocol_app_param_id, ds.type, ds.subtype, tn.name as organism,
                study_release.study_name, study_release.investigation_name
@@ -500,15 +493,6 @@ select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type
                end as value,
                c.characteristic_id,
                ds.name as dataset_name, sample_pan.name as pan_name, ds.type,
-               case
-                       when lower(ds.name) like '%microarrayantibody%'
-                            then 'Ontology_icemr_RSRC'
-                       when lower(ds.name) like 'otu%'
-                            then 'Ontology_microbiomeHierarchy_RSRC'
-                       when ds.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
-                            then 'Ontology_prism_RSRC'
-                       else null
-                       end as hierarchy_dataset_name,
                ds.subtype, tn.name as organism,
                study_release.study_name, study_release.investigation_name
         from node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
@@ -650,13 +634,6 @@ WHERE
         create table FallbackMetadata&1 nologging as
         -- regular query for most datasets
         select ds.name as dataset_name, ds.type, ds.subtype, tn.name as organism,
-              case
-                       when lower(ds.name) like '%microarrayantibody%'
-                            then 'Ontology_icemr_RSRC'
-                       when lower(ds.name) like 'otu%'
-                            then 'Ontology_microbiomeHierarchy_RSRC'
-                       else null
-                       end as hierarchy_dataset_name,
                pan.name as pan_name, pan.protocol_app_node_id, 'dataset' as term_name,
                study_release.study_name, study_release.investigation_name, dsp.display_name as value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
@@ -726,24 +703,24 @@ UNION ALL
     <sql>
       <![CDATA[
         create table Metadata&1 nologging as
-        select m.type as dataset_type, subtype, organism, dataset_name, hierarchy_dataset_name,
+        select m.type as dataset_type, subtype, organism, dataset_name,
                investigation_name, study_name, protocol_app_node_id, pan_name,
                category, term, term_id,
                substr(value, 1, 250) as string_value,
                case when mt.type = 'number' then to_number(m.value) else cast(null as number) end as number_value,
                case when mt.type = 'date' then to_date(m.value, 'mm/dd/yyyy') else cast(null as date) end as date_value
         from MetadataType mt,
-             (  select type, subtype, organism, dataset_name, hierarchy_dataset_name,
+             (  select type, subtype, organism, dataset_name,
                        investigation_name, study_name, protocol_app_node_id, pan_name,
                        category, term, term_id, value
                 from PANProtocolMetadata
               union
-                select type, subtype, organism, dataset_name, hierarchy_dataset_name,
+                select type, subtype, organism, dataset_name,
                        investigation_name, study_name, protocol_app_node_id, pan_name,
                        category, term, term_id, value
                 from PANCharacteristicMetadata
               union
-                select  type, subtype, organism, dataset_name, hierarchy_dataset_name,
+                select  type, subtype, organism, dataset_name,
                        investigation_name, study_name, protocol_app_node_id, pan_name,
                        null as category, term_name as term, cast(null as number) as term_id, value
                 from FallbackMetadata
@@ -773,13 +750,15 @@ UNION ALL
         select * from (
         with hierarchy_mapping
         as (select dataset_name,
-                   case
-                       when lower(dataset_name) like '%microarrayantibody%'
+               case
+                       when lower(ds.name) like '%microarrayantibody%'
                             then 'Ontology_icemr_RSRC'
-                       when lower(dataset_name) like 'otu%'
+                       when lower(ds.name) like 'otu%'
                             then 'Ontology_microbiomeHierarchy_RSRC'
+                       when ds.name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                            then 'Ontology_prism_RSRC'
                        else null
-                       end as hierarchy_dataset_name
+                       end as hierarchy_dataset_name,
             from (  select dataset_name
                     from FallbackMetadata
                   union
