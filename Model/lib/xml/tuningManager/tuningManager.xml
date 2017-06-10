@@ -435,7 +435,7 @@ and ot.name in ('study participant information',
               where ot.name = pp.name
               group by pp.protocol_param_id
               )
-        select node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type, pan.isa_type, ds.name as dataset_name,
+        select node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type, pan.isa_type as protocol_app_node_isa_type, ds.name as dataset_name,
                p.name as category, pan.name as pan_name, pp.name as term, param_term_id.ontology_term_id as term_id,
                pap.value, pap.protocol_app_param_id, ds.type, ds.subtype, tn.name as organism,
                study_release.study_name, study_release.investigation_name
