@@ -36,6 +36,7 @@ and d.name like '%isolates_genbank_RSRC'
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
+    <externalDependency name="apidb.SequenceTaxon"/>
     <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="sres.TaxonName"/>
     <externalDependency name="sres.Taxon"/>
@@ -103,8 +104,15 @@ and organisms.organism = superkingdom.organism (+)
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>otu relative abundance values, aggegated at various taxonomic levels
     </comment>
-    <externalDependency name="results.OtuAbundance"/>
+    <externalDependency name="apidb.SequenceTaxon"/>
+    <externalDependency name="apidb.Datasource"/>
     <externalDependency name="dots.ExternalNaSequence"/>
+    <externalDependency name="results.OtuAbundance"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="study.ProtocolAppNode"/>
+    <externalDependency name="study.Study"/>
+    <externalDependency name="study.StudyLink"/>
     <internalDependency name="ExternalSequenceTaxonRank"/>
     <sql>
       <![CDATA[
