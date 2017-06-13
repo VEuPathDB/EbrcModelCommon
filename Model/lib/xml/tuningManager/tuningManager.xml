@@ -1299,6 +1299,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
 
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
+    <internalDependency name="GenomicSeqAttributes"/>
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
 
