@@ -4,7 +4,12 @@
   <tuningTable name="SampleId" prefixEnabled="false">
     <comment>Which protocol app nodes for sample record                                                                                                    
     </comment>
+    <externalDependency name="core.ProjectInfo"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.ProtocolAppNode"/>
+    <externalDependency name="study.Study"/>
+    <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
 create table SampleId&1 as 
@@ -31,7 +36,7 @@ and d.name like '%isolates_genbank_RSRC'
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
-    <externalDependency name="dots.ExternalNASequence"/>
+    <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="sres.TaxonName"/>
     <externalDependency name="sres.Taxon"/>
     <sql>
@@ -229,12 +234,12 @@ and organisms.organism = superkingdom.organism (+)
 
   <tuningTable name="ProtocolAppNodeRecord" prefixEnabled="false">
    <comment>Input to pan meta data tables</comment>
-    <externalDependency name="study.protocolappnode"/>
-    <externalDependency name="sres.ontologyterm"/>
-    <externalDependency name="study.studylink"/>
-    <externalDependency name="study.study"/>
-    <externalDependency name="sres.externaldatabase"/>
-    <externalDependency name="sres.externaldatabaserelease"/>
+    <externalDependency name="study.ProtocolAppNode"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="study.StudyLink"/>
+    <externalDependency name="study.Study"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
 create table ProtocolAppNodeRecord&1 as
@@ -707,7 +712,7 @@ UNION ALL
                category, term, term_id,
                substr(value, 1, 250) as string_value,
                case when mt.type = 'number' then to_number(m.value) else cast(null as number) end as number_value,
-               case when mt.type = 'date' then to_date(m.value, 'mm/dd/yyyy') else cast(null as date) end as date_value
+               case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from MetadataType mt,
              (  select type, subtype, organism, dataset_name,
                        investigation_name, study_name, protocol_app_node_id, pan_name,
@@ -779,16 +784,11 @@ UNION ALL
               select *
               from characteristic_metadata),
         ontology_tree_metadata
-        as (select distinct term_id, dataset_name, organism, type,subtype,
-                            case
-                              when lower(dataset_name) like '%microarrayantibody%'
-                                   then 'Ontology_icemr_RSRC'
-                              when lower(dataset_name) like 'otu%'
-                                   then 'Ontology_microbiomeHierarchy_RSRC'
-                              else null
-                            end as hierarchy_dataset_name
-            from PANCharacteristicMetadata
-            where lower(dataset_name) like '%microarrayantibody%' or lower(dataset_name) like 'otu%'
+        as (select distinct term_id, pcm.dataset_name, organism, type,subtype,
+                            hm.hierarchy_dataset_name
+            from PANCharacteristicMetadata pcm, hierarchy_mapping hm
+            where (lower(pcm.dataset_name) like '%microarrayantibody%' or lower(pcm.dataset_name) like 'otu%')
+              and pcm.dataset_name = hm.dataset_name
            ),
         leaf_term
         as (select distinct term_id, hierarchy_dataset_name
@@ -801,7 +801,8 @@ UNION ALL
             where external_database_release_id in (select edr.external_database_release_id
                                                    from sres.externaldatabase ed, sres.externaldatabaserelease edr
                                                    where ed.external_database_id = edr.external_database_id
-                                                     and ed.name in ('Ontology_icemr_RSRC', 'Ontology_microbiomeHierarchy_RSRC')
+                                                     and ed.name in ('Ontology_icemr_RSRC', 'Ontology_microbiomeHierarchy_RSRC',
+                                                                     'ISASimple_ICEMR_PRISM_surveillance_RSRC')
                                                   )
               and orel.subject_term_id != orel.object_term_id
             start with subject_term_id in (select term_id from leaf_term)
@@ -1265,6 +1266,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
   <tuningTable name="SampleAttributes" alwaysUpdate="true">
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
+    <internalDependency name="PANProtocolMetadata"/>
+    <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="ParticipantAttributes"/>
     <ancillaryTable name="ClinicalVisitAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
