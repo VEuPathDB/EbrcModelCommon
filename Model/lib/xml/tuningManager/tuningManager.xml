@@ -1432,7 +1432,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
       <![CDATA[
         CREATE TABLE MetadataType&1 NOLOGGING AS
         WITH override
-        AS ( SELECT 'age' AS property, 'number' AS type, 'range' AS filter FROM dual
+        AS ( SELECT 'something other than age' AS property, 'number' AS type, 'range' AS filter FROM dual
             UNION
               SELECT 'name' AS property, 'string' AS type, 'membership' AS filter FROM dual
             UNION   
