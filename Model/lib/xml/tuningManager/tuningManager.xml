@@ -792,11 +792,11 @@ UNION ALL
               select *
               from characteristic_metadata),
         ontology_tree_metadata
-        as (select distinct term_id, pcm.dataset_name, organism, type,subtype,
+        as (select distinct term_id, m.dataset_name, organism, type,subtype,
                             hm.hierarchy_dataset_name
-            from PANCharacteristicMetadata pcm, hierarchy_mapping hm
-            where (lower(pcm.dataset_name) like '%microarrayantibody%' or lower(pcm.dataset_name) like 'otu%')
-              and pcm.dataset_name = hm.dataset_name
+            from metadata m, hierarchy_mapping hm
+            where m.dataset_name = hm.dataset_name
+              and hm.hierarchy_dataset_name is not null
            ),
         leaf_term
         as (select distinct term_id, hierarchy_dataset_name
@@ -809,12 +809,13 @@ UNION ALL
             where external_database_release_id in (select edr.external_database_release_id
                                                    from sres.externaldatabase ed, sres.externaldatabaserelease edr
                                                    where ed.external_database_id = edr.external_database_id
-                                                     and ed.name in ('Ontology_icemr_RSRC', 'Ontology_microbiomeHierarchy_RSRC',
-                                                                     'ISASimple_ICEMR_PRISM_surveillance_RSRC')
+                                                     and ed.name in (select hierarchy_dataset_name
+                                                                     from hierarchy_mapping)
                                                   )
               and orel.subject_term_id != orel.object_term_id
             start with subject_term_id in (select term_id from leaf_term)
-            connect by subject_term_id = prior object_term_id) tree,
+            connect by subject_term_id = prior object_term_id
+                       and external_database_release_id = prior external_database_release_id) tree,
             sres.externaldatabase ed, 
             sres.externaldatabaserelease edr
             where tree.external_database_release_id = edr.external_database_release_id
@@ -837,7 +838,7 @@ UNION ALL
                         start with parent_term_id = ancestor.term_id
                         connect by prior child_term_id = parent_term_id)
                 and descendent.term_id = lt.term_id
-                and decode(descendent.dataset_name, lt.hierarchy_dataset_name, 1 ,0) = 1 
+                and decode(descendent.dataset_name, lt.hierarchy_dataset_name, 1, 0) = 1
                 and descendent.dataset_name = ancestor.dataset_name
             union
               select term_id as ancestor_term_id, term_id as leaf_term_id, hierarchy_dataset_name as dataset_name
@@ -850,13 +851,15 @@ UNION ALL
            )
         -- END OF WITH CLAUSES (whew!)
         -- parent
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, term as property, 'parent' as spec_property, category as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                 term as property, 'parent' as spec_property, category as spec_value
           from metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and hierarchy_dataset_name is null 
         -- leaf
         union
-          select organism, m.dataset_name, type, subtype, hierarchy_dataset_name, term as property, 'leaf' as spec_property, 'true' as spec_value
+          select organism, m.dataset_name, type, subtype, hierarchy_dataset_name, term as property,
+                           'leaf' as spec_property, 'true' as spec_value
           from metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
         -- filter
@@ -892,40 +895,47 @@ UNION ALL
             and m.term_id = ot.ontology_term_id
         -- parents: parent
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, category as property, 'parent' as spec_property, 'protocol' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          category as property, 'parent' as spec_property, 'protocol' as spec_value
           from protocol_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, category as property, 'parent' as spec_property, 'characteristic' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          category as property, 'parent' as spec_property, 'characteristic' as spec_value
           from characteristic_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         -- parents: display
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, category as property, 'display' as spec_property, category as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          category as property, 'display' as spec_property, category as spec_value
           from metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         -- grandparents: parent
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, 'protocol' as property, 'parent' as spec_property, '' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          'protocol' as property, 'parent' as spec_property, '' as spec_value
           from protocol_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, 'characteristic' as property, 'parent' as spec_property, '' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          'characteristic' as property, 'parent' as spec_property, '' as spec_value
           from characteristic_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         -- grandparents: display
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, 'protocol' as property, 'display' as spec_property, 'Protocol' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          'protocol' as property, 'display' as spec_property, 'Protocol' as spec_value
           from protocol_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
         union
-          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name, 'characteristic' as property, 'display' as spec_property, 'Characteristic' as spec_value
+          select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
+                          'characteristic' as property, 'display' as spec_property, 'Characteristic' as spec_value
           from characteristic_metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
             and (hierarchy_dataset_name is null)
@@ -939,13 +949,14 @@ UNION ALL
                sres.OntologyTerm child, sres.OntologyTerm parent
           where edge.child_term_id = lap.ancestor_term_id
             and lap.leaf_term_id = otm.term_id
-            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1 ,0) = 1
+            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
             and edge.child_term_id = child.ontology_term_id
             and edge.parent_term_id = parent.ontology_term_id(+)
-            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1 ,0) = 1
+            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
         -- fallback: parent
         union
-          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property, 'parent' as spec_property, '' as spec_value
+          select organism, dataset_name, type, subtype, hierarchy_dataset_name,
+                 property, 'parent' as spec_property, '' as spec_value
           from fallback
         -- fallback: display
         union
@@ -958,15 +969,18 @@ UNION ALL
           from fallback
         -- fallback: filter
         union
-          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property, 'filter' as spec_property, 'membership' as spec_value
+          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property,
+                 'filter' as spec_property, 'membership' as spec_value
           from fallback
         -- fallback: leaf
         union
-          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property, 'leaf' as spec_property, 'true' as spec_value
+          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property,
+                 'leaf' as spec_property, 'true' as spec_value
           from fallback
         -- fallback: type
         union
-          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property, 'type' as spec_property, 'string' as spec_value
+          select organism, dataset_name, type, subtype, hierarchy_dataset_name, property,
+                 'type' as spec_property, 'string' as spec_value
           from fallback
         ) 
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
