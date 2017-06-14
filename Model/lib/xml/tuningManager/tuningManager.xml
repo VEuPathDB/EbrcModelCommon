@@ -421,6 +421,7 @@ and ot.name in ('study participant information',
     <ancillaryTable name="SampleDownstream"/>
     <ancillaryTable name="PANExternalDatabaseRelease"/>
     <ancillaryTable name="PANParameterValues"/>
+    <ancillaryTable name="PANUpstream"/>
     <sql>
       <![CDATA[
         create table ProtocolAppNodeIO&1 nologging as
@@ -432,27 +433,40 @@ and ot.name in ('study participant information',
     </sql>
     <sql>
       <![CDATA[
+        create table PANUpstream&1 nologging as
+        select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
+        from ProtocolAppNodeIO&1
+        start with output_node_id in (  (  select protocol_app_node_id from ProtocolAppNodeResults
+                                         union
+                                           select protocol_app_node_id
+                                           from SampleId
+                                           where project_id not in ('ClinEpiDB')
+                                        )
+                                      minus -- omit Popset isolates
+                                        select pan.protocol_app_node_id
+                                        from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
+                                             sres.ExternalDatabaseRelease edr
+                                        where pan.external_database_release_id = edr.external_database_release_id
+                                          and edr.external_database_id = ed.external_database_id
+                                          and ed.name like '%_isolates_genbank_RSRC'
+                                     )
+        connect by prior input_node_id = output_node_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create table PANProtocolMetadata&1 nologging as
-   with node_inputs
-        as (select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-            from ProtocolAppNodeIO&1
-            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults
-                                          union 
-                                          select protocol_app_node_id from sampleid where project_id not in ('ClinEpiDB')
-                                          )
-            connect by prior input_node_id = output_node_id
-            )
-         ,param_term_id
-         as ( select pp.protocol_param_id, min(ot.ontology_term_id) as ontology_term_id  
-              from STUDY.PROTOCOLPARAM pp, SRES.ONTOLOGYTERM ot
-              where ot.name = pp.name
-              group by pp.protocol_param_id
-              )
+        with param_term_id
+             as (select pp.protocol_param_id, min(ot.ontology_term_id) as ontology_term_id  
+                 from STUDY.PROTOCOLPARAM pp, SRES.ONTOLOGYTERM ot
+                 where ot.name = pp.name
+                 group by pp.protocol_param_id
+                )
         select node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type, pan.isa_type as protocol_app_node_isa_type, ds.name as dataset_name,
                p.name as category, pan.name as pan_name, pp.name as term, param_term_id.ontology_term_id as term_id,
                pap.value, pap.protocol_app_param_id, ds.type, ds.subtype, tn.name as organism,
                study_release.study_name, study_release.investigation_name
-        from node_inputs, param_term_id, study.ProtocolAppParam pap, sres.ontologyterm ot,
+        from PANUpstream&1 node_inputs, param_term_id, study.ProtocolAppParam pap, sres.ontologyterm ot,
              study.ProtocolParam pp, study.Protocol p, study.StudyLink sl, 
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              apidb.Datasource ds, study.ProtocolAppNode pan, sres.TaxonName tn,
@@ -484,20 +498,6 @@ and ot.name in ('study participant information',
     <sql>
       <![CDATA[
         create table PANCharacteristicMetadata&1 nologging as
-        with node_inputs
-        as (-- for nodes which have data and for sample/specimen nodes (excluding ClinEpi), get all upstream characteristics
-            select connect_by_root output_node_id as protocol_app_node_id, input_node_id
-            from protocolappnodeio&1
-            start with output_node_id in (select protocol_app_node_id from ProtocolAppNodeResults
-                                          union 
-                                          select protocol_app_node_id from sampleid where project_id not in ('ClinEpiDB')
-                                          )
-            connect by prior input_node_id = output_node_id
-            union
-            select protocol_app_node_id, protocol_app_node_id as input_node_id from sampleid
-            union
-            select protocol_app_node_id, protocol_app_node_id as input_node_id from ProtocolAppNodeRecord where type != 'specimen'
-           )
 select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_pan.isa_type as protocol_app_node_isa_type, pan.protocol_app_node_id as ancestor_protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
                attribute_term.ontology_term_id as term_id, 
                case when apidb.is_number(c.value) = 1
@@ -508,7 +508,7 @@ select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type
                ds.name as dataset_name, sample_pan.name as pan_name, ds.type,
                ds.subtype, tn.name as organism,
                study_release.study_name, study_release.investigation_name
-        from node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
+        from PANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
              sres.ontologyTerm mt, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
              apidb.Datasource ds, sres.TaxonName tn, study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
