@@ -3035,7 +3035,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
 
-    <pluginArgs>--metaDataRoot @@dataDir@@/final --investigationBaseName investigation.xml --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --isSimpleConfiguration 1 --ontologyMappingFile @@dataDir@@/final/ontologyMapping.xml --ontologyMappingOverrideFileBaseName ontologyMappingOverride.xml</pluginArgs>
+    <pluginArgs>--metaDataRoot @@dataDir@@ --investigationBaseName investigation.xml --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --isSimpleConfiguration 1 --ontologyMappingFile @@dataDir@@/final/ontologyMapping.xml --ontologyMappingOverrideFileBaseName ontologyMappingOverride.xml</pluginArgs>
   </datasetLoader>
 
   </datasetClass>
@@ -3080,22 +3080,14 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
 
 
-  <datasetClass class="oboOntologyFromURL" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="name">&name;</prop>
-    <prop name="url"/>
 
-    <graphTemplateFile name="oboOntologies.xml"/>
 
-    <datasetLoader datasetName="OBO_Ontology_${name}_RSRC" version="dontcare"
-                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
-                   scope="global"
-                   type="sres"
-                   >
-      <wgetArgs url="${url}">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/${name}.owl </wgetArgs>
-      <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
+
+
+
+
+
+
 
 
 <!--This dataset class is created for IDO only. We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology. -->
@@ -3185,6 +3177,99 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
        <pluginArgs>--inFile @@dataDir@@/final/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+  <datasetClass class="updateOboOntology" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="isPreferred"></prop>
+
+    <graphTemplateFile name="updateOntologies.xml"/>
+
+    <datasetLoader datasetName="OBO_Ontology_INTERNAL_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+      <wgetArgs url="http://purl.obolibrary.org/obo/${name}.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/${name}.owl </wgetArgs>
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OBO_Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec 'OBO_Ontology_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="updateOntologyFromTabDelim" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isPreferred"></prop>
+
+    <graphTemplateFile name="updateOntologies.xml"/>
+
+    <datasetLoader datasetName="Ontology_INTERNAL_${name}_RSRC" version="${version}"
+                   plugin="GUS::Supported::Plugin::InsertOntologyFromTabDelim"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/ontology/${name}TabDelim/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/terms.txt"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/relationships.txt"/>
+
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+
+      <pluginArgs>--termFile @@dataDir@@/final/terms.txt --relFile @@dataDir@@/final/relationships.txt --extDbRlsSpec 'Ontology_${name}_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+<datasetClass class="updateOntologyFromOWL" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version"/>
+    <prop name="isPreferred"></prop>
+
+    <graphTemplateFile name="updateOntologies.xml"/>
+
+    <datasetLoader datasetName="Ontology_INTERNAL_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/ontology/${name}OWL/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+       <pluginArgs>--inFile @@dataDir@@/final/${name}.owl --extDbRlsSpec 'Ontology_${name}_RSRC' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+  <datasetClass class="updateEupathOntologyTerms" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="isPreferred"></prop>
+
+    <datasetLoader datasetName="OntologyTerm_INTERNAL_EuPath_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+      <wgetArgs url="https://cbilsvn.pmacs.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/development/eupath_merged.owl">-e robots=off --wait 1 -I /svnroot/ApiCommonData/trunk/Load/src/ontology/release/development/eupath_merged.owl --tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath_merged.owl </wgetArgs>
+
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@dataDir@@/eupath_merged.owl --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
   <datasetClass class="ontologySynonyms" category="" datasetFileHint="">
     <purpose></purpose>
