@@ -35,51 +35,60 @@ sub run{
 
   my $failures = 0;
 
-  my @fields;
-  my $fieldsSh = $dbh->prepare(<<SQL);
-      -- turn terms into column names
-      select distinct replace(replace(replace(replace(replace(replace(term, ' ', '_'), -- space -> underscore
-                                             '/', ''), -- slash -> nothing
-                                     '-', '_'),  -- hyphen -> underscore
-                             '''', ''), -- apostrophe -> nothing
-                         '(', ''), -- open paren -> nothing
-                     ')', '') as term -- close paren -> nothing
-      from (  select 'c_' || lower(term) as term
-              from apidbTuning.SampleCharMetadata
+  my %types = ("study participant information" => "Participant",
+               "clinical visit information" => "ClinicalVisit",
+               "CDC light trap assay" => "LightTrap",
+               "dwelling" => "Dwelling",
+               "specimen" => "Sample"
+      );
+
+
+  foreach my $type (keys %types) {
+    my $record = $types{$type};
+
+    # for SampleAttributes, we cannot rely on the type_id.  (lots of more specific types of samples like "blood specimen" ...)
+    my $orIsaSample = $record eq 'Sample' ? "or protocol_app_node_isa_type = 'Sample'" : "";
+
+    my @fields;
+    my $fieldsSh = $dbh->prepare(<<SQL);
+    -- turn terms into column names
+      select distinct term
+      from (  select 'c_' || ot.source_id as term
+              from PANCHARACTERISTICMETADATA m, sres.ontologyterm ot where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
             union
-              select 'p_' || lower(term) as term
-              from apidbTuning.SampleProtocolMetadata
-           ) where length(term) <= 30
+              select 'p_' || ot.source_id as term
+              from PANPROTOCOLMETADATA m, sres.ontologyterm ot  where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
+              )
 SQL
 
-  $fieldsSh->execute();
-  while(my ($field) = $fieldsSh->fetchrow_array()) {
-    push @fields, $field;
-  }
-  $fieldsSh->finish();
-
-  my @sortedFields = sort @fields;
-
-  createEmptyTable($dbh,$suffix, \@sortedFields);
-
+    $fieldsSh->execute();
+    while(my ($field) = $fieldsSh->fetchrow_array()) {
+      push @fields, $field;
+    }
+    $fieldsSh->finish();
+    
+    my @sortedFields = sort @fields;
+    
+    createEmptyTable($dbh,$suffix, \@sortedFields, $record);
+    
   my $fieldsString = join(",", @sortedFields);
+    
+    # prefix a comma if it isn't empty
+    $fieldsString = ", " . $fieldsString
+        if $fieldsString;
+    
+    my $bindVarLength = scalar(@sortedFields) + 5;
+    my @bindVars;
+    foreach(1..$bindVarLength) {
+      push @bindVars, "?";
+    }
+    my $bindVarsString = join(",", @bindVars);
+    
+    my $insertStatement = "INSERT INTO ${record}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
+    my $insertRow = $dbh->prepare($insertStatement);
 
-  # prefix a comma if it isn't empty
-  $fieldsString = ", " . $fieldsString
-    if $fieldsString;
 
-  my $bindVarLength = scalar(@sortedFields) + 5;
-  my @bindVars;
-  foreach(1..$bindVarLength) {
-    push @bindVars, "?";
-  }
-  my $bindVarsString = join(",", @bindVars);
-
-  my $insertStatement = "INSERT INTO SampleAttributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
-  my $insertRow = $dbh->prepare($insertStatement);
-
-
-  my $metaDataSql = "
+    my $metaDataSql = "
     select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
     from (select protocol_app_node_id,
 --               listagg(value, ',') within group (order by value) as value
@@ -87,11 +96,11 @@ SQL
                                                               '.quot;', '\"'),
                                                '.gt;', '>'),
                                 '.apos;', '''') as value
-          from (  select protocol_app_node_id, '\"c_' || replace(lower(term), ' ', '_') || '\"=> ''' || replace(value, '''', '\\''') || '''' as text
-                  from apidbTuning.SampleCharMetadata
+          from (  select m.protocol_app_node_id, '\"c_' || ot.source_id || '\"=> ''' || replace(m.value, '''', '\\''') || '''' as text
+                  from PANCHARACTERISTICMETADATA m, sres.ontologyterm ot where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
                 union
-                  select protocol_app_node_id, '\"p_' || replace(lower(term), ' ', '_') || '\"=> ''' || replace(value, '''', '\\''') || ''''
-                  from apidbTuning.SampleProtocolMetadata
+                  select m.protocol_app_node_id, '\"p_' || ot.source_id || '\"=> ''' || replace(m.value, '''', '\\''') || ''''
+                  from PANPROTOCOLMETADATA m, sres.ontologyterm ot  where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
                )
           group by protocol_app_node_id
          ) meta,
@@ -99,37 +108,38 @@ SQL
     where meta.protocol_app_node_id = pan.protocol_app_node_id
       and pan.type_id = ot.ontology_term_id
 ";
-  print STDERR "metaDataSql-->>\n$metaDataSql\n<<-- end of metaDataSql\n"
-    if $debug;
+    print STDERR "metaDataSql-->>\n$metaDataSql\n<<-- end of metaDataSql\n"
+        if $debug;
 
-  my $metaSh = $dbh->prepare($metaDataSql);
-  $metaSh->execute();
-  while(my ($id, $name, $desc, $typeId, $type, $metadata) = $metaSh->fetchrow_array()) {
+    my $metaSh = $dbh->prepare($metaDataSql);
+    $metaSh->execute();
+    while(my ($id, $name, $desc, $typeId, $type, $metadata) = $metaSh->fetchrow_array()) {
 
-    my $hashString = "{ $metadata }";
-    print STDERR "hashString-->>\n$hashString\n<<-- end of hashString\n"
-      if $debug;
-    my $hashref = eval $hashString;
+      my $hashString = "{ $metadata }";
+      print STDERR "hashString-->>\n$hashString\n<<-- end of hashString\n"
+          if $debug;
+      my $hashref = eval $hashString;
 
-    if($@) {
-      die "Error evaluating string: $@";
+      if($@) {
+        die "Error evaluating string: $@";
+      }
+
+      my @values = map { $hashref->{$_} } @sortedFields;
+
+      $insertRow->execute($id, $name, $desc, $typeId, $type, @values);
     }
+    $insertRow->finish();
 
-    my @values = map { $hashref->{$_} } @sortedFields;
+    $dbh->commit();
 
-    $insertRow->execute($id, $name, $desc, $typeId, $type, @values);
+    createIndexes($dbh, $suffix, $record);
   }
-  $insertRow->finish();
-
-  $dbh->commit();
-
-  createIndexes($dbh, $suffix);
 
   $dbh->disconnect();
 }
 
 sub createEmptyTable {
-     my ($dbh, $suffix, $fields) = @_;
+     my ($dbh, $suffix, $fields, $record) = @_;
 
      my $fieldsString = join(",\n", map {"$_ varchar2(2000)"} @$fields);
      # prefix a comma if it isn't empty
@@ -137,7 +147,7 @@ sub createEmptyTable {
        if $fieldsString;
 
     $dbh->do(<<SQL) or die "creating table";
-     create table SampleAttributes$suffix (
+     create table ${record}Attributes$suffix (
        protocol_app_node_id number(10),
        name varchar2(200),
        description varchar2(3000),
@@ -150,17 +160,17 @@ $dbh->{PrintError} = 0;
 }
 
 sub createIndexes {
-     my ($dbh, $suffix) = @_;
+     my ($dbh, $suffix, $record) = @_;
 
     $dbh->do(<<SQL) or die "creating index";
-      create index sampatt_panid_ix$suffix
-      on SampleAttributes$suffix (protocol_app_node_id, name)
+      create index ${record}att_panid_ix$suffix
+      on ${record}Attributes$suffix (protocol_app_node_id, name)
       tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
-      create index sampatt_name_ix$suffix
-      on SampleAttributes$suffix (name, protocol_app_node_id)
+      create index ${record}patt_name_ix$suffix
+      on ${record}Attributes$suffix (name, protocol_app_node_id)
       tablespace indx
 SQL
 
