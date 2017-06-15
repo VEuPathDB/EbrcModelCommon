@@ -4063,7 +4063,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <externalDbIdUrl><![CDATA[http://www.${project}.org/gene/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
-      <wgetArgs url="http://eupathdb.org/eupathdb/webservices/GeneQuestions/GenesByGeneType.xml?organism=${organismName}&amp;includePseudogenes=No&amp;geneType=protein%20coding&amp;o-fields=protein_sequence,product,organism">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.xml</wgetArgs>
+      <wgetArgs url="http://eupathdb.org/eupathdb/service/answer">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.xml  --post-data '{ "answerSpec": {   "questionName": "GeneQuestions.GenesByGeneType",    "parameters": {      "organism": "${organismName}",      "geneType": "protein coding",      "includePseudogenes": "No"    },    "viewFilters": [      { "name": "representativeTranscriptOnly", "value": {} }    ]  },  "formatting": {    "format" : "xml",    "formatConfig": {      "attributes": [        "primary_key",        "organism",        "gene_product",        "protein_sequence"      ]    }  }}'</wgetArgs>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
@@ -4106,7 +4106,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <externalDbIdUrl><![CDATA[http://www.${project}.org/gene/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
-      <wgetArgs url="http://eupathdb.org/eupathdb/webservices/GeneQuestions/GenesByGeneType.xml?organism=${organismName}&amp;includePseudogenes=No&amp;geneType=protein%20coding&amp;o-fields=protein_sequence,product,organism">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.xml</wgetArgs>
+      <wgetArgs url="http://eupathdb.org/eupathdb/service/answer">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.xml  --post-data '{ "answerSpec": {   "questionName": "GeneQuestions.GenesByGeneType",    "parameters": {      "organism": "${organismName}",      "geneType": "protein coding",      "includePseudogenes": "No"    },    "viewFilters": [      { "name": "representativeTranscriptOnly", "value": {} }    ]  },  "formatting": {    "format" : "xml",    "formatConfig": {      "attributes": [        "primary_key",        "organism",        "gene_product",        "protein_sequence"      ]    }  }}'</wgetArgs>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
