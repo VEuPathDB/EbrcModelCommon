@@ -3196,7 +3196,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec 'OBO_Ontology_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
-<!-- removed dashes before args on line 3219 and 3225 so commit will work
+  
   <datasetClass class="updateOntologyFromTabDelim" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="name">&name;</prop>
@@ -3216,16 +3216,16 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl externalDatabaseName 'Ontology_${name}_RSRC' gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
 
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput file="@@dataDir@@/final/terms.txt"/>
       <getAndUnpackOutput file="@@dataDir@@/final/relationships.txt"/>
 
-      <pluginArgs>termFile @@dataDir@@/final/terms.txt relFile @@dataDir@@/final/relationships.txt extDbRlsSpec 'Ontology_${name}_RSRC|%' isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--termFile @@dataDir@@/final/terms.txt --relFile @@dataDir@@/final/relationships.txt --extDbRlsSpec 'Ontology_${name}_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
--->
+
 
 <datasetClass class="updateOntologyFromOWL" category="" datasetFileHint="">
     <purpose></purpose>
