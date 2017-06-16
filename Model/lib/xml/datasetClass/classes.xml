@@ -3216,11 +3216,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput file="@@dataDir@@/final/terms.txt"/>
       <getAndUnpackOutput file="@@dataDir@@/final/relationships.txt"/>
-
-      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
 
       <pluginArgs>--termFile @@dataDir@@/final/terms.txt --relFile @@dataDir@@/final/relationships.txt --extDbRlsSpec 'Ontology_${name}_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
@@ -3245,8 +3245,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'Ontology_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
        <pluginArgs>--inFile @@dataDir@@/final/${name}.owl --extDbRlsSpec 'Ontology_${name}_RSRC' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
