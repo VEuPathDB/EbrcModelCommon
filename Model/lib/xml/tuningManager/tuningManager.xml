@@ -434,23 +434,35 @@ and ot.name in ('study participant information',
     <sql>
       <![CDATA[
         create table PANUpstream&1 nologging as
-        select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-        from ProtocolAppNodeIO&1
-        start with output_node_id in (  (  select protocol_app_node_id from ProtocolAppNodeResults
-                                         union
-                                           select protocol_app_node_id
-                                           from SampleId
-                                           where project_id not in ('ClinEpiDB')
-                                        )
-                                      minus -- omit Popset isolates
-                                        select pan.protocol_app_node_id
-                                        from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
-                                             sres.ExternalDatabaseRelease edr
-                                        where pan.external_database_release_id = edr.external_database_release_id
-                                          and edr.external_database_id = ed.external_database_id
-                                          and ed.name like '%_isolates_genbank_RSRC'
-                                     )
-        connect by prior input_node_id = output_node_id
+        select *
+        from (  select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
+                from ProtocolAppNodeIo&1
+                start with output_node_id
+                           in (  select protocol_app_node_id
+                                 from ProtocolAppNodeResults
+                               union
+                                 select protocol_app_node_id
+                                 from SampleId
+                                 where project_id not in ('ClinEpiDB')
+                              )
+                connect by prior input_node_id = output_node_id
+              union
+                select si.protocol_app_node_id, si.protocol_app_node_id as input_node_id, o.protocol_app_id
+                from SampleId si, study.Output o
+                where si.protocol_app_node_id = o.protocol_app_node_id(+)
+              union
+                select panr.protocol_app_node_id, panr.protocol_app_node_id as input_node_id, o.protocol_app_id
+                from ProtocolAppNodeRecord panr, study.Output o
+                where panr.type != 'specimen'
+                  and panr.protocol_app_node_id = o.protocol_app_node_id(+)
+             )
+        where protocol_app_node_id
+              not in (select pan.protocol_app_node_id
+                      from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
+                           sres.ExternalDatabaseRelease edr
+                      where pan.external_database_release_id = edr.external_database_release_id
+                        and edr.external_database_id = ed.external_database_id
+                        and ed.name like '%_isolates_genbank_RSRC')
       ]]>
     </sql>
     <sql>
