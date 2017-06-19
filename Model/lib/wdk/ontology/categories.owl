@@ -746,7 +746,6 @@
 
     <owl:Class rdf:about="http://edamontology.org/topic_3298">
         <rdfs:label>Phenomics</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3299"/>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
         <obo:hasDefinition>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors. </obo:hasDefinition>
         <obo:IAO_0000115>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors. </obo:IAO_0000115>
