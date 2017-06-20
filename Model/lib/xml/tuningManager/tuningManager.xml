@@ -434,23 +434,35 @@ and ot.name in ('study participant information',
     <sql>
       <![CDATA[
         create table PANUpstream&1 nologging as
-        select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
-        from ProtocolAppNodeIO&1
-        start with output_node_id in (  (  select protocol_app_node_id from ProtocolAppNodeResults
-                                         union
-                                           select protocol_app_node_id
-                                           from SampleId
-                                           where project_id not in ('ClinEpiDB')
-                                        )
-                                      minus -- omit Popset isolates
-                                        select pan.protocol_app_node_id
-                                        from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
-                                             sres.ExternalDatabaseRelease edr
-                                        where pan.external_database_release_id = edr.external_database_release_id
-                                          and edr.external_database_id = ed.external_database_id
-                                          and ed.name like '%_isolates_genbank_RSRC'
-                                     )
-        connect by prior input_node_id = output_node_id
+        select *
+        from (  select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
+                from ProtocolAppNodeIo&1
+                start with output_node_id
+                           in (  select protocol_app_node_id
+                                 from ProtocolAppNodeResults
+                               union
+                                 select protocol_app_node_id
+                                 from SampleId
+                                 where project_id not in ('ClinEpiDB')
+                              )
+                connect by prior input_node_id = output_node_id
+              union
+                select si.protocol_app_node_id, si.protocol_app_node_id as input_node_id, o.protocol_app_id
+                from SampleId si, study.Output o
+                where si.protocol_app_node_id = o.protocol_app_node_id(+)
+              union
+                select panr.protocol_app_node_id, panr.protocol_app_node_id as input_node_id, o.protocol_app_id
+                from ProtocolAppNodeRecord panr, study.Output o
+                where panr.type != 'specimen'
+                  and panr.protocol_app_node_id = o.protocol_app_node_id(+)
+             )
+        where protocol_app_node_id
+              not in (select pan.protocol_app_node_id
+                      from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
+                           sres.ExternalDatabaseRelease edr
+                      where pan.external_database_release_id = edr.external_database_release_id
+                        and edr.external_database_id = ed.external_database_id
+                        and ed.name like '%_isolates_genbank_RSRC')
       ]]>
     </sql>
     <sql>
@@ -715,10 +727,10 @@ UNION ALL
     <sql>
       <![CDATA[
         create table Metadata&1 nologging as
-        select m.type as dataset_type, subtype, organism, dataset_name,
-               investigation_name, study_name, protocol_app_node_id, pan_name,
-               category, term, term_id,
-               substr(value, 1, 250) as string_value,
+        select m.type as dataset_type, m.subtype, m.organism, m.dataset_name,
+               m.investigation_name, m.study_name, m.protocol_app_node_id, m.pan_name,
+               m.category, m.term, m.term_id, mt.source_id,
+               substr(m.value, 1, 250) as string_value,
                case when mt.type = 'number' then to_number(m.value) else cast(null as number) end as number_value,
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from MetadataType mt,
@@ -737,7 +749,9 @@ UNION ALL
                        null as category, term_name as term, cast(null as number) as term_id, value
                 from FallbackMetadata
              ) m
-        where m.term = mt.property
+        where (m.term_id = mt.term_id
+               or (mt.term_id is null and m.term = mt.property))
+
       ]]>
     </sql>
     <sql>
@@ -1446,63 +1460,66 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
       <![CDATA[
         CREATE TABLE MetadataType&1 NOLOGGING AS
         WITH override
-        AS ( SELECT 'age' AS property, 'number' AS type, 'range' AS filter FROM dual
-            UNION
-              SELECT 'name' AS property, 'string' AS type, 'membership' AS filter FROM dual
-            UNION   
-              SELECT 'studyid' AS property, 'string' AS type, 'membership' AS filter FROM dual
-            UNION   
-              SELECT 'taxon_id' AS property, 'number' AS type, 'membership' AS filter FROM dual
-            UNION
-             SELECT 'proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
-            UNION
-              SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
-           ),
-        metadata
-        AS (  SELECT term, value
-              FROM panProtocolMetadata
-              WHERE term NOT IN (SELECT property FROM override)
-            UNION
-              SELECT term, value
-              FROM panCharacteristicMetadata
-              WHERE term NOT IN (SELECT property FROM override)
-           ),
-        term_attributes
-        AS (SELECT term,
-                   MIN(apidb.is_number(value)) AS is_number,
-                   MIN(apidb.is_date(value)) AS is_date
-            FROM metadata
-            GROUP BY term
-           )
-     SELECT * FROM override
- UNION ALL
-   SELECT term AS property,
-          CASE
-            WHEN is_date = 1
-              THEN 'date'
-            WHEN is_number = 1
-              THEN 'number'
-            ELSE 'string'
-          END AS type,
-          CASE
-            WHEN is_date = 1 OR is_number = 1
-              THEN 'range'
-            ELSE 'membership' 
-          END AS filter
-   FROM term_attributes
+             AS ( SELECT 'age' AS property, 'number' AS type, 'range' AS filter FROM dual
+                 UNION
+                   SELECT 'name' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                 UNION   
+                   SELECT 'studyid' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                 UNION   
+                   SELECT 'taxon_id' AS property, 'number' AS type, 'membership' AS filter FROM dual
+                 UNION
+                  SELECT 'proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
+                 UNION
+                   SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                ),
+             pan_metadata
+             AS (  SELECT term, value, term_id
+                   FROM panProtocolMetadata
+                   WHERE term NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT term, value, term_id
+                   FROM panCharacteristicMetadata
+                   WHERE term NOT IN (SELECT property FROM override)
+                ),
+             term_attributes
+             AS (SELECT term, term_id,
+                        MIN(apidb.is_number(value)) AS is_number,
+                        MIN(apidb.is_date(value)) AS is_date
+                 FROM pan_metadata
+                 GROUP BY term, term_id
+                )
+          SELECT o.property, ot.ontology_term_id as term_id, ot.source_id, o.type, o.filter
+          FROM override o, sres.OntologyTerm ot
+          WHERE o.property = ot.name(+)
+      UNION ALL
+        SELECT ta.term AS property, ot.ontology_term_id as term_id, ot.source_id,
+               CASE
+                 WHEN is_date = 1
+                   THEN 'date'
+                 WHEN is_number = 1
+                   THEN 'number'
+                 ELSE 'string'
+               END AS type,
+               CASE
+                 WHEN is_date = 1 OR is_number = 1
+                   THEN 'range'
+                 ELSE 'membership' 
+               END AS filter
+        FROM term_attributes ta, sres.OntologyTerm ot
+        WHERE ta.term_id = ot.ontology_term_id(+)
        ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE UNIQUE INDEX mtdprop_ix&1
-          ON MetadataType&1 (property)
+          ON MetadataType&1 (term_id, property)
         TABLESPACE indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX mtdttyp_ix&1
-          ON MetadataType&1 (property, type, filter)
+          ON MetadataType&1 (property, term_id, type, filter)
         TABLESPACE indx
       ]]>
     </sql>
