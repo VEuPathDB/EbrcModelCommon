@@ -513,7 +513,7 @@ and ot.name in ('study participant information',
 select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_pan.isa_type as protocol_app_node_isa_type, pan.protocol_app_node_id as ancestor_protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
                attribute_term.ontology_term_id as term_id, 
                case when apidb.is_number(c.value) = 1
-                    then to_char(nvl(round(c.value, 2), 0))
+                    then to_char(nvl(round(apidb.parse_number(c.value), 2), 0))
                     else nvl(c.value, value_term.name)
                end as value,
                c.characteristic_id,
@@ -731,7 +731,10 @@ UNION ALL
                m.investigation_name, m.study_name, m.protocol_app_node_id, m.pan_name,
                m.category, m.term, m.term_id, mt.source_id,
                substr(m.value, 1, 250) as string_value,
-               case when mt.type = 'number' then to_number(m.value) else cast(null as number) end as number_value,
+               case when mt.type = 'number'
+                      then apidb.parse_number(m.value)
+                    else cast(null as number)
+               end as number_value,
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from MetadataType mt,
              (  select type, subtype, organism, dataset_name,
@@ -887,8 +890,9 @@ UNION ALL
         union
           select distinct organism, m.dataset_name, type, subtype,
                           hierarchy_dataset_name, term as property, 'display' as spec_property,
-                          -- work around initcap's apostrophe problem
-                          replace(replace(initcap(replace(term, '''', '4834929393')), '4834929393', ''''),
+                          -- work around initcap's apostrophe problem with improbably digit sequence
+                          replace(replace(initcap(replace(replace(term, '_', ' '), -- turn underscore to space
+                                                  '''', '4834929393')), '4834929393', ''''),
                                   '16s', '16S')
                             as spec_value
           from metadata m, hierarchy_mapping hm
