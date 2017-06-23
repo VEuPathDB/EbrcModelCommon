@@ -49,27 +49,29 @@ sub run{
     # for SampleAttributes, we cannot rely on the type_id.  (lots of more specific types of samples like "blood specimen" ...)
     my $orIsaSample = $record eq 'Sample' ? "or protocol_app_node_isa_type = 'Sample'" : "";
 
-    my @fields;
+    my (@fields);
     my $fieldsSh = $dbh->prepare(<<SQL);
     -- turn terms into column names
-      select distinct term
-      from (  select ot.source_id as term
-              from PANCHARACTERISTICMETADATA m, sres.ontologyterm ot where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
+      select distinct term, type
+      from (  select ot.source_id as term, mt.type
+              from PANCHARACTERISTICMETADATA m, MetaDataType mt where mt.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
             union
-              select ot.source_id as term
-              from PANPROTOCOLMETADATA m, sres.ontologyterm ot  where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
+              select ot.source_id as term, mt.type
+              from PANPROTOCOLMETADATA m, MetaDataType mt  where mt.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
               )
 SQL
 
     $fieldsSh->execute();
-    while(my ($field) = $fieldsSh->fetchrow_array()) {
-      push @fields, $field;
+    while(my ($field, $fieldType) = $fieldsSh->fetchrow_array()) {
+      push @fields, [$field, $fieldType];
     }
     $fieldsSh->finish();
     
-    my @sortedFields = sort @fields;
-    
-    createEmptyTable($dbh,$suffix, \@sortedFields, $record);
+    my @sortedFieldsArray = sort{ $a->[0] le $b->[0] } @fields;
+
+    my @sortedFields = map { $_->[0] } @sortedFieldsArray;
+
+    createEmptyTable($dbh,$suffix, \@sortedFieldsArray, $record);
     
   my $fieldsString = join(",", @sortedFields);
     
@@ -141,7 +143,9 @@ SQL
 sub createEmptyTable {
      my ($dbh, $suffix, $fields, $record) = @_;
 
-     my $fieldsString = join(",\n", map {"$_ varchar2(2000)"} @$fields);
+     $f = ("number" => "number(10)", "string" => "varchar2(2000)", "date" => "date");
+
+     my $fieldsString = join(",\n", map { $_->[0]." " . $f{$_->[1]} } @$fields);
      # prefix a comma if it isn't empty
      $fieldsString = ", " . $fieldsString
        if $fieldsString;
