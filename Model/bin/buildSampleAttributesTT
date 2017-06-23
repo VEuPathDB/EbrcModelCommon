@@ -53,10 +53,10 @@ sub run{
     my $fieldsSh = $dbh->prepare(<<SQL);
     -- turn terms into column names
       select distinct term, type
-      from (  select ot.source_id as term, mt.type
+      from (  select mt.source_id as term, mt.type
               from PANCHARACTERISTICMETADATA m, MetaDataType mt where mt.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
             union
-              select ot.source_id as term, mt.type
+              select mt.source_id as term, mt.type
               from PANPROTOCOLMETADATA m, MetaDataType mt  where mt.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
               )
 SQL
@@ -71,20 +71,19 @@ SQL
 
     my @sortedFields = map { $_->[0] } @sortedFieldsArray;
 
+
+
     createEmptyTable($dbh,$suffix, \@sortedFieldsArray, $record);
     
-  my $fieldsString = join(",", @sortedFields);
+    my $fieldsString = join(",", @sortedFields);
     
     # prefix a comma if it isn't empty
     $fieldsString = ", " . $fieldsString
         if $fieldsString;
     
-    my $bindVarLength = scalar(@sortedFields) + 5;
-    my @bindVars;
-    foreach(1..$bindVarLength) {
-      push @bindVars, "?";
-    }
-    my $bindVarsString = join(",", @bindVars);
+    my @bindVars = map { $_->[1] eq "number" ? "apidb.parse_number(?)" : $_->[1] eq "date" ? "apidb.parse_date(?)" : "?" } @sortedFieldsArray;
+
+    my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
     
     my $insertStatement = "INSERT INTO ${record}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
     my $insertRow = $dbh->prepare($insertStatement);
@@ -150,7 +149,8 @@ sub createEmptyTable {
      $fieldsString = ", " . $fieldsString
        if $fieldsString;
 
-    $dbh->do(<<SQL) or die "creating table";
+
+     my $sql = <<SQL;
      create table ${record}Attributes$suffix (
        protocol_app_node_id number(10),
        name varchar2(200),
@@ -160,6 +160,10 @@ sub createEmptyTable {
        $fieldsString
   ) nologging
 SQL
+
+    $dbh->do($sql) or die "creating table";
+
+
 $dbh->{PrintError} = 0;
 }
 
