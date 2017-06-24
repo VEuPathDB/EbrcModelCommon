@@ -1307,6 +1307,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
     <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="MetadataType"/>
     <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="ParticipantAttributes"/>
     <ancillaryTable name="ClinicalVisitAttributes"/>
