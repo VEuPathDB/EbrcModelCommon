@@ -418,6 +418,12 @@
     <track>pjirSE8</track>
   </subtrackSet>
 
+<!-- bld 34
+  <subtrackSet name="Mycosphaerellaceae" project="FungiDB" suffixes="_span;_gene">
+    <track>ztriIPO323</track>
+  </subtrackSet>
+-->
+
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
     <track>pinfT30-4</track>
     <track>PcapLT1534</track>
@@ -648,6 +654,16 @@
       <subtrack set="Pneumocystidomycetes"/>
     </track>
   </url>
+
+<!-- bld 34
+  <url project="FungiDB" type="synteny">
+    <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Mycosphaerellaceae"/>
+    </track>
+  </url>
+-->
 
   <url project="FungiDB" type="synteny">
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
