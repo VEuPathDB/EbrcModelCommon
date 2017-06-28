@@ -783,7 +783,7 @@ UNION ALL
                        when lower(dataset_name) like '%microarrayantibody%'
                             then 'Ontology_icemr_RSRC'
                        when lower(dataset_name) like 'otu%'
-                            then 'Ontology_microbiomeHierarchy_RSRC'
+                            then 'Ontology_mbioRoot_RSRC'
                        when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                             then 'Ontology_prism_RSRC'
                        else null
