@@ -1477,6 +1477,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                  UNION
                    SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
+                   SELECT 'year' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                 UNION
                    SELECT 'blood_smear_summary' AS property, 'string' AS type, 'membership' AS filter FROM dual
                 ),
              pan_metadata
