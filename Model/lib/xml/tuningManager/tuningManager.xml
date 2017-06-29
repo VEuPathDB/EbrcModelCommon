@@ -1022,9 +1022,9 @@ UNION ALL
     <sql>
       <![CDATA[
         CREATE TABLE MetadataOntology&1 NOLOGGING AS
-        SELECT SUBSTR(property, 1, 80) AS ontology_term_name,
-               SUBSTR(parent_ontology_term_name, 1, 80) AS parent_ontology_term_name,
-               SUBSTR(display_name, 1, 80) AS display_name, 
+        SELECT SUBSTR(property, 1, 120) AS ontology_term_name,
+               SUBSTR(parent_ontology_term_name, 1, 120) AS parent_ontology_term_name,
+               SUBSTR(display_name, 1, 120) AS display_name, 
                SUBSTR(description, 1, 500) AS description,
                SUBSTR(units, 1, 40) AS units,
                SUBSTR(organism, 1, 80) AS organism,
@@ -1476,6 +1476,10 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                   SELECT 'proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
                  UNION
                    SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                 UNION
+                   SELECT 'year' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                 UNION
+                   SELECT 'blood_smear_summary' AS property, 'string' AS type, 'membership' AS filter FROM dual
                 ),
              pan_metadata
              AS (  SELECT term, value, term_id
