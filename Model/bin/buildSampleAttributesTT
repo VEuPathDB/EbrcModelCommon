@@ -35,11 +35,12 @@ sub run{
 
   my $failures = 0;
 
-  my %types = ("study participant information" => "Participant",
-               "clinical visit information" => "ClinicalVisit",
+  my %types = ("Participant" => "Participant",
+               "Visit" => "ClinicalVisit",
                "CDC light trap assay" => "LightTrap",
-               "dwelling" => "Dwelling",
-               "specimen" => "Sample"
+               "Dwelling type" => "Dwelling",
+               "specimen" => "Sample",
+               "Specimen type" => "Sample",
       );
 
 
