@@ -263,10 +263,11 @@ and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
 and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and ot.name in ('study participant information',
-                'clinical visit information',
+and ot.name in ('Participant',
+                'Visit',
                 'specimen',
-                'dwelling',
+                'Specimen type',
+                'Dwelling type',
                 'CDC light trap assay')
       ]]>
     </sql>
