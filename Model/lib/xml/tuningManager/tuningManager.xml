@@ -266,7 +266,7 @@ and r.EXTERNAL_DATABASE_ID = d.external_database_id
 and ot.name in ('Participant',
                 'Visit',
                 'specimen',
-                'Specimen type'
+                'Specimen type',
                 'Dwelling type',
                 'CDC light trap assay')
       ]]>
