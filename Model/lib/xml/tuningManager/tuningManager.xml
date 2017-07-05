@@ -475,10 +475,12 @@ and ot.name in ('Participant',
                  where ot.name = pp.name
                  group by pp.protocol_param_id
                 )
-        select node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type, pan.isa_type as protocol_app_node_isa_type, ds.name as dataset_name,
-               p.name as category, pan.name as pan_name, pp.name as term, param_term_id.ontology_term_id as term_id,
+        select node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type,
+               pan.isa_type as protocol_app_node_isa_type, ds.name as dataset_name,
+               p.name as category, pan.name as pan_name, pp.name as term,
+               param_term_id.ontology_term_id as term_id,
                pap.value, pap.protocol_app_param_id, ds.type, ds.subtype, tn.name as organism,
-               study_release.study_name, study_release.investigation_name
+               study_release.study_name, study_release.investigation_name, pp.unit_type_id as unit_id
         from PANUpstream&1 node_inputs, param_term_id, study.ProtocolAppParam pap, sres.ontologyterm ot,
              study.ProtocolParam pp, study.Protocol p, study.StudyLink sl, 
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
@@ -511,20 +513,24 @@ and ot.name in ('Participant',
     <sql>
       <![CDATA[
         create table PANCharacteristicMetadata&1 nologging as
-select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_pan.isa_type as protocol_app_node_isa_type, pan.protocol_app_node_id as ancestor_protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
-               attribute_term.ontology_term_id as term_id, 
-               case when apidb.is_number(c.value) = 1
-                    then to_char(nvl(round(apidb.parse_number(c.value), 2), 0))
-                    else nvl(c.value, value_term.name)
-               end as value,
+        select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type,
+               sample_pan.isa_type as protocol_app_node_isa_type,
+               pan.protocol_app_node_id as ancestor_protocol_app_node_id,
+               nvl(mt.name, 'assay') as category, -- to be replaced by ancestor_pan_type
+               nvl(mt.name, 'assay') as ancestor_pan_type,
+               mt.ontology_term_id as ancestor_pan_type_id,
+               attribute_term.name as term, -- if not a material type it has to be an assay
+               attribute_term.ontology_term_id as term_id,
+               nvl(value_term.name, c.value) as value,
                c.characteristic_id,
                ds.name as dataset_name, sample_pan.name as pan_name, ds.type,
                ds.subtype, tn.name as organism,
-               study_release.study_name, study_release.investigation_name
-        from PANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, sres.OntologyTerm value_term,
-             sres.ontologyTerm mt, study.StudyLink sl,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed, sres.OntologyTerm attribute_term,
-             apidb.Datasource ds, sres.TaxonName tn, study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
+               study_release.study_name, study_release.investigation_name, c.unit_id
+        from PANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c,
+             sres.OntologyTerm value_term, sres.ontologyTerm mt, study.StudyLink sl,
+             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+             sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
+             study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
              (  select s.study_id, i.external_database_release_id,
                        s.name as study_name, i.name as investigation_name
                 from study.Study s, study.Study i
@@ -1026,7 +1032,7 @@ UNION ALL
         SELECT SUBSTR(property, 1, 120) AS ontology_term_name,
                SUBSTR(parent_ontology_term_name, 1, 120) AS parent_ontology_term_name,
                SUBSTR(display_name, 1, 120) AS display_name, 
-               SUBSTR(description, 1, 500) AS description,
+               SUBSTR(description, 1, 2400) AS description,
                SUBSTR(units, 1, 40) AS units,
                SUBSTR(organism, 1, 80) AS organism,
                SUBSTR(dataset_name, 1, 80) AS dataset_name,
