@@ -1076,6 +1076,152 @@ UNION ALL
   </tuningTable>
 
 
+  <tuningTable name="NewMetadataOntology">
+    <comment>
+    </comment>
+    <internalDependency name="FallbackMetadata"/>
+    <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="MetadataType"/>
+    <sql>
+      <![CDATA[
+        create table NewMetadataOntology&1 nologging as
+        select *
+        from (with hierarchy_mapping
+                   as (select dataset_name,
+                              case
+                                when lower(dataset_name) like '%microarrayantibody%'
+                                  then 'Ontology_icemr_RSRC'
+                                when lower(dataset_name) like 'otu%'
+                                  then 'Ontology_mbioRoot_RSRC'
+                                when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                                   then 'Ontology_prism_RSRC'
+                                else null
+                              end as hierarchy_dataset_name
+                       from (  select dataset_name
+                               from panCharacteristicMetadata
+                             union
+                               select dataset_name
+                                 from panProtocolMetadata)),
+                   protocol_metadata
+                   as (select distinct organism, type, subtype, dataset_name,
+                                       category, term, term_id, value, unit_id
+                       from panProtocolMetadata),
+                   characteristic_metadata
+                   as (select distinct organism, type, subtype, dataset_name,
+                                       category, term, term_id, value, unit_id
+                       from panCharacteristicMetadata),
+                   metadata
+                   as (  select *
+                         from protocol_metadata
+                       union
+                         select *
+                         from characteristic_metadata),
+                   ontology_tree_metadata
+                   as (select distinct m.term_id, m.dataset_name, organism, m.type,
+                                       m.subtype, m.unit_id, hm.hierarchy_dataset_name
+                       from metadata m, hierarchy_mapping hm
+                                  where m.dataset_name = hm.dataset_name
+                        and hm.hierarchy_dataset_name is not null
+                      ),
+                   leaf_term
+                   as (select distinct term_id, hierarchy_dataset_name
+                       from ontology_tree_metadata
+                      ),
+                   graph_edge
+                   as (select ed.name as dataset_name, tree.*
+                       from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr,
+                            (select subject_term_id as child_term_id,
+                                    object_term_id as parent_term_id,
+                                    external_database_release_id
+                             from sres.OntologyRelationship orel
+                             where external_database_release_id
+                                   in (select edr.external_database_release_id
+                                       from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
+                                       where ed.external_database_id = edr.external_database_id
+                                         and ed.name in (select hierarchy_dataset_name
+                                                         from hierarchy_mapping)
+                                      )
+                               and orel.subject_term_id != orel.object_term_id
+                             start with subject_term_id in (select term_id from leaf_term)
+                             connect by subject_term_id = prior object_term_id
+                                        and external_database_release_id = prior external_database_release_id) tree
+                       where tree.external_database_release_id = edr.external_database_release_id
+                         and ed.external_database_id = edr.external_database_id),
+                   unparented_term
+                   as (select parent_term_id as term_id, dataset_name from graph_edge
+                       minus
+                       select child_term_id as term_id, dataset_name from graph_edge),
+                   distinct_term
+                   as (select parent_term_id as term_id, dataset_name from graph_edge
+                       union
+                       select child_term_id as term_id, dataset_name from graph_edge),
+                   leaf_ancestor_pair 
+                   as (  select ancestor.term_id as ancestor_term_id, descendent.term_id as leaf_term_id,
+                                ancestor.dataset_name
+                         from distinct_term ancestor, distinct_term descendent, leaf_term lt
+                         where descendent.term_id
+                               in (select child_term_id
+                                     from graph_edge
+                                     start with parent_term_id = ancestor.term_id
+                                     connect by prior child_term_id = parent_term_id)
+                             and descendent.term_id = lt.term_id
+                             and decode(descendent.dataset_name, lt.hierarchy_dataset_name, 1, 0) = 1
+                             and descendent.dataset_name = ancestor.dataset_name
+                       union
+                         select term_id as ancestor_term_id, term_id as leaf_term_id,
+                                hierarchy_dataset_name as dataset_name
+                         from leaf_term
+                       ),
+                   fallback
+                   as (select distinct fm.dataset_name, type, subtype, organism,
+                                       term_name as property, hierarchy_dataset_name
+                       from FallbackMetadata fm, hierarchy_mapping hm
+                       where fm.dataset_name = hm.dataset_name
+                      )
+        -- END OF WITH CLAUSES (whew!)
+        select child.name as ontology_term_name, child.ontology_term_id,
+               child.source_id as ontology_term_source_id, child.definition as description,
+               -- work around initcap's problems with apostrophes and numerals
+               replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
+                         '16s', '16S') as display_name,
+               parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+               parent.source_id as parent_ontology_term_source_id,
+               unit.name as units, mt.type,
+               case
+                 when mt.filter = 'range' then 1
+                 else 0
+               end as is_range,
+               1 as precision,
+              otm.organism, otm.dataset_name, otm.type as dataset_type, subtype
+        from ontology_tree_metadata otm, leaf_ancestor_pair lap,
+             sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
+             MetadataType mt,
+             (  select child_term_id, parent_term_id, dataset_name from graph_edge
+              union
+                select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
+          where edge.child_term_id = lap.ancestor_term_id
+            and lap.leaf_term_id = otm.term_id
+            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+            and edge.child_term_id = child.ontology_term_id(+)
+            and edge.parent_term_id = parent.ontology_term_id(+)
+            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+            and edge.child_term_id = mt.term_id(+)
+            and otm.unit_id = unit.ontology_term_id(+)
+        ) 
+        where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
+        order by organism, dataset_name, ontology_term_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index nmoix1&1
+        on NewMetadataOntology&1 (ontology_term_name, dataset_name, organism)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+
   <tuningTable name="TaxonAbundanceSpec">
     <internalDependency name="TaxonAbundance"/>
     <sql>
