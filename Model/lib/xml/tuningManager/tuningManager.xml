@@ -28,6 +28,8 @@ and s.study_id = sl.study_id
 and pan.ROW_PROJECT_ID = pi.PROJECT_ID
 and sl.protocol_app_node_id = pan.protocol_app_node_id
 and d.name like '%isolates_genbank_RSRC'
+-- using column positions, rather than column names, in ORDER BY on union
+order by 2, 1
       ]]>
     </sql>
   </tuningTable>
@@ -43,61 +45,58 @@ and d.name like '%isolates_genbank_RSRC'
     <sql>
       <![CDATA[
 create table ExternalSequenceTaxonRank&1 nologging as
-with organism_rank as (
-select tn1.taxon_id as organism, tn2.name as parent_organism, 
-           tn2.taxon_id as parent_organism_id, r.rank
-from (
-select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
-from sres.taxon
-start with taxon_id in (  select taxon_id from DOTS.EXTERNALNASEQUENCE
-                        union
-                          select taxon_id from apidb.SequenceTaxon)
-connect by prior parent_id = taxon_id) r
-, sres.taxonname tn1
-, sres.taxonname tn2
-where r.input = tn1.taxon_id
-and r.taxon_id = tn2.taxon_id
-and tn1.name_class = 'scientific name'
-and tn2.name_class = 'scientific name'
-and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
-)
-
+with organism_rank
+     as (select tn1.taxon_id as organism, tn2.name as parent_organism, 
+                tn2.taxon_id as parent_organism_id, r.rank
+         from sres.TaxonName tn1, sres.TaxonName tn2,
+              (select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
+               from sres.taxon
+               start with taxon_id in (  select taxon_id from DOTS.EXTERNALNASEQUENCE
+                                       union
+                                         select taxon_id from apidb.SequenceTaxon)
+               connect by prior parent_id = taxon_id) r
+         where r.input = tn1.taxon_id
+           and r.taxon_id = tn2.taxon_id
+           and tn1.name_class = 'scientific name'
+           and tn2.name_class = 'scientific name'
+           and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
+        )
 select organisms.organism, 
-        nvl(superkingdom.parent_organism, 'N/A') as superkingdom,
-        superkingdom.parent_organism_id as superkingdom_id,
-        nvl(kingdom.parent_organism, 'N/A') as kingdom,
-        kingdom.parent_organism_id as kingdom_id,
-        nvl (phylum.parent_organism, 'N/A') as phylum,
-        phylum.parent_organism_id as phylum_id,
-        nvl (class.parent_organism, 'N/A') as class,
-        class.parent_organism_id as class_id,
-        nvl (family.parent_organism, 'N/A') as family,
-        family.parent_organism_id as family_id,
-        nvl (rank_order.parent_organism, 'N/A') as rank_order,
-        rank_order.parent_organism_id as rank_order_id,
-        nvl ( genus.parent_organism, 'N/A') as genus,
-        genus.parent_organism_id as genus_id,
-        nvl(species.parent_organism, 'N/A') as species,
-        species.parent_organism_id as species_id
-from 
-(select distinct organism from organism_rank) organisms,
-(select * from organism_rank where rank= 'phylum') phylum,
-(select * from organism_rank where rank= 'genus') genus,
-(select * from organism_rank where rank= 'species') species,
-(select * from organism_rank where rank= 'kingdom') kingdom,
-(select * from organism_rank where rank= 'superkingdom') superkingdom,
-(select * from organism_rank where rank= 'class') class,
-(select * from organism_rank where rank= 'family') family,
-(select * from organism_rank where rank= 'order') rank_order
+       nvl(superkingdom.parent_organism, 'N/A') as superkingdom,
+       superkingdom.parent_organism_id as superkingdom_id,
+       nvl(kingdom.parent_organism, 'N/A') as kingdom,
+       kingdom.parent_organism_id as kingdom_id,
+       nvl (phylum.parent_organism, 'N/A') as phylum,
+       phylum.parent_organism_id as phylum_id,
+       nvl (class.parent_organism, 'N/A') as class,
+       class.parent_organism_id as class_id,
+       nvl (family.parent_organism, 'N/A') as family,
+       family.parent_organism_id as family_id,
+       nvl (rank_order.parent_organism, 'N/A') as rank_order,
+       rank_order.parent_organism_id as rank_order_id,
+       nvl ( genus.parent_organism, 'N/A') as genus,
+       genus.parent_organism_id as genus_id,
+       nvl(species.parent_organism, 'N/A') as species,
+       species.parent_organism_id as species_id
+from (select distinct organism from organism_rank) organisms,
+     (select * from organism_rank where rank= 'phylum') phylum,
+     (select * from organism_rank where rank= 'genus') genus,
+     (select * from organism_rank where rank= 'species') species,
+     (select * from organism_rank where rank= 'kingdom') kingdom,
+     (select * from organism_rank where rank= 'superkingdom') superkingdom,
+     (select * from organism_rank where rank= 'class') class,
+     (select * from organism_rank where rank= 'family') family,
+     (select * from organism_rank where rank= 'order') rank_order
 where organisms.organism = phylum.organism (+)
-and organisms.organism = genus.organism (+)
-and organisms.organism = species.organism (+)
-and organisms.organism = kingdom.organism (+)
-and organisms.organism = class.organism (+)
-and organisms.organism = rank_order.organism (+)
-and organisms.organism = family.organism (+)
-and organisms.organism = superkingdom.organism (+)
- ]]>
+  and organisms.organism = genus.organism (+)
+  and organisms.organism = species.organism (+)
+  and organisms.organism = kingdom.organism (+)
+  and organisms.organism = class.organism (+)
+  and organisms.organism = rank_order.organism (+)
+  and organisms.organism = family.organism (+)
+  and organisms.organism = superkingdom.organism (+)
+order by organism, species, genus
+       ]]>
     </sql>
   </tuningTable>
 
@@ -228,7 +227,8 @@ and organisms.organism = superkingdom.organism (+)
           AND study_release.external_database_release_id = edr.external_database_release_id
           AND edr.external_database_id = ed.external_database_id
           AND ed.name = ds.name
- ]]>
+        ORDER BY type, subtype, study_name, dataset_name, pan_name
+      ]]>
     </sql>
     <sql>
       <![CDATA[
@@ -269,6 +269,7 @@ and ot.name in ('Participant',
                 'Specimen type',
                 'Dwelling type',
                 'CDC light trap assay')
+order by pan.name
       ]]>
     </sql>
   </tuningTable>
@@ -391,6 +392,8 @@ and ot.name in ('Participant',
     union
       select protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from apidb.crisprphenotype)
+    -- use position number instead of column names in ORDER BY of union
+    order by 1, 2
       ]]>
     </sql>
   </tuningTable>
@@ -430,6 +433,7 @@ and ot.name in ('Participant',
         from study.ProtocolApp pa, study.Input i, study.Output o
         where i.protocol_app_id = pa.protocol_app_id
           and o.protocol_app_id = pa.protocol_app_id
+        order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
     <sql>
@@ -464,6 +468,7 @@ and ot.name in ('Participant',
                       where pan.external_database_release_id = edr.external_database_release_id
                         and edr.external_database_id = ed.external_database_id
                         and ed.name like '%_isolates_genbank_RSRC')
+        order by protocol_app_node_id, protocol_app_id
       ]]>
     </sql>
     <sql>
@@ -508,6 +513,7 @@ and ot.name in ('Participant',
           and p.name not like '%::%' -- avoid Perl class names
           and p.name not like '%data transformation' -- avoid data transformation protocol parameters
           and pp.PROTOCOL_PARAM_ID = param_term_id.protocol_param_id
+        order by organism, type, subtype, pan_name
       ]]>
     </sql>
     <sql>
@@ -553,7 +559,12 @@ and ot.name in ('Participant',
           and sample_pan.type_id = sample_ot.ontology_term_id (+)
           and ds.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
- and (mt.name is not null or attribute_term.name = 'average mapping coverage' or attribute_term.name ='proportion mapped reads') --temporary may need adjusting for RNASeq      
+ --temporary may need adjusting for RNASeq
+ and (mt.name is not null
+      or attribute_term.name = 'average mapping coverage'
+      or attribute_term.name ='proportion mapped reads')
+        order by organism, type, subtype, pan_name
+
  ]]>
     </sql>
 
@@ -606,6 +617,7 @@ WHERE
   and p3.type_id = ot3.ontology_term_id (+)
   and io.protocol_app_id = pa.protocol_app_id
   and pa.protocol_id = p.protocol_id
+ORDER BY name, protocol_app_node_id, input_protocol_app_node_id, output_protocol_app_node_id
       ]]>
     </sql>
     <sql>
@@ -620,6 +632,7 @@ FROM
 WHERE
   s.study_id = sl.study_id
   and s.external_database_release_id is not null
+ORDER BY external_database_release_id, protocol_app_node_id
       ]]>
     </sql>
     <sql>
@@ -642,6 +655,7 @@ WHERE
   AND p.protocol_id = pp.protocol_id
   AND io.protocol_app_id = pap.protocol_app_id
   AND io.output_node_id = pan.protocol_app_node_id
+ORDER BY protocol_app_node_name
       ]]>
     </sql>
   </tuningTable>
@@ -720,6 +734,7 @@ UNION ALL
           and o.abbrev = replace(ed.name, '_NGS_SNPsAndVariations', '')
           and o.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
+        order by organism, dataset_name, pan_name
       ]]>
     </sql>
   </tuningTable>
@@ -761,6 +776,7 @@ UNION ALL
              ) m
         where (m.term_id = mt.term_id
                or (mt.term_id is null and m.term = mt.property))
+        order by organism, dataset_type, subtype, dataset_name, pan_name
 
       ]]>
     </sql>
@@ -1065,7 +1081,6 @@ UNION ALL
     <sql>
       <![CDATA[
        create table TaxonAbundanceSpec&1 nologging as
-
         -- parent
           select  type, subtype, dataset_name,  term_id as property, 'parent' as spec_property, category as spec_value
           from TaxonAbundance
@@ -1094,6 +1109,7 @@ UNION ALL
         union
           select type, subtype, dataset_name, term_id as property, 'type' as spec_property, 'number' as spec_value
           from TaxonAbundance
+        order by 1, 2, 3
       ]]>
     </sql>
   </tuningTable>
@@ -1140,6 +1156,7 @@ UNION ALL
           select * from mononym
         union
           select * from full_name
+        order by 2, 1
       ]]>
     </sql>
     <sql>
@@ -1290,6 +1307,7 @@ WHERE sequence.taxon_id = tn.taxon_id(+)
   AND sequence.na_sequence_id = virtualization.piece_na_sequence_id(+)
   AND taxon.taxon_id = organism.taxon_id(+)
   AND sequence.na_sequence_id = msa.na_sequence_id(+)
+ORDER BY organism, source_id
       ]]>
     </sql>
     <sql>
@@ -1430,6 +1448,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
         WHERE ed.external_database_id = edr.external_database_id
           AND (ed.name = dsp.name
                OR ed.name LIKE dsp.dataset_name_pattern)
+        ORDER BY ed.name
       ]]>
     </sql>
     <sql>
