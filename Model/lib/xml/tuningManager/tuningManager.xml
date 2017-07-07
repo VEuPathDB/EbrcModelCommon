@@ -515,7 +515,7 @@ order by pan.name
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              apidb.Datasource ds, study.ProtocolAppNode pan, sres.TaxonName tn,
              ( select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
+                       s.name as study_name, cast (null as varchar2(20)) as investigation_name
                 from study.Study s where s.investigation_id is null) study_release
         where node_inputs.protocol_app_id = pap.protocol_app_id
           and pap.protocol_param_id = pp.protocol_param_id
@@ -557,7 +557,7 @@ order by pan.name
              sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
              study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
              ( select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
+                       s.name as study_name, cast (null as varchar2(20)) as investigation_name
                 from study.Study s
                 where s.investigation_id is null) study_release
         where pan.protocol_app_node_id = c.protocol_app_node_id
@@ -701,7 +701,7 @@ ORDER BY protocol_app_node_name
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn,
              (select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
+                       s.name as study_name, cast (null as varchar2(20)) as investigation_name
                 from study.Study s where s.investigation_id is null) study_release, 
              DatasetPresenter dsp
         where pan.protocol_app_node_id in (select protocol_app_node_id
@@ -725,7 +725,7 @@ UNION ALL
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, apidb.Organism o,
              (select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
+                       s.name as study_name, cast (null as varchar2(20)) as investigation_name
                 from study.Study s where s.investigation_id is null) study_release
         where pan.protocol_app_node_id in (select protocol_app_node_id
                                            from ProtocolAppNodeResults)
