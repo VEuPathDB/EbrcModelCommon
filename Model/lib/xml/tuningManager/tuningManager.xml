@@ -438,6 +438,18 @@ order by pan.name
     </sql>
     <sql>
       <![CDATA[
+        create index panio_iix&1 on ProtocolAppNodeIO&1 (input_node_id, output_node_id, protocol_app_id)
+             tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index panio_oix&1 on ProtocolAppNodeIO&1 (output_node_id, input_node_id, protocol_app_id)
+             tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create table PANUpstream&1 nologging as
         select *
         from (  select connect_by_root output_node_id as protocol_app_node_id, input_node_id, protocol_app_id
@@ -469,6 +481,18 @@ order by pan.name
                         and edr.external_database_id = ed.external_database_id
                         and ed.name like '%_isolates_genbank_RSRC')
         order by protocol_app_node_id, protocol_app_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index panup_pix&1 on PANUpstream&1 (protocol_app_node_id, input_node_id, protocol_app_id) 
+             tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index panup_iix&1 on PANUpstream&1 (input_node_id, protocol_app_node_id, protocol_app_id) 
+             tablespace indx
       ]]>
     </sql>
     <sql>
