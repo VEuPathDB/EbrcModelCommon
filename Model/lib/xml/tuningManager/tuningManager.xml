@@ -1128,7 +1128,7 @@ UNION ALL
                        from ontology_tree_metadata
                       ),
                    graph_edge
-                   as (select ed.name as dataset_name, tree.*
+                   as (select distinct ed.name as dataset_name, tree.*
                        from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr,
                             (select subject_term_id as child_term_id,
                                     object_term_id as parent_term_id,
@@ -1142,6 +1142,8 @@ UNION ALL
                                                          from hierarchy_mapping)
                                       )
                                and orel.subject_term_id != orel.object_term_id
+                               and orel.object_term_id
+                                   not in (select ontology_term_id from sres.OntologyTerm where name = 'Thing')
                              start with subject_term_id in (select term_id from leaf_term)
                              connect by subject_term_id = prior object_term_id
                                         and external_database_release_id = prior external_database_release_id) tree
@@ -1179,7 +1181,8 @@ UNION ALL
                        where fm.dataset_name = hm.dataset_name
                       )
         -- END OF WITH CLAUSES (whew!)
-        select child.name as ontology_term_name, child.ontology_term_id,
+        select distinct
+               child.name as ontology_term_name, child.ontology_term_id,
                child.source_id as ontology_term_source_id, child.definition as description,
                -- work around initcap's problems with apostrophes and numerals
                replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
