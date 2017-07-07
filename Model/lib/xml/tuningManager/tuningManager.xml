@@ -777,7 +777,6 @@ UNION ALL
         where (m.term_id = mt.term_id
                or (mt.term_id is null and m.term = mt.property))
         order by organism, dataset_type, subtype, dataset_name, pan_name
-
       ]]>
     </sql>
     <sql>
@@ -1181,36 +1180,148 @@ UNION ALL
                        where fm.dataset_name = hm.dataset_name
                       )
         -- END OF WITH CLAUSES (whew!)
-        select distinct
-               child.name as ontology_term_name, child.ontology_term_id,
-               child.source_id as ontology_term_source_id, child.definition as description,
-               -- work around initcap's problems with apostrophes and numerals
-               replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
-                         '16s', '16S') as display_name,
-               parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
-               parent.source_id as parent_ontology_term_source_id,
-               unit.name as units, mt.type,
-               case
-                 when mt.filter = 'range' then 1
-                 else 0
-               end as is_range,
-               1 as precision,
-              otm.organism, otm.dataset_name, otm.type as dataset_type, subtype
-        from ontology_tree_metadata otm, leaf_ancestor_pair lap,
-             sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
-             MetadataType mt,
-             (  select child_term_id, parent_term_id, dataset_name from graph_edge
-              union
-                select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
-          where edge.child_term_id = lap.ancestor_term_id
-            and lap.leaf_term_id = otm.term_id
-            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
-            and edge.child_term_id = child.ontology_term_id(+)
-            and edge.parent_term_id = parent.ontology_term_id(+)
-            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
-            and edge.child_term_id = mt.term_id(+)
-            and otm.unit_id = unit.ontology_term_id(+)
-        ) 
+          select -- terms using the OntologyRelationship hierarchy
+                 -- DISTINCT -- moot because of UNION; otherwise needed
+                 child.name as ontology_term_name, child.ontology_term_id,
+                 child.source_id as ontology_term_source_id, child.definition as description,
+                 -- work around initcap's problems with apostrophes
+                 replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
+                           '16s', '16S') as display_name,
+                 parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+                 parent.source_id as parent_ontology_term_source_id,
+                 unit.name as units, mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                otm.organism, otm.dataset_name, otm.type as dataset_type, otm.subtype
+          from ontology_tree_metadata otm, leaf_ancestor_pair lap,
+               sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
+               MetadataType mt,
+               (  select child_term_id, parent_term_id, dataset_name from graph_edge
+                union
+                  select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
+            where edge.child_term_id = lap.ancestor_term_id
+              and lap.leaf_term_id = otm.term_id
+              and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+              and edge.child_term_id = child.ontology_term_id(+)
+              and edge.parent_term_id = parent.ontology_term_id(+)
+              and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+              and edge.child_term_id = mt.term_id(+)
+              and otm.unit_id = unit.ontology_term_id(+)
+        union
+          select -- hardwired hierarchy: characteristics
+                 distinct -- moot only because of UNION
+                 nvl(term.name, pcm.term) as ontology_term_name, term.ontology_term_id,
+                 term.source_id as ontology_term_source_id, term.definition as description,
+                 initcap(nvl(term.name, pcm.term)) as display_name,
+                 parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+                 parent.source_id as parent_ontology_term_source_id,
+                 unit.name as units, mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                pcm.organism, pcm.dataset_name, pcm.type as dataset_type, pcm.subtype
+          from PanCharacteristicMetadata pcm, sres.OntologyTerm term,
+               sres.OntologyTerm parent, sres.OntologyTerm unit, MetadataType mt,
+               hierarchy_mapping hm
+          where pcm.term_id = term.ontology_term_id(+)
+            and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.unit_id = unit.ontology_term_id(+)
+            and pcm.term_id = mt.term_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: characteristics parents
+                 distinct -- moot only because of UNION
+                 parent.name as ontology_term_name, parent.ontology_term_id as ontology_term_id,
+                 parent.source_id as ontology_term_source_id, parent.definition as description,
+                 initcap(parent.name) as display_name,
+                 'characteristic' as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                pcm.organism, pcm.dataset_name, pcm.type as dataset_type, pcm.subtype
+          from PanCharacteristicMetadata pcm, sres.OntologyTerm parent,
+               hierarchy_mapping hm
+          where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: characteristics grandparents
+                 distinct -- moot only because of UNION
+                 'characteristic' as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 'Characteristic' as display_name,
+                 null as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                pcm.organism, pcm.dataset_name, pcm.type as dataset_type, pcm.subtype
+          from PanCharacteristicMetadata pcm, sres.OntologyTerm parent,
+               hierarchy_mapping hm
+          where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols
+                 distinct -- moot only because of UNION
+                 nvl(term.name, ppm.term) as ontology_term_name, term.ontology_term_id,
+                 term.source_id as ontology_term_source_id, term.definition as description,
+                 initcap(nvl(term.name, ppm.term)) as display_name,
+                 ppm.category as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 unit.name as units, mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                ppm.organism, ppm.dataset_name, ppm.type as dataset_type, ppm.subtype
+          from PanProtocolMetadata ppm, sres.OntologyTerm term,
+               sres.OntologyTerm unit, MetadataType mt,
+               hierarchy_mapping hm
+          where ppm.term_id = term.ontology_term_id(+)
+            and ppm.unit_id = unit.ontology_term_id(+)
+            and ppm.term_id = mt.term_id(+)
+            and ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols parents
+                 distinct -- moot only because of UNION
+                 ppm.category as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 initcap(ppm.category) as display_name,
+                 'protocol' as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                ppm.organism, ppm.dataset_name, ppm.type as dataset_type, ppm.subtype
+          from PanProtocolMetadata ppm, hierarchy_mapping hm
+          where ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols grandparents
+                 distinct -- moot only because of UNION
+                 'protocol' as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 'Protocol' as display_name,
+                 null as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                ppm.organism, ppm.dataset_name, ppm.type as dataset_type, ppm.subtype
+          from PanProtocolMetadata ppm, hierarchy_mapping hm
+          where ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        )
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
         order by organism, dataset_name, ontology_term_name
       ]]>
