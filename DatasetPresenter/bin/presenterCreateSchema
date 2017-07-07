@@ -159,7 +159,7 @@ sub createTables {
       create table $schema.DatasetModelRef$suffix (
         dataset_model_ref_id         number(12),
         dataset_presenter_id         varchar2(15),
-        record_type                  varchar2(50),
+        record_type                  varchar2(100),
         target_type                  varchar2(20),
         target_name                  varchar2(300),
         constraint DatasetModelRef${suffix}_pk primary key (dataset_model_ref_id)
