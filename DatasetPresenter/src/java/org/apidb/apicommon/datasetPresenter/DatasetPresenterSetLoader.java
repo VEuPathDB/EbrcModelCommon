@@ -304,10 +304,11 @@ public class DatasetPresenterSetLoader {
         if(datasetInjector != null) {
             Map<String, String> injectorPropValues =  datasetInjector.getPropValues();
             for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
-
+                
 		String dataValue = pv.getValue();
+
 		if (dataValue.length() > 4000) {
-		    dataValue = dataValue.substring(0,4000);
+		    dataValue = dataValue.substring(0,3999);
 		}
                 loadInjectorPropValue(datasetPresenterId, pv.getKey(), dataValue, injectorPropertiesStmt);
             }
@@ -316,6 +317,8 @@ public class DatasetPresenterSetLoader {
         String type = datasetPresenter.getType();
         String subtype = datasetPresenter.getSubtype();
 
+
+
         for (Contact contact : datasetPresenter.getContacts(allContacts)) {
           loadContact(datasetPresenterId, contact, contactStmt);
         }
@@ -323,6 +326,8 @@ public class DatasetPresenterSetLoader {
         for (Publication pub : datasetPresenter.getPublications()) {
 	    loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
         }
+
+
 
         for (ModelReference ref : datasetPresenter.getModelReferences()) {
           loadModelReference(datasetPresenterId, ref, referenceStmt);
@@ -569,10 +574,14 @@ public class DatasetPresenterSetLoader {
 
   private void loadModelReference(String datasetPresenterId, ModelReference ref,
       PreparedStatement stmt) throws SQLException {
+
     stmt.setString(1, datasetPresenterId);
     stmt.setString(2, ref.getRecordClassName());
     stmt.setString(3, ref.getTargetType());
     stmt.setString(4, ref.getTargetName().replace(":", ""));
+
+
+
     stmt.execute();
   }
 
