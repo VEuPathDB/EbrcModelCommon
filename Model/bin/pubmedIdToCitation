@@ -3,7 +3,7 @@
 use lib "$ENV{GUS_HOME}/lib/perl";
 
 use LWP::Simple;
-use ApiCommonModel::Model::XMLUtils qw(extractTag extractTagContent extractAllTags getAttrValue);
+use EbrcModelCommon::Model::XMLUtils qw(extractTag extractTagContent extractAllTags getAttrValue);
 
 use Encode;
 
