@@ -1,6 +1,6 @@
 #! /usr/bin/perl
                                                                                              
-package ApiCommonModel::Model::pcbiPubmed;
+package EbrcModelCommon::Model::pcbiPubmed;
 require Exporter;
 @ISA = qw (Exporter);
 @EXPORT = qw (
@@ -12,7 +12,7 @@ require Exporter;
 
 use strict;
 use LWP::Simple;
-use ApiCommonModel::Model::XMLUtils;
+use EbrcModelCommon::Model::XMLUtils;
 use Encode;
 
 my $ncbiEutilsUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
@@ -40,14 +40,14 @@ sub fetchPubmedUrl {
                                                                                              
 sub fetchAuthorList {
 	my @authors;
-	my $aContent = ApiCommonModel::Model::XMLUtils::extractTagContent ($content, "AuthorList");
+	my $aContent = EbrcModelCommon::Model::XMLUtils::extractTagContent ($content, "AuthorList");
 
-	foreach my $author (ApiCommonModel::Model::XMLUtils::extractAllTags ($aContent, "Author")) {
-		my $attrValue = ApiCommonModel::Model::XMLUtils::getAttrValue ($author, "Author", "ValidYN");
+	foreach my $author (EbrcModelCommon::Model::XMLUtils::extractAllTags ($aContent, "Author")) {
+		my $attrValue = EbrcModelCommon::Model::XMLUtils::getAttrValue ($author, "Author", "ValidYN");
 		#Some of them don't have this attribute.
 	    if (!$attrValue || $attrValue eq "Y") {
-			my $lastname = ApiCommonModel::Model::XMLUtils::extractTagContent ($author, "LastName");
-	        #my $initials = ApiCommonModel::Model::XMLUtils::extractTagContent ($author, "Initials");
+			my $lastname = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "LastName");
+	        #my $initials = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "Initials");
 	        #push @authors, "$lastname $initials";
 			return "$lastname et al.";
 	    }
@@ -58,14 +58,14 @@ sub fetchAuthorList {
 
 sub fetchAuthorListLong {
 	my @authors;
-	my $aContent = ApiCommonModel::Model::XMLUtils::extractTagContent ($content, "AuthorList");
+	my $aContent = EbrcModelCommon::Model::XMLUtils::extractTagContent ($content, "AuthorList");
 
-	foreach my $author (ApiCommonModel::Model::XMLUtils::extractAllTags ($aContent, "Author")) {
-		my $attrValue = ApiCommonModel::Model::XMLUtils::getAttrValue ($author, "Author", "ValidYN");
+	foreach my $author (EbrcModelCommon::Model::XMLUtils::extractAllTags ($aContent, "Author")) {
+		my $attrValue = EbrcModelCommon::Model::XMLUtils::getAttrValue ($author, "Author", "ValidYN");
 		#Some of them don't have this attribute.
 	    if (!$attrValue || $attrValue eq "Y") {
-			my $lastname = ApiCommonModel::Model::XMLUtils::extractTagContent ($author, "LastName");
-	        my $initials = ApiCommonModel::Model::XMLUtils::extractTagContent ($author, "Initials");
+			my $lastname = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "LastName");
+	        my $initials = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "Initials");
 	        push @authors, "$lastname $initials";
 	    }
 	}
@@ -74,12 +74,12 @@ sub fetchAuthorListLong {
 }
                                                                                              
 sub fetchTitle {
-    my $title = ApiCommonModel::Model::XMLUtils::extractTagContent($content, "ArticleTitle");
+    my $title = EbrcModelCommon::Model::XMLUtils::extractTagContent($content, "ArticleTitle");
 	return $title;
 }
                                                                                              
 sub fetchPublication {    
-	my $publication = ApiCommonModel::Model::XMLUtils::extractTag ($content, "Journal");
+	my $publication = EbrcModelCommon::Model::XMLUtils::extractTag ($content, "Journal");
 	my ($pubName, $pubVolume, $pubIssue, $pubDate, $pubPages);
 	
 	# The name of the journal can come from one of the three sources
@@ -90,9 +90,9 @@ sub fetchPublication {
 	# Don't know what's the difference between Title and MedlineTA, but
 	# one of them didn't have Title, but had MedlineTA.
 	
-	if (!($pubName = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "ISOAbbreviation"))) {
-		if (!($pubName = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Title"))) {
-			$pubName = ApiCommonModel::Model::XMLUtils::extractTagContent ($content, "MedlineTA");
+	if (!($pubName = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "ISOAbbreviation"))) {
+		if (!($pubName = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Title"))) {
+			$pubName = EbrcModelCommon::Model::XMLUtils::extractTagContent ($content, "MedlineTA");
 		}
 	}
 	                                                                               
@@ -102,32 +102,32 @@ sub fetchPublication {
 	#   3. MedlineDate
 	                                                                               
 	my ($pubYear, $pubSeason, $pubMonth, $pubDay, $pubMedlineDate);
-	if ($pubYear = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Year")) {
-	    if ($pubMonth = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Month")) {
-			if ($pubDay = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Day")) {
+	if ($pubYear = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Year")) {
+	    if ($pubMonth = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Month")) {
+			if ($pubDay = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Day")) {
 		        $pubDate = "$pubYear $pubMonth $pubDay";
 			} else {
 				$pubDate = "$pubYear $pubMonth";
 			}
 	    } else {
 	        $pubDate = "$pubYear "
-	                    . ApiCommonModel::Model::XMLUtils::extractTagContent($publication, "Season");
+	                    . EbrcModelCommon::Model::XMLUtils::extractTagContent($publication, "Season");
 	    }
 	} else {
-	    $pubDate = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "MedlineDate");
+	    $pubDate = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "MedlineDate");
 	}
 	                                                                               
-	$pubVolume = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Volume");
-	$pubIssue = ApiCommonModel::Model::XMLUtils::extractTagContent ($publication, "Issue");
+	$pubVolume = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Volume");
+	$pubIssue = EbrcModelCommon::Model::XMLUtils::extractTagContent ($publication, "Issue");
 	                                                                               
 	# Pagination can have two forms:
 	#   1. MedlinePgn - indicates both start and end
 	#   2. StartPage, and optionally EndPage
-	my $pages = ApiCommonModel::Model::XMLUtils::extractTagContent ($content, "Pagination");
-	$pubPages = ApiCommonModel::Model::XMLUtils::extractTagContent ($pages, "MedlinePgn")
-	    or $pubPages = ApiCommonModel::Model::XMLUtils::extractTagContent ($pages, "StartPage")
+	my $pages = EbrcModelCommon::Model::XMLUtils::extractTagContent ($content, "Pagination");
+	$pubPages = EbrcModelCommon::Model::XMLUtils::extractTagContent ($pages, "MedlinePgn")
+	    or $pubPages = EbrcModelCommon::Model::XMLUtils::extractTagContent ($pages, "StartPage")
 	                . "-"
-	                . ApiCommonModel::Model::XMLUtils::extractTagContent ($pages, "EndPage");
+	                . EbrcModelCommon::Model::XMLUtils::extractTagContent ($pages, "EndPage");
 	                                                                               
 	return "$pubName $pubDate;$pubVolume($pubIssue):$pubPages";
 }
