@@ -514,7 +514,7 @@ and ot.name in ('Participant',
 select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_pan.isa_type as protocol_app_node_isa_type, pan.protocol_app_node_id as ancestor_protocol_app_node_id, nvl(mt.name, 'assay') as category, attribute_term.name as term, -- if not a material type it has to be an assay
                attribute_term.ontology_term_id as term_id, 
                case when apidb.is_number(c.value) = 1
-                    then to_char(nvl(round(apidb.parse_number(c.value), 2), 0))
+                    then to_char(nvl(round(apidb.parse_and_round_number(c.value), 2), 0))
                     else nvl(c.value, value_term.name)
                end as value,
                c.characteristic_id,
@@ -733,7 +733,7 @@ UNION ALL
                m.category, m.term, m.term_id, mt.source_id,
                substr(m.value, 1, 250) as string_value,
                case when mt.type = 'number'
-                      then apidb.parse_number(m.value)
+                      then apidb.parse_and_round_number(m.value)
                     else cast(null as number)
                end as number_value,
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
