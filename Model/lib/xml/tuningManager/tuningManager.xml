@@ -429,23 +429,44 @@ order by pan.name
     <sql>
       <![CDATA[
         create table ProtocolAppNodeIO&1 nologging as
-        select i.protocol_app_node_ID input_node_id, pa.protocol_app_id, o.protocol_app_node_id output_node_id
-        from study.ProtocolApp pa, study.Input i, study.Output o
+        select i.protocol_app_node_id input_node_id, pa.protocol_app_id,
+               o.protocol_app_node_id output_node_id, in_pan.type_id as input_type_id,
+               out_pan.type_id as output_type_id
+        from study.ProtocolApp pa, study.Input i, study.Output o,
+             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan
         where i.protocol_app_id = pa.protocol_app_id
           and o.protocol_app_id = pa.protocol_app_id
+          and i.protocol_app_node_id = in_pan.protocol_app_node_id
+          and o.protocol_app_node_id = out_pan.protocol_app_node_id
         order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index panio_iix&1 on ProtocolAppNodeIO&1 (input_node_id, output_node_id, protocol_app_id)
-             tablespace indx
+        create index panio_iix&1 on ProtocolAppNodeIO&1
+               (input_node_id, output_node_id, protocol_app_id, input_type_id, output_type_id)
+               tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index panio_oix&1 on ProtocolAppNodeIO&1 (output_node_id, input_node_id, protocol_app_id)
-             tablespace indx
+        create index panio_oix&1 on ProtocolAppNodeIO&1
+               (output_node_id, input_node_id, protocol_app_id, input_type_id, output_type_id)
+               tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index panio_otypeix&1 on ProtocolAppNodeIO&1
+               (input_type_id, output_type_id, output_node_id, input_node_id, protocol_app_id)
+               tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index panio_itypeix&1 on ProtocolAppNodeIO&1
+               (input_type_id, output_type_id, input_node_id, output_node_id, protocol_app_id)
+               tablespace indx
       ]]>
     </sql>
     <sql>
