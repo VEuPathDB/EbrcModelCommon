@@ -1222,7 +1222,8 @@ UNION ALL
                  nvl(term.name, pcm.term) as ontology_term_name, term.ontology_term_id,
                  term.source_id as ontology_term_source_id, term.definition as description,
                  initcap(nvl(term.name, pcm.term)) as display_name,
-                 parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+                 nvl(parent.name, pcm.ancestor_pan_type) as parent_ontology_term_name,
+                 parent.ontology_term_id as parent_ontology_term_id,
                  parent.source_id as parent_ontology_term_source_id,
                  unit.name as units, mt.type,
                  case
@@ -1243,7 +1244,8 @@ UNION ALL
         union
           select -- hardwired hierarchy: characteristics parents
                  distinct -- moot only because of UNION
-                 parent.name as ontology_term_name, parent.ontology_term_id as ontology_term_id,
+                 nvl(parent.name, pcm.ancestor_pan_type) as ontology_term_name,
+                 parent.ontology_term_id as ontology_term_id,
                  parent.source_id as ontology_term_source_id, parent.definition as description,
                  initcap(parent.name) as display_name,
                  'characteristic' as parent_ontology_term_name, null as parent_ontology_term_id,
@@ -1327,6 +1329,24 @@ UNION ALL
           from PanProtocolMetadata ppm, hierarchy_mapping hm
           where ppm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
+        union
+          select -- fallback metadata
+                 distinct -- moot only because of UNION
+                 fm.term_name as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 initcap(fm.term_name) as display_name,
+                 null as parent_ontology_term_name,
+                 null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, nvl(mt.type, 'string') as type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                fm.organism, fm.dataset_name, fm.type as dataset_type, fm.subtype
+          from FallbackMetadata fm, MetadataType mt
+          where fm.term_name = mt.property(+)
         )
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
         order by organism, dataset_name, ontology_term_name
