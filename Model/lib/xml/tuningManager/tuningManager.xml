@@ -759,7 +759,7 @@ UNION ALL
                m.category, m.term, m.term_id, mt.source_id,
                substr(m.value, 1, 250) as string_value,
                case when mt.type = 'number'
-                      then apidb.parse_number(m.value)
+                      then apidb.parse_and_round_number(m.value)
                     else cast(null as number)
                end as number_value,
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
