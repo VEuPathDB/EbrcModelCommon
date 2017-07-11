@@ -82,7 +82,7 @@ SQL
     $fieldsString = ", " . $fieldsString
         if $fieldsString;
     
-    my @bindVars = map { $_->[1] eq "number" ? "apidb.parse_number(?)" : $_->[1] eq "date" ? "apidb.parse_date(?)" : "?" } @sortedFieldsArray;
+    my @bindVars = map { $_->[1] eq "number" ? "apidb.parse_and_round_number(?)" : $_->[1] eq "date" ? "apidb.parse_date(?)" : "?" } @sortedFieldsArray;
 
     my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
     
