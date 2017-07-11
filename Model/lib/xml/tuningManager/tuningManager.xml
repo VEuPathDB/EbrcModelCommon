@@ -1231,10 +1231,10 @@ UNION ALL
                   select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
             where edge.child_term_id = lap.ancestor_term_id
               and lap.leaf_term_id = otm.term_id
-              and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+--            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = child.ontology_term_id(+)
               and edge.parent_term_id = parent.ontology_term_id(+)
-              and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+--            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = mt.term_id(+)
               and otm.unit_id = unit.ontology_term_id(+)
         union
