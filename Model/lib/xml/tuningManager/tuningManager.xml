@@ -1064,13 +1064,13 @@ UNION ALL
   </tuningTable>
 
 
-  <tuningTable name="MetadataOntology">
+  <tuningTable name="OldMetadataOntology">
     <comment>Wide, strongly-typed metadata ontology for new-style filter params
     </comment>
     <internalDependency name="MetadataSpec"/>
     <sql>
       <![CDATA[
-        CREATE TABLE MetadataOntology&1 NOLOGGING AS
+        CREATE TABLE OldMetadataOntology&1 NOLOGGING AS
         SELECT SUBSTR(property, 1, 120) AS ontology_term_name,
                SUBSTR(parent_ontology_term_name, 1, 120) AS parent_ontology_term_name,
                SUBSTR(display_name, 1, 120) AS display_name, 
@@ -1095,14 +1095,14 @@ UNION ALL
     <sql>
       <![CDATA[
         create index moix1&1
-        on MetadataOntology&1 (dataset_name, organism, ontology_term_name)
+        on OldMetadataOntology&1 (dataset_name, organism, ontology_term_name)
         tablespace indx
       ]]>
     </sql>
   </tuningTable>
 
 
-  <tuningTable name="NewMetadataOntology">
+  <tuningTable name="MetadataOntology">
     <comment>
     </comment>
     <internalDependency name="FallbackMetadata"/>
@@ -1110,7 +1110,7 @@ UNION ALL
     <internalDependency name="MetadataType"/>
     <sql>
       <![CDATA[
-        create table NewMetadataOntology&1 nologging as
+        create table MetadataOntology&1 nologging as
         select *
         from (with hierarchy_mapping
                    as (select dataset_name,
@@ -1378,7 +1378,7 @@ UNION ALL
     <sql>
       <![CDATA[
         create index nmoix1&1
-        on NewMetadataOntology&1 (ontology_term_name, dataset_name, organism)
+        on MetadataOntology&1 (ontology_term_name, dataset_name, organism)
         tablespace indx
       ]]>
     </sql>
