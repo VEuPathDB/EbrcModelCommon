@@ -1130,11 +1130,11 @@ UNION ALL
                                  from panProtocolMetadata)),
                    protocol_metadata
                    as (select distinct organism, type, subtype, dataset_name,
-                                       category, term, term_id, value, unit_id
+                                       category, term, term_id, unit_id
                        from panProtocolMetadata),
                    characteristic_metadata
                    as (select distinct organism, type, subtype, dataset_name,
-                                       category, term, term_id, value, unit_id
+                                       category, term, term_id, unit_id
                        from panCharacteristicMetadata),
                    metadata
                    as (  select *
@@ -1176,9 +1176,11 @@ UNION ALL
                        where tree.external_database_release_id = edr.external_database_release_id
                          and ed.external_database_id = edr.external_database_id),
                    unparented_term
-                   as (select parent_term_id as term_id, dataset_name from graph_edge
-                       minus
-                       select child_term_id as term_id, dataset_name from graph_edge),
+                   as ((    select parent_term_id as term_id, dataset_name from graph_edge
+                          union
+                            select term_id, hierarchy_dataset_name as dataset_name from leaf_term)
+                        minus
+                          select child_term_id as term_id, dataset_name from graph_edge),
                    distinct_term
                    as (select parent_term_id as term_id, dataset_name from graph_edge
                        union
