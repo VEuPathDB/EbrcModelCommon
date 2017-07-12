@@ -1826,7 +1826,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                    WHERE term NOT IN (SELECT property FROM override)
                 ),
              term_attributes
-             AS (SELECT term, term_id,
+             AS (SELECT term, term_id, COUNT(DISTINCT value) AS distinct_values,
                         MIN(apidb.is_number(value)) AS is_number,
                         MIN(apidb.is_date(value)) AS is_date
                  FROM pan_metadata
@@ -1838,14 +1838,16 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
       UNION ALL
         SELECT ta.term AS property, ot.ontology_term_id as term_id, ot.source_id,
                CASE
-                 WHEN is_date = 1
+                 WHEN ta.is_date = 1
                    THEN 'date'
-                 WHEN is_number = 1
+                 WHEN ta.is_number = 1
                    THEN 'number'
                  ELSE 'string'
                END AS type,
                CASE
-                 WHEN is_date = 1 OR is_number = 1
+                 WHEN ta.is_date = 1
+                   THEN 'range'
+                 WHEN ta.is_number = 1 AND ta.distinct_values > 10
                    THEN 'range'
                  ELSE 'membership' 
                END AS filter
