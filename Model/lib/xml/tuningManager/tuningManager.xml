@@ -430,42 +430,46 @@ order by pan.name
       <![CDATA[
         create table ProtocolAppNodeIO&1 nologging as
         select i.protocol_app_node_id input_node_id, pa.protocol_app_id,
-               o.protocol_app_node_id output_node_id, in_pan.type_id as input_type_id,
-               out_pan.type_id as output_type_id
+               o.protocol_app_node_id output_node_id,
+               in_type.source_id as input_type_source_id,
+               out_type.source_id as output_type_source_id
         from study.ProtocolApp pa, study.Input i, study.Output o,
-             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan
+             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan,
+             sres.OntologyTerm in_type,  sres.OntologyTerm out_type
         where i.protocol_app_id = pa.protocol_app_id
           and o.protocol_app_id = pa.protocol_app_id
           and i.protocol_app_node_id = in_pan.protocol_app_node_id
           and o.protocol_app_node_id = out_pan.protocol_app_node_id
+          and in_pan.type_id = in_type.ontology_term_id
+          and out_pan.type_id = out_type.ontology_term_id
         order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_iix&1 on ProtocolAppNodeIO&1
-               (input_node_id, output_node_id, protocol_app_id, input_type_id, output_type_id)
+               (input_node_id, output_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_oix&1 on ProtocolAppNodeIO&1
-               (output_node_id, input_node_id, protocol_app_id, input_type_id, output_type_id)
+               (output_node_id, input_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_otypeix&1 on ProtocolAppNodeIO&1
-               (input_type_id, output_type_id, output_node_id, input_node_id, protocol_app_id)
+               (output_type_source_id, input_type_source_id, output_node_id, input_node_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_itypeix&1 on ProtocolAppNodeIO&1
-               (input_type_id, output_type_id, input_node_id, output_node_id, protocol_app_id)
+               (input_type_source_id, output_type_source_id, input_node_id, output_node_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
