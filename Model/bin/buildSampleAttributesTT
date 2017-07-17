@@ -102,6 +102,7 @@ SQL
                 from (select m.protocol_app_node_id, ot.source_id, replace(m.value, '''', '\\''') as value
                       from PANCHARACTERISTICMETADATA m, sres.ontologyterm ot where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
                       union
+                      select m.protocol_app_node_id, ot.source_id, replace(m.value, '''', '\\''') as value
                       from PANPROTOCOLMETADATA m, sres.ontologyterm ot  where ot.ontology_term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
                ) group by protocol_app_node_id, source_id
           )
