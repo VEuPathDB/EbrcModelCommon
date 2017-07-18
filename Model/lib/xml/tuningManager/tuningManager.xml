@@ -1836,7 +1836,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                  FROM pan_metadata
                  GROUP BY term, term_id
                 )
-          SELECT o.property, ot.ontology_term_id as term_id, ot.source_id, o.type, o.filter
+          SELECT o.property, ot.ontology_term_id as term_id, ot.source_id,
+                 o.type, o.filter, NULL as distinct_values
           FROM override o, sres.OntologyTerm ot
           WHERE o.property = ot.name(+)
       UNION ALL
@@ -1854,7 +1855,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                  WHEN ta.is_number = 1 AND ta.distinct_values > 10
                    THEN 'range'
                  ELSE 'membership' 
-               END AS filter
+               END AS filter,
+               ta.distinct_values
         FROM term_attributes ta, sres.OntologyTerm ot
         WHERE ta.term_id = ot.ontology_term_id(+)
        ]]>
