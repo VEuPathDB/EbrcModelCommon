@@ -770,7 +770,46 @@ UNION ALL
     </sql>
   </tuningTable>
 
+
   <tuningTable name="Metadata">
+    <comment>
+      Metadata table with rows added for NULL properties
+    </comment>
+    <internalDependency name="MetadataWithoutNulls"/>
+    <sql>
+      <![CDATA[
+        create table Metadata&1 nologging as
+        select cross_product.dataset_type, cross_product.subtype, cross_product.organism, cross_product.dataset_name,
+               cross_product.study_name, cross_product.protocol_app_node_id, cross_product.pan_name, cross_product.category,
+               cross_product.term, cross_product.term_id, cross_product.source_id,
+               mwn.string_value, mwn.number_value, mwn.date_value
+        from apidbTuning.MetadataWithoutNulls mwn,
+             (select sample.study_name, sample.category, sample.protocol_app_node_id, sample.dataset_name,
+                     sample.dataset_type, sample.subtype, sample.organism, sample.pan_name,
+                     property.term, property.term_id, property.source_id
+              from  (select distinct study_name, category, protocol_app_node_id, dataset_name,
+                                     dataset_type, subtype, organism, pan_name
+                     from apidbTuning.MetadataWithoutNulls) sample,
+                    (select distinct study_name, category, term, term_id, source_id
+                     from apidbTuning.MetadataWithoutNulls) property
+              where sample.study_name = property.study_name
+                and sample.category = property.category) cross_product
+        where cross_product.protocol_app_node_id = mwn.protocol_app_node_id(+)
+          and cross_product.term = mwn.term(+)
+        order by organism, dataset_type, subtype, dataset_name, pan_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index md_ixone&1
+        on Metadata&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+
+  <tuningTable name="MetadataWithoutNulls">
     <comment>
       Metadata table for new, wide, strongly-typed filter param
     </comment>
@@ -779,7 +818,7 @@ UNION ALL
     <internalDependency name="PANProtocolMetadata"/>
     <sql>
       <![CDATA[
-        create table Metadata&1 nologging as
+        create table MetadataWithoutNulls&1 nologging as
         select m.type as dataset_type, m.subtype, m.organism, m.dataset_name,
                m.study_name, m.protocol_app_node_id, m.pan_name,
                m.category, m.term, m.term_id, mt.source_id,
@@ -812,8 +851,8 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
-        create index md_ixone&1
-        on Metadata&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
+        create index mwn_ixone&1
+        on MetadataWithoutNulls&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
         tablespace indx
       ]]>
     </sql>
