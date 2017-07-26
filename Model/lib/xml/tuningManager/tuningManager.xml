@@ -783,15 +783,15 @@ UNION ALL
                cross_product.study_name, cross_product.protocol_app_node_id, cross_product.pan_name, cross_product.category,
                cross_product.term, cross_product.term_id, cross_product.source_id,
                mwn.string_value, mwn.number_value, mwn.date_value
-        from apidbTuning.MetadataWithoutNulls mwn,
+        from MetadataWithoutNulls mwn,
              (select sample.study_name, sample.category, sample.protocol_app_node_id, sample.dataset_name,
                      sample.dataset_type, sample.subtype, sample.organism, sample.pan_name,
                      property.term, property.term_id, property.source_id
               from  (select distinct study_name, category, protocol_app_node_id, dataset_name,
                                      dataset_type, subtype, organism, pan_name
-                     from apidbTuning.MetadataWithoutNulls) sample,
+                     from MetadataWithoutNulls) sample,
                     (select distinct study_name, category, term, term_id, source_id
-                     from apidbTuning.MetadataWithoutNulls) property
+                     from MetadataWithoutNulls) property
               where sample.study_name = property.study_name
                 and sample.category = property.category) cross_product
         where cross_product.protocol_app_node_id = mwn.protocol_app_node_id(+)
