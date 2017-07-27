@@ -878,6 +878,8 @@ UNION ALL
                             then 'Ontology_mbioRoot_RSRC'
                        when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                             then 'Ontology_prism_RSRC'
+                       when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                            then 'Ontology_gates_RSRC'
                        else null
                        end as hierarchy_dataset_name
             from (  select dataset_name
@@ -1164,6 +1166,8 @@ UNION ALL
                                   then 'Ontology_mbioRoot_RSRC'
                                 when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                                    then 'Ontology_prism_RSRC'
+                                when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                                   then 'Ontology_gates_RSRC'
                                 else null
                               end as hierarchy_dataset_name
                        from (  select dataset_name
