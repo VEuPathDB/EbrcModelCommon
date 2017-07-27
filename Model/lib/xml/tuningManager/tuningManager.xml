@@ -1693,7 +1693,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <ancillaryTable name="ParticipantAttributes"/>
     <ancillaryTable name="EventAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
-    <ancillaryTable name="DwellingAttributes"/>
+    <ancillaryTable name="HouseholdAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
   </tuningTable>
 
