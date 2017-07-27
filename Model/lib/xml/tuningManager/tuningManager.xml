@@ -264,10 +264,10 @@ and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
 and ot.name in ('Participant',
-                'Visit',
+                'Event',
                 'specimen',
-                'Specimen type',
-                'Dwelling type',
+                'Specimen',
+                'Household',
                 'CDC light trap assay')
 order by pan.name
       ]]>
@@ -1691,7 +1691,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <internalDependency name="MetadataType"/>
     <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="ParticipantAttributes"/>
-    <ancillaryTable name="ClinicalVisitAttributes"/>
+    <ancillaryTable name="EventAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
     <ancillaryTable name="DwellingAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
