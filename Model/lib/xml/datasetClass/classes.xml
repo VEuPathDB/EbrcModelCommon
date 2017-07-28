@@ -4310,7 +4310,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="dontcare">
   
-     <wgetArgs url="http://eupathdb.org/eupathdb/webservices/GeneQuestions/GenesByTaxon.xml?organism=${organismName}&amp;o-fields=ec_numbers_string"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
+     <wgetArgs url="http://eupathdb.org/eupathdb/webservices/GeneQuestions/GenesByTaxon.xml?organism=${organismName}&amp;o-fields=ec_numbers"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
 
      <unpack>orthomclUnpackEupathDB_EC_XML @@dataDir@@/ecAssocFromEuPathDB.xml @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
      
