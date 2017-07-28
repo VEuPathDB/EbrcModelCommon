@@ -264,10 +264,10 @@ and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
 and ot.name in ('Participant',
-                'Visit',
+                'Event',
                 'specimen',
-                'Specimen type',
-                'Dwelling type',
+                'Specimen',
+                'Household',
                 'CDC light trap assay')
 order by pan.name
       ]]>
@@ -430,42 +430,46 @@ order by pan.name
       <![CDATA[
         create table ProtocolAppNodeIO&1 nologging as
         select i.protocol_app_node_id input_node_id, pa.protocol_app_id,
-               o.protocol_app_node_id output_node_id, in_pan.type_id as input_type_id,
-               out_pan.type_id as output_type_id
+               o.protocol_app_node_id output_node_id,
+               in_type.source_id as input_type_source_id,
+               out_type.source_id as output_type_source_id
         from study.ProtocolApp pa, study.Input i, study.Output o,
-             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan
+             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan,
+             sres.OntologyTerm in_type,  sres.OntologyTerm out_type
         where i.protocol_app_id = pa.protocol_app_id
           and o.protocol_app_id = pa.protocol_app_id
           and i.protocol_app_node_id = in_pan.protocol_app_node_id
           and o.protocol_app_node_id = out_pan.protocol_app_node_id
+          and in_pan.type_id = in_type.ontology_term_id
+          and out_pan.type_id = out_type.ontology_term_id
         order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_iix&1 on ProtocolAppNodeIO&1
-               (input_node_id, output_node_id, protocol_app_id, input_type_id, output_type_id)
+               (input_node_id, output_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_oix&1 on ProtocolAppNodeIO&1
-               (output_node_id, input_node_id, protocol_app_id, input_type_id, output_type_id)
+               (output_node_id, input_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_otypeix&1 on ProtocolAppNodeIO&1
-               (input_type_id, output_type_id, output_node_id, input_node_id, protocol_app_id)
+               (output_type_source_id, input_type_source_id, output_node_id, input_node_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index panio_itypeix&1 on ProtocolAppNodeIO&1
-               (input_type_id, output_type_id, input_node_id, output_node_id, protocol_app_id)
+               (input_type_source_id, output_type_source_id, input_node_id, output_node_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
@@ -766,7 +770,46 @@ UNION ALL
     </sql>
   </tuningTable>
 
+
   <tuningTable name="Metadata">
+    <comment>
+      Metadata table with rows added for NULL properties
+    </comment>
+    <internalDependency name="MetadataWithoutNulls"/>
+    <sql>
+      <![CDATA[
+        create table Metadata&1 nologging as
+        select cross_product.dataset_type, cross_product.subtype, cross_product.organism, cross_product.dataset_name,
+               cross_product.study_name, cross_product.protocol_app_node_id, cross_product.pan_name, cross_product.category,
+               cross_product.term, cross_product.term_id, cross_product.source_id,
+               mwn.string_value, mwn.number_value, mwn.date_value
+        from MetadataWithoutNulls mwn,
+             (select sample.study_name, sample.category, sample.protocol_app_node_id, sample.dataset_name,
+                     sample.dataset_type, sample.subtype, sample.organism, sample.pan_name,
+                     property.term, property.term_id, property.source_id
+              from  (select distinct study_name, category, protocol_app_node_id, dataset_name,
+                                     dataset_type, subtype, organism, pan_name
+                     from MetadataWithoutNulls) sample,
+                    (select distinct study_name, category, term, term_id, source_id
+                     from MetadataWithoutNulls) property
+              where sample.study_name = property.study_name
+                and sample.category = property.category) cross_product
+        where cross_product.protocol_app_node_id = mwn.protocol_app_node_id(+)
+          and cross_product.term = mwn.term(+)
+        order by organism, dataset_type, subtype, dataset_name, pan_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index md_ixone&1
+        on Metadata&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+
+  <tuningTable name="MetadataWithoutNulls">
     <comment>
       Metadata table for new, wide, strongly-typed filter param
     </comment>
@@ -775,7 +818,7 @@ UNION ALL
     <internalDependency name="PANProtocolMetadata"/>
     <sql>
       <![CDATA[
-        create table Metadata&1 nologging as
+        create table MetadataWithoutNulls&1 nologging as
         select m.type as dataset_type, m.subtype, m.organism, m.dataset_name,
                m.study_name, m.protocol_app_node_id, m.pan_name,
                m.category, m.term, m.term_id, mt.source_id,
@@ -808,8 +851,8 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
-        create index md_ixone&1
-        on Metadata&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
+        create index mwn_ixone&1
+        on MetadataWithoutNulls&1 (dataset_name, category, term, pan_name, protocol_app_node_id, string_value, number_value, date_value)
         tablespace indx
       ]]>
     </sql>
@@ -835,6 +878,8 @@ UNION ALL
                             then 'Ontology_mbioRoot_RSRC'
                        when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                             then 'Ontology_prism_RSRC'
+                       when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                            then 'Ontology_gates_RSRC'
                        else null
                        end as hierarchy_dataset_name
             from (  select dataset_name
@@ -1064,13 +1109,13 @@ UNION ALL
   </tuningTable>
 
 
-  <tuningTable name="MetadataOntology">
+  <tuningTable name="OldMetadataOntology">
     <comment>Wide, strongly-typed metadata ontology for new-style filter params
     </comment>
     <internalDependency name="MetadataSpec"/>
     <sql>
       <![CDATA[
-        CREATE TABLE MetadataOntology&1 NOLOGGING AS
+        CREATE TABLE OldMetadataOntology&1 NOLOGGING AS
         SELECT SUBSTR(property, 1, 120) AS ontology_term_name,
                SUBSTR(parent_ontology_term_name, 1, 120) AS parent_ontology_term_name,
                SUBSTR(display_name, 1, 120) AS display_name, 
@@ -1095,14 +1140,14 @@ UNION ALL
     <sql>
       <![CDATA[
         create index moix1&1
-        on MetadataOntology&1 (dataset_name, organism, ontology_term_name)
+        on OldMetadataOntology&1 (dataset_name, organism, ontology_term_name)
         tablespace indx
       ]]>
     </sql>
   </tuningTable>
 
 
-  <tuningTable name="NewMetadataOntology">
+  <tuningTable name="MetadataOntology">
     <comment>
     </comment>
     <internalDependency name="FallbackMetadata"/>
@@ -1110,7 +1155,7 @@ UNION ALL
     <internalDependency name="MetadataType"/>
     <sql>
       <![CDATA[
-        create table NewMetadataOntology&1 nologging as
+        create table MetadataOntology&1 nologging as
         select *
         from (with hierarchy_mapping
                    as (select dataset_name,
@@ -1121,6 +1166,8 @@ UNION ALL
                                   then 'Ontology_mbioRoot_RSRC'
                                 when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
                                    then 'Ontology_prism_RSRC'
+                                when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                                   then 'Ontology_gates_RSRC'
                                 else null
                               end as hierarchy_dataset_name
                        from (  select dataset_name
@@ -1130,11 +1177,11 @@ UNION ALL
                                  from panProtocolMetadata)),
                    protocol_metadata
                    as (select distinct organism, type, subtype, dataset_name,
-                                       category, term, term_id, value, unit_id
+                                       category, term, term_id, unit_id
                        from panProtocolMetadata),
                    characteristic_metadata
                    as (select distinct organism, type, subtype, dataset_name,
-                                       category, term, term_id, value, unit_id
+                                       category, term, term_id, unit_id
                        from panCharacteristicMetadata),
                    metadata
                    as (  select *
@@ -1176,9 +1223,11 @@ UNION ALL
                        where tree.external_database_release_id = edr.external_database_release_id
                          and ed.external_database_id = edr.external_database_id),
                    unparented_term
-                   as (select parent_term_id as term_id, dataset_name from graph_edge
-                       minus
-                       select child_term_id as term_id, dataset_name from graph_edge),
+                   as ((    select parent_term_id as term_id, dataset_name from graph_edge
+                          union
+                            select term_id, hierarchy_dataset_name as dataset_name from leaf_term)
+                        minus
+                          select child_term_id as term_id, dataset_name from graph_edge),
                    distinct_term
                    as (select parent_term_id as term_id, dataset_name from graph_edge
                        union
@@ -1376,7 +1425,7 @@ UNION ALL
     <sql>
       <![CDATA[
         create index nmoix1&1
-        on NewMetadataOntology&1 (ontology_term_name, dataset_name, organism)
+        on MetadataOntology&1 (ontology_term_name, dataset_name, organism)
         tablespace indx
       ]]>
     </sql>
@@ -1642,9 +1691,9 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <internalDependency name="MetadataType"/>
     <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="ParticipantAttributes"/>
-    <ancillaryTable name="ClinicalVisitAttributes"/>
+    <ancillaryTable name="EventAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
-    <ancillaryTable name="DwellingAttributes"/>
+    <ancillaryTable name="HouseholdAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
   </tuningTable>
 
@@ -1824,29 +1873,33 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                    WHERE term NOT IN (SELECT property FROM override)
                 ),
              term_attributes
-             AS (SELECT term, term_id,
+             AS (SELECT term, term_id, COUNT(DISTINCT value) AS distinct_values,
                         MIN(apidb.is_number(value)) AS is_number,
                         MIN(apidb.is_date(value)) AS is_date
                  FROM pan_metadata
                  GROUP BY term, term_id
                 )
-          SELECT o.property, ot.ontology_term_id as term_id, ot.source_id, o.type, o.filter
+          SELECT o.property, ot.ontology_term_id as term_id, ot.source_id,
+                 o.type, o.filter, NULL as distinct_values
           FROM override o, sres.OntologyTerm ot
           WHERE o.property = ot.name(+)
       UNION ALL
         SELECT ta.term AS property, ot.ontology_term_id as term_id, ot.source_id,
                CASE
-                 WHEN is_date = 1
+                 WHEN ta.is_date = 1
                    THEN 'date'
-                 WHEN is_number = 1
+                 WHEN ta.is_number = 1
                    THEN 'number'
                  ELSE 'string'
                END AS type,
                CASE
-                 WHEN is_date = 1 OR is_number = 1
+                 WHEN ta.is_date = 1
+                   THEN 'range'
+                 WHEN ta.is_number = 1 AND ta.distinct_values > 10
                    THEN 'range'
                  ELSE 'membership' 
-               END AS filter
+               END AS filter,
+               ta.distinct_values
         FROM term_attributes ta, sres.OntologyTerm ot
         WHERE ta.term_id = ot.ontology_term_id(+)
        ]]>
