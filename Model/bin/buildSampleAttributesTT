@@ -93,10 +93,10 @@ SQL
     my $metaDataSql = "
     with pmd as (
                      select m.protocol_app_node_id, ot.source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from PANCHARACTERISTICMETADATA m, apidbtuning.metadatatype ot where ot.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
+                      from PANCHARACTERISTICMETADATA m, metadatatype ot where ot.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
                       union
                       select m.protocol_app_node_id, ot.source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from PANPROTOCOLMETADATA m, apidbtuning.metadatatype ot where ot.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
+                      from PANPROTOCOLMETADATA m, metadatatype ot where ot.term_id = m.term_id and (protocol_app_node_type = '$type' $orIsaSample)
     )
     select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
     from (select protocol_app_node_id,
