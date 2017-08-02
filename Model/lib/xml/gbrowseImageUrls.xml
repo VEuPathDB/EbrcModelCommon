@@ -348,7 +348,7 @@
     <track>ndisFGSC8579</track>
     <track>smack-hell</track>
     <track>mory70-15</track>
-<!-- bld 34    <track>moryBR32</track>  -->
+    <track>moryBR32</track>
     <track>treeQM6a</track>
   </subtrackSet>
 
@@ -418,11 +418,9 @@
     <track>pjirSE8</track>
   </subtrackSet>
 
-<!-- bld 34
   <subtrackSet name="Mycosphaerellaceae" project="FungiDB" suffixes="_span;_gene">
     <track>ztriIPO323</track>
   </subtrackSet>
--->
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
     <track>pinfT30-4</track>
@@ -539,7 +537,7 @@
     <org abbrev="ndisFGSC8579" organism="Neurospora discreta FGSC 8579"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
-<!-- bld 34   <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>  -->
+    <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -655,7 +653,6 @@
     </track>
   </url>
 
-<!-- bld 34
   <url project="FungiDB" type="synteny">
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
     <track name="Gene"/>
@@ -663,7 +660,6 @@
       <subtrack set="Mycosphaerellaceae"/>
     </track>
   </url>
--->
 
   <url project="FungiDB" type="synteny">
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
@@ -1241,7 +1237,7 @@
   <url project="HostDB" type="dna">
     <org organism="Homo sapiens REF" abbrev="hsapREF" />
     <org organism="Mus musculus C57BL6J" abbrev="mmusC57BL6J" />
-<!-- for bld 34    <org organism="Macaca mulatta isolate 17573" abbrev="mmul17573" />  -->
+    <org organism="Macaca mulatta isolate 17573" abbrev="mmul17573" />
     <track name="Gene" />
 
   </url>
