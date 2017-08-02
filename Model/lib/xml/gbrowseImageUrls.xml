@@ -310,6 +310,7 @@
     <track>scerS288c</track>
     <track>calbSC5314</track>
     <track>cglaCBS138</track>
+    <track>clusATCC42720</track>
     <track>ylipCLIB122</track>
   </subtrackSet>
 
@@ -406,6 +407,7 @@
     <track>pbraPb03</track>
     <track>pbraPb18</track>
     <track>plutPb01</track>
+    <track>uree1704</track>
   </subtrackSet>
 
   <subtrackSet name="Ustilaginomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -441,7 +443,6 @@
     <track>hcapNAm1</track>
     <track>hcapG186AR</track>
   </subtrackSet>
-
 
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
@@ -487,6 +488,7 @@
     <org abbrev="calbSC5314" organism="Candida albicans SC5314"/>
     <org abbrev="calbSC5314_B" organism="Candida albicans SC5314_B"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -629,6 +631,7 @@
     <org abbrev="pbraPb03" organism="Paracoccidioides brasiliensis Pb03"/>
     <org abbrev="pbraPb18" organism="Paracoccidioides brasiliensis Pb18"/>
     <org abbrev="plutPb01" organism="Paracoccidioides lutzii Pb01"/>
+    <org abbrev="uree1704" organism="Uncinocarpus reesii 1704"/> 
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Onygenales"/>
