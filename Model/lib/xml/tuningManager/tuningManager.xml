@@ -441,8 +441,8 @@ order by pan.name
           and o.protocol_app_id = pa.protocol_app_id
           and i.protocol_app_node_id = in_pan.protocol_app_node_id
           and o.protocol_app_node_id = out_pan.protocol_app_node_id
-          and in_pan.type_id = in_type.ontology_term_id
-          and out_pan.type_id = out_type.ontology_term_id
+          and in_pan.type_id = in_type.ontology_term_id(+)
+          and out_pan.type_id = out_type.ontology_term_id(+)
         order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
