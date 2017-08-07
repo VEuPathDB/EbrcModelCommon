@@ -267,6 +267,7 @@ and ot.name in ('Participant',
                 'Event',
                 'specimen',
                 'Specimen',
+                'Specimen type',
                 'Household',
                 'CDC light trap assay')
 order by pan.name
@@ -440,8 +441,8 @@ order by pan.name
           and o.protocol_app_id = pa.protocol_app_id
           and i.protocol_app_node_id = in_pan.protocol_app_node_id
           and o.protocol_app_node_id = out_pan.protocol_app_node_id
-          and in_pan.type_id = in_type.ontology_term_id
-          and out_pan.type_id = out_type.ontology_term_id
+          and in_pan.type_id = in_type.ontology_term_id(+)
+          and out_pan.type_id = out_type.ontology_term_id(+)
         order by i.protocol_app_node_id, o.protocol_app_node_id
       ]]>
     </sql>
@@ -876,7 +877,7 @@ UNION ALL
                             then 'Ontology_icemr_RSRC'
                        when lower(dataset_name) like 'otu%'
                             then 'Ontology_mbioRoot_RSRC'
-                       when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                       when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                             then 'Ontology_prism_RSRC'
                        when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                             then 'Ontology_gates_RSRC'
@@ -1164,7 +1165,7 @@ UNION ALL
                                   then 'Ontology_icemr_RSRC'
                                 when lower(dataset_name) like 'otu%'
                                   then 'Ontology_mbioRoot_RSRC'
-                                when dataset_name = 'ISASimple_ICEMR_PRISM_surveillance_RSRC'
+                                when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                                    then 'Ontology_prism_RSRC'
                                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                                    then 'Ontology_gates_RSRC'
