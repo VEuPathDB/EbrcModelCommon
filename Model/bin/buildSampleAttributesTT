@@ -72,9 +72,12 @@ SQL
 
     my @sortedFields = map { $_->[0] } @sortedFieldsArray;
 
+  
+  my @prefixes = (undef, 'Shiny');
+  
+  foreach my $prefix (@prefixes) {
 
-
-    createEmptyTable($dbh,$suffix, \@sortedFieldsArray, $record);
+    createEmptyTable($dbh,$suffix, \@sortedFieldsArray, $record, $prefix);
     
     my $fieldsString = join(",", @sortedFields);
     
@@ -86,7 +89,7 @@ SQL
 
     my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
     
-    my $insertStatement = "INSERT INTO ${record}Attributes$suffix(${record}_pan_id, ${record}_name, ${record}_description, ${record}_type_id, ${record}_type, protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
+    my $insertStatement = "INSERT INTO ${record}${prefix}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
     my $insertRow = $dbh->prepare($insertStatement);
 
 
@@ -145,14 +148,16 @@ SQL
 
     $dbh->commit();
 
-    createIndexes($dbh, $suffix, $record);
+    createIndexes($dbh, $suffix, $record, $prefix);
   }
+}
+
 
   $dbh->disconnect();
 }
 
 sub createEmptyTable {
-     my ($dbh, $suffix, $fields, $record) = @_;
+     my ($dbh, $suffix, $fields, $record, $prefix) = @_;
 
      my %f = ("number" => "number", "string" => "varchar2(2000)", "date" => "date");
 
@@ -163,12 +168,7 @@ sub createEmptyTable {
 
 
      my $sql = <<SQL;
-     create table ${record}Attributes$suffix (
-       ${record}_pan_id number(10),
-       ${record}_name varchar2(200),
-       ${record}_description varchar2(3000),
-       ${record}_type_id number(10),
-       ${record}_type  varchar2(400)
+     create table ${record}${prefix}Attributes$suffix (
        protocol_app_node_id number(10),
        name varchar2(200),
        description varchar2(3000),
@@ -185,16 +185,16 @@ $dbh->{PrintError} = 0;
 }
 
 sub createIndexes {
-     my ($dbh, $suffix, $record) = @_;
+     my ($dbh, $suffix, $record, $prefix) = @_;
 
     $dbh->do(<<SQL) or die "creating index";
-      create index ${record}att_panid_ix$suffix
+      create index ${record}${prefix}att_panid_ix$suffix
       on ${record}Attributes$suffix (protocol_app_node_id, name)
       tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
-      create index ${record}patt_name_ix$suffix
+      create index ${record}${prefix}patt_name_ix$suffix
       on ${record}Attributes$suffix (name, protocol_app_node_id)
       tablespace indx
 SQL
