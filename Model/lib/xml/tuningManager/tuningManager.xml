@@ -1696,6 +1696,13 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <ancillaryTable name="EventAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
     <ancillaryTable name="HouseholdAttributes"/>
+
+    <!-- parallel set of tables for use in shiny apps -->
+    <ancillaryTable name="ParticipantShinyAttributes"/>
+    <ancillaryTable name="EventShinyAttributes"/>
+    <ancillaryTable name="LightTrapShinyAttributes"/>
+    <ancillaryTable name="HouseholdShinyAttributes"/>
+    <ancillaryTable name="SampleShinyAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
   </tuningTable>
 
