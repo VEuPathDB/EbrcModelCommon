@@ -218,13 +218,13 @@ sub createIndexes {
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}${prefix}att_panid_ix$suffix
-      on ${record}Attributes$suffix (${record}_pan_id, ${record}_name)
+      on ${record}${prefix}Attributes$suffix (${record}_pan_id, ${record}_name)
       tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}${prefix}patt_name_ix$suffix
-      on ${record}Attributes$suffix (${record}_name, ${record}_pan_id)
+      on ${record}${$prefix}Attributes$suffix (${record}_name, ${record}_pan_id)
       tablespace indx
 SQL
      }
