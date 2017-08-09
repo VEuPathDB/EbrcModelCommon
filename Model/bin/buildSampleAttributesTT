@@ -86,7 +86,7 @@ SQL
 
     my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
     
-    my $insertStatement = "INSERT INTO ${record}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
+    my $insertStatement = "INSERT INTO ${record}Attributes$suffix(${record}_pan_id, ${record}_name, ${record}_description, ${record}_type_id, ${record}_type $fieldsString) VALUES ($bindVarsString)";
     my $insertRow = $dbh->prepare($insertStatement);
 
 
@@ -164,11 +164,11 @@ sub createEmptyTable {
 
      my $sql = <<SQL;
      create table ${record}Attributes$suffix (
-       protocol_app_node_id number(10),
-       name varchar2(200),
-       description varchar2(3000),
-       type_id number(10),
-       type  varchar2(400)
+       ${record}_pan_id number(10),
+       ${record}_name varchar2(200),
+       ${record}_description varchar2(3000),
+       ${record}_type_id number(10),
+       ${record}_type  varchar2(400)
        $fieldsString
   ) nologging
 SQL
