@@ -986,11 +986,15 @@ UNION ALL
         union
           select distinct organism, m.dataset_name, type, subtype,
                           hierarchy_dataset_name, term as property, 'display' as spec_property,
-                          -- work around initcap's apostrophe problem with improbably digit sequence
-                          replace(replace(initcap(replace(replace(term, '_', ' '), -- turn underscore to space
-                                                  '''', '4834929393')), '4834929393', ''''),
-                                  '16s', '16S')
-                            as spec_value
+                          case
+                            when hierarchy_dataset_name is null
+                              then
+                                -- work around initcap's apostrophe problem with improbably digit sequence
+                                replace(replace(initcap(replace(replace(term, '_', ' '), -- turn underscore to space
+                                                        '''', '4834929393')), '4834929393', ''''),
+                                        '16s', '16S')
+                              else term
+                          end as spec_value
           from metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
         -- type
@@ -1263,8 +1267,9 @@ UNION ALL
                  child.name as ontology_term_name, child.ontology_term_id,
                  child.source_id as ontology_term_source_id, child.definition as description,
                  -- work around initcap's problems with apostrophes
-                 replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
-                           '16s', '16S') as display_name,
+                 -- replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
+                 --           '16s', '16S') as display_name,
+                 child.name as display_name,
                  parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
                  parent.source_id as parent_ontology_term_source_id,
                  unit.name as units, mt.type,
