@@ -110,7 +110,7 @@ SQL
                 where type != 'number'                
                 group by protocol_app_node_id, source_id, type
                 UNION
-                select protocol_app_node_id, '\"' || source_id || '\"=> ''' || avg(value)  || '''' as text
+                select protocol_app_node_id, '\"' || source_id || '\"=> ''' || avg(replace(value, ',', ''))  || '''' as text
                 from (pmd) 
                 where type = 'number'                
                 group by protocol_app_node_id, source_id, type

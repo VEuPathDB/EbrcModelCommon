@@ -740,7 +740,8 @@ ORDER BY protocol_app_node_name
           and edr.external_database_id = ed.external_database_id
           and ed.name = ds.name
           and ds.taxon_id = tn.taxon_id(+)
-          and ds.name = dsp.name (+)
+          --cnv datasets use hts_snp presenters
+          and replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name (+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
 UNION ALL
         -- special query for reference strain
