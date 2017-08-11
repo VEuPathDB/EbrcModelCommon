@@ -3264,10 +3264,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
                    >
-      <wgetArgs url="https://cbilsvn.pmacs.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/${version}/eupath_merged.owl">-e robots=off --wait 1 -I /svnroot/ApiCommonData/trunk/Load/src/ontology/release/${version}/eupath_merged.owl --tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath_merged.owl </wgetArgs>
+
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
 
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@dataDir@@/eupath_merged.owl --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+  <datasetClass class="updateRepositoryOntologyTerms" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="isPreferred"></prop>
+
+    <datasetLoader datasetName="OntologyTerm_INTERNAL_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
+
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3779,6 +3806,38 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+
+  <datasetClass class="taxonMapping" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name"/>
+    <prop name="version"/>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+   
+    <datasetLoader datasetName="taxonMapping_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::InsertSequenceTaxon"
+              type="sres"
+              scope="global"
+            >
+
+      <manualGet fileOrDir="${projectName}/common/curatedTaxonomy/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/sequenceToTaxonHierarchy.txt"/> <!-- maps na_sequence source_id to a string -->
+      <getAndUnpackOutput file="@@dataDir@@/final/taxonMapping.xml"/> <!-- manual override string to ncbi taxonomy -->
+
+      <pluginArgs>--dbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --sequenceToTaxonHierarchyFile @@dataDir@@/final/sequenceToTaxonHierarchy.txt --taxonMappingFile @@dataDir@@/final/taxonMapping.xml</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
   <datasetClass class="phylogeneticProfiles" category="" datasetFileHint="">
     <purpose></purpose>
@@ -4482,10 +4541,42 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
                    >
-      <wgetArgs url="https://cbilsvn.pmacs.upenn.edu/svn/apidb/ApiCommonData/trunk/Load/src/ontology/release/development/eupath_merged.owl">-e robots=off --wait 1 -I /svnroot/ApiCommonData/trunk/Load/src/ontology/release/development/eupath_merged.owl --tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath_merged.owl </wgetArgs>
-      <pluginArgs>--inFile @@dataDir@@/eupath_merged.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+  <datasetClass class="repositoryOntologyTerms" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eupathCuratedOntologies.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
 
 
   <!-- dataset class for loading sample metadata -->
