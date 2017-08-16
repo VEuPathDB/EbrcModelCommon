@@ -105,7 +105,7 @@ SQL
                                                               '.quot;', '\"'),
                                                '.gt;', '>'),
                                 '.apos;', '''') as value
-          from (select protocol_app_node_id, '\"' || source_id || '\"=> ''' || listagg(value,',') within group (order by value)  || '''' as text
+          from (select protocol_app_node_id, '\"' || source_id || '\"=> ''' || listagg(value,' | ') within group (order by value)  || '''' as text
                 from (pmd) 
                 where type != 'number'                
                 group by protocol_app_node_id, source_id, type
