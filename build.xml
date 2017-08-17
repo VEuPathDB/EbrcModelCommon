@@ -59,7 +59,8 @@
   <!-- oooooooooooooooooooooooooo  Installation  oooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
-  <target name="EbrcModelCommon-Installation" depends="EbrcModelCommon/DatasetPresenter-Installation,
+  <target name="EbrcModelCommon-Installation" depends="EbrcModelCommon-MavenInstallation,
+  	                                        EbrcModelCommon/DatasetPresenter-Installation,
                                             EbrcModelCommon/Model-Installation,
                                             ReFlow-Installation,
                                             WDK-Installation" >
@@ -67,7 +68,14 @@
     <ant target="defaultProjectInstall">
       <property name="project" value="EbrcModelCommon"/>
     </ant>
-  </target>  
+  </target> 
+	
+	<target name="EbrcModelCommon-MavenInstallation">
+	    <ant target="mavenBuildProject">
+	      <property name="project" value="EbrcModelCommon"/>
+	    </ant>
+	    <property name="alreadyBuilt" value="true"/>
+	  </target>
   
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
