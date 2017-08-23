@@ -448,14 +448,7 @@ public class DatasetPresenterSetLoader {
         stmt.setString(1, datasetPresenterId);
         stmt.setString(2, property);
         stmt.setString(3, value);
-
-	try {
-	    stmt.execute();
-	} catch (SQLException e) {
-	    System.out.println("*****error loading property*****");
-	    System.out.println("datasetPresenterId: \"" + datasetPresenterId + "\"; property: \"" + property + "\"; value: \"" + value + "\"");
-	    throw(e);
-	}
+        stmt.execute();
     }
 
   private void loadContact(String datasetPresenterId, Contact contact,
