@@ -720,7 +720,7 @@ ORDER BY protocol_app_node_name
       <![CDATA[
         create table FallbackMetadata&1 nologging as
         -- regular query for most datasets
-        select ds.name as dataset_name
+        select ed.name as dataset_name
         , ds.type
         , CASE WHEN ds.type = 'genome'
             THEN 'HTS_SNP'
