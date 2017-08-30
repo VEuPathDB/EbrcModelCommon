@@ -727,7 +727,7 @@ ORDER BY protocol_app_node_name
             ELSE ds.subtype
             END as subtype
         , tn.name as organism
-        , pan.name as pan_name
+        , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan_name END AS pan_name
         , pan.protocol_app_node_id
         , 'dataset' as term_name
         , study_release.study_name
@@ -737,7 +737,7 @@ ORDER BY protocol_app_node_name
             END as value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.TaxonName tn, DatasetPresenter dsp,
+             sres.TaxonName tn, DatasetPresenter dsp, apidb.organism o
              (select s.study_id, s.external_database_release_id,
                        s.name as study_name
               from study.Study s
@@ -752,6 +752,7 @@ ORDER BY protocol_app_node_name
           and edr.external_database_id = ed.external_database_id
           and ed.name = replace(ds.name, 'primary_genome_RSRC', 'NGS_SNPsAndVariations')
           and ds.taxon_id = tn.taxon_id(+)
+          and ds.taxon_id = o.taxon_id(+)
           --cnv datasets use hts_snp presenters
           and replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name (+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
