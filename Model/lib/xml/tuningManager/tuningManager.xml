@@ -720,9 +720,21 @@ ORDER BY protocol_app_node_name
       <![CDATA[
         create table FallbackMetadata&1 nologging as
         -- regular query for most datasets
-        select ds.name as dataset_name, ds.type, ds.subtype, tn.name as organism,
-               pan.name as pan_name, pan.protocol_app_node_id, 'dataset' as term_name,
-               study_release.study_name, dsp.display_name as value
+        select ds.name as dataset_name
+        , ds.type
+        , CASE WHEN ds.type = 'genome'
+            THEN 'HTS_SNP'
+            ELSE ds.subtype
+            END as subtype
+        , tn.name as organism
+        , pan.name as pan_name
+        , pan.protocol_app_node_id
+        , 'dataset' as term_name
+        , study_release.study_name
+        , CASE WHEN ds.type = 'genome'
+            THEN tn.name || ' ' || dsp.display_name 
+            ELSE dsp.display_name
+            ENDas value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, DatasetPresenter dsp,
@@ -738,7 +750,7 @@ ORDER BY protocol_app_node_name
           and sl.study_id = study_release.study_id
           and study_release.external_database_release_id = edr.external_database_release_id
           and edr.external_database_id = ed.external_database_id
-          and ed.name = ds.name
+          and ed.name = replace(ds.name, 'primary_genome_RSRC', 'NGS_SNPsAndVariations')
           and ds.taxon_id = tn.taxon_id(+)
           --cnv datasets use hts_snp presenters
           and replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name (+)
