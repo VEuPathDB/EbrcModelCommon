@@ -727,7 +727,7 @@ ORDER BY protocol_app_node_name
             ELSE ds.subtype
             END as subtype
         , tn.name as organism
-        , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan_name END AS pan_name
+        , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan.name END AS pan_name
         , pan.protocol_app_node_id
         , 'dataset' as term_name
         , study_release.study_name
