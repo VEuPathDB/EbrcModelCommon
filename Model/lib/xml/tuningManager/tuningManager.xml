@@ -734,7 +734,7 @@ ORDER BY protocol_app_node_name
         , CASE WHEN ds.type = 'genome'
             THEN tn.name || ' ' || dsp.display_name 
             ELSE dsp.display_name
-            ENDas value
+            END as value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, DatasetPresenter dsp,
