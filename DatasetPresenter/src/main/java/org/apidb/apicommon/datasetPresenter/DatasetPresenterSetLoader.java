@@ -305,7 +305,7 @@ public class DatasetPresenterSetLoader {
             Map<String, String> injectorPropValues =  datasetInjector.getPropValues();
             for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
                 
-		String dataValue = pv.getValue().substring(0,3999);
+		String dataValue = pv.getValue().substring(0, min(3999, pv.getValue().length() - 1));
 
 		if (dataValue.length() > 4000) {
 		    dataValue = dataValue.substring(0,3999);
