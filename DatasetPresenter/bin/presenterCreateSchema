@@ -90,7 +90,7 @@ sub createTables {
         dataset_property_id   number(12),
         dataset_presenter_id  varchar2(15),
         property              varchar2(255),
-        value                 clob,
+        value                 varchar2(4000),
         constraint DatasetProperty${suffix}_pk primary key (dataset_property_id)
       )";
   runSql($dbh, $sql, 1);
