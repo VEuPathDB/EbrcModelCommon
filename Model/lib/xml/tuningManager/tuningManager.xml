@@ -940,6 +940,9 @@ UNION ALL
                                                   )
               and orel.subject_term_id != orel.object_term_id
             start with subject_term_id in (select term_id from leaf_term)
+                                    and subject_term_id not in (select ontology_term_id
+                                                                from sres.OntologyTerm
+                                                                where source_id = 'ICEMR_sample_origin')
             connect by subject_term_id = prior object_term_id
                        and external_database_release_id = prior external_database_release_id) tree,
             sres.externaldatabase ed, 
@@ -974,6 +977,7 @@ UNION ALL
         as (select distinct fm.dataset_name, type, subtype, organism, term_name as property, hierarchy_dataset_name
             from FallbackMetadata fm, hierarchy_mapping hm
             where fm.dataset_name = hm.dataset_name
+              and fm.term_name != 'dataset'
            )
         -- END OF WITH CLAUSES (whew!)
         -- parent
@@ -1006,7 +1010,7 @@ UNION ALL
                                 replace(replace(initcap(replace(replace(term, '_', ' '), -- turn underscore to space
                                                         '''', '4834929393')), '4834929393', ''''),
                                         '16s', '16S')
-                              else term
+                              else replace(replace(term, 'sample_origin', 'ICEMR'), '_', ' ')
                           end as spec_value
           from metadata m, hierarchy_mapping hm
           where m.dataset_name = hm.dataset_name
