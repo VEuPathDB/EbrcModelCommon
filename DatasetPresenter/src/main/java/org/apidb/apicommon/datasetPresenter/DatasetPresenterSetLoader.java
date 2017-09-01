@@ -15,6 +15,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.gusdb.fgputil.CliUtil;
 import org.gusdb.fgputil.db.platform.SupportedPlatform;
+import org.gusdb.fgputil.FormatUtil;
 
 public class DatasetPresenterSetLoader {
 
@@ -305,11 +306,7 @@ public class DatasetPresenterSetLoader {
             Map<String, String> injectorPropValues =  datasetInjector.getPropValues();
             for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
                 
-		String dataValue = pv.getValue();
-
-		if (dataValue.length() > 4000) {
-		    dataValue = dataValue.substring(0,3999);
-		}
+		String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
                 loadInjectorPropValue(datasetPresenterId, pv.getKey(), dataValue, injectorPropertiesStmt);
             }
         }
