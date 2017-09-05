@@ -20,15 +20,12 @@ import java.util.Set;
  */
 public class DatasetPresenterSet {
 
-  private Map<String, DatasetPresenter> presenters = new LinkedHashMap<String, DatasetPresenter>();
-  private Map<String, InternalDataset> internalDatasets = new LinkedHashMap<String, InternalDataset>();
-  private Set<String> namePatterns = new HashSet<String>();
+  private Map<String, DatasetPresenter> _presenters = new LinkedHashMap<String, DatasetPresenter>();
+  private Map<String, InternalDataset> _internalDatasets = new LinkedHashMap<String, InternalDataset>();
+  private Set<String> _namePatterns = new HashSet<String>();
 
-    private Map<String,Map<String,String>> propertiesFromFiles = new HashMap<String,Map<String,String>>();
-    private Set<String> duplicateDatasetNames = new HashSet<String>();
-
-    
-
+  private Map<String,Map<String,String>> _propertiesFromFiles = new HashMap<String,Map<String,String>>();
+  private Set<String> _duplicateDatasetNames = new HashSet<String>();
 
   /**
    * Add a DatasetPresenter to this set.
@@ -37,37 +34,37 @@ public class DatasetPresenterSet {
    */
   public void addDatasetPresenter(DatasetPresenter presenter) {
     String name = presenter.getDatasetName();
-    if (presenters.containsKey(name))
+    if (_presenters.containsKey(name))
       throw new UserException("DatasetPresenter already exists with name: "
           + name);
-    if (internalDatasets.containsKey(name))
+    if (_internalDatasets.containsKey(name))
       throw new UserException("InternalDataset already exists with name: "
           + name);
-    presenters.put(name, presenter);
+    _presenters.put(name, presenter);
     String pattern = presenter.getDatasetNamePattern();
     if (pattern != null) {
-      if (namePatterns.contains(pattern))
+      if (_namePatterns.contains(pattern))
         throw new UserException("datasetNamePattern already exists: " + pattern);
-      namePatterns.add(pattern);
+      _namePatterns.add(pattern);
     }
   }
 
   public void addInternalDataset(InternalDataset internalDataset) {
 
     String name = internalDataset.getName();
-    if (presenters.containsKey(name))
+    if (_presenters.containsKey(name))
       throw new UserException("DatasetPresenter already exists with name: "
           + name);
-    if (internalDatasets.containsKey(name))
+    if (_internalDatasets.containsKey(name))
       throw new UserException("InternalDataset already exists with name: "
           + name);
-    internalDatasets.put(name, internalDataset);
+    _internalDatasets.put(name, internalDataset);
 
     String pattern = internalDataset.getDatasetNamePattern();
     if (pattern != null) {
-      if (namePatterns.contains(pattern))
+      if (_namePatterns.contains(pattern))
         throw new UserException("datasetNamePattern already exists: " + pattern);
-      namePatterns.add(pattern);
+      _namePatterns.add(pattern);
     }
   }
 
@@ -93,46 +90,46 @@ public class DatasetPresenterSet {
    * Called at processing time.
    */
   void addToDatasetInjectorSet(DatasetInjectorSet datasetInjectorSet) {
-    for (DatasetPresenter presenter : presenters.values()) {
+    for (DatasetPresenter presenter : _presenters.values()) {
       if (presenter.getDatasetInjectorConstructor() != null) 
         datasetInjectorSet.addDatasetInjector(presenter.getDatasetInjectorConstructor().getDatasetInjector());
     }
   }
 
   int getSize() {
-    return presenters.size();
+    return _presenters.size();
   }
 
   Map<String, DatasetPresenter> getDatasetPresenters() {
-    return Collections.unmodifiableMap(presenters);
+    return Collections.unmodifiableMap(_presenters);
   }
   
   DatasetPresenter getDatasetPresenter(String name) {
-    return presenters.get(name);
+    return _presenters.get(name);
   }
 
   Map<String, InternalDataset> getInternalDatasets() {
-    return Collections.unmodifiableMap(internalDatasets);
+    return Collections.unmodifiableMap(_internalDatasets);
   }
 
+  // TODO: figure out where this method should be called; probable input value is:
+  //   System.getenv("PROJECT_HOME") + "/ApiCommonModel/DatasetPresenter/testData/contacts.xml.test";
   void validateContactIds(String contactsFileName) {
     ContactsFileParser parser = new ContactsFileParser();
-    String project_home = System.getenv("PROJECT_HOME");
-    Contacts contacts = parser.parseFile(project_home
-        + "/ApiCommonModel/DatasetPresenter/testData/contacts.xml.test");
-    for (DatasetPresenter presenter : presenters.values()) {
+    Contacts contacts = parser.parseFile(contactsFileName);
+    for (DatasetPresenter presenter : _presenters.values()) {
       presenter.getContacts(contacts);
     }
   }
   
   void handleOverrides() {
-    for (DatasetPresenter datasetPresenter : presenters.values()) {
+    for (DatasetPresenter datasetPresenter : _presenters.values()) {
       String override = datasetPresenter.getOverride();
       if (override != null) {
         String datasetName = datasetPresenter.getDatasetName();
         String partialErrMsg = "DatasetPresenter with name " + datasetName + " contains override=\"" + override + "\"";
         DatasetPresenter overriddenDp = getDatasetPresenter(override);
-        InternalDataset overriddenIntD = internalDatasets.get(override);
+        InternalDataset overriddenIntD = _internalDatasets.get(override);
         if (overriddenDp != null) {
           if (!overriddenDp.containsNameTaxonPair(datasetName)) throw new UserException(partialErrMsg + " but the overridden DatasetPresenter does not match \"" + datasetName + "\"");
           overriddenDp.removeNameTaxonPair(datasetName);
@@ -146,21 +143,21 @@ public class DatasetPresenterSet {
   }
   
   void addPropertiesFromFiles(Map<String,Map<String,String>> datasetNamesToProperties, Set<String> duplicateDatasetNames) {
-    for (DatasetPresenter datasetPresenter : presenters.values()) {
+    for (DatasetPresenter datasetPresenter : _presenters.values()) {
       datasetPresenter.addPropertiesFromFile(datasetNamesToProperties, duplicateDatasetNames);
     }
   }
 
     void addCategoriesForPattern() {
-        for (DatasetPresenter datasetPresenter : presenters.values()) {
+        for (DatasetPresenter datasetPresenter : _presenters.values()) {
             if(datasetPresenter.getDatasetNamePattern() != null && !datasetPresenter.getDatasetNamePattern().equals("")) {
-                datasetPresenter.addCategoriesForPattern(propertiesFromFiles, duplicateDatasetNames);
+                datasetPresenter.addCategoriesForPattern(_propertiesFromFiles);
             }
         }
     }
 
   void addIdentifierProperty() {
-    for (DatasetPresenter datasetPresenter : presenters.values()) {
+    for (DatasetPresenter datasetPresenter : _presenters.values()) {
         datasetPresenter.addIdentityProperty();
     }
   }
@@ -182,8 +179,8 @@ public class DatasetPresenterSet {
     // add properties from dataset prop files to presenters
 
     DatasetPropertiesParser propParser = new DatasetPropertiesParser();
-    propParser.parseAllPropertyFiles(dps.propertiesFromFiles, dps.duplicateDatasetNames);
-    dps.addPropertiesFromFiles(dps.propertiesFromFiles, dps.duplicateDatasetNames);
+    propParser.parseAllPropertyFiles(dps._propertiesFromFiles, dps._duplicateDatasetNames);
+    dps.addPropertiesFromFiles(dps._propertiesFromFiles, dps._duplicateDatasetNames);
 
     // add presenterId
     dps.addIdentifierProperty();    

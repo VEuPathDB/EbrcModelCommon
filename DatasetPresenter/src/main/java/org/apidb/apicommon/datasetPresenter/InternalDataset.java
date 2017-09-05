@@ -4,31 +4,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class InternalDataset {
-  private String name;
-  private String namePattern;
-  private Set<String> namesMatchedInDb = new HashSet<String>();
-  
+
+  private String _name;
+  private String _namePattern;
+  private Set<String> _namesMatchedInDb = new HashSet<String>();
+
   public void setName(String name) {
-    this.name = name;
+    _name = name;
   }
-  
+
   public void setDatasetNamePattern(String pattern) {
-    this.namePattern = pattern;
+    _namePattern = pattern;
   }
-  
+
   String getName() {
-    return name;
+    return _name;
   }
-  
+
   String getDatasetNamePattern() {
-    return namePattern;
+    return _namePattern;
   }
-  
+
   void addNameFromDb(String name) {
-    namesMatchedInDb.add(name);
+    _namesMatchedInDb.add(name);
   }
-  
+
   boolean containsNameFromDb(String name) {
-    return namesMatchedInDb.contains(name);
+    return _namesMatchedInDb.contains(name);
   }
 }

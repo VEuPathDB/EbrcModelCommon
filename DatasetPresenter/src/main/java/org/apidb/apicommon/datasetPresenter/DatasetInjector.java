@@ -24,12 +24,12 @@ import org.apidb.apicommon.comparator.NaturalOrderComparator;
  */
 public abstract class DatasetInjector {
 
-  private Map<String, String> propValues = new HashMap<String, String>();
-  private String datasetName;
-  private Contact primaryContact;
-  private DatasetInjectorSet datasetInjectorSet;
-  private Map<String, ModelReference> modelReferences = new HashMap<String, ModelReference>();
-  private Map<String, Map<String, String>> globalDatasetProperties;
+  private Map<String, String> _propValues = new HashMap<String, String>();
+  private String _datasetName;
+  private Contact _primaryContact;
+  private DatasetInjectorSet _datasetInjectorSet;
+  private Map<String, ModelReference> _modelReferences = new HashMap<String, ModelReference>();
+  private Map<String, Map<String, String>> _globalDatasetProperties;
 
   /**
    * Subclasses use this method to declare the properties they require. These
@@ -94,34 +94,34 @@ public abstract class DatasetInjector {
    * @param value
    */
   protected void setPropValue(String key, String value) {
-    propValues.put(key, value);
+    _propValues.put(key, value);
   }
 
 
     protected Map<String, String> getPropValues() {
-        return this.propValues;
+        return this._propValues;
     }
 
   protected String getPropValue(String key) {
-    return propValues.get(key);
+    return _propValues.get(key);
   }
 
   protected boolean getPropValueAsBoolean(String key) {
       String pv = getPropValue(key);
 
       if(pv != null && !pv.toLowerCase().equals("true") && !pv.toLowerCase().equals("false")) {
-          throw new UserException("Required true/false value for boolean prop " + key + " for dataset " + this.datasetName);
+          throw new UserException("Required true/false value for boolean prop " + key + " for dataset " + this._datasetName);
       }
 
     return Boolean.parseBoolean(pv);
   }
 
   protected String getDatasetName() {
-    return datasetName;
+    return _datasetName;
   }
 
   protected Contact getPrimaryContact() {
-    return this.primaryContact;
+    return this._primaryContact;
   }
 
   /**
@@ -132,8 +132,8 @@ public abstract class DatasetInjector {
    */
   protected void injectTemplate(String templateName) {
     TemplateInstance templateInstance = new TemplateInstance(templateName,
-        Collections.unmodifiableMap(propValues));
-    datasetInjectorSet.injectTemplateInstance(templateInstance);
+        Collections.unmodifiableMap(_propValues));
+    _datasetInjectorSet.injectTemplateInstance(templateInstance);
   }
 
   /**
@@ -146,13 +146,13 @@ public abstract class DatasetInjector {
    */
   protected void addWdkReference(String recordClass, String type, String name) {
     ModelReference ref = new ModelReference(recordClass, type, name,
-        datasetName);
+        _datasetName);
     String key = recordClass + type + name;
-    if (modelReferences.containsKey(key)) {
-      throw new UserException("Dataset " + datasetName
+    if (_modelReferences.containsKey(key)) {
+      throw new UserException("Dataset " + _datasetName
           + " already contains a model reference for " + type + ", " + name);
     }
-    modelReferences.put(key, ref);
+    _modelReferences.put(key, ref);
   }
 
   /**
@@ -164,17 +164,17 @@ public abstract class DatasetInjector {
    * @param name
    */
   protected void addModelReference(String type, String name) {
-    ModelReference ref = new ModelReference(type, name, datasetName);
+    ModelReference ref = new ModelReference(type, name, _datasetName);
     String key = type + name;
-    if (modelReferences.containsKey(key)) {
-      throw new UserException("Dataset " + datasetName
+    if (_modelReferences.containsKey(key)) {
+      throw new UserException("Dataset " + _datasetName
           + " already contains a model reference for " + type + ", " + name);
     }
-    modelReferences.put(key, ref);
+    _modelReferences.put(key, ref);
   }
 
   List<ModelReference> getModelReferences() {
-    return new ArrayList<ModelReference>(modelReferences.values());
+    return new ArrayList<ModelReference>(_modelReferences.values());
   }
 
   /**
@@ -183,14 +183,14 @@ public abstract class DatasetInjector {
    * @param propValues
    */
   protected void addPropValues(Map<String, String> propValues) {
-    this.propValues.putAll(propValues);
+    this._propValues.putAll(propValues);
 
     // validate against declaration
     String[][] propsDeclaration = getPropertiesDeclaration();
     for (String[] decl : propsDeclaration) {
       if (!propValues.containsKey(decl[0])) {
         throw new UserException("A datasetInjector for class "
-            + this.getClass().getName() + " in DatasetPresenter " + datasetName
+            + this.getClass().getName() + " in DatasetPresenter " + _datasetName
             + " is missing the required property " + decl[0]);
       }
     }
@@ -230,7 +230,7 @@ public abstract class DatasetInjector {
    * @param datasetName
    */
   void setDatasetName(String datasetName) {
-    this.datasetName = datasetName;
+    this._datasetName = datasetName;
   }
 
   /**
@@ -239,7 +239,7 @@ public abstract class DatasetInjector {
    * @param primaryContact
    */
   void setPrimaryContact(Contact primaryContact) {
-    this.primaryContact = primaryContact;
+    this._primaryContact = primaryContact;
   }
 
   /**
@@ -248,7 +248,7 @@ public abstract class DatasetInjector {
    * @param datasetInjectorSet
    */
   void setDatasetInjectorSet(DatasetInjectorSet datasetInjectorSet) {
-    this.datasetInjectorSet = datasetInjectorSet;
+    this._datasetInjectorSet = datasetInjectorSet;
   }
 
   /***
@@ -257,12 +257,12 @@ public abstract class DatasetInjector {
    * 
    */
   protected String getOrganismAbbrevFromDatasetName() {
-    if (this.datasetName.equals("")) {
+    if (this._datasetName.equals("")) {
       return "";
     }
 
     try {
-      String[] tokens = this.datasetName.split("_");
+      String[] tokens = this._datasetName.split("_");
       String organismAbbrev = tokens[0];
      
       if(organismAbbrev.equals("")){
@@ -311,12 +311,12 @@ public abstract class DatasetInjector {
 
 
   protected String getOrganismAbbrevDisplayFromDatasetName() {
-    if (this.datasetName.equals("")) {
+    if (this._datasetName.equals("")) {
       return "";
     }
 
     try {
-      String[] tokens = this.datasetName.split("_");
+      String[] tokens = this._datasetName.split("_");
       String organismAbbrev = tokens[0];
      
       if(organismAbbrev.equals("")){
@@ -375,16 +375,16 @@ public abstract class DatasetInjector {
   }
 
   protected void setGraphDatasetName() {
-    String graphDatasetName = this.datasetName.replace("-", "");
+    String graphDatasetName = this._datasetName.replace("-", "");
     setPropValue("graphDatasetName", graphDatasetName);
   }
   
   void setGlobalDatasetProperties(Map<String, Map<String, String>> globalDatasetProps) {
-    this.globalDatasetProperties = globalDatasetProps;
+    this._globalDatasetProperties = globalDatasetProps;
   }
 
   protected Map<String, Map<String, String>> getGlobalDatasetProperties() {
-    return globalDatasetProperties;
+    return _globalDatasetProperties;
   }
 
   protected void setShortAttribution() {
@@ -416,7 +416,7 @@ public abstract class DatasetInjector {
     while (globalPropsKeys.hasNext()) {
         String dataset = globalPropsKeys.next();
 
-        if(!dataset.startsWith(organismAbbrev) || this.datasetName.equals(dataset)) {
+        if(!dataset.startsWith(organismAbbrev) || this._datasetName.equals(dataset)) {
             continue;
         }
 
@@ -444,7 +444,7 @@ public abstract class DatasetInjector {
         }
     }
 
-    Map<String, String> exptProps = globalProps.get(this.datasetName);
+    Map<String, String> exptProps = globalProps.get(this._datasetName);
     String exptName = "";
     if (exptProps.containsKey("experimentName")) {
         exptName = exptProps.get("experimentName");
@@ -460,7 +460,7 @@ public abstract class DatasetInjector {
     List<String> sampleNames = exptSamples.get(exptKey);
 
     if (sampleNames.isEmpty()) {
-        throw new UserException ("No sample names found for dataset " + this.datasetName);
+        throw new UserException ("No sample names found for dataset " + this._datasetName);
     }
     // remove duplicates (NGS and CNV have dup experiment and samples)
     Set<String> distinctSamples = new HashSet<>();
