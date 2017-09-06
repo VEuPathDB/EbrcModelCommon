@@ -2863,6 +2863,22 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="geneOntologySlim" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <datasetLoader datasetName="GOSlim_RSRC" version="${version}"
+      plugin="ApiCommonData::Load::Plugin::InsertGeneOntologySlim"
+              scope="global"
+              type="function"
+              >
+    <manualGet fileOrDir="common/ontology/geneOntology/${version}/final/gene_ontology.obo">
+        <dir name="final">
+        </dir>
+    </manualGet>
+    <pluginArgs>--oboFile @@dataDir@@/gene_ontology.obo --extDbRlsName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION%</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="enzymeDB" category="" datasetFileHint="">
     <purpose></purpose>
     <datasetLoader datasetName="enzymeDB_RSRC" version="TODAY"
