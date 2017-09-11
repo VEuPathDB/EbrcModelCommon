@@ -731,10 +731,16 @@ ORDER BY protocol_app_node_name
         , pan.protocol_app_node_id
         , 'dataset' as term_name
         , study_release.study_name
-        , CASE WHEN ds.type = 'genome'
-            THEN tn.name || ' ' || dsp.display_name 
+        , CASE
+            WHEN ds.type = 'genome'
+              THEN tn.name || ' ' || dsp.display_name
+            WHEN dsp.display_name IS NULL
+              THEN replace(replace(replace(replace(ed.name, 'pfal3D7_microarrayAntibody_', ''),
+                                           '_ICEMR_RSRC', ''),
+                                   '_RSRC', ''),
+                           '_', ' ')                                  
             ELSE dsp.display_name
-            END as value
+          END as value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, DatasetPresenter dsp, apidb.organism o,
