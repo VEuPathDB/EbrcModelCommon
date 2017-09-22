@@ -621,6 +621,20 @@ order by pan.name
 
     <sql>
       <![CDATA[
+        create index panchar_ix&1 on PANCharacteristicMetadata&1 (dataset_name, type, subtype, protocol_app_node_id, pan_name, term, value)
+             tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index pancharorg_ix&1 on PANCharacteristicMetadata&1 (organism, type, subtype, dataset_name, protocol_app_node_id, pan_name, term, value)
+             tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
 create table SampleDownstream&1 nologging as
 SELECT
   p1.name
