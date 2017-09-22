@@ -1464,32 +1464,32 @@ UNION ALL
       <![CDATA[
        create table TaxonAbundanceSpec&1 nologging as
         -- parent
-          select  type, subtype, dataset_name,  term_id as property, 'parent' as spec_property, category as spec_value
+          select  type, subtype, dataset_name,  term_id as property, 'parent' as spec_property, category as spec_value, taxon_level
           from TaxonAbundance
         --grandparent
         union
-          select  type, subtype, dataset_name, category as property, 'parent' as spec_property, null as spec_value
+          select  type, subtype, dataset_name, category as property, 'parent' as spec_property, null as spec_value, taxon_level
           from TaxonAbundance
         -- leaf
         union
-          select type, subtype, dataset_name,  term_id as property, 'leaf' as spec_property, 'true' as spec_value
+          select type, subtype, dataset_name,  term_id as property, 'leaf' as spec_property, 'true' as spec_value, taxon_level
           from TaxonAbundance
         -- filter
         union
           select type, subtype, dataset_name,
-                 term_id as property, 'filter' as spec_property, 'range' as spec_value
+                 term_id as property, 'filter' as spec_property, 'range' as spec_value, taxon_level
           from TaxonAbundance
         -- display
         union
-          select distinct type, subtype, dataset_name, term_id as property, 'display' as spec_property, term as spec_value
+          select distinct type, subtype, dataset_name, term_id as property, 'display' as spec_property, term as spec_value, taxon_level
           from TaxonAbundance
         -- parent:display
         union
-          select distinct type, subtype, dataset_name, category as property, 'display' as spec_property, category as spec_value
+          select distinct type, subtype, dataset_name, category as property, 'display' as spec_property, category as spec_value, taxon_level
           from TaxonAbundance
         -- type
         union
-          select type, subtype, dataset_name, term_id as property, 'type' as spec_property, 'number' as spec_value
+          select type, subtype, dataset_name, term_id as property, 'type' as spec_property, 'number' as spec_value, taxon_level
           from TaxonAbundance
         order by 1, 2, 3
       ]]>
