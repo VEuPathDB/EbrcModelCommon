@@ -908,8 +908,9 @@ UNION ALL
     <comment>
     </comment>
     <internalDependency name="FallbackMetadata"/>
-    <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="MetadataTopValues"/>
     <internalDependency name="MetadataType"/>
+    <internalDependency name="PANProtocolMetadata"/>
     <sql>
       <![CDATA[
         create table MetadataSpec&1 nologging as
@@ -1050,10 +1051,16 @@ UNION ALL
         union
         --description
           select m.organism, m.dataset_name, m.type, m.subtype, hm.hierarchy_dataset_name,
-                 m.term as property, 'description' as spec_property, ot.definition as spec_value
-          from metadata m, hierarchy_mapping hm, sres.ontologyterm ot
+                 m.term as property, 'description' as spec_property,
+                 case
+                   when mtv.top_values is null
+                     then ot.definition
+                   else ot.definition || '  E.g. ' || mtv.top_values
+                 end as spec_value
+          from metadata m, hierarchy_mapping hm, sres.ontologyterm ot, MetadataTopValues mtv
           where m.dataset_name = hm.dataset_name
             and m.term_id = ot.ontology_term_id
+            and m.term_id = mtv.term_id(+)
         -- parents: parent
         union
           select distinct organism, m.dataset_name, type, subtype, hierarchy_dataset_name,
@@ -1200,8 +1207,9 @@ UNION ALL
     <comment>
     </comment>
     <internalDependency name="FallbackMetadata"/>
-    <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="MetadataTopValues"/>
     <internalDependency name="MetadataType"/>
+    <internalDependency name="PANProtocolMetadata"/>
     <sql>
       <![CDATA[
         create table MetadataOntology&1 nologging as
@@ -1308,7 +1316,12 @@ UNION ALL
           select -- terms using the OntologyRelationship hierarchy
                  -- DISTINCT -- moot because of UNION; otherwise needed
                  child.name as ontology_term_name, child.ontology_term_id,
-                 child.source_id as ontology_term_source_id, child.definition as description,
+                 child.source_id as ontology_term_source_id,
+                 case
+                   when mtv.top_values is null
+                     then child.definition
+                   else child.definition || ' E.g. ' || mtv.top_values
+                 end as description,
                  -- work around initcap's problems with apostrophes
                  -- replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
                  --           '16s', '16S') as display_name,
@@ -1324,7 +1337,7 @@ UNION ALL
                 otm.organism, otm.dataset_name, otm.type as dataset_type, otm.subtype
           from ontology_tree_metadata otm, leaf_ancestor_pair lap,
                sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
-               MetadataType mt,
+               MetadataType mt, MetadataTopValues mtv,
                (  select child_term_id, parent_term_id, dataset_name from graph_edge
                 union
                   select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
@@ -1335,12 +1348,18 @@ UNION ALL
               and edge.parent_term_id = parent.ontology_term_id(+)
 --            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = mt.term_id(+)
+              and edge.child_term_id = mtv.term_id(+)
               and otm.unit_id = unit.ontology_term_id(+)
         union
           select -- hardwired hierarchy: characteristics
                  distinct -- moot only because of UNION
                  nvl(term.name, pcm.term) as ontology_term_name, term.ontology_term_id,
-                 term.source_id as ontology_term_source_id, term.definition as description,
+                 term.source_id as ontology_term_source_id,
+                 case
+                   when mtv.top_values is null
+                     then term.definition
+                   else term.definition || ' E.g. ' || mtv.top_values
+                 end as description,
                  initcap(nvl(term.name, pcm.term)) as display_name,
                  nvl(parent.name, pcm.ancestor_pan_type) as parent_ontology_term_name,
                  parent.ontology_term_id as parent_ontology_term_id,
@@ -1354,11 +1373,12 @@ UNION ALL
                 pcm.organism, pcm.dataset_name, pcm.type as dataset_type, pcm.subtype
           from PanCharacteristicMetadata pcm, sres.OntologyTerm term,
                sres.OntologyTerm parent, sres.OntologyTerm unit, MetadataType mt,
-               hierarchy_mapping hm
+               hierarchy_mapping hm, MetadataTopValues mtv
           where pcm.term_id = term.ontology_term_id(+)
             and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
             and pcm.unit_id = unit.ontology_term_id(+)
             and pcm.term_id = mt.term_id(+)
+            and pcm.term_id = mtv.term_id(+)
             and pcm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
         union
@@ -2026,6 +2046,33 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
              and ta.relative_abundance > 0
              and ta.taxon_id = t.taxon_id
       ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="MetadataTopValues">
+    <comment>
+       Most common values for each property
+    </comment>
+    <internalDependency name="PANProtocolMetadata"/>
+    <sql>
+      <![CDATA[
+        create table MetadataTopValues&1 nologging as 
+        select term, term_id,
+               listagg(value, ', ') within group (order by ranking) as top_values
+        from (select term, term_id, value,
+                     row_number() over (partition by term, term_id order by count(*) desc) as ranking
+              from (  select term, trim(value) as value, term_id
+                      from panProtocolMetadata
+                      where value is not null
+                    union all
+                      select term, trim(value) as value, term_id
+                      from panCharacteristicMetadata
+                      where value is not null
+                   )
+              group by term, term_id, value)
+        where ranking <= 5
+        group by term, term_id
+       ]]>
     </sql>
   </tuningTable>
 
