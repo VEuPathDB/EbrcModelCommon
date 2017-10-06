@@ -1040,6 +1040,7 @@ UNION ALL
               and orel.subject_term_id != orel.object_term_id
             start with subject_term_id in (select term_id from leaf_term)
             connect by subject_term_id = prior object_term_id
+                       and subject_term_id != object_term_id
                        and external_database_release_id = prior external_database_release_id) tree,
             sres.externaldatabase ed, 
             sres.externaldatabaserelease edr
