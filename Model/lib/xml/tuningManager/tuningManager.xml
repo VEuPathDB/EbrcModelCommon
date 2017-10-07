@@ -592,10 +592,15 @@ order by pan.name
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
              study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
-             ( select s.study_id, s.external_database_release_id,
-                       s.name as study_name
-                from study.Study s
-                where s.investigation_id is null) study_release
+-- revision 82228-style study_release subquery
+             (  select s.study_id, i.external_database_release_id,
+                       s.name as study_name, i.name as investigation_name
+                from study.Study s, study.Study i
+                where s.investigation_id = i.study_id
+              union
+                select s.study_id, s.external_database_release_id,
+                       s.name as study_name, null as investigation_name
+                from study.Study s) study_release
         where pan.protocol_app_node_id = c.protocol_app_node_id
           and pan.type_id = mt.ontology_term_id (+)
           and c.ontology_term_id = value_term.ontology_term_id(+)
@@ -650,19 +655,10 @@ order by pan.name
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
              study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
--- revision 82228-style study_release subquery
-             (  select s.study_id, i.external_database_release_id,
-                       s.name as study_name, i.name as investigation_name
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-              union
-                select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
-                from study.Study s) study_release
---           ( select s.study_id, s.external_database_release_id,
---                     s.name as study_name
---              from study.Study s
---              where s.investigation_id is null) study_release
+             ( select s.study_id, s.external_database_release_id,
+                       s.name as study_name
+                from study.Study s
+                where s.investigation_id is null) study_release
         where pan.protocol_app_node_id = c.protocol_app_node_id
           and pan.type_id = mt.ontology_term_id (+)
           and c.ontology_term_id = value_term.ontology_term_id(+)
