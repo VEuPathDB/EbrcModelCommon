@@ -1341,6 +1341,7 @@ UNION ALL
                                    not in (select ontology_term_id from sres.OntologyTerm where name = 'Thing')
                              start with subject_term_id in (select term_id from leaf_term)
                              connect by subject_term_id = prior object_term_id
+                                        and subject_term_id != object_term_id
                                         and external_database_release_id = prior external_database_release_id) tree
                        where tree.external_database_release_id = edr.external_database_release_id
                          and ed.external_database_id = edr.external_database_id),
