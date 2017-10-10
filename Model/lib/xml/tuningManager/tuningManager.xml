@@ -423,6 +423,7 @@ order by pan.name
     <externalDependency name="study.ProtocolAppParam"/>
     <ancillaryTable name="ProtocolAppNodeIO"/>
     <ancillaryTable name="PANCharacteristicMetadata"/>
+    <ancillaryTable name="PANCharacteristicMetadata2"/>
     <ancillaryTable name="SampleDownstream"/>
     <ancillaryTable name="PANExternalDatabaseRelease"/>
     <ancillaryTable name="PANParameterValues"/>
@@ -564,6 +565,69 @@ order by pan.name
     <sql>
       <![CDATA[
         create table PANCharacteristicMetadata&1 nologging as
+        with caps
+        as (select qualifier_id, lower_value, commonest_capitalization
+            from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
+                         dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
+                  from study.Characteristic
+                  group by qualifier_id, value
+                 )
+            where ranking = 1
+           )
+        select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type,
+               sample_pan.isa_type as protocol_app_node_isa_type,
+               pan.protocol_app_node_id as ancestor_protocol_app_node_id,
+               nvl(mt.name, 'assay') as category, -- to be replaced by ancestor_pan_type
+               nvl(mt.name, 'assay') as ancestor_pan_type,
+               mt.ontology_term_id as ancestor_pan_type_id,
+               attribute_term.name as term, -- if not a material type it has to be an assay
+               attribute_term.ontology_term_id as term_id,
+               nvl(value_term.name, caps.commonest_capitalization) as value,
+               c.characteristic_id,
+               ds.name as dataset_name, sample_pan.name as pan_name, ds.type,
+               ds.subtype, tn.name as organism,
+               study_release.study_name, c.unit_id
+        from PANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, caps,
+             sres.OntologyTerm value_term, sres.ontologyTerm mt, study.StudyLink sl,
+             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+             sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
+             study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
+-- revision 82228-style study_release subquery
+             (  select s.study_id, i.external_database_release_id,
+                       s.name as study_name, i.name as investigation_name
+                from study.Study s, study.Study i
+                where s.investigation_id = i.study_id
+              union
+                select s.study_id, s.external_database_release_id,
+                       s.name as study_name, null as investigation_name
+                from study.Study s) study_release
+        where pan.protocol_app_node_id = c.protocol_app_node_id
+          and pan.type_id = mt.ontology_term_id (+)
+          and c.ontology_term_id = value_term.ontology_term_id(+)
+          and c.qualifier_id = caps.qualifier_id(+)
+          and lower(c.value) = caps.lower_value(+)
+          and c.qualifier_id = attribute_term.ontology_term_id(+)
+          and node_inputs.input_node_id = pan.protocol_app_node_id
+          and node_inputs.protocol_app_node_id = sl.protocol_app_node_id
+          and sl.study_id = study_release.study_id
+          and study_release.external_database_release_id = edr.external_database_release_id
+          and edr.external_database_id = ed.external_database_id
+          and ed.name = ds.name
+          and node_inputs.protocol_app_node_id = sample_pan.protocol_app_node_id
+          and sample_pan.type_id = sample_ot.ontology_term_id (+)
+          and ds.taxon_id = tn.taxon_id(+)
+          and (tn.name_class = 'scientific name' or tn.name_class is null)
+ --temporary may need adjusting for RNASeq
+ and (mt.name is not null
+      or attribute_term.name = 'average mapping coverage'
+      or attribute_term.name ='proportion mapped reads')
+        order by organism, type, subtype, pan_name
+ ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create table PANCharacteristicMetadata2&1 nologging as
         with caps
         as (select qualifier_id, lower_value, commonest_capitalization
             from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
@@ -972,6 +1036,7 @@ UNION ALL
               and orel.subject_term_id != orel.object_term_id
             start with subject_term_id in (select term_id from leaf_term)
             connect by subject_term_id = prior object_term_id
+                       and subject_term_id != object_term_id
                        and external_database_release_id = prior external_database_release_id) tree,
             sres.externaldatabase ed, 
             sres.externaldatabaserelease edr
@@ -1276,6 +1341,7 @@ UNION ALL
                                    not in (select ontology_term_id from sres.OntologyTerm where name = 'Thing')
                              start with subject_term_id in (select term_id from leaf_term)
                              connect by subject_term_id = prior object_term_id
+                                        and subject_term_id != object_term_id
                                         and external_database_release_id = prior external_database_release_id) tree
                        where tree.external_database_release_id = edr.external_database_release_id
                          and ed.external_database_id = edr.external_database_id),
