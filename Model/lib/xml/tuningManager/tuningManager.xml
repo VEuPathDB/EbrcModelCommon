@@ -795,7 +795,6 @@ ORDER BY protocol_app_node_name
       For datasets that have results but no metadata, a fallback set of metadata comprising the name of each ProtocolAppNode
     </comment>
     <internalDependency name="ProtocolAppNodeResults"/>
-    <internalDependency name="PANProtocolMetadata"/>
     <internalDependency name="DatasetPresenter"/>
     <externalDependency name="apidb.Datasource"/>
     <externalDependency name="sres.ExternalDatabase"/>
@@ -838,8 +837,6 @@ ORDER BY protocol_app_node_name
               where s.investigation_id is null) study_release
         where pan.protocol_app_node_id in (select protocol_app_node_id
                                            from ProtocolAppNodeResults)
---        and ds.name not in (select dataset_name from PANProtocolMetadata)
---        and ds.name not in (select dataset_name from PANCharacteristicMetadata)
           and pan.protocol_app_node_id = sl.protocol_app_node_id
           and sl.study_id = study_release.study_id
           and study_release.external_database_release_id = edr.external_database_release_id
@@ -864,8 +861,6 @@ UNION ALL
               where s.investigation_id is null) study_release
         where pan.protocol_app_node_id in (select protocol_app_node_id
                                            from ProtocolAppNodeResults)
---        and ed.name not in (select dataset_name from PANProtocolMetadata)
---        and ed.name not in (select dataset_name from PANCharacteristicMetadata)
           and pan.protocol_app_node_id = sl.protocol_app_node_id
           and sl.study_id = study_release.study_id
           and study_release.external_database_release_id = edr.external_database_release_id
