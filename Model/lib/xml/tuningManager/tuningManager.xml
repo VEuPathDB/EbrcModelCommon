@@ -987,9 +987,11 @@ UNION ALL
                        when lower(dataset_name) like 'otu%'
                             then 'Ontology_mbioRoot_RSRC'
                        when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                            then 'Ontology_prism_RSRC'
+                            then 'OntologyTerm_icemr_prism_RSRC'
                        when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                            then 'Ontology_gates_RSRC'
+                            then 'OntologyTerm_gates_RSRC'
+                       when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
+                            then 'OntologyTerm_gates_gems_RSRC'
                        else null
                        end as hierarchy_dataset_name
             from (  select dataset_name
@@ -1287,9 +1289,11 @@ UNION ALL
                                 when lower(dataset_name) like 'otu%'
                                   then 'Ontology_mbioRoot_RSRC'
                                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                                   then 'Ontology_prism_RSRC'
+                                  then 'OntologyTerm_icemr_prism_RSRC'
                                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                                   then 'Ontology_gates_RSRC'
+                                  then 'OntologyTerm_gates_RSRC'
+                                when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
+                                  then 'OntologyTerm_gates_gems_RSRC'
                                 else null
                               end as hierarchy_dataset_name
                        from (  select dataset_name
