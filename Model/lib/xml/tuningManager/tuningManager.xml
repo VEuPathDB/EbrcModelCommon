@@ -956,7 +956,7 @@ UNION ALL
     <sql>
       <![CDATA[
         create index mwn_ixone&1
-        on MetadataWithoutNulls&1 (dataset_name, source_id, category, protocol_app_node_id, string_value, number_value, date_value)
+        on MetadataWithoutNulls&1 (source_id, protocol_app_node_id, dataset_name, category, string_value, number_value, date_value)
         tablespace indx
       ]]>
     </sql>
