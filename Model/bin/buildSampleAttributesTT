@@ -137,7 +137,7 @@ SQL
         die "Error evaluating string: $@";
       }
 
-      my @values = map { $hashref->{$_} } @sortedFields;
+      my @values = map { length $hashref->{$_} > 499 ? substr($hashref->{$_}, 0, 500) . " ..." : $hashref->{$_}; } @sortedFields;
 
       $insertRow->execute($id, $name, $desc, $typeId, $type, @values);
     }
