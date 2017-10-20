@@ -883,19 +883,19 @@ UNION ALL
       <![CDATA[
         create table Metadata&1 nologging as
         select cross_product.dataset_type, cross_product.subtype, cross_product.organism, cross_product.dataset_name,
-               cross_product.study_name, cross_product.protocol_app_node_id, cross_product.pan_name, cross_product.category,
+               cross_product.protocol_app_node_id, cross_product.pan_name, cross_product.category,
                cross_product.term, cross_product.term_id, cross_product.source_id,
                mwn.string_value, mwn.number_value, mwn.date_value
         from MetadataWithoutNulls mwn,
-             (select sample.study_name, sample.category, sample.protocol_app_node_id, sample.dataset_name,
+             (select sample.category, sample.protocol_app_node_id, sample.dataset_name,
                      sample.dataset_type, sample.subtype, sample.organism, sample.pan_name,
                      property.term, property.term_id, property.source_id
-              from  (select distinct study_name, category, protocol_app_node_id, dataset_name,
+              from  (select distinct category, protocol_app_node_id, dataset_name,
                                      dataset_type, subtype, organism, pan_name
                      from MetadataWithoutNulls) sample,
-                    (select distinct study_name, category, term, term_id, source_id
+                    (select distinct dataset_name, category, term, term_id, source_id
                      from MetadataWithoutNulls) property
-              where sample.study_name = property.study_name
+              where sample.dataset_name = property.dataset_name
                 and sample.category = property.category) cross_product
         where cross_product.protocol_app_node_id = mwn.protocol_app_node_id(+)
           and cross_product.term = mwn.term(+)
@@ -923,7 +923,7 @@ UNION ALL
       <![CDATA[
         create table MetadataWithoutNulls&1 nologging as
         select m.type as dataset_type, m.subtype, m.organism, m.dataset_name,
-               m.study_name, m.protocol_app_node_id, m.pan_name,
+               m.protocol_app_node_id, m.pan_name,
                m.category, m.term, m.term_id, mt.source_id,
                substr(m.value, 1, 250) as string_value,
                case when mt.type = 'number'
@@ -933,17 +933,17 @@ UNION ALL
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from MetadataType mt,
              (  select type, subtype, organism, dataset_name,
-                       study_name, protocol_app_node_id, pan_name,
+                       protocol_app_node_id, pan_name,
                        category, term, term_id, value
                 from PANProtocolMetadata
               union
                 select type, subtype, organism, dataset_name,
-                       study_name, protocol_app_node_id, pan_name,
+                       protocol_app_node_id, pan_name,
                        category, term, term_id, value
                 from PANCharacteristicMetadata
               union
                 select type, subtype, organism, dataset_name,
-                       study_name, protocol_app_node_id, pan_name,
+                       protocol_app_node_id, pan_name,
                        null as category, term_name as term, cast(null as number) as term_id, value
                 from FallbackMetadata
              ) m
