@@ -145,9 +145,9 @@
        </attributeQueryRef>
 
      
-        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
+        <attributesList summary="organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
 
-        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+        <attributesList summary="pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
