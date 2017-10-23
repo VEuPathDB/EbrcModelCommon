@@ -959,6 +959,13 @@ UNION ALL
         tablespace indx
       ]]>
     </sql>
+    <sql>
+      <![CDATA[
+        create index mwn_min_ixtwo&1
+        on MetadataWithoutNulls&1 (source_id, protocol_app_node_id, string_value, number_value, date_value)
+        tablespace indx
+      ]]>
+    </sql>
   </tuningTable>
 
 
