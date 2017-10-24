@@ -898,7 +898,7 @@ UNION ALL
               where sample.dataset_name = property.dataset_name
                 and sample.category = property.category) cross_product
         where cross_product.protocol_app_node_id = mwn.protocol_app_node_id(+)
-          and cross_product.term = mwn.term(+)
+          and cross_product.source_id = mwn.source_id(+)
         order by organism, dataset_type, subtype, dataset_name, pan_name
       ]]>
     </sql>
