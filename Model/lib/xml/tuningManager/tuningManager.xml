@@ -1835,7 +1835,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <internalDependency name="MetadataType"/>
     <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="ParticipantAttributes"/>
-    <ancillaryTable name="EventAttributes"/>
+    <ancillaryTable name="ObservationAttributes"/>
     <ancillaryTable name="LightTrapAttributes"/>
     <ancillaryTable name="HouseholdAttributes"/>
     <program commandLine="buildSampleAttributesTT"/>
