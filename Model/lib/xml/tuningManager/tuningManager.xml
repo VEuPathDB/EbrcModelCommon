@@ -251,7 +251,7 @@ order by organism, species, genus
     <sql>
       <![CDATA[
 create table ProtocolAppNodeRecord&1 as
-select distinct pan.PROTOCOL_APP_NODE_ID, pan.name as pan_name, ot.name as type
+select distinct pan.PROTOCOL_APP_NODE_ID, pan.name as pan_name, ot.name as type, ot.source_id as type_source_id
 from study.protocolappnode pan
    , sres.ontologyterm ot
    , study.studylink sl
@@ -263,13 +263,14 @@ and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
 and sl.study_id = s.study_id
 and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
 and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and ot.name in ('Participant',
-                'Event',
-                'specimen',
-                'Specimen',
-                'Specimen type',
-                'Household',
-                'CDC light trap assay')
+and (ot.source_id in ('EUPATH_0000738', --Observation/Event
+                     'PCO_0000024', -- Household
+                     'EUPATH_0000096', --Participant
+                     'EUPATH_0000055', -- CDC light trap
+                     'OBI_0100051' -- SPecimentype (need to replace with specimen)
+                     )
+    OR pan.isa_type = 'Sample'
+    )
 order by pan.name
       ]]>
     </sql>
@@ -532,6 +533,7 @@ order by pan.name
                  group by pp.protocol_param_id
                 )
         select distinct node_inputs.protocol_app_node_id, ot.name as protocol_app_node_type,
+               ot.ontology_term_id as protocol_app_node_type_id,
                pan.isa_type as protocol_app_node_isa_type, ds.name as dataset_name,
                p.name as category, pan.name as pan_name, pp.name as term,
                param_term_id.ontology_term_id as term_id,
@@ -575,6 +577,7 @@ order by pan.name
             where ranking = 1
            )
         select distinct sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type,
+               sample_ot.ontology_term_id as protocol_app_node_type_id,
                sample_pan.isa_type as protocol_app_node_isa_type,
                pan.protocol_app_node_id as ancestor_protocol_app_node_id,
                nvl(mt.name, 'assay') as category, -- to be replaced by ancestor_pan_type
@@ -636,7 +639,7 @@ order by pan.name
                  )
             where ranking = 1
            )
-        select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type,
+        select sample_pan.protocol_app_node_id, sample_ot.name as protocol_app_node_type, sample_ot.ontology_term_id as protocol_app_node_type_id,
                sample_pan.isa_type as protocol_app_node_isa_type,
                pan.protocol_app_node_id as ancestor_protocol_app_node_id,
                nvl(mt.name, 'assay') as category, -- to be replaced by ancestor_pan_type
