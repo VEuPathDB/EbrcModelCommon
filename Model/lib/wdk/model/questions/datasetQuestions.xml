@@ -138,7 +138,7 @@
       queryRef="DatasetIds.ByKeyword"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true"
-      excludeProjects="MicrobiomeDB,ClinEpiDB">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates">
       <attributesList
          summary="display_name,contact,institution"
          sorting="display_name asc" />
@@ -164,7 +164,7 @@
       queryRef="DatasetIds.ByGeneList"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
-      excludeProjects="MicrobiomeDB,ClinEpiDB">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates">
       <attributesList
          summary="hit_count,percent_count,display_name,contact,institution"
          sorting="percent_count desc, display_name asc" />
