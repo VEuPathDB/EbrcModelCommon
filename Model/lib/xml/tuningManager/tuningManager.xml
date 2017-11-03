@@ -1910,7 +1910,10 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
       dc.name as contact,
       dc.affiliation as institution,
       LISTAGG(dpub.pmid, ' ') WITHIN GROUP (ORDER BY dpub.pmid) as pubmed_id,
-      LISTAGG(dpub.citation, '  ') WITHIN GROUP (ORDER BY dpub.citation) as citation
+      LISTAGG(CASE WHEN REGEXP_LIKE(dpub.citation, '[[:digit:]]{4};')
+                   THEN substr(citation, 1, regexp_instr(citation, '[[:digit:]]{4};' ) - 1)
+                   ELSE dpub.citation
+              END , '  ') WITHIN GROUP (ORDER BY dpub.citation) as citation
       from DatasetPresenter dp, DatasetContact dc, 
            DatasetPublication dpub  
       where dp.dataset_presenter_id = dc.dataset_presenter_id
