@@ -11,12 +11,14 @@ use Getopt::Long qw(GetOptions);
 
 use EbrcModelCommon::Model::tmUtils;
 
-my ($help, $propfile, $instance, $schema, $suffix, $debug);
+my ($help, $propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug);
 
 GetOptions("propfile=s" => \$propfile,
            "instance=s" => \$instance,
            "schema=s" => \$schema,
            "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
            "debug!" => \$debug,
            "help|h" => \$help,
           );
@@ -67,26 +69,24 @@ SQL
       push @fields, [$field, $fieldType];
     }
     $fieldsSh->finish();
-    
+
     my @sortedFieldsArray = sort{ $a->[0] le $b->[0] } @fields;
 
     my @sortedFields = map { $_->[0] } @sortedFieldsArray;
 
+    createEmptyTable($dbh, $suffix, $prefix, $filterValue, \@sortedFieldsArray, $record);
 
-
-    createEmptyTable($dbh,$suffix, \@sortedFieldsArray, $record);
-    
     my $fieldsString = join(",", @sortedFields);
-    
+
     # prefix a comma if it isn't empty
     $fieldsString = ", " . $fieldsString
         if $fieldsString;
-    
+
     my @bindVars = map { $_->[1] eq "number" ? "apidb.parse_and_round_number(?)" : $_->[1] eq "date" ? "apidb.parse_date(?)" : "?" } @sortedFieldsArray;
 
     my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
-    
-    my $insertStatement = "INSERT INTO ${record}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
+
+    my $insertStatement = "INSERT INTO ${prefix}${record}Attributes$suffix(protocol_app_node_id, name, description, type_id, type $fieldsString) VALUES ($bindVarsString)";
     my $insertRow = $dbh->prepare($insertStatement);
 
 
@@ -145,14 +145,14 @@ SQL
 
     $dbh->commit();
 
-    createIndexes($dbh, $suffix, $record);
+    createIndexes($dbh, $suffix, $prefix, $record);
   }
 
   $dbh->disconnect();
 }
 
 sub createEmptyTable {
-     my ($dbh, $suffix, $fields, $record) = @_;
+     my ($dbh, $suffix, $prefix, $filterValue, $fields, $record) = @_;
 
      my %f = ("number" => "number", "string" => "varchar2(2000)", "date" => "date");
 
@@ -161,9 +161,8 @@ sub createEmptyTable {
      $fieldsString = ", " . $fieldsString
        if $fieldsString;
 
-
      my $sql = <<SQL;
-     create table ${record}Attributes$suffix (
+     create table ${prefix}${record}Attributes$suffix (
        protocol_app_node_id number(10),
        name varchar2(200),
        description varchar2(3000),
@@ -180,17 +179,17 @@ $dbh->{PrintError} = 0;
 }
 
 sub createIndexes {
-     my ($dbh, $suffix, $record) = @_;
+     my ($dbh, $suffix, $prefix, $record) = @_;
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}att_panid_ix$suffix
-      on ${record}Attributes$suffix (protocol_app_node_id, name)
+      on ${prefix}${record}Attributes$suffix (protocol_app_node_id, name)
       tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}patt_name_ix$suffix
-      on ${record}Attributes$suffix (name, protocol_app_node_id)
+      on ${prefix}${record}Attributes$suffix (name, protocol_app_node_id)
       tablespace indx
 SQL
 
@@ -201,7 +200,7 @@ sub usage {
   if($e) {
     print STDERR $e . "\n";
   }
-  print STDERR "usage:  buildSampleAttributesTT -instance <instance> -propfile <file> -suffix <NNNN> [ -schema <login> ] [ -debug ] [ -help ] \n";
+  print STDERR "usage:  buildSampleAttributesTT -instance <instance> -propfile <file> -suffix <NNNN> [ -schema <login> ] [ -prefix <prefix> -filterValue <value> ] [ -debug ] [ -help ] \n";
   exit;
 }
 

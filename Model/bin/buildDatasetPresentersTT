@@ -15,12 +15,14 @@ use CBIL::Util::PropertySet;
 use DBI;
 
 #my ($propfile, $instance, $schema, $suffix, $debug);
-my ($propfile, $instance, $schema, $suffix, $debug, $report);
+my ($propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug, $report);
 Getopt::Long::Configure("pass_through");
 GetOptions("propfile=s" => \$propfile,
            "instance=s" => \$instance,
            "schema=s" => \$schema,
            "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
            "debug!" => \$debug,
            "report!" => \$report,
 	  );
