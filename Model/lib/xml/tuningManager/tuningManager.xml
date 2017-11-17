@@ -760,10 +760,15 @@ ORDER BY protocol_app_node_name
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, DatasetPresenter dsp, apidb.organism o,
-             (select s.study_id, s.external_database_release_id,
-                       s.name as study_name
-              from study.Study s
-              where s.investigation_id is null) study_release
+             -- revision 82228-style study_release subquery 
+             (  select s.study_id, i.external_database_release_id,
+                       s.name as study_name, i.name as investigation_name
+                from study.Study s, study.Study i
+                where s.investigation_id = i.study_id
+              union
+                select s.study_id, s.external_database_release_id,
+                       s.name as study_name, null as investigation_name
+                from study.Study s) study_release
         where pan.protocol_app_node_id in (select protocol_app_node_id
                                            from ProtocolAppNodeResults)
 --        and ds.name not in (select dataset_name from PANProtocolMetadata)
