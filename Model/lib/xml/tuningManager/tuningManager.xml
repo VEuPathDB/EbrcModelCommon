@@ -416,28 +416,28 @@ order by pan.name
     </sql>
     <sql>
       <![CDATA[
-        create index panio_iix&1 on ProtocolAppNodeIO&1
+        create index panio1_iix&1 on ProtocolAppNodeIO&1
                (input_node_id, output_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index panio_oix&1 on ProtocolAppNodeIO&1
+        create index panio1_oix&1 on ProtocolAppNodeIO&1
                (output_node_id, input_node_id, protocol_app_id, input_type_source_id, output_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index panio_otypeix&1 on ProtocolAppNodeIO&1
+        create index panio1_otypeix&1 on ProtocolAppNodeIO&1
                (output_type_source_id, input_type_source_id, output_node_id, input_node_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index panio_itypeix&1 on ProtocolAppNodeIO&1
+        create index panio1_itypeix&1 on ProtocolAppNodeIO&1
                (input_type_source_id, output_type_source_id, input_node_id, output_node_id, protocol_app_id)
                tablespace indx
       ]]>
