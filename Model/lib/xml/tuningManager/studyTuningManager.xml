@@ -245,28 +245,28 @@ order by pan.name
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixpanio_iix&1 on &prefixPANIO&1
+        create index &prefixpainio2_iix&1 on &prefixPANIO&1
                (input_pan_id, output_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixpanio_oix&1 on &prefixPANIO&1
+        create index &prefixpainio2_oix&1 on &prefixPANIO&1
                (output_pan_id, input_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixpanio_otypeix&1 on &prefixPANIO&1
+        create index &prefixpainio2_otypeix&1 on &prefixPANIO&1
                (output_pan_type_source_id, input_pan_type_source_id, output_pan_id, input_pan_id, protocol_app_id)
                tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixpanio_itypeix&1 on &prefixPANIO&1
+        create index &prefixpainio2_itypeix&1 on &prefixPANIO&1
                (input_pan_type_source_id, output_pan_type_source_id, input_pan_id, output_pan_id, protocol_app_id)
                tablespace indx
       ]]>
