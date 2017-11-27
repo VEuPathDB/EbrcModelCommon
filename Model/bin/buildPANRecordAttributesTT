@@ -1,0 +1,207 @@
+#!/usr/bin/perl
+
+use strict;
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use DBI;
+use DBD::Oracle;
+
+use Getopt::Long qw(GetOptions);
+
+use EbrcModelCommon::Model::tmUtils;
+
+my ($help, $propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug);
+
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
+           "debug!" => \$debug,
+           "help|h" => \$help,
+          );
+
+die "required parameter missing" unless ($propfile && $instance && $suffix);
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+&run();
+
+sub run{
+
+  if($help) {
+    &usage();
+  }
+
+  my $failures = 0;
+
+  my %types = ("EUPATH_0000096" => "Participant",
+               "EUPATH_0000738" => "Observation",
+               "EUPATH_0000055" => "LightTrap",
+               "PCO_0000024" => "Household",
+               "OBI_0100051" => "Sample",
+      );
+
+
+  foreach my $type (keys %types) {
+    my $record = $types{$type};
+
+    # for SampleAttributes, we cannot rely on the type_id.  (lots of more specific types of samples like "blood specimen" ...)
+    my $orIsaSample = $record eq 'Sample' ? "or pan_isa_type = 'Sample'" : "";
+
+    my (@fields);
+    my $fieldsSh = $dbh->prepare(<<SQL);
+    -- turn terms into column names
+      select distinct term, type
+      from (  select mt.property_source_id as term, mt.type
+              from ${prefix}InferredChars m, ${prefix}PropertyTypes mt, sres.ontologyterm ot where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
+            union
+              select mt.property_source_id as term, mt.type
+              from ${prefix}InferredParams m, ${prefix}PropertyTypes mt, sres.ontologyterm ot  where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
+              )
+SQL
+
+    $fieldsSh->execute();
+
+    while(my ($field, $fieldType) = $fieldsSh->fetchrow_array()) {
+      push @fields, [$field, $fieldType];
+    }
+    $fieldsSh->finish();
+
+    my @sortedFieldsArray = sort{ $a->[0] le $b->[0] } @fields;
+
+    my @sortedFields = map { $_->[0] } @sortedFieldsArray;
+
+    createEmptyTable($dbh, $suffix, $prefix, $filterValue, \@sortedFieldsArray, $record);
+
+    my $fieldsString = join(",", @sortedFields);
+
+    # prefix a comma if it isn't empty
+    $fieldsString = ", " . $fieldsString
+        if $fieldsString;
+
+    my @bindVars = map { $_->[1] eq "number" ? "apidb.parse_and_round_number(?)" : $_->[1] eq "date" ? "apidb.parse_date(?)" : "?" } @sortedFieldsArray;
+
+    my $bindVarsString = "?,?,?,?,?," . join(",", @bindVars);
+
+    my $insertStatement = "INSERT INTO ${prefix}${record}s$suffix(pan_id, name, description, pan_type_id, pan_type $fieldsString) VALUES ($bindVarsString)";
+    my $insertRow = $dbh->prepare($insertStatement);
+
+
+    my $metaDataSql = "
+    with pmd as (
+                     select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
+                      from ${prefix}InferredChars m, sres.ontologyterm t, ${prefix}PropertyTypes ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+                      union
+                      select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
+                      from ${prefix}InferredParams m, sres.ontologyterm t, ${prefix}PropertyTypes ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+    )
+    select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
+    from (select pan_id,
+--               listagg(value, ',') within group (order by value) as value
+                 regexp_replace(regexp_replace(regexp_replace(rtrim(xmlagg(XMLELEMENT(e,text,',').EXTRACT('//text()') ORDER BY text).GetClobVal(),','),
+                                                              '.quot;', '\"'),
+                                               '.gt;', '>'),
+                                '.apos;', '''') as value
+          from (select pan_id, '\"' || property_source_id || '\"=> ''' || listagg(value,' | ') within group (order by value)  || '''' as text
+                from (pmd) 
+                where type != 'number'                
+                group by pan_id, property_source_id, type
+                UNION
+                select pan_id, '\"' || property_source_id || '\"=> ''' || avg(replace(value, ',', ''))  || '''' as text
+                from (pmd) 
+                where type = 'number'                
+                group by pan_id, property_source_id, type
+          )
+          group by pan_id
+         ) meta,
+         study.ProtocolAppNode pan, sres.OntologyTerm ot
+    where meta.pan_id = pan.protocol_app_node_id
+      and pan.type_id = ot.ontology_term_id
+";
+    print STDERR "metaDataSql-->>\n$metaDataSql\n<<-- end of metaDataSql\n"
+        if $debug;
+
+    my $metaSh = $dbh->prepare($metaDataSql);
+    $metaSh->execute();
+    while(my ($id, $name, $desc, $typeId, $type, $metadata) = $metaSh->fetchrow_array()) {
+
+      my $hashString = "{ $metadata }";
+      print STDERR "hashString-->>\n$hashString\n<<-- end of hashString\n"
+          if $debug;
+      my $hashref = eval $hashString;
+
+      if($@) {
+        die "Error evaluating string: $@";
+      }
+
+      my @values = map { length $hashref->{$_} > 499 ? substr($hashref->{$_}, 0, 500) . " ..." : $hashref->{$_}; } @sortedFields;
+
+      $insertRow->execute($id, $name, $desc, $typeId, $type, @values);
+    }
+    $insertRow->finish();
+
+    $dbh->commit();
+
+    createIndexes($dbh, $suffix, $prefix, $record);
+  }
+
+  $dbh->disconnect();
+}
+
+sub createEmptyTable {
+     my ($dbh, $suffix, $prefix, $filterValue, $fields, $record) = @_;
+
+     my %f = ("number" => "number", "string" => "varchar2(2000)", "date" => "date");
+
+     my $fieldsString = join(",\n", map { $_->[0]." " . $f{$_->[1]} } @$fields);
+     # prefix a comma if it isn't empty
+     $fieldsString = ", " . $fieldsString
+       if $fieldsString;
+
+     my $sql = <<SQL;
+     create table ${prefix}${record}s$suffix (
+       pan_id number(10),
+       name varchar2(200),
+       description varchar2(3000),
+       pan_type_id number(10),
+       pan_type  varchar2(400)
+       $fieldsString
+  ) nologging
+SQL
+
+    $dbh->do($sql) or die "creating table";
+
+
+$dbh->{PrintError} = 0;
+}
+
+sub createIndexes {
+     my ($dbh, $suffix, $prefix, $record) = @_;
+
+    $dbh->do(<<SQL) or die "creating index";
+      create index ${record}att_panid_ix$suffix
+      on ${prefix}${record}s$suffix (pan_id, name)
+      tablespace indx
+SQL
+
+    $dbh->do(<<SQL) or die "creating index";
+      create index ${record}patt_name_ix$suffix
+      on ${prefix}${record}s$suffix (name, pan_id)
+      tablespace indx
+SQL
+
+}
+
+sub usage {
+  my $e = shift;
+  if($e) {
+    print STDERR $e . "\n";
+  }
+  print STDERR "usage:  buildSampleAttributesTT -instance <instance> -propfile <file> -suffix <NNNN> [ -schema <login> ] [ -prefix <prefix> -filterValue <value> ] [ -debug ] [ -help ] \n";
+  exit;
+}
+
+1;
