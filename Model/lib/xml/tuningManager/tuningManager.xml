@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
 
-  <tuningTable name="SampleId" prefixEnabled="false">
-    <comment>Which protocol app nodes for sample record                                                                                                    
-    </comment>
-    <externalDependency name="core.ProjectInfo"/>
-    <externalDependency name="sres.ExternalDatabase"/>
-    <externalDependency name="sres.ExternalDatabaseRelease"/>
-    <externalDependency name="study.ProtocolAppNode"/>
-    <externalDependency name="study.Study"/>
-    <externalDependency name="study.StudyLink"/>
-    <sql>
-      <![CDATA[
-create table SampleId&1 as 
-select pan.protocol_app_node_id, pan.name, pi.name as project_id from study.protocolappnode pan, core.projectinfo pi where pan.isa_type = 'Sample' and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-union
-select pan.protocol_app_node_id, pan.name, pi.name as project_id
-from study.study s
-   , sres.externaldatabase d
-   , sres.externaldatabaserelease r
-   , study.protocolappnode pan
-   , study.studylink sl
-   , core.projectinfo pi
-where s.external_database_release_id = r.external_database_release_id
-and r.external_database_id = d.external_database_id
-and s.study_id = sl.study_id
-and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-and sl.protocol_app_node_id = pan.protocol_app_node_id
-and d.name like '%isolates_genbank_RSRC'
--- using column positions, rather than column names, in ORDER BY on union
-order by 2, 1
-      ]]>
-    </sql>
-  </tuningTable>
-
-
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
@@ -886,7 +852,7 @@ UNION ALL
     </sql>
   </tuningTable>
 
-
+<!--
   <tuningTable name="Metadata">
     <comment>
       Metadata table with rows added for NULL properties
@@ -980,6 +946,7 @@ UNION ALL
       ]]>
     </sql>
   </tuningTable>
+-->
 
 
   <tuningTable name="MetadataSpec">

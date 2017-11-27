@@ -1067,7 +1067,7 @@ UNION ALL
     <ancillaryTable name="Observations"/>
     <ancillaryTable name="LightTraps"/>
     <ancillaryTable name="Households"/>
-    <program commandLine="buildSampleAttributesTT"/>
+    <program commandLine="buildPANRecordAttributesTT"/>
   </tuningTable>
 
 
