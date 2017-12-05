@@ -74,8 +74,13 @@ public class DatasetPresenter {
   }
 
     public String getId() {
-	return "DS_" + DigestUtils.sha1Hex(getDatasetName()).substring(0,10);
+	return "DS_" + getDigest();
     }
+
+    public String getDigest() {
+	return DigestUtils.sha1Hex(getDatasetName()).substring(0,10);
+    }
+
 
   String getPropValue(String propName) {
     return propValues.get(propName);
@@ -421,9 +426,14 @@ public class DatasetPresenter {
 
     void addIdentityProperty() {
         NamedValue presenterId = new NamedValue("presenterId", getId());
+        NamedValue datasetDigest = new NamedValue("datasetDigest", getDigest());
         addProp(presenterId);
+        addProp(datasetDigest);
         if (datasetInjectorConstructor != null) {
             datasetInjectorConstructor.addProp(presenterId);
+            datasetInjectorConstructor.addProp(datasetDigest);
+
+            System.out.println("I AM HERE!!!");
         }
     }
 
