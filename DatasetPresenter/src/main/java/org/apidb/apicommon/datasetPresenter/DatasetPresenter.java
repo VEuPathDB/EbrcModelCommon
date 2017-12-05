@@ -432,8 +432,6 @@ public class DatasetPresenter {
         if (datasetInjectorConstructor != null) {
             datasetInjectorConstructor.addProp(presenterId);
             datasetInjectorConstructor.addProp(datasetDigest);
-
-            System.out.println("I AM HERE!!!");
         }
     }
 
