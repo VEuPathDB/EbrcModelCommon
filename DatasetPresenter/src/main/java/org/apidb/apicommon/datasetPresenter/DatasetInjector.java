@@ -148,12 +148,12 @@ public abstract class DatasetInjector {
    * @param name
    */
   protected void addWdkReference(String recordClass, String type, String name) {
-      addWdkReference(recordClass, type, name, EMPTY_ARRAY);
+      addWdkReference(recordClass, type, name, EMPTY_ARRAY, null);
   }
 
-  protected void addWdkReference(String recordClass, String type, String name, String[] scopes) {
+    protected void addWdkReference(String recordClass, String type, String name, String[] scopes, String iri) {
     ModelReference ref = new ModelReference(recordClass, type, name,
-                                            _datasetName, scopes);
+                                            _datasetName, scopes, iri);
     String key = recordClass + type + name;
     if (_modelReferences.containsKey(key)) {
       throw new UserException("Dataset " + _datasetName
@@ -171,12 +171,12 @@ public abstract class DatasetInjector {
    * @param name
    */
     protected void addModelReference(String type, String name) {
-        addModelReference(type, name, EMPTY_ARRAY);
+        addModelReference(type, name, EMPTY_ARRAY, null);
     }
 
 
-    protected void addModelReference(String type, String name, String[] scopes) {
-        ModelReference ref = new ModelReference(type, name, _datasetName, scopes);
+    protected void addModelReference(String type, String name, String[] scopes, String iri) {
+        ModelReference ref = new ModelReference(type, name, _datasetName, scopes, iri);
     String key = type + name;
     if (_modelReferences.containsKey(key)) {
       throw new UserException("Dataset " + _datasetName
