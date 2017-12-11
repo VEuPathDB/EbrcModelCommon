@@ -40,23 +40,23 @@ public class ModelReference {
         }
     }
   
-    String getRecordClassName() {
+    public String getRecordClassName() {
         return recordClassName;
     }
   
-    String getTargetName() {
+    public String getTargetName() {
         return targetName;
     }
 
-    String getTargetType() {
+    public String getTargetType() {
         return targetType;
     }
 
-    String getCategoryIri() {
+    public String getCategoryIri() {
         return categoryIri;
     }
 
-    String[] getScopes() {
+    public String[] getScopes() {
         return scopes;
     }
 }

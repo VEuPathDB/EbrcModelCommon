@@ -186,7 +186,7 @@ public abstract class DatasetInjector {
   }
 
 
-  List<ModelReference> getModelReferences() {
+  protected List<ModelReference> getModelReferences() {
     return new ArrayList<ModelReference>(_modelReferences.values());
   }
 
