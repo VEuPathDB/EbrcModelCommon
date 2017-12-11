@@ -181,7 +181,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
        </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates">
+    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
         <testParamValues>
           <paramValue name="text_expression">GeneDB*</paramValue>
         </testParamValues>
@@ -199,7 +199,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
     </sqlQuery>
                    
 
-    <sqlQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates">
+    <sqlQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
         <paramRef ref="sharedParams.ds_gene_ids"/>
         <paramRef ref="datasetParams.threshold"/>
         <paramRef ref="datasetParams.orthologyFlag"/>

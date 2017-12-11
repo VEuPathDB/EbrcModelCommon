@@ -523,9 +523,9 @@ ORDER BY external_database_release_id, protocol_app_node_id
 create table &prefixSampleProcess&1 nologging as
 SELECT
   p1.name
-, p1.protocol_app_node_id
-, p3.name as input
-, p3.protocol_app_node_id as input_protocol_app_node_id
+, p1.pan_id
+, p3.name as input_name
+, p3.protocol_app_node_id as input_pan_id
 , case
     WHEN ot3.name LIKE 'data%'
     THEN 'Data'
@@ -533,8 +533,8 @@ SELECT
   end as input_isa_type
 , ot3.name as input_material_type
 , p.name AS protocol
-, p2.name AS output
-, p2.protocol_app_node_id AS output_protocol_app_node_id
+, p2.name AS output_name
+, p2.protocol_app_node_id AS output_pan_id
 , case
     WHEN ot2.name LIKE 'data%'
     THEN 'Data'
@@ -773,7 +773,8 @@ UNION ALL
                                 when lower(dataset_name) like 'otu%'
                                   then 'Ontology_mbioRoot_RSRC'
                                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                                  then 'OntologyTerm_icemr_prism_RSRC'
+--TODO ADD BACK                                  then 'OntologyTerm_icemr_prism_RSRC'
+                                  then 'Ontology_prism_RSRC'
                                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                                   then 'OntologyTerm_gates_RSRC'
                                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'

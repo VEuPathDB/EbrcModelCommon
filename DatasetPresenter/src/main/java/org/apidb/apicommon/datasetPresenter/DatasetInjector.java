@@ -31,6 +31,9 @@ public abstract class DatasetInjector {
   private Map<String, ModelReference> _modelReferences = new HashMap<String, ModelReference>();
   private Map<String, Map<String, String>> _globalDatasetProperties;
 
+  private static final String[] EMPTY_ARRAY = new String[0];
+
+
   /**
    * Subclasses use this method to declare the properties they require. These
    * properties must be the union of all the properties required by the
@@ -145,8 +148,12 @@ public abstract class DatasetInjector {
    * @param name
    */
   protected void addWdkReference(String recordClass, String type, String name) {
+      addWdkReference(recordClass, type, name, EMPTY_ARRAY, null);
+  }
+
+    protected void addWdkReference(String recordClass, String type, String name, String[] scopes, String iri) {
     ModelReference ref = new ModelReference(recordClass, type, name,
-        _datasetName);
+                                            _datasetName, scopes, iri);
     String key = recordClass + type + name;
     if (_modelReferences.containsKey(key)) {
       throw new UserException("Dataset " + _datasetName
@@ -163,8 +170,13 @@ public abstract class DatasetInjector {
    * @param type
    * @param name
    */
-  protected void addModelReference(String type, String name) {
-    ModelReference ref = new ModelReference(type, name, _datasetName);
+    protected void addModelReference(String type, String name) {
+        addModelReference(type, name, EMPTY_ARRAY, null);
+    }
+
+
+    protected void addModelReference(String type, String name, String[] scopes, String iri) {
+        ModelReference ref = new ModelReference(type, name, _datasetName, scopes, iri);
     String key = type + name;
     if (_modelReferences.containsKey(key)) {
       throw new UserException("Dataset " + _datasetName
@@ -172,6 +184,7 @@ public abstract class DatasetInjector {
     }
     _modelReferences.put(key, ref);
   }
+
 
   List<ModelReference> getModelReferences() {
     return new ArrayList<ModelReference>(_modelReferences.values());
