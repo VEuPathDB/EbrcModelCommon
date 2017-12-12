@@ -617,7 +617,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="apidb.SequenceTaxon"/>
     <externalDependency name="results.OtuAbundance"/>
-    <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="InferredParams"/>
     <internalDependency name="ExternalSequenceTaxonRank"/>
     <sql>
       <![CDATA[
