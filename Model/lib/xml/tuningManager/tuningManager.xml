@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
 
+  <import file="studyTuningManager.xml"/>
+
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
