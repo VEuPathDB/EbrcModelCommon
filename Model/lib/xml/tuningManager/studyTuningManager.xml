@@ -567,7 +567,7 @@ WHERE
   and p3.type_id = ot3.ontology_term_id (+)
   and io.protocol_app_id = pa.protocol_app_id
   and pa.protocol_id = p.protocol_id
-ORDER BY name, protocol_app_node_id, input_protocol_app_node_id, output_protocol_app_node_id
+ORDER BY name, protocol_app_node_id, input_protocol_app_node_id, output_pan_id
       ]]>
     </sql>
   </tuningTable>
