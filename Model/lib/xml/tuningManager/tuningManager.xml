@@ -654,7 +654,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                        from dots.ExternalNaSequence ens, apidb.SequenceTaxon st
                        where ens.na_sequence_id = st.na_sequence_id(+)
                        ) taxonAssignment
-                 where oa.protocol_app_node_id = ds.output_protocol_app_node_id
+                 where oa.protocol_app_node_id = ds.output_pan_id
                    and ds.output_isa_type = 'Data'
                    and oa.na_sequence_id = taxonAssignment.na_sequence_id
                  group by ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id
