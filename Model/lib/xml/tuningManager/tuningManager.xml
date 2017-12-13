@@ -639,7 +639,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
            from (select ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id,
                         sum(nvl(oa.relative_abundance, 0)) as relative_abundance,
                         sum(nvl(oa.raw_count, 0)) as absolute_abundance
-                 from results.OtuAbundance oa, SampleDownstream ds,
+                 from results.OtuAbundance oa, sampleprocess ds,
                       (select ens.na_sequence_id,
                               case
                                 when st.taxon_id is not null
