@@ -345,6 +345,7 @@
     <track>azonCBS506.65</track>
     <track>aoryRIB40</track>
     <track>afisNRRL181</track>
+    <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -361,6 +362,8 @@
     <track>fgraPH-1</track>
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
+    <track>foxy54006</track>
+    <track>foxyFo47</track>
     <track>fver7600</track>
   </subtrackSet>
 
@@ -448,6 +451,8 @@
   <subtrackSet name="Ajellomycetaceae" project="FungiDB" suffixes="_span;_gene">
     <track>hcapNAm1</track>
     <track>hcapG186AR</track>
+    <track>hcapG217B</track>
+    <track>hcapH88</track>
   </subtrackSet>
 
   <url project="FungiDB" type="synteny">
@@ -533,6 +538,7 @@
     <org abbrev="azonCBS506.65" organism="Aspergillus zonatus CBS 506.65"/>
     <org abbrev="aoryRIB40" organism="Aspergillus oryzae RIB40"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
+    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -558,6 +564,8 @@
     <org abbrev="fgraPH-1" organism="Fusarium graminearum PH-1"/>
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
+    <org abbrev="foxy54006" organism="Fusarium oxysporum f. sp. cubense tropical race 4 54006"/>
+    <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -704,6 +712,8 @@
   <url project="FungiDB" type="synteny">
     <org abbrev = "hcapNAm1" organism="Histoplasma capsulatum NAm1"/> 
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
+    <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
+    <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
