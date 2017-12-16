@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
 
+  <import file="studyTuningManager.xml"/>
+
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
@@ -617,7 +619,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="apidb.SequenceTaxon"/>
     <externalDependency name="results.OtuAbundance"/>
-    <internalDependency name="PANProtocolMetadata"/>
+    <internalDependency name="InferredParams"/>
     <internalDependency name="ExternalSequenceTaxonRank"/>
     <sql>
       <![CDATA[
@@ -639,7 +641,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
            from (select ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id,
                         sum(nvl(oa.relative_abundance, 0)) as relative_abundance,
                         sum(nvl(oa.raw_count, 0)) as absolute_abundance
-                 from results.OtuAbundance oa, SampleDownstream ds,
+                 from results.OtuAbundance oa, sampleprocess ds,
                       (select ens.na_sequence_id,
                               case
                                 when st.taxon_id is not null
@@ -654,7 +656,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                        from dots.ExternalNaSequence ens, apidb.SequenceTaxon st
                        where ens.na_sequence_id = st.na_sequence_id(+)
                        ) taxonAssignment
-                 where oa.protocol_app_node_id = ds.output_protocol_app_node_id
+                 where oa.protocol_app_node_id = ds.output_pan_id
                    and ds.output_isa_type = 'Data'
                    and oa.na_sequence_id = taxonAssignment.na_sequence_id
                  group by ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id

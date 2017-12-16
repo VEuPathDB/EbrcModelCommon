@@ -345,6 +345,7 @@
     <track>azonCBS506.65</track>
     <track>aoryRIB40</track>
     <track>afisNRRL181</track>
+    <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -361,6 +362,8 @@
     <track>fgraPH-1</track>
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
+    <track>foxy54006</track>
+    <track>foxyFo47</track>
     <track>fver7600</track>
   </subtrackSet>
 
@@ -448,6 +451,8 @@
   <subtrackSet name="Ajellomycetaceae" project="FungiDB" suffixes="_span;_gene">
     <track>hcapNAm1</track>
     <track>hcapG186AR</track>
+    <track>hcapG217B</track>
+    <track>hcapH88</track>
   </subtrackSet>
 
   <url project="FungiDB" type="synteny">
@@ -533,6 +538,7 @@
     <org abbrev="azonCBS506.65" organism="Aspergillus zonatus CBS 506.65"/>
     <org abbrev="aoryRIB40" organism="Aspergillus oryzae RIB40"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
+    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -558,6 +564,8 @@
     <org abbrev="fgraPH-1" organism="Fusarium graminearum PH-1"/>
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
+    <org abbrev="foxy54006" organism="Fusarium oxysporum f. sp. cubense tropical race 4 54006"/>
+    <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -704,6 +712,8 @@
   <url project="FungiDB" type="synteny">
     <org abbrev = "hcapNAm1" organism="Histoplasma capsulatum NAm1"/> 
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
+    <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
+    <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
@@ -770,6 +780,7 @@
     <track>nparERTm3</track>
     <track>nausERTm2</track>
     <track>nausERTm6</track>
+    <track>ndisJUm2807</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="ecunEC2_gene" suffixes="_span;_gene">
@@ -830,6 +841,7 @@
     <org organism="Nematocida parisii ERTm3" abbrev="nparERTm3" />
     <org organism="Nematocida ausubeli ERTm2" abbrev="nausERTm2" />
     <org organism="Nematocida ausubeli ERTm6" abbrev="nausERTm6" />
+    <org organism="Nematocida displodere strain JUm2807" abbrev="ndisJUm2807" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Nematocida_gene" />
@@ -1065,6 +1077,8 @@
     <track>tcruCLBrenerNon-Esmeraldo-like</track>
     <track>tcruCLBrener</track>
     <track>tcruDm28c</track>
+    <track>tcrucruziDm28c</track>
+    <track>tcruSylvioX10-1</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1081,6 +1095,7 @@
     <track>tconIL3000</track>
     <track>tevaSTIB805</track>
     <track>tranSC58</track>
+    <track>ttheEdinburgh</track>
     <track>tvivY486</track>
   </subtrackSet>
 
@@ -1140,6 +1155,7 @@
     <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
     <org organism="Trypanosoma cruzi Dm28c" abbrev="tcruDm28c" />
     <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
+    <org organism="Trypanosoma cruzi cruzi strain Dm28c" abbrev="tcrucruziDm28c" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
@@ -1162,6 +1178,7 @@
     <org organism="Trypanosoma congolense IL3000" abbrev="tconIL3000" />
     <org organism="Trypanosoma evansi strain STIB 805" abbrev="tevaSTIB805" />
     <org organism="Trypanosoma rangeli SC58" abbrev="tranSC58" />
+    <org organism="Trypanosoma theileri isolate Edinburgh" abbrev="ttheEdinburgh" />
     <org organism="Trypanosoma vivax Y486" abbrev="tvivY486" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">

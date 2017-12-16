@@ -523,7 +523,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
 create table &prefixSampleProcess&1 nologging as
 SELECT
   p1.name
-, p1.pan_id
+, p1.protocol_app_node_id
 , p3.name as input_name
 , p3.protocol_app_node_id as input_pan_id
 , case
@@ -567,7 +567,7 @@ WHERE
   and p3.type_id = ot3.ontology_term_id (+)
   and io.protocol_app_id = pa.protocol_app_id
   and pa.protocol_id = p.protocol_id
-ORDER BY name, protocol_app_node_id, input_protocol_app_node_id, output_protocol_app_node_id
+ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
       ]]>
     </sql>
   </tuningTable>
@@ -773,8 +773,7 @@ UNION ALL
                                 when lower(dataset_name) like 'otu%'
                                   then 'Ontology_mbioRoot_RSRC'
                                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
---TODO ADD BACK                                  then 'OntologyTerm_icemr_prism_RSRC'
-                                  then 'Ontology_prism_RSRC'
+                                  then 'OntologyTerm_icemr_prism_RSRC'
                                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                                   then 'OntologyTerm_gates_RSRC'
                                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
