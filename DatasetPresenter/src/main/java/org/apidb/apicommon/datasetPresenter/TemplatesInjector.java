@@ -71,6 +71,12 @@ public class TemplatesInjector {
 
     initDatasetInjectorSet();
 
+
+    List<DatasetInjector> datasetInjectors = datasetInjectorSet.getDatasetInjectors();
+    for (DatasetInjector datasetInjector : datasetInjectors) {
+        datasetInjector.setTemplateSet(templateSet);
+    }
+
     Collection<AnchorFile> anchorFiles = templateSet.getAnchorFiles();
 
     Pattern patt = Pattern.compile(TEMPLATE_ANCHOR + "\\s+(\\w+)");
@@ -212,6 +218,7 @@ public class TemplatesInjector {
 
     TemplateSet templateSet = new TemplateSet();
     TemplatesParser.parseTemplatesDir(templateSet, templatesDir);
+
 
     TemplatesInjector templatesInjector = new TemplatesInjector(
         datasetPresenterSet, templateSet);

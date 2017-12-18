@@ -31,6 +31,8 @@ public abstract class DatasetInjector {
   private Map<String, ModelReference> _modelReferences = new HashMap<String, ModelReference>();
   private Map<String, Map<String, String>> _globalDatasetProperties;
 
+  private TemplateSet templateSet;
+
   private static final String[] EMPTY_ARRAY = new String[0];
 
 
@@ -104,6 +106,28 @@ public abstract class DatasetInjector {
     protected Map<String, String> getPropValues() {
         return this._propValues;
     }
+
+
+    protected TemplateSet getTemplateSet() {
+        return this.templateSet;
+    }
+
+    protected void setTemplateSet(TemplateSet templateSet) {
+        this.templateSet = templateSet;
+    }
+
+
+    protected String getTemplateInstanceText(String templateName) {
+      TemplateSet templateSet = getTemplateSet();
+
+      Template template = templateSet.getTemplateByName(templateName);
+      TemplateInstance templateInstance = new TemplateInstance(templateName,
+                                                               Collections.unmodifiableMap(_propValues));
+
+
+      return(template.getInstanceAsText(templateInstance));
+    }
+
 
   protected String getPropValue(String key) {
     return _propValues.get(key);
