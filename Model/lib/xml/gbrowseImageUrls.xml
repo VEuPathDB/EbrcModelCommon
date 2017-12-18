@@ -29,6 +29,7 @@
   <subtrackSet project="PlasmoDB" name="human_gene" suffixes="_span;_gene">
     <track>pfal3D7</track>
     <track>pvivSal1</track>
+    <track>pcynM</track>
     <track>pknoH</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
@@ -46,6 +47,7 @@
   <subtrackSet project="PlasmoDB" name="human_genomic" suffixes="_span">
     <track>pfal3D7</track>
     <track>pvivSal1</track>
+    <track>pcynM</track>
     <track>pknoH</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
@@ -91,6 +93,7 @@
     <org organism="Plasmodium falciparum IT" abbrev="pfalIT" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
+    <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
@@ -119,6 +122,7 @@
     <org organism="Plasmodium falciparum IT" abbrev="pfalIT" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
+    <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
@@ -956,6 +960,7 @@
     <track>sneuSN3</track>
     <track>hhamHH34</track>
     <track>ccayCHN_HEN01</track>
+    <track>csuiWienI</track>
   </subtrackSet>
 
   <subtrackSet project="ToxoDB" name="Eimeria_gene" suffixes="_span;_gene">
@@ -978,6 +983,7 @@
     <track>tgonRH</track>
     <track>ncanLIV</track>
     <track>hhamHH34</track>
+    <track>csuiWienI</track>
   </subtrackSet>
 
   <url project="ToxoDB" type="synteny">
@@ -1002,6 +1008,15 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Cyclospora cayetanensis strain CHN_HEN01" abbrev="ccayCHN_HEN01" />
+    <track name="Gene" />
+    <track name="EST" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="all_gene" />
+    </track>
+  </url>
+
+  <url project="ToxoDB" type="synteny">
+    <org organism="Cystoisospora suis strain Wien I" abbrev="csuiWienI" />
     <track name="Gene" />
     <track name="EST" />
     <track name="Synteny" abbrevFirst="true">
