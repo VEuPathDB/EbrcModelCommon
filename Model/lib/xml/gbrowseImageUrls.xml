@@ -32,9 +32,15 @@
     <track>pknoH</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
+    <track>pgabG01</track>
     <track>preiCDC</track>
+    <track>preiG01</track>
     <track>pmalUG01</track>
     <track>povaGH01</track>
+    <track>padlG01</track>
+    <track>pbilG01</track>
+    <track>pblaG01</track>
+    <track>ppraG01</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="human_genomic" suffixes="_span">
@@ -43,9 +49,15 @@
     <track>pknoH</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
+    <track>pgabG01</track>
     <track>preiCDC</track>
+    <track>preiG01</track>
     <track>pmalUG01</track>
     <track>povaGH01</track>
+    <track>padlG01</track>
+    <track>pbilG01</track>
+    <track>pblaG01</track>
+    <track>ppraG01</track>
   </subtrackSet>
   
   <subtrackSet project="PlasmoDB" name="rodent_gene" suffixes="_span;_gene">
@@ -88,6 +100,12 @@
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
+    <org organism="Plasmodium adleri G01" abbrev="padlG01" />
+    <org organism="Plasmodium billcollinsi G01" abbrev="pbilG01" />
+    <org organism="Plasmodium reichenowi G01" abbrev="preiG01" />
+    <org organism="Plasmodium blacklocki G01" abbrev="pblaG01" />
+    <org organism="Plasmodium gaboni strain G01" abbrev="pgabG01" />
+    <org organism="Plasmodium praefalciparum strain G01" abbrev="ppraG01" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="human_gene" />
@@ -110,6 +128,12 @@
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
+    <org organism="Plasmodium adleri G01" abbrev="padlG01" />
+    <org organism="Plasmodium billcollinsi G01" abbrev="pbilG01" />
+    <org organism="Plasmodium reichenowi G01" abbrev="preiG01" />
+    <org organism="Plasmodium blacklocki G01" abbrev="pblaG01" />
+    <org organism="Plasmodium gaboni strain G01" abbrev="pgabG01" />
+    <org organism="Plasmodium praefalciparum strain G01" abbrev="ppraG01" />
     <track name="Scaffolds" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="human_genomic" />
