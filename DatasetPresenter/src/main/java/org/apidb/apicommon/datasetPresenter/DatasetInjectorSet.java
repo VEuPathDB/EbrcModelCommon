@@ -27,6 +27,13 @@ public class DatasetInjectorSet {
     datasetInjector.setDatasetInjectorSet(this);
   }
 
+
+    protected List<DatasetInjector> getDatasetInjectors() {
+        return(this.datasetInjectors);
+    }
+
+
+
   /**
    * Transform this DatasetInjectorSet into a TemplateInstanceSet. Calls each
    * injector and asks it construct TemplateInstances and add them to the
