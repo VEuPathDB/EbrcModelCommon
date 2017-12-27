@@ -125,6 +125,9 @@ public abstract class DatasetInjector {
                                                                Collections.unmodifiableMap(_propValues));
 
 
+      template.validateTemplateText();
+      template.validatePropertiesInstance(_propValues);
+
       return(template.getInstanceAsText(templateInstance));
     }
 
