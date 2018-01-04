@@ -1145,6 +1145,7 @@
     <track>tcruDm28c</track>
     <track>tcrucruziDm28c</track>
     <track>tcruSylvioX10-1</track>
+    <track>tcruSylvioX10-1-2012</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1221,6 +1222,7 @@
     <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
     <org organism="Trypanosoma cruzi Dm28c" abbrev="tcruDm28c" />
     <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
+    <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi cruzi strain Dm28c" abbrev="tcrucruziDm28c" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
