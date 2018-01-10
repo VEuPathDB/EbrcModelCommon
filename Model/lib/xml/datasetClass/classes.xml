@@ -3051,7 +3051,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
 
-    <pluginArgs>--metaDataRoot @@dataDir@@ --investigationBaseName investigation.xml --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --isSimpleConfiguration 1 --ontologyMappingFile @@dataDir@@/final/ontologyMapping.xml --ontologyMappingOverrideFileBaseName ontologyMappingOverride.xml --valueMappingFile @@dataDir@@/final/valueMap.txt</pluginArgs>
+    <pluginArgs>--metaDataRoot @@dataDir@@ --investigationBaseName investigation.xml --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --isSimpleConfiguration 1 --ontologyMappingFile @@dataDir@@/final/ontologyMapping.xml --ontologyMappingOverrideFileBaseName ontologyMappingOverride.xml --valueMappingFile @@dataDir@@/final/valueMap.txt --dateObfuscationFile @@dataDir@@/final/dateObfuscation.txt</pluginArgs>
   </datasetLoader>
 
   </datasetClass>
