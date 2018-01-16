@@ -758,7 +758,6 @@ UNION ALL
     <comment>
     </comment>
     <internalDependency name="DefaultChars"/>
-    <internalDependency name="TopValues"/>
     <internalDependency name="PropertyTypes"/>
     <internalDependency name="InferredParams"/>
     <sql>
@@ -871,11 +870,7 @@ UNION ALL
                  -- DISTINCT -- moot because of UNION; otherwise needed
                  child.name as ontology_term_name, child.ontology_term_id,
                  child.source_id as ontology_term_source_id,
-                 case
-                   when mtv.top_values is null
-                     then child.definition
-                   else child.definition || ' E.g. ' || mtv.top_values
-                 end as description,
+                 child.definition as description,
                  -- work around initcap's problems with apostrophes
                  -- replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
                  --           '16s', '16S') as display_name,
@@ -891,7 +886,7 @@ UNION ALL
                 otm.organism, otm.dataset_name, otm.dataset_type, otm.dataset_subtype
           from ontology_tree_metadata otm, leaf_ancestor_pair lap,
                sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
-               &prefixPropertyTypes mt, &prefixTopValues mtv,
+               &prefixPropertyTypes mt,
                (  select child_term_id, parent_term_id, dataset_name from graph_edge
                 union
                   select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
@@ -902,18 +897,13 @@ UNION ALL
               and edge.parent_term_id = parent.ontology_term_id(+)
 --            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = mt.property_id(+)
-              and edge.child_term_id = mtv.property_id(+)
               and otm.unit_id = unit.ontology_term_id(+)
         union
           select -- hardwired hierarchy: characteristics
                  distinct -- moot only because of UNION
                  nvl(term.name, pcm.property) as ontology_term_name, term.ontology_term_id,
                  term.source_id as ontology_term_source_id,
-                 case
-                   when mtv.top_values is null
-                     then term.definition
-                   else term.definition || ' E.g. ' || mtv.top_values
-                 end as description,
+                 term.definition as description,
                  initcap(nvl(term.name, pcm.property)) as display_name,
                  nvl(parent.name, pcm.ancestor_pan_type) as parent_ontology_term_name,
                  parent.ontology_term_id as parent_ontology_term_id,
@@ -927,12 +917,11 @@ UNION ALL
                 pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
           from &prefixInferredchars pcm, sres.OntologyTerm term,
                sres.OntologyTerm parent, sres.OntologyTerm unit, &prefixPropertyTypes mt,
-               hierarchy_mapping hm, &prefixTopValues mtv
+               hierarchy_mapping hm
           where pcm.property_id = term.ontology_term_id(+)
             and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
             and pcm.unit_id = unit.ontology_term_id(+)
             and pcm.property_id = mt.property_id(+)
-            and pcm.property_id = mtv.property_id(+)
             and pcm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
         union
@@ -1158,32 +1147,5 @@ UNION ALL
     </sql>
   </tuningTable>
 
-<!-- renamed from MetadataTopValues -->
-  <tuningTable name="TopValues" prefixEnabled="true">
-    <comment>
-       Most common values for each property
-    </comment>
-    <internalDependency name="InferredParams"/>
-    <sql>
-      <![CDATA[
-        create table &prefixTopValues&1 nologging as 
-        select property, property_id,
-               listagg(value, ', ') within group (order by ranking) as top_values
-        from (select property, property_id, value,
-                     row_number() over (partition by property, property_id order by count(*) desc) as ranking
-              from (  select property, trim(value) as value, property_id
-                      from &prefixinferredparams
-                      where value is not null
-                    union all
-                      select property, trim(value) as value, property_id
-                      from &prefixinferredchars
-                      where value is not null
-                   )
-              group by property, property_id, value)
-        where ranking <= 5
-        group by property, property_id
-       ]]>
-    </sql>
-  </tuningTable>
 
 </tuningConfig>
