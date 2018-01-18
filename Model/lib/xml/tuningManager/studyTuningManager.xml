@@ -877,7 +877,12 @@ UNION ALL
                  child.name as display_name,
                  parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
                  parent.source_id as parent_ontology_term_source_id,
-                 unit.name as units, mt.type,
+                 case -- units apply only to leaves, not their ancestors
+                   when child.ontology_term_id = otm.property_id
+                     then unit.name
+                   else null
+                 end as units,
+                 mt.type,
                  case
                    when mt.filter = 'range' then 1
                    else 0
