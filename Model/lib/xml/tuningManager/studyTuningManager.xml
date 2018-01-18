@@ -702,7 +702,7 @@ UNION ALL
       Metadata table for new, wide, strongly-typed filter param
     </comment>
     <internalDependency name="DefaultChars"/>
-    <internalDependency name="PropertyTypes"/>
+    <internalDependency name="PropertyType"/>
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
@@ -716,7 +716,7 @@ UNION ALL
                     else cast(null as number)
                end as number_value,
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
-        from &prefixPropertyTypes mt,
+        from &prefixPropertyType mt,
              (  select dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name,
                        protocol as category, property, property_id, value
@@ -758,7 +758,7 @@ UNION ALL
     <comment>
     </comment>
     <internalDependency name="DefaultChars"/>
-    <internalDependency name="PropertyTypes"/>
+    <internalDependency name="PropertyType"/>
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
@@ -891,7 +891,7 @@ UNION ALL
                 otm.organism, otm.dataset_name, otm.dataset_type, otm.dataset_subtype
           from ontology_tree_metadata otm, leaf_ancestor_pair lap,
                sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
-               &prefixPropertyTypes mt,
+               &prefixPropertyType mt,
                (  select child_term_id, parent_term_id, dataset_name from graph_edge
                 union
                   select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
@@ -921,7 +921,7 @@ UNION ALL
                  1 as precision,
                 pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
           from &prefixInferredchars pcm, sres.OntologyTerm term,
-               sres.OntologyTerm parent, sres.OntologyTerm unit, &prefixPropertyTypes mt,
+               sres.OntologyTerm parent, sres.OntologyTerm unit, &prefixPropertyType mt,
                hierarchy_mapping hm
           where pcm.property_id = term.ontology_term_id(+)
             and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
@@ -980,7 +980,7 @@ UNION ALL
                  1 as precision,
                 ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
           from &prefixInferredparams ppm, sres.OntologyTerm term,
-               sres.OntologyTerm unit, &prefixPropertyTypes mt,
+               sres.OntologyTerm unit, &prefixPropertyType mt,
                hierarchy_mapping hm
           where ppm.property_id = term.ontology_term_id(+)
             and ppm.unit_id = unit.ontology_term_id(+)
@@ -1033,7 +1033,7 @@ UNION ALL
                  end as is_range,
                  1 as precision,
                 fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
-          from &prefixDefaultChars fm, &prefixPropertyTypes mt
+          from &prefixDefaultChars fm, &prefixPropertyType mt
           where fm.property = mt.property(+)
         )
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
@@ -1055,7 +1055,7 @@ UNION ALL
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
     <internalDependency name="InferredParams"/>
-    <internalDependency name="PropertyTypes"/>
+    <internalDependency name="PropertyType"/>
     <externalDependency name="sres.OntologyTerm"/>
     <ancillaryTable name="Participants"/>
     <ancillaryTable name="Observations"/>
@@ -1068,14 +1068,14 @@ UNION ALL
 
 
   <!-- Renamed from MetadataType -->
-  <tuningTable name="PropertyTypes" prefixEnabled="true">
+  <tuningTable name="PropertyType" prefixEnabled="true">
     <comment>
        Data type and filter method for metadata properties.
     </comment>
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixPropertyTypes&1 NOLOGGING AS
+        CREATE TABLE &prefixPropertyType&1 NOLOGGING AS
         WITH override
              AS ( SELECT 'age' AS property, 'number' AS type, 'range' AS filter FROM dual
                  UNION
@@ -1139,14 +1139,14 @@ UNION ALL
     <sql>
       <![CDATA[
         CREATE UNIQUE INDEX mtdprop_ix&1
-          ON &prefixPropertyTypes&1 (property_id, property)
+          ON &prefixPropertyType&1 (property_id, property)
         TABLESPACE indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixmtdttyp_ix&1
-          ON &prefixPropertyTypes&1 (property, property_id, type, filter)
+          ON &prefixPropertyType&1 (property, property_id, type, filter)
         TABLESPACE indx
       ]]>
     </sql>
