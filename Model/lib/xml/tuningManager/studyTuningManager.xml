@@ -766,7 +766,7 @@ UNION ALL
         select ontology_term_name, ontology_term_id, ontology_term_source_id, 
                description, display_name, parent_ontology_term_name, 
                parent_ontology_term_id, parent_ontology_term_source_id, units, 
-               nvl(type, 'string'), as type,
+               nvl(type, 'string') as type,
                nvl(is_range, 0) as is_range,
                nvl(precision, 1) as precision,
                organism, dataset_name, dataset_type, dataset_subtype
