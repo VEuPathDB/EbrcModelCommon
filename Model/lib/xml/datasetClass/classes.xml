@@ -3746,13 +3746,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+    <!-- This really should be named "genericStudyResult" it doesn't only apply to profiles -->
     <datasetClass class="genericProfiles" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
-    <prop name="technologyType">currently supported values are: array,rnaseq,immune_response,quantitative,rtpcr</prop>
+    <prop name="technologyType">currently supported values are: array,rnaseq,immune_response,quantitative,rtpcr,phenotype</prop>
 
     <graphTemplateFile name="genericProfile.xml"/>
    
