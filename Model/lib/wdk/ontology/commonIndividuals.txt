@@ -11,7 +11,7 @@ DatasetRecordClasses.DatasetRecordClass.GenomeHistory	http://edamontology.org/to
 DatasetRecordClasses.DatasetRecordClass.References	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	References						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Version	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Version						results	record	download
 DatasetRecordClasses.DatasetRecordClass.DatasetGeneTable	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	DatasetGeneTable								download
-DatasetRecordClasses.DatasetRecordClass.primary_key			DatasetRecordClasses.DatasetRecordClass	attribute	primary_key						results	record	download
+DatasetRecordClasses.DatasetRecordClass.primary_key			DatasetRecordClasses.DatasetRecordClass	attribute	primary_key						results		download
 DatasetRecordClasses.DatasetRecordClass.organism_prefix	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	
 DatasetRecordClasses.DatasetRecordClass.category	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	category						results	record	
 DatasetRecordClasses.DatasetRecordClass.dataset_id	http://edamontology.org/topic_0219	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_id								
