@@ -175,7 +175,8 @@ order by organism, species, genus
                initcap(tsm.taxon_node) AS category, CAST(tsm.taxon_name AS VARCHAR2(200)) AS term,
                tsm.taxon_id AS term_id, ds.name AS dataset_name, ds.type, ds.subtype,
                study_release.study_name, study_release.investigation_name,
-               tsm.taxon_level, tsm.raw_count AS agg_count, tsm.relative_abundance AS value
+               tsm.taxon_level, tsm.raw_count AS agg_count,
+               round(tsm.relative_abundance, 6) AS value
         FROM agg_taxon_string_map tsm,
              study.ProtocolAppNode pan,
              study.StudyLink sl,
