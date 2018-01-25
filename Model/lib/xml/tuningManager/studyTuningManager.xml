@@ -1343,7 +1343,7 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixnmoix1&1
+        create index &prefixnmobugggix1&1
         on &prefixOntologyBug&1 (ontology_term_name, dataset_name, organism)
         tablespace indx
       ]]>
