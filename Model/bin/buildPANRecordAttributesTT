@@ -56,10 +56,10 @@ sub run{
     -- turn terms into column names
       select distinct term, type
       from (  select mt.property_source_id as term, mt.type
-              from ${prefix}InferredChars m, ${prefix}PropertyTypes mt, sres.ontologyterm ot where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
+              from ${prefix}InferredChars m, ${prefix}PropertyType mt, sres.ontologyterm ot where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
             union
               select mt.property_source_id as term, mt.type
-              from ${prefix}InferredParams m, ${prefix}PropertyTypes mt, sres.ontologyterm ot  where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
+              from ${prefix}InferredParams m, ${prefix}PropertyType mt, sres.ontologyterm ot  where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
               )
 SQL
 
@@ -93,10 +93,10 @@ SQL
     my $metaDataSql = "
     with pmd as (
                      select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from ${prefix}InferredChars m, sres.ontologyterm t, ${prefix}PropertyTypes ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+                      from ${prefix}InferredChars m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
                       union
                       select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from ${prefix}InferredParams m, sres.ontologyterm t, ${prefix}PropertyTypes ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+                      from ${prefix}InferredParams m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
     )
     select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
     from (select pan_id,
