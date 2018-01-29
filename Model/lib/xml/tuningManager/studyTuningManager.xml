@@ -1027,7 +1027,12 @@ UNION ALL
           select -- fallback metadata
                  distinct -- moot only because of UNION
                  fm.property as ontology_term_name, null as ontology_term_id,
-                 null as ontology_term_source_id, null as description,
+                 (select max(source_id)
+                  from sres.OntologyTerm
+                  where name = fm.property) as ontology_term_source_id,
+                 (select max(definition)
+                  from sres.OntologyTerm
+                  where name = fm.property) as description,
                  initcap(fm.property) as display_name,
                  case
                    when fm.property = 'parasite organism' then 'host'
@@ -1325,7 +1330,12 @@ UNION ALL
           select -- fallback metadata
                  distinct -- moot only because of UNION
                  fm.property as ontology_term_name, null as ontology_term_id,
-                 null as ontology_term_source_id, null as description,
+                 (select max(source_id)
+                  from sres.OntologyTerm
+                  where name = fm.property) as ontology_term_source_id,
+                 (select max(definition)
+                  from sres.OntologyTerm
+                  where name = fm.property) as description,
                  initcap(fm.property) as display_name,
                  case
                    when fm.property = 'parasite organism' then 'host'
