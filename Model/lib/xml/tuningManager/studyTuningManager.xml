@@ -1327,7 +1327,10 @@ UNION ALL
                  fm.property as ontology_term_name, null as ontology_term_id,
                  null as ontology_term_source_id, null as description,
                  initcap(fm.property) as display_name,
-                 null as parent_ontology_term_name,
+                 case
+                   when fm.property = 'parasite organism' then 'host'
+                   else null
+                 end as parent_ontology_term_name,
                  null as parent_ontology_term_id,
                  null as parent_ontology_term_source_id,
                  null as units, nvl(mt.type, 'string') as type,
