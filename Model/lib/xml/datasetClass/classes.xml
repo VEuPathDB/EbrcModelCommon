@@ -2385,7 +2385,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput dir="@@dataDir@@/final/images"/>
-      <pluginArgs>--file @@dataDir@@/final/geneimage.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/final/phenotype_results.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
