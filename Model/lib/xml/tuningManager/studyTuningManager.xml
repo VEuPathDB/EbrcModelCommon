@@ -908,7 +908,9 @@ UNION ALL
                &prefixPropertyType mt,
                (  select child_term_id, parent_term_id, dataset_name from graph_edge
                 union
-                  select term_id as child_term_id, null as parent_term_id, dataset_name from unparented_term) edge
+                  select term_id as child_term_id, null as parent_term_id, dataset_name
+                  from unparented_term
+               ) edge
             where edge.child_term_id = lap.ancestor_term_id
               and lap.leaf_term_id = otm.property_id
 --            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
@@ -949,7 +951,7 @@ UNION ALL
                  nvl(parent.name, pcm.ancestor_pan_type) as ontology_term_name,
                  parent.ontology_term_id as ontology_term_id,
                  parent.source_id as ontology_term_source_id, parent.definition as description,
-                 initcap(parent.name) as display_name,
+                 initcap(nvl(parent.name, pcm.ancestor_pan_type)) as display_name,
                  'characteristic' as parent_ontology_term_name, null as parent_ontology_term_id,
                  null as parent_ontology_term_source_id,
                  null as units, null as type,
