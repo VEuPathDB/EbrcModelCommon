@@ -478,7 +478,7 @@
          </xmlRecordClass>
 
 
- <xmlRecordClass includeProjects="TriTrypDB"
+ <xmlRecordClass excludeProjects="ToxoDB,PlasmoDB"
         	name="ExternalLinksRecord"
         	type="ExternalLinks"
         	idPrefix="EL."
@@ -488,91 +488,6 @@
                <xmlAttribute name="url"/>
             </xmlTable>
 
-         </xmlRecordClass>
-
-
- <xmlRecordClass includeProjects="CryptoDB"
-        	name="ExternalLinksRecord"
-        	type="ExternalLinks"
-        	idPrefix="EL."
-        	delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-
-         </xmlRecordClass>
-
-
-<xmlRecordClass includeProjects="GiardiaDB"
-                name="ExternalLinksRecord"
-                type="ExternalLinks"
-                idPrefix="EL."
-                delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-
-         </xmlRecordClass>
-
-
-<xmlRecordClass includeProjects="TrichDB"
-                name="ExternalLinksRecord"
-                type="ExternalLinks"
-                idPrefix="EL."
-                delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-
-         </xmlRecordClass>
-
-
-<xmlRecordClass includeProjects="EuPathDB"
-        	name="ExternalLinksRecord"
-        	type="ExternalLinks"
-        	idPrefix="EL."
-        	delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-
-         </xmlRecordClass>
-
-	 <xmlRecordClass includeProjects="AmoebaDB"
-        	name="ExternalLinksRecord"
-        	type="ExternalLinks"
-        	idPrefix="EL."
-        	delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-         </xmlRecordClass>
-
-	 <xmlRecordClass includeProjects="MicrosporidiaDB"
-        	name="ExternalLinksRecord"
-        	type="ExternalLinks"
-        	idPrefix="EL."
-        	delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
-	 </xmlRecordClass>
-
-	 <xmlRecordClass includeProjects="FungiDB,HostDB,SchistoDB,InitDB,PiroplasmaDB,MicrobiomeDB"
-        	name="ExternalLinksRecord"
-        	type="ExternalLinks"
-        	idPrefix="EL."
-        	delimiter="@">
-            <xmlTable name="communityLinks" displayName="Community Links">
-               <xmlAttribute name="title"/>
-               <xmlAttribute name="url"/>
-            </xmlTable>
          </xmlRecordClass>
 
 
