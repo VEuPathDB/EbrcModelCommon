@@ -395,8 +395,8 @@
   <!-- External links -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-        <xmlRecordClass
-        	name="ExternalLinksRecord"
+        <xmlRecordClass 
+        	name="ExternalLinksRecord" includeProjects="PlasmoDB"
         	type="ExternalLinks"
         	idPrefix="EL."
         	delimiter="@">
