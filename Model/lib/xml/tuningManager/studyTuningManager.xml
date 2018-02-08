@@ -446,7 +446,12 @@ ORDER BY external_database_release_id, protocol_app_node_id
         as (select qualifier_id, lower_value, commonest_capitalization
             from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
                          dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
-                  from study.Characteristic
+                  from study.Characteristic c, study.studylink sl, study.study s, sres.externaldatabase d, sres.externaldatabaserelease r
+                  where c.protocol_app_node_id = sl.protocol_app_node_id
+                   and sl.study_id = s.study_id
+                   and s.external_database_release_id = r.external_database_release_id
+                   and r.external_database_id = d.external_database_id
+                   and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
                   group by qualifier_id, value
                  )
             where ranking = 1
