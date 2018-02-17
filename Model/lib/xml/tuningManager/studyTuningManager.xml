@@ -1076,6 +1076,13 @@ UNION ALL
         tablespace indx
       ]]>
     </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixnouqix1&1
+        on &prefixOntology&1 (ontology_term_name, dataset_name)
+        tablespace indx
+      ]]>
+    </sql>
   </tuningTable>
 
   <tuningTable name="Samples" alwaysUpdate="true" prefixEnabled="true">
