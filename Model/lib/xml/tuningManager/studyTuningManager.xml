@@ -1013,7 +1013,7 @@ UNION ALL
                  nvl(ppm.protocol_type, ppm.protocol) as ontology_term_name,
                  ppm.protocol_type_id as ontology_term_id,
                  null as ontology_term_source_id, null as description,
-                 initcap(ppm.protocol) as display_name,
+                 initcap(nvl(ppm.protocol_type, ppm.protocol)) as display_name,
                  'protocol' as parent_ontology_term_name, null as parent_ontology_term_id,
                  null as parent_ontology_term_source_id,
                  null as units, null as type,
@@ -1064,6 +1064,23 @@ UNION ALL
                 fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
           from &prefixDefaultChars fm, &prefixPropertyType mt
           where fm.property = mt.property(+)
+        union
+          select -- fallback metadata parents
+                 distinct
+                 host_term.name as ontology_term_name, host_term.ontology_term_id,
+                 host_term.source_id as ontology_term_source_id,
+                 host_term.definition as description,
+                 initcap(host_term.name) as display_name,
+                 'characteristic' as parent_ontology_term_name,
+                 null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
+          from &prefixDefaultChars fm, sres.OntologyTerm host_term
+          where fm.property = 'parasite organism'
+            and host_term.source_id = 'GO_0018995' -- "host"
         )
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
         order by organism, dataset_name, ontology_term_name
