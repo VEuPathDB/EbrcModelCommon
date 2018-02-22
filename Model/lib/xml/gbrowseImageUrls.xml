@@ -285,6 +285,7 @@
     <track>chomTU502_2012</track>
     <track>chomUdeA01</track>
     <track>chom30976</track>
+    <track>cmelUKMEL1</track>
     <track>cmurRN66</track>
     <track>cand30847</track>
     <track>cubi39726</track>
@@ -300,6 +301,7 @@
     <org organism="Cryptosporidium hominis isolate TU502_2012" abbrev="chomTU502_2012" />
     <org organism="Cryptosporidium hominis UdeA01" abbrev="chomUdeA01" />
     <org organism="Cryptosporidium hominis isolate 30976" abbrev="chom30976" />
+    <org organism="Cryptosporidium meleagridis strain UKMEL1" abbrev="cmelUKMEL1" />
     <org organism="Cryptosporidium muris RN66" abbrev="cmurRN66" />
     <org organism="Cryptosporidium andersoni isolate 30847" abbrev="cand30847" />
     <org organism="Cryptosporidium ubiquitum isolate 39726" abbrev="cubi39726" />
@@ -782,6 +784,7 @@
     <track>bbigBOND</track>
     <track>bbovT2Bo</track>
     <track>bmicRI</track>
+    <track>bovaMiyake</track>
     <track>cfelWinnie</track>
     <track>tannAnkara</track>
     <track>tequWA</track>
@@ -793,6 +796,7 @@
     <org organism="Babesia bigemina strain BOND" abbrev="bbigBOND" />
     <org organism="Babesia bovis T2Bo" abbrev="bbovT2Bo" />
     <org organism="Babesia microti strain RI" abbrev="bmicRI" />
+    <org organism="Babesia ovata strain Miyake" abbrev="bovaMiyake" />
     <org organism="Cytauxzoon felis strain Winnie" abbrev="cfelWinnie" />
     <org organism="Theileria annulata strain Ankara" abbrev="tannAnkara" />
     <org organism="Theileria equi strain WA" abbrev="tequWA" />
@@ -1135,6 +1139,7 @@
     <track>ltroL590</track>
     <track>lenrLEM3045</track>
     <track>lpanMHOMCOL81L13</track>
+    <track>lpanMHOMPA94PSC1</track>
     <track>lspMARLEM2494</track>
   </subtrackSet>
 
@@ -1199,6 +1204,7 @@
     <org organism="Leishmania enriettii strain LEM3045" abbrev="lenrLEM3045" />
     <org organism="Leishmania gerbilli strain LEM452" abbrev="lgerLEM452" />
     <org organism="Leishmania panamensis MHOM/COL/81/L13" abbrev="lpanMHOMCOL81L13" />
+    <org organism="Leishmania panamensis strain MHOM/PA/94/PSC-1" abbrev="lpanMHOMPA94PSC1" />
     <org organism="Leishmania tropica L590" abbrev="ltroL590" />
     <org organism="Leishmania turanica strain LEM423" abbrev="lturLEM423" />
     <org organism="Leishmania sp. MAR LEM2494" abbrev="lspMARLEM2494" />
