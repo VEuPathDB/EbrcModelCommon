@@ -370,6 +370,7 @@
   <subtrackSet name="Saccharomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>scerS288c</track>
     <track>calbSC5314</track>
+    <track>caurB8441</track>
     <track>cglaCBS138</track>
     <track>clusATCC42720</track>
     <track>ylipCLIB122</track>
@@ -383,6 +384,7 @@
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
     <track>acarITEM5010</track>
+    <track>acamIBT28561</track>
     <track>afumAf293</track>
     <track>afumA1163</track>
     <track>aclaNRRL1</track>
@@ -390,6 +392,7 @@
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
     <track>anigATCC1015</track>
+    <track>anovIBT16806</track>
     <track>aterNIH2624</track>
     <track>aacuATCC16872</track>
     <track>abraCBS101740</track>
@@ -401,6 +404,8 @@
     <track>awenDTO134E9</track>
     <track>azonCBS506.65</track>
     <track>aoryRIB40</track>
+    <track>aochIBT24754</track>
+    <track>asteIBT23096</track>
     <track>afisNRRL181</track>
     <track>prubWisconsin54-1255</track>
   </subtrackSet>
@@ -428,6 +433,7 @@
     <track>cneoJEC21</track>
     <track>cneoB-3501A</track>
     <track>cneoH99</track>
+    <track>cneoKN99</track>
     <track>cgatWM276</track>
     <track>cgatCA1873</track>
     <track>cgatIND107</track>
@@ -555,6 +561,7 @@
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="calbSC5314" organism="Candida albicans SC5314"/>
     <org abbrev="calbSC5314_B" organism="Candida albicans SC5314_B"/>
+    <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
@@ -576,6 +583,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="acarITEM5010" organism="Aspergillus carbonarius ITEM 5010"/>
+    <org abbrev="acamIBT28561" organism="Aspergillus campestris IBT 28561"/>
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
     <org abbrev="afumA1163" organism="Aspergillus fumigatus A1163"/>
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
@@ -583,6 +591,7 @@
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
+    <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
     <org abbrev="aacuATCC16872" organism="Aspergillus aculeatus ATCC 16872"/>
     <org abbrev="abraCBS101740" organism="Aspergillus brasiliensis CBS 101740"/>
@@ -594,6 +603,8 @@
     <org abbrev="awenDTO134E9" organism="Aspergillus wentii DTO 134E9"/>
     <org abbrev="azonCBS506.65" organism="Aspergillus zonatus CBS 506.65"/>
     <org abbrev="aoryRIB40" organism="Aspergillus oryzae RIB40"/>
+    <org abbrev="aochIBT24754" organism="Aspergillus ochraceoroseus IBT 24754"/>
+    <org abbrev="asteIBT23096" organism="Aspergillus steynii IBT 23096"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
     <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
@@ -635,6 +646,7 @@
     <org abbrev="cneoJEC21" organism="Cryptococcus neoformans var. neoformans JEC21"/>
     <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
     <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
+    <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
     <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
     <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
