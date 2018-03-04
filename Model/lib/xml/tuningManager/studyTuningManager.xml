@@ -772,6 +772,8 @@ UNION ALL
                    then 'Ontology_mbioRoot_RSRC'
                  when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                    then 'OntologyTerm_icemr_prism_RSRC'
+                 when dataset_name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
+                   then 'OntologyTerm_gates_maled_RSRC'
                  when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                    then 'OntologyTerm_gates_RSRC'
                  when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
@@ -1097,6 +1099,354 @@ UNION ALL
       <![CDATA[
         create unique index &prefixnouqix1&1
         on &prefixOntology&1 (ontology_term_name, dataset_name)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="OntologyNew" prefixEnabled="true">
+    <comment>
+    </comment>
+    <internalDependency name="DefaultChars"/>
+    <internalDependency name="PropertyType"/>
+    <internalDependency name="InferredParams"/>
+    <ancillaryTable name="HierarchyMapNew"/>
+    <sql>
+      <![CDATA[
+        create table &prefixHierarchyMapNew&1 nologging as
+        select dataset_name,
+               case
+                 when lower(dataset_name) like '%microarrayantibody%'
+                   then 'Ontology_icemr_RSRC'
+                 when lower(dataset_name) like 'otu%'
+                   then 'Ontology_mbioRoot_RSRC'
+                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
+                   then 'OntologyTerm_icemr_prism_RSRC'
+                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                   then 'OntologyTerm_gates_RSRC'
+                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
+                   then 'OntologyTerm_gates_gems_RSRC'
+                 else null
+               end as hierarchy_dataset_name
+        from (  select dataset_name
+                from &prefixinferredchars
+              union
+                select dataset_name
+                  from &prefixinferredparams
+             )
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixhmapidx1&1
+        on &prefixHierarchyMapNew&1 (dataset_name, hierarchy_dataset_name)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create table &prefixOntologyNew&1 nologging as
+        select ontology_term_name, ontology_term_id, ontology_term_source_id,
+               description, display_name, parent_ontology_term_name,
+               parent_ontology_term_id, parent_ontology_term_source_id, units,
+               type, is_range, precision,
+               organism, dataset_name, dataset_type, dataset_subtype
+        from (with protocol_metadata
+                   as (select distinct organism, dataset_type, dataset_subtype, dataset_name,
+                                       protocol as category, property, property_id, unit_id
+                       from &prefixinferredparams),
+                   characteristic_metadata
+                   as (select distinct organism, dataset_type, dataset_subtype, dataset_name,
+                                       ancestor_pan_type as category, property, property_id, unit_id
+                       from &prefixinferredchars),
+                   metadata
+                   as (  select *
+                         from protocol_metadata
+                       union
+                         select *
+                         from characteristic_metadata),
+                   ontology_tree_metadata
+                   as (select distinct m.property_id, m.dataset_name, organism, m.dataset_type,
+                                       m.dataset_subtype, m.unit_id, hm.hierarchy_dataset_name
+                       from metadata m, &prefixHierarchyMapNew&1 hm
+                                  where m.dataset_name = hm.dataset_name
+                        and hm.hierarchy_dataset_name is not null
+                      ),
+                   leaf_term
+                   as (select distinct property_id, hierarchy_dataset_name
+                       from ontology_tree_metadata
+                      ),
+                   graph_edge
+                   as (select distinct ed.name as dataset_name, tree.*
+                       from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr,
+                            (select subject_term_id as child_term_id,
+                                    object_term_id as parent_term_id,
+                                    external_database_release_id
+                             from sres.OntologyRelationship orel
+                             where external_database_release_id
+                                   in (select edr.external_database_release_id
+                                       from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
+                                       where ed.external_database_id = edr.external_database_id
+                                         and ed.name in (select hierarchy_dataset_name
+                                                         from &prefixHierarchyMapNew&1)
+                                      )
+                               and orel.subject_term_id != orel.object_term_id
+                               and orel.object_term_id
+                                   not in (select ontology_term_id from sres.OntologyTerm where name = 'Thing')
+                             start with subject_term_id in (select property_id from leaf_term)
+                             connect by subject_term_id = prior object_term_id
+                                        and subject_term_id != object_term_id
+                                        and external_database_release_id = prior external_database_release_id) tree
+                       where tree.external_database_release_id = edr.external_database_release_id
+                         and ed.external_database_id = edr.external_database_id),
+                   unparented_term
+                   as ((    select parent_term_id as term_id, dataset_name from graph_edge
+                          union
+                            select property_id, hierarchy_dataset_name as dataset_name from leaf_term)
+                        minus
+                          select child_term_id as term_id, dataset_name from graph_edge),
+                   distinct_term
+                   as (select parent_term_id as term_id, dataset_name from graph_edge
+                       union
+                       select child_term_id as term_id, dataset_name from graph_edge),
+                   leaf_ancestor_pair
+                   as (  select ancestor.term_id as ancestor_term_id, descendent.term_id as leaf_term_id,
+                                ancestor.dataset_name
+                         from distinct_term ancestor, distinct_term descendent, leaf_term lt
+                         where descendent.term_id
+                               in (select child_term_id
+                                     from graph_edge
+                                     start with parent_term_id = ancestor.term_id
+                                     connect by prior child_term_id = parent_term_id)
+                             and descendent.term_id = lt.property_id
+                             and decode(descendent.dataset_name, lt.hierarchy_dataset_name, 1, 0) = 1
+                             and descendent.dataset_name = ancestor.dataset_name
+                       union
+                         select property_id as ancestor_term_id, property_id as leaf_term_id,
+                                hierarchy_dataset_name as dataset_name
+                         from leaf_term
+                       ),
+                   fallback
+                   as (select distinct fm.dataset_name, dataset_type, dataset_subtype, organism,
+                                       property, hierarchy_dataset_name
+                       from &prefixDefaultChars fm, &prefixHierarchyMapNew&1 hm
+                       where fm.dataset_name = hm.dataset_name
+                      )
+        -- END OF WITH CLAUSES (whew!)
+          select -- terms using the OntologyRelationship hierarchy
+                 -- DISTINCT -- moot because of UNION; otherwise needed
+                 child.name as ontology_term_name, child.ontology_term_id,
+                 child.source_id as ontology_term_source_id,
+                 child.definition as description,
+                 syn.ontology_synonym as display_name,
+                 parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+                 parent.source_id as parent_ontology_term_source_id,
+                 case -- units apply only to leaves, not their ancestors
+                   when child.ontology_term_id = otm.property_id
+                     then unit.name
+                   else null
+                 end as units,
+                 mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                otm.organism, otm.dataset_name, otm.dataset_type, otm.dataset_subtype
+          from ontology_tree_metadata otm, leaf_ancestor_pair lap,
+               sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
+               sres.OntologySynonym syn, sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr,
+               &prefixPropertyType mt,
+               (  select child_term_id, parent_term_id, dataset_name from graph_edge
+                union
+                  select term_id as child_term_id, null as parent_term_id, dataset_name
+                  from unparented_term
+               ) edge
+            where edge.child_term_id = lap.ancestor_term_id
+              and lap.leaf_term_id = otm.property_id
+              and edge.child_term_id = child.ontology_term_id(+)
+              and edge.parent_term_id = parent.ontology_term_id(+)
+              and edge.child_term_id = mt.property_id(+)
+              and otm.unit_id = unit.ontology_term_id(+)
+              and lap.dataset_name = ed.name
+              and ed.external_database_id = edr.external_database_id
+              and edr.external_database_release_id = syn.external_database_release_id
+              and child.ontology_term_id = syn.ontology_term_id
+        union
+          select -- hardwired hierarchy: characteristics
+                 distinct -- moot only because of UNION
+                 nvl(term.name, pcm.property) as ontology_term_name, term.ontology_term_id,
+                 term.source_id as ontology_term_source_id,
+                 term.definition as description,
+                 initcap(nvl(term.name, pcm.property)) as display_name,
+                 nvl(parent.name, pcm.ancestor_pan_type) as parent_ontology_term_name,
+                 parent.ontology_term_id as parent_ontology_term_id,
+                 parent.source_id as parent_ontology_term_source_id,
+                 unit.name as units, mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
+          from &prefixInferredchars pcm, sres.OntologyTerm term,
+               sres.OntologyTerm parent, sres.OntologyTerm unit, &prefixPropertyType mt,
+               &prefixHierarchyMapNew&1 hm
+          where pcm.property_id = term.ontology_term_id(+)
+            and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.unit_id = unit.ontology_term_id(+)
+            and pcm.property_id = mt.property_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: characteristics parents
+                 distinct -- moot only because of UNION
+                 nvl(parent.name, pcm.ancestor_pan_type) as ontology_term_name,
+                 parent.ontology_term_id as ontology_term_id,
+                 parent.source_id as ontology_term_source_id, parent.definition as description,
+                 initcap(nvl(parent.name, pcm.ancestor_pan_type)) as display_name,
+                 'characteristic' as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
+          from &prefixInferredchars pcm, sres.OntologyTerm parent,
+               &prefixHierarchyMapNew&1 hm
+          where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: characteristics grandparents
+                 distinct -- moot only because of UNION
+                 'characteristic' as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 'Characteristic' as display_name,
+                 null as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
+          from &prefixInferredchars pcm, sres.OntologyTerm parent,
+               &prefixHierarchyMapNew&1 hm
+          where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
+            and pcm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols
+                 distinct -- moot only because of UNION
+                 nvl(term.name, ppm.property) as ontology_term_name, term.ontology_term_id,
+                 term.source_id as ontology_term_source_id, term.definition as description,
+                 initcap(nvl(term.name, ppm.property)) as display_name,
+                 nvl(ppm.protocol_type, ppm.protocol) as parent_ontology_term_name,
+                 ppm.protocol_type_id as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 unit.name as units, mt.type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
+          from &prefixInferredparams ppm, sres.OntologyTerm term,
+               sres.OntologyTerm unit, &prefixPropertyType mt,
+               &prefixHierarchyMapNew&1 hm
+          where ppm.property_id = term.ontology_term_id(+)
+            and ppm.unit_id = unit.ontology_term_id(+)
+            and ppm.property_id = mt.property_id(+)
+            and ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols parents
+                 distinct -- moot only because of UNION
+                 nvl(ppm.protocol_type, ppm.protocol) as ontology_term_name,
+                 ppm.protocol_type_id as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 initcap(nvl(ppm.protocol_type, ppm.protocol)) as display_name,
+                 'protocol' as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
+          from &prefixInferredparams ppm, &prefixHierarchyMapNew&1 hm
+          where ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- hardwired hierarchy: protocols grandparents
+                 distinct -- moot only because of UNION
+                 'protocol' as ontology_term_name, null as ontology_term_id,
+                 null as ontology_term_source_id, null as description,
+                 'Protocol' as display_name,
+                 null as parent_ontology_term_name, null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
+          from &prefixInferredparams ppm, &prefixHierarchyMapNew&1 hm
+          where ppm.dataset_name = hm.dataset_name
+            and hm.hierarchy_dataset_name is null
+        union
+          select -- fallback metadata
+                 distinct -- moot only because of UNION
+                 fm.property as ontology_term_name, null as ontology_term_id,
+                 (select max(source_id)
+                  from sres.OntologyTerm
+                  where name = fm.property) as ontology_term_source_id,
+                 (select max(definition)
+                  from sres.OntologyTerm
+                  where name = fm.property) as description,
+                 initcap(fm.property) as display_name,
+                 case
+                   when fm.property = 'parasite organism' then 'host'
+                   else null
+                 end as parent_ontology_term_name,
+                 null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, nvl(mt.type, 'string') as type,
+                 case
+                   when mt.filter = 'range' then 1
+                   else 0
+                 end as is_range,
+                 1 as precision,
+                fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
+          from &prefixDefaultChars fm, &prefixPropertyType mt
+          where fm.property = mt.property(+)
+        union
+          select -- fallback metadata parents
+                 distinct
+                 host_term.name as ontology_term_name, host_term.ontology_term_id,
+                 host_term.source_id as ontology_term_source_id,
+                 host_term.definition as description,
+                 initcap(host_term.name) as display_name,
+                 'characteristic' as parent_ontology_term_name,
+                 null as parent_ontology_term_id,
+                 null as parent_ontology_term_source_id,
+                 null as units, null as type,
+                 null as is_range,
+                 null as precision,
+                fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
+          from &prefixDefaultChars fm, sres.OntologyTerm host_term
+          where fm.property = 'parasite organism'
+            and host_term.source_id = 'GO_0018995' -- "host"
+        )
+        where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
+        order by organism, dataset_name, ontology_term_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixnmo_ix2&1
+        on &prefixOntologyNew&1 (ontology_term_name, dataset_name, organism)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixnouqix2&1
+        on &prefixOntologyNew&1 (ontology_term_name, dataset_name)
         tablespace indx
       ]]>
     </sql>
