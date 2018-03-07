@@ -1201,6 +1201,10 @@
     <track>bayaB08-376</track>
   </subtrackSet>
 
+  <subtrackSet project="TriTrypDB" name="Paratrypanosoma_gene" suffixes="_span;_gene">
+    <track>pconCUL13</track>
+  </subtrackSet>
+
   <url project="TriTrypDB" type="synteny">
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
@@ -1226,6 +1230,7 @@
       <subtrack set="cruzi_gene" />
       <subtrack set="crithidia_gene" />
       <subtrack set="monterogeii_gene" />
+      <subtrack set="Paratrypanosoma_gene" />
       <subtrack name="tbruTREU927_span" />
       <subtrack name="tbruTREU927_gene" />
     </track>
@@ -1248,6 +1253,7 @@
       <subtrack set="brucei_gene" />
       <subtrack set="crithidia_gene" />
       <subtrack set="monterogeii_gene" />
+      <subtrack set="Paratrypanosoma_gene" />
       <subtrack set="grayi_gene" />
       <subtrack name="lmajFriedlin_span" />
       <subtrack name="lmajFriedlin_gene" />
@@ -1273,6 +1279,7 @@
       <subtrack set="crithidia_gene" />
       <subtrack set="monterogeii_gene" />
       <subtrack set="grayi_gene" />
+      <subtrack set="Paratrypanosoma_gene" />
       <subtrack name="lmajFriedlin_span" />
       <subtrack name="lmajFriedlin_gene" />
     </track>
@@ -1348,6 +1355,19 @@
       <subtrack name="lmajFriedlin_gene" />
       <subtrack name="tbruTREU927_span" />
       <subtrack name="tbruTREU927_gene" />
+      <subtrack set="cruzi_gene" />
+     </track>
+  </url>
+
+  <url project="TriTrypDB" type="synteny">
+    <org organism="Paratrypanosoma confusum CUL13" abbrev="pconCUL13" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Paratrypanosoma_gene" />
+      <subtrack set="Blechomonas_gene" />
+      <subtrack set="monterogeii_gene" />
+      <subtrack set="crithidia_gene" />
+      <subtrack set="leish_gene" />
       <subtrack set="cruzi_gene" />
      </track>
   </url>
