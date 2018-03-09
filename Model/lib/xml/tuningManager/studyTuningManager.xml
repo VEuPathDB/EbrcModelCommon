@@ -272,6 +272,49 @@ order by pan.name
     </sql>
   </tuningTable>
 
+  <tuningTable name="HierarchyMap" prefixEnabled="true">
+    <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
+    </comment>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="study.Study"/>
+    <sql>
+      <![CDATA[
+        create table &prefixHierarchyMap&1 nologging as
+        select dataset_name,
+               case
+                 when lower(dataset_name) like '%microarrayantibody%'
+                   then 'Ontology_icemr_RSRC'
+                 when lower(dataset_name) like 'otu%'
+                   then 'Ontology_mbioRoot_RSRC'
+                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
+                   then 'OntologyTerm_icemr_prism_RSRC'
+                 when dataset_name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
+                   then 'OntologyTerm_gates_maled_RSRC'
+                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                   then 'OntologyTerm_gates_RSRC'
+                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
+                   then 'OntologyTerm_gates_gems_RSRC'
+                 else null
+               end as hierarchy_dataset_name
+        from (select name as dataset_name
+              from sres.ExternalDatabase
+              where external_database_id
+                    in (select edr.external_database_id
+                        from sres.ExternalDatabaseRelease edr, study.Study s
+                        where s.external_database_release_id = edr.external_database_release_id)
+             )
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixhmap_ix0&1
+        on &prefixHierarchyMap&1 (dataset_name, hierarchy_dataset_name)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
    <!-- renamed from PANExternalDatabaseRelease -->
   <tuningTable name="PANExtDbRls" prefixEnabled="true">
    <comment>ALL inputs and outputs</comment>
@@ -758,43 +801,9 @@ UNION ALL
     <comment>
     </comment>
     <internalDependency name="DefaultChars"/>
-    <internalDependency name="PropertyType"/>
+    <internalDependency name="HierarchyMap"/>
     <internalDependency name="InferredParams"/>
-    <ancillaryTable name="HierarchyMap"/>
-    <sql>
-      <![CDATA[
-        create table &prefixHierarchyMap&1 nologging as
-        select dataset_name,
-               case
-                 when lower(dataset_name) like '%microarrayantibody%'
-                   then 'Ontology_icemr_RSRC'
-                 when lower(dataset_name) like 'otu%'
-                   then 'Ontology_mbioRoot_RSRC'
-                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                   then 'OntologyTerm_icemr_prism_RSRC'
-                 when dataset_name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
-                   then 'OntologyTerm_gates_maled_RSRC'
-                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                   then 'OntologyTerm_gates_RSRC'
-                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
-                   then 'OntologyTerm_gates_gems_RSRC'
-                 else null
-               end as hierarchy_dataset_name
-        from (  select dataset_name
-                from &prefixinferredchars
-              union
-                select dataset_name
-                  from &prefixinferredparams
-             )
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create index &prefixhmapix1&1
-        on &prefixHierarchyMap&1 (dataset_name, hierarchy_dataset_name)
-        tablespace indx
-      ]]>
-    </sql>
+    <internalDependency name="PropertyType"/>
     <sql>
       <![CDATA[
         create table &prefixOntology&1 nologging as
@@ -820,7 +829,7 @@ UNION ALL
                    ontology_tree_metadata
                    as (select distinct m.property_id, m.dataset_name, organism, m.dataset_type,
                                        m.dataset_subtype, m.unit_id, hm.hierarchy_dataset_name
-                       from metadata m, &prefixHierarchyMap&1 hm
+                       from metadata m, &prefixHierarchyMap hm
                                   where m.dataset_name = hm.dataset_name
                         and hm.hierarchy_dataset_name is not null
                       ),
@@ -840,7 +849,7 @@ UNION ALL
                                        from sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
                                        where ed.external_database_id = edr.external_database_id
                                          and ed.name in (select hierarchy_dataset_name
-                                                         from &prefixHierarchyMap&1)
+                                                         from &prefixHierarchyMap)
                                       )
                                and orel.subject_term_id != orel.object_term_id
                                and orel.object_term_id
@@ -881,7 +890,7 @@ UNION ALL
                    fallback
                    as (select distinct fm.dataset_name, dataset_type, dataset_subtype, organism,
                                        property, hierarchy_dataset_name
-                       from &prefixDefaultChars fm, &prefixHierarchyMap&1 hm
+                       from &prefixDefaultChars fm, &prefixHierarchyMap hm
                        where fm.dataset_name = hm.dataset_name
                       )
         -- END OF WITH CLAUSES (whew!)
@@ -943,7 +952,7 @@ UNION ALL
                 pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
           from &prefixInferredchars pcm, sres.OntologyTerm term,
                sres.OntologyTerm parent, sres.OntologyTerm unit, &prefixPropertyType mt,
-               &prefixHierarchyMap&1 hm
+               &prefixHierarchyMap hm
           where pcm.property_id = term.ontology_term_id(+)
             and pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
             and pcm.unit_id = unit.ontology_term_id(+)
@@ -964,7 +973,7 @@ UNION ALL
                  null as precision,
                 pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
           from &prefixInferredchars pcm, sres.OntologyTerm parent,
-               &prefixHierarchyMap&1 hm
+               &prefixHierarchyMap hm
           where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
             and pcm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
@@ -981,7 +990,7 @@ UNION ALL
                  null as precision,
                 pcm.organism, pcm.dataset_name, pcm.dataset_type, pcm.dataset_subtype
           from &prefixInferredchars pcm, sres.OntologyTerm parent,
-               &prefixHierarchyMap&1 hm
+               &prefixHierarchyMap hm
           where pcm.ancestor_pan_type_id = parent.ontology_term_id(+)
             and pcm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
@@ -1003,7 +1012,7 @@ UNION ALL
                 ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
           from &prefixInferredparams ppm, sres.OntologyTerm term,
                sres.OntologyTerm unit, &prefixPropertyType mt,
-               &prefixHierarchyMap&1 hm
+               &prefixHierarchyMap hm
           where ppm.property_id = term.ontology_term_id(+)
             and ppm.unit_id = unit.ontology_term_id(+)
             and ppm.property_id = mt.property_id(+)
@@ -1022,7 +1031,7 @@ UNION ALL
                  null as is_range,
                  null as precision,
                 ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
-          from &prefixInferredparams ppm, &prefixHierarchyMap&1 hm
+          from &prefixInferredparams ppm, &prefixHierarchyMap hm
           where ppm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
         union
@@ -1037,7 +1046,7 @@ UNION ALL
                  null as is_range,
                  null as precision,
                 ppm.organism, ppm.dataset_name, ppm.dataset_type, ppm.dataset_subtype
-          from &prefixInferredparams ppm, &prefixHierarchyMap&1 hm
+          from &prefixInferredparams ppm, &prefixHierarchyMap hm
           where ppm.dataset_name = hm.dataset_name
             and hm.hierarchy_dataset_name is null
         union
