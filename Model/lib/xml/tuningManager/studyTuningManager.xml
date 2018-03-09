@@ -1593,7 +1593,7 @@ order by p.ontology_term_name,p.participant_id
     </comment>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
-    <internalDependency name="Observations"/>
+    <internalDependency name="Samples"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 nologging (
