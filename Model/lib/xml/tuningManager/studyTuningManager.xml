@@ -1559,4 +1559,96 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="ParticipantMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for participant filter in participant record
+    </comment>
+    <internalDependency name="MetaData"/>
+    <sql>
+      <![CDATA[
+create table &prefixParticipantMD&1 nologging (
+  participant_id,
+  ontology_term_name,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefix_partmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
+  )
+  ORGANIZATION index
+  PARALLEL (DEGREE 2)
+  as select distinct pan_id as participant_id, property_source_id as ontology_term_name, string_value, number_value, date_value
+ from ApidbTuning.&prefixMetaData
+ where category = 'Participant'
+order by p.ontology_term_name,p.participant_id
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ObservationMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for observation filter 
+    </comment>
+    <internalDependency name="MetaData"/>
+    <internalDependency name="PANIO"/>
+    <internalDependency name="Observations"/>
+    <sql>
+      <![CDATA[
+create table &prefixObservationMD&1 nologging (
+  participant_id,
+  observation_id,
+  ontology_term_name,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefix_obsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
+  )
+  ORGANIZATION index
+  PARALLEL (DEGREE 2)
+select * from (
+  as select distinct io.input_pan_id as participant_id, m.pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
+ from ApidbTuning.&prefixMetaData m, ApidbTuning.&prefixPANIO io
+ where m.category = 'Event'
+ and m.pan_id = io.output_pan_id
+ and io.input_pan_type_source_id = 'EUPATH_0000096'
+UNION
+select io.input_pan_id as participant_id, spec.input_pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
+ from ApidbTuning.&prefixMetaData m, ApidbTuning.&prefixPANIO spec, ApidbTuning.&prefixPANIO io, ApidbTuning.&prefixObservations o
+ where m.category = 'Specimen used for test'
+ and m.pan_id = spec.output_pan_id
+ and Io.Output_Pan_Id = spec.input_pan_id
+ and spec.input_pan_id = o.pan_id
+ and io.input_pan_type_source_id = 'EUPATH_0000096'
+ and io.output_pan_type_source_id = 'EUPATH_0000738'
+ ) order by p.ontology_term_name,o.observation_id
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="PartObsIdMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for participant filter that includes observation ids
+    </comment>
+    <internalDependency name="ParticipantMD"/>
+    <internalDependency name="ObservationMD"/>
+    <sql>
+      <![CDATA[
+create table &prefixPartObsIdMD&1 nologging (
+  participant_id,
+  observation_id,
+  ontology_term_name,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefix_partobsmd_pk PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
+  )
+  ORGANIZATION index
+  PARALLEL (DEGREE 2)
+  as select distinct p.participant_id, o.observation_id, p.ontology_term_name, p.string_value, p.number_value, p.date_value
+from ApidbTuning.&prefixParticipantMD p, (select distinct participant_id,observation_id from ApidbTuning.&prefixObservationMD) o
+where p.participant_id = o.participant_id
+order by p.ontology_term_name,p.participant_id,o.observation_id
+      ]]>
+    </sql>
+  </tuningTable>
+
 </tuningConfig>
