@@ -1603,7 +1603,7 @@ UNION ALL
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixParticipantMD&1 nologging (
+create table &prefixParticipantMD&1 (
   participant_id,
   household_id,
   ontology_term_name,
@@ -1614,11 +1614,14 @@ create table &prefixParticipantMD&1 nologging (
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
-  as select distinct m.pan_id as participant_id, io.input_pan_id as household_id, m.property_source_id as m.ontology_term_name, m.string_value, m.number_value, date_value
- from &prefixMetaData, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
+  nologging
+  as select * from (
+  select distinct m.pan_id as participant_id, io.input_pan_id as household_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, date_value
+ from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
  where m.category = 'Participant'
  and m.pan_id = io.output_pan_id(+)
-order by p.ontology_term_name,p.participant_id
+ )
+ order by ontology_term_name,participant_id
       ]]>
     </sql>
   </tuningTable>
@@ -1632,7 +1635,7 @@ order by p.ontology_term_name,p.participant_id
     <internalDependency name="Samples"/>
     <sql>
       <![CDATA[
-create table &prefixObservationMD&1 nologging (
+create table &prefixObservationMD&1 (
   participant_id,
   observation_id,
   ontology_term_name,
@@ -1643,8 +1646,10 @@ create table &prefixObservationMD&1 nologging (
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
+  nologging
+  as
 select * from (
-  as select distinct io.input_pan_id as participant_id, m.pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
+  select distinct io.input_pan_id as participant_id, m.pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
  from &prefixMetadata m, &prefixPANIO io
  where m.category = 'Event'
  and m.pan_id = io.output_pan_id
@@ -1658,7 +1663,7 @@ select io.input_pan_id as participant_id, spec.input_pan_id as observation_id, m
  and spec.input_pan_id = o.pan_id
  and io.input_pan_type_source_id = 'EUPATH_0000096'
  and io.output_pan_type_source_id = 'EUPATH_0000738'
- ) order by p.ontology_term_name,o.observation_id
+ ) order by ontology_term_name,participant_id
       ]]>
     </sql>
   </tuningTable>
@@ -1671,7 +1676,7 @@ select io.input_pan_id as participant_id, spec.input_pan_id as observation_id, m
     <internalDependency name="ObservationMD"/>
     <sql>
       <![CDATA[
-create table &prefixPartObsIdMD&1 nologging (
+create table &prefixPartObsIdMD&1 (
   participant_id,
   observation_id,
   ontology_term_name,
@@ -1682,10 +1687,13 @@ create table &prefixPartObsIdMD&1 nologging (
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
-  as select distinct p.participant_id, o.observation_id, p.ontology_term_name, p.string_value, p.number_value, p.date_value
+  nologging
+  as
+  select * from (
+  select distinct p.participant_id, o.observation_id, p.ontology_term_name, p.string_value, p.number_value, p.date_value
 from &prefixParticipantMD p, (select distinct participant_id,observation_id from &prefixObservationMD) o
-where p.participant_id = o.participant_id
-order by p.ontology_term_name,p.participant_id,o.observation_id
+where p.participant_id = o.participant_id )
+order by ontology_term_name,participant_id
       ]]>
     </sql>
   </tuningTable>
