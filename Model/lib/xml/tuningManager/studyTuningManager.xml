@@ -60,8 +60,7 @@ order by 2, 1
     </sql>
     <sql>
       <![CDATA[
-        create -- unique -- it's a problem that this would fail
-               index &prefixdt&1_uqix
+        create unique index &prefixdt&1_uqix
                on &prefixDatasetTerm&1 (hierarchy_dataset_name, ontology_term_id)
                tablespace indx
       ]]>
