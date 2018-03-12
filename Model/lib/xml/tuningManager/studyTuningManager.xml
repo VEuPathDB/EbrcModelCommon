@@ -38,6 +38,7 @@ order by 2, 1
 
   <tuningTable name="DatasetTerm" prefixEnabled="true">
    <comment></comment>
+    <internalDependency name="HierarchyMap"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="sres.OntologySynonym"/>
@@ -52,7 +53,9 @@ order by 2, 1
         where ot.ontology_term_id = syn.ontology_term_id
           and syn.external_database_release_id = edr.external_database_release_id
           and edr.external_database_id = ed.external_database_id
-          and ed.name != 'GO_RSRC'
+          and ed.name
+              in (select hierarchy_dataset_name
+                  from &prefixHierarchyMap)
       ]]>
     </sql>
     <sql>
