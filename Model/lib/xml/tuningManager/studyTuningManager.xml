@@ -1642,7 +1642,7 @@ create table &prefixObservationMD&1 (
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefix_obsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
+  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
