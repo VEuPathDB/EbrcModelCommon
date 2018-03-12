@@ -1683,7 +1683,7 @@ create table &prefixPartObsIdMD&1 (
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefix_partobsmd_pk PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
+  CONSTRAINT &prefixPartobsmd_pk PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
