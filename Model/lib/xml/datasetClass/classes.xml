@@ -3058,6 +3058,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="groupName"></prop>
     <prop name="studyName"></prop>
     <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
 
     <graphTemplateFile name="clinepiRoot.xml"/>
 
@@ -3313,6 +3314,33 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
       <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
+
+  <datasetClass class="UpdateWebDisplayOntologyClinEpi" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="isPreferred"></prop>
+
+    <graphTemplateFile name="clinepiRoot.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_INTERNAL_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
+
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4604,6 +4632,28 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
 
     <graphTemplateFile name="eupathCuratedOntologies.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="WebDisplayOntologyClinEpi" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="clinepiRoot.xml"/>
 
     <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
                    plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
