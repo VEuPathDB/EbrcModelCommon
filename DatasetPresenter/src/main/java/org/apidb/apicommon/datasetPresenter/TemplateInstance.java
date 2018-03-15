@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.gusdb.fgputil.FormatUtil;
+import org.gusdb.fgputil.FormatUtil.Style;
+
 /**
  * An instance of a template: a template name and a set of property values to substitute into the template.
  * @author steve
@@ -33,5 +36,9 @@ public class TemplateInstance {
   
   String getPropValue(String key) {
     return propValues.get(key);
+  }
+
+  String getPrettyPrintedPropValues(Style style) {
+    return FormatUtil.prettyPrint(propValues, style);
   }
 }

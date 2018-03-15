@@ -1,5 +1,7 @@
 package org.apidb.apicommon.datasetPresenter;
 
+import static org.gusdb.fgputil.FormatUtil.NL;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.DirectoryStream;
@@ -16,6 +18,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.gusdb.fgputil.FormatUtil.Style;
 
 /**
  * A text template, containing embedded macros, with the ability to substitute
@@ -256,8 +260,12 @@ public class Template {
   String getInstanceAsText(TemplateInstance instance) {
     String textInstance = getTemplateText();
     for (String key : instance.getPropKeys()) {
-      textInstance = textInstance.replaceAll(MACRO_START + key + MACRO_END,
-          instance.getPropValue(key));
+      if (instance.getPropValue(key) == null) {
+        throw new UserException(
+            "Template " + getName() + " was passed instance with missing required property '" + key + "'.  " +
+                "Properties present: " + NL + instance.getPrettyPrintedPropValues(Style.MULTI_LINE));
+      }
+      textInstance = textInstance.replaceAll(MACRO_START + key + MACRO_END, instance.getPropValue(key));
     }
     return textInstance;
   }
