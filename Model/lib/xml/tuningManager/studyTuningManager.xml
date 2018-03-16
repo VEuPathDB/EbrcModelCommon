@@ -402,6 +402,8 @@ ORDER BY external_database_release_id, protocol_app_node_id
   <tuningTable name="InferredParams" prefixEnabled="true">
     <comment>
     </comment>
+    <internalDependency name="DatasetTerm"/>
+    <internalDependency name="HierarchyMap"/>
     <internalDependency name="PANIO"/>
     <internalDependency name="PANResults"/>
     <internalDependency name="SampleId"/>
@@ -524,68 +526,88 @@ ORDER BY external_database_release_id, protocol_app_node_id
       <![CDATA[
         create table &prefixInferredChars&1 nologging as
         with caps
-        as (select qualifier_id, lower_value, commonest_capitalization
-            from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
-                         dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
-                  from study.Characteristic c, study.studylink sl, study.study s, sres.externaldatabase d, sres.externaldatabaserelease r
-                  where c.protocol_app_node_id = sl.protocol_app_node_id
-                   and sl.study_id = s.study_id
-                   and s.external_database_release_id = r.external_database_release_id
-                   and r.external_database_id = d.external_database_id
-                   and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-                  group by qualifier_id, value
-                 )
-            where ranking = 1
-           )
-        select distinct sample_pan.protocol_app_node_id as pan_id, sample_ot.name as pan_type,
-               sample_ot.ontology_term_id as pan_type_id,
-               sample_pan.isa_type as pan_isa_type,
-               pan.protocol_app_node_id as ancestor_pan_id,
-               nvl(mt.name, 'assay') as ancestor_pan_type,
-               mt.ontology_term_id as ancestor_pan_type_id,
-               attribute_term.name as property, -- if not a material type it has to be an assay
-               attribute_term.ontology_term_id as property_id,
-               nvl(value_term.name, caps.commonest_capitalization) as value,
-               c.characteristic_id,
-               ds.name as dataset_name, sample_pan.name as pan_name, ds.type as dataset_type,
-               ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
-        from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, caps,
-             sres.OntologyTerm value_term, sres.ontologyTerm mt, study.StudyLink sl,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
-             study.ProtocolAppNode sample_pan, sres.ontologyterm sample_ot,
--- revision 82228-style study_release subquery
-             (  select s.study_id, i.external_database_release_id,
-                       s.name as study_name, i.name as investigation_name
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-              union
-                select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
-                from study.Study s) study_release
-        where pan.protocol_app_node_id = c.protocol_app_node_id
-          and pan.type_id = mt.ontology_term_id (+)
-          and c.ontology_term_id = value_term.ontology_term_id(+)
-          and c.qualifier_id = caps.qualifier_id(+)
-          and lower(c.value) = caps.lower_value(+)
-          and c.qualifier_id = attribute_term.ontology_term_id(+)
-          and node_inputs.input_pan_id = pan.protocol_app_node_id
-          and node_inputs.pan_id = sl.protocol_app_node_id
-          and sl.study_id = study_release.study_id
-          and study_release.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
-          and ed.name = ds.name
-          and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-          and node_inputs.pan_id = sample_pan.protocol_app_node_id
-          and sample_pan.type_id = sample_ot.ontology_term_id (+)
-          and ds.taxon_id = tn.taxon_id(+)
-          and (tn.name_class = 'scientific name' or tn.name_class is null)
- --temporary may need adjusting for RNASeq
- and (mt.name is not null
-      or attribute_term.name = 'average mapping coverage'
-      or attribute_term.name ='proportion mapped reads')
-        order by organism, type, subtype, pan_name
- ]]>
+             as (select qualifier_id, lower_value, commonest_capitalization
+                 from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
+                              dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
+                       from study.Characteristic c, study.StudyLink sl, study.Study s,
+                            sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
+                       where c.protocol_app_node_id = sl.protocol_app_node_id
+                         and sl.study_id = s.study_id
+                         and s.external_database_release_id = r.external_database_release_id
+                         and r.external_database_id = d.external_database_id
+                         and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+                       group by qualifier_id, value
+                      )
+                 where ranking = 1
+                ),
+             ic
+             as (select distinct sample_pan.protocol_app_node_id as pan_id,
+                        sample_ot.name as pan_type,
+                        sample_ot.ontology_term_id as pan_type_id,
+                        sample_pan.isa_type as pan_isa_type,
+                        pan.protocol_app_node_id as ancestor_pan_id,
+                        nvl(mt.name, 'assay') as ancestor_pan_type,
+                        mt.ontology_term_id as ancestor_pan_type_id,
+                        attribute_term.name as property, -- if not a material type it has to be an assay
+                        attribute_term.ontology_term_id as property_id,
+                        nvl(value_term.name, caps.commonest_capitalization) as value,
+                        value_term.ontology_term_id as value_id, c.characteristic_id,
+                        ds.name as dataset_name, hm.hierarchy_dataset_name,
+                        sample_pan.name as pan_name, ds.type as dataset_type,
+                        ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
+                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, caps,
+                      sres.OntologyTerm value_term, sres.OntologyTerm mt, study.StudyLink sl,
+                      sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+                      sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
+                      study.ProtocolAppNode sample_pan, sres.OntologyTerm sample_ot,
+                      &prefixHierarchyMap hm,
+                     -- revision 82228-style study_release subquery
+                      (  select s.study_id, i.external_database_release_id,
+                                s.name as study_name, i.name as investigation_name
+                         from study.Study s, study.Study i
+                         where s.investigation_id = i.study_id
+                       union
+                         select s.study_id, s.external_database_release_id,
+                                s.name as study_name, null as investigation_name
+                         from study.Study s) study_release
+                 where pan.protocol_app_node_id = c.protocol_app_node_id
+                   and pan.type_id = mt.ontology_term_id (+)
+                   and c.ontology_term_id = value_term.ontology_term_id(+)
+                   and c.qualifier_id = caps.qualifier_id(+)
+                   and lower(c.value) = caps.lower_value(+)
+                   and c.qualifier_id = attribute_term.ontology_term_id(+)
+                   and node_inputs.input_pan_id = pan.protocol_app_node_id
+                   and node_inputs.pan_id = sl.protocol_app_node_id
+                   and sl.study_id = study_release.study_id
+                   and study_release.external_database_release_id = edr.external_database_release_id
+                   and edr.external_database_id = ed.external_database_id
+                   and ed.name = ds.name
+                   and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+                   and node_inputs.pan_id = sample_pan.protocol_app_node_id
+                   and sample_pan.type_id = sample_ot.ontology_term_id (+)
+                   and ds.taxon_id = tn.taxon_id(+)
+                   and (tn.name_class = 'scientific name' or tn.name_class is null)
+                -- temporary may need adjusting for RNASeq
+                   and (mt.name is not null
+                        or attribute_term.name = 'average mapping coverage'
+                        or attribute_term.name ='proportion mapped reads')
+                   and ds.name = hm.dataset_name
+                 order by organism, type, subtype, pan_name)
+        select ic.pan_id, nvl(pan_type_syn.name, ic.pan_type) as pan_type,
+               ic.pan_type_id, ic.pan_isa_type, ic.ancestor_pan_id,
+               nvl(ancestor_type_syn.name, ic.ancestor_pan_type) as ancestor_pan_type,
+               ic.ancestor_pan_type_id,
+               nvl(property_syn.name, ic.property) as property,
+               ic.property_id, nvl(value_syn.name, ic.value) as value,
+               ic.value_id, ic.characteristic_id, ic.dataset_name, ic.pan_name,
+               ic.dataset_type, ic.dataset_subtype, ic.organism, ic.unit_id
+        from ic, &prefixDatasetTerm property_syn, &prefixDatasetTerm value_syn,
+             &prefixDatasetTerm pan_type_syn, &prefixDatasetTerm ancestor_type_syn
+        where ic.hierarchy_dataset_name = property_syn.hierarchy_dataset_name(+)
+          and ic.hierarchy_dataset_name = value_syn.hierarchy_dataset_name(+)
+          and ic.hierarchy_dataset_name = pan_type_syn.hierarchy_dataset_name(+)
+          and ic.hierarchy_dataset_name = ancestor_type_syn.hierarchy_dataset_name(+)
+      ]]>
     </sql>
 
 
