@@ -604,9 +604,13 @@ ORDER BY external_database_release_id, protocol_app_node_id
         from ic, &prefixDatasetTerm property_syn, &prefixDatasetTerm value_syn,
              &prefixDatasetTerm pan_type_syn, &prefixDatasetTerm ancestor_type_syn
         where ic.hierarchy_dataset_name = property_syn.hierarchy_dataset_name(+)
+          and ic.property_id = property_syn.ontology_term_id(+)
           and ic.hierarchy_dataset_name = value_syn.hierarchy_dataset_name(+)
+          and ic.value_id = value_syn.ontology_term_id(+)
           and ic.hierarchy_dataset_name = pan_type_syn.hierarchy_dataset_name(+)
+          and ic.pan_type_id = pan_type_syn.ontology_term_id(+)
           and ic.hierarchy_dataset_name = ancestor_type_syn.hierarchy_dataset_name(+)
+          and ic.ancestor_pan_type_id = ancestor_type_syn.hierarchy_dataset_name(+)
       ]]>
     </sql>
 
