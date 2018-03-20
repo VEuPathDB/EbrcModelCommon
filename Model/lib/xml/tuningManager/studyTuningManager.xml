@@ -960,18 +960,16 @@ UNION ALL
         -- END OF WITH CLAUSES (whew!)
           select -- terms using the OntologyRelationship hierarchy
                  -- DISTINCT -- moot because of UNION; otherwise needed
-                 child.name as ontology_term_name, child.ontology_term_id,
+                 nvl(child_syn.name, child.name) as ontology_term_name, child.ontology_term_id,
                  child.source_id as ontology_term_source_id,
                  child.definition as description,
-                 -- work around initcap's problems with apostrophes
-                 -- replace(replace(initcap(replace(child.name, '''', '4834929393')), '4834929393', ''''),
-                 --           '16s', '16S') as display_name,
-                 child.name as display_name,
-                 parent.name as parent_ontology_term_name, parent.ontology_term_id as parent_ontology_term_id,
+                 nvl(child_syn.name, child.name) as display_name,
+                 nvl(parent_syn.name, parent.name) as parent_ontology_term_name,
+                 parent.ontology_term_id as parent_ontology_term_id,
                  parent.source_id as parent_ontology_term_source_id,
                  case -- units apply only to leaves, not their ancestors
                    when child.ontology_term_id = otm.property_id
-                     then unit.name
+                     then nvl(unit_syn.name, unit.name)
                    else null
                  end as units,
                  mt.type,
@@ -983,7 +981,8 @@ UNION ALL
                 otm.organism, otm.dataset_name, otm.dataset_type, otm.dataset_subtype
           from ontology_tree_metadata otm, leaf_ancestor_pair lap,
                sres.OntologyTerm child, sres.OntologyTerm parent, sres.OntologyTerm unit,
-               &prefixPropertyType mt,
+               &prefixPropertyType mt, &prefixDatasetTerm child_syn,
+               &prefixDatasetTerm parent_syn, &prefixDatasetTerm unit_syn,
                (  select child_term_id, parent_term_id, dataset_name from graph_edge
                 union
                   select term_id as child_term_id, null as parent_term_id, dataset_name
@@ -997,6 +996,12 @@ UNION ALL
 --            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = mt.property_id(+)
               and otm.unit_id = unit.ontology_term_id(+)
+              and edge.dataset_name = child_syn.hierarchy_dataset_name(+)
+              and edge.child_term_id = child_syn.ontology_term_id(+)
+              and edge.dataset_name = parent_syn.hierarchy_dataset_name(+)
+              and edge.parent_term_id = parent_syn.ontology_term_id(+)
+              and otm.unit_id = unit_syn.ontology_term_id(+)
+              and otm.hierarchy_dataset_name = unit_syn.hierarchy_dataset_name(+)
         union
           select -- hardwired hierarchy: characteristics
                  distinct -- moot only because of UNION
