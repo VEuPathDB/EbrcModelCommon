@@ -1340,7 +1340,7 @@ select * from (
  and m.pan_id = io.output_pan_id
  and io.input_pan_type_source_id = 'EUPATH_0000096'
 UNION
-select io.input_pan_id as participant_id, spec.input_pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
+select m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, spec.input_pan_id as observation_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO spec, &prefixPANIO io, &prefixObservations o
  where m.category = 'Specimen used for test'
  and m.pan_id = spec.output_pan_id
