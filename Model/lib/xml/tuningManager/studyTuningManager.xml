@@ -1289,9 +1289,9 @@ UNION ALL
     <sql>
       <![CDATA[
 create table &prefixParticipantMD&1 (
+  ontology_term_name,
   participant_id,
   household_id,
-  ontology_term_name,
   string_value,
   number_value,
   date_value,
@@ -1301,7 +1301,7 @@ create table &prefixParticipantMD&1 (
   PARALLEL (DEGREE 2)
   nologging
   as select * from (
-  select distinct m.pan_id as participant_id, io.input_pan_id as household_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, date_value
+  select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
  from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
  where m.category = 'Participant'
  and m.pan_id = io.output_pan_id(+)
@@ -1321,9 +1321,9 @@ create table &prefixParticipantMD&1 (
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
+  ontology_term_name,
   participant_id,
   observation_id,
-  ontology_term_name,
   string_value,
   number_value,
   date_value,
@@ -1334,7 +1334,7 @@ create table &prefixObservationMD&1 (
   nologging
   as
 select * from (
-  select distinct io.input_pan_id as participant_id, m.pan_id as observation_id, m.property_source_id as ontology_term_name, m.string_value, m.number_value, m.date_value
+  select distinct m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, m.pan_id as observation_id, m.string_value, m.number_value, m.date_value
  from &prefixMetadata m, &prefixPANIO io
  where m.category = 'Event'
  and m.pan_id = io.output_pan_id
@@ -1362,20 +1362,20 @@ select io.input_pan_id as participant_id, spec.input_pan_id as observation_id, m
     <sql>
       <![CDATA[
 create table &prefixPartObsIdMD&1 (
+  ontology_term_name,
   participant_id,
   observation_id,
-  ontology_term_name,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixPartobsmd&1_pk PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
+  CONSTRAINT &prefixPartobsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
-  select distinct p.participant_id, o.observation_id, p.ontology_term_name, p.string_value, p.number_value, p.date_value
+  select distinct p.ontology_term_name ,p.participant_id, o.observation_id, p.string_value, p.number_value, p.date_value
 from &prefixParticipantMD p, (select distinct participant_id,observation_id from &prefixObservationMD) o
 where p.participant_id = o.participant_id )
 order by ontology_term_name,participant_id
