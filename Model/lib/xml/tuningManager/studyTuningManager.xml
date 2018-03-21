@@ -758,7 +758,7 @@ ORDER BY protocol_app_node_name
           END as value
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.TaxonName tn, DatasetPresenter dsp, apidb.organism o,
+             sres.TaxonName tn, apidbTuning.DatasetPresenter dsp, apidb.organism o,
              (select s.study_id, s.external_database_release_id,
                        s.name as study_name
               from study.Study s
