@@ -942,7 +942,8 @@ UNION ALL
                                in (select child_term_id
                                      from graph_edge
                                      start with parent_term_id = ancestor.term_id
-                                     connect by prior child_term_id = parent_term_id)
+                                     connect by prior child_term_id = parent_term_id
+                                        and prior external_database_release_id = external_database_release_id)
                              and descendent.term_id = lt.property_id
                              and decode(descendent.dataset_name, lt.hierarchy_dataset_name, 1, 0) = 1
                              and descendent.dataset_name = ancestor.dataset_name
@@ -990,10 +991,10 @@ UNION ALL
                ) edge
             where edge.child_term_id = lap.ancestor_term_id
               and lap.leaf_term_id = otm.property_id
---            and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+              and decode(lap.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = child.ontology_term_id(+)
               and edge.parent_term_id = parent.ontology_term_id(+)
---            and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
+              and decode(edge.dataset_name, otm.hierarchy_dataset_name, 1, 0) = 1
               and edge.child_term_id = mt.property_id(+)
               and otm.unit_id = unit.ontology_term_id(+)
               and edge.dataset_name = child_syn.hierarchy_dataset_name(+)
