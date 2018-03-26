@@ -423,6 +423,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <externalDependency name="study.Protocol"/>
     <externalDependency name="study.ProtocolParam"/>
     <externalDependency name="study.ProtocolAppParam"/>
+    <ancillaryTable name="ValueCaps"/>
     <ancillaryTable name="InferredChars"/> <!-- renamed from PANCHaracteristicMetadata -->
     <ancillaryTable name="SampleProcess"/> <!-- renamed from SampleDownstream -->
     <ancillaryTable name="PANUpstream"/>
@@ -494,13 +495,11 @@ ORDER BY external_database_release_id, protocol_app_node_id
              study.ProtocolParam pp, study.Protocol p, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              apidb.Datasource ds, study.ProtocolAppNode pan, sres.TaxonName tn, sres.ontologyterm proto_type,
-             (  select s.study_id, i.external_database_release_id,
-                       s.name as study_name, i.name as investigation_name
+             (  select s.study_id, i.external_database_release_id
                 from study.Study s, study.Study i
                 where s.investigation_id = i.study_id
               union
-                select s.study_id, s.external_database_release_id,
-                       s.name as study_name, null as investigation_name
+                select s.study_id, s.external_database_release_id
                 from study.Study s) study_release
         where node_inputs.protocol_app_id = pap.protocol_app_id
           and pap.protocol_param_id = pp.protocol_param_id
@@ -524,23 +523,33 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
+        create table &prefixValueCaps&1 nologging as
+        select qualifier_id, lower_value, commonest_capitalization
+        from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
+                     dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
+              from study.Characteristic c, study.StudyLink sl, study.Study s,
+                   sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
+              where c.protocol_app_node_id = sl.protocol_app_node_id
+                and sl.study_id = s.study_id
+                and s.external_database_release_id = r.external_database_release_id
+                and r.external_database_id = d.external_database_id
+                and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+              group by qualifier_id, value
+             )
+        where ranking = 1
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixvalcap_ix&1
+               on &prefixValueCaps&1 (qualifier_id, lower_value, commonest_capitalization)
+               tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create table &prefixInferredChars&1 nologging as
-        with caps
-             as (select qualifier_id, lower_value, commonest_capitalization
-                 from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
-                              dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
-                       from study.Characteristic c, study.StudyLink sl, study.Study s,
-                            sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
-                       where c.protocol_app_node_id = sl.protocol_app_node_id
-                         and sl.study_id = s.study_id
-                         and s.external_database_release_id = r.external_database_release_id
-                         and r.external_database_id = d.external_database_id
-                         and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-                       group by qualifier_id, value
-                      )
-                 where ranking = 1
-                ),
-             ic
+        with ic
              as (select distinct sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,
@@ -555,20 +564,17 @@ ORDER BY external_database_release_id, protocol_app_node_id
                         ds.name as dataset_name, hm.hierarchy_dataset_name,
                         sample_pan.name as pan_name, ds.type as dataset_type,
                         ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
-                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, caps,
+                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, &prefixValueCaps&1 caps,
                       sres.OntologyTerm value_term, sres.OntologyTerm mt, study.StudyLink sl,
                       sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
                       sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
                       study.ProtocolAppNode sample_pan, sres.OntologyTerm sample_ot,
                       &prefixHierarchyMap hm,
-                     -- revision 82228-style study_release subquery
-                      (  select s.study_id, i.external_database_release_id,
-                                s.name as study_name, i.name as investigation_name
+                      (  select s.study_id, i.external_database_release_id
                          from study.Study s, study.Study i
                          where s.investigation_id = i.study_id
                        union
-                         select s.study_id, s.external_database_release_id,
-                                s.name as study_name, null as investigation_name
+                         select s.study_id, s.external_database_release_id
                          from study.Study s) study_release
                  where pan.protocol_app_node_id = c.protocol_app_node_id
                    and pan.type_id = mt.ontology_term_id (+)
@@ -613,15 +619,12 @@ ORDER BY external_database_release_id, protocol_app_node_id
           and ic.ancestor_pan_type_id = ancestor_type_syn.ontology_term_id(+)
       ]]>
     </sql>
-
-
     <sql>
       <![CDATA[
         create index &prefixpanchar_ix&1 on &prefixInferredChars&1 (dataset_name, dataset_type, dataset_subtype, pan_id, pan_name, property, value)
              tablespace indx
       ]]>
     </sql>
-
     <sql>
       <![CDATA[
         create index &prefixpancharorg_ix&1 on &prefixInferredChars&1 (organism, dataset_type, dataset_subtype, dataset_name, pan_id, pan_name, property, value)
