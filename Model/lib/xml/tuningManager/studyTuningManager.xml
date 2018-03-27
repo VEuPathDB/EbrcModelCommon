@@ -402,6 +402,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
   <tuningTable name="InferredParams" prefixEnabled="true">
     <comment>
     </comment>
+<!--
     <internalDependency name="DatasetTerm"/>
     <internalDependency name="HierarchyMap"/>
     <internalDependency name="PANIO"/>
@@ -423,6 +424,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <externalDependency name="study.Protocol"/>
     <externalDependency name="study.ProtocolParam"/>
     <externalDependency name="study.ProtocolAppParam"/>
+-->
     <ancillaryTable name="ValueCaps"/>
     <ancillaryTable name="InferredChars"/> <!-- renamed from PANCHaracteristicMetadata -->
     <ancillaryTable name="SampleProcess"/> <!-- renamed from SampleDownstream -->
@@ -549,8 +551,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <sql>
       <![CDATA[
         create table &prefixInferredChars&1 nologging as
-        with ic
-             as (select distinct sample_pan.protocol_app_node_id as pan_id,
+        select distinct sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,
                         sample_pan.isa_type as pan_isa_type,
@@ -598,31 +599,77 @@ ORDER BY external_database_release_id, protocol_app_node_id
                         or attribute_term.name = 'average mapping coverage'
                         or attribute_term.name ='proportion mapped reads')
                    and ds.name = hm.dataset_name
-                 order by organism, type, subtype, pan_name)
-        select ic.pan_id, nvl(pan_type_syn.name, ic.pan_type) as pan_type,
-               ic.pan_type_id, ic.pan_isa_type, ic.ancestor_pan_id,
-               nvl(ancestor_type_syn.name, ic.ancestor_pan_type) as ancestor_pan_type,
-               ic.ancestor_pan_type_id,
-               nvl(property_syn.name, ic.property) as property,
-               ic.property_id, nvl(value_syn.name, ic.value) as value,
-               ic.value_id, ic.characteristic_id, ic.dataset_name, ic.pan_name,
-               ic.dataset_type, ic.dataset_subtype, ic.organism, ic.unit_id
-        from ic, &prefixDatasetTerm property_syn, &prefixDatasetTerm value_syn,
-             &prefixDatasetTerm pan_type_syn, &prefixDatasetTerm ancestor_type_syn
-        where ic.hierarchy_dataset_name = property_syn.hierarchy_dataset_name(+)
-          and ic.property_id = property_syn.ontology_term_id(+)
-          and ic.hierarchy_dataset_name = value_syn.hierarchy_dataset_name(+)
-          and ic.value_id = value_syn.ontology_term_id(+)
-          and ic.hierarchy_dataset_name = pan_type_syn.hierarchy_dataset_name(+)
-          and ic.pan_type_id = pan_type_syn.ontology_term_id(+)
-          and ic.hierarchy_dataset_name = ancestor_type_syn.hierarchy_dataset_name(+)
-          and ic.ancestor_pan_type_id = ancestor_type_syn.ontology_term_id(+)
+                 order by organism, type, subtype, pan_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpanchar_ix&1 on &prefixInferredChars&1 (dataset_name, dataset_type, dataset_subtype, pan_id, pan_name, property, value)
              tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixInferredChars&1 ic
+        set property
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ic.property_id
+                 and hm.dataset_name = ic.dataset_name)
+        where property_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ic.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixInferredChars&1 ic
+        set value
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ic.value_id
+                 and hm.dataset_name = ic.dataset_name)
+        where value_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ic.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixInferredChars&1 ic
+        set pan_type
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ic.pan_type_id
+                 and hm.dataset_name = ic.dataset_name)
+        where pan_type_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ic.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixInferredChars&1 ic
+        set ancestor_pan_type
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ic.ancestor_pan_type_id
+                 and hm.dataset_name = ic.dataset_name)
+        where ancestor_pan_type_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ic.dataset_name)
       ]]>
     </sql>
     <sql>
