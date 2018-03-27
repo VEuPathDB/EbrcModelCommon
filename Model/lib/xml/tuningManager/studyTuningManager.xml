@@ -402,7 +402,6 @@ ORDER BY external_database_release_id, protocol_app_node_id
   <tuningTable name="InferredParams" prefixEnabled="true">
     <comment>
     </comment>
-<!--
     <internalDependency name="DatasetTerm"/>
     <internalDependency name="HierarchyMap"/>
     <internalDependency name="PANIO"/>
@@ -424,7 +423,6 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <externalDependency name="study.Protocol"/>
     <externalDependency name="study.ProtocolParam"/>
     <externalDependency name="study.ProtocolAppParam"/>
--->
     <ancillaryTable name="ValueCaps"/>
     <ancillaryTable name="InferredChars"/> <!-- renamed from PANCHaracteristicMetadata -->
     <ancillaryTable name="SampleProcess"/> <!-- renamed from SampleDownstream -->
