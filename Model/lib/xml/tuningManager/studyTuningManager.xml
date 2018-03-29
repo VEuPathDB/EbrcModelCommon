@@ -549,7 +549,8 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <sql>
       <![CDATA[
         create table &prefixInferredChars&1 nologging as
-        select distinct sample_pan.protocol_app_node_id as pan_id,
+        select -- distinct -- should be unneeded and can use too much temp space
+                sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,
                         sample_pan.isa_type as pan_isa_type,
@@ -564,17 +565,20 @@ ORDER BY external_database_release_id, protocol_app_node_id
                         sample_pan.name as pan_name, ds.type as dataset_type,
                         ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
                  from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, &prefixValueCaps&1 caps,
-                      sres.OntologyTerm value_term, sres.OntologyTerm mt, study.StudyLink sl,
+                      sres.OntologyTerm value_term, sres.OntologyTerm mt,
                       sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
                       sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
                       study.ProtocolAppNode sample_pan, sres.OntologyTerm sample_ot,
                       &prefixHierarchyMap hm,
-                      (  select s.study_id, i.external_database_release_id
-                         from study.Study s, study.Study i
-                         where s.investigation_id = i.study_id
-                       union
-                         select s.study_id, s.external_database_release_id
-                         from study.Study s) study_release
+                      (select distinct sl.protocol_app_node_id, study_release.external_database_release_id
+                       from study.StudyLink sl,
+                            (  select s.study_id, i.external_database_release_id
+                               from study.Study s, study.Study i
+                               where s.investigation_id = i.study_id
+                             union
+                               select s.study_id, s.external_database_release_id
+                               from study.Study s) study_release
+                       where sl.study_id = study_release.study_id) pan_release
                  where pan.protocol_app_node_id = c.protocol_app_node_id
                    and pan.type_id = mt.ontology_term_id (+)
                    and c.ontology_term_id = value_term.ontology_term_id(+)
@@ -582,9 +586,8 @@ ORDER BY external_database_release_id, protocol_app_node_id
                    and lower(c.value) = caps.lower_value(+)
                    and c.qualifier_id = attribute_term.ontology_term_id(+)
                    and node_inputs.input_pan_id = pan.protocol_app_node_id
-                   and node_inputs.pan_id = sl.protocol_app_node_id
-                   and sl.study_id = study_release.study_id
-                   and study_release.external_database_release_id = edr.external_database_release_id
+                   and node_inputs.pan_id = pan_release.protocol_app_node_id
+                   and pan_release.external_database_release_id = edr.external_database_release_id
                    and edr.external_database_id = ed.external_database_id
                    and ed.name = ds.name
                    and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
@@ -593,11 +596,17 @@ ORDER BY external_database_release_id, protocol_app_node_id
                    and ds.taxon_id = tn.taxon_id(+)
                    and (tn.name_class = 'scientific name' or tn.name_class is null)
                 -- temporary may need adjusting for RNASeq
-                   and (mt.name is not null
+                   and (pan.type_id is not null
                         or attribute_term.name = 'average mapping coverage'
-                        or attribute_term.name ='proportion mapped reads')
+                        or attribute_term.name = 'proportion mapped reads')
                    and ds.name = hm.dataset_name
-                 order by organism, type, subtype, pan_name
+--                 order by organism, type, subtype, pan_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixpanchar_uqix&1 on &prefixInferredChars&1 (pan_id, property, value)
+             tablespace indx
       ]]>
     </sql>
     <sql>
