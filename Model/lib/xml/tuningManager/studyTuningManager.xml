@@ -1361,7 +1361,7 @@ create table &prefixParticipantMD&1 (
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
  from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
- where m.category = 'Participant'
+ where m.category in ('Child','Participant')
  and m.pan_id = io.output_pan_id(+)
  )
  order by ontology_term_name,participant_id
@@ -1394,7 +1394,7 @@ create table &prefixObservationMD&1 (
 select * from (
   select distinct m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, m.pan_id as observation_id, m.string_value, m.number_value, m.date_value
  from &prefixMetadata m, &prefixPANIO io
- where m.category = 'Event'
+ where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
  and m.pan_id = io.output_pan_id
  and io.input_pan_type_source_id = 'EUPATH_0000096'
 UNION
@@ -1433,7 +1433,7 @@ create table &prefixPartObsIdMD&1 (
   nologging
   as
   select * from (
-  select distinct p.ontology_term_name ,p.participant_id, o.observation_id, p.string_value, p.number_value, p.date_value
+  select p.ontology_term_name ,p.participant_id, o.observation_id, p.string_value, p.number_value, p.date_value
 from &prefixParticipantMD p, (select distinct participant_id,observation_id from &prefixObservationMD) o
 where p.participant_id = o.participant_id )
 order by ontology_term_name,participant_id
