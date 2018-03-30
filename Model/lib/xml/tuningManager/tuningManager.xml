@@ -300,7 +300,7 @@ order by organism, species, genus
     </sql>
     <sql>
       <![CDATA[
-        create unique index data_load_prjct_error&1 on &prefixProjectTaxon&1 (taxon)
+        create unique index data_load_prjct_err&1 on &prefixProjectTaxon&1 (taxon)
       ]]>
     </sql>
     <sql>
