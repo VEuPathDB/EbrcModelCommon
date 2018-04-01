@@ -554,7 +554,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,
                         sample_pan.isa_type as pan_isa_type,
-                        pan.protocol_app_node_id as ancestor_pan_id,
+                   --   pan.protocol_app_node_id as ancestor_pan_id,
                         nvl(mt.name, 'assay') as ancestor_pan_type,
                         mt.ontology_term_id as ancestor_pan_type_id,
                         attribute_term.name as property, -- if not a material type it has to be an assay
