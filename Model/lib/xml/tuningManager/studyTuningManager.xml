@@ -564,12 +564,17 @@ ORDER BY external_database_release_id, protocol_app_node_id
                         ds.name as dataset_name, hm.hierarchy_dataset_name,
                         sample_pan.name as pan_name, ds.type as dataset_type,
                         ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
-                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, study.Characteristic c, &prefixValueCaps&1 caps,
+                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, &prefixValueCaps&1 caps,
                       sres.OntologyTerm value_term, sres.OntologyTerm mt,
                       sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
                       sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
                       study.ProtocolAppNode sample_pan, sres.OntologyTerm sample_ot,
                       &prefixHierarchyMap hm,
+                      (select min(characteristic_id) as characteristic_id,
+                              protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
+                       from study.Characteristic
+                       group by protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
+                      ) c,
                       (select distinct sl.protocol_app_node_id, study_release.external_database_release_id
                        from study.StudyLink sl,
                             (  select s.study_id, i.external_database_release_id
