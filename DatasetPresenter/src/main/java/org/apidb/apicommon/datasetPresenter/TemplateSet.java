@@ -41,7 +41,7 @@ public class TemplateSet {
       Template template = nameToTemplate.get(name);
 
       if(template == null || template.equals("")) {
-          System.err.println("Requested template not found:  " + name);
+          throw new RuntimeException("No Template found by name:  " + name);
       }
 
       return template;
