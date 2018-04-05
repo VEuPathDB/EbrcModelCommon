@@ -38,7 +38,13 @@ public class TemplateSet {
   }
 
   Template getTemplateByName(String name) {
-    return nameToTemplate.get(name);
+      Template template = nameToTemplate.get(name);
+
+      if(template == null || template.equals("")) {
+          System.err.println("Requested template not found:  " + name);
+      }
+
+      return template;
   }
 
   /**
