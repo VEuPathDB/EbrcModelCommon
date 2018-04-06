@@ -1509,6 +1509,7 @@ select m.property_source_id as ontology_term_name, io.input_pan_id as participan
       <![CDATA[
 create table &prefixPartObsIdMD&1 (
   ontology_term_name,
+  household_id,
   participant_id,
   observation_id,
   string_value,
@@ -1521,8 +1522,8 @@ create table &prefixPartObsIdMD&1 (
   nologging
   as
   select * from (
-  select p.ontology_term_name ,p.participant_id, nvl(o.observation_id,-1), p.string_value, p.number_value, p.date_value
-from &prefixParticipantMD p, (select distinct participant_id,observation_id from &prefixObservationMD) o
+  select p.ontology_term_name, nvl(o.household_id,-1),p.participant_id, nvl(o.observation_id,-1), p.string_value, p.number_value, p.date_value
+from &prefixParticipantMD p, (select distinct household_id,participant_id,observation_id from &prefixObservationMD) o
 where p.participant_id = o.participant_id(+) )
 order by ontology_term_name,participant_id
       ]]>
