@@ -1570,19 +1570,20 @@ order by ontology_term_name,household_id
 create table &prefixHouseObsIdMD&1 (
   ontology_term_name,
   household_id,
+  participant_id,
   observation_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,observation_id,string_value) 
+  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
   PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
-  select h.ontology_term_name ,h.household_id, nvl(o.observation_id,-1), h.string_value, h.number_value, h.date_value
-from &prefixHouseholdMD h, (select distinct observation_id,household_id from &prefixObservationMD) o
+  select h.ontology_term_name ,h.household_id, nvl(o.participant_id,-1), nvl(o.observation_id,-1), h.string_value, h.number_value, h.date_value
+from &prefixHouseholdMD h, (select distinct observation_id,participant_id,household_id from &prefixObservationMD) o
 where h.household_id = o.household_id(+) )
 order by ontology_term_name,household_id
       ]]>
