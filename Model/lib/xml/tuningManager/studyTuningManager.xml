@@ -313,37 +313,46 @@ order by pan.name
   <tuningTable name="HierarchyMap" prefixEnabled="true">
     <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
     </comment>
+<!--    <internalDependency name="DatasetPresenter"/> TODO:  ADD THIS BACK-->
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.Study"/>
     <sql>
       <![CDATA[
         create table &prefixHierarchyMap&1 nologging as
-        select dataset_name,
-               case
-                 when lower(dataset_name) like '%microarrayantibody%'
-                   then 'Ontology_icemr_RSRC'
-                 when lower(dataset_name) like 'otu%'
-                   then 'Ontology_mbioRoot_RSRC'
-                 when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                   then 'OntologyTerm_icemr_prism_RSRC'
-                 when dataset_name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
-                   then 'OntologyTerm_icemr_indian_RSRC'
-                 when dataset_name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
-                   then 'OntologyTerm_gates_maled_RSRC'
-                 when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                   then 'OntologyTerm_gates_RSRC'
-                 when dataset_name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
-                   then 'OntologyTerm_gates_gems_RSRC'
-                 else null
-               end as hierarchy_dataset_name
-        from (select name as dataset_name
+        select datasets.dataset_name,
+               nvl(dynamic_mapping.hierarchy, hardwired_hierarchy) as hierarchy_dataset_name
+        from (select name as dataset_name,
+                     case
+                       when lower(name) like '%microarrayantibody%'
+                         then 'Ontology_icemr_RSRC'
+                       when lower(name) like 'otu%'
+                         then 'Ontology_mbioRoot_RSRC'
+                       when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
+                         then 'OntologyTerm_icemr_prism_RSRC'
+                       when name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
+                         then 'OntologyTerm_icemr_indian_RSRC'
+                       when name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
+                         then 'OntologyTerm_gates_maled_RSRC'
+                       when name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
+                         then 'OntologyTerm_gates_RSRC'
+                       when name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
+                         then 'OntologyTerm_gates_gems_RSRC'
+                       else null
+                     end as hardwired_hierarchy
               from sres.ExternalDatabase
               where external_database_id
                     in (select edr.external_database_id
                         from sres.ExternalDatabaseRelease edr, study.Study s
                         where s.external_database_release_id = edr.external_database_release_id)
-             )
+             ) datasets,
+             (select dsp.name as dataset_name, d.name as hierarchy
+              from APIDBTUNING.DatasetPresenter dsp, APIDBTUNING.DatasetProperty p, sres.ExternalDatabase d
+               where p.property = 'webDisplayOntologyName'
+                and dsp.dataset_presenter_id = p.dataset_presenter_id
+                and 'OntologyTerm_' || p.value || '_RSRC' = d.name
+             ) dynamic_mapping
+        where datasets.dataset_name = dynamic_mapping.dataset_name(+)
       ]]>
     </sql>
     <sql>
