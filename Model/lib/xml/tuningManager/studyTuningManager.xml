@@ -327,6 +327,8 @@ order by pan.name
                    then 'Ontology_mbioRoot_RSRC'
                  when dataset_name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                    then 'OntologyTerm_icemr_prism_RSRC'
+                 when dataset_name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
+                   then 'OntologyTerm_icemr_indian_RSRC'
                  when dataset_name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
                    then 'OntologyTerm_gates_maled_RSRC'
                  when dataset_name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
