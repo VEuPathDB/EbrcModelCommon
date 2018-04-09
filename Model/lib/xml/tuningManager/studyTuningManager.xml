@@ -313,7 +313,7 @@ order by pan.name
   <tuningTable name="HierarchyMap" prefixEnabled="true">
     <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
     </comment>
-<!--    <internalDependency name="DatasetPresenter"/> TODO:  ADD THIS BACK-->
+    <internalDependency name="DatasetPresenter"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.Study"/>
@@ -347,7 +347,7 @@ order by pan.name
                         where s.external_database_release_id = edr.external_database_release_id)
              ) datasets,
              (select dsp.name as dataset_name, d.name as hierarchy
-              from APIDBTUNING.DatasetPresenter dsp, APIDBTUNING.DatasetProperty p, sres.ExternalDatabase d
+              from DatasetPresenter dsp, DatasetProperty p, sres.ExternalDatabase d
                where p.property = 'webDisplayOntologyName'
                 and dsp.dataset_presenter_id = p.dataset_presenter_id
                 and 'OntologyTerm_' || p.value || '_RSRC' = d.name
