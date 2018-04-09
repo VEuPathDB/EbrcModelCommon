@@ -40,6 +40,28 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
        </sql>
     </sqlQuery>
 
+    <sqlQuery name="ByReferenceNameNoTaxon">
+        <testParamValues>
+            <paramValue name="reference_name">Reference</paramValue>
+            <paramValue name="record_class">PopsetRecordClasses.PopsetRecordClass</paramValue>
+        </testParamValues>
+
+        <paramRef ref="datasetParams.reference_name"/>
+        <paramRef ref="datasetParams.record_class"/>        
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+          select distinct ref.dataset_presenter_id as dataset_id, 
+                 ref.target_name, ref.record_type
+          from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
+          where ref.dataset_presenter_id = dnt.dataset_presenter_id 
+          and ref.target_name = $$reference_name$$
+          and ref.record_type = $$record_class$$
+          ]]>
+       </sql>
+    </sqlQuery>
+
+
     <sqlQuery name="ById">
         <testParamValues>
             <paramValue name="dataset_id">DS_20c45d8ed1</paramValue>

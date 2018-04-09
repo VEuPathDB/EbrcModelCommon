@@ -44,6 +44,20 @@
          Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
       </description>
     </question>
+
+    <question name="DatasetsByReferenceNameNoTaxon"
+      displayName="Data Sets used in a search"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByReferenceNameNoTaxon"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+      </description>
+    </question>
+
     
     <question name="DatasetsByQuestionName"
       displayName="Data Sets used in a search"
