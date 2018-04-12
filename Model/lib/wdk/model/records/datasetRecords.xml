@@ -113,12 +113,12 @@
 -->
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
-         <columnAttribute name="study_categories" internal="true"/>
-         <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" internal="true"/>
-         <columnAttribute name="policy_url" internal="true"/>
-         <columnAttribute name="card_headline" internal="true"/>
-         <columnAttribute name="card_points" internal="true"/>
+         <columnAttribute name="study_categories" internal="false"/>
+         <columnAttribute name="project_availability" internal="false"/>
+         <columnAttribute name="study_access" internal="false"/>
+         <columnAttribute name="policy_url" internal="false"/>
+         <columnAttribute name="card_headline" internal="false"/>
+         <columnAttribute name="card_points" internal="false"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.All">
