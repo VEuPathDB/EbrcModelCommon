@@ -313,7 +313,7 @@ order by pan.name
   <tuningTable name="HierarchyMap" prefixEnabled="true">
     <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
     </comment>
-    <internalDependency name="DatasetPresenter"/>
+    <internalDependency name="DatasetPresenter"/> 
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.Study"/>
@@ -803,7 +803,7 @@ ORDER BY protocol_app_node_name
       For datasets that have results but no metadata, a fallback set of metadata comprising the name of each ProtocolAppNode
     </comment>
     <internalDependency name="PANResults"/>
-<!--    <internalDependency name="DatasetPresenter"/> TODO:  ADD THIS BACK-->
+    <internalDependency name="DatasetPresenter"/> 
     <externalDependency name="apidb.Datasource"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
@@ -1477,15 +1477,14 @@ create table &prefixObservationMD&1 (
   as
 select * from (
   select distinct m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, m.pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO io, &prefixPANIO ioh
+ from &prefixMetaData m, &prefixPANIO io, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') ioh
  where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
  and m.pan_id = io.output_pan_id
  and io.input_pan_type_source_id = 'EUPATH_0000096'
  and io.input_pan_id = ioh.output_pan_id(+)
- and ioh.input_pan_type_source_id = 'PCO_0000024'
 UNION
 select m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, spec.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO spec, &prefixPANIO io, &prefixObservations o, &prefixPANIO ioh
+ from &prefixMetaData m, &prefixPANIO spec, &prefixPANIO io, &prefixObservations o, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') ioh
  where m.category = 'Specimen used for test'
  and m.pan_id = spec.output_pan_id
  and Io.Output_Pan_Id = spec.input_pan_id
@@ -1493,7 +1492,6 @@ select m.property_source_id as ontology_term_name, io.input_pan_id as participan
  and io.input_pan_type_source_id = 'EUPATH_0000096'
  and io.output_pan_type_source_id = 'EUPATH_0000738'
  and io.input_pan_id = ioh.output_pan_id(+)
- and ioh.input_pan_type_source_id = 'PCO_0000024'
  ) order by ontology_term_name,participant_id
       ]]>
     </sql>
