@@ -119,6 +119,7 @@
          <columnAttribute name="policy_url" internal="false"/>
          <columnAttribute name="card_headline" internal="false"/>
          <columnAttribute name="card_points" internal="false"/>
+         <columnAttribute name="card_questions" internal="false"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.All">
@@ -544,6 +545,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="policy_url"/>
          <column name="card_headline"/>
          <column name="card_points"/>
+         <column name="card_questions"/>
             <sql>
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points
@@ -551,12 +553,12 @@ from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty 
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints')
+where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions')
 )
 pivot 
 (
    min(value)
-   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points)
+   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions)
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
