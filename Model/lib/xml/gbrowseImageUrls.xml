@@ -425,6 +425,9 @@
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
     <track>foxy54006</track>
+    <track>foxyrace1</track>
+    <track>foxyrace4</track>
+    <track>foxy26406</track>
     <track>foxyFo47</track>
     <track>fver7600</track>
   </subtrackSet>
@@ -437,6 +440,7 @@
     <track>cgatWM276</track>
     <track>cgatCA1873</track>
     <track>cgatIND107</track>
+    <track>cgatEJB2</track>
     <track>cdeuR265</track>
     <track>tmesDSM1558</track>
   </subtrackSet>
@@ -516,6 +520,7 @@
     <track>hcapG186AR</track>
     <track>hcapG217B</track>
     <track>hcapH88</track>
+    <track>hcapH143</track>
   </subtrackSet>
 
   <url project="FungiDB" type="synteny">
@@ -633,6 +638,9 @@
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
     <org abbrev="foxy54006" organism="Fusarium oxysporum f. sp. cubense tropical race 4 54006"/>
+    <org abbrev="foxyrace1" organism="Fusarium oxysporum f. sp. cubense race 1"/>
+    <org abbrev="foxyrace4" organism="Fusarium oxysporum f. sp. cubense race 4"/>
+    <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
@@ -650,6 +658,7 @@
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
     <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
     <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
+    <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cdeuR265" organism="Cryptococcus deuterogattii R265"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
     <track name="Gene"/>
@@ -783,6 +792,7 @@
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
     <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
+    <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
