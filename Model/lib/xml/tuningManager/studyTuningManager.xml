@@ -628,7 +628,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <sql>
       <![CDATA[
         create unique index &prefixpanchar_uqix&1
-             on &prefixInferredChars&1 (pan_id, property, property_source_id, value)
+             on &prefixInferredChars&1 (dataset_name, pan_id, property, property_source_id, value)
              tablespace indx
       ]]>
     </sql>
