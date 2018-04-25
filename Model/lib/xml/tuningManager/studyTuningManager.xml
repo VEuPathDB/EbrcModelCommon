@@ -1238,7 +1238,11 @@ UNION ALL
                  (select max(definition)
                   from sres.OntologyTerm
                   where name = fm.property) as description,
-                 initcap(fm.property) as display_name,
+                 case
+                   when lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+                     then initcap(replace(fm.property, 'parasite organism', 'organism'))
+                   else initcap(fm.property)
+                 end as display_name,
                  case
                    when fm.property = 'parasite organism' then 'host'
                    else null
