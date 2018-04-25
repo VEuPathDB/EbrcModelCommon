@@ -95,6 +95,7 @@ order by organism, species, genus
             FROM results.OtuAbundance oa, dots.ExternalNaSequence ens, apidb.SequenceTaxon st
             WHERE oa.na_sequence_id = ens.na_sequence_id
               AND ens.na_sequence_id = st.na_sequence_id(+)
+              AND oa.relative_abundance is not null
            ),
         taxa_string_map
         AS (  SELECT DECODE(REPLACE(estr.kingdom, 'N/A', 'unknown'), 'unknown',
