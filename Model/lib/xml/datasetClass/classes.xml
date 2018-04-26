@@ -3322,6 +3322,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="UpdateWebDisplayOntologyClinEpi" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
     <prop name="isPreferred"></prop>
@@ -4650,9 +4651,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="WebDisplayOntologyClinEpi" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
-
     <graphTemplateFile name="clinepiRoot.xml"/>
 
     <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
