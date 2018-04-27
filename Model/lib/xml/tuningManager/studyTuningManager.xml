@@ -1238,11 +1238,7 @@ UNION ALL
                  (select max(definition)
                   from sres.OntologyTerm
                   where name = fm.property) as description,
-                 case
-                   when lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
-                     then initcap(replace(fm.property, 'parasite organism', 'organism'))
-                   else initcap(fm.property)
-                 end as display_name,
+                 initcap(fm.property) as display_name,
                  case
                    when fm.property = 'parasite organism' then 'host'
                    else null
@@ -1292,6 +1288,14 @@ UNION ALL
         create unique index &prefixnouqix1&1
         on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name)
         tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixOntology&1
+        set display_name = 'Organism'
+        where ontology_term_name = 'parasite organism'
+          and lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
       ]]>
     </sql>
   </tuningTable>
