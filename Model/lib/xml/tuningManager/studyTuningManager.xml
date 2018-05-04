@@ -1480,7 +1480,7 @@ create table &prefixObservationMD&1 (
   CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+  PARALLEL (DEGREE 4)
   nologging
   as
 select * from (
