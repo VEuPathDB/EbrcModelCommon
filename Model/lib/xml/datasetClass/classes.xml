@@ -3101,7 +3101,23 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="DADA2Taxonomy" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
 
+    <datasetLoader datasetName="DADA2Taxonomy_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="dontcare"
+              >
+      <manualGet fileOrDir="${projectName}/common/DADA2Taxonomy/${version}/final/DADA2Taxonomy_trainSet.fa.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
   <datasetClass class="oboOntology" category="" datasetFileHint="">
@@ -3882,6 +3898,38 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="otuProfilesDADA2" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name"/>
+    <prop name="version"/>
+    <prop name="multiplexed"/>
+    <prop name="barcodesType"/>
+    <prop name="samplesInfoFile"/>
+    <prop name="isPaired"/>
+    <prop name="trimLeft"/>
+    <prop name="trimLeftR"/>
+    <prop name="truncLen"/>
+    <prop name="truncLenR"/>
+    <prop name="readLen"/>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+
+    <datasetLoader datasetName="otuDADA2_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="population_biology"
+              scope="global"
+            >
+
+      <manualGet fileOrDir="${projectName}/common/otu/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
   <datasetClass class="taxonMapping" category="" datasetFileHint="">
