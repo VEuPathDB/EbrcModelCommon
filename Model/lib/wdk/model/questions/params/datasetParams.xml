@@ -31,6 +31,12 @@
             <help>The category of data in the dataset </help>
         </stringParam>
         
+        <stringParam name="user_id"
+                     prompt="User Id"
+                     number="true">
+            <help>EuPathDB user_id</help>
+        </stringParam>
+        
         <stringParam name="dataset_type"
                      prompt="Data set type"
                      number="false">

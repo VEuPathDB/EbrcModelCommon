@@ -140,6 +140,24 @@
       </description>
     </question>
 
+    <question name="DatasetsByUserId"
+      displayName="Data Sets study_access level based on user_id"
+      shortDisplayName="StudyAccess"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByUserId"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      includeProjects="ClinEpiDB,Gates,ICEMR"
+      noSummaryOnSingleRecord="true">
+      <attributesList summary="study_id, restriction_level" />
+      <description>
+         Find data sets that are associated with a particular data set type and subtype
+      </description>
+       <dynamicAttributes>
+         <columnAttribute name="restriction_level" displayName="Study Access level"  align="left" />
+         <columnAttribute name="study_id" displayName="Study Id"  align="left" />
+      </dynamicAttributes>
+    </question>
+
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <!-- Text search -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
