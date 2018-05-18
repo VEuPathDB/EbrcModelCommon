@@ -489,11 +489,13 @@ ORDER BY external_database_release_id, protocol_app_node_id
       <![CDATA[
         create table &prefixInferredParams&1 nologging as
         with param_term
-             as (select pp.protocol_param_id, ot.ontology_term_id, ot.source_id,
-                 -- use row_number() to get only the oldest of terms that share a name
-                 row_number() over (order by ot.ontology_term_id) as ranking
-                 from study.ProtocolParam pp, sres.OntologyTerm ot
-                 where ot.name = pp.name
+            as (select pp.protocol_param_id, ot.ontology_term_id, ot.source_id,
+            -- use row_number() to get only the oldest of terms that share a name
+            row_number()
+                over (partition by ot.name order by ot.ontology_term_id)
+                as ranking
+            from study.ProtocolParam pp, sres.OntologyTerm ot
+            where ot.name = pp.name
                 )
         select distinct node_inputs.pan_id, ot.name as pan_type,
                ot.ontology_term_id as pan_type_id,
