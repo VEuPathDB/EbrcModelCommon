@@ -834,7 +834,7 @@ ORDER BY protocol_app_node_name
         , 'dataset' as property
         , CAST (NULL AS VARCHAR2(80)) AS property_source_id
         , CAST (NULL AS NUMBER(10)) AS property_id
-        , study_release.name as study.name
+        , study_release.name as study_name
         , CASE
             WHEN ds.type = 'genome'
               THEN tn.name || ' ' || dsp.display_name
@@ -874,7 +874,7 @@ UNION ALL
                'parasite organism' as property,
                CAST (NULL AS VARCHAR2(80)) AS property_source_id,
                CAST (NULL AS NUMBER(10)) AS property_id,
-               study_release.name as study.name, tn.name as value
+               study_release.name as study_name, tn.name as value
         from study.ProtocolAppNode pan, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, apidb.Organism o,
