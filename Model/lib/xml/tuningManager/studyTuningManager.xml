@@ -1361,11 +1361,11 @@ UNION ALL
                    WHERE property NOT IN (SELECT property FROM override)
                 ),
              term_attributes
-             AS (SELECT property, property_id, COUNT(DISTINCT value) AS distinct_values,
+             AS (SELECT MAX(property) as property, property_id, COUNT(DISTINCT value) AS distinct_values,
                         MIN(apidb.is_number(value)) AS is_number,
                         MIN(apidb.is_date(value)) AS is_date
                  FROM pan_metadata
-                 GROUP BY property, property_id
+                 GROUP BY property_id
                 )
           SELECT o.property, ot.ontology_term_id as property_id, ot.source_id as property_source_id,
                  o.type, o.filter, NULL as distinct_values
