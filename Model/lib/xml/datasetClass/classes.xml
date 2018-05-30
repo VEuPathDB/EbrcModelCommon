@@ -1683,7 +1683,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="isAffymetrixGeneArray"/>
     <prop name="isNimbleGenGeneArray"/>
-    <prop name="vendorMappingFileName"/>
+    <prop name="vendorMappingFileName"/> <!-- for nimblegen, the xys file will declare a "designname" which should be used here -->
     <prop name="probeRows"/>
     <prop name="probeCols"/>
     <prop name="limitNU"/>
@@ -1705,6 +1705,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
+      <!-- for nimblegen, we require additional file named geneProbeMapping.ndf -->
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput file="@@dataDir@@/final/probes.fsa"/>
 
