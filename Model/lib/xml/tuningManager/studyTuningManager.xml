@@ -1155,7 +1155,7 @@ UNION ALL
                  host_term.source_id as ontology_term_source_id,
                  host_term.definition as description,
                  initcap(host_term.name) as display_name,
-                 'characteristic' as parent_ontology_term_name,
+                 null as parent_ontology_term_name,
                  null as parent_ontology_term_id,
                  null as parent_ontology_term_source_id,
                  null as units, null as type,
