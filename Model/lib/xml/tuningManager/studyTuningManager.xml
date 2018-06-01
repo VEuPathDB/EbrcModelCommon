@@ -1296,10 +1296,8 @@ UNION ALL
     <comment>
       Metadata table specific for household filter in household record
     </comment>
-<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixHouseholdMD&1 (
