@@ -871,11 +871,11 @@ UNION ALL
         -- special query for reference strain
         select ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
                tn.name as organism, o.strain_abbrev as pan_name, pan.protocol_app_node_id as pan_id,
-               'parasite organism' as property,
-               CAST (NULL AS VARCHAR2(80)) AS property_source_id,
-               CAST (NULL AS NUMBER(10)) AS property_id,
+               ot.name as property,
+               ot.source_id as property_source_id,
+               ot.ontology_term_id as property_id,
                study_release.name as study_name, tn.name as value
-        from study.ProtocolAppNode pan, study.StudyLink sl,
+        from study.ProtocolAppNode pan, study.StudyLink sl, sres.OntologyTerm ot,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, apidb.Organism o,
              (  select s.study_id, i.external_database_release_id, i.name
@@ -895,6 +895,7 @@ UNION ALL
           and o.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
           and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+          and ot.source_id = 'OPL_0000232' -- "parasite organism"
         order by organism, dataset_name, pan_name
       ]]>
     </sql>
@@ -995,20 +996,19 @@ UNION ALL
                parent_ontology_term_id, parent_ontology_term_source_id, units,
                type, is_range, precision,
                organism, dataset_name, dataset_type, dataset_subtype
-        from (with protocol_metadata
-                   as (select distinct organism, dataset_type, dataset_subtype, dataset_name,
-                                       protocol as category, property, property_id, unit_id
-                       from &prefixinferredparams),
-                   characteristic_metadata
-                   as (select distinct organism, dataset_type, dataset_subtype, dataset_name,
-                                       ancestor_pan_type as category, property, property_id, unit_id
-                       from &prefixinferredchars),
-                   metadata
-                   as (  select *
-                         from protocol_metadata
+        from (with metadata
+                   as (  select organism, dataset_type, dataset_subtype, dataset_name,
+                                property, property_id, unit_id
+                         from &prefixInferredParams
                        union
-                         select *
-                         from characteristic_metadata),
+                         select organism, dataset_type, dataset_subtype, dataset_name,
+                                property, property_id, unit_id
+                         from &prefixInferredChars
+
+                       union
+                         select organism, dataset_type, dataset_subtype, dataset_name,
+                                property, property_id, unit_id
+                         from &prefixDefaultChars),
                    ontology_tree_metadata
                    as (select distinct m.property_id, m.dataset_name, organism, m.dataset_type,
                                        m.dataset_subtype, m.unit_id, hm.hierarchy_dataset_name
@@ -1070,12 +1070,6 @@ UNION ALL
                          select property_id as ancestor_term_id, property_id as leaf_term_id,
                                 hierarchy_dataset_name as dataset_name
                          from leaf_term
-                       ),
-                   fallback
-                   as (select distinct fm.dataset_name, dataset_type, dataset_subtype, organism,
-                                       property, hierarchy_dataset_name
-                       from &prefixDefaultChars fm, &prefixHierarchyMap hm
-                       where fm.dataset_name = hm.dataset_name
                       )
         -- END OF WITH CLAUSES (whew!)
           select -- terms using the OntologyRelationship hierarchy
@@ -1122,49 +1116,6 @@ UNION ALL
               and edge.parent_term_id = parent_syn.ontology_term_id(+)
               and otm.unit_id = unit_syn.ontology_term_id(+)
               and otm.hierarchy_dataset_name = unit_syn.hierarchy_dataset_name(+)
-        union
-          select -- fallback metadata
-                 distinct -- moot only because of UNION
-                 fm.property as ontology_term_name, null as ontology_term_id,
-                 (select max(source_id)
-                  from sres.OntologyTerm
-                  where name = fm.property) as ontology_term_source_id,
-                 (select max(definition)
-                  from sres.OntologyTerm
-                  where name = fm.property) as description,
-                 initcap(fm.property) as display_name,
-                 case
-                   when fm.property = 'parasite organism' then 'host'
-                   else null
-                 end as parent_ontology_term_name,
-                 null as parent_ontology_term_id,
-                 null as parent_ontology_term_source_id,
-                 null as units, nvl(mt.type, 'string') as type,
-                 case
-                   when mt.filter = 'range' then 1
-                   else 0
-                 end as is_range,
-                 1 as precision,
-                fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
-          from &prefixDefaultChars fm, &prefixPropertyType mt
-          where fm.property = mt.property(+)
-        union
-          select -- fallback metadata parents
-                 distinct
-                 host_term.name as ontology_term_name, host_term.ontology_term_id,
-                 host_term.source_id as ontology_term_source_id,
-                 host_term.definition as description,
-                 initcap(host_term.name) as display_name,
-                 null as parent_ontology_term_name,
-                 null as parent_ontology_term_id,
-                 null as parent_ontology_term_source_id,
-                 null as units, null as type,
-                 null as is_range,
-                 null as precision,
-                fm.organism, fm.dataset_name, fm.dataset_type, fm.dataset_subtype
-          from &prefixDefaultChars fm, sres.OntologyTerm host_term
-          where fm.property = 'parasite organism'
-            and host_term.source_id = 'GO_0018995' -- "host"
         )
         where dataset_name not in ('ISASimple_RSRC','ISA_RSRC')
         order by organism, dataset_name, ontology_term_name
