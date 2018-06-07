@@ -1007,7 +1007,7 @@ UNION ALL
 
                        union
                          select organism, dataset_type, dataset_subtype, dataset_name,
-                                property, property_id, unit_id
+                                property, property_id, cast (null as number(10) as unit_id
                          from &prefixDefaultChars),
                    ontology_tree_metadata
                    as (select distinct m.property_id, m.dataset_name, organism, m.dataset_type,
