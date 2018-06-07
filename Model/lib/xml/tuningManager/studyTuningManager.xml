@@ -991,7 +991,7 @@ UNION ALL
     <sql>
       <![CDATA[
         create table &prefixOntology&1 nologging as
-        select ontology_term_name, ontology_term_id, ontology_term_source_id,
+        select distinct ontology_term_name, ontology_term_id, ontology_term_source_id,
                description, display_name, parent_ontology_term_name,
                parent_ontology_term_id, parent_ontology_term_source_id, units,
                type, is_range, precision,
