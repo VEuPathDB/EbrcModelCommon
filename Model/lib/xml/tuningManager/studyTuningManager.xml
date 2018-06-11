@@ -994,7 +994,7 @@ UNION ALL
               union
                 select dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name,
-                       null as category, property, cast(null as number) as property_id, value
+                       null as category, property, property_id, value
                 from &prefixDefaultChars
              ) m
         where (m.property_id = mt.property_id
