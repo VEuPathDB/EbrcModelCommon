@@ -1200,6 +1200,7 @@ UNION ALL
     <comment>
        Data type and filter method for metadata properties.
     </comment>
+    <internalDependency name="DefaultChars"/>
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
@@ -1225,11 +1226,15 @@ UNION ALL
                 ),
              pan_metadata
              AS (  SELECT property, value, property_id
-                   FROM &prefixinferredparams
+                   FROM &prefixInferredParams
                    WHERE property NOT IN (SELECT property FROM override)
                  UNION
                    SELECT property, value, property_id
-                   FROM &prefixinferredchars
+                   FROM &prefixInferredChars
+                   WHERE property NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT property, value, property_id
+                   FROM &prefixDefaultChars
                    WHERE property NOT IN (SELECT property FROM override)
                 ),
              term_attributes
