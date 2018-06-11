@@ -539,6 +539,38 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
+        update &prefixInferredParams&1 ip
+        set property
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ip.property_id
+                 and hm.dataset_name = ip.dataset_name)
+        where property_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ip.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixInferredParams&1 ip
+        set pan_type
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = ip.pan_type_id
+                 and hm.dataset_name = ip.dataset_name)
+        where pan_type_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = ip.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create table &prefixValueCaps&1 nologging as
         select qualifier_id, lower_value, commonest_capitalization
         from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
