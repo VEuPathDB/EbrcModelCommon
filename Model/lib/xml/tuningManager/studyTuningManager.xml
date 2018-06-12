@@ -939,17 +939,17 @@ UNION ALL
     <sql>
       <![CDATA[
         update &prefixDefaultChars&1 dc
-        set (property_source_id, property_id)
-            = (select source_id, ontology_term_id
-               from (with distinct_terms
-                     as (select name, source_id, ontology_term_id
-                         from (select name, source_id, ontology_term_id,
-                               row_number() over (partition by name order by ontology_term_id) as ranking
-                               from sres.OntologyTerm ot)
-                         where ranking = 1)
-                     select name, source_id, ontology_term_id
-                     from distinct_terms)
-               where name = dc.property)
+        set property
+            = (select dt.name
+               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 and dt.ontology_term_id = dc.property_id
+                 and hm.dataset_name = dc.dataset_name)
+        where property_id
+              in (select dt.ontology_term_id
+                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    and hm.dataset_name = dc.dataset_name)
       ]]>
     </sql>
     <sql>
