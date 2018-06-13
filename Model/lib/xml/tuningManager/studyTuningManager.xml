@@ -651,8 +651,8 @@ ORDER BY external_database_release_id, protocol_app_node_id
                    and (tn.name_class = 'scientific name' or tn.name_class is null)
                 -- temporary may need adjusting for RNASeq
                    and (pan.type_id is not null
-                        or attribute_term.name = 'average mapping coverage'
-                        or attribute_term.name = 'proportion mapped reads')
+                        or lower(attribute_term.name) = 'average mapping coverage'
+                        or lower(attribute_term.name) = 'proportion mapped reads')
                    and ds.name = hm.dataset_name
 --                   and ds.name != 'ISASimple_RSRC'
 --                   and ds.name != 'ISA_RSRC'
