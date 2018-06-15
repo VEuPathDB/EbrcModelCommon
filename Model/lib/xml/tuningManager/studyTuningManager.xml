@@ -651,8 +651,11 @@ ORDER BY external_database_release_id, protocol_app_node_id
                    and (tn.name_class = 'scientific name' or tn.name_class is null)
                 -- temporary may need adjusting for RNASeq
                    and (pan.type_id is not null
-                        or lower(attribute_term.name) = 'average mapping coverage'
-                        or lower(attribute_term.name) = 'proportion mapped reads')
+                        or attribute_term.source_id
+                           in ('EUPATH_0000454', -- average mapping coverage
+                               'EUPATH_0000455'  -- proportion mapped reads
+                              )
+                       )
                    and ds.name = hm.dataset_name
 --                   and ds.name != 'ISASimple_RSRC'
 --                   and ds.name != 'ISA_RSRC'
@@ -1214,7 +1217,7 @@ UNION ALL
                  UNION
                    SELECT 'taxon_id' AS property, 'number' AS type, 'membership' AS filter FROM dual
                  UNION
-                  SELECT 'proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
+                  SELECT 'Proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
                  UNION
                    SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
