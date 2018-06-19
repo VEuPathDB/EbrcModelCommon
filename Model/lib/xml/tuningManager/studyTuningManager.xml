@@ -1216,8 +1216,8 @@ UNION ALL
                    SELECT 'studyid' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
                    SELECT 'taxon_id' AS property, 'number' AS type, 'membership' AS filter FROM dual
-                 UNION
-                  SELECT 'Proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
+--               UNION
+--                SELECT 'Proportion mapped reads' AS property, 'number' AS type, 'range' AS filter FROM dual
                  UNION
                    SELECT 'dataset' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
