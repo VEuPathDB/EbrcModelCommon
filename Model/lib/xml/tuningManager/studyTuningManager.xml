@@ -935,7 +935,13 @@ UNION ALL
           and o.taxon_id = tn.taxon_id(+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
           and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-          and ot.source_id = 'OPL_0000232' -- "parasite organism"
+          and ot.source_id
+              = case
+                  -- is this a FungiDB instance?
+                  when lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+                    then 'NCIT_C14209' -- "Fungal organism"
+                  else 'OPL_0000232' -- "parasite organism"
+                end
         order by organism, dataset_name, pan_name
       ]]>
     </sql>
