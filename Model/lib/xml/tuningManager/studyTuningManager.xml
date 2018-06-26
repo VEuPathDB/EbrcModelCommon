@@ -1179,7 +1179,7 @@ UNION ALL
       <![CDATA[
         update &prefixOntology&1
         set display_name = 'Organism'
-        where ontology_term_name = 'parasite organism'
+        where lower(ontology_term_name) = 'parasite organism'
           and lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
       ]]>
     </sql>
