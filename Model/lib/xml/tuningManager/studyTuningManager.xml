@@ -1361,7 +1361,6 @@ create table &prefixParticipantMD&1 (
     </comment>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
-    <internalDependency name="Samples"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1378,23 +1377,34 @@ create table &prefixObservationMD&1 (
   PARALLEL (DEGREE 4)
   nologging
   as
+with ioh as (
+select distinct input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024' and output_pan_type_source_id = 'EUPATH_0000096'
+),
+ioo as (
+select distinct input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'EUPATH_0000096' and output_pan_type_source_id = 'EUPATH_0000738'
+)
 select * from (
-  select distinct m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, m.pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO io, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') ioh
+  select distinct m.property_source_id as ontology_term_name, ioo.input_pan_id as participant_id, m.pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, ioo, ioh
  where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
- and m.pan_id = io.output_pan_id
- and io.input_pan_type_source_id = 'EUPATH_0000096'
- and io.input_pan_id = ioh.output_pan_id(+)
-UNION
-select m.property_source_id as ontology_term_name, io.input_pan_id as participant_id, spec.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO spec, &prefixPANIO io, &prefixObservations o, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') ioh
+ and m.pan_id = ioo.output_pan_id
+ and ioo.input_pan_id = ioh.output_pan_id(+) 
+UNION ALL
+select m.property_source_id as ontology_term_name, ioo.input_pan_id as participant_id, spec.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
  where m.category in ('Specimen used for test','Specimen type')
  and m.pan_id = spec.output_pan_id
- and Io.Output_Pan_Id = spec.input_pan_id
- and spec.input_pan_id = o.pan_id
- and io.input_pan_type_source_id = 'EUPATH_0000096'
- and io.output_pan_type_source_id = 'EUPATH_0000738'
- and io.input_pan_id = ioh.output_pan_id(+)
+ and spec.input_pan_type_source_id = 'EUPATH_0000738'
+ and ioo.Output_Pan_Id = spec.input_pan_id
+ and ioo.input_pan_id = ioh.output_pan_id(+)
+UNION ALL
+   select distinct m.property_source_id as ontology_term_name, ioo.input_pan_id as participant_id, iosub.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixPANIO iosub,  ioh, ioo
+ where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
+ and m.pan_id = iosub.output_pan_id
+ and iosub.input_pan_type_source_id = 'EUPATH_0000738'
+ and iosub.input_pan_id = ioo.output_pan_id
+ and ioo.input_pan_id = ioh.output_pan_id(+)
  ) order by ontology_term_name,participant_id
       ]]>
     </sql>
