@@ -1312,7 +1312,7 @@ create table &prefixHouseholdMD&1 (
   CONSTRAINT &prefixHhmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+--  PARALLEL (DEGREE 2)
   nologging
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as household_id, m.string_value, m.number_value, m.date_value
@@ -1342,7 +1342,7 @@ create table &prefixParticipantMD&1 (
   CONSTRAINT &prefixPpartmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+--  PARALLEL (DEGREE 2)
   nologging
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
@@ -1374,7 +1374,7 @@ create table &prefixObservationMD&1 (
   CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 4)
+--  PARALLEL (DEGREE 4)
   nologging
   as
 with ioh as (
@@ -1389,7 +1389,7 @@ select * from (
  where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
  and m.pan_id = ioo.output_pan_id
  and ioo.input_pan_id = ioh.output_pan_id(+) 
-UNION ALL
+UNION
 select m.property_source_id as ontology_term_name, ioo.input_pan_id as participant_id, spec.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
  where m.category in ('Specimen used for test','Specimen type')
@@ -1397,7 +1397,7 @@ select m.property_source_id as ontology_term_name, ioo.input_pan_id as participa
  and spec.input_pan_type_source_id = 'EUPATH_0000738'
  and ioo.Output_Pan_Id = spec.input_pan_id
  and ioo.input_pan_id = ioh.output_pan_id(+)
-UNION ALL
+UNION
    select distinct m.property_source_id as ontology_term_name, ioo.input_pan_id as participant_id, iosub.input_pan_id as observation_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO iosub,  ioh, ioo
  where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
@@ -1414,7 +1414,7 @@ UNION ALL
     <comment>
       Metadata table specific for participant filter that includes observation ids
     </comment>
-    <internalDependency name="ParticipantMD"/>
+    <internalDependency name="ParticipantMD"/> 
     <internalDependency name="ObservationMD"/>
     <sql>
       <![CDATA[
@@ -1429,7 +1429,7 @@ create table &prefixPartObsIdMD&1 (
   CONSTRAINT &prefixPartobsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+--  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
@@ -1459,7 +1459,7 @@ create table &prefixHousePartIdMD&1 (
   CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+--  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
@@ -1490,7 +1490,7 @@ create table &prefixHouseObsIdMD&1 (
   CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
-  PARALLEL (DEGREE 2)
+--  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
