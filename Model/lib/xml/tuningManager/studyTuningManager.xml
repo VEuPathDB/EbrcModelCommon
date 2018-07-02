@@ -843,6 +843,7 @@ ORDER BY protocol_app_node_name
     <comment>
       For datasets that have results but no metadata, a fallback set of metadata comprising the name of each ProtocolAppNode
     </comment>
+    <internalDependency name="DatasetTerm"/>
     <internalDependency name="PANResults"/>
     <internalDependency name="DatasetPresenter"/> 
     <externalDependency name="apidb.Datasource"/>
