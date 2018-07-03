@@ -6,7 +6,7 @@
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for 16S reference organisms                                                                                                     
     </comment>
-    <externalDependency name="apidb.SequenceTaxon"/>
+    <externalDependency name="apidb.TaxonString"/>
     <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="sres.TaxonName"/>
     <externalDependency name="sres.Taxon"/>
@@ -21,7 +21,7 @@ with organism_rank
                from sres.taxon
                start with taxon_id in (  select taxon_id from DOTS.EXTERNALNASEQUENCE
                                        union
-                                         select taxon_id from apidb.SequenceTaxon)
+                                         select taxon_id from apidb.TaxonString)
                connect by prior parent_id = taxon_id) r
          where r.input = tn1.taxon_id
            and r.taxon_id = tn2.taxon_id
@@ -71,9 +71,7 @@ order by organism, species, genus
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>otu relative abundance values, aggegated at various taxonomic levels
     </comment>
-    <externalDependency name="apidb.SequenceTaxon"/>
     <externalDependency name="apidb.Datasource"/>
-    <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="results.OtuAbundance"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
@@ -86,16 +84,10 @@ order by organism, species, genus
         CREATE TABLE TaxonAbundance&1 NOLOGGING AS
         WITH leaf_abundance
         AS (SELECT oa.protocol_app_node_id, oa.raw_count AS raw_count,
-                   oa.relative_abundance AS relative_abundance,
-                   CASE
-                     WHEN st.taxon_id IS NOT NULL
-                       THEN st.taxon_id
-                     ELSE ens.taxon_id
-                   END AS taxon_id
-            FROM results.OtuAbundance oa, dots.ExternalNaSequence ens, apidb.SequenceTaxon st
-            WHERE oa.na_sequence_id = ens.na_sequence_id
-              AND ens.na_sequence_id = st.na_sequence_id(+)
-              AND oa.relative_abundance is not null
+                   oa.relative_abundance AS relative_abundance, 
+                   oa.taxon_id as taxon_id
+            FROM results.OtuAbundance oa
+            WHERE oa.relative_abundance is not null
            ),
         taxa_string_map
         AS (  SELECT DECODE(REPLACE(estr.kingdom, 'N/A', 'unknown'), 'unknown',
@@ -618,8 +610,6 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
     <comment>for the sample record taxon relative abundance table
      </comment>
     <externalDependency name="sres.Taxon"/>
-    <externalDependency name="dots.ExternalNaSequence"/>
-    <externalDependency name="apidb.SequenceTaxon"/>
     <externalDependency name="results.OtuAbundance"/>
     <internalDependency name="InferredParams"/>
     <internalDependency name="ExternalSequenceTaxonRank"/>
@@ -640,28 +630,13 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
                   replace(family, 'N/A', '') as family,
                   replace(genus, 'N/A', '') as genus,
                   replace(species, 'N/A', '') as species
-           from (select ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id,
+           from (select ds.name, oa.protocol_app_node_id, oa.taxon_id,
                         sum(nvl(oa.relative_abundance, 0)) as relative_abundance,
                         sum(nvl(oa.raw_count, 0)) as absolute_abundance
-                 from results.OtuAbundance oa, sampleprocess ds,
-                      (select ens.na_sequence_id,
-                              case
-                                when st.taxon_id is not null
-                                  then st.taxon_id
-                                else ens.taxon_id
-                              end as taxon_id,
-                              case
-                                when st.taxon_id is not null
-                                  then 'Greengenes'
-                                else 'Genbank'
-                              end as source
-                       from dots.ExternalNaSequence ens, apidb.SequenceTaxon st
-                       where ens.na_sequence_id = st.na_sequence_id(+)
-                       ) taxonAssignment
+                 from results.OtuAbundance oa, sampleprocess ds
                  where oa.protocol_app_node_id = ds.output_pan_id
                    and ds.output_isa_type = 'Data'
-                   and oa.na_sequence_id = taxonAssignment.na_sequence_id
-                 group by ds.name, oa.protocol_app_node_id, taxonAssignment.taxon_id
+                 group by ds.name, oa.protocol_app_node_id, oa.taxon_id
                 ) ta,
                 ExternalSequenceTaxonRank estr, sres.Taxon t
            where ta.taxon_id = estr.organism
