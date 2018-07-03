@@ -3120,6 +3120,24 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="DADA2TaxonMapping" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+
+    <datasetLoader datasetName="DADA2TaxonMapping_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="dontcare"
+              >
+      <manualGet fileOrDir="${projectName}/common/curatedTaxonomy/${name}/${version}/final/taxonMapping.xml">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
   <datasetClass class="oboOntology" category="" datasetFileHint="">
     <purpose></purpose>
@@ -3959,8 +3977,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --sequenceToTaxonHierarchyFile @@dataDir@@/final/sequenceToTaxonHierarchy.txt --taxonMappingFile @@dataDir@@/final/taxonMapping.xml</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
 
   <datasetClass class="phylogeneticProfiles" category="" datasetFileHint="">
     <purpose></purpose>
