@@ -4851,6 +4851,31 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!-- datasetClass for HMDB Compounds -->
+  <datasetClass class="HMDB_Compounds" category="" datasetFileHint="">
+    <purpose>Load HMDB Metabolites</purpose>
+    <prop name="version">&version;</prop>
+
+    <datasetLoader datasetName="compounds_HMDB_RSRC" version="${version}"
+            plugin="ApiCommonData::Load::Plugin::InsertHMDB"
+            scope="global"
+            type="compound"
+    >
+
+        <manualGet fileOrDir="common/empty">
+            <dir name="final"/>
+        </manualGet>
+        <unpack>ln -s @@manualDeliveryDir@@/common/metabolites/HMDB/${version}/final @@dataDir@@/final</unpack>
+
+        <getAndUnpackOutput dir="@@dataDir@@/final"/>
+        <getAndUnpackOutput file="@@dataDir@@/final/hmdb_metabolites.xml"/>
+        <getAndUnpackOutput file="@@dataDir@@/final/structures.sdf"/>
+
+        <pluginArgs>--xmlFile @@dataDir@@/final/hmdb_metabolites.xml --sdfFile @@dataDir@@/final/structures.sdf</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+  
+
 
   <!-- datasetClass for Metabolite Profiles -->
   <datasetClass class="metaboliteProfiles" category="" datasetFileHint="">
