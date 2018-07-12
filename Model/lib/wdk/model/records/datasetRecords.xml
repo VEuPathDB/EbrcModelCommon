@@ -832,14 +832,23 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="url"/>
             <column name="description"/>
             <sql excludeProjects="EuPathDB">
-              SELECT dataset_id, dataset_name, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
+              SELECT hl.dataset_presenter_id as dataset_id, dnt.name as dataset_name, 
+                     hl.text, hl.url, hl.description
+              FROM ApidbTuning.DatasetHyperLink hl,
+                   ApidbTuning.DatasetNameTaxon dnt
+              WHERE hl.dataset_presenter_id = dnt.dataset_presenter_id
+              -- no real datasets in mbio have urls so table of nulls returned unless following
+              AND lower(hl.url) NOT LIKE '%greengenes%'
             </sql>
 
             <sql includeProjects="EuPathDB">
-              SELECT dataset_id, dataset_name, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
-              WHERE url NOT LIKE '/cgi-bin/gbrowse/%'
+               SELECT hl.dataset_presenter_id as dataset_id, dnt.name as dataset_name, 
+                      hl.text, hl.url, hl.description
+               FROM ApidbTuning.DatasetHyperLink hl,
+                    ApidbTuning.DatasetNameTaxon dnt
+               WHERE hl.dataset_presenter_id = dnt.dataset_presenter_id
+               AND lower(hl.url) NOT LIKE '%greengenes%'
+               AND url NOT LIKE '/cgi-bin/gbrowse/%'
             </sql>
       </sqlQuery>
 
@@ -920,7 +929,8 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="is_graph_custom"/>
             <column name="template"/>
 
-            <sql includeProjects="EuPathDB">
+            <!-- force no plots on dataset record while avoiding datasetexamplesourceid for mbio, clinepi-->
+            <sql includeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB">
             <![CDATA[
  select '' as source_id,
             '' as project_id,
@@ -949,7 +959,7 @@ from apidbtuning.datasetnametaxon dsnt
             ]]>
             </sql>
 
-            <sql excludeProjects="EuPathDB">
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB">
             <![CDATA[
 
 select g.*, decode(lower(is_graph_custom), 'false', 1, 0) as template, regexp_substr(graph_ids, '[^,]*') as default_graph_id

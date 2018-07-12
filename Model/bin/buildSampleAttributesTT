@@ -1,5 +1,10 @@
 #!/usr/bin/perl
 
+#
+#NO LONGER IN USE. REPLACED BY buildPANRecordAttributesTT
+#
+
+
 use strict;
 
 use lib "$ENV{GUS_HOME}/lib/perl";
