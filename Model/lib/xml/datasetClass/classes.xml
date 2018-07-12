@@ -3051,6 +3051,34 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+   <datasetClass class="genericProfilesClinEpi" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="technologyType">currently supported values are: zscore or percentile</prop>
+
+    <graphTemplateFile name="clinepiRoot.xml"/>
+   
+    <datasetLoader datasetName="Profile_${technologyType}_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="generic_profiles"
+              subType="${technologyType}"
+              scope="global">
+
+      <manualGet fileOrDir="${projectName}/profile/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+
 
   <datasetClass class="ISASimpleClinEpi" category="" datasetFileHint="">
     <purpose></purpose>
