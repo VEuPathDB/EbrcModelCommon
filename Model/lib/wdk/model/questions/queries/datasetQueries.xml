@@ -220,7 +220,7 @@ FROM (select dataset_presenter_id, value as study_access
 from apidbtuning.datasetproperty 
 where  property = 'studyAccess') d,
 (select dataset_presenter_id, restriction_level as study_access
-from @COMMENT_SCHEMA@ValidDatasetUser@COMMENT_DBLINK@
+from @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@
 where user_id = $$user_id$$) u
 WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
           ]]>
