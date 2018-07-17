@@ -370,6 +370,7 @@
   <subtrackSet name="Saccharomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>scerS288c</track>
     <track>calbSC5314</track>
+    <track>calbWO1</track>
     <track>caurB8441</track>
     <track>cglaCBS138</track>
     <track>clusATCC42720</track>
@@ -418,6 +419,7 @@
     <track>mory70-15</track>
     <track>moryBR32</track>
     <track>treeQM6a</track>
+    <track>ssch1099-18</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
@@ -566,6 +568,7 @@
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="calbSC5314" organism="Candida albicans SC5314"/>
     <org abbrev="calbSC5314_B" organism="Candida albicans SC5314_B"/>
+    <org abbrev="calbWO1" organism="Candida albicans WO-1"/>
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
@@ -626,6 +629,7 @@
     <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
+    <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Sordariomycetes"/>
