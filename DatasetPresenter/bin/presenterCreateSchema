@@ -50,10 +50,10 @@ sub createTables {
         display_category             varchar2(60),
         type                         varchar2(100),
         subtype                      varchar2(100),
-        category                         varchar2(100),
+        category                     varchar2(100),
         is_species_scope             number(1),
         build_number_introduced      number(5),
-        dataset_sha1_digest          number(50),
+        dataset_sha1_digest          varchar2(50),
         constraint DatasetPresenter${suffix}_pk primary key (dataset_presenter_id)
       )";
   runSql($dbh, $sql, 1);
