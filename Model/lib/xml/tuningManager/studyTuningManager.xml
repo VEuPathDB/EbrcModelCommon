@@ -332,7 +332,7 @@ order by pan.name
                          then 'OntologyTerm_icemr_prism_RSRC'
                        when name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
                          then 'OntologyTerm_icemr_indian_RSRC'
-                       when name = 'ISASimple_Gates_MAL-ED_phase1_RSRC'
+                       when name = 'ISASimple_Gates_MAL-ED_phase2_RSRC'
                          then 'OntologyTerm_gates_maled_RSRC'
                        when name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
                          then 'OntologyTerm_gates_RSRC'
