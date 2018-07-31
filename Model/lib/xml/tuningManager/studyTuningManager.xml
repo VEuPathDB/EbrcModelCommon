@@ -1393,12 +1393,12 @@ select * from (
 UNION
 select m.property_source_id as ontology_term_name, spec.input_pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
- where m.category in ('Specimen used for test','Specimen type')
+ where m.category in ('Specimen used for test','Specimen type','Sample')
  and m.pan_id = spec.output_pan_id
  and spec.input_pan_type_source_id = 'EUPATH_0000738'
  and ioo.Output_Pan_Id = spec.input_pan_id
  and ioo.input_pan_id = ioh.output_pan_id(+)
-UNION
+UNION  /* NOTE: the following pulls in sub-observations for an observation but maintains as separate observations */
    select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO iosub,  ioh, ioo
  where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
