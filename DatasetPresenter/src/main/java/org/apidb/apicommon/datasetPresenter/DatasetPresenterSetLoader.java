@@ -297,8 +297,9 @@ public class DatasetPresenterSetLoader {
         datasetPresenter.setDefaultDatasetInjector(defaultDatasetInjectorClasses);
 
 	String datasetPresenterId = datasetPresenter.getId();
+        String datasetFullDigest = datasetPresenter.getFullDigest();
 
-        loadDatasetPresenter(datasetPresenterId, datasetPresenter, presenterStmt);
+        loadDatasetPresenter(datasetPresenterId, datasetFullDigest, datasetPresenter, presenterStmt);
 
         DatasetInjector datasetInjector = datasetPresenter.getDatasetInjector();
 
@@ -374,19 +375,20 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getPresenterStmt() throws SQLException {
     String table = config.getUsername() + ".DatasetPresenter" + suffix;
     String sql = "INSERT INTO " + table +
-        " (dataset_presenter_id, name, dataset_name_pattern, " +
+        " (dataset_presenter_id, dataset_sha1_digest, name, dataset_name_pattern, " +
         "display_name, short_display_name, short_attribution, summary, " +
         "protocol, usage, description, caveat, acknowledgement, release_policy, " +
         "display_category, type, subtype, is_species_scope, build_number_introduced, " +
         "category)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadDatasetPresenter(String datasetPresenterId, DatasetPresenter datasetPresenter, PreparedStatement stmt)
+  private void loadDatasetPresenter(String datasetPresenterId, String datasetFullDigest, DatasetPresenter datasetPresenter, PreparedStatement stmt)
       throws SQLException {
     int i = 1;
     stmt.setString(i++, datasetPresenterId); 
+    stmt.setString(i++, datasetFullDigest);
     stmt.setString(i++, datasetPresenter.getDatasetName());
     stmt.setString(i++, datasetPresenter.getDatasetNamePattern());
     stmt.setString(i++, datasetPresenter.getDatasetDisplayName());
