@@ -327,7 +327,7 @@ order by pan.name
                        when lower(name) like '%microarrayantibody%'
                          then 'Ontology_icemr_RSRC'
                        when lower(name) like 'otu%'
-                         then 'Ontology_mbioRoot_RSRC'
+                         then 'OntologyTerm_microbiome_RSRC'
                        when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                          then 'OntologyTerm_icemr_prism_RSRC'
                        when name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
