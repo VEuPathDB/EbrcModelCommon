@@ -251,7 +251,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
         <paramRef ref="sharedParams.ds_gene_ids"/>
         <paramRef ref="datasetParams.FDR"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
-	<wsColumn name="dataset_id" width="50" wsName="dataset_id"/>
+	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
 	<wsColumn name="fdr" width="50" wsName="fdr"/>
 
 </processQuery>
