@@ -368,12 +368,13 @@
   </subtrackSet>
 
   <subtrackSet name="Saccharomycetes" project="FungiDB" suffixes="_span;_gene">
-    <track>scerS288c</track>
     <track>calbSC5314</track>
+    <track>calbSC5314_B</track>
     <track>calbWO1</track>
     <track>caurB8441</track>
     <track>cglaCBS138</track>
     <track>clusATCC42720</track>
+    <track>scerS288c</track>
     <track>ylipCLIB122</track>
   </subtrackSet>
 
@@ -565,13 +566,13 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="calbSC5314" organism="Candida albicans SC5314"/>
     <org abbrev="calbSC5314_B" organism="Candida albicans SC5314_B"/>
     <org abbrev="calbWO1" organism="Candida albicans WO-1"/>
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
+    <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">

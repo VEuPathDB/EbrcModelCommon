@@ -56,6 +56,13 @@
             <suggest default="2.0"/>
         </stringParam>
 
+        <stringParam name="FDR"
+                     prompt="False Discovery Rate Cutoff >="
+                     number="true">
+            <help>Enter a number between 0 and 1.</help> 
+            <suggest default="0.05"/>
+        </stringParam>
+
     <enumParam name="orthologyFlag"
                      prompt="Use orthology?"
                      multiPick="false"
