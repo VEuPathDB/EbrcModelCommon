@@ -112,6 +112,19 @@
        </attributeQueryRef>
 -->
 
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest">
+         <columnAttribute name="dataset_sha1_digest" internal="true"/>
+         <columnAttribute name="dataset_display_name" internal="true"/>
+         <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
+              <displayText>
+                <![CDATA[ $$dataset_display_name$$ ]]>
+              </displayText>
+              <url> 
+                <![CDATA[ /common/downloads/Current_Release/@PROJECT_ID@/$$dataset_sha1_digest$$ ]]>
+              </url>
+         </linkAttribute>
+       </attributeQueryRef>
+
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
          <columnAttribute name="study_categories" internal="false"/>
          <columnAttribute name="project_availability" internal="false"/>
@@ -533,6 +546,20 @@ OR if the linkName and or URL require access to other attributes....also how to 
                        select dsp.dataset_presenter_id as dataset_id, 
                               nvl(dsp.display_category, dsp.category) as newcategory
                          from ApidbTuning.DatasetPresenter dsp
+                ]]>
+        </sql>
+      </sqlQuery>
+
+      <sqlQuery name="DatasetDigest" isCacheable="false">
+        <column name="dataset_sha1_digest"/>
+        <column name="dataset_display_name"/>
+        <column name="dataset_id"/> 
+          <sql>
+            <![CDATA[
+                       select dsp.dataset_sha1_digest
+                         , dsp.dataset_presenter_id as dataset_id 
+                         , dsp.display_name as dataset_display_name
+                       from ApidbTuning.DatasetPresenter dsp
                 ]]>
         </sql>
       </sqlQuery>
