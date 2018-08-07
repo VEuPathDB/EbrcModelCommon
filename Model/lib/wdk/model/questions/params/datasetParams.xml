@@ -57,7 +57,7 @@
         </stringParam>
 
         <stringParam name="FDR"
-                     prompt="False Discovery Rate Cutoff >="
+                     prompt="False Discovery Rate Cutoff &lte"
                      number="true">
             <help>Enter a number between 0 and 1.</help> 
             <suggest default="0.05"/>

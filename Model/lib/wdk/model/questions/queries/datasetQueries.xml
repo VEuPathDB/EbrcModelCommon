@@ -252,7 +252,8 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
         <paramRef ref="datasetParams.FDR"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
 	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
-	<wsColumn name="fdr" width="50" wsName="fdr"/>
+	<wsColumn name="percent_count" width="50" wsName="percent_count"/>  <!--NOTE: need more general column name -->
+	<wsColumn name="hit_count" width="50" wsName="hit_count"/>  <!--NOTE: need more general column name -->
 
 </processQuery>
 
