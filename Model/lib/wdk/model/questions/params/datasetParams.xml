@@ -50,10 +50,10 @@
         </stringParam>
         
         <stringParam name="threshold"
-                     prompt="Threshold >="
+                     prompt="False Discovery Rate Cutoff &lt;="
                      number="true">
-            <help>Enter a non-negative number.</help> 
-            <suggest default="2.0"/>
+            <help>Enter a number between 0 and 1.</help> 
+            <suggest default="0.05"/>
         </stringParam>
 
         <stringParam name="FDR"

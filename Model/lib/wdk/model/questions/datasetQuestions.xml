@@ -202,7 +202,7 @@
       </description>
       <attributesList
          summary="hit_count,percent_count,display_name,contact,institution"
-         sorting="percent_count desc, display_name asc" />
+         sorting="percent_count asc, display_name asc" />
        <dynamicAttributes>
          <columnAttribute name="hit_count" displayName="# Valid Input Genes"  align="center" help="Number of gene identifiers from the input list that could be mapped to this organism by checking for valid IDs or ortholog transform"/>
          <columnAttribute name="percent_count" displayName="FDR"  align="center" help="False Discovery Rate"/>
