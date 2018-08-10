@@ -1362,8 +1362,10 @@ create table &prefixParticipantMD&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
+<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
+-->
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1395,7 +1397,7 @@ select * from (
 UNION
 select m.property_source_id as ontology_term_name, spec.input_pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
- where m.category in ('Specimen used for test','Specimen type','Sample')
+ where m.category in ('Specimen used for test','Specimen type','Sample','Sample type')
  and m.pan_id = spec.output_pan_id
  and spec.input_pan_type_source_id = 'EUPATH_0000738'
  and ioo.Output_Pan_Id = spec.input_pan_id
@@ -1417,8 +1419,10 @@ UNION  /* NOTE: the following pulls in sub-observations for an observation but m
     <comment>
       Metadata table specific for participant filter that includes observation ids
     </comment>
+<!--
     <internalDependency name="ParticipantMD"/> 
     <internalDependency name="ObservationMD"/>
+-->
     <sql>
       <![CDATA[
 create table &prefixPartObsIdMD&1 (
@@ -1478,8 +1482,10 @@ order by ontology_term_name,household_id
     <comment>
       Metadata table specific for household filter that includes observation ids
     </comment>
+<!--
     <internalDependency name="ObservationMD"/>
     <internalDependency name="HouseholdMD"/>
+-->
     <sql>
       <![CDATA[
 create table &prefixHouseObsIdMD&1 (
