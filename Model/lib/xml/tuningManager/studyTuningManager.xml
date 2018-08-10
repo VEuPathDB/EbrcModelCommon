@@ -1362,10 +1362,8 @@ create table &prefixParticipantMD&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
-<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1419,10 +1417,8 @@ UNION  /* NOTE: the following pulls in sub-observations for an observation but m
     <comment>
       Metadata table specific for participant filter that includes observation ids
     </comment>
-<!--
     <internalDependency name="ParticipantMD"/> 
     <internalDependency name="ObservationMD"/>
--->
     <sql>
       <![CDATA[
 create table &prefixPartObsIdMD&1 (
@@ -1482,10 +1478,8 @@ order by ontology_term_name,household_id
     <comment>
       Metadata table specific for household filter that includes observation ids
     </comment>
-<!--
     <internalDependency name="ObservationMD"/>
     <internalDependency name="HouseholdMD"/>
--->
     <sql>
       <![CDATA[
 create table &prefixHouseObsIdMD&1 (
