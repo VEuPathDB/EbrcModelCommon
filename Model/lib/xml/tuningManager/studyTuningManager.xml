@@ -1234,7 +1234,7 @@ UNION ALL
                  UNION
                    SELECT 'blood_smear_summary' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
-                   SELECT 'family ID' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                   SELECT 'Family ID' AS property, 'string' AS type, 'membership' AS filter FROM dual
                 ),
              pan_metadata
              AS (  SELECT property, value, property_id
