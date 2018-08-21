@@ -330,7 +330,7 @@ order by pan.name
                          then 'OntologyTerm_microbiome_RSRC'
                        when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                          then 'OntologyTerm_icemr_prism_RSRC'
-                       when name = 'ISASimple_ICEMR_India_census_cross_sectional_longitudinal_RSRC'
+                       when name in ('ISASimple_ICEMR_India_longitudinal_RSRC','ISASimple_ICEMR_India_cross_sectional_RSRC')
                          then 'OntologyTerm_icemr_indian_RSRC'
                        when name = 'ISASimple_Gates_MAL-ED_phase2_RSRC'
                          then 'OntologyTerm_gates_maled_RSRC'
@@ -1234,7 +1234,7 @@ UNION ALL
                  UNION
                    SELECT 'blood_smear_summary' AS property, 'string' AS type, 'membership' AS filter FROM dual
                  UNION
-                   SELECT 'family ID' AS property, 'string' AS type, 'membership' AS filter FROM dual
+                   SELECT 'Family ID' AS property, 'string' AS type, 'membership' AS filter FROM dual
                 ),
              pan_metadata
              AS (  SELECT property, value, property_id
