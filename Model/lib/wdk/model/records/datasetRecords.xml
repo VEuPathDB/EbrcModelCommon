@@ -171,6 +171,9 @@
         <attributesList summary="organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
 
         <attributesList summary="pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+ 
+
+
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
@@ -206,6 +209,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
      <!-- =================================================================== -->
 
       <table name="ExampleGraphs"
+	     excludeProjects="ClinEpiDB,ICEMR,Gates"
 	     displayName="Example Graphs"
 	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
   <textAttribute name="thumbnail" displayName="Preview">
@@ -388,6 +392,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
        <table name="Version"
                displayName="Provider's Version"
+	       excludeProjects="ClinEpiDB,ICEMR,Gates"
                queryRef="DatasetTables.Version">
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
