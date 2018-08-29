@@ -44,7 +44,7 @@ public class RnaSeqInjector extends  DatasetInjector {
       String isStrandSpecific = getPropValue("isStrandSpecific");
       if(Boolean.parseBoolean(isStrandSpecific)) {
           setPropValue("exprGraphAttr", datasetName + 
-                       "_sense_expr_graph," + datasetName + "_antisense_expr_graph");
+                       "_sense_expr_graph," + datasetName + "_antisense_expr_graph," + datasetName + "_Both_strands_expr_graph");
           setPropValue("pctGraphAttr", datasetName + 
                        "_sense_pct_graph," + datasetName + "_antisense_pct_graph");
 
