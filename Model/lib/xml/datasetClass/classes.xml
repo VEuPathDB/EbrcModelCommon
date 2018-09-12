@@ -4714,7 +4714,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
