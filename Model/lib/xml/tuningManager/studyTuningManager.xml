@@ -1303,24 +1303,56 @@ UNION ALL
       Metadata table specific for household filter in household record
     </comment>
     <internalDependency name="Metadata"/>
-    <internalDependency name="PANIO"/>
+    <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
 create table &prefixHouseholdMD&1 (
   ontology_term_name,
   household_id,
+  household_observation_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixHhmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,string_value) 
+  CONSTRAINT &prefixHhmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,household_observation_id,string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
-  as select * from (
-  select distinct m.property_source_id as ontology_term_name, m.pan_id as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m
- where m.category = 'Household'
+  as 
+with iopo as (
+select distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
+from &prefixPANIO hp, &prefixPANIO po 
+where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000096'
+and hp.output_pan_id = po.input_pan_id
+and po.input_pan_type_source_id = 'EUPATH_0000096' and po.output_pan_type_source_id = 'EUPATH_0000738'
+),
+ioho as (
+select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
+from &prefixPANIO hp 
+where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000738'
+),
+hhold as (
+select * from (
+ select distinct m.property_source_id as ontology_term_name, 
+ CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id ELSE m.pan_id END as household_id, 
+ m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, iopo, ioho
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('PCO_0000024')   
+   )
+ and m.pan_id = iopo.observation_id(+)
+ and m.pan_id = ioho.observation_id(+)
+ ))
+ select * from (
+ select * from hhold
+ union
+ select distinct m.property_source_id as ontology_term_name, 
+ hh.household_id, hh.household_observation_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, (select distinct household_observation_id, household_id from hhold) hh
+ where m.property_source_id = 'EUPATH_0000644'
+ and m.pan_id = hh.household_observation_id
  )
  order by ontology_term_name
       ]]>
@@ -1364,6 +1396,7 @@ create table &prefixParticipantMD&1 (
     </comment>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
+    <internalDependency name="HouseholdMD"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1380,22 +1413,40 @@ create table &prefixObservationMD&1 (
 --  PARALLEL (DEGREE 2)
   nologging
   as
-with ioh as (
-select distinct input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024' and output_pan_type_source_id = 'EUPATH_0000096'
+ with ioh as (
+select distinct input_pan_id, output_pan_id from &prefixPANIO 
+where input_pan_type_source_id = 'PCO_0000024' and output_pan_type_source_id = 'EUPATH_0000096'
 ),
 ioo as (
-select distinct input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'EUPATH_0000096' and output_pan_type_source_id = 'EUPATH_0000738'
+select distinct input_pan_id, output_pan_id from &prefixPANIO 
+where input_pan_type_source_id = 'EUPATH_0000096' 
+and output_pan_type_source_id = 'EUPATH_0000738'
+),
+obsont as (
+select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0000738')
 )
 select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, ioo, ioh
- where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
+ where m.property_source_id in (
+ select ontology_term_source_id
+ from obsont  
+   )
+ and m.pan_id not in (select distinct household_observation_id from &prefixHouseholdMD)
  and m.pan_id = ioo.output_pan_id
  and ioo.input_pan_id = ioh.output_pan_id(+) 
-UNION
-select m.property_source_id as ontology_term_name, spec.input_pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+UNION /* NOTE: next block pulls in sample information */
+select distinct m.property_source_id as ontology_term_name, spec.input_pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
- where m.category in ('Specimen used for test','Specimen type','Sample','Sample type')
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
+   )
  and m.pan_id = spec.output_pan_id
  and spec.input_pan_type_source_id = 'EUPATH_0000738'
  and ioo.Output_Pan_Id = spec.input_pan_id
@@ -1403,7 +1454,10 @@ select m.property_source_id as ontology_term_name, spec.input_pan_id as observat
 UNION  /* NOTE: the following pulls in sub-observations for an observation but maintains as separate observations */
    select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPANIO iosub,  ioh, ioo
- where m.category in ('Visit','Event', 'Event/Observation', 'Observation')
+ where m.property_source_id in (
+ select ontology_term_source_id
+ from obsont  
+   )
  and m.pan_id = iosub.output_pan_id
  and iosub.input_pan_type_source_id = 'EUPATH_0000738'
  and iosub.input_pan_id = ioo.output_pan_id
@@ -1456,17 +1510,18 @@ create table &prefixHousePartIdMD&1 (
   ontology_term_name,
   household_id,
   participant_id,
+  household_observation_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,string_value) 
+  CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id, participant_id,household_observation_id, string_value) 
   )
   ORGANIZATION index
 --  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
-  select h.ontology_term_name, h.household_id, nvl(p.participant_id,-1), h.string_value, h.number_value, h.date_value
+  select h.ontology_term_name, h.household_id, nvl(p.participant_id,-1) as participant_id, h.household_observation_id, h.string_value, h.number_value, h.date_value
 from &prefixHouseholdMD h, (select distinct participant_id,household_id from &prefixParticipantMD) p
 where h.household_id = p.household_id(+) )
 order by ontology_term_name,household_id
@@ -1487,17 +1542,18 @@ create table &prefixHouseObsIdMD&1 (
   household_id,
   participant_id,
   observation_id,
+  household_observation_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,string_value) 
+  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,household_observation_id, string_value) 
   )
   ORGANIZATION index
 --  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
-  select h.ontology_term_name ,h.household_id, nvl(o.participant_id,-1), nvl(o.observation_id,-1), h.string_value, h.number_value, h.date_value
+  select h.ontology_term_name ,h.household_id, nvl(o.participant_id,-1), nvl(o.observation_id,-1), nvl(h.household_observation_id,-1), h.string_value, h.number_value, h.date_value
 from &prefixHouseholdMD h, (select distinct observation_id,participant_id,household_id from &prefixObservationMD) o
 where h.household_id = o.household_id(+) )
 order by ontology_term_name,household_id
