@@ -527,6 +527,23 @@
     <track>hcapH143</track>
   </subtrackSet>
 
+  <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
+    <track>lproJHH5317</track>
+    <track>sapiIHEM14462</track>
+  </subtrackSet>
+
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="lproJHH5317" organism="Lomentospora prolificans JHH-5317"/>
+    <org abbrev="sapiIHEM14462" organism="Scedosporium apiospermum IHEM 14462"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Sordariomycetes_Microascaceae"/>
+      <subtrack set="Sordariomycetes"/>
+      <subtrack set="Sordariomycetes_Fusarium"/>
+    </track>
+  </url>
+
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
