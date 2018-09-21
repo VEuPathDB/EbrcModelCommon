@@ -373,6 +373,7 @@
     <track>calbWO1</track>
     <track>caurB8441</track>
     <track>cglaCBS138</track>
+    <track>cparCDC317</track>
     <track>clusATCC42720</track>
     <track>scerS288c</track>
     <track>ylipCLIB122</track>
@@ -395,6 +396,7 @@
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
     <track>anigATCC1015</track>
+    <track>anigN402ATCC64974</track>
     <track>anovIBT16806</track>
     <track>aterNIH2624</track>
     <track>aacuATCC16872</track>
@@ -422,6 +424,7 @@
     <track>moryBR32</track>
     <track>treeQM6a</track>
     <track>ssch1099-18</track>
+    <track>sbra5110</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
@@ -433,6 +436,7 @@
     <track>foxyrace4</track>
     <track>foxy26406</track>
     <track>foxyFo47</track>
+    <track>fproET1</track>
     <track>fver7600</track>
   </subtrackSet>
 
@@ -590,6 +594,7 @@
     <org abbrev="calbWO1" organism="Candida albicans WO-1"/>
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
@@ -620,6 +625,7 @@
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
+    <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
     <org abbrev="aacuATCC16872" organism="Aspergillus aculeatus ATCC 16872"/>
@@ -651,6 +657,7 @@
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
+    <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Sordariomycetes"/>
@@ -667,6 +674,7 @@
     <org abbrev="foxyrace4" organism="Fusarium oxysporum f. sp. cubense race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
+    <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
