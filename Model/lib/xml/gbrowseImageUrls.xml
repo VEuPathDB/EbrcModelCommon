@@ -28,6 +28,10 @@
 
   <subtrackSet project="PlasmoDB" name="human_gene" suffixes="_span;_gene">
     <track>pfal3D7</track>
+    <track>pfalIT</track>
+    <track>pfal7G8</track>
+    <track>pfalCD01</track>
+    <track>pfalDd2</track>
     <track>pvivSal1</track>
     <track>pcynM</track>
     <track>pknoH</track>
@@ -40,6 +44,10 @@
 
   <subtrackSet project="PlasmoDB" name="human_genomic" suffixes="_span">
     <track>pfal3D7</track>
+    <track>pfalIT</track>
+    <track>pfal7G8</track>
+    <track>pfalCD01</track>
+    <track>pfalDd2</track>
     <track>pvivSal1</track>
     <track>pcynM</track>
     <track>pknoH</track>
@@ -149,6 +157,9 @@
   <url project="PlasmoDB" type="genomic">
     <org organism="Plasmodium falciparum 3D7" abbrev="pfal3D7" />
     <org organism="Plasmodium falciparum IT" abbrev="pfalIT" />
+    <org organism="Plasmodium falciparum 7G8" abbrev="pfal7G8" />
+    <org organism="Plasmodium falciparum CD01" abbrev="pfalCD01" />
+    <org organism="Plasmodium falciparum Dd2" abbrev="pfalDd2" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
