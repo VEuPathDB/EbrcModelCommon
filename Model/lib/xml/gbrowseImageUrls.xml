@@ -376,6 +376,7 @@
     <track>clusATCC42720</track>
     <track>scerS288c</track>
     <track>ylipCLIB122</track>
+    <track>ylipCLIB89W29</track>
   </subtrackSet>
 
   <subtrackSet name="Zygomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -592,6 +593,7 @@
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
+    <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Saccharomycetes"/>
