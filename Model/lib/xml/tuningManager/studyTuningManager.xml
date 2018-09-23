@@ -338,6 +338,8 @@ order by pan.name
                          then 'OntologyTerm_gates_RSRC'
                        when name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
                          then 'OntologyTerm_gates_gems_RSRC'
+                       when name = 'ISASimple_ICEMR_South_Asia_surveillance_RSRC'
+                         then 'OntologyTerm_icemr_southAsia_RSRC'
                        else 'OntologyTerm_eupath_isa_RSRC'
                      end as hardwired_hierarchy
               from sres.ExternalDatabase
