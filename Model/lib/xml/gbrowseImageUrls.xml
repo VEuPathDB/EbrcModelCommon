@@ -891,8 +891,10 @@
     <track>heriGB1</track>
     <track>hericanceri</track>
     <track>ncerBRL01</track>
+    <track>ncerPA08_1199</track>
     <track>nbomCQ1</track>
     <track>vcorATCC50505</track>
+    <track>aspWSBS2006</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="EdMiOrPs_gene" suffixes="_span;_gene">
@@ -921,6 +923,10 @@
 
   <subtrackSet project="MicrosporidiaDB" name="ecunEC3_gene" suffixes="_span;_gene">
     <track>ecunEC3</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="ecunEcunIII-L_gene" suffixes="_span;_gene">
+    <track>ecunEcunIII-L</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="ecunGBM1_gene" suffixes="_span;_gene">
@@ -962,8 +968,10 @@
     <org organism="Hepatospora eriocheir strain GB1" abbrev="heriGB1" />
     <org organism="Hepatospora eriocheir strain canceri" abbrev="hericanceri" />
     <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
+    <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="main_gene" />
@@ -1024,7 +1032,15 @@
       <subtrack set="ecunEC3_gene" />
       <subtrack set="main_gene" />
     </track>
+  </url>
 
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Encephalitozoon cuniculi EcunIII-L" abbrev="ecunEcunIII-L" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="ecunEcunIII-L_gene" />
+      <subtrack set="main_gene"/>
+    </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
