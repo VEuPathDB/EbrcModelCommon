@@ -106,8 +106,8 @@ and r.EXTERNAL_DATABASE_ID = d.external_database_id
 and (ot.source_id in ('EUPATH_0000738', --Observation/Event
                      'PCO_0000024', -- Household
                      'EUPATH_0000096', --Participant
-                     'EUPATH_0000055', -- CDC light trap
-                     'OBI_0100051' -- SPecimentype (need to replace with specimen)
+                     'EUPATH_0000327', -- CDC light trap
+                     'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
                      )
     OR pan.isa_type = 'Sample'
     )
@@ -1379,7 +1379,6 @@ create table &prefixParticipantMD&1 (
   CONSTRAINT &prefixPpartmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
@@ -1412,7 +1411,6 @@ create table &prefixObservationMD&1 (
   CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id, string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as
  with ioh as (
@@ -1467,6 +1465,20 @@ UNION  /* NOTE: the following pulls in sub-observations for an observation but m
  ) order by ontology_term_name,participant_id
       ]]>
     </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixObsmd_partid&1
+          ON &prefixObservationMD&1 (participant_id, observation_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixObsmd_obsid&1
+          ON &prefixObservationMD&1 (observation_id, participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
   </tuningTable>
 
   <tuningTable name="PartObsIdMD" prefixEnabled="true">
@@ -1488,7 +1500,6 @@ create table &prefixPartObsIdMD&1 (
   CONSTRAINT &prefixPartobsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
@@ -1519,7 +1530,6 @@ create table &prefixHousePartIdMD&1 (
   CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id, participant_id,household_observation_id, string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
@@ -1551,7 +1561,6 @@ create table &prefixHouseObsIdMD&1 (
   CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,household_observation_id, string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as
   select * from (
