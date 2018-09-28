@@ -1397,7 +1397,6 @@ create table &prefixParticipantMD&1 (
     </comment>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
-    <internalDependency name="HouseholdMD"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1422,6 +1421,11 @@ select distinct input_pan_id, output_pan_id from &prefixPANIO
 where input_pan_type_source_id = 'EUPATH_0000096' 
 and output_pan_type_source_id = 'EUPATH_0000738'
 ),
+hobs as (
+select distinct output_pan_id from &prefixPANIO 
+where input_pan_type_source_id = 'PCO_0000024' 
+and output_pan_type_source_id = 'EUPATH_0000738'
+),
 obsont as (
 select distinct o.ontology_term_source_id
  from &prefixOntology o
@@ -1435,7 +1439,7 @@ select * from (
  select ontology_term_source_id
  from obsont  
    )
- and m.pan_id not in (select distinct household_observation_id from &prefixHouseholdMD)
+ and m.pan_id not in (select output_pan_id from hobs)
  and m.pan_id = ioo.output_pan_id
  and ioo.input_pan_id = ioh.output_pan_id(+) 
 UNION /* NOTE: next block pulls in sample information */
