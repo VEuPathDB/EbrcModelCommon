@@ -1391,6 +1391,156 @@ create table &prefixParticipantMD&1 (
     </sql>
   </tuningTable>
 
+  <tuningTable name="HousePartIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to participant relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHousePartIO&1 (
+  household_id,
+  participant_id,
+  CONSTRAINT &prefixhousepartio_pk&1 PRIMARY KEY (household_id,participant_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as household_id, output_pan_id as participant_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'PCO_0000024'
+  and output_pan_type_source_id = 'EUPATH_0000096'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixparthouseio&1
+          ON &prefixHousePartIO&1 (participant_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="HouseObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to observation relation
+    </comment>
+    <internalDependency name="HousePartIO"/>
+    <internalDependency name="PartObsIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHouseObsIO&1 (
+  household_id,
+  observation_id,
+  CONSTRAINT &prefixhouseobsio_pk&1 PRIMARY KEY (household_id,observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select hp.household_id, po.observation_id
+  from &prefixPartObsIO po, &prefixHousePartIO hp
+  where po.participant_id = hp.participant_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixobshouseio&1
+          ON &prefixHouseObsIO&1 (observation_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="PartObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for participant to observation relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixPartObsIO&1 (
+  participant_id,
+  observation_id,
+  CONSTRAINT &prefixpartobsio_pk&1 PRIMARY KEY (participant_id,observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as participant_id, output_pan_id as observation_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000096' 
+  and output_pan_type_source_id = 'EUPATH_0000738'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixobspartio&1
+          ON &prefixPartObsIO&1 (observation_id,participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ObsSampleIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for Observation to Sample relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixObsSampleIO&1 (
+  observation_id,
+  sample_id,
+  CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as observation_id, output_pan_id as sample_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000738' 
+  and output_pan_type_source_id = 'EUPATH_0000609'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsampleobsio&1
+          ON &prefixObsSampleIO&1 (sample_id, observation_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="HouseLightIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to light trap relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHouseLightIO&1 (
+  household_id,
+  lighttrap_id,
+  CONSTRAINT &prefixhouselightio_pk&1 PRIMARY KEY (household_id,lighttrap_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as household_id, output_pan_id as lighttrap_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'PCO_0000024' 
+  and output_pan_type_source_id = 'EUPATH_0000327'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixlighthouseio&1
+          ON &prefixHouseLightIO&1 (lighttrap_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
   <tuningTable name="ObservationMD" prefixEnabled="true">
     <comment>
       Metadata table specific for observation filter 
