@@ -1551,6 +1551,7 @@ create table &prefixHouseLightIO&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
+    <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
     <internalDependency name="Ontology"/>
