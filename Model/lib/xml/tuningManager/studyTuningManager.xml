@@ -1304,10 +1304,8 @@ UNION ALL
     <comment>
       Metadata table specific for household filter in household record
     </comment>
-<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="Ontology"/>
--->
     <sql>
       <![CDATA[
 create table &prefixHouseholdMD&1 (
@@ -1367,10 +1365,9 @@ select * from (
     <comment>
       Metadata table specific for participant filter in participant record
     </comment>
-<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
--->
+    <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
 create table &prefixParticipantMD&1 (
@@ -1387,7 +1384,12 @@ create table &prefixParticipantMD&1 (
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
  from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
- where m.category in ('Child','Participant')
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0000096')   
+   )
  and m.pan_id = io.output_pan_id(+)
  )
  order by ontology_term_name,participant_id
@@ -1399,9 +1401,7 @@ create table &prefixParticipantMD&1 (
     <comment>
       Metadata table specific for household to participant relation
     </comment>
-<!--
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixHousePartIO&1 (
@@ -1461,9 +1461,7 @@ create table &prefixHouseObsIO&1 (
     <comment>
       Metadata table specific for participant to observation relation
     </comment>
-<!--
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixPartObsIO&1 (
@@ -1493,9 +1491,7 @@ create table &prefixPartObsIO&1 (
     <comment>
       Metadata table specific for Observation to Sample relation
     </comment>
-<!--
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixObsSampleIO&1 (
@@ -1525,9 +1521,7 @@ create table &prefixObsSampleIO&1 (
     <comment>
       Metadata table specific for household to light trap relation
     </comment>
-<!--
     <internalDependency name="PANIO"/>
--->
     <sql>
       <![CDATA[
 create table &prefixHouseLightIO&1 (
@@ -1557,10 +1551,9 @@ create table &prefixHouseLightIO&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
-<!--
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
--->
+    <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1644,97 +1637,5 @@ UNION  -- NOTE: the following pulls in sub-observations for an observation but m
       ]]>
     </sql>
   </tuningTable>
-
-  <tuningTable name="PartObsIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for participant filter that includes observation ids
-    </comment>
-    <internalDependency name="ParticipantMD"/> 
-    <internalDependency name="ObservationMD"/>
-    <sql>
-      <![CDATA[
-create table &prefixPartObsIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixPartobsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select * from (
-  select p.ontology_term_name, nvl(o.household_id,-1),p.participant_id, nvl(o.observation_id,-1), p.string_value, p.number_value, p.date_value
-from &prefixParticipantMD p, (select distinct household_id,participant_id,observation_id from &prefixObservationMD) o
-where p.participant_id = o.participant_id(+) )
-order by ontology_term_name,participant_id
-      ]]>
-    </sql>
-  </tuningTable>
-
-  <tuningTable name="HousePartIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for household filter that includes participant ids
-    </comment>
-    <internalDependency name="ParticipantMD"/>
-    <internalDependency name="HouseholdMD"/>
-    <sql>
-      <![CDATA[
-create table &prefixHousePartIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  household_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id, participant_id,household_observation_id, string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select * from (
-  select h.ontology_term_name, h.household_id, nvl(p.participant_id,-1) as participant_id, h.household_observation_id, h.string_value, h.number_value, h.date_value
-from &prefixHouseholdMD h, (select distinct participant_id,household_id from &prefixParticipantMD) p
-where h.household_id = p.household_id(+) )
-order by ontology_term_name,household_id
-      ]]>
-    </sql>
-  </tuningTable>
-
-  <tuningTable name="HouseObsIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for household filter that includes observation ids
-    </comment>
-    <internalDependency name="ObservationMD"/>
-    <internalDependency name="HouseholdMD"/>
-    <sql>
-      <![CDATA[
-create table &prefixHouseObsIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  observation_id,
-  household_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,household_observation_id, string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select * from (
-  select h.ontology_term_name ,h.household_id, nvl(o.participant_id,-1), nvl(o.observation_id,-1), nvl(h.household_observation_id,-1), h.string_value, h.number_value, h.date_value
-from &prefixHouseholdMD h, (select distinct observation_id,participant_id,household_id from &prefixObservationMD) o
-where h.household_id = o.household_id(+) )
-order by ontology_term_name,household_id
-      ]]>
-    </sql>
-  </tuningTable>
-
 
 </tuningConfig>
