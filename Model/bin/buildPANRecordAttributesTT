@@ -39,7 +39,7 @@ sub run{
 
   my %types = ("EUPATH_0000096" => "Participant",
                "EUPATH_0000738" => "Observation",
-               "EUPATH_0000055" => "LightTrap",
+               "EUPATH_0000327" => "LightTrap",
                "PCO_0000024" => "Household",
                "OBI_0100051" => "Sample",
       );

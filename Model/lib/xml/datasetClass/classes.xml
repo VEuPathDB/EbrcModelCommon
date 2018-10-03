@@ -1092,6 +1092,18 @@
   </datasetClass>
 
 
+
+
+  <datasetClass class="unidbComponentProject" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="databaseInstance"/>
+    <prop name="workflowVersion"/>
+
+    <graphTemplateFile name="unidb.xml"/>
+  </datasetClass>
+
+
   <!-- Category: ESTs -->
 
   <!-- NOTE: this dataset class only gets the sequences from a dbEST mirror database, it does not map

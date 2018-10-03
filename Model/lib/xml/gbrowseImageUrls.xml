@@ -32,6 +32,17 @@
     <track>pfal7G8</track>
     <track>pfalCD01</track>
     <track>pfalDd2</track>
+    <track>pfalGA01</track>
+    <track>pfalGB4</track>
+    <track>pfalGN01</track>
+    <track>pfalHB3</track>
+    <track>pfalKE01</track>
+    <track>pfalKH01</track>
+    <track>pfalKH02</track>
+    <track>pfalML01</track>
+    <track>pfalSD01</track>
+    <track>pfalSN01</track>
+    <track>pfalTG01</track>
     <track>pvivSal1</track>
     <track>pcynM</track>
     <track>pknoH</track>
@@ -48,6 +59,17 @@
     <track>pfal7G8</track>
     <track>pfalCD01</track>
     <track>pfalDd2</track>
+    <track>pfalGA01</track>
+    <track>pfalGB4</track>
+    <track>pfalGN01</track>
+    <track>pfalHB3</track>
+    <track>pfalKE01</track>
+    <track>pfalKH01</track>
+    <track>pfalKH02</track>
+    <track>pfalML01</track>
+    <track>pfalSD01</track>
+    <track>pfalSN01</track>
+    <track>pfalTG01</track>
     <track>pvivSal1</track>
     <track>pcynM</track>
     <track>pknoH</track>
@@ -134,6 +156,20 @@
   <url project="PlasmoDB" type="synteny">
     <org organism="Plasmodium falciparum 3D7" abbrev="pfal3D7" />
     <org organism="Plasmodium falciparum IT" abbrev="pfalIT" />
+    <org organism="Plasmodium falciparum 7G8" abbrev="pfal7G8" />
+    <org organism="Plasmodium falciparum CD01" abbrev="pfalCD01" />
+    <org organism="Plasmodium falciparum Dd2" abbrev="pfalDd2" />
+    <org organism="Plasmodium falciparum GA01" abbrev="pfalGA01" />
+    <org organism="Plasmodium falciparum GB4" abbrev="pfalGB4" />
+    <org organism="Plasmodium falciparum GN01" abbrev="pfalGN01" />
+    <org organism="Plasmodium falciparum HB3" abbrev="pfalHB3" />
+    <org organism="Plasmodium falciparum KE01" abbrev="pfalKE01" />
+    <org organism="Plasmodium falciparum KH01" abbrev="pfalKH01" />
+    <org organism="Plasmodium falciparum KH02" abbrev="pfalKH02" />
+    <org organism="Plasmodium falciparum ML01" abbrev="pfalML01" />
+    <org organism="Plasmodium falciparum SD01" abbrev="pfalSD01" />
+    <org organism="Plasmodium falciparum SN01" abbrev="pfalSN01" />
+    <org organism="Plasmodium falciparum TG01" abbrev="pfalTG01" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
@@ -160,6 +196,17 @@
     <org organism="Plasmodium falciparum 7G8" abbrev="pfal7G8" />
     <org organism="Plasmodium falciparum CD01" abbrev="pfalCD01" />
     <org organism="Plasmodium falciparum Dd2" abbrev="pfalDd2" />
+    <org organism="Plasmodium falciparum GA01" abbrev="pfalGA01" />
+    <org organism="Plasmodium falciparum GB4" abbrev="pfalGB4" />
+    <org organism="Plasmodium falciparum GN01" abbrev="pfalGN01" />
+    <org organism="Plasmodium falciparum HB3" abbrev="pfalHB3" />
+    <org organism="Plasmodium falciparum KE01" abbrev="pfalKE01" />
+    <org organism="Plasmodium falciparum KH01" abbrev="pfalKH01" />
+    <org organism="Plasmodium falciparum KH02" abbrev="pfalKH02" />
+    <org organism="Plasmodium falciparum ML01" abbrev="pfalML01" />
+    <org organism="Plasmodium falciparum SD01" abbrev="pfalSD01" />
+    <org organism="Plasmodium falciparum SN01" abbrev="pfalSN01" />
+    <org organism="Plasmodium falciparum TG01" abbrev="pfalTG01" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
@@ -404,6 +451,7 @@
     <track>afumA1163</track>
     <track>aclaNRRL1</track>
     <track>aflaNRRL3357</track>
+    <track>akawIFO4308</track>
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
     <track>anigATCC1015</track>
@@ -637,6 +685,7 @@
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
     <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
+    <org abbrev="akawIFO4308" organism="Aspergillus kawachii IFO 4308"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
     <org abbrev="aacuATCC16872" organism="Aspergillus aculeatus ATCC 16872"/>
@@ -889,8 +938,10 @@
     <track>heriGB1</track>
     <track>hericanceri</track>
     <track>ncerBRL01</track>
+    <track>ncerPA08_1199</track>
     <track>nbomCQ1</track>
     <track>vcorATCC50505</track>
+    <track>aspWSBS2006</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="EdMiOrPs_gene" suffixes="_span;_gene">
@@ -919,6 +970,10 @@
 
   <subtrackSet project="MicrosporidiaDB" name="ecunEC3_gene" suffixes="_span;_gene">
     <track>ecunEC3</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="ecunEcunIII-L_gene" suffixes="_span;_gene">
+    <track>ecunEcunIII-L</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="ecunGBM1_gene" suffixes="_span;_gene">
@@ -960,8 +1015,10 @@
     <org organism="Hepatospora eriocheir strain GB1" abbrev="heriGB1" />
     <org organism="Hepatospora eriocheir strain canceri" abbrev="hericanceri" />
     <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
+    <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="main_gene" />
@@ -1022,7 +1079,15 @@
       <subtrack set="ecunEC3_gene" />
       <subtrack set="main_gene" />
     </track>
+  </url>
 
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Encephalitozoon cuniculi EcunIII-L" abbrev="ecunEcunIII-L" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="ecunEcunIII-L_gene" />
+      <subtrack set="main_gene"/>
+    </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
