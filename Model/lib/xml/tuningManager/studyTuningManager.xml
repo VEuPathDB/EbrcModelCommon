@@ -106,8 +106,8 @@ and r.EXTERNAL_DATABASE_ID = d.external_database_id
 and (ot.source_id in ('EUPATH_0000738', --Observation/Event
                      'PCO_0000024', -- Household
                      'EUPATH_0000096', --Participant
-                     'EUPATH_0000055', -- CDC light trap
-                     'OBI_0100051' -- SPecimentype (need to replace with specimen)
+                     'EUPATH_0000327', -- CDC light trap
+                     'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
                      )
     OR pan.isa_type = 'Sample'
     )
@@ -338,6 +338,8 @@ order by pan.name
                          then 'OntologyTerm_gates_RSRC'
                        when name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
                          then 'OntologyTerm_gates_gems_RSRC'
+                       when name = 'ISASimple_ICEMR_South_Asia_surveillance_RSRC'
+                         then 'OntologyTerm_icemr_southAsia_RSRC'
                        else 'OntologyTerm_eupath_isa_RSRC'
                      end as hardwired_hierarchy
               from sres.ExternalDatabase
@@ -1365,6 +1367,7 @@ select * from (
     </comment>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
+    <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
 create table &prefixParticipantMD&1 (
@@ -1377,15 +1380,169 @@ create table &prefixParticipantMD&1 (
   CONSTRAINT &prefixPpartmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
  from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
- where m.category in ('Child','Participant')
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0000096')   
+   )
  and m.pan_id = io.output_pan_id(+)
  )
  order by ontology_term_name,participant_id
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="HousePartIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to participant relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHousePartIO&1 (
+  household_id,
+  participant_id,
+  CONSTRAINT &prefixhousepartio_pk&1 PRIMARY KEY (household_id,participant_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as household_id, output_pan_id as participant_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'PCO_0000024'
+  and output_pan_type_source_id = 'EUPATH_0000096'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixparthouseio&1
+          ON &prefixHousePartIO&1 (participant_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="HouseObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to observation relation
+    </comment>
+    <internalDependency name="HousePartIO"/>
+    <internalDependency name="PartObsIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHouseObsIO&1 (
+  household_id,
+  observation_id,
+  CONSTRAINT &prefixhouseobsio_pk&1 PRIMARY KEY (household_id,observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select hp.household_id, po.observation_id
+  from &prefixPartObsIO po, &prefixHousePartIO hp
+  where po.participant_id = hp.participant_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixobshouseio&1
+          ON &prefixHouseObsIO&1 (observation_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="PartObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for participant to observation relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixPartObsIO&1 (
+  participant_id,
+  observation_id,
+  CONSTRAINT &prefixpartobsio_pk&1 PRIMARY KEY (participant_id,observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as participant_id, output_pan_id as observation_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000096' 
+  and output_pan_type_source_id = 'EUPATH_0000738'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixobspartio&1
+          ON &prefixPartObsIO&1 (observation_id,participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ObsSampleIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for Observation to Sample relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixObsSampleIO&1 (
+  observation_id,
+  sample_id,
+  CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as observation_id, output_pan_id as sample_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000738' 
+  and output_pan_type_source_id = 'EUPATH_0000609'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsampleobsio&1
+          ON &prefixObsSampleIO&1 (sample_id, observation_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="HouseLightIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to light trap relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHouseLightIO&1 (
+  household_id,
+  lighttrap_id,
+  CONSTRAINT &prefixhouselightio_pk&1 PRIMARY KEY (household_id,lighttrap_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as household_id, output_pan_id as lighttrap_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'PCO_0000024' 
+  and output_pan_type_source_id = 'EUPATH_0000327'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixlighthouseio&1
+          ON &prefixHouseLightIO&1 (lighttrap_id,household_id)
+        TABLESPACE indx
       ]]>
     </sql>
   </tuningTable>
@@ -1394,172 +1551,92 @@ create table &prefixParticipantMD&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
+    <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="PANIO"/>
-    <internalDependency name="HouseholdMD"/>
+    <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
   ontology_term_name,
   observation_id,
   participant_id,
+  sample_id,
   household_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id, string_value) 
+  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id,sample_id,string_value) 
   )
   ORGANIZATION index
---  PARALLEL (DEGREE 2)
   nologging
   as
- with ioh as (
-select distinct input_pan_id, output_pan_id from &prefixPANIO 
-where input_pan_type_source_id = 'PCO_0000024' and output_pan_type_source_id = 'EUPATH_0000096'
-),
-ioo as (
-select distinct input_pan_id, output_pan_id from &prefixPANIO 
-where input_pan_type_source_id = 'EUPATH_0000096' 
-and output_pan_type_source_id = 'EUPATH_0000738'
-),
-obsont as (
+with obsont as (
 select distinct o.ontology_term_source_id
  from &prefixOntology o
      CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
      START WITH o.ontology_term_source_id in ('EUPATH_0000738')
 )
-select * from (
-  select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, ioo, ioh
+ select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
  where m.property_source_id in (
  select ontology_term_source_id
  from obsont  
    )
- and m.pan_id not in (select distinct household_observation_id from &prefixHouseholdMD)
- and m.pan_id = ioo.output_pan_id
- and ioo.input_pan_id = ioh.output_pan_id(+) 
-UNION /* NOTE: next block pulls in sample information */
-select distinct m.property_source_id as ontology_term_name, spec.input_pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO spec, ioo, ioh
+ and m.pan_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+) 
+UNION --NOTE: next block pulls in sample information
+select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
  where m.property_source_id in (
  select distinct o.ontology_term_source_id
  from &prefixOntology o
      CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
      START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
    )
- and m.pan_id = spec.output_pan_id
- and spec.input_pan_type_source_id = 'EUPATH_0000738'
- and ioo.Output_Pan_Id = spec.input_pan_id
- and ioo.input_pan_id = ioh.output_pan_id(+)
-UNION  /* NOTE: the following pulls in sub-observations for an observation but maintains as separate observations */
-   select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.input_pan_id as participant_id, nvl(ioh.input_pan_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO iosub,  ioh, ioo
+ and m.pan_id = spec.sample_id
+      and ioo.observation_id = spec.observation_id
+      and ioo.participant_id = ioh.participant_id(+)     
+UNION -- NOTE: some sample information is loaded associated with observations ...
+select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
+   )
+ and m.pan_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+) 
+UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
+ select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id, m.pan_id as sample_id,
+ nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixPANIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
  where m.property_source_id in (
  select ontology_term_source_id
  from obsont  
    )
  and m.pan_id = iosub.output_pan_id
  and iosub.input_pan_type_source_id = 'EUPATH_0000738'
- and iosub.input_pan_id = ioo.output_pan_id
- and ioo.input_pan_id = ioh.output_pan_id(+)
- ) order by ontology_term_name,participant_id
+ and iosub.output_pan_type_source_id = 'EUPATH_0000738'
+ and iosub.input_pan_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
-  </tuningTable>
-
-  <tuningTable name="PartObsIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for participant filter that includes observation ids
-    </comment>
-    <internalDependency name="ParticipantMD"/> 
-    <internalDependency name="ObservationMD"/>
     <sql>
       <![CDATA[
-create table &prefixPartObsIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixPartobsmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,observation_id,string_value) 
-  )
-  ORGANIZATION index
---  PARALLEL (DEGREE 2)
-  nologging
-  as
-  select * from (
-  select p.ontology_term_name, nvl(o.household_id,-1),p.participant_id, nvl(o.observation_id,-1), p.string_value, p.number_value, p.date_value
-from &prefixParticipantMD p, (select distinct household_id,participant_id,observation_id from &prefixObservationMD) o
-where p.participant_id = o.participant_id(+) )
-order by ontology_term_name,participant_id
+        CREATE INDEX &prefixObsmd_partid&1
+          ON &prefixObservationMD&1 (participant_id, observation_id)
+        TABLESPACE indx
       ]]>
     </sql>
-  </tuningTable>
-
-  <tuningTable name="HousePartIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for household filter that includes participant ids
-    </comment>
-    <internalDependency name="ParticipantMD"/>
-    <internalDependency name="HouseholdMD"/>
     <sql>
       <![CDATA[
-create table &prefixHousePartIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  household_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixHousePartmd_pk&1 PRIMARY KEY (ontology_term_name,household_id, participant_id,household_observation_id, string_value) 
-  )
-  ORGANIZATION index
---  PARALLEL (DEGREE 2)
-  nologging
-  as
-  select * from (
-  select h.ontology_term_name, h.household_id, nvl(p.participant_id,-1) as participant_id, h.household_observation_id, h.string_value, h.number_value, h.date_value
-from &prefixHouseholdMD h, (select distinct participant_id,household_id from &prefixParticipantMD) p
-where h.household_id = p.household_id(+) )
-order by ontology_term_name,household_id
+        CREATE INDEX &prefixObsmd_obsid&1
+          ON &prefixObservationMD&1 (observation_id, participant_id)
+        TABLESPACE indx
       ]]>
     </sql>
   </tuningTable>
-
-  <tuningTable name="HouseObsIdMD" prefixEnabled="true">
-    <comment>
-      Metadata table specific for household filter that includes observation ids
-    </comment>
-    <internalDependency name="ObservationMD"/>
-    <internalDependency name="HouseholdMD"/>
-    <sql>
-      <![CDATA[
-create table &prefixHouseObsIdMD&1 (
-  ontology_term_name,
-  household_id,
-  participant_id,
-  observation_id,
-  household_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixHouseObsmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,participant_id,observation_id,household_observation_id, string_value) 
-  )
-  ORGANIZATION index
---  PARALLEL (DEGREE 2)
-  nologging
-  as
-  select * from (
-  select h.ontology_term_name ,h.household_id, nvl(o.participant_id,-1), nvl(o.observation_id,-1), nvl(h.household_observation_id,-1), h.string_value, h.number_value, h.date_value
-from &prefixHouseholdMD h, (select distinct observation_id,participant_id,household_id from &prefixObservationMD) o
-where h.household_id = o.household_id(+) )
-order by ontology_term_name,household_id
-      ]]>
-    </sql>
-  </tuningTable>
-
 
 </tuningConfig>
