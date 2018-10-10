@@ -671,7 +671,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
                         WHEN dsc.affiliation is not null THEN dsc.affiliation
-                        ELSE '<a href="http://eupathdb.org/eupathdb/contact.do" class="new-window" data-name="contact_us">Contact EuPathDB for more details</a>' 
+                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact EuPathDB for more details</a>' 
                    END as contact,
                     CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
                         ELSE   dsc.affiliation END as institution,
