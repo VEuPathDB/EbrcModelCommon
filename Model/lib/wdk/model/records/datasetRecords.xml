@@ -59,23 +59,23 @@
       <!-- =============================================================== -->
 
           <reporter name="attributesTabular" displayName="Summary - tab delimited" scopes="results"
-                    implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
+                    implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
              <property name="page_size">500</property>
           </reporter>
           <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results" excludeProjects="EuPathDB" 
-                    implementation="org.gusdb.wdk.model.report.TableTabularReporter">
+                    implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
              <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
           </reporter>
 
           <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" scopes="record"
-                    implementation="org.gusdb.wdk.model.report.FullRecordReporter">
+                    implementation="org.gusdb.wdk.model.report.reporter.FullRecordReporter">
           </reporter>
 
           <reporter name="xml"  displayName="XML: choose from columns and/or tables" scopes=""
-                   implementation="org.gusdb.wdk.model.report.XMLReporter">
+                   implementation="org.gusdb.wdk.model.report.reporter.XMLReporter">
           </reporter>
           <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
-                    implementation="org.gusdb.wdk.model.report.JSONReporter">
+                    implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
           </reporter>
 
       <!-- =============================================================== -->
