@@ -81,6 +81,9 @@ public class DatasetPresenter {
 	return DigestUtils.sha1Hex(getDatasetName()).substring(0,10);
     }
 
+    public String getFullDigest() {
+        return DigestUtils.sha1Hex(getDatasetName());
+    }
 
   String getPropValue(String propName) {
     return propValues.get(propName);

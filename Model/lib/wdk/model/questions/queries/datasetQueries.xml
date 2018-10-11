@@ -198,7 +198,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
                    select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetpresenter dsp
                    where nvl(dsp.display_category, dsp.category) = $$dataset_category$$
-                   and lower(dsp.subtype) like lower($$dataset_subtype$$)
+                   and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
           ]]>
        </sql>
     </sqlQuery>
@@ -243,61 +243,19 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
           ]]>
        </sql>
     </sqlQuery>
-                   
 
-    <sqlQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
+
+<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"
+             processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
+             doNotTest="true">
         <paramRef ref="sharedParams.ds_gene_ids"/>
         <paramRef ref="datasetParams.threshold"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
+	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
+	<wsColumn name="percent_count" width="50" wsName="percent_count"/>  <!--NOTE: need more general column name -->
+	<wsColumn name="hit_count" width="50" wsName="hit_count"/>  <!--NOTE: need more general column name -->
 
-        <column name="dataset_id"/>
-        <column name="hit_count"/>
-        <column name="percent_count"/>
-        <sql>
-          <![CDATA[
-       WITH inList as (
-         SELECT DISTINCT gi.gene,ga.organism,ga.orthomcl_name
-         FROM apidbtuning.GeneId gi, apidbtuning.geneattributes ga,
-         ($$ds_gene_ids$$)  ds
-         WHERE LOWER(gi.id) = LOWER(ds.gene_source_id)
-         AND ga.source_id = gi.gene
-         )
-         SELECT dsp.dataset_presenter_id  as dataset_id, 
-                 inTable.in_count as hit_count,
-                 (r.hit_count/inTable.in_count)*100 as percent_count
-          FROM  apidbtuning.DatasetPresenter dsp,(SELECT organism,count(*) AS in_count from inList group by organism) inTable,                
-                (SELECT  gl.organism, gl.dataset_name, COUNT(distinct gl.source_id) AS hit_count
-                 FROM ApidbTuning.DatasetGeneList gl, inList l
-                 WHERE l.gene = gl.source_id                 
-                GROUP BY gl.organism,gl.dataset_name) R
-          WHERE dsp.name = r.dataset_name
-          AND R.organism = inTable.organism
-          GROUP BY dsp.dataset_presenter_id, r.hit_count, inTable.in_count
-          HAVING (r.hit_count/inTable.in_count)*100 >= $$threshold$$
-          UNION
-          SELECT dsp.dataset_presenter_id  as dataset_id, 
-                 orTable.in_count as hit_count,
-                 (r.hit_count/orTable.in_count)*100 as percent_count
-          FROM  apidbtuning.DatasetPresenter dsp,
-                (SELECT gac.organism,count(distinct gac.source_id) AS in_count from inList lc, apidbtuning.geneattributes gac 
-                WHERE lc.orthomcl_name = gac.orthomcl_name
-                 AND gac.organism not in (select distinct organism from inList)
-                 group by gac.organism
-                ) orTable,               
-                (SELECT  gl.organism, gl.dataset_name, COUNT(distinct gl.source_id) AS hit_count
-                 FROM ApidbTuning.DatasetGeneList gl, inList l
-                 WHERE l.orthomcl_name = gl.orthomcl_name
-                 AND gl.organism not in (select distinct organism from inList)
-                GROUP BY gl.organism,gl.dataset_name) R
-          WHERE  $$orthologyFlag$$ = 'yes'
-          AND dsp.name = r.dataset_name
-          AND R.organism = orTable.organism
-          GROUP BY dsp.dataset_presenter_id, r.hit_count, orTable.in_count
-          HAVING (r.hit_count/orTable.in_count)*100 >= $$threshold$$
-          ]]>
-       </sql>
-    </sqlQuery>
-
+</processQuery>
 
   </querySet>
 </wdkModel>

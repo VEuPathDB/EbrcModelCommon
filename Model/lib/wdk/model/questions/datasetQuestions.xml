@@ -197,19 +197,18 @@
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
       excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
-      <attributesList
-         summary="hit_count,percent_count,display_name,contact,institution"
-         sorting="percent_count desc, display_name asc" />
       <description>
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
+      <attributesList
+         summary="hit_count,percent_count,display_name,contact,institution"
+         sorting="percent_count asc, display_name asc" />
        <dynamicAttributes>
          <columnAttribute name="hit_count" displayName="# Valid Input Genes"  align="center" help="Number of gene identifiers from the input list that could be mapped to this organism by checking for valid IDs or ortholog transform"/>
-         <columnAttribute name="percent_count" displayName="Match Percentage"  align="center" help="Percentage of matches from the Input Valid Gene List"/>
+         <columnAttribute name="percent_count" displayName="FDR"  align="center" help="False Discovery Rate"/>
       </dynamicAttributes>
 
     </question>
-
 
 
   </questionSet>

@@ -4,15 +4,19 @@ public class ModelReference {
     private String recordClassName;
     private String targetName;
     private String targetType;
+    private int orderNumber;
     private String[] scopes;
     private String categoryIri;
-  
-    public ModelReference(String recordClassName, String targetType, String targetName, String datasetName, String[] scopes, String categoryIri) {
+
+
+
+    public ModelReference(String recordClassName, String targetType, String targetName, String datasetName, String[] scopes, String categoryIri, int orderNumber) {
         this.recordClassName = recordClassName;
         this.targetType = targetType;
         this.targetName = targetName;
         this.scopes = scopes;
         this.categoryIri = categoryIri;
+        this.orderNumber = orderNumber;
 
         if (recordClassName == null) {
             throw new UserException("Dataset " + datasetName + " contains a WDK model reference with a NULL record class name");
@@ -58,5 +62,9 @@ public class ModelReference {
 
     public String[] getScopes() {
         return scopes;
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
     }
 }

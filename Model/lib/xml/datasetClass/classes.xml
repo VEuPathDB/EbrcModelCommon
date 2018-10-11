@@ -1092,6 +1092,18 @@
   </datasetClass>
 
 
+
+
+  <datasetClass class="unidbComponentProject" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="databaseInstance"/>
+    <prop name="workflowVersion"/>
+
+    <graphTemplateFile name="unidb.xml"/>
+  </datasetClass>
+
+
   <!-- Category: ESTs -->
 
   <!-- NOTE: this dataset class only gets the sequences from a dbEST mirror database, it does not map
@@ -3148,13 +3160,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="DADA2TaxonMapping" category="" datasetFileHint="">
+  <datasetClass class="OverrideTaxonMapping" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="projectName">&projectName;</prop>
 
-    <datasetLoader datasetName="DADA2TaxonMapping_RSRC" version="${version}"
+    <datasetLoader datasetName="OverrideTaxonMapping_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="dontcare"
               >
@@ -3376,7 +3388,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </manualGet>
 
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3404,7 +3416,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </manualGet>
 
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3429,7 +3441,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </manualGet>
 
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_${name}_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_${name}_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4714,7 +4726,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/eupath_merged.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4738,7 +4750,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4760,7 +4772,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/development/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 

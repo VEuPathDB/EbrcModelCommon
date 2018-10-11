@@ -112,6 +112,19 @@
        </attributeQueryRef>
 -->
 
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest">
+         <columnAttribute name="dataset_sha1_digest" internal="true"/>
+         <columnAttribute name="dataset_display_name" internal="true"/>
+         <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
+              <displayText>
+                <![CDATA[ $$dataset_display_name$$ ]]>
+              </displayText>
+              <url> 
+                <![CDATA[ /common/downloads/Current_Release/$$dataset_sha1_digest$$ ]]>
+              </url>
+         </linkAttribute>
+       </attributeQueryRef>
+
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
          <columnAttribute name="study_categories" internal="false"/>
          <columnAttribute name="project_availability" internal="false"/>
@@ -120,6 +133,11 @@
          <columnAttribute name="card_headline" internal="false"/>
          <columnAttribute name="card_points" internal="false"/>
          <columnAttribute name="card_questions" internal="false"/>
+         <columnAttribute name="request_protection_level" internal="false"/>
+         <columnAttribute name="request_access_fields" internal="false"/>
+         <columnAttribute name="request_email" internal="false"/>
+         <columnAttribute name="request_email_body" internal="false"/>
+         <columnAttribute name="request_needs_approval" internal="false"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.All">
@@ -158,6 +176,9 @@
         <attributesList summary="organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
 
         <attributesList summary="pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+ 
+
+
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
@@ -193,6 +214,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
      <!-- =================================================================== -->
 
       <table name="ExampleGraphs"
+	     excludeProjects="ClinEpiDB,ICEMR,Gates"
 	     displayName="Example Graphs"
 	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
   <textAttribute name="thumbnail" displayName="Preview">
@@ -375,6 +397,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
        <table name="Version"
                displayName="Provider's Version"
+	       excludeProjects="ClinEpiDB,ICEMR,Gates"
                queryRef="DatasetTables.Version">
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -537,6 +560,20 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
+      <sqlQuery name="DatasetDigest" isCacheable="false">
+        <column name="dataset_sha1_digest"/>
+        <column name="dataset_display_name"/>
+        <column name="dataset_id"/> 
+          <sql>
+            <![CDATA[
+                       select dsp.dataset_sha1_digest
+                         , dsp.dataset_presenter_id as dataset_id 
+                         , dsp.display_name as dataset_display_name
+                       from ApidbTuning.DatasetPresenter dsp
+                ]]>
+        </sql>
+      </sqlQuery>
+
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false">
          <column name="dataset_id"/>
          <column name="study_categories"/>
@@ -546,19 +583,25 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="card_headline"/>
          <column name="card_points"/>
          <column name="card_questions"/>
+         <column name="request_protection_level"/>
+         <column name="request_access_fields"/>
+         <column name="request_email"/>
+         <column name="request_email_body"/>
+         <column name="request_needs_approval"/>
+
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions
+select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty 
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions')
+where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail','requestEmailBody','requestNeedsApproval')
 )
 pivot 
 (
    min(value)
-   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions)
+   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email,'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
