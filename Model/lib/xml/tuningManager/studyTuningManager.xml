@@ -1054,7 +1054,6 @@ UNION ALL
                          select organism, dataset_type, dataset_subtype, dataset_name,
                                 property, property_id, unit_id
                          from &prefixInferredChars
-
                        union
                          select organism, dataset_type, dataset_subtype, dataset_name,
                                 property, property_id, cast (null as number(10)) as unit_id
