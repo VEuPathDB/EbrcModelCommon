@@ -58,6 +58,8 @@ order by 2, 1
         where orel.subject_term_id = child.ontology_term_id
           and orel.object_term_id = parent.ontology_term_id
           and orel.subject_term_id != orel.object_term_id -- work around ICEMR bug
+          and orel.object_term_id
+              not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
           and orel.external_database_release_id = edr.external_database_release_id
           and edr.external_database_id = ed.external_database_id
           and ed.name
