@@ -93,9 +93,9 @@ order by 2, 1
         create table &prefixOntologyAncestor&1 nologging as
         select hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
                parent_ontology_term_id as ancestor_ontology_term_id
-        from apidbTuning.OntologyRelation
+        from OntologyRelation
         start with (hierarchy_dataset_name, child_ontology_term_id)
-                   in (select hierarchy_dataset_name, child_ontology_term_id from apidbTuning.OntologyRelation)
+                   in (select hierarchy_dataset_name, child_ontology_term_id from OntologyRelation)
         connect by child_ontology_term_id = prior parent_ontology_term_id
                    and hierarchy_dataset_name = prior hierarchy_dataset_name
       ]]>
