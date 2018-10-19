@@ -1321,14 +1321,17 @@ UNION ALL
                      and hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
              DatasetInfo
              -- columns that are functions of dataset
-             as (  select dataset_name, dataset_type, dataset_subtype, organism
-                   from &prefixInferredChars
-                 union
-                   select dataset_name, dataset_type, dataset_subtype, organism
-                   from &prefixInferredParams
-                 union
-                   select dataset_name, dataset_type, dataset_subtype, organism
-                   from &prefixDefaultChars)
+             as (select dataset_name, max(dataset_type) as dataset_type,
+                        max(dataset_subtype) as dataset_subtype, max(organism) as organism
+                 from (  select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixInferredChars
+                       union
+                         select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixInferredParams
+                       union
+                         select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixDefaultChars)
+                 group by dataset_name)
         select nvl(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
                ot.source_id as ontology_term_source_id, ot.definition as description,
                nvl(term_synonym.name, ot.name) as display_name, term_synonym.display_order,
