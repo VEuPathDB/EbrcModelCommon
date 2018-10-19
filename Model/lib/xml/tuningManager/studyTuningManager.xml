@@ -64,7 +64,7 @@ order by 2, 1
           and edr.external_database_id = ed.external_database_id
           and ed.name
               in (select hierarchy_dataset_name
-                  from HierarchyMap)
+                  from &prefixHierarchyMap)
       ]]>
     </sql>
     <sql>
@@ -93,9 +93,10 @@ order by 2, 1
         create table &prefixOntologyAncestor&1 nologging as
         select hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
                parent_ontology_term_id as ancestor_ontology_term_id
-        from OntologyRelation
+        from &prefixOntologyRelation
         start with (hierarchy_dataset_name, child_ontology_term_id)
-                   in (select hierarchy_dataset_name, child_ontology_term_id from OntologyRelation)
+                   in (select hierarchy_dataset_name, child_ontology_term_id
+                       from &prefixOntologyRelation)
         connect by child_ontology_term_id = prior parent_ontology_term_id
                    and hierarchy_dataset_name = prior hierarchy_dataset_name
       ]]>
