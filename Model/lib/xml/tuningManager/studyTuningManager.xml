@@ -103,7 +103,7 @@ order by 2, 1
     </sql>
     <sql>
       <![CDATA[
-        create unique index &prefixdt&1_uqix
+        create unique index &prefixontac&1_uqix
                on &prefixOntologyAncestor&1 (hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id)
                tablespace indx
       ]]>
