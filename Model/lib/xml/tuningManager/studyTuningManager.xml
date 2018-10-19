@@ -1360,6 +1360,7 @@ UNION ALL
           and dot.unit_id = unit_term.ontology_term_id(+)
           and dot.dataset_name = di.dataset_name
           and dot.ontology_term_id = pt.property_id(+)
+          and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
       ]]>
     </sql>
     <sql>
