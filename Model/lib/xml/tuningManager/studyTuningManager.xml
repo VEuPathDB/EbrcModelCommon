@@ -1299,6 +1299,7 @@ UNION ALL
     <internalDependency name="DefaultChars"/>
     <internalDependency name="HierarchyMap"/>
     <internalDependency name="InferredParams"/>
+    <internalDependency name="OntologyAncestor"/>
     <internalDependency name="OntologyRelation"/>
     <internalDependency name="PropertyType"/>
     <sql>
