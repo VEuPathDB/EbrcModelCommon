@@ -36,6 +36,80 @@ order by 2, 1
     </sql>
   </tuningTable>
 
+  <tuningTable name="OntologyRelation" prefixEnabled="true">
+    <comment>Each record represents a parent-child relation within an ontology
+             dataset. Used to build the Ontology tuning table, which adds info
+             particular to a (data) dataset, such as property types and
+             dataset-specific display names.
+    </comment>
+    <internalDependency name="HierarchyMap"/>
+    <externalDependency name="sres.OntologyRelationship"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <sql>
+      <![CDATA[
+        create table &prefixOntologyRelation&1 nologging as
+        select ed.name as hierarchy_dataset_name, edr.external_database_release_id as hierarchy_dataset_release_id,
+               child.ontology_term_id as child_ontology_term_id, child.source_id as child_ontology_term_source_id,
+               parent.ontology_term_id as parent_ontology_term_id, parent.source_id as parent_ontology_term_source_id
+        from sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
+             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
+        where orel.subject_term_id = child.ontology_term_id
+          and orel.object_term_id = parent.ontology_term_id
+          and orel.subject_term_id != orel.object_term_id -- work around ICEMR bug
+          and orel.object_term_id
+              not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
+          and orel.external_database_release_id = edr.external_database_release_id
+          and edr.external_database_id = ed.external_database_id
+          and ed.name
+              in (select hierarchy_dataset_name
+                  from &prefixHierarchyMap)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixOrelIx&1
+        on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id, parent_ontology_term_id)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixOrelUqIx&1
+        on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="OntologyAncestor" prefixEnabled="true">
+   <comment>
+     (term, ancestor term, ontology) 3-tuples
+   </comment>
+    <internalDependency name="OntologyRelation"/>
+    <sql>
+      <![CDATA[
+        create table &prefixOntologyAncestor&1 nologging as
+        select hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
+               parent_ontology_term_id as ancestor_ontology_term_id
+        from &prefixOntologyRelation
+        start with (hierarchy_dataset_name, child_ontology_term_id)
+                   in (select hierarchy_dataset_name, child_ontology_term_id
+                       from &prefixOntologyRelation)
+        connect by child_ontology_term_id = prior parent_ontology_term_id
+                   and hierarchy_dataset_name = prior hierarchy_dataset_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixontac&1_uqix
+               on &prefixOntologyAncestor&1 (hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id)
+               tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
   <tuningTable name="DatasetTerm" prefixEnabled="true">
    <comment></comment>
     <internalDependency name="HierarchyMap"/>
@@ -973,6 +1047,29 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="DatasetLeafTerm" prefixEnabled="true">
+    <comment>
+      Ontology terms used in each dataset as properties that have values
+    </comment>
+    <internalDependency name="DefaultChars"/>
+    <internalDependency name="PropertyType"/>
+    <internalDependency name="InferredParams"/>
+    <sql>
+      <![CDATA[
+        create table &prefixDatasetLeafTerm&1 nologging as
+          select dataset_name, unit_id, property_id
+          from &prefixInferredParams
+        union
+          select dataset_name, unit_id, property_id
+          from &prefixInferredChars
+        union
+          select dataset_name, null, property_id
+          from &prefixDefaultChars
+        order by dataset_name, property_id
+      ]]>
+    </sql>
+  </tuningTable>
+
   <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
@@ -1030,7 +1127,7 @@ UNION ALL
     </sql>
   </tuningTable>
 
-  <tuningTable name="Ontology" prefixEnabled="true">
+  <tuningTable name="OldOntology" prefixEnabled="true">
     <comment>
     </comment>
     <internalDependency name="DatasetTerm"/>
@@ -1040,7 +1137,7 @@ UNION ALL
     <internalDependency name="PropertyType"/>
     <sql>
       <![CDATA[
-        create table &prefixOntology&1 nologging as
+        create table &prefixOldOntology&1 nologging as
         select distinct ontology_term_name, ontology_term_id, ontology_term_source_id,
                description, display_name, display_order, parent_ontology_term_name,
                parent_ontology_term_id, parent_ontology_term_source_id, units,
@@ -1174,14 +1271,112 @@ UNION ALL
     <sql>
       <![CDATA[
         create index &prefixnmoix1&1
-        on &prefixOntology&1 (ontology_term_name, dataset_name, organism)
+        on &prefixOldOntology&1 (ontology_term_name, dataset_name, organism)
         tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixnouqix1&1
-        on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name)
+        on &prefixOldOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixOldOntology&1
+        set display_name = 'Organism'
+        where lower(ontology_term_name) = 'parasite organism'
+          and lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="Ontology" prefixEnabled="true">
+    <comment>
+    </comment>
+    <internalDependency name="DatasetLeafTerm"/>
+    <internalDependency name="DatasetTerm"/>
+    <internalDependency name="DefaultChars"/>
+    <internalDependency name="HierarchyMap"/>
+    <internalDependency name="InferredParams"/>
+    <internalDependency name="OntologyAncestor"/>
+    <internalDependency name="OntologyRelation"/>
+    <internalDependency name="PropertyType"/>
+    <sql>
+      <![CDATA[
+        create table &prefixOntology&1 nologging as
+        with DatasetOntologyTerm
+             -- a term (leaf or ancestor) of a dataset
+             as (  -- ontology terms used as properties (things with values)
+                   select dataset_name, property_id as ontology_term_id, unit_id
+                   from &prefixDatasetLeafTerm
+                 union
+                   -- ontology terms with descendants used as properties
+                   select leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
+                   cast(null as number) as unit_id
+                   from &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, OntologyAncestor ancestor
+                   where leaf.property_id = ancestor.ontology_term_id
+                     and leaf.dataset_name = hmap.dataset_name
+                     and hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
+             DatasetInfo
+             -- columns that are functions of dataset
+             as (select dataset_name, max(dataset_type) as dataset_type,
+                        max(dataset_subtype) as dataset_subtype, max(organism) as organism
+                 from (  select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixInferredChars
+                       union
+                         select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixInferredParams
+                       union
+                         select dataset_name, dataset_type, dataset_subtype, organism
+                         from &prefixDefaultChars)
+                 group by dataset_name)
+        select nvl(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
+               ot.source_id as ontology_term_source_id, ot.definition as description,
+               nvl(term_synonym.name, ot.name) as display_name, term_synonym.display_order,
+               parent.parent_ontology_term_name, parent.parent_ontology_term_id,
+               parent.parent_ontology_term_source_id, unit_term.name as units, pt.type,
+               case
+                 when pt.filter = 'range' then 1
+                 else 0
+               end as is_range,
+               cast(1 as number(1)) as precision,
+               di.organism, dot.dataset_name, di.dataset_type, di.dataset_subtype
+        from DatasetOntologyTerm dot, sres.OntologyTerm ot, &prefixHierarchyMap hmap,
+             &prefixDatasetTerm term_synonym, &prefixPropertyType pt,
+             sres.OntologyTerm unit_term, DatasetInfo di,
+             (select orel.hierarchy_dataset_name, orel.child_ontology_term_id,
+                     orel.parent_ontology_term_id, orel.parent_ontology_term_source_id,
+                     nvl(dt.name, ot.name) as parent_ontology_term_name
+              from &prefixOntologyRelation orel, sres.OntologyTerm ot, &prefixDatasetTerm dt
+              where orel.parent_ontology_term_id = ot.ontology_term_id
+                and orel.parent_ontology_term_id = dt.ontology_term_id(+)
+                and orel.hierarchy_dataset_name = dt.hierarchy_dataset_name(+)
+             ) parent
+        where dot.ontology_term_id = ot.ontology_term_id
+          and dot.dataset_name = hmap.dataset_name
+          and dot.ontology_term_id = term_synonym.ontology_term_id(+)
+          and hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name(+)
+          and dot.ontology_term_id = parent.child_ontology_term_id(+)
+          and hmap.hierarchy_dataset_name = parent.hierarchy_dataset_name(+)
+          and dot.unit_id = unit_term.ontology_term_id(+)
+          and dot.dataset_name = di.dataset_name
+          and dot.ontology_term_id = pt.property_id(+)
+          and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixnmoidx1&1
+        on &prefixOntology&1 (ontology_term_name, dataset_name, organism)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index &prefixnouqidx1&1
+        on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name, dataset_type)
         tablespace indx
       ]]>
     </sql>
