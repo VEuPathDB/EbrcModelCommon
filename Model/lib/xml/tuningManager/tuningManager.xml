@@ -427,7 +427,7 @@ FROM sres.Taxon, sres.OntologyTerm so, apidb.Organism,
       FROM &prefixSequencePieceClosure) virtualization,
      (SELECT a_na_sequence_id as na_sequence_id, 1 as has_msa
       FROM apidb.Synteny syn
-      GROUP BY a_na_sequence_id) msa
+      GROUP BY a_na_sequence_id) msa,
      (SELECT taxon_id, max(name) as name
       FROM sres.TaxonName
       WHERE name_class = 'scientific name'
