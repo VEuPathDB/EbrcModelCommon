@@ -18,6 +18,21 @@
          Find all data sets.
       </description>
     </question>
+
+        
+    <question name="Studies"
+      displayName="Studies"
+      shortDisplayName="Studies"
+      fullAnswer="true"
+      queryRef="DatasetIds.AllDatasets"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc,display_name asc" />
+      <description>
+         Find all data sets.
+      </description>
+    </question>
+
      
     <question name="DatasetsByDatasetNames"
       displayName="Data Sets by dataset names"
