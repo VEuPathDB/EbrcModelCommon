@@ -3971,6 +3971,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="truncLen"/>
     <prop name="truncLenR"/>
     <prop name="readLen"/>
+    <prop name="platform"/>
+    <prop name="sraStudyId"/>
+    <prop name="mergeTechReps"/>
 
     <graphTemplateFile name="microbiomeRoot.xml"/>
 
