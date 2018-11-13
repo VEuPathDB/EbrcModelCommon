@@ -173,9 +173,11 @@
        </attributeQueryRef>
 
      
-        <attributesList summary="organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB"/>
+        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
-        <attributesList summary="pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+
+        <attributesList summary="display_name,pmids,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
  
 
 
