@@ -89,7 +89,7 @@
     
 
        <attributeQueryRef ref="DatasetAttributes.Organisms">
-         <columnAttribute name="organism_prefix" displayName="Organism(s) (source or reference)" 
+         <columnAttribute excludeProjects="ClinEipDB,Gates,ICEMR" name="organism_prefix" displayName="Organism(s) (source or reference)" 
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
        </attributeQueryRef>
 
@@ -173,11 +173,11 @@
        </attributeQueryRef>
 
      
-        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
         <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
 
-        <attributesList summary="display_name,pmids,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
+        <attributesList summary="display_name,pmids,summary,eupath_release,contact" includeProjects="ClinEpiDB,Gates,ICEMR"/>
  
 
 
