@@ -708,7 +708,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
 
 
-
+<!--  i think this should be removed from within this querySet: DatasetAttributes since it is a table
       <sqlQuery name="AccessRequest"  isCacheable="false">
 	    <column name="dataset_id"/>
 	    <column name="dataset_name"/>
@@ -740,7 +740,7 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             </sql>
       </sqlQuery>
 
-
+-->
 
 
 
@@ -897,13 +897,13 @@ FROM (
          SELECT * 
          FROM( 
              SELECT user_id, key, value
-             FROM useraccounts.account_properties@acctdbN.profile where key in ('first_name', 'last_name')
+             FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ where key in ('first_name', 'last_name')
          )
      )
     GROUP BY user_id
  )t1,
-(SELECT user_id,value FROM useraccounts.account_properties@acctdbN.profile WHERE key in ('organization'))t2,
-(SELECT user_id, dataset_presenter_id,start_date, purpose FROM userlogins5.ValidDatasetUser@CEDEVN.LOGIN_COMMENT)t3,
+(SELECT user_id,value FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ WHERE key in ('organization'))t2,
+(SELECT user_id, dataset_presenter_id,start_date, purpose FROM @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@ where purpose is not NULL)t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
 
 WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
