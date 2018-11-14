@@ -128,7 +128,7 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
          <columnAttribute name="study_categories" internal="false"/>
          <columnAttribute name="project_availability" internal="false"/>
-         <columnAttribute name="study_access" internal="false"/>
+         <columnAttribute name="study_access" displayName="Study Accessibility"  internal="false"/>
          <columnAttribute name="policy_url" internal="false"/>
          <columnAttribute name="card_headline" internal="false"/>
          <columnAttribute name="card_points" internal="false"/>
@@ -734,7 +734,9 @@ FROM (
 (SELECT user_id, dataset_presenter_id,start_date, purpose FROM userlogins5.ValidDatasetUser@CEPRODN.LOGIN_COMMENT)t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
 
-WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
+WHERE t1.user_id = t2.user_id and t1.user_id = t3.user_id  and t3.dataset_presenter_id = t4.dataset_presenter_id 
+and t3.purpose is not null
+
  ]]>
 
             </sql>
@@ -907,6 +909,7 @@ FROM (
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
 
 WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
+and t3.purpose is not null
  ]]>
 
             </sql>
