@@ -147,7 +147,8 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.All">
-         <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+         <columnAttribute name="dataset_name" includeProjects="MicrobiomeDB"  displayName="Data Set Name" help="Name of the dataset."/>
+         <columnAttribute name="dataset_name" includeProjects="ClinEpiDB,Gates,ICEMRM"  displayName="Data Set Name" help="Name of the dataset."/>
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
