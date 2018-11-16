@@ -132,13 +132,13 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
-         <columnAttribute name="study_categories" displayName="Category" internal="false"/>
+         <columnAttribute name="study_categories" displayName="Category"/>
          <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study Accessibility"  internal="false"/>
+         <columnAttribute name="study_access" displayName="Study Accessibility"/>
          <columnAttribute name="policy_url" internal="true"/>
          <columnAttribute name="card_headline" internal="true"/>
          <columnAttribute name="card_points" internal="true"/>
-         <columnAttribute name="card_questions" displayName="Searches" internal="false"/>
+         <columnAttribute name="card_questions" displayName="Searches"/>
          <columnAttribute name="request_protection_level" internal="true"/>
          <columnAttribute name="request_access_fields" internal="true"/>
          <columnAttribute name="request_email" internal="true"/>
@@ -147,12 +147,14 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.All">
-         <columnAttribute name="dataset_name" includeProjects="MicrobiomeDB"  displayName="Data Set Name" help="Name of the dataset."/>
-         <columnAttribute name="dataset_name" includeProjects="ClinEpiDB,Gates,ICEMRM"  displayName="Data Set Name" help="Name of the dataset."/>
+         <columnAttribute name="dataset_name" internal="true"/>
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
-         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
+         <columnAttribute name="display_name" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" removable="false"/>
+         <columnAttribute name="display_name" includeProjects="MicrobiomeDB" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="description" displayName="Description" internal="true" sortable="false"
+         <columnAttribute name="description" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" sortable="false"
+                          help="A full description of the dataset."/>
+         <columnAttribute name="description" includeProjects="MicrobiomeDB" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
          <columnAttribute name="usage" internal="true"/>
@@ -165,9 +167,13 @@
                           help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="release_policy"  displayName="Release Policy" internal="true"
+         <columnAttribute name="release_policy" includeProjects="ClinEpiDB,Gates,ICEMR"  displayName="Release Policy" internal="true"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="pmids" displayName="Publications" internal="true" sortable="false"
+         <columnAttribute name="release_policy" includeProjects="MicrobiomeDB"  displayName="Release Policy"
+                          help= "A request from the data provider stipulating the proper use of unpublished data. "  />
+         <columnAttribute name="pmids" displayName="Publications" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" sortable="false"
+                          help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" includeProjects="MicrobiomeDB" sortable="false"
                           help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -225,7 +231,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
      <!-- =================================================================== -->
 
       <table name="ExampleGraphs"
-	     excludeProjects="ClinEpiDB,ICEMR,Gates"
+	     excludeProjects="ClinEpiDB,ICEMR,Gates,MicrobiomeDB"
 	     displayName="Example Graphs"
 	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
   <textAttribute name="thumbnail" displayName="Preview">
