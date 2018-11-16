@@ -123,7 +123,7 @@
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
               <displayText>
-                <![CDATA[ $$dataset_display_name$$ ]]>
+                <![CDATA[ <i class="fa fa-download"></i> ]]>
               </displayText>
               <url> 
                 <![CDATA[ /common/downloads/Current_Release/$$dataset_sha1_digest$$ ]]>
