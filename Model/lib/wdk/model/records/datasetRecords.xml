@@ -53,7 +53,7 @@
           </text>
       </idAttribute>
 
- <idAttribute name="primary_key" displayName="Study" includeProjects="ClinEpiDB"
+      <idAttribute name="primary_key" displayName="Study" includeProjects="ClinEpiDB,Gates,ICEMR"
                    help="Click a study to go to the full study record">
           <text>
               <![CDATA[ $$display_name$$ ]]>
