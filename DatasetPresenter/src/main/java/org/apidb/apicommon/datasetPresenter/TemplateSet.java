@@ -40,7 +40,7 @@ public class TemplateSet {
   Template getTemplateByName(String name) {
       Template template = nameToTemplate.get(name);
 
-      if(template == null || template.equals("")) {
+      if(template == null) {
           throw new RuntimeException("No Template found by name:  " + name);
       }
 
