@@ -1315,7 +1315,7 @@ UNION ALL
                    -- ontology terms with descendants used as properties
                    select leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
                    cast(null as number) as unit_id
-                   from &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, OntologyAncestor ancestor
+                   from &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, &prefixOntologyAncestor ancestor
                    where leaf.property_id = ancestor.ontology_term_id
                      and leaf.dataset_name = hmap.dataset_name
                      and hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
