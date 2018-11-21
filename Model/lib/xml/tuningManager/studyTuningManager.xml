@@ -1526,12 +1526,18 @@ select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation
 from &prefixPANIO hp 
 where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000738'
 ),
+iohh as (
+select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
+from &prefixPANIO hp 
+where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'PCO_0000024'
+),
 hhold as (
 select * from (
  select distinct m.property_source_id as ontology_term_name, 
- CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id ELSE m.pan_id END as household_id, 
+ CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id 
+ WHEN iohh.household_id is not null THEN iohh.household_id ELSE m.pan_id END as household_id, 
  m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, iopo, ioho
+ from &prefixMetaData m, iopo, ioho, iohh
  where m.property_source_id in (
  select distinct o.ontology_term_source_id
  from &prefixOntology o
@@ -1540,6 +1546,7 @@ select * from (
    )
  and m.pan_id = iopo.observation_id(+)
  and m.pan_id = ioho.observation_id(+)
+ and m.pan_id = iohh.observation_id(+)
  ))
  select * from (
  select * from hhold
