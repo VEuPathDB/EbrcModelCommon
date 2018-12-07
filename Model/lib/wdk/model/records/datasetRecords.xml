@@ -675,10 +675,9 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                    dsp.is_species_scope, 
                    dsp.build_number_introduced,
                    nvl2(
-                     -- NULL if build_number_introduced is 0 or 1
+                     -- NULL if build_number_introduced is 0
                      DECODE(dsp.build_number_introduced,
                             0, NULL,
-                            1, NULL,
                                dsp.build_number_introduced),
                      '@PROJECT_ID@ ' || bd.release_number || ' / ' || bd.release_date,
                      NULL

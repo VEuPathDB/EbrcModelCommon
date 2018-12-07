@@ -12,7 +12,9 @@
         <column name="dataset_id"/>
         <sql>
           <![CDATA[
-                   select dataset_presenter_id as dataset_id from apidbtuning.datasetpresenter
+            select dataset_presenter_id as dataset_id
+            from apidbtuning.datasetpresenter
+            order by build_number_introduced desc
           ]]>
        </sql>
     </sqlQuery>
@@ -212,6 +214,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
         <column name="dataset_id"/>
         <column name="study_id"/>
         <column name="restriction_level"/>
+        <column name="approval_status"/>
 
         <sql>
           <![CDATA[
@@ -220,8 +223,10 @@ FROM (select dataset_presenter_id, value as study_access
 from apidbtuning.datasetproperty 
 where  property = 'studyAccess') d,
 (select dataset_presenter_id, restriction_level as study_access
-from @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@
-where user_id = $$user_id$$) u
+ from @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@
+ where user_id = $$user_id$$  
+ AND (approval_status < 1 or approval_status is NULL)
+) u
 WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
           ]]>
        </sql>
