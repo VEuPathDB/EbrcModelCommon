@@ -152,8 +152,7 @@
          <columnAttribute name="display_name" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" removable="false"/>
          <columnAttribute name="display_name" includeProjects="MicrobiomeDB" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="description" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" sortable="false"
-                          help="A full description of the dataset."/>
+         <columnAttribute name="description" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" displayName="Description" sortable="false" help="A full description of the dataset."/>
          <columnAttribute name="description" includeProjects="MicrobiomeDB" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
