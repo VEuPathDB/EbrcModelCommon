@@ -370,6 +370,7 @@ order by organism, species, genus
     <externalDependency name="apidb.Synteny"/>
     <externalDependency name="apidb.Organism"/>
     <externalDependency name="dots.DbRefNaSequence"/>
+    <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="sres.DbRef"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
