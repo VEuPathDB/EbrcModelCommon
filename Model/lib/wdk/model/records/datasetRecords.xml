@@ -335,7 +335,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- External Links -->  
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="HyperLinks" excludeProjects="ClinEpiDB"
+        <table name="HyperLinks"
                displayName="Link Outs"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
