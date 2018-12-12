@@ -188,7 +188,7 @@
         <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
         <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact"
-                        sorting="eupath_release desc,display_name asc"
+			sorting="build_number_introduced desc,display_name asc"
                         includeProjects="MicrobiomeDB"/>
 
         <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" includeProjects="ClinEpiDB,Gates,ICEMR"/>
