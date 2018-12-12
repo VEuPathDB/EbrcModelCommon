@@ -164,7 +164,7 @@
          <columnAttribute name="type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date" 
                           help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
-         <columnAttribute name="summary" displayName="Summary" sortable="false"
+         <columnAttribute name="summary" displayName="Summary"
                           help= "A short description of the dataset."/>
          <columnAttribute name="release_policy" includeProjects="ClinEpiDB,Gates,ICEMR"  displayName="Release Policy" internal="true"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
@@ -188,7 +188,7 @@
         <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
         <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact"
-			sorting="build_number_introduced desc,display_name asc"
+			sorting="eupath_release desc,display_name asc"
                         includeProjects="MicrobiomeDB"/>
 
         <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" includeProjects="ClinEpiDB,Gates,ICEMR"/>
