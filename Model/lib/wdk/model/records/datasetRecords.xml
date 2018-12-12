@@ -828,6 +828,7 @@ from apidbtuning.datasetnametaxon dsnt
              select dataset_presenter_id as dataset_id, pmid, citation
              from ApidbTuning.DatasetPublication
              where pmid is not null
+             order by dataset_publication_id
             ]]>
             </sql>
       </sqlQuery>
