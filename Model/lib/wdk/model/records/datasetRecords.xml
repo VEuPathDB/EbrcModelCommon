@@ -164,7 +164,7 @@
          <columnAttribute name="type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date" 
                           help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
-         <columnAttribute name="summary" displayName="Summary" sortable="false"
+         <columnAttribute name="summary" displayName="Summary"
                           help= "A short description of the dataset."/>
          <columnAttribute name="release_policy" includeProjects="ClinEpiDB,Gates,ICEMR"  displayName="Release Policy" internal="true"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
@@ -187,14 +187,11 @@
      
         <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
-        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact" includeProjects="MicrobiomeDB"/>
-
-
+        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact"
+			sorting="eupath_release desc,display_name asc"
+                        includeProjects="MicrobiomeDB"/>
 
         <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" includeProjects="ClinEpiDB,Gates,ICEMR"/>
- 
-
-
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
@@ -338,7 +335,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- External Links -->  
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="HyperLinks" excludeProjects="ClinEpiDB"
+        <table name="HyperLinks"
                displayName="Link Outs"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -831,6 +828,7 @@ from apidbtuning.datasetnametaxon dsnt
              select dataset_presenter_id as dataset_id, pmid, citation
              from ApidbTuning.DatasetPublication
              where pmid is not null
+             order by dataset_publication_id
             ]]>
             </sql>
       </sqlQuery>

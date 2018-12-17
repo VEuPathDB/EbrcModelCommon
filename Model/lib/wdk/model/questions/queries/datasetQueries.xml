@@ -13,8 +13,7 @@
         <sql>
           <![CDATA[
             select dataset_presenter_id as dataset_id
-            from apidbtuning.datasetpresenter
-            order by build_number_introduced desc
+            from apidbTuning.DatasetPresenter
           ]]>
        </sql>
     </sqlQuery>
