@@ -1287,8 +1287,9 @@
     <track>tcruCLBrenerEsmeraldo-like</track>
     <track>tcruCLBrenerNon-Esmeraldo-like</track>
     <track>tcruCLBrener</track>
-    <track>tcruDm28c</track>
-    <track>tcrucruziDm28c</track>
+    <track>tcruDm28c2014</track>
+    <track>tcruDm28c2017</track>
+    <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
   </subtrackSet>
@@ -1371,10 +1372,11 @@
     <org organism="Trypanosoma cruzi CL Brener Non-Esmeraldo-like" abbrev="tcruCLBrenerNon-Esmeraldo-like" />
     <org organism="Trypanosoma cruzi strain CL Brener" abbrev="tcruCLBrener" />
     <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
-    <org organism="Trypanosoma cruzi Dm28c" abbrev="tcruDm28c" />
+    <org organism="Trypanosoma cruzi Dm28c 2014" abbrev="tcruDm28c2014" />
     <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
-    <org organism="Trypanosoma cruzi cruzi strain Dm28c" abbrev="tcrucruziDm28c" />
+    <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
+    <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
