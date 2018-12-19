@@ -44,6 +44,7 @@
     <track>pfalSN01</track>
     <track>pfalTG01</track>
     <track>pvivSal1</track>
+    <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
     <track>pcynB</track>
@@ -71,6 +72,7 @@
     <track>pfalSN01</track>
     <track>pfalTG01</track>
     <track>pvivSal1</track>
+    <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
     <track>pcynB</track>
@@ -172,6 +174,7 @@
     <org organism="Plasmodium falciparum TG01" abbrev="pfalTG01" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
+    <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
@@ -209,6 +212,7 @@
     <org organism="Plasmodium falciparum TG01" abbrev="pfalTG01" />
     <org organism="Plasmodium vivax Sal-1" abbrev="pvivSal1" />
     <org organism="Plasmodium vivax P01" abbrev="pvivP01" />
+    <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
@@ -1287,8 +1291,9 @@
     <track>tcruCLBrenerEsmeraldo-like</track>
     <track>tcruCLBrenerNon-Esmeraldo-like</track>
     <track>tcruCLBrener</track>
-    <track>tcruDm28c</track>
-    <track>tcrucruziDm28c</track>
+    <track>tcruDm28c2014</track>
+    <track>tcruDm28c2017</track>
+    <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
   </subtrackSet>
@@ -1296,6 +1301,7 @@
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
     <track>tbruTREU927</track>
     <track>tbruLister427</track>
+    <track>tbruLister427_2018</track>
     <track>tbrugambienseDAL972</track>
   </subtrackSet>
 
@@ -1371,10 +1377,11 @@
     <org organism="Trypanosoma cruzi CL Brener Non-Esmeraldo-like" abbrev="tcruCLBrenerNon-Esmeraldo-like" />
     <org organism="Trypanosoma cruzi strain CL Brener" abbrev="tcruCLBrener" />
     <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
-    <org organism="Trypanosoma cruzi Dm28c" abbrev="tcruDm28c" />
+    <org organism="Trypanosoma cruzi Dm28c 2014" abbrev="tcruDm28c2014" />
     <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
-    <org organism="Trypanosoma cruzi cruzi strain Dm28c" abbrev="tcrucruziDm28c" />
+    <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
+    <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
@@ -1394,6 +1401,7 @@
   <url project="TriTrypDB" type="synteny">
     <org organism="Trypanosoma brucei brucei TREU927" abbrev="tbruTREU927" />
     <org organism="Trypanosoma brucei Lister strain 427" abbrev="tbruLister427" />
+    <org organism="Trypanosoma brucei Lister strain 427 2018" abbrev="tbruLister427_2018" />
     <org organism="Trypanosoma brucei gambiense DAL972" abbrev="tbrugambienseDAL972" />
     <org organism="Trypanosoma congolense IL3000" abbrev="tconIL3000" />
     <org organism="Trypanosoma evansi strain STIB 805" abbrev="tevaSTIB805" />
