@@ -1339,6 +1339,10 @@
     <track>pconCUL13</track>
   </subtrackSet>
 
+  <subtrackSet project="TriTrypDB" name="Bodo_gene" suffixes="_span;_gene">
+    <track>bsalLakeKonstanz</track>
+  </subtrackSet>
+
   <url project="TriTrypDB" type="synteny">
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
@@ -1505,6 +1509,21 @@
       <subtrack set="crithidia_gene" />
       <subtrack set="leish_gene" />
       <subtrack set="cruzi_gene" />
+     </track>
+  </url>
+
+  <url project="TriTrypDB" type="synteny">
+    <org organism="Bodo saltans strain Lake Konstanz" abbrev="bsalLakeKonstanz" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Bodo_gene" />
+      <subtrack set="brucei_gene" />
+      <subtrack set="cruzi_gene" />
+      <subtrack set="leish_gene" />
+      <subtrack set="Paratrypanosoma_gene" />
+      <subtrack set="Blechomonas_gene" />
+      <subtrack set="monterogeii_gene" />
+      <subtrack set="crithidia_gene" />
      </track>
   </url>
 
