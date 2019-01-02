@@ -414,6 +414,8 @@ order by pan.name
                          then 'OntologyTerm_gates_gems_RSRC'
                        when name = 'ISASimple_ICEMR_South_Asia_surveillance_RSRC'
                          then 'OntologyTerm_icemr_southAsia_RSRC'
+                       when name = 'ISASimple_ICEMR_India_fever_surveillance_RSRC'
+                         then 'OntologyTerm_icemr_india_feverSurv_RSRC'
                        else 'OntologyTerm_eupath_isa_RSRC'
                      end as hardwired_hierarchy
               from sres.ExternalDatabase
@@ -673,7 +675,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <sql>
       <![CDATA[
         create table &prefixInferredChars&1 nologging as
-        select distinct -- should be unneeded and can use too much temp space
+        select -- distinct -- should be unneeded and can use too much temp space
                 sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,

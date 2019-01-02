@@ -146,6 +146,8 @@
          <columnAttribute name="request_needs_approval" internal="true"/>
        </attributeQueryRef>
 
+ 
+
        <attributeQueryRef ref="DatasetAttributes.All">
          <columnAttribute name="dataset_name" internal="true"/>
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
@@ -182,16 +184,20 @@
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>  
          <columnAttribute name="short_attribution" internal="true"/>
-       </attributeQueryRef>
+       </attributeQueryRef>     
 
      
-        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
+<!--   Columns to show
+-->
+        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" 
+                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
-        <attributesList summary="display_name,pmids,newcategory,summary,eupath_release,contact"
-			sorting="eupath_release desc,display_name asc"
+        <attributesList summary="eupath_release,summary,contact,pmids"
+                        sorting="eupath_release desc,primary_key asc"
                         includeProjects="MicrobiomeDB"/>
 
-        <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" includeProjects="ClinEpiDB,Gates,ICEMR"/>
+        <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" 
+                        includeProjects="ClinEpiDB,Gates,ICEMR"/>
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
