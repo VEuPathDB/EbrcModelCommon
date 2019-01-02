@@ -675,7 +675,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <sql>
       <![CDATA[
         create table &prefixInferredChars&1 nologging as
-        select distinct -- should be unneeded and can use too much temp space
+        select -- distinct -- should be unneeded and can use too much temp space
                 sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
                         sample_ot.ontology_term_id as pan_type_id,
