@@ -1267,9 +1267,11 @@
 <!-- TriTrypDB -->
 
   <subtrackSet project="TriTrypDB" name="leish_gene" suffixes="_span;_gene">
+    <track>lamaMHOMBR71973M2269</track>
     <track>lbraMHOMBR75M2904</track>
     <track>lbraMHOMBR75M2903</track>
     <track>ldonBPK282A1</track>
+    <track>ldonCL-SL</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
@@ -1345,9 +1347,11 @@
   </subtrackSet>
 
   <url project="TriTrypDB" type="synteny">
+    <org organism="Leishmania amazonensis MHOM/BR/71973/M2269" abbrev="lamaMHOMBR71973M2269" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
+    <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
