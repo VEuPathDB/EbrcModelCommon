@@ -1097,12 +1097,12 @@ UNION ALL
                        pan_id, pan_name,
                        protocol as category, property, property_id, value
                 from &prefixInferredParams
-              union
+              union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name,
                        ancestor_pan_type as category, property, property_id, value
                 from &prefixInferredChars
-              union
+              union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name,
                        null as category, property, property_id, value
