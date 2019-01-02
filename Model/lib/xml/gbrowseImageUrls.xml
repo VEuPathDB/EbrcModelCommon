@@ -1296,6 +1296,7 @@
     <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
+    <track>tcruTCC</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1386,6 +1387,7 @@
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
     <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
+    <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
