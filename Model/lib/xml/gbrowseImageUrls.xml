@@ -1267,9 +1267,11 @@
 <!-- TriTrypDB -->
 
   <subtrackSet project="TriTrypDB" name="leish_gene" suffixes="_span;_gene">
+    <track>lamaMHOMBR71973M2269</track>
     <track>lbraMHOMBR75M2904</track>
     <track>lbraMHOMBR75M2903</track>
     <track>ldonBPK282A1</track>
+    <track>ldonCL-SL</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
@@ -1296,6 +1298,7 @@
     <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
+    <track>tcruTCC</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1339,10 +1342,16 @@
     <track>pconCUL13</track>
   </subtrackSet>
 
+  <subtrackSet project="TriTrypDB" name="Bodo_gene" suffixes="_span;_gene">
+    <track>bsalLakeKonstanz</track>
+  </subtrackSet>
+
   <url project="TriTrypDB" type="synteny">
+    <org organism="Leishmania amazonensis MHOM/BR/71973/M2269" abbrev="lamaMHOMBR71973M2269" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
+    <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
@@ -1382,6 +1391,7 @@
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
     <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
+    <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
@@ -1505,6 +1515,21 @@
       <subtrack set="crithidia_gene" />
       <subtrack set="leish_gene" />
       <subtrack set="cruzi_gene" />
+     </track>
+  </url>
+
+  <url project="TriTrypDB" type="synteny">
+    <org organism="Bodo saltans strain Lake Konstanz" abbrev="bsalLakeKonstanz" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Bodo_gene" />
+      <subtrack set="brucei_gene" />
+      <subtrack set="cruzi_gene" />
+      <subtrack set="leish_gene" />
+      <subtrack set="Paratrypanosoma_gene" />
+      <subtrack set="Blechomonas_gene" />
+      <subtrack set="monterogeii_gene" />
+      <subtrack set="crithidia_gene" />
      </track>
   </url>
 
