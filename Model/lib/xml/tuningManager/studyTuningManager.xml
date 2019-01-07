@@ -1110,7 +1110,7 @@ UNION ALL
              ) m
         where (m.property_id = mt.property_id
                or (mt.property_id is null and m.property = mt.property))
-        order by organism, dataset_type, dataset_subtype, dataset_name, pan_name
+        -- order by organism, dataset_type, dataset_subtype, dataset_name, pan_name
       ]]>
     </sql>
     <sql>
