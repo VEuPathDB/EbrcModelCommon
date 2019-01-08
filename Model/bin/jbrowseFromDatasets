@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $CONF_FILE_BASENAME = "tracks.conf";
+
+my $PROP_FILE_PATH = "$ENV{GUS_HOME}/lib/prop/datasetProperties/*.prop";
+my $TRACKS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/JBrowse/Model/conf/$CONF_FILE_BASENAME";
+
+my $CUSTOM_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/JBrowse/Model/lib/jbrowse";
+my $GENERATED_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/JBrowse/Model/lib/generated";
+
+my @files = glob $PROP_FILE_PATH;
+
+foreach my $file (@files) {
+  open(FILE, $file) or die "Cannot open file $file for reading: $!";
+  while (my $line = <FILE>) {
+    chomp;
+    if ($line =~ /publicOrganismAbbrev=(.+)$/) {
+
+      my $organismAbbrev = $1;
+
+      my $orgCustomTracksConf = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
+
+      my $orgGeneratedTracksDir = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev";
+      my $orgGeneratedTracksConf = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
+
+      unless(-d $orgGeneratedTracksDir) {
+        system("mkdir -p $orgGeneratedTracksDir") == 0 or die "mkdir failed for directory $orgGeneratedTracksDir: $?";
+      }
+
+      # generated track file doesn't exist OR does exist but custom file exists and is newer
+      if(! -e $orgGeneratedTracksConf || (-e $orgCustomTracksConf && (stat $orgCustomTracksConf)[9] > (stat $orgGeneratedTracksConf)[9])) {
+
+        system("cp $TRACKS_CONF_FOR_INJECTION $orgGeneratedTracksConf") == 0 or die "cp failed: $?";
+
+        if(-e $orgCustomTracksConf) {
+          system("cat $orgCustomTracksConf >> $orgGeneratedTracksConf") == 0 or die "cat failed: $?";
+        }
+      }
+    }
+  }
+}
+
