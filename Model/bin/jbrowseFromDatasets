@@ -37,8 +37,10 @@ foreach my $file (@files) {
         system("mkdir -p $orgGeneratedTracksDir") == 0 or die "mkdir failed for directory $orgGeneratedTracksDir: $?";
       }
 
-      # generated track file doesn't exist OR does exist but custom file exists and is newer
-      if(! -e $orgGeneratedTracksConf || (-e $orgCustomTracksConf && (stat $orgCustomTracksConf)[9] > (stat $orgGeneratedTracksConf)[9])) {
+      # generated track file doesn't exist OR INJECTED TRACKS IS NEWER  OR custom file exists and is newer
+      if(! -e $orgGeneratedTracksConf || 
+         (stat $TRACKS_CONF_FOR_INJECTION)[9] > (stat $orgGeneratedTracksConf)[9] || 
+         (-e $orgCustomTracksConf && (stat $orgCustomTracksConf)[9] > (stat $orgGeneratedTracksConf)[9])) {
 
         system("cp $TRACKS_CONF_FOR_INJECTION $orgGeneratedTracksConf") == 0 or die "cp failed: $?";
 
