@@ -499,7 +499,9 @@
     <track>foxyrace4</track>
     <track>foxy26406</track>
     <track>foxyFo47</track>
+    <track>foxyFOSC3a</track>
     <track>fproET1</track>
+    <track>fproNRRL62905</track>
     <track>fver7600</track>
   </subtrackSet>
 
@@ -514,6 +516,8 @@
     <track>cgatEJB2</track>
     <track>cgatNT10</track>
     <track>cdeuR265</track>
+    <track>kbesCBS10118</track>
+    <track>kdejCBS10117</track>
     <track>tmesDSM1558</track>
   </subtrackSet>
 
@@ -738,7 +742,9 @@
     <org abbrev="foxyrace4" organism="Fusarium oxysporum f. sp. cubense race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
+    <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum FOSC 3-a"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
+    <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -758,6 +764,8 @@
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
     <org abbrev="cdeuR265" organism="Cryptococcus deuterogattii R265"/>
+    <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
+    <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
