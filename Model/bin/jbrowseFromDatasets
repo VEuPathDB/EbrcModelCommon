@@ -18,7 +18,7 @@ foreach my $file (@files) {
   open(FILE, $file) or die "Cannot open file $file for reading: $!";
   while (my $line = <FILE>) {
     chomp;
-    if ($line =~ /publicOrganismAbbrev=(.+)$/) {
+    if ($line =~ /organismAbbrev=(.+)$/) {
 
       my $organismAbbrev = $1;
 
