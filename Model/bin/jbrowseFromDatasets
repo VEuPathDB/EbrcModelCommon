@@ -5,10 +5,10 @@ use strict;
 my $CONF_FILE_BASENAME = "tracks.conf";
 
 my $PROP_FILE_PATH = "$ENV{GUS_HOME}/lib/prop/datasetProperties/*.prop";
-my $TRACKS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/JBrowse/Model/conf/$CONF_FILE_BASENAME";
+my $TRACKS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$CONF_FILE_BASENAME";
 
-my $CUSTOM_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/JBrowse/Model/lib/jbrowse";
-my $GENERATED_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/JBrowse/Model/lib/jbrowse/auto_generated";
+my $CUSTOM_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse";
+my $GENERATED_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/auto_generated";
 
 my $GUS_HOME_BASE = "$ENV{GUS_HOME}/lib/jbrowse/auto_generated";
 
