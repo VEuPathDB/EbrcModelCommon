@@ -334,9 +334,6 @@ public class Template {
     String projectName = anchorFileNameToProject.get(anchorFileName);
     String organismAbbrev = anchorFileNameToOrganismAbbrev.get(anchorFileName);
 
-
-    System.out.println("organismAbbrev" + organismAbbrev);
-
     // getting null pointer when template exists in dst file but not called
     // anywhere
     if (templateInstances != null) {
