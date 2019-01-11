@@ -499,7 +499,9 @@
     <track>foxyrace4</track>
     <track>foxy26406</track>
     <track>foxyFo47</track>
+    <track>foxyFOSC3a</track>
     <track>fproET1</track>
+    <track>fproNRRL62905</track>
     <track>fver7600</track>
   </subtrackSet>
 
@@ -514,6 +516,8 @@
     <track>cgatEJB2</track>
     <track>cgatNT10</track>
     <track>cdeuR265</track>
+    <track>kbesCBS10118</track>
+    <track>kdejCBS10117</track>
     <track>tmesDSM1558</track>
   </subtrackSet>
 
@@ -738,7 +742,9 @@
     <org abbrev="foxyrace4" organism="Fusarium oxysporum f. sp. cubense race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
+    <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum FOSC 3-a"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
+    <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -758,6 +764,8 @@
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
     <org abbrev="cdeuR265" organism="Cryptococcus deuterogattii R265"/>
+    <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
+    <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1267,9 +1275,11 @@
 <!-- TriTrypDB -->
 
   <subtrackSet project="TriTrypDB" name="leish_gene" suffixes="_span;_gene">
+    <track>lamaMHOMBR71973M2269</track>
     <track>lbraMHOMBR75M2904</track>
     <track>lbraMHOMBR75M2903</track>
     <track>ldonBPK282A1</track>
+    <track>ldonCL-SL</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
@@ -1296,6 +1306,7 @@
     <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
+    <track>tcruTCC</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1344,9 +1355,11 @@
   </subtrackSet>
 
   <url project="TriTrypDB" type="synteny">
+    <org organism="Leishmania amazonensis MHOM/BR/71973/M2269" abbrev="lamaMHOMBR71973M2269" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
+    <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
@@ -1386,6 +1399,7 @@
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
     <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
+    <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
