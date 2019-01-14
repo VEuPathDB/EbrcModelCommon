@@ -921,12 +921,17 @@ FROM (
      )
     GROUP BY user_id
  )t1,
-(SELECT user_id,value FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ WHERE key in ('organization'))t2,
-(SELECT user_id, dataset_presenter_id,start_date, purpose FROM @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@ where purpose is not NULL)t3,
+(SELECT user_id, value 
+   FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ 
+  WHERE key in ('organization'))t2,
+(SELECT user_id, dataset_presenter_id, start_date, purpose, approval_status 
+   FROM @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@ 
+  WHERE purpose is not NULL
+    AND approval_status is NULL OR approval_status = 0)t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
 
 WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
-and t3.purpose is not null
+
  ]]>
 
             </sql>
