@@ -72,11 +72,21 @@ public class Template {
    * the anchor file name provided by the template file
    */
   private String rawAnchorFileName;
+
   /**
    * a set of file names. this results if the rawAnchorFileName contains the
    * ${projectName} macro.
    */
   private Map<String, String> anchorFileNameToProject = new HashMap<String, String>();
+
+
+  /**
+   * a set of file names. this results if the rawAnchorFileName contains the
+   * ${organismAbbrev} macro.
+   */
+  private Map<String, String> anchorFileNameToOrganismAbbrev = new HashMap<String, String>();
+
+
   private String name;
   private String templateFilePath;
 
@@ -156,10 +166,20 @@ public class Template {
       return;
     }
 
-    // replace clumsy project name macro with simple macro, and confirm only one
-    // instance of it
-    String rawAnchorFileName2 = rawAnchorFileName.replaceFirst(
-        "\\$\\{projectName\\}", "PROJECTNAME");
+    String rawAnchorFileName2 = rawAnchorFileName;
+
+    if (rawAnchorFileName.contains("${projectName}")) {
+        rawAnchorFileName2 = rawAnchorFileName.replaceFirst(
+        "\\$\\{projectName\\}", "ANCHORFILEMACRO");
+    }
+
+    if (rawAnchorFileName.contains("${organismAbbrev}")) {
+        rawAnchorFileName2 = rawAnchorFileName2.replaceFirst(
+        "\\$\\{organismAbbrev\\}", "ANCHORFILEMACRO");
+    }
+
+    boolean anchorFileMacroIsDir = rawAnchorFileName2.contains("/ANCHORFILEMACRO/");
+
     if (rawAnchorFileName2.contains("$"))
       throw new UserException(
           msgPrefix
@@ -169,17 +189,36 @@ public class Template {
     Path tempPath = FileSystems.getDefault().getPath(project_home,
         rawAnchorFileName2);
     String temp = tempPath.toString();
-    String[] splitPath = temp.split("PROJECTNAME");
-    String[] splitRaw = rawAnchorFileName2.split("PROJECTNAME");
+
+    String[] splitPath = temp.split("ANCHORFILEMACRO");
+    String[] splitRaw = rawAnchorFileName2.split("ANCHORFILEMACRO");
     Path path = FileSystems.getDefault().getPath(splitPath[0]);
+
     String glob = "*" + splitPath[1];
+    if(anchorFileMacroIsDir) {
+        glob = "*";
+    }
+
     try (DirectoryStream<Path> ds = Files.newDirectoryStream(path, glob)) {
       for (Path p : ds) {
+
         String pathName = p.toString().replaceAll("\\\\", "/"); // GO UNIX!
         String pathName2 = pathName.replaceFirst(project_home + "/", "");
-        String projectName = pathName2.replaceFirst(splitRaw[0], "").replaceFirst(
+        String pathVar = pathName2.replaceFirst(splitRaw[0], "").replaceFirst(
             splitRaw[1], "");
-        setAnchorFileNameProject(pathName2, projectName);
+
+        if(anchorFileMacroIsDir) {
+            pathName2 = pathName2 + splitPath[1];
+        }
+
+
+        if (rawAnchorFileName.contains("${projectName}")) {
+            setAnchorFileNameProject(pathName2, pathVar);
+        }
+
+        if (rawAnchorFileName.contains("${organismAbbrev}")) {
+            setAnchorFileNameOrganismAbbrev(pathName2, pathVar);
+        }
       }
     } catch (IOException e) {
       throw new UserException(
@@ -187,7 +226,10 @@ public class Template {
               + "which throws an error when trying to expand ${projectName} into matching files",
           e);
     }
+
   }
+
+
 
   /*
    * Getters
@@ -218,13 +260,19 @@ public class Template {
     return anchorFileNameToProject.get(anchorFileName);
   }
 
+  String getAnchorFileOrganismAbbrev(String anchorFileName) {
+    return anchorFileNameToOrganismAbbrev.get(anchorFileName);
+  }
+
   /**
    * provide the list of anchor files that refer to this template
    * 
    * @return
    */
   Collection<String> getAnchorFileNames() {
-    return Collections.unmodifiableCollection(anchorFileNameToProject.keySet());
+      Set<String> keys = new HashSet<String>(anchorFileNameToProject.keySet());
+      keys.addAll(anchorFileNameToOrganismAbbrev.keySet());
+      return Collections.unmodifiableCollection(keys);
   }
 
   /**
@@ -284,6 +332,8 @@ public class Template {
     StringBuffer buf = new StringBuffer();
 
     String projectName = anchorFileNameToProject.get(anchorFileName);
+    String organismAbbrev = anchorFileNameToOrganismAbbrev.get(anchorFileName);
+
     // getting null pointer when template exists in dst file but not called
     // anywhere
     if (templateInstances != null) {
@@ -301,6 +351,19 @@ public class Template {
             continue;
         }
 
+        // apply publicOrgnismAbbrev filter, if we have one
+        if (organismAbbrev != null) {
+          String instanceOrganismAbbrev = instance.getPropValue("organismAbbrev");
+          if (instanceOrganismAbbrev == null)
+            throw new UserException(
+                getAnchorFileErrMsgPrefix()
+                    + "which references ${instanceOrganismAbbrev}, but that property is not supplied in this instance: "
+                    + nl + getInstanceAsText(instance));
+          if (!instanceOrganismAbbrev.equals(organismAbbrev))
+            continue;
+        }
+
+
         buf.append(getInstanceAsText(instance) + nl);
       }
     }
@@ -314,6 +377,10 @@ public class Template {
   
    void setAnchorFileNameProject(String anchorFileName, String project) {
     anchorFileNameToProject.put(anchorFileName, project);
+  }
+
+   void setAnchorFileNameOrganismAbbrev(String anchorFileName, String organismAbbrev) {
+    anchorFileNameToOrganismAbbrev.put(anchorFileName, organismAbbrev);
   }
 
   /**
