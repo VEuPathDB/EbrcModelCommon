@@ -1074,6 +1074,73 @@ UNION ALL
     </sql>
   </tuningTable>
 
+    <tuningTable name="MetadataSummary" prefixEnabled="true">
+    <comment>
+      Summary stats for property values
+    </comment>
+    <internalDependency name="PropertyType"/>
+    <internalDependency name="Metadata"/>
+    <sql>
+      <![CDATA[
+	create table $prefixMetadataSummary as
+ 	select s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
+               null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
+ 	from (
+  	  select property_source_id, listagg(string_value,';') within group(order by string_value) as distinct_values   
+  	  from (
+		select distinct m.property_source_id, m.string_value    
+    		from &prefixmetadata m,
+         	     &prefixpropertytype pt
+    		where m.string_value is not null
+    		and m.property_source_id = pt.property_source_id
+    		and pt.type = 'string'
+    		and pt.distinct_values < 100
+  		)
+  	group by property_source_id
+ 	) s,
+ 	&prefixpropertytype pt
+ 	where pt.property_source_id = s.property_source_id
+	union
+ 	select n.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+        	min, max, average, upper_quartile, lower_quartile
+ 	from (
+   	  select m.property_source_id, 
+          	cast(min(m.number_value) as varchar2(100)) as min, 
+          	cast(max(m.number_value) as varchar2(100)) as max,
+          	cast(avg(m.number_value) as varchar2(100)) as average,
+          	cast(percentile_disc(.75) within group (order by m.number_value) as varchar2(100)) as upper_quartile,
+          	cast(percentile_disc(.25) within group (order by m.number_value) as varchar2(100)) as lower_quartile
+    	  from &prefixmetadata m,
+         	&prefixpropertytype pt
+    	  where m.number_value is not null
+    	  and m.property_source_id = pt.property_source_id
+    	  and pt.type = 'number'
+    	  group by m.property_source_id
+	) n,
+ 	&prefixpropertytype pt
+	where pt.property_source_id = n.property_source_id  
+	union
+	select d.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+        	min, max, null as average, upper_quartile, lower_quartile
+ 	from (
+     	  select m.property_source_id, 
+            	cast(min(m.date_value) as varchar2(100)) as min, 
+            	cast(max(m.date_value) as varchar2(100)) as max,
+            	cast(percentile_disc(.75) within group (order by m.date_value) as varchar2(100)) as upper_quartile,
+            	cast(percentile_disc(.25) within group (order by m.date_value) as varchar2(100)) as lower_quartile
+     	  from &prefixmetadata m,
+          	&prefixpropertytype pt
+     	  where m.date_value is not null
+     	  and m.property_source_id = pt.property_source_id
+     	  and pt.type = 'date'
+     	  group by m.property_source_id
+ 	) d,
+ 	&prefixpropertytype pt
+ 	where pt.property_source_id = d.property_source_id
+      ]]>
+    </sql>
+  </tuningTable>
+
   <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
