@@ -313,7 +313,14 @@ public class Template {
             "Template " + getName() + " was passed instance with missing required property '" + key + "'.  " +
                 "Properties present: " + NL + instance.getPrettyPrintedPropValues(Style.MULTI_LINE));
       }
-      textInstance = textInstance.replaceAll(MACRO_START + key + MACRO_END, instance.getPropValue(key));
+
+      try {
+          textInstance = textInstance.replaceAll(MACRO_START + key + MACRO_END, instance.getPropValue(key));
+      }
+      catch(IllegalArgumentException e) {
+          System.err.println("Likey you have an unescaped $ which is not allowed:  \n" + instance.getPropValue(key));
+          throw e;
+      }
     }
     return textInstance;
   }
