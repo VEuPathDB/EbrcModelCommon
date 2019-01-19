@@ -1628,7 +1628,7 @@ create table &prefixObsSampleIO&1 (
     <comment>
       Metadata table specific for Observation to Sample relation
     </comment>
-<!--    <internalDependency name="PANIO"/> -->
+    <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
 create table &prefixObsObsIO&1 (
@@ -1690,12 +1690,10 @@ create table &prefixHouseLightIO&1 (
       Metadata table specific for observation filter 
     </comment>
     <internalDependency name="ObsObsIO"/>
-<!--
     <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="ObsSampleIO"/>
     <internalDependency name="Ontology"/>
--->
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
