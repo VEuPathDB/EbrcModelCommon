@@ -404,6 +404,8 @@ order by pan.name
                          then 'OntologyTerm_microbiome_RSRC'
                        when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
                          then 'OntologyTerm_icemr_prism_RSRC'
+                       when name = 'ISASimple_ICEMR_PRISM2_cohort_RSRC'
+                         then 'OntologyTerm_icemr_prism2_RSRC'
                        when name in ('ISASimple_ICEMR_India_longitudinal_RSRC','ISASimple_ICEMR_India_cross_sectional_RSRC')
                          then 'OntologyTerm_icemr_indian_RSRC'
                        when name = 'ISASimple_Gates_MAL-ED_phase2_RSRC'
@@ -1072,6 +1074,73 @@ UNION ALL
     </sql>
   </tuningTable>
 
+    <tuningTable name="MetadataSummary" prefixEnabled="true">
+    <comment>
+      Summary stats for property values
+    </comment>
+    <internalDependency name="PropertyType"/>
+    <internalDependency name="Metadata"/>
+    <sql>
+      <![CDATA[
+	create table &prefixMetadataSummary&1 as
+ 	select s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
+               null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
+ 	from (
+  	  select property_source_id, listagg(string_value,'|') within group(order by string_value) as distinct_values   
+  	  from (
+		select distinct m.property_source_id, m.string_value    
+    		from &prefixmetadata m,
+         	     &prefixpropertytype pt
+    		where m.string_value is not null
+    		and m.property_source_id = pt.property_source_id
+    		and pt.type = 'string'
+    		and pt.distinct_values < 100
+  		)
+  	group by property_source_id
+ 	) s,
+ 	&prefixpropertytype pt
+ 	where pt.property_source_id = s.property_source_id
+	union
+ 	select n.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+        	min, max, average, upper_quartile, lower_quartile
+ 	from (
+   	  select m.property_source_id, 
+          	cast(min(m.number_value) as varchar2(100)) as min, 
+          	cast(max(m.number_value) as varchar2(100)) as max,
+          	cast(avg(m.number_value) as varchar2(100)) as average,
+          	cast(percentile_disc(.75) within group (order by m.number_value) as varchar2(100)) as upper_quartile,
+          	cast(percentile_disc(.25) within group (order by m.number_value) as varchar2(100)) as lower_quartile
+    	  from &prefixmetadata m,
+         	&prefixpropertytype pt
+    	  where m.number_value is not null
+    	  and m.property_source_id = pt.property_source_id
+    	  and pt.type = 'number'
+    	  group by m.property_source_id
+	) n,
+ 	&prefixpropertytype pt
+	where pt.property_source_id = n.property_source_id  
+	union
+	select d.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+        	min, max, null as average, upper_quartile, lower_quartile
+ 	from (
+     	  select m.property_source_id, 
+            	cast(min(m.date_value) as varchar2(100)) as min, 
+            	cast(max(m.date_value) as varchar2(100)) as max,
+            	cast(percentile_disc(.75) within group (order by m.date_value) as varchar2(100)) as upper_quartile,
+            	cast(percentile_disc(.25) within group (order by m.date_value) as varchar2(100)) as lower_quartile
+     	  from &prefixmetadata m,
+          	&prefixpropertytype pt
+     	  where m.date_value is not null
+     	  and m.property_source_id = pt.property_source_id
+     	  and pt.type = 'date'
+     	  group by m.property_source_id
+ 	) d,
+ 	&prefixpropertytype pt
+ 	where pt.property_source_id = d.property_source_id
+      ]]>
+    </sql>
+  </tuningTable>
+
   <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
@@ -1555,6 +1624,35 @@ create table &prefixObsSampleIO&1 (
       ]]>
     </sql>
   </tuningTable>
+  <tuningTable name="ObsObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for Observation to Sample relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixObsObsIO&1 (
+  observation_id,
+  sub_observation_id,
+  CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sub_observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as observation_id, output_pan_id as sub_observation_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000738' 
+  and output_pan_type_source_id = 'EUPATH_0000738'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsubobsobsio&1
+          ON &prefixObsObsIO&1 (sub_observation_id, observation_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
 
   <tuningTable name="HouseLightIO" prefixEnabled="true">
     <comment>
@@ -1586,13 +1684,14 @@ create table &prefixHouseLightIO&1 (
     </sql>
   </tuningTable>
 
+<!-- NOTE: this will NOT work for studies where sub observations have samples -->
   <tuningTable name="ObservationMD" prefixEnabled="true">
     <comment>
       Metadata table specific for observation filter 
     </comment>
+    <internalDependency name="ObsObsIO"/>
     <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
-    <internalDependency name="PANIO"/>
     <internalDependency name="ObsSampleIO"/>
     <internalDependency name="Ontology"/>
     <sql>
@@ -1601,12 +1700,13 @@ create table &prefixObservationMD&1 (
   ontology_term_name,
   observation_id,
   participant_id,
+  sub_observation_id,
   sample_id,
   household_id,
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id,sample_id,string_value) 
+  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id,sub_observation_id,sample_id,string_value) 
   )
   ORGANIZATION index
   nologging
@@ -1617,7 +1717,7 @@ select distinct o.ontology_term_source_id
      CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
      START WITH o.ontology_term_source_id in ('EUPATH_0000738')
 )
- select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sub_observation_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
  where m.property_source_id in (
  select ontology_term_source_id
@@ -1626,7 +1726,7 @@ select distinct o.ontology_term_source_id
  and m.pan_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+) 
 UNION --NOTE: next block pulls in sample information
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
  where m.property_source_id in (
  select distinct o.ontology_term_source_id
@@ -1638,7 +1738,7 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
       and ioo.observation_id = spec.observation_id
       and ioo.participant_id = ioh.participant_id(+)     
 UNION -- NOTE: some sample information is loaded associated with observations ...
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id,  m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
  where m.property_source_id in (
  select distinct o.ontology_term_source_id
@@ -1649,17 +1749,15 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
  and m.pan_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+) 
 UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
- select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id, m.pan_id as sample_id,
+ select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
  nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPANIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
+ from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
  where m.property_source_id in (
  select ontology_term_source_id
  from obsont  
    )
- and m.pan_id = iosub.output_pan_id
- and iosub.input_pan_type_source_id = 'EUPATH_0000738'
- and iosub.output_pan_type_source_id = 'EUPATH_0000738'
- and iosub.input_pan_id = ioo.observation_id
+ and m.pan_id = iosub.sub_observation_id
+ and iosub.observation_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
