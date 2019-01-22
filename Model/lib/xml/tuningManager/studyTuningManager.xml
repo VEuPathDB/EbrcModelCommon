@@ -1086,7 +1086,7 @@ UNION ALL
  	select s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
                null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
  	from (
-  	  select property_source_id, listagg(string_value,';') within group(order by string_value) as distinct_values   
+  	  select property_source_id, listagg(string_value,'|') within group(order by string_value) as distinct_values   
   	  from (
 		select distinct m.property_source_id, m.string_value    
     		from &prefixmetadata m,
