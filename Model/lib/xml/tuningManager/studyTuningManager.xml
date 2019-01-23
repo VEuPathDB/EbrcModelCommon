@@ -1634,7 +1634,7 @@ create table &prefixObsSampleIO&1 (
 create table &prefixObsObsIO&1 (
   observation_id,
   sub_observation_id,
-  CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sub_observation_id) 
+  CONSTRAINT &prefixobsobs_pk&1 PRIMARY KEY (observation_id,sub_observation_id) 
   )
   ORGANIZATION index
   nologging
