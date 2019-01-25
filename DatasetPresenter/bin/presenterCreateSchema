@@ -182,7 +182,7 @@ sub createTables {
         genome_source              varchar2(300),
         genome_version             varchar2(40),
         annotation_source          varchar2(300),
-        annotation_version         varchar2(20),
+        annotation_version         varchar2(40),
         functional_annotation_source       varchar2(300),
         functional_annotation_version      varchar2(20),
         constraint DatasetHistory${suffix}_pk primary key (dataset_history_id)
