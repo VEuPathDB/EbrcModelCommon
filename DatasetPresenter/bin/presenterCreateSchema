@@ -180,7 +180,7 @@ sub createTables {
         build_number               number(3),
         note                       varchar2(1000),
         genome_source              varchar2(300),
-        genome_version             varchar2(20),
+        genome_version             varchar2(40),
         annotation_source          varchar2(300),
         annotation_version         varchar2(20),
         functional_annotation_source       varchar2(300),
