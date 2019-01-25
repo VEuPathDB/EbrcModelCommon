@@ -1380,12 +1380,11 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="leish_gene" />
-      <subtrack set="cruzi_gene" />
+      <subtrack name="tbruTREU927_span" />
+      <subtrack name="tbruTREU927_gene" />
       <subtrack set="crithidia_gene" />
       <subtrack set="monterogeii_gene" />
       <subtrack set="Paratrypanosoma_gene" />
-      <subtrack name="tbruTREU927_span" />
-      <subtrack name="tbruTREU927_gene" />
     </track>
     
 
