@@ -1380,12 +1380,11 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="leish_gene" />
-      <subtrack set="cruzi_gene" />
+      <subtrack name="tbruTREU927_span" />
+      <subtrack name="tbruTREU927_gene" />
       <subtrack set="crithidia_gene" />
       <subtrack set="monterogeii_gene" />
       <subtrack set="Paratrypanosoma_gene" />
-      <subtrack name="tbruTREU927_span" />
-      <subtrack name="tbruTREU927_gene" />
     </track>
     
 
@@ -1529,9 +1528,11 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Bodo_gene" />
-      <subtrack set="brucei_gene" />
+      <subtrack name="lmajFriedlin_span" />
+      <subtrack name="lmajFriedlin_gene" />
+      <subtrack name="tbruTREU927_span" />
+      <subtrack name="tbruTREU927_gene" />
       <subtrack set="cruzi_gene" />
-      <subtrack set="leish_gene" />
       <subtrack set="Paratrypanosoma_gene" />
       <subtrack set="Blechomonas_gene" />
       <subtrack set="monterogeii_gene" />
