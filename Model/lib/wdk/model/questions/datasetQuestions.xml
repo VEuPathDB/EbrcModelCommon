@@ -215,11 +215,15 @@
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
       <attributesList
-         summary="hit_count,percent_count,display_name,contact,institution"
-         sorting="percent_count asc, display_name asc" />
+         summary="overlap,ul_nonDS,ds_nonUL,nonUL_nonDS,p_value,display_name,contact,institution"
+         sorting="p_value asc" />
        <dynamicAttributes>
-         <columnAttribute name="hit_count" displayName="# Valid Input Genes"  align="center" help="Number of gene identifiers from the input list that could be mapped to this organism by checking for valid IDs or ortholog transform"/>
-         <columnAttribute name="percent_count" displayName="FDR"  align="center" help="False Discovery Rate"/>
+         <columnAttribute name="overlap" displayName="# Overlapped Genes"  align="center" help="Number of overlapped genes identifiers from the input list that could be mapped to this organism by checking for valid IDs or ortholog transform"/>
+         <columnAttribute name="ul_nonDS" displayName="# subset1"  align="center" help="Number of genes identifiers in the input list but not in this dataset"/>
+	 <columnAttribute name="ds_nonUL" displayName="# subset2"  align="center" help="Number of genes identifiers not in the input list but in this dataset"/>
+	 <columnAttribute name="nonUL_nonDS" displayName="# subset3"  align="center" help="Number of genes identifiers not in the input list and  not in this dataset"/>
+	 <columnAttribute name="p_value" displayName="# p value"  align="center" help="fisher's exact test p value "/>
+
       </dynamicAttributes>
 
     </question>
