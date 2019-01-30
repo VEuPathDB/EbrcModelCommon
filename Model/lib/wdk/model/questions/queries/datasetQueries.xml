@@ -253,11 +253,16 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
              processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
              doNotTest="true">
         <paramRef ref="sharedParams.ds_gene_ids"/>
-        <paramRef ref="datasetParams.threshold"/>
+        <paramRef ref="datasetParams.fold_change"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
 	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
-	<wsColumn name="percent_count" width="50" wsName="percent_count"/>  <!--NOTE: need more general column name -->
-	<wsColumn name="hit_count" width="50" wsName="hit_count"/>  <!--NOTE: need more general column name -->
+	<wsColumn name="overlap" width="100" wsName="overlap"/>
+	<wsColumn name="ul_nonDS" width="100" wsName="ul_nonDS"/>
+	<wsColumn name="ds_nonUL" width="100" wsName="ds_nonUL"/>
+	<wsColumn name="nonUL_nonDS" width="100" wsName="nonUL_nonDS"/>
+	<wsColumn name="p_value" width="100" wsName="p_value"/>
+	<!--<wsColumn name="percent_count" width="50" wsName="percent_count"/>  NOTE: need more general column name -->
+	<!--<wsColumn name="hit_count" width="50" wsName="hit_count"/> NOTE: need more general column name -->
 
 </processQuery>
 
