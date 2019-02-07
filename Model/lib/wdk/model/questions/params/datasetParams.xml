@@ -63,6 +63,14 @@
             <suggest default="0.05"/>
         </stringParam>
 
+
+        <stringParam name="fold_change"
+                     prompt="Fold Change &gt;="
+                     number="true">
+            <help>Enter a number between 1 and 100000000.</help> 
+            <suggest default="10"/>
+        </stringParam>
+
     <enumParam name="orthologyFlag"
                      prompt="Use orthology?"
                      multiPick="false"

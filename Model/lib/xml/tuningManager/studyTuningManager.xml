@@ -1461,7 +1461,7 @@ select * from (
  select distinct m.property_source_id as ontology_term_name, 
  hh.household_id, hh.household_observation_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, (select distinct household_observation_id, household_id from hhold) hh
- where m.property_source_id = 'EUPATH_0000644'
+ where m.property_source_id = 'EUPATH_0000579'
  and m.pan_id = hh.household_observation_id
  )
  order by ontology_term_name
