@@ -47,8 +47,8 @@
     </question>
    
     <question name="DatasetsByReferenceName"
-      displayName="Data Sets used in a search"
-      shortDisplayName="Search"
+      displayName="Data Sets used to generate a table or result"
+      shortDisplayName="Reference"
       fullAnswer="true"
       queryRef="DatasetIds.ByReferenceName"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
@@ -61,7 +61,7 @@
 
     <question name="DatasetsByReferenceNameNoTaxon"
       displayName="Data Sets used in a search"
-      shortDisplayName="Search"
+      shortDisplayName="RefNoTaxon"
       fullAnswer="true"
       queryRef="DatasetIds.ByReferenceNameNoTaxon"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
