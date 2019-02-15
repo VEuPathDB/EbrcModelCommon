@@ -3245,6 +3245,20 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="updateOboOntologyEfo" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="isPreferred"></prop>
+
+    <datasetLoader datasetName="OBO_Ontology_INTERNAL_efo_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+      <wgetArgs url="http://www.ebi.ac.uk/efo/efo.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/efo.owl </wgetArgs>
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OBO_Ontology_efo_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@dataDir@@/efo.owl --extDbRlsSpec 'OBO_Ontology_efo_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
   <datasetClass class="ontologyFromTabDelim" category="" datasetFileHint="">
     <purpose></purpose>
