@@ -74,7 +74,7 @@
     <enumParam name="orthologyFlag"
                      prompt="Use orthology?"
                      multiPick="false"
-                     quote="true">
+                     quote="false">
       <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Yes/No to use of orthology to match experiments</help>
       <enumList>
