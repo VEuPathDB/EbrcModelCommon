@@ -142,6 +142,7 @@
          <columnAttribute name="request_protection_level" internal="true"/>
          <columnAttribute name="request_access_fields" internal="true"/>
          <columnAttribute name="request_email" internal="true"/>
+         <columnAttribute name="request_email_bcc" internal="true"/>
          <columnAttribute name="request_email_body" internal="true"/>
          <columnAttribute name="request_needs_approval" internal="true"/>
        </attributeQueryRef>
@@ -625,22 +626,23 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="request_protection_level"/>
          <column name="request_access_fields"/>
          <column name="request_email"/>
+         <column name="request_email_bcc"/>
          <column name="request_email_body"/>
          <column name="request_needs_approval"/>
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty 
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail','requestEmailBody','requestNeedsApproval')
+where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
 )
 pivot 
 (
    min(value)
-   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email,'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
