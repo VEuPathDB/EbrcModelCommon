@@ -16,7 +16,7 @@ use EbrcModelCommon::Model::XMLUtils;
 use Encode;
 
 my $ncbiEutilsUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
-                    . "db=pubmed&retmode=xml&rettype=abstract&id=";
+                    . "api_key=f2006d7a9fa4e92b2931d964bb75ada85a08&db=pubmed&retmode=xml&rettype=abstract&id=";
                                                                                              
 my $publicationPubmedUrl = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?"
                             . "cmd=Retrieve&amp;db=PubMed&amp;list_uids=";
