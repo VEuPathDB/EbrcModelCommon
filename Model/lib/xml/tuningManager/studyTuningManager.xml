@@ -399,6 +399,7 @@ order by pan.name
         from (select name as dataset_name,
                      case
                        when lower(name) like '%microarrayantibody%'
+                            and name not like '%Helb_RecentExposure%'
                          then 'Ontology_icemr_RSRC'
                        when lower(name) like 'otu%'
                          then 'OntologyTerm_microbiome_RSRC'
