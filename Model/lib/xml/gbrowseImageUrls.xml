@@ -450,6 +450,11 @@
     <track>rdelRA99-880</track>
   </subtrackSet>
 
+  <subtrackSet name="Eurotiomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>prubWisconsin54-1255</track>
+    <track>eoliCBS72588</track>
+  </subtrackSet>
+
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
     <track>acarITEM5010</track>
     <track>acamIBT28561</track>
@@ -478,7 +483,6 @@
     <track>aochIBT24754</track>
     <track>asteIBT23096</track>
     <track>afisNRRL181</track>
-    <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -689,6 +693,16 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
+    <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Eurotiomycetes"/>
+      <subtrack set="Aspergillaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
     <org abbrev="acarITEM5010" organism="Aspergillus carbonarius ITEM 5010"/>
     <org abbrev="acamIBT28561" organism="Aspergillus campestris IBT 28561"/>
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
@@ -716,7 +730,6 @@
     <org abbrev="aochIBT24754" organism="Aspergillus ochraceoroseus IBT 24754"/>
     <org abbrev="asteIBT23096" organism="Aspergillus steynii IBT 23096"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
-    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
