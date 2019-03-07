@@ -3229,6 +3229,36 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="OBO_Ontology_fma" category="" datasetFileHint="">
+    <purpose></purpose>
+
+  <datasetLoader datasetName="OBO_Ontology_fma_RSRC" version="dontcare"
+              plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+              scope="global"
+              type="sres"
+              >
+
+      <wgetArgs url="http://purl.obolibrary.org/obo/fma.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/fma.owl </wgetArgs>
+      <pluginArgs>--inFile @@dataDir@@/fma.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+  </datasetLoader>
+
+  </datasetClass>
+
+  <datasetClass class="updateOboOntologyFma" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="isPreferred"></prop>
+
+    <datasetLoader datasetName="OBO_Ontology_INTERNAL_fma_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+      <wgetArgs url="http://purl.obolibrary.org/obo/fma.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/fma.owl </wgetArgs>
+      <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OBO_Ontology_fma_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
+      <pluginArgs>--inFile @@dataDir@@/fma.owl --extDbRlsSpec 'OBO_Ontology_fma_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="OBO_Ontology_efo" category="" datasetFileHint="">
     <purpose></purpose>
