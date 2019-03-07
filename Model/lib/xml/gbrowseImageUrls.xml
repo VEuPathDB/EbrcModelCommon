@@ -409,6 +409,7 @@
   <subtrackSet name="Pucciniomycetes_gene" project="FungiDB" suffixes="_span;_gene">
     <track>mlar98AG31</track>
     <track>pgraCRL75-36-700-3</track>
+    <track>ptri1-1BBBDRace1</track>
   </subtrackSet>
 
   <subtrackSet name="Schizosaccharomycetes_gene" project="FungiDB" suffixes="_span;_gene">
@@ -436,6 +437,7 @@
     <track>caurB8441</track>
     <track>cglaCBS138</track>
     <track>cparCDC317</track>
+    <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
     <track>scerS288c</track>
     <track>ylipCLIB122</track>
@@ -446,6 +448,13 @@
     <track>mcirCBS277-49</track>
     <track>pblaNRRL1555</track>
     <track>rdelRA99-880</track>
+  </subtrackSet>
+
+  <subtrackSet name="Eurotiomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>prubWisconsin54-1255</track>
+    <track>eoliCBS72588</track>
+    <track>fpedCBS271-37</track>
+    <track>ccarKSF</track>
   </subtrackSet>
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
@@ -459,6 +468,7 @@
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
     <track>anigATCC1015</track>
+    <track>anigATCC13496</track>
     <track>anigN402ATCC64974</track>
     <track>anovIBT16806</track>
     <track>aterNIH2624</track>
@@ -475,7 +485,6 @@
     <track>aochIBT24754</track>
     <track>asteIBT23096</track>
     <track>afisNRRL181</track>
-    <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -518,6 +527,7 @@
     <track>cdeuR265</track>
     <track>kbesCBS10118</track>
     <track>kdejCBS10117</track>
+    <track>khevCBS569</track>
     <track>tmesDSM1558</track>
   </subtrackSet>
 
@@ -619,6 +629,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
+    <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pucciniomycetes_gene"/>
@@ -662,6 +673,7 @@
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
+    <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
@@ -683,6 +695,18 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
+    <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
+    <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
+    <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Eurotiomycetes"/>
+      <subtrack set="Aspergillaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
     <org abbrev="acarITEM5010" organism="Aspergillus carbonarius ITEM 5010"/>
     <org abbrev="acamIBT28561" organism="Aspergillus campestris IBT 28561"/>
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
@@ -692,6 +716,7 @@
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
+    <org abbrev="anigATCC13496" organism="Aspergillus niger ATCC 13496"/>
     <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
     <org abbrev="akawIFO4308" organism="Aspergillus kawachii IFO 4308"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
@@ -709,7 +734,6 @@
     <org abbrev="aochIBT24754" organism="Aspergillus ochraceoroseus IBT 24754"/>
     <org abbrev="asteIBT23096" organism="Aspergillus steynii IBT 23096"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
-    <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -766,6 +790,7 @@
     <org abbrev="cdeuR265" organism="Cryptococcus deuterogattii R265"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
+    <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1282,6 +1307,7 @@
     <track>lbraMHOMBR75M2903</track>
     <track>ldonBPK282A1</track>
     <track>ldonCL-SL</track>
+    <track>ldonLV9</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
@@ -1362,6 +1388,7 @@
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
     <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
+    <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
