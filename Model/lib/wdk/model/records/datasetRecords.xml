@@ -1154,7 +1154,6 @@ select '' as dataset,
        1 as order_num
        
        from dual
-      -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
        ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
        ApidbTuning.datasetnametaxon dnt
 where p.dataset = graph_descrip.dataset
