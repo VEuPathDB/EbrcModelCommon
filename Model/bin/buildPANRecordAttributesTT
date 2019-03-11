@@ -41,7 +41,6 @@ sub run{
                "EUPATH_0000738" => "Observation",
                "EUPATH_0000327" => "LightTrap",
                "PCO_0000024" => "Household",
-               "OBI_0100051" => "Sample", # Deprecated
                "EUPATH_0000609" => "Sample",
       );
 
