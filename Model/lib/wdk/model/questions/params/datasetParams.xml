@@ -22,7 +22,7 @@
         <stringParam name="organism"
                      prompt="Organism"
                      number="false">
-            <help>The organsim name, in the form used in the resources xml files </help>
+            <help>The organism name, in the form used in the resources xml files </help>
         </stringParam>
         
         <stringParam name="dataset_category"
