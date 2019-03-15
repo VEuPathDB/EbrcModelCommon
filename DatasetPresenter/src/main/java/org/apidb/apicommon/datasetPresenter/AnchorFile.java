@@ -51,6 +51,7 @@ public class AnchorFile {
     String postLib = "";
     boolean seenLib = false;
     boolean hasPerl = false;
+    boolean hasR = false;
 
     for(int i = 0; i < splitPath.length; i++) {
         if(splitPath[i].equals("lib")) {
@@ -62,6 +63,12 @@ public class AnchorFile {
             hasPerl = true;
             continue;
         }
+
+        if(splitPath[i].equals("R")) {
+            hasR = true;
+            continue;
+        }
+
         if(seenLib) {
             postLib = postLib + "/" + splitPath[i];
         } else {
@@ -72,6 +79,12 @@ public class AnchorFile {
     String prefix = "lib";
     if(hasPerl) {
         prefix = prefix + "/perl";
+        postLib = preLib + postLib;
+    }
+
+    if (hasR) {
+        prefix = prefix + "/R";
+        preLib = preLib.substring(preLib.lastIndexOf('/'));
         postLib = preLib + postLib;
     }
     
