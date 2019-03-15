@@ -1095,7 +1095,7 @@ UNION ALL
     		where m.string_value is not null
     		and m.property_source_id = pt.property_source_id
     		and pt.type = 'string'
-    		and pt.distinct_values < 100
+    		and pt.distinct_values < 80
   		)
   	group by property_source_id
  	) s,
