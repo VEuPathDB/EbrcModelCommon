@@ -1,5 +1,7 @@
 package org.apidb.apicommon.datasetPresenter;
 
+import static org.gusdb.fgputil.FormatUtil.NL;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,11 +15,14 @@ import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.apache.log4j.Logger;
 import org.gusdb.fgputil.CliUtil;
-import org.gusdb.fgputil.db.platform.SupportedPlatform;
 import org.gusdb.fgputil.FormatUtil;
+import org.gusdb.fgputil.db.platform.SupportedPlatform;
 
 public class DatasetPresenterSetLoader {
+
+  private static final Logger LOG = Logger.getLogger(DatasetPresenterSetLoader.class);
 
   private Contacts allContacts;
   private HyperLinks defaultHyperLinks;
@@ -31,8 +36,6 @@ public class DatasetPresenterSetLoader {
   private String suffix;
   private String login;
   private DatasetPresenterSet dps = null;
-
-  static final String nl = System.lineSeparator();
 
   public DatasetPresenterSetLoader(String propFileName,
       String contactsFileName, String defaultInjectorsFileName,
@@ -87,9 +90,9 @@ public class DatasetPresenterSetLoader {
       }
 
       if (presenterNamesNotInDb.size() != 0) {
-        System.err.println(nl
+        System.err.println(NL
             + "The following DatasetPresenters have no match in Apidb.Datasource: "
-            + nl + setToString(presenterNamesNotInDb));
+            + NL + setToString(presenterNamesNotInDb));
       }
       
       dps.handleOverrides();
@@ -516,8 +519,8 @@ public class DatasetPresenterSetLoader {
     try {
         insertStmt.execute();
     } catch (SQLException e) {
-        System.out.println("*****Error Loading Publication*****");
-        System.out.println(publication.toString());
+        LOG.error("*****Error Loading Publication*****");
+        LOG.error("Publication: " + publication.toString() + NL, e);
         throw(e);
     }
     
@@ -653,7 +656,7 @@ public class DatasetPresenterSetLoader {
   private static String getUsageNotes() {
     return
 
-    nl + "";
+    NL + "";
   }
 
   static CommandLine getCmdLine(String[] args) {
@@ -696,7 +699,7 @@ public class DatasetPresenterSetLoader {
     if (namesFromDbNotFound.size() != 0)
       throw new UserException(
           "The following Dataset names in Apidb.Datasource are not mentioned or matched by the input DatasetPresenters:"
-              + nl + setToString(namesFromDbNotFound));
+              + NL + setToString(namesFromDbNotFound));
 
     System.err.println("Validation complete");
     return dpsl;
@@ -705,7 +708,7 @@ public class DatasetPresenterSetLoader {
   private static String setToString(Set<String> set) {
     StringBuffer buf = new StringBuffer();
     for (String s : set)
-      buf.append(s + nl);
+      buf.append(s + NL);
     return buf.toString();
   }
 
@@ -722,7 +725,7 @@ public class DatasetPresenterSetLoader {
         dpsl.schemaDropConstraints();
       }
     } catch (UserException ex) {
-      System.err.println(nl + "Error: " + ex.getMessage() + nl);
+      System.err.println(NL + "Error: " + ex.getMessage() + NL);
       System.exit(1);
     }
   }
