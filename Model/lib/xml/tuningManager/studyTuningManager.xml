@@ -426,6 +426,7 @@ order by pan.name
                     in (select edr.external_database_id
                         from sres.ExternalDatabaseRelease edr, study.Study s
                         where s.external_database_release_id = edr.external_database_release_id)
+                and (name = '&filterValue' or nvl('&filterValue', '0') = '0')
              ) datasets,
              (select dsp.name as dataset_name, d.name as hierarchy
               from DatasetPresenter dsp, DatasetProperty p, sres.ExternalDatabase d
