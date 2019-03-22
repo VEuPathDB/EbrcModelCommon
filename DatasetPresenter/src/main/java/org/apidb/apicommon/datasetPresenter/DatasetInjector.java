@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 
+import org.apache.log4j.Logger;
 import org.apidb.apicommon.comparator.NaturalOrderComparator;
 
 /**
@@ -23,6 +24,8 @@ import org.apidb.apicommon.comparator.NaturalOrderComparator;
  * 
  */
 public abstract class DatasetInjector {
+
+  private static final Logger LOG = Logger.getLogger(DatasetInjector.class);
 
   private Map<String, String> _propValues = new HashMap<String, String>();
   private String _datasetName;
@@ -326,7 +329,7 @@ public abstract class DatasetInjector {
         return organismAbbrev;
       } 
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      LOG.error("Unable to get organism abbrev from dataset name", e);
       return "";
     }
 
@@ -389,7 +392,7 @@ public abstract class DatasetInjector {
         return organismAbbrev;
       } 
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      LOG.error("Unable to get organism abbrev display from dataset name", e);
       return "";
     }
 
