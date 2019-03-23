@@ -219,9 +219,9 @@
          sorting="p_value asc" />
        <dynamicAttributes>
          <columnAttribute name="overlap" displayName="# Overlapping Genes 1"  align="center" help="Number of overlapped genes identifiers from the input list that could be mapped to this dataset by checking for valid IDs or ortholog transform"/>
-         <columnAttribute name="ul_nonDS" displayName="# Overlapping Genes 2"  align="center" help="Number of genes identifiers in the input list but not in this dataset"/>
-	 <columnAttribute name="ds_nonUL" displayName="# Overlapping Genes 3"  align="center" help="Number of genes identifiers not in the input list but in this dataset"/>
-	 <columnAttribute name="nonUL_nonDS" displayName="# Overlapping Genes 4"  align="center" help="Number of genes identifiers not in the input list and  not in this dataset"/>
+         <columnAttribute name="ul_nonDS" displayName="Exp Overlap"  align="center" help="Number of genes identifiers in the input list but not in this dataset"/>
+	 <columnAttribute name="ds_nonUL" displayName="Percent UL"  align="center" help="Number of genes identifiers not in the input list but in this dataset"/>
+	 <columnAttribute name="nonUL_nonDS" displayName="Percent DS"  align="center" help="Number of genes identifiers not in the input list and  not in this dataset"/>
 	 <columnAttribute name="p_value" displayName="Fisher's Exact Test P-Value"  align="center" help="fisher's exact test p value "/>
 
       </dynamicAttributes>
