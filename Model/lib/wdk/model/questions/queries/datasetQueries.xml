@@ -256,11 +256,11 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
         <paramRef ref="datasetParams.fold_change"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
 	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
-	<wsColumn name="overlap" width="100" wsName="overlap"/>
-	<wsColumn name="ul_nonDS" width="100" wsName="ul_nonDS"/>
-	<wsColumn name="fe" width="100" wsName="fe"/>
-	<wsColumn name="ds_nonUL" width="100" wsName="ds_nonUL"/>
-	<wsColumn name="nonUL_nonDS" width="100" wsName="nonUL_nonDS"/>
+	<wsColumn name="obser_ovelap" width="100" wsName="obser_ovelap"/>
+	<wsColumn name="exp_overlap" width="100" wsName="exp_overlap"/>
+	<wsColumn name="fold_enrichment" width="100" wsName="fold_enrichment"/>
+	<wsColumn name="percent_ul" width="100" wsName="percent_ul"/>
+	<wsColumn name="percent_ds" width="100" wsName="percent_ds"/>
 	<wsColumn name="p_value" width="100" wsName="p_value"/>
 	<!--<wsColumn name="percent_count" width="50" wsName="percent_count"/>  NOTE: need more general column name -->
 	<!--<wsColumn name="hit_count" width="50" wsName="hit_count"/> NOTE: need more general column name -->
