@@ -258,6 +258,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
 	<wsColumn name="overlap" width="100" wsName="overlap"/>
 	<wsColumn name="ul_nonDS" width="100" wsName="ul_nonDS"/>
+	<wsColumn name="fe" width="100" wsName="fe"/>
 	<wsColumn name="ds_nonUL" width="100" wsName="ds_nonUL"/>
 	<wsColumn name="nonUL_nonDS" width="100" wsName="nonUL_nonDS"/>
 	<wsColumn name="p_value" width="100" wsName="p_value"/>
