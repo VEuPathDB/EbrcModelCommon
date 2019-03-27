@@ -16,7 +16,6 @@ for (my $i=0; $i< $#ARGV; $i++) {
   if ($ARGV[$i] eq "\-templatesDir") {
     my @files = glob("$ARGV[$i+1]"."/*");
     foreach $file(@files){
-      system( print "FOO $file\n");
       system("cp $file $TEMPDIR");
     }
     push(@dirs, @files);
