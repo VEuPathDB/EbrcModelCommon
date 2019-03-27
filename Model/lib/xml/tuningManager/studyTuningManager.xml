@@ -403,22 +403,6 @@ order by pan.name
                          then 'Ontology_icemr_RSRC'
                        when lower(name) like 'otu%'
                          then 'OntologyTerm_microbiome_RSRC'
-                       when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                         then 'OntologyTerm_icemr_prism_RSRC'
-                       when name = 'ISASimple_ICEMR_PRISM2_cohort_RSRC'
-                         then 'OntologyTerm_icemr_prism2_RSRC'
-                       when name in ('ISASimple_ICEMR_India_longitudinal_RSRC','ISASimple_ICEMR_India_cross_sectional_RSRC')
-                         then 'OntologyTerm_icemr_indian_RSRC'
-                       when name = 'ISASimple_Gates_MAL-ED_phase2_RSRC'
-                         then 'OntologyTerm_gates_maled_RSRC'
-                       when name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                         then 'OntologyTerm_gates_RSRC'
-                       when name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
-                         then 'OntologyTerm_gates_gems_RSRC'
-                       when name = 'ISASimple_ICEMR_South_Asia_surveillance_RSRC'
-                         then 'OntologyTerm_icemr_southAsia_RSRC'
-                       when name = 'ISASimple_ICEMR_India_fever_surveillance_RSRC'
-                         then 'OntologyTerm_icemr_india_feverSurv_RSRC'
                        else 'OntologyTerm_eupath_isa_RSRC'
                      end as hardwired_hierarchy
               from sres.ExternalDatabase
