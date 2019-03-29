@@ -636,6 +636,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pucciniomycetes_gene"/>
+      <subtrack set="Ustilaginomycetes"/>
     </track>
   </url>
 
@@ -646,6 +647,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Schizosaccharomycetes_gene"/>
+      <subtrack set="Pneumocystidomycetes"/>
     </track>
   </url>
 
@@ -829,6 +831,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Agaricomycetes"/>
+      <subtrack set="Tremellomycetes"/>
     </track>
   </url>
 
@@ -888,6 +891,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
+      <subtrack set="Pucciniomycetes_gene"/>
     </track>
   </url>
 
@@ -896,8 +900,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pneumocystidomycetes"/>
-      <subtrack set="Pucciniomycetes_gene"/>
-      <subtrack set="Zygomycetes"/>
+      <subtrack set="Schizosaccharomycetes_gene"/>
     </track>
   </url>
 
