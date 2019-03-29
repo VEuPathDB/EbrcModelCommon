@@ -655,6 +655,8 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Chytridiomycetes_gene"/>
+      <subtrack set="Blastocladiomycetes"/>
+      <subtrack set="Zygomycetes"/>
     </track>
   </url>
 
@@ -694,6 +696,8 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Zygomycetes"/>
+      <subtrack set="Blastocladiomycetes"/>
+      <subtrack set="Chytridiomycetes_gene"/>
     </track>
   </url>
 
@@ -834,8 +838,7 @@
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Blastocladiomycetes"/>
       <subtrack set="Chytridiomycetes_gene"/>
-      <subtrack set="Sordariomycetes"/>
-      <subtrack set="Tremellomycetes"/>
+      <subtrack set="Zygomycetes"/>
     </track>
   </url>
 
