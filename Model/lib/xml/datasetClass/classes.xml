@@ -1101,6 +1101,22 @@
     <prop name="workflowVersion"/>
 
     <graphTemplateFile name="unidb.xml"/>
+    <datasetLoader datasetName="${projectName}_${databaseInstance}_${workflowVersion}_UniDB_RSRC"
+              version="${workflowVersion}"
+	            plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              type=""
+              subType=""
+              organismAbbrev="">
+
+      <manualGet fileOrDir="${projectName}/unidb/${databaseInstance}/${workflowVersion}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput file="@@dataDir@@/final/forceSkipDatasets" />
+      <getAndUnpackOutput file="@@dataDir@@/final/forceLoadDatasets" />
+     <pluginArgs></pluginArgs>
+    </datasetLoader>
   </datasetClass>
 
 
