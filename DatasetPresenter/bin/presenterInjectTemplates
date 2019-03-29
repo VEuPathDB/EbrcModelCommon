@@ -2,11 +2,31 @@
 
 use lib "$ENV{GUS_HOME}/lib/perl";
 use FgpUtil::Util::CommandHelper;
+use File::Temp qw/tempdir/;
 
 my $GUS_HOME = $ENV{GUS_HOME};
 my $CLASSPATH = &FgpUtil::Util::CommandHelper::getJavaClasspath($GUS_HOME);
 my $sysProps = &FgpUtil::Util::CommandHelper::getSystemProps($GUS_HOME, 'presenterInjectTemplates');
-my $args = &FgpUtil::Util::CommandHelper::getJavaArgs(@ARGV);
+
+my @newArgs;
+my @dirs;
+my $TEMPDIR = tempdir( CLEANUP => 1 );
+
+for (my $i=0; $i< $#ARGV; $i++) {
+  if ($ARGV[$i] eq "\-templatesDir") {
+    my @files = glob("$ARGV[$i+1]"."/*");
+    foreach $file(@files){
+      system("cp $file $TEMPDIR");
+    }
+    push(@dirs, @files);
+  } else {
+    push (@newargs, $ARGV[$i], $ARGV[$i+1]);
+  }
+  $i++;
+}
+push (@newargs, "\-templatesDir", "$TEMPDIR" );
+
+my $args = &FgpUtil::Util::CommandHelper::getJavaArgs(@newargs);
 
 my $cmd = "java $sysProps -classpath $CLASSPATH org.apidb.apicommon.datasetPresenter.TemplatesInjector $args";
 
