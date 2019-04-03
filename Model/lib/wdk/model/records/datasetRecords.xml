@@ -46,7 +46,7 @@
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Data Set" includeProjects="MicrobiomeDB"
+      <idAttribute name="primary_key" displayName="Data Set" excludeProjects="ClinEpiDB,Gates,ICEMR"
                    help="Click a data set to go to the full data set record">
           <text>
               <![CDATA[ $$display_name$$ ]]>
@@ -108,7 +108,7 @@
 -->
 
        <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="ClinEpiDB,Gates,ICEMR">
-         <columnAttribute name="newcategory" displayName="NewCategory" inReportMaker="false"
+         <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
                           help= "Datasets are assigned to categories based on the biological attributes of the data." />
        </attributeQueryRef>
 
@@ -118,7 +118,7 @@
        </attributeQueryRef>
 -->
 
-       <attributeQueryRef ref="DatasetAttributes.DatasetDigest">
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
@@ -131,7 +131,7 @@
          </linkAttribute>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
+       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="ClinEpiDB,Gates,ICEMR">
          <columnAttribute name="study_categories" displayName="Category"/>
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility"/>
@@ -150,13 +150,12 @@
  
 
        <attributeQueryRef ref="DatasetAttributes.All">
-         <columnAttribute name="dataset_name" internal="true"/>
+         <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
-         <columnAttribute name="display_name" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" removable="false"/>
-         <columnAttribute name="display_name" includeProjects="MicrobiomeDB" displayName="Dataset Name" removable="false"/>
+         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="description" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" displayName="Description" sortable="false" help="A full description of the dataset."/>
-         <columnAttribute name="description" includeProjects="MicrobiomeDB" displayName="Description" sortable="false"
+         <columnAttribute name="version" displayName="Dataset version" help="Dataset version from which data was obtained."/>
+         <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
          <columnAttribute name="usage" internal="true"/>
@@ -167,15 +166,11 @@
          <columnAttribute name="type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date" 
                           help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
-         <columnAttribute name="summary" displayName="Summary"
+         <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="release_policy" includeProjects="ClinEpiDB,Gates,ICEMR"  displayName="Release Policy" internal="true"
+         <columnAttribute name="release_policy"  displayName="Release Policy"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="release_policy" includeProjects="MicrobiomeDB"  displayName="Release Policy"
-                          help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="pmids" displayName="Publications" includeProjects="ClinEpiDB,Gates,ICEMR" internal="true" sortable="false"
-                          help="PubMed links related to the dataset."/>
-         <columnAttribute name="pmids" displayName="Publications" includeProjects="MicrobiomeDB" sortable="false"
+         <columnAttribute name="pmids" displayName="Publications" sortable="false"
                           help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -185,12 +180,9 @@
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>  
          <columnAttribute name="short_attribution" internal="true"/>
-       </attributeQueryRef>     
+       </attributeQueryRef>
 
-     
-<!--   Columns to show
--->
-        <attributesList summary="display_name,organism_prefix,newcategory,summary,eupath_release,contact" 
+        <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact" 
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"/>
 
         <attributesList summary="eupath_release,summary,contact,pmids"
@@ -234,7 +226,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
      <!-- =================================================================== -->
 
       <table name="ExampleGraphs"
-	     excludeProjects="ClinEpiDB,ICEMR,Gates,MicrobiomeDB"
+	     excludeProjects="EuPathDB,ClinEpiDB,ICEMR,Gates,MicrobiomeDB"
 	     displayName="Example Graphs"
 	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
   <textAttribute name="thumbnail" displayName="Preview">
@@ -262,8 +254,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute internal="true" displayName="is_graph_custom" name="is_graph_custom"/>
        <!--     <columnAttribute displayName="Summary" name="summary"/>
             <columnAttribute displayName="Attribution" name="short_attribution"/>
+       -->
             <columnAttribute displayName="Assay Type" name="assay_type"/>
-          -->  <columnAttribute internal="true"  displayName="Template" name="template"/>
+            <columnAttribute internal="true"  displayName="Template" name="template"/>
             <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
          <propertyList name="excludeFromDumper"><value>true</value></propertyList>
       </table>
@@ -423,10 +416,11 @@ OR if the linkName and or URL require access to other attributes....also how to 
                queryRef="DatasetTables.Version">
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="organism" displayName="Organism"/>
+            <columnAttribute name="organism" displayName="Reference Organism"/>
             <columnAttribute name="version" displayName="Version"/>
         </table>  
 
+<!--
       <table name="DatasetGeneTable"
              displayName="Dataset Gene Table" 
              queryRef="DatasetTables.DatasetGeneTable">
@@ -438,12 +432,12 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <columnAttribute name="max_value" displayName="Max value"/>
         <columnAttribute name="max_timepoint" displayName="Max timepoint"/>
       </table>
-
+-->
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- request table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-	<table name="AccessRequest" excludeProjects="MicrobiomeDB"
+	<table name="AccessRequest" includeProjects="ClinEpiDB,Gates,ICEMR"
                displayName="Study Request Records"
                queryRef="DatasetTables.AccessRequest">
           <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -600,7 +594,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="DatasetDigest" isCacheable="false">
+      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
         <column name="dataset_sha1_digest"/>
         <column name="dataset_display_name"/>
         <column name="dataset_id"/> 
@@ -614,7 +608,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false">
+      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="ClinEpiDB,Gates,ICEMR">
          <column name="dataset_id"/>
          <column name="study_categories"/>
          <column name="project_availability"/>
@@ -638,10 +632,12 @@ select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty 
 where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
+and trim(value) is not null
+-- TEMPLATE_ANCHOR injectDatasetQuestions
 )
 pivot 
 (
-   min(value)
+   max(value)
    for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
@@ -656,6 +652,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
          <column name="display_name" ignoreCase="true"/>
          <column name="short_display_name"/>
          <column name="description"/>
+         <column name="version"/>
          <column name="summary"/>
          <column name="protocol"/>
          <column name="usage"/>
@@ -671,7 +668,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
-                   dsp.display_name,
+                   dsp.display_name, ds.version,
                    dsp.short_display_name, dsp.description,
                    nvl(dsp.summary, dsp.description) as summary,
                    dsp.protocol, dsp.usage, dsp.caveat, dsp.acknowledgement,
@@ -679,15 +676,16 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                    dsp.is_species_scope, 
                    dsp.build_number_introduced,
                    nvl2(
-                     -- NULL if build_number_introduced is 0
+                     -- NULL if build_number_introduced is 0 or 1
                      DECODE(dsp.build_number_introduced,
                             0, NULL,
+                            1, NULL,
                                dsp.build_number_introduced),
                      '@PROJECT_ID@ ' || bd.release_number || ' / ' || bd.release_date,
                      NULL
                    ) as eupath_release,
                   pubs.pmids
-            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.EupathBuildDates bd,
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.EupathBuildDates bd, apidb.datasource ds,
                  (select dataset_presenter_id,
                          listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids
                   from ApidbTuning.DatasetPublication
@@ -695,6 +693,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             where dsp.build_number_introduced = bd.build_number(+)
               and bd.project(+) = '@PROJECT_ID@'
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
+	      and ds.name (+) = dsp.name
             ]]>
             </sql>
       </sqlQuery>
@@ -723,47 +722,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             </sql>
       </sqlQuery>
 
-
-
-
-<!--  i think this should be removed from within this querySet: DatasetAttributes since it is a table
-      <sqlQuery name="AccessRequest"  isCacheable="false">
-	    <column name="dataset_id"/>
-	    <column name="dataset_name"/>
-            <column name="name"/>
-            <column name="organization"/>
-	    <column name="start_date"/>
-	    <column name="purpose"/>
-            <sql>
-              <![CDATA[
-SELECT t1.name,t2.value as organization,t3.start_date, t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name 
-FROM (
-    SELECT user_id, listagg(value,' ') within group( order by key ) as name
-    FROM ( 
-         SELECT * 
-         FROM( 
-             SELECT user_id, key, value
-             FROM useraccounts.account_properties@acctdbN.profile where key in ('first_name', 'last_name')
-         )
-     )
-    GROUP BY user_id
- )t1,
-(SELECT user_id,value FROM useraccounts.account_properties@acctdbN.profile WHERE key in ('organization'))t2,
-(SELECT user_id, dataset_presenter_id,start_date, purpose FROM userlogins5.ValidDatasetUser@CEPRODN.LOGIN_COMMENT)t3,
-(SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
-
-WHERE t1.user_id = t2.user_id and t1.user_id = t3.user_id  and t3.dataset_presenter_id = t4.dataset_presenter_id 
-and t3.purpose is not null
-
- ]]>
-
-            </sql>
-      </sqlQuery>
-
--->
-
-
-
+           
 
 
       <sqlQuery name="Organisms"  isCacheable="false">
@@ -772,7 +731,9 @@ and t3.purpose is not null
 
             <sql excludeProjects="EuPathDB">
             <![CDATA[
-select dataset_id, listagg(org, '<br>') within group (order by org) as organism_prefix
+select dataset_id,
+  regexp_replace(
+    utl_i18n.unescape_reference(to_char( dbms_lob.substr(xmlagg(xmlelement(e,org,'<br>').extract('//text()')  order by org).getclobval() , 4000, 1)) ) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
 from (
 select distinct dsnt.dataset_presenter_id as dataset_id
  , case when tn.name is null then null
@@ -902,7 +863,7 @@ from apidbtuning.datasetnametaxon dsnt
 
       
 
-      <sqlQuery name="AccessRequest"  isCacheable="false">
+      <sqlQuery name="AccessRequest"  isCacheable="false" includeProjects="ClinEpiDB,Gates,ICEMR">
 	    <column name="dataset_id"/>
 	    <column name="dataset_name"/>
             <column name="name"/>
@@ -996,23 +957,14 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <column name="url"/>
             <column name="description"/>
             <sql excludeProjects="EuPathDB">
-              SELECT hl.dataset_presenter_id as dataset_id, dnt.name as dataset_name, 
-                     hl.text, hl.url, hl.description
-              FROM ApidbTuning.DatasetHyperLink hl,
-                   ApidbTuning.DatasetNameTaxon dnt
-              WHERE hl.dataset_presenter_id = dnt.dataset_presenter_id
-              -- no real datasets in mbio have urls so table of nulls returned unless following
-              AND lower(hl.url) NOT LIKE '%greengenes%'
+              SELECT dataset_id, dataset_name, text, url, description
+              FROM ApidbTuning.DatasetHyperLinks
             </sql>
 
             <sql includeProjects="EuPathDB">
-               SELECT hl.dataset_presenter_id as dataset_id, dnt.name as dataset_name, 
-                      hl.text, hl.url, hl.description
-               FROM ApidbTuning.DatasetHyperLink hl,
-                    ApidbTuning.DatasetNameTaxon dnt
-               WHERE hl.dataset_presenter_id = dnt.dataset_presenter_id
-               AND lower(hl.url) NOT LIKE '%greengenes%'
-               AND url NOT LIKE '/cgi-bin/gbrowse/%'
+              SELECT dataset_id, dataset_name, text, url, description
+              FROM ApidbTuning.DatasetHyperLinks
+              WHERE url NOT LIKE '/cgi-bin/gbrowse/%'
             </sql>
       </sqlQuery>
 
@@ -1091,6 +1043,7 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="is_graph_custom"/>
+            <column name="assay_type"/>
             <column name="template"/>
 
             <!-- force no plots on dataset record while avoiding datasetexamplesourceid for mbio, clinepi-->
@@ -1151,9 +1104,11 @@ select '' as dataset,
        '' as x_axis,
        '' y_axis,
        '' as is_graph_custom,
+       'other' as assay_type,
        1 as order_num
        
        from dual
+      -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
        ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
        ApidbTuning.datasetnametaxon dnt
 where p.dataset = graph_descrip.dataset
@@ -1162,6 +1117,7 @@ and graph_descrip.dataset = dnt.name) g
             </sql>
       </sqlQuery>
 
+<!-- 
       <sqlQuery name="DatasetGeneTable"  isCacheable='false'>
         <column name="dataset_id"/>
         <column name="source_id"/>
@@ -1178,7 +1134,7 @@ and graph_descrip.dataset = dnt.name) g
         ]]>
        </sql>
       </sqlQuery>
-
+-->
     </querySet>
 
     <querySet name="DatasetReleaseNotesTables" queryType="table" 
