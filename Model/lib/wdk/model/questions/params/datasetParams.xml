@@ -50,9 +50,9 @@
         </stringParam>
         
         <stringParam name="threshold"
-                     prompt="False Discovery Rate Cutoff &lt;="
+                     prompt="Threshold Cutoff &lt;="
                      number="true">
-            <help>Enter a number between 0 and 1.</help> 
+            <help>Enter a number between 0 and 1</help> 
             <suggest default="0.05"/>
         </stringParam>
 
@@ -64,12 +64,32 @@
         </stringParam>
 
 
-        <stringParam name="fold_change"
-                     prompt="Fold Change &gt;="
+        <stringParam name="datasetCutoff"
+                     prompt="Target List Cutoff Value &gt;="
                      number="true">
             <help>Enter a number between 1 and 100000000.</help> 
             <suggest default="10"/>
         </stringParam>
+
+
+    <enumParam name="datasetCutoffType"
+                     prompt="Target List Cutoff Type"
+                     multiPick="false"
+                     quote="false">
+      <noTranslation value="true" includeProjects="EuPathDB" />
+      <help>Compare your strategy result to gene lists which match this criteria</help>
+      <enumList>
+        <enumValue default="true">
+          <term>Fold Change</term>
+          <internal>fc</internal>
+        </enumValue>
+        <enumValue>
+          <term>Rank</term>
+          <internal>rank</internal>
+        </enumValue>  
+      </enumList>
+    </enumParam>
+
 
     <enumParam name="orthologyFlag"
                      prompt="Use orthology?"
