@@ -634,6 +634,8 @@ from apidbtuning.datasetproperty
 where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
 and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
+
+-- TEMPLATE_ANCHOR injectProjectAvailability
 )
 pivot 
 (

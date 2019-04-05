@@ -6,6 +6,14 @@ prop=cardQuestionsSql
 ${cardQuestionsSql}
 >templateTextEnd<
 
+[templateStart]
+name=injectProjectAvailability
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+prop=projectAvailabilitySql
+>templateTextStart<
+${projectAvailabilitySql}
+>templateTextEnd<
+
 
 [templateStart] 
 name=datasetExampleGraphDescriptions
