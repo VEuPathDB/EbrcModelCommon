@@ -50,9 +50,12 @@ order by 2, 1
     <sql>
       <![CDATA[
         create table &prefixOntologyRelation&1 nologging as
-        select ed.name as hierarchy_dataset_name, edr.external_database_release_id as hierarchy_dataset_release_id,
-               child.ontology_term_id as child_ontology_term_id, child.source_id as child_ontology_term_source_id,
-               parent.ontology_term_id as parent_ontology_term_id, parent.source_id as parent_ontology_term_source_id
+        select ed.name as hierarchy_dataset_name,
+               edr.external_database_release_id as hierarchy_dataset_release_id,
+               child.ontology_term_id as child_ontology_term_id,
+               child.source_id as child_ontology_term_source_id,
+               parent.ontology_term_id as parent_ontology_term_id,
+               parent.source_id as parent_ontology_term_source_id
         from sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
         where orel.subject_term_id = child.ontology_term_id
@@ -61,6 +64,9 @@ order by 2, 1
           and orel.object_term_id
               not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
           and orel.external_database_release_id = edr.external_database_release_id
+          and (orel.predicate_term_id is null
+               or orel.predicate_term_id
+                  in (select ontology_term_id from sres.OntologyTerm where source_id = 'subClassOf'))
           and edr.external_database_id = ed.external_database_id
           and ed.name
               in (select hierarchy_dataset_name
@@ -1060,7 +1066,7 @@ UNION ALL
     </sql>
   </tuningTable>
 
-    <tuningTable name="MetadataSummary" prefixEnabled="true">
+  <tuningTable name="MetadataSummary" prefixEnabled="true">
     <comment>
       Summary stats for property values
     </comment>
