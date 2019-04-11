@@ -1235,7 +1235,8 @@ UNION ALL
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
-               parent.parent_ontology_term_source_id, unit_term.name as units, pt.type,
+               parent.parent_ontology_term_source_id, unit_term.name as units,
+               cast(pt.type as varchar2(20)) as type,
                case
                  when pt.filter = 'range' then 1
                  else 0
@@ -1263,6 +1264,23 @@ UNION ALL
           and dot.dataset_name = di.dataset_name
           and dot.ontology_term_id = pt.property_id(+)
           and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixOntology&1 o
+        set type
+            = (select max(object.name) -- e.g. "multifilter"
+               from sres.OntologyRelationship orel,
+                    sres.OntologyTerm predicate, sres.OntologyTerm object,
+                    sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
+               where orel.predicate_term_id = predicate.ontology_term_id
+                 and predicate.source_id = 'EUPATH_0000271' -- "termType"
+                 and orel.object_term_id = object.ontology_term_id
+                 and orel.external_database_release_id = edr.external_database_release_id
+                 and edr.external_database_id = ed.external_database_id
+      )
+where type is null
       ]]>
     </sql>
     <sql>
