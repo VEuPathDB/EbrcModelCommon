@@ -1273,14 +1273,18 @@ UNION ALL
             = (select max(object.name) -- e.g. "multifilter"
                from sres.OntologyRelationship orel,
                     sres.OntologyTerm predicate, sres.OntologyTerm object,
-                    sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
-               where orel.predicate_term_id = predicate.ontology_term_id
+                    sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+                    &prefixHierarchyMap hmap
+               where o.ontology_term_id = orel.subject_term_id
+                 and orel.predicate_term_id = predicate.ontology_term_id
                  and predicate.source_id = 'EUPATH_0000271' -- "termType"
                  and orel.object_term_id = object.ontology_term_id
                  and orel.external_database_release_id = edr.external_database_release_id
                  and edr.external_database_id = ed.external_database_id
-      )
-where type is null
+                 and ed.name = hmap.hierarchy_dataset_name
+                 and hmap.dataset_name = o.dataset_name
+              )
+        where type is null
       ]]>
     </sql>
     <sql>
