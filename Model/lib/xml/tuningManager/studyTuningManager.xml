@@ -1703,13 +1703,11 @@ create table &prefixHouseLightIO&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
-<!--
     <internalDependency name="ObsObsIO"/>
     <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="ObsSampleIO"/>
     <internalDependency name="Ontology"/>
--->
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
