@@ -1703,11 +1703,13 @@ create table &prefixHouseLightIO&1 (
     <comment>
       Metadata table specific for observation filter 
     </comment>
+<!--
     <internalDependency name="ObsObsIO"/>
     <internalDependency name="HousePartIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="ObsSampleIO"/>
     <internalDependency name="Ontology"/>
+-->
     <sql>
       <![CDATA[
 create table &prefixObservationMD&1 (
@@ -1739,6 +1741,17 @@ select distinct o.ontology_term_source_id
    )
  and m.pan_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+) 
+UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
+ select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
+ nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
+ where m.property_source_id in (
+ select ontology_term_source_id
+ from obsont  
+   )
+ and m.pan_id = iosub.sub_observation_id
+ and iosub.observation_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+)
 UNION --NOTE: next block pulls in sample information
 select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
@@ -1751,28 +1764,6 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
  and m.pan_id = spec.sample_id
       and ioo.observation_id = spec.observation_id
       and ioo.participant_id = ioh.participant_id(+)     
-UNION -- NOTE: some sample information is loaded associated with observations ...
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
-   )
- and m.pan_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+) 
-UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
- select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
- nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
- where m.property_source_id in (
- select ontology_term_source_id
- from obsont  
-   )
- and m.pan_id = iosub.sub_observation_id
- and iosub.observation_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
     <sql>
