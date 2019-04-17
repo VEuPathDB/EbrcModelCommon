@@ -1390,7 +1390,9 @@ UNION ALL
                CASE
                  WHEN ta.is_date = 1
                    THEN 'range'
-                 WHEN ta.is_number = 1 AND ta.distinct_values > 10
+                 WHEN ta.is_number = 1
+                      AND ta.distinct_values > 10
+                      AND lower(ta.property) NOT LIKE '%code%'
                    THEN 'range'
                  ELSE 'membership'
                END AS filter,
