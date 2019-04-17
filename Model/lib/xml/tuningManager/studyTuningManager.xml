@@ -50,9 +50,12 @@ order by 2, 1
     <sql>
       <![CDATA[
         create table &prefixOntologyRelation&1 nologging as
-        select ed.name as hierarchy_dataset_name, edr.external_database_release_id as hierarchy_dataset_release_id,
-               child.ontology_term_id as child_ontology_term_id, child.source_id as child_ontology_term_source_id,
-               parent.ontology_term_id as parent_ontology_term_id, parent.source_id as parent_ontology_term_source_id
+        select ed.name as hierarchy_dataset_name,
+               edr.external_database_release_id as hierarchy_dataset_release_id,
+               child.ontology_term_id as child_ontology_term_id,
+               child.source_id as child_ontology_term_source_id,
+               parent.ontology_term_id as parent_ontology_term_id,
+               parent.source_id as parent_ontology_term_source_id
         from sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
         where orel.subject_term_id = child.ontology_term_id
@@ -61,6 +64,9 @@ order by 2, 1
           and orel.object_term_id
               not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
           and orel.external_database_release_id = edr.external_database_release_id
+          and (orel.predicate_term_id is null
+               or orel.predicate_term_id
+                  in (select ontology_term_id from sres.OntologyTerm where source_id = 'subClassOf'))
           and edr.external_database_id = ed.external_database_id
           and ed.name
               in (select hierarchy_dataset_name
@@ -1060,7 +1066,7 @@ UNION ALL
     </sql>
   </tuningTable>
 
-    <tuningTable name="MetadataSummary" prefixEnabled="true">
+  <tuningTable name="MetadataSummary" prefixEnabled="true">
     <comment>
       Summary stats for property values
     </comment>
@@ -1229,7 +1235,8 @@ UNION ALL
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
-               parent.parent_ontology_term_source_id, unit_term.name as units, pt.type,
+               parent.parent_ontology_term_source_id, unit_term.name as units,
+               cast(pt.type as varchar2(20)) as type,
                case
                  when pt.filter = 'range' then 1
                  else 0
@@ -1257,6 +1264,27 @@ UNION ALL
           and dot.dataset_name = di.dataset_name
           and dot.ontology_term_id = pt.property_id(+)
           and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixOntology&1 o
+        set type
+            = (select max(object.name) -- e.g. "multifilter"
+               from sres.OntologyRelationship orel,
+                    sres.OntologyTerm predicate, sres.OntologyTerm object,
+                    sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+                    &prefixHierarchyMap hmap
+               where o.ontology_term_id = orel.subject_term_id
+                 and orel.predicate_term_id = predicate.ontology_term_id
+                 and predicate.source_id = 'EUPATH_0000271' -- "termType"
+                 and orel.object_term_id = object.ontology_term_id
+                 and orel.external_database_release_id = edr.external_database_release_id
+                 and edr.external_database_id = ed.external_database_id
+                 and ed.name = hmap.hierarchy_dataset_name
+                 and hmap.dataset_name = o.dataset_name
+              )
+        where type is null
       ]]>
     </sql>
     <sql>
@@ -1362,7 +1390,9 @@ UNION ALL
                CASE
                  WHEN ta.is_date = 1
                    THEN 'range'
-                 WHEN ta.is_number = 1 AND ta.distinct_values > 10
+                 WHEN ta.is_number = 1
+                      AND ta.distinct_values > 10
+                      AND lower(ta.property) NOT LIKE '%code%'
                    THEN 'range'
                  ELSE 'membership'
                END AS filter,
@@ -1711,6 +1741,17 @@ select distinct o.ontology_term_source_id
    )
  and m.pan_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+) 
+UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
+ select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
+ nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
+ where m.property_source_id in (
+ select ontology_term_source_id
+ from obsont  
+   )
+ and m.pan_id = iosub.sub_observation_id
+ and iosub.observation_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+)
 UNION --NOTE: next block pulls in sample information
 select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
@@ -1723,28 +1764,6 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
  and m.pan_id = spec.sample_id
       and ioo.observation_id = spec.observation_id
       and ioo.participant_id = ioh.participant_id(+)     
-UNION -- NOTE: some sample information is loaded associated with observations ...
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
-   )
- and m.pan_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+) 
-UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
- select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
- nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
- where m.property_source_id in (
- select ontology_term_source_id
- from obsont  
-   )
- and m.pan_id = iosub.sub_observation_id
- and iosub.observation_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
     <sql>
