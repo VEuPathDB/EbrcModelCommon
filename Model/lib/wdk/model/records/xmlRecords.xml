@@ -372,7 +372,7 @@
   <!-- Tutorials -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-        <xmlRecordClass
+        <xmlRecordClass  excludeProjects="ClinEpiDB,ICEMR,Gates"
         	name="TutorialsRecord"
         	type="Tutorial"
         	idPrefix="Tut."
@@ -387,6 +387,25 @@
               <xmlAttribute name="fileName.flv"/>
               <xmlAttribute name="fileName.pdf"/>
               <xmlAttribute name="duration"/>
+              <xmlAttribute name="size"/>
+            </xmlTable>
+        </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Tutorials Clinepi sites -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass  includeProjects="ClinEpiDB,ICEMR,Gates"
+        	name="TutorialsRecord"
+        	type="Tutorial"
+        	idPrefix="Tut."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="description"/>
+            <xmlAttribute name="uid"/> 
+            <xmlTable name="files">
+              <xmlAttribute name="projects"/>
+              <xmlAttribute name="fileName.pdf"/>
               <xmlAttribute name="size"/>
             </xmlTable>
         </xmlRecordClass>
