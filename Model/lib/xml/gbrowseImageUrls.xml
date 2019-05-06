@@ -461,6 +461,10 @@
     <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
+  <subtrackSet name="Glomeromycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>rirrDAOM181602</track>
+  </subtrackSet>
+
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
     <track>acarITEM5010</track>
     <track>acamIBT28561</track>
@@ -699,8 +703,18 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Zygomycetes"/>
+      <subtrack set="Glomeromycetes"/>
       <subtrack set="Blastocladiomycetes"/>
       <subtrack set="Chytridiomycetes_gene"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="rirrDAOM181602" organism="Rhizophagus irregularis DAOM 181602=DAOM 197198"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Glomeromycetes"/>
+      <subtrack set="Zygomycetes"/>
     </track>
   </url>
 
