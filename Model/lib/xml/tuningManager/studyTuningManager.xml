@@ -645,7 +645,9 @@ ORDER BY external_database_release_id, protocol_app_node_id
       <![CDATA[
         create table &prefixValueCaps&1 nologging as
         select qualifier_id, lower_value, commonest_capitalization
-        from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
+        from (select qualifier_id,
+                     substr(value, 1, 2400) as commonest_capitalization,
+                     substr(lower(value), 1, 3100) as lower_value,
                      dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
               from study.Characteristic c, study.StudyLink sl, study.Study s,
                    sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
