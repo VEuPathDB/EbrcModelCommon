@@ -454,6 +454,7 @@
     <track>eoliCBS72588</track>
     <track>fpedCBS271-37</track>
     <track>ccarKSF</track>
+    <track>cimmCBS83496</track>
   </subtrackSet>
 
   <subtrackSet name="Penicillium_gene" project="FungiDB" suffixes="_span;_gene">
@@ -707,6 +708,7 @@
     <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
+    <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Herpotrichiellaceae"/>
@@ -851,6 +853,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Leotiomycetes"/>
+      <subtrack set="Sordariomycetes"/>
     </track>
   </url>
 
