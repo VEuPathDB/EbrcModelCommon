@@ -50,9 +50,12 @@ order by 2, 1
     <sql>
       <![CDATA[
         create table &prefixOntologyRelation&1 nologging as
-        select ed.name as hierarchy_dataset_name, edr.external_database_release_id as hierarchy_dataset_release_id,
-               child.ontology_term_id as child_ontology_term_id, child.source_id as child_ontology_term_source_id,
-               parent.ontology_term_id as parent_ontology_term_id, parent.source_id as parent_ontology_term_source_id
+        select ed.name as hierarchy_dataset_name,
+               edr.external_database_release_id as hierarchy_dataset_release_id,
+               child.ontology_term_id as child_ontology_term_id,
+               child.source_id as child_ontology_term_source_id,
+               parent.ontology_term_id as parent_ontology_term_id,
+               parent.source_id as parent_ontology_term_source_id
         from sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
         where orel.subject_term_id = child.ontology_term_id
@@ -61,6 +64,9 @@ order by 2, 1
           and orel.object_term_id
               not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
           and orel.external_database_release_id = edr.external_database_release_id
+          and (orel.predicate_term_id is null
+               or orel.predicate_term_id
+                  in (select ontology_term_id from sres.OntologyTerm where source_id = 'subClassOf'))
           and edr.external_database_id = ed.external_database_id
           and ed.name
               in (select hierarchy_dataset_name
@@ -403,22 +409,6 @@ order by pan.name
                          then 'Ontology_icemr_RSRC'
                        when lower(name) like 'otu%'
                          then 'OntologyTerm_microbiome_RSRC'
-                       when name = 'ISASimple_ICEMR_PRISM_cohort_RSRC'
-                         then 'OntologyTerm_icemr_prism_RSRC'
-                       when name = 'ISASimple_ICEMR_PRISM2_cohort_RSRC'
-                         then 'OntologyTerm_icemr_prism2_RSRC'
-                       when name in ('ISASimple_ICEMR_India_longitudinal_RSRC','ISASimple_ICEMR_India_cross_sectional_RSRC')
-                         then 'OntologyTerm_icemr_indian_RSRC'
-                       when name = 'ISASimple_Gates_MAL-ED_phase2_RSRC'
-                         then 'OntologyTerm_gates_maled_RSRC'
-                       when name = 'ISASimple_Gates_MAL-ED_stdm_tp_RSRC'
-                         then 'OntologyTerm_gates_RSRC'
-                       when name = 'ISASimple_Gates_GEMS_gems1_case_control_RSRC'
-                         then 'OntologyTerm_gates_gems_RSRC'
-                       when name = 'ISASimple_ICEMR_South_Asia_surveillance_RSRC'
-                         then 'OntologyTerm_icemr_southAsia_RSRC'
-                       when name = 'ISASimple_ICEMR_India_fever_surveillance_RSRC'
-                         then 'OntologyTerm_icemr_india_feverSurv_RSRC'
                        else 'OntologyTerm_eupath_isa_RSRC'
                      end as hardwired_hierarchy
               from sres.ExternalDatabase
@@ -426,6 +416,7 @@ order by pan.name
                     in (select edr.external_database_id
                         from sres.ExternalDatabaseRelease edr, study.Study s
                         where s.external_database_release_id = edr.external_database_release_id)
+                and (name = '&filterValue' or nvl('&filterValue', '0') = '0')
              ) datasets,
              (select dsp.name as dataset_name, d.name as hierarchy
               from DatasetPresenter dsp, DatasetProperty p, sres.ExternalDatabase d
@@ -654,7 +645,9 @@ ORDER BY external_database_release_id, protocol_app_node_id
       <![CDATA[
         create table &prefixValueCaps&1 nologging as
         select qualifier_id, lower_value, commonest_capitalization
-        from (select qualifier_id, value as commonest_capitalization, lower(value) as lower_value,
+        from (select qualifier_id,
+                     cast(value as varchar2(3100)) as commonest_capitalization,
+                     cast(lower(value) as varchar2(3100)) as lower_value,
                      dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
               from study.Characteristic c, study.StudyLink sl, study.Study s,
                    sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
@@ -1075,7 +1068,7 @@ UNION ALL
     </sql>
   </tuningTable>
 
-    <tuningTable name="MetadataSummary" prefixEnabled="true">
+  <tuningTable name="MetadataSummary" prefixEnabled="true">
     <comment>
       Summary stats for property values
     </comment>
@@ -1095,7 +1088,7 @@ UNION ALL
     		where m.string_value is not null
     		and m.property_source_id = pt.property_source_id
     		and pt.type = 'string'
-    		and pt.distinct_values < 100
+    		and pt.distinct_values < 80
   		)
   	group by property_source_id
  	) s,
@@ -1244,7 +1237,8 @@ UNION ALL
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
-               parent.parent_ontology_term_source_id, unit_term.name as units, pt.type,
+               parent.parent_ontology_term_source_id, unit_term.name as units,
+               cast(pt.type as varchar2(20)) as type,
                case
                  when pt.filter = 'range' then 1
                  else 0
@@ -1272,6 +1266,27 @@ UNION ALL
           and dot.dataset_name = di.dataset_name
           and dot.ontology_term_id = pt.property_id(+)
           and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixOntology&1 o
+        set type
+            = (select max(object.name) -- e.g. "multifilter"
+               from sres.OntologyRelationship orel,
+                    sres.OntologyTerm predicate, sres.OntologyTerm object,
+                    sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
+                    &prefixHierarchyMap hmap
+               where o.ontology_term_id = orel.subject_term_id
+                 and orel.predicate_term_id = predicate.ontology_term_id
+                 and predicate.source_id = 'EUPATH_0000271' -- "termType"
+                 and orel.object_term_id = object.ontology_term_id
+                 and orel.external_database_release_id = edr.external_database_release_id
+                 and edr.external_database_id = ed.external_database_id
+                 and ed.name = hmap.hierarchy_dataset_name
+                 and hmap.dataset_name = o.dataset_name
+              )
+        where type is null
       ]]>
     </sql>
     <sql>
@@ -1377,7 +1392,9 @@ UNION ALL
                CASE
                  WHEN ta.is_date = 1
                    THEN 'range'
-                 WHEN ta.is_number = 1 AND ta.distinct_values > 10
+                 WHEN ta.is_number = 1
+                      AND ta.distinct_values > 10
+                      AND lower(ta.property) NOT LIKE '%code%'
                    THEN 'range'
                  ELSE 'membership'
                END AS filter,
@@ -1726,6 +1743,17 @@ select distinct o.ontology_term_source_id
    )
  and m.pan_id = ioo.observation_id
  and ioo.participant_id = ioh.participant_id(+) 
+UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
+ select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
+ nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
+ where m.property_source_id in (
+ select ontology_term_source_id
+ from obsont  
+   )
+ and m.pan_id = iosub.sub_observation_id
+ and iosub.observation_id = ioo.observation_id
+ and ioo.participant_id = ioh.participant_id(+)
 UNION --NOTE: next block pulls in sample information
 select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
  from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
@@ -1738,28 +1766,6 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
  and m.pan_id = spec.sample_id
       and ioo.observation_id = spec.observation_id
       and ioo.participant_id = ioh.participant_id(+)     
-UNION -- NOTE: some sample information is loaded associated with observations ...
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
-   )
- and m.pan_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+) 
-UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
- select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
- nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
- where m.property_source_id in (
- select ontology_term_source_id
- from obsont  
-   )
- and m.pan_id = iosub.sub_observation_id
- and iosub.observation_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
     <sql>

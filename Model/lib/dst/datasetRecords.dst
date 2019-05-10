@@ -1,0 +1,44 @@
+[templateStart]
+name=injectDatasetQuestions
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+prop=cardQuestionsSql
+>templateTextStart<
+${cardQuestionsSql}
+>templateTextEnd<
+
+[templateStart]
+name=injectProjectAvailability
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+prop=projectAvailabilitySql
+>templateTextStart<
+${projectAvailabilitySql}
+>templateTextEnd<
+
+
+[templateStart] 
+name=datasetExampleGraphDescriptions
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+prop=datasetName
+prop=datasetDisplayName 
+prop=datasetDescrip
+prop=graphModule
+prop=graphXAxisSamplesDescription
+prop=graphYAxisDescription
+prop=graphPriorityOrderGrouping
+prop=isGraphCustom
+>templateTextStart<
+      UNION
+      select '${datasetName}' as dataset,
+       '${datasetDisplayName}' as display_name,
+       '${datasetDescrip}' as description,
+       '${graphModule}' as module,
+       '${graphXAxisSamplesDescription}' as x_axis,
+       '${graphYAxisDescription}' as y_axis,
+       '${isGraphCustom}' as is_graph_custom,
+       CASE WHEN REGEXP_LIKE ('${datasetName}','rnaSeq') 
+            THEN 'RNA-seq' ELSE 'other' END AS assay_type,
+       ${graphPriorityOrderGrouping} as order_num
+       from dual
+>templateTextEnd<
+
+

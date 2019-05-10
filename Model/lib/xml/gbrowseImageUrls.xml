@@ -450,11 +450,19 @@
     <track>rdelRA99-880</track>
   </subtrackSet>
 
-  <subtrackSet name="Eurotiomycetes" project="FungiDB" suffixes="_span;_gene">
-    <track>prubWisconsin54-1255</track>
+  <subtrackSet name="Herpotrichiellaceae" project="FungiDB" suffixes="_span;_gene">
     <track>eoliCBS72588</track>
     <track>fpedCBS271-37</track>
     <track>ccarKSF</track>
+    <track>cimmCBS83496</track>
+  </subtrackSet>
+
+  <subtrackSet name="Penicillium_gene" project="FungiDB" suffixes="_span;_gene">
+    <track>prubWisconsin54-1255</track>
+  </subtrackSet>
+
+  <subtrackSet name="Glomeromycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>rirrDAOM181602</track>
   </subtrackSet>
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
@@ -633,6 +641,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pucciniomycetes_gene"/>
+      <subtrack set="Ustilaginomycetes"/>
     </track>
   </url>
 
@@ -643,6 +652,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Schizosaccharomycetes_gene"/>
+      <subtrack set="Pneumocystidomycetes"/>
     </track>
   </url>
 
@@ -652,6 +662,8 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Chytridiomycetes_gene"/>
+      <subtrack set="Blastocladiomycetes"/>
+      <subtrack set="Zygomycetes"/>
     </track>
   </url>
 
@@ -691,17 +703,39 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Zygomycetes"/>
+      <subtrack set="Glomeromycetes"/>
+      <subtrack set="Blastocladiomycetes"/>
+      <subtrack set="Chytridiomycetes_gene"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="rirrDAOM181602" organism="Rhizophagus irregularis DAOM 181602=DAOM 197198"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Glomeromycetes"/>
+      <subtrack set="Zygomycetes"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
+    <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
+    <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
+    <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Herpotrichiellaceae"/>
+      <subtrack set="Onygenales"/>
+      <subtrack set="Trichocomaceae"/>
     </track>
   </url>
 
   <url project="FungiDB" type="synteny">
     <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
-    <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
-    <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
-    <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
-      <subtrack set="Eurotiomycetes"/>
+      <subtrack set="Penicillium_gene"/>
       <subtrack set="Aspergillaceae"/>
     </track>
   </url>
@@ -813,6 +847,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Agaricomycetes"/>
+      <subtrack set="Tremellomycetes"/>
     </track>
   </url>
 
@@ -822,8 +857,7 @@
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Blastocladiomycetes"/>
       <subtrack set="Chytridiomycetes_gene"/>
-      <subtrack set="Sordariomycetes"/>
-      <subtrack set="Tremellomycetes"/>
+      <subtrack set="Zygomycetes"/>
     </track>
   </url>
 
@@ -833,6 +867,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Leotiomycetes"/>
+      <subtrack set="Sordariomycetes"/>
     </track>
   </url>
 
@@ -873,6 +908,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
+      <subtrack set="Pucciniomycetes_gene"/>
     </track>
   </url>
 
@@ -881,8 +917,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pneumocystidomycetes"/>
-      <subtrack set="Pucciniomycetes_gene"/>
-      <subtrack set="Zygomycetes"/>
+      <subtrack set="Schizosaccharomycetes_gene"/>
     </track>
   </url>
 
@@ -915,6 +950,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Trichocomaceae"/>
+      <subtrack set="Aspergillaceae"/>
     </track>
   </url>
 
