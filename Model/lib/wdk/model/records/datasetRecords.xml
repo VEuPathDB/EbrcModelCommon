@@ -666,7 +666,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
          <column name="build_number_introduced"/>
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
          <column name="pmids"/>
-            <sql>
+         <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
@@ -677,26 +677,28 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                    dsp.release_policy, dsp.type,
                    dsp.is_species_scope, 
                    dsp.build_number_introduced,
-                   nvl2(
-                     -- NULL if build_number_introduced is 0 
-                     DECODE(dsp.build_number_introduced,
-                            0, NULL,
-                               dsp.build_number_introduced),
-                     '@PROJECT_ID@ ' || bd.release_number || ' / ' || bd.release_date,
-                     NULL
-                   ) as eupath_release,
-                  pubs.pmids
-            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.EupathBuildDates bd, apidb.datasource ds,
+                   history.eupath_release,
+                   pubs.pmids
+            from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id,
                          listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids
                   from ApidbTuning.DatasetPublication
-                  group by dataset_presenter_id) pubs
-            where dsp.build_number_introduced = bd.build_number(+)
-              and bd.project(+) = '@PROJECT_ID@'
+                  group by dataset_presenter_id) pubs,
+                 (select dataset_presenter_id,
+                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                  from (select dh.dataset_presenter_id, dh.build_number, ebd.release_date,
+                               ebd.release_number, ebd.project,
+                               row_number() over (partition by dh.dataset_presenter_id
+                                                              order by ebd.release_number desc) rn
+                        from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
+                        where dh.build_number = ebd.build_number
+                          and ebd.project = 'PlasmoDB')
+                  where rn = 1) history
+            where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
             ]]>
-            </sql>
+         </sql>
       </sqlQuery>
 
 
