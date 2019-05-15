@@ -692,7 +692,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                                                               order by ebd.release_number desc) rn
                         from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
                         where dh.build_number = ebd.build_number
-                          and ebd.project = @PROJECT_ID@')
+                          and ebd.project = '@PROJECT_ID@')
                   where rn = 1) history
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
