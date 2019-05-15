@@ -677,7 +677,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                    dsp.release_policy, dsp.type,
                    dsp.is_species_scope, 
                    dsp.build_number_introduced,
-                   history.eupath_release,
+                   nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
                    pubs.pmids
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id,
@@ -693,8 +693,13 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                         from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
                         where dh.build_number = ebd.build_number
                           and ebd.project = '@PROJECT_ID@')
-                  where rn = 1) history
+                  where rn = 1) history,
+                 (select build_number,
+                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                  from apidbTuning.EupathBuildDates
+                        where project = '@PROJECT_ID@') introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
+              and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
             ]]>
