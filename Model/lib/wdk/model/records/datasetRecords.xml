@@ -339,7 +339,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Link Outs"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" displayName="Description"/>
             <columnAttribute name="url" internal="true"/>
 
@@ -959,14 +958,13 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
 
 
       <sqlQuery name="HyperLinks"  isCacheable='false'>
-            <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="text"/>
             <column name="url"/>
             <column name="description"/>
             <sql excludeProjects="EuPathDB">
-              SELECT dataset_id, dataset_name, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
+              SELECT dataset_presenter_id as  dataset_id, text, url, description
+              FROM ApidbTuning.DatasetHyperLink
             </sql>
 
             <sql includeProjects="EuPathDB">
