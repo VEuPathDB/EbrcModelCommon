@@ -1135,6 +1135,27 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="PropertyCategory" prefixEnabled="true">
+    <comment>
+      Category (or categories) of each property
+    </comment>
+    <internalDependency name="Metadata"/>
+    <sql>
+      <![CDATA[
+	create table &prefixPropertyCategory&1 as
+ 	select distinct property_source_id, dataset_name, category
+ 	from &prefixMetadata
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpcat_ixone&1
+        on &prefixPropertyCategory&1 (property_source_id, dataset_name, category)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
   <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
@@ -1148,7 +1169,7 @@ UNION ALL
         create table &prefixMetadata&1 nologging as
         select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
                m.pan_id, m.pan_name,
-               m.category, m.property, m.property_id, mt.property_source_id,
+n               m.category, m.property, m.property_id, mt.property_source_id,
                substr(m.value, 1, 250) as string_value,
                case when mt.type = 'number'
                       then apidb.parse_and_round_number(m.value)
