@@ -1135,6 +1135,27 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="PropertyCategory" prefixEnabled="true">
+    <comment>
+      Category (or categories) of each property
+    </comment>
+    <internalDependency name="Metadata"/>
+    <sql>
+      <![CDATA[
+	create table &prefixPropertyCategory&1 as
+ 	select distinct property_source_id, dataset_name, category
+ 	from &prefixMetadata
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpcat_ixone&1
+        on &prefixPropertyCategory&1 (property_source_id, dataset_name, category)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
   <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>

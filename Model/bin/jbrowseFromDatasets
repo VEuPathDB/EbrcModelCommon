@@ -3,9 +3,12 @@
 use strict;
 
 my $CONF_FILE_BASENAME = "tracks.conf";
+my $CONF_FILE_BASENAME_AA = "tracks_aa.conf";
 
 my $PROP_FILE_PATH = "$ENV{GUS_HOME}/lib/prop/datasetProperties/*.prop";
+
 my $TRACKS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$CONF_FILE_BASENAME";
+my $TRACKS_CONF_FOR_INJECTION_AA = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$CONF_FILE_BASENAME_AA";
 
 my $CUSTOM_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse";
 my $GENERATED_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/auto_generated";
@@ -23,11 +26,14 @@ foreach my $file (@files) {
       my $organismAbbrev = $1;
 
       my $orgCustomTracksConf = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
+      my $orgCustomTracksConfAa = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME_AA";
 
-      my $orgGeneratedTracksDir = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev";
+      my $orgGeneratedTracksDir = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/aa";
+
       my $orgGeneratedTracksConf = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
+      my $orgGeneratedTracksConfAa = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/aa/$CONF_FILE_BASENAME";
 
-      my $orgGusHomeDirectory = "$GUS_HOME_BASE/$organismAbbrev";
+      my $orgGusHomeDirectory = "$GUS_HOME_BASE/$organismAbbrev/aa";
 
       unless(-d $orgGusHomeDirectory) {
         system("mkdir -p  $orgGusHomeDirectory") == 0 or die "mkdir failed for directory $orgGusHomeDirectory: $?";
@@ -48,6 +54,19 @@ foreach my $file (@files) {
           system("cat $orgCustomTracksConf >> $orgGeneratedTracksConf") == 0 or die "cat failed: $?";
         }
       }
+
+      # generated track file doesn't exist OR INJECTED TRACKS IS NEWER  OR custom file exists and is newer
+      if(! -e $orgGeneratedTracksConfAa || 
+         (stat $TRACKS_CONF_FOR_INJECTION_AA)[9] > (stat $orgGeneratedTracksConfAa)[9] || 
+         (-e $orgCustomTracksConfAa && (stat $orgCustomTracksConfAa)[9] > (stat $orgGeneratedTracksConfAa)[9])) {
+
+        system("cp $TRACKS_CONF_FOR_INJECTION_AA $orgGeneratedTracksConfAa") == 0 or die "cp failed: $?";
+
+        if(-e $orgCustomTracksConfAa) {
+          system("cat $orgCustomTracksConfAa >> $orgGeneratedTracksConfAa") == 0 or die "cat failed: $?";
+        }
+      }
+
     }
   }
 }
