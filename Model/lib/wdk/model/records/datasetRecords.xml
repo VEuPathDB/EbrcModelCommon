@@ -962,10 +962,17 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <column name="text"/>
             <column name="url"/>
             <column name="description"/>
-            <sql excludeProjects="EuPathDB">
+            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
               SELECT dataset_id, text, url, description
               FROM ApidbTuning.DatasetHyperLinks
             </sql>
+
+
+            <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
+              SELECT dataset_presenter_id AS dataset_id, text, url, description
+              FROM ApidbTuning.DatasetHyperLINK
+            </sql>
+
 
             <sql includeProjects="EuPathDB">
               SELECT dataset_id, text, url, description
