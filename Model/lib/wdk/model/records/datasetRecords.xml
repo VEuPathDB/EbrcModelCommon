@@ -963,12 +963,12 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <column name="url"/>
             <column name="description"/>
             <sql excludeProjects="EuPathDB">
-              SELECT dataset_presenter_id as  dataset_id, text, url, description
-              FROM ApidbTuning.DatasetHyperLink
+              SELECT dataset_id, text, url, description
+              FROM ApidbTuning.DatasetHyperLinks
             </sql>
 
             <sql includeProjects="EuPathDB">
-              SELECT dataset_id, dataset_name, text, url, description
+              SELECT dataset_id, text, url, description
               FROM ApidbTuning.DatasetHyperLinks
               WHERE url NOT LIKE '/cgi-bin/gbrowse/%'
             </sql>
