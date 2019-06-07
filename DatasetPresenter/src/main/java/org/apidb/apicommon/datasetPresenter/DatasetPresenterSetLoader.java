@@ -416,7 +416,7 @@ public class DatasetPresenterSetLoader {
     Integer buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
 
     if(buildNumberIntroduced == null) {
-        buildNumberIntroduced = new Integer(0);
+        buildNumberIntroduced = Integer.valueOf(0);
     }
 
     stmt.setInt(i++, buildNumberIntroduced.intValue());
