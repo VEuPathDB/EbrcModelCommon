@@ -187,6 +187,7 @@ and (ot.source_id in ('EUPATH_0000738', --Observation/Event
                      'PCO_0000024', -- Household
                      'EUPATH_0000096', --Participant
                      'EUPATH_0000327', -- CDC light trap
+                     'EUPATH_0025169', -- Insect sample
                      'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
                      )
     OR pan.isa_type = 'Sample'
