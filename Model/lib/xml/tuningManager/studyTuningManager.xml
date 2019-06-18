@@ -187,6 +187,7 @@ and (ot.source_id in ('EUPATH_0000738', --Observation/Event
                      'PCO_0000024', -- Household
                      'EUPATH_0000096', --Participant
                      'EUPATH_0000327', -- CDC light trap
+                     'EUPATH_0025169', -- Insect sample
                      'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
                      )
     OR pan.isa_type = 'Sample'
@@ -1693,22 +1694,22 @@ create table &prefixObsObsIO&1 (
     </sql>
   </tuningTable>
 
-  <tuningTable name="HouseLightIO" prefixEnabled="true">
+  <tuningTable name="HouseEntoIO" prefixEnabled="true">
     <comment>
-      Metadata table specific for household to light trap relation
+      Metadata table specific for household to Entomology relation
     </comment>
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixHouseLightIO&1 (
+create table &prefixHouseEntoIO&1 (
   household_id,
-  lighttrap_id,
-  CONSTRAINT &prefixhouselightio_pk&1 PRIMARY KEY (household_id,lighttrap_id) 
+  entomology_id,
+  CONSTRAINT &prefixhouseentoio_pk&1 PRIMARY KEY (household_id,entomology_id) 
   )
   ORGANIZATION index
   nologging
   as
-  select distinct input_pan_id as household_id, output_pan_id as lighttrap_id
+  select distinct input_pan_id as household_id, output_pan_id as entomology_id
   from &prefixPANIO 
   where input_pan_type_source_id = 'PCO_0000024' 
   and output_pan_type_source_id = 'EUPATH_0000327'
@@ -1716,8 +1717,38 @@ create table &prefixHouseLightIO&1 (
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &prefixlighthouseio&1
-          ON &prefixHouseLightIO&1 (lighttrap_id,household_id)
+        CREATE INDEX &prefixhouseentoio&1
+          ON &prefixHouseEntoIO&1 (entomology_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="EntoInsSplIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to Entomology relation
+    </comment>
+    <internalDependency name="PANIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixEntoInsSplIO&1 (
+  entomology_id,
+  insect_sample_id,
+  CONSTRAINT &prefixentoinssplio_pk&1 PRIMARY KEY (entomology_id,insect_sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as entomology_id, output_pan_id as insect_sample_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0000327' 
+  and output_pan_type_source_id = 'EUPATH_0025169'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixentoinssplio&1
+          ON &prefixEntoInsSplIO&1 (insect_sample_id,entomology_id)
         TABLESPACE indx
       ]]>
     </sql>
@@ -1800,6 +1831,49 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
       <![CDATA[
         CREATE INDEX &prefixObsmd_obsid&1
           ON &prefixObservationMD&1 (observation_id, participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="EntomologyMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for observation filter 
+    </comment>
+    <internalDependency name="HouseEntoIO"/>
+    <internalDependency name="EntoInsSplIO"/>
+    <internalDependency name="Metadata"/>
+    <sql>
+      <![CDATA[
+create table &prefixEntomologyMD&1 (
+  ontology_term_name,
+  entomology_id,
+  household_id,
+  insect_sample_id,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefixEntmd_pk&1 PRIMARY KEY (ontology_term_name,entomology_id,household_id,insect_sample_id,string_value) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+   select distinct m.property_source_id as ontology_term_name, m.pan_id as entomology_id, io.household_id,  m.pan_id as insect_sample_id, 
+   m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixHouseEntoIO io
+ where m.pan_id = io.entomology_id
+UNION  -- NOTE: the following pulls in insect sample data
+   select distinct m.property_source_id as ontology_term_name, eis.entomology_id, io.household_id,  m.pan_id as insect_sample_id, 
+   m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m, &prefixHouseEntoIO io, &prefixEntoInsSplIO eis
+ where m.pan_id = Eis.Insect_Sample_Id
+ and Eis.Entomology_Id = io.entomology_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixEntomd_houseid&1
+          ON &prefixEntomologyMD&1 (household_id, entomology_id)
         TABLESPACE indx
       ]]>
     </sql>

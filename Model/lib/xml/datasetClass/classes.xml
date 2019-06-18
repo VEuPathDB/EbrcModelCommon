@@ -2418,6 +2418,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+  <datasetClass class="NAFeaturePhenotypeGeneric" category="phenotype" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/> 
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertNAFeaturePhenotype"
+              datasetName="${organismAbbrev}_${name}_NAFeaturePhenotypeGeneric_RSRC"
+              version="${version}"
+              scope="organism"
+              type="phenotype"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/phenotype/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--file @@dataDir@@/final/phenotype_results.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
