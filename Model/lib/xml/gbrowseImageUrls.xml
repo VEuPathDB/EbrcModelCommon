@@ -437,6 +437,7 @@
     <track>calbSC5314_B</track>
     <track>calbWO1</track>
     <track>caurB8441</track>
+    <track>cduoB09383</track>
     <track>cglaCBS138</track>
     <track>cparCDC317</track>
     <track>ctroMYA3404</track>
@@ -454,6 +455,7 @@
 
   <subtrackSet name="Herpotrichiellaceae" project="FungiDB" suffixes="_span;_gene">
     <track>eoliCBS72588</track>
+    <track>emesCBS40295</track>
     <track>fpedCBS271-37</track>
     <track>ccarKSF</track>
     <track>cimmCBS83496</track>
@@ -505,6 +507,7 @@
     <track>mory70-15</track>
     <track>moryBR32</track>
     <track>treeQM6a</track>
+    <track>tvirGv29-8</track>
     <track>ssch1099-18</track>
     <track>sbra5110</track>
   </subtrackSet>
@@ -592,8 +595,9 @@
     <track>pjirSE8</track>
   </subtrackSet>
 
-  <subtrackSet name="Mycosphaerellaceae" project="FungiDB" suffixes="_span;_gene">
+  <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>ztriIPO323</track>
+    <track>cgeo1.58</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -685,6 +689,7 @@
     <org abbrev="calbSC5314_B" organism="Candida albicans SC5314_B"/>
     <org abbrev="calbWO1" organism="Candida albicans WO-1"/>
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
+    <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
@@ -722,6 +727,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
+    <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
@@ -784,6 +790,7 @@
     <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
+    <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
     <track name="Gene"/>
@@ -925,9 +932,10 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
+    <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
-      <subtrack set="Mycosphaerellaceae"/>
+      <subtrack set="Dothideomycetes"/>
       <subtrack set="Aspergillaceae"/>
     </track>
   </url>
