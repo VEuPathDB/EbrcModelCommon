@@ -1216,6 +1216,7 @@
     <track>sneuSN3</track>
     <track>hhamHH34</track>
     <track>ccayCHN_HEN01</track>
+    <track>ccayNF1_C8</track>
     <track>csuiWienI</track>
   </subtrackSet>
 
@@ -1264,6 +1265,7 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Cyclospora cayetanensis strain CHN_HEN01" abbrev="ccayCHN_HEN01" />
+    <org organism="Cyclospora cayetanensis isolate NF1_C8" abbrev="ccayNF1_C8" />
     <track name="Gene" />
     <track name="EST" />
     <track name="Synteny" abbrevFirst="true">
