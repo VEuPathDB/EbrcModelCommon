@@ -3202,6 +3202,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>    
   </datasetClass>
 
+  <!-- will eventually turn into sunbeam -->
+  <datasetClass class="snakemakeTest" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+
+    <datasetLoader datasetName="snakemake_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="population_biology"
+              scope="global"
+            >
+
+      <manualGet fileOrDir="${projectName}/common/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
   <datasetClass class="DADA2Taxonomy" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
