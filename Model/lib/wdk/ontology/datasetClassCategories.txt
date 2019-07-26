@@ -61,6 +61,7 @@ isolatesUpdateIsReference	http://edamontology.org/topic_0199	Genetic Variation	i
 updateIsolatesByContinents	http://edamontology.org/topic_0199	Genetic Variation	isolates	
 updateIsolateFeaturesByProductAlias	http://edamontology.org/topic_0199	Genetic Variation	isolates	
 metaboliteProfiles	http://edamontology.org/topic_3172	Metabolomics	metabolite_levels	FILL
+compoundMassSpec	http://edamontology.org/topic_3172	Metabolomics	metabolite_levels	FILL
 chipChipMetaData	http://edamontology.org/topic_3173	Epigenomics	metadata	chip-chip
 copyNumberVariationMetaData	http://edamontology.org/topic_3175	Structural Variation	metadata	copyNumberVariation
 proteinMicroarrayMetaData	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	metadata	immuneResponse
