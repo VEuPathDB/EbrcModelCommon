@@ -5050,7 +5050,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   
 
 
-  <!-- datasetClass for Metabolite Profiles -->
+  <!-- datasetClass for Metabolite Profiles - deprecated-->
   <datasetClass class="metaboliteProfiles" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -5077,6 +5077,34 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+  <datasetClass class="compoundMassSpec" category="" datasetFileHint="">
+    <purpose>New class for untargeted metabolomics</purpose>
+    <prop name="experimentName"/>
+    <prop name="experimentVersion"/>
+    <prop name="projectName">&projectName;</prop>
+
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="compoundMassSpec_${experimentName}_RSRC" version="${experimentVersion}"
+           plugin="ApiCommonData::Load::Plugin::InsertCompoundMassSpec"
+           scope="global"
+           type="metabolite_levels"
+           >
+      <manualGet fileOrDir="${projectName}/common/metabolites/${experimentName}/${experimentVersion}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+      <getAndUnpackOutput file="@@dataDir@@/final/peaks.tab" />
+      <getAndUnpackOutput file="@@dataDir@@/final/data.tab" />
+      <getAndUnpackOutput file="@@dataDir@@/final/mapping.tab" />
+
+      <pluginArgs>--inputDir @@dataDir@@/final --configFile 'insert_study_results_config.txt' --extDbSpec '%DATASET_NAME%|%DATASET_VERSION%' --studyName ${experimentName}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
  <datasetClass class="originsOfReplicationExperiment" category="" datasetFileHint="">
     <purpose></purpose>
