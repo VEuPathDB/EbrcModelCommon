@@ -5089,7 +5089,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <datasetLoader datasetName="compoundMassSpec_${experimentName}_RSRC" version="${experimentVersion}"
            plugin="ApiCommonData::Load::Plugin::InsertCompoundMassSpec"
            scope="global"
-           type="metabolite_levels"
+           type="compound"
+           subType="metabolite_levels"
            >
       <manualGet fileOrDir="${projectName}/common/metabolites/${experimentName}/${experimentVersion}/final">
         <dir name="final">
