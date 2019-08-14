@@ -5101,7 +5101,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/final/data.tab" />
       <getAndUnpackOutput file="@@dataDir@@/final/mapping.tab" />
 
-      <pluginArgs>--inputDir @@dataDir@@/final --configFile 'insert_study_results_config.txt' --extDbSpec '%DATASET_NAME%|%DATASET_VERSION%' --studyName ${experimentName}</pluginArgs>
+      <pluginArgs>--inputDir @@dataDir@@/final --configFile 'insert_study_results_config.txt' --extDbSpec '%DATASET_NAME%|%DATASET_VERSION%' --studyName 'compoundMassSpec_${experimentName}_RSRC'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
