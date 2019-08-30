@@ -365,7 +365,7 @@
                  <xsl:if test="example">
                    <table border="1">
                      <tr><th>Example</th><th>Notes</th></tr>
-                     <xsl:for-each select="example">
+                     <xsl:for-each select="example"> 
                        <!-- this href is a challenge.  it should be https://cbilsvn.pmacs.upenn.edu/svn/apidb/ManualDeliveryExample/XXXX/the_dir -->
                        <!-- where XXXX is either trunk or branches/some_branch_number, depending on where this .xsl file is in svn -->
                        <!-- and the_dir is the value of @dir -->
