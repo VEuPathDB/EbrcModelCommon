@@ -439,6 +439,7 @@
     <track>caurB8441</track>
     <track>cduoB09383</track>
     <track>cglaCBS138</track>
+    <track>chaeB11899</track>
     <track>cparCDC317</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
@@ -449,6 +450,7 @@
 
   <subtrackSet name="Zygomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>mcirCBS277-49</track>
+    <track>mcir1006PhL</track>
     <track>pblaNRRL1555</track>
     <track>rdelRA99-880</track>
   </subtrackSet>
@@ -467,6 +469,7 @@
 
   <subtrackSet name="Glomeromycetes" project="FungiDB" suffixes="_span;_gene">
     <track>rirrDAOM181602</track>
+    <track>rirrA1DAOM664342</track>
   </subtrackSet>
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
@@ -589,6 +592,7 @@
     <track>umay521</track>
     <track>sreiSRZ2</track>
     <track>mgloCBS7966</track>
+    <track>mresKCTC27527</track>
   </subtrackSet>
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -691,6 +695,7 @@
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
@@ -705,6 +710,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="mcirCBS277-49" organism="Mucor circinelloides f. lusitanicus CBS 277.49"/>
+    <org abbrev="mcir1006PhL" organism="Mucor circinelloides f. circinelloides 1006PhL"/>
     <org abbrev="pblaNRRL1555" organism="Phycomyces blakesleeanus NRRL 1555(-)"/>
     <org abbrev="rdelRA99-880" organism="Rhizopus delemar RA 99-880"/>
     <track name="Gene"/>
@@ -718,6 +724,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="rirrDAOM181602" organism="Rhizophagus irregularis DAOM 181602=DAOM 197198"/>
+    <org abbrev="rirrA1DAOM664342" organism="Rhizophagus irregularis A1 (DAOM-664342)"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Glomeromycetes"/>
@@ -914,6 +921,7 @@
     <org abbrev="umay521" organism="Ustilago maydis 521"/>
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
+    <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
@@ -1377,12 +1385,14 @@
     <track>tcruCLBrenerEsmeraldo-like</track>
     <track>tcruCLBrenerNon-Esmeraldo-like</track>
     <track>tcruCLBrener</track>
+    <track>tcruBrazilA4</track>
     <track>tcruDm28c2014</track>
     <track>tcruDm28c2017</track>
     <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
     <track>tcruTCC</track>
+    <track>tcruYC6</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1469,13 +1479,15 @@
     <org organism="Trypanosoma cruzi CL Brener Esmeraldo-like" abbrev="tcruCLBrenerEsmeraldo-like" />
     <org organism="Trypanosoma cruzi CL Brener Non-Esmeraldo-like" abbrev="tcruCLBrenerNon-Esmeraldo-like" />
     <org organism="Trypanosoma cruzi strain CL Brener" abbrev="tcruCLBrener" />
-    <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
+    <org organism="Trypanosoma cruzi Brazil A4" abbrev="tcruBrazilA4" />
     <org organism="Trypanosoma cruzi Dm28c 2014" abbrev="tcruDm28c2014" />
-    <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
-    <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
     <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
+    <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
+    <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
+    <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
+    <org organism="Trypanosoma cruzi Y C6" abbrev="tcruYC6" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />

@@ -1172,7 +1172,13 @@ UNION ALL
         select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
                m.pan_id, m.pan_name,
                m.category, m.property, m.property_id, mt.property_source_id,
-               substr(m.value, 1, 250) as string_value,
+               substr(case
+                        when m.value != lower(m.value)
+                          -- there's at least one capital letter -- leave it alone
+                          then m.value
+                          else -- capitalize first character of string
+                               upper(substr(m.value, 1, 1)) || substr(m.value, 2)
+                      end, 1, 250) as string_value,
                case when mt.type = 'number'
                       then apidb.parse_and_round_number(m.value)
                     else cast(null as number)
