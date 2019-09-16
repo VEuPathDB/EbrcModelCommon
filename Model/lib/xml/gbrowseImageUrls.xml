@@ -439,6 +439,7 @@
     <track>caurB8441</track>
     <track>cduoB09383</track>
     <track>cglaCBS138</track>
+    <track>chaeB11899</track>
     <track>cparCDC317</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
@@ -449,6 +450,7 @@
 
   <subtrackSet name="Zygomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>mcirCBS277-49</track>
+    <track>mcir1006PhL</track>
     <track>pblaNRRL1555</track>
     <track>rdelRA99-880</track>
   </subtrackSet>
@@ -467,6 +469,7 @@
 
   <subtrackSet name="Glomeromycetes" project="FungiDB" suffixes="_span;_gene">
     <track>rirrDAOM181602</track>
+    <track>rirrA1DAOM664342</track>
   </subtrackSet>
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
@@ -589,6 +592,7 @@
     <track>umay521</track>
     <track>sreiSRZ2</track>
     <track>mgloCBS7966</track>
+    <track>mresKCTC27527</track>
   </subtrackSet>
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -602,11 +606,12 @@
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
     <track>pinfT30-4</track>
-    <track>PcapLT1534</track>
+    <track>pcapLT1534</track>
+    <track>pcinCBS144-22</track>
+    <track>ppalsbr112.9</track>
+    <track>pparINRA-310</track>
     <track>pramPr-102</track>
     <track>psojP6497</track>
-    <track>pparINRA-310</track>
-    <track>pcinCBS144-22</track>
     <track>haraEmoy2</track>
   </subtrackSet>
 
@@ -691,6 +696,7 @@
     <org abbrev="caurB8441" organism="Candida auris strain B8441"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
@@ -705,6 +711,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="mcirCBS277-49" organism="Mucor circinelloides f. lusitanicus CBS 277.49"/>
+    <org abbrev="mcir1006PhL" organism="Mucor circinelloides f. circinelloides 1006PhL"/>
     <org abbrev="pblaNRRL1555" organism="Phycomyces blakesleeanus NRRL 1555(-)"/>
     <org abbrev="rdelRA99-880" organism="Rhizopus delemar RA 99-880"/>
     <track name="Gene"/>
@@ -718,6 +725,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="rirrDAOM181602" organism="Rhizophagus irregularis DAOM 181602=DAOM 197198"/>
+    <org abbrev="rirrA1DAOM664342" organism="Rhizophagus irregularis A1 (DAOM-664342)"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Glomeromycetes"/>
@@ -914,6 +922,7 @@
     <org abbrev="umay521" organism="Ustilago maydis 521"/>
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
+    <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
@@ -943,10 +952,11 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
+    <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
+    <org abbrev="ppalsbr112.9" organism="Phytophthora palmivora var. palmivora strain sbr112.9"/>
+    <org abbrev="pparINRA-310" organism="Phytophthora parasitica INRA-310"/>
     <org abbrev="pramPr-102" organism="Phytophthora ramorum strain Pr102"/>
     <org abbrev="psojP6497" organism="Phytophthora sojae strain P6497"/>
-    <org abbrev="pparINRA-310" organism="Phytophthora parasitica INRA-310"/>
-    <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
     <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1202,14 +1212,17 @@
     <track>tgonME49</track>
     <track>tgonGT1</track>
     <track>tgonVEG</track>
+    <track>tgonARI</track>
+    <track>tgonCAST</track>
+    <track>tgonCOUG</track>
+    <track>tgonFOU</track>
+    <track>tgonGAB2-2007-GAL-DOM2</track>
+    <track>tgonMAS</track>
     <track>tgonRH</track>
     <track>tgonRUB</track>
-    <track>tgonGAB2-2007-GAL-DOM2</track>
-    <track>tgonFOU</track>
-    <track>tgonARI</track>
-    <track>tgonVAND</track>
-    <track>tgonMAS</track>
     <track>tgonTgCatPRC2</track>
+    <track>tgonTgCATBr9</track>
+    <track>tgonVAND</track>
     <track>tgonp89</track>
     <track>ncanLIV</track>
     <track>sneuSOSN1</track>
@@ -1325,6 +1338,9 @@
     <org organism="Toxoplasma gondii MAS" abbrev="tgonMAS" />
     <org organism="Toxoplasma gondii p89" abbrev="tgonp89" />
     <org organism="Toxoplasma gondii TgCatPRC2" abbrev="tgonTgCatPRC2" />
+    <org organism="Toxoplasma gondii CAST" abbrev="tgonCAST" />
+    <org organism="Toxoplasma gondii COUG" abbrev="tgonCOUG" />
+    <org organism="Toxoplasma gondii TgCATBr9" abbrev="tgonTgCATBr9" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
@@ -1352,6 +1368,7 @@
   <subtrackSet project="TriTrypDB" name="leish_gene" suffixes="_span;_gene">
     <track>lamaMHOMBR71973M2269</track>
     <track>lbraMHOMBR75M2904</track>
+    <track>lbraMHOMBR75M2904_2019</track>
     <track>lbraMHOMBR75M2903</track>
     <track>ldonBPK282A1</track>
     <track>ldonCL-SL</track>
@@ -1377,12 +1394,14 @@
     <track>tcruCLBrenerEsmeraldo-like</track>
     <track>tcruCLBrenerNon-Esmeraldo-like</track>
     <track>tcruCLBrener</track>
+    <track>tcruBrazilA4</track>
     <track>tcruDm28c2014</track>
     <track>tcruDm28c2017</track>
     <track>tcruDm28c2018</track>
     <track>tcruSylvioX10-1</track>
     <track>tcruSylvioX10-1-2012</track>
     <track>tcruTCC</track>
+    <track>tcruYC6</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1433,6 +1452,7 @@
   <url project="TriTrypDB" type="synteny">
     <org organism="Leishmania amazonensis MHOM/BR/71973/M2269" abbrev="lamaMHOMBR71973M2269" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2904" abbrev="lbraMHOMBR75M2904" />
+    <org organism="Leishmania braziliensis MHOM/BR/75/M2904 2019" abbrev="lbraMHOMBR75M2904_2019" />
     <org organism="Leishmania braziliensis MHOM/BR/75/M2903" abbrev="lbraMHOMBR75M2903" />
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
     <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
@@ -1469,13 +1489,15 @@
     <org organism="Trypanosoma cruzi CL Brener Esmeraldo-like" abbrev="tcruCLBrenerEsmeraldo-like" />
     <org organism="Trypanosoma cruzi CL Brener Non-Esmeraldo-like" abbrev="tcruCLBrenerNon-Esmeraldo-like" />
     <org organism="Trypanosoma cruzi strain CL Brener" abbrev="tcruCLBrener" />
-    <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
+    <org organism="Trypanosoma cruzi Brazil A4" abbrev="tcruBrazilA4" />
     <org organism="Trypanosoma cruzi Dm28c 2014" abbrev="tcruDm28c2014" />
-    <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
-    <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi Dm28c 2017" abbrev="tcruDm28c2017" />
     <org organism="Trypanosoma cruzi Dm28c 2018" abbrev="tcruDm28c2018" />
+    <org organism="Trypanosoma cruzi marinkellei strain B7" abbrev="tcrumarinkelleiB7" />
+    <org organism="Trypanosoma cruzi Sylvio X10/1" abbrev="tcruSylvioX10-1" />
+    <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
+    <org organism="Trypanosoma cruzi Y C6" abbrev="tcruYC6" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
