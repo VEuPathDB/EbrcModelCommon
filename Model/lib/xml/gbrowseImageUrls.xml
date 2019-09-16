@@ -1212,14 +1212,17 @@
     <track>tgonME49</track>
     <track>tgonGT1</track>
     <track>tgonVEG</track>
+    <track>tgonARI</track>
+    <track>tgonCAST</track>
+    <track>tgonCOUG</track>
+    <track>tgonFOU</track>
+    <track>tgonGAB2-2007-GAL-DOM2</track>
+    <track>tgonMAS</track>
     <track>tgonRH</track>
     <track>tgonRUB</track>
-    <track>tgonGAB2-2007-GAL-DOM2</track>
-    <track>tgonFOU</track>
-    <track>tgonARI</track>
-    <track>tgonVAND</track>
-    <track>tgonMAS</track>
     <track>tgonTgCatPRC2</track>
+    <track>tgonTgCATBr9</track>
+    <track>tgonVAND</track>
     <track>tgonp89</track>
     <track>ncanLIV</track>
     <track>sneuSOSN1</track>
@@ -1335,6 +1338,9 @@
     <org organism="Toxoplasma gondii MAS" abbrev="tgonMAS" />
     <org organism="Toxoplasma gondii p89" abbrev="tgonp89" />
     <org organism="Toxoplasma gondii TgCatPRC2" abbrev="tgonTgCatPRC2" />
+    <org organism="Toxoplasma gondii CAST" abbrev="tgonCAST" />
+    <org organism="Toxoplasma gondii COUG" abbrev="tgonCOUG" />
+    <org organism="Toxoplasma gondii TgCATBr9" abbrev="tgonTgCATBr9" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
