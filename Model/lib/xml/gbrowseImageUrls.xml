@@ -463,6 +463,10 @@
     <track>cimmCBS83496</track>
   </subtrackSet>
 
+  <subtrackSet name="Cyphellophoraceae" project="FungiDB" suffixes="_span;_gene">
+    <track>ceurCBS101466</track>
+  </subtrackSet>
+
   <subtrackSet name="Penicillium_gene" project="FungiDB" suffixes="_span;_gene">
     <track>prubWisconsin54-1255</track>
   </subtrackSet>
@@ -741,6 +745,18 @@
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Herpotrichiellaceae"/>
+      <subtrack set="Cyphellophoraceae"/>
+      <subtrack set="Onygenales"/>
+      <subtrack set="Trichocomaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="ceurCBS101466" organism="Cyphellophora europaea CBS 101466"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Cyphellophoraceae"/>
       <subtrack set="Herpotrichiellaceae"/>
       <subtrack set="Onygenales"/>
       <subtrack set="Trichocomaceae"/>
