@@ -36,7 +36,7 @@ $|=1;
 
 
 my $sql;
-if ($PROJECT_HOME =~ /\/eupa/ || $PROJECT_HOME =~ /\/unidb/ || $PROJECT_HOME =~ /\/rm30362/ ){
+if ($PROJECT_HOME =~ /\/eupa/ || $PROJECT_HOME =~ /\/uni/ || $PROJECT_HOME =~ /\/rm30362/ ){
   $sql = <<SQL;
     select project_id, lower(project_id) as lower_project_id
       from (select distinct project_id from GenomicSeqAttributes)
