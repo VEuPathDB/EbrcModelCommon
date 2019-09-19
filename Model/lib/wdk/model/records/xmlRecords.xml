@@ -372,7 +372,7 @@
   <!-- Tutorials -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-        <xmlRecordClass  excludeProjects="ClinEpiDB,ICEMR,Gates"
+        <xmlRecordClass  excludeProjects="ClinEpiDB,AllClinEpiDB,ICEMR,Gates"
         	name="TutorialsRecord"
         	type="Tutorial"
         	idPrefix="Tut."
@@ -395,7 +395,7 @@
   <!-- Tutorials Clinepi sites -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-        <xmlRecordClass  includeProjects="ClinEpiDB,ICEMR,Gates"
+        <xmlRecordClass  includeProjects="ClinEpiDB,AllClinEpiDB,ICEMR,Gates"
         	name="TutorialsRecord"
         	type="Tutorial"
         	idPrefix="Tut."
