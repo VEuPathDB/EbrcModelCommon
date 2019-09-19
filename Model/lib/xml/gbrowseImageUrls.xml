@@ -1433,6 +1433,7 @@
 
   <subtrackSet project="TriTrypDB" name="tryp_gene" suffixes="_span;_gene">
     <track>tconIL3000</track>
+    <track>tconIL3000_2019</track>
     <track>tevaSTIB805</track>
     <track>tranSC58</track>
     <track>ttheEdinburgh</track>
@@ -1532,6 +1533,7 @@
     <org organism="Trypanosoma brucei Lister strain 427 2018" abbrev="tbruLister427_2018" />
     <org organism="Trypanosoma brucei gambiense DAL972" abbrev="tbrugambienseDAL972" />
     <org organism="Trypanosoma congolense IL3000" abbrev="tconIL3000" />
+    <org organism="Trypanosoma congolense IL3000 2019" abbrev="tconIL3000_2019" />
     <org organism="Trypanosoma evansi strain STIB 805" abbrev="tevaSTIB805" />
     <org organism="Trypanosoma rangeli SC58" abbrev="tranSC58" />
     <org organism="Trypanosoma theileri isolate Edinburgh" abbrev="ttheEdinburgh" />
