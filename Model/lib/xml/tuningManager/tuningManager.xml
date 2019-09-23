@@ -248,7 +248,7 @@ order by organism, species, genus
 
 
   <tuningTable name="ProjectTaxon" prefixEnabled="true">
-    <comment>map taxon names to project_ids. to be used by the apidb.project_id function</comment>
+    <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
     <externalDependency name="dots.ExternalNaSequence"/>
     <externalDependency name="sres.TaxonName"/>
     <externalDependency name="core.ProjectInfo"/>
