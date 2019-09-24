@@ -390,6 +390,7 @@
     <track>gassEP15</track>
     <track>gmurRobertsThomson</track>
     <track>ssalATCC50377</track>
+    <track>mexiPA203</track>
   </subtrackSet>
 
   <url project="GiardiaDB" type="synteny">
@@ -400,6 +401,7 @@
     <org organism="Giardia Assemblage E isolate P15" abbrev="gassEP15"/>
     <org organism="Giardia muris strain Roberts-Thomson" abbrev="gmurRobertsThomson"/>
     <org organism="Spironucleus salmonicida ATCC50377" abbrev="ssalATCC50377"/>
+    <org organism="Monocercomonoides exilis PA203" abbrev="mexiPA203"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
