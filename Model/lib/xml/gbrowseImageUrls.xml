@@ -390,6 +390,7 @@
     <track>gassEP15</track>
     <track>gmurRobertsThomson</track>
     <track>ssalATCC50377</track>
+    <track>mexiPA203</track>
   </subtrackSet>
 
   <url project="GiardiaDB" type="synteny">
@@ -400,6 +401,7 @@
     <org organism="Giardia Assemblage E isolate P15" abbrev="gassEP15"/>
     <org organism="Giardia muris strain Roberts-Thomson" abbrev="gmurRobertsThomson"/>
     <org organism="Spironucleus salmonicida ATCC50377" abbrev="ssalATCC50377"/>
+    <org organism="Monocercomonoides exilis PA203" abbrev="mexiPA203"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
@@ -461,6 +463,10 @@
     <track>fpedCBS271-37</track>
     <track>ccarKSF</track>
     <track>cimmCBS83496</track>
+  </subtrackSet>
+
+  <subtrackSet name="Cyphellophoraceae" project="FungiDB" suffixes="_span;_gene">
+    <track>ceurCBS101466</track>
   </subtrackSet>
 
   <subtrackSet name="Penicillium_gene" project="FungiDB" suffixes="_span;_gene">
@@ -741,6 +747,18 @@
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Herpotrichiellaceae"/>
+      <subtrack set="Cyphellophoraceae"/>
+      <subtrack set="Onygenales"/>
+      <subtrack set="Trichocomaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="ceurCBS101466" organism="Cyphellophora europaea CBS 101466"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Cyphellophoraceae"/>
       <subtrack set="Herpotrichiellaceae"/>
       <subtrack set="Onygenales"/>
       <subtrack set="Trichocomaceae"/>
@@ -1417,6 +1435,7 @@
 
   <subtrackSet project="TriTrypDB" name="tryp_gene" suffixes="_span;_gene">
     <track>tconIL3000</track>
+    <track>tconIL3000_2019</track>
     <track>tevaSTIB805</track>
     <track>tranSC58</track>
     <track>ttheEdinburgh</track>
@@ -1516,6 +1535,7 @@
     <org organism="Trypanosoma brucei Lister strain 427 2018" abbrev="tbruLister427_2018" />
     <org organism="Trypanosoma brucei gambiense DAL972" abbrev="tbrugambienseDAL972" />
     <org organism="Trypanosoma congolense IL3000" abbrev="tconIL3000" />
+    <org organism="Trypanosoma congolense IL3000 2019" abbrev="tconIL3000_2019" />
     <org organism="Trypanosoma evansi strain STIB 805" abbrev="tevaSTIB805" />
     <org organism="Trypanosoma rangeli SC58" abbrev="tranSC58" />
     <org organism="Trypanosoma theileri isolate Edinburgh" abbrev="ttheEdinburgh" />
