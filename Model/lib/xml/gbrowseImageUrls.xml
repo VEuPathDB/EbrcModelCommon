@@ -343,6 +343,7 @@
 
   <subtrackSet project="CryptoDB" name="main_gene" suffixes="_span;_gene">
     <track>cparIowaII</track>
+    <track>cparIOWA-ATCC</track>
     <track>chomTU502</track>
     <track>chomTU502_2012</track>
     <track>chomUdeA01</track>
@@ -359,6 +360,7 @@
 
   <url project="CryptoDB" type="synteny">
     <org organism="Cryptosporidium parvum Iowa II" abbrev="cparIowaII" />
+    <org organism="Cryptosporidium parvum IOWA-ATCC" abbrev="cparIOWA-ATCC" />
     <org organism="Cryptosporidium hominis TU502" abbrev="chomTU502" />
     <org organism="Cryptosporidium hominis isolate TU502_2012" abbrev="chomTU502_2012" />
     <org organism="Cryptosporidium hominis UdeA01" abbrev="chomUdeA01" />
