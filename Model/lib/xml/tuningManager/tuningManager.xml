@@ -4,7 +4,7 @@
   <import file="studyTuningManager.xml"/>
 
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
-    <comment>Taxon ranks for 16S reference organisms                                                                                                     
+    <comment>Taxon ranks for 16S reference organisms
     </comment>
     <externalDependency name="apidb.TaxonString"/>
     <externalDependency name="dots.ExternalNaSequence"/>
