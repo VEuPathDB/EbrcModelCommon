@@ -161,7 +161,7 @@
       fullAnswer="true"
       queryRef="DatasetIds.ByUserId"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      includeProjects="ClinEpiDB,Gates,ICEMR"
+      includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
       noSummaryOnSingleRecord="true">
       <attributesList summary="study_id, restriction_level" />
       <description>
@@ -185,7 +185,7 @@
       queryRef="DatasetIds.ByKeyword"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true"
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
       <attributesList
          summary="display_name,contact,institution"
          sorting="display_name asc" />
@@ -211,7 +211,7 @@
       queryRef="DatasetIds.ByGeneList"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
       <description>
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
