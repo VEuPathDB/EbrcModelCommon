@@ -189,7 +189,7 @@
                         sorting="eupath_release desc,primary_key asc"
                         includeProjects="MicrobiomeDB"/>
 
-        <attributesList summary="study_categories,summary,eupath_release,card_questions,bulk_download_url" 
+        <attributesList summary="study_categories,summary,eupath_release,card_questions" 
                         includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
