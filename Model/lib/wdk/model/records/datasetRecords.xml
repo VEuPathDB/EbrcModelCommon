@@ -32,6 +32,7 @@
 
 <!-- ======================================= DATA SETS =========================================================== -->
 
+    <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
    <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset">
            <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
@@ -154,7 +155,8 @@
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="version" displayName="Dataset version" help="Dataset version from which data was obtained."/>
+         <columnAttribute name="version" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
+          <columnAttribute name="version" displayName="Dataset version" help="Dataset version from which data was obtained." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
@@ -168,7 +170,8 @@
                           help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="release_policy"  displayName="Release Policy"
+         <columnAttribute name="release_policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
+         <columnAttribute name="release_policy"  displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
          <columnAttribute name="pmids" displayName="Publications" sortable="false"
                           help="PubMed links related to the dataset."/>
