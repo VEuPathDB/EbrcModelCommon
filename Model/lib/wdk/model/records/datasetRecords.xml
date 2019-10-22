@@ -135,7 +135,10 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
          <columnAttribute name="study_categories" displayName="Category"/>
          <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study Accessibility"/>
+         <columnAttribute name="study_access" displayName="Study Accessibility" 
+           help="Some studies require that the user requests approval to access certain functionality (they will be prompted when attempting the action): 
+                 if 'controlled', to download; if 'protected', to access specific search results and download; if 'private', to run a search or analysis and download. 
+                 If a study is classified as 'limited', it will behave as 'controlled' when the user is logged in, and as 'protected' for a guest user. "/>
          <columnAttribute name="policy_url" internal="true"/>
          <columnAttribute name="card_headline" internal="true"/>
          <columnAttribute name="card_points" internal="true"/>
