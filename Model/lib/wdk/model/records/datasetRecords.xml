@@ -33,7 +33,7 @@
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
-   <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset" allRecordsQueryRef="DatasetIds.AllDatasets">
+   <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset">
            <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
      <testParamValues >
