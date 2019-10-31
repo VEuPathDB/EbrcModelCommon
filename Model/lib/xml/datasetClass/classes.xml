@@ -4445,7 +4445,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <wgetArgs url="https://www.vectorbase.org/download/${vectorBaseLongName}peptides${vectorBaseShortName}fagz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/vectorbaseProteins.fasta.gz</wgetArgs> 
 
-      <unpack>gunzip -d @@dataDir@@/vectorbaseProteins.fasta.gz</unpack>
+      <unpack>if [ -e @@dataDir@@/vectorbaseProteins.fasta.gz ]; then gunzip -d @@dataDir@@/vectorbaseProteins.fasta.gz; fi</unpack>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
@@ -4479,14 +4479,14 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
-		   subType="core"
+		   subType="peripheral"
 		   scope="dontcare" > 
 
       <externalDbIdUrl><![CDATA[https://www.vectorbase.org/search/site/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
       <wgetArgs url="https://www.vectorbase.org/download/${vectorBaseLongName}peptides${vectorBaseShortName}fagz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/vectorbaseProteins.fasta.gz</wgetArgs> 
 
-      <unpack>gunzip -d @@dataDir@@/vectorbaseProteins.fasta.gz</unpack>
+      <unpack>if [ -e @@dataDir@@/vectorbaseProteins.fasta.gz ]; then gunzip -d @@dataDir@@/vectorbaseProteins.fasta.gz; fi</unpack>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
@@ -4527,7 +4527,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
 
-      <unpack>gunzip -d @@dataDir@@/uniprot.fasta.gz</unpack>
+      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
@@ -4535,7 +4535,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @dataDir@@/${abbrev}Proteome.fasta</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
 
       <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
 
@@ -4563,14 +4563,14 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
-		   subType="core"
+		   subType="peripheral"
 		   scope="dontcare" > 
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
       <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
 
-      <unpack>gunzip -d @@dataDir@@/uniprot.fasta.gz</unpack>
+      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
@@ -4578,7 +4578,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @dataDir@@/${abbrev}Proteome.fasta</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
 
       <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
 
@@ -4710,7 +4710,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n"  --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n" --tableName "DoTS::ExternalAASequence"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
@@ -4740,11 +4740,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
- <!--     <unpack>orthomclValidateSpeciesName ${abbrev} ${ncbiTaxonId} '${organismName}' ${ncbiTaxonIdIsAtSpeciesLevel}</unpack> -->
-
       <unpack>orthomclUnpackEupathProteins @@dataDir@@/eupathProteins.xml @@dataDir@@/eupathProteins.fasta</unpack>
 
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/eupathProteins.fasta --outputFile @@dataDir@@/exemplars.fasta --geneIdRegex 'gene=(\S+)' --proteinIdRegex '^>(\S+)\s' --maxStopCodonPercent 20  --preferredSource sp </unpack>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/eupathProteins.fasta --outputFile @@dataDir@@/exemplars.fasta --geneIdRegex 'gene=(\S+)' --proteinIdRegex '^>(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
       <unpack>orthomclMakeEupathAliasesFile ${abbrev} @@dataDir@@/eupathProteins.xml @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
 
@@ -4753,7 +4751,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta  --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n"   --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n" --tableName "DoTS::ExternalAASequence"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
@@ -4874,7 +4872,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://biomart.vectorbase.org/biomart/martservice?query=&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;Query virtualSchemaName=&apos;vb_mart_1906&apos; formatter=&apos;TSV&apos; header=&apos;0&apos; uniqueRows=&apos;0&apos; count=&apos;&apos; datasetConfigVersion=&apos;0.6&apos;&gt;&lt;Dataset name=&apos;${biomartDataset}&apos; interface=&apos;default&apos;&gt;&lt;Attribute name=&apos;ensembl_gene_id&apos;/&gt;&lt;Attribute name=&apos;kegg_enzyme&apos;/&gt;&lt;/Dataset&gt;&lt;/Query&gt;"> --output-document=@@dataDir@@/ecAssocFromVectorbaseBiomart.tab --content-disposition</wgetArgs>
+     <wgetArgs url="https://biomart.vectorbase.org/biomart/martservice?query=&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;Query virtualSchemaName=&apos;vb_mart_1908&apos; formatter=&apos;TSV&apos; header=&apos;0&apos; uniqueRows=&apos;0&apos; count=&apos;&apos; datasetConfigVersion=&apos;0.6&apos;&gt;&lt;Dataset name=&apos;${biomartDataset}&apos; interface=&apos;default&apos;&gt;&lt;Attribute name=&apos;ensembl_gene_id&apos;/&gt;&lt;Attribute name=&apos;kegg_enzyme&apos;/&gt;&lt;/Dataset&gt;&lt;/Query&gt;"> --output-document=@@dataDir@@/ecAssocFromVectorbaseBiomart.tab --content-disposition</wgetArgs>
      
      <unpack>orthomclUnpackVectorbaseEc @@dataDir@@/ecAssocFromVectorbaseBiomart.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -4895,7 +4893,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://biomart.vectorbase.org/biomart/martservice?query=&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;Query virtualSchemaName=&apos;vb_mart_1906&apos; formatter=&apos;TSV&apos; header=&apos;0&apos; uniqueRows=&apos;0&apos; count=&apos;&apos; datasetConfigVersion=&apos;0.6&apos;&gt;&lt;Dataset name=&apos;${biomartDataset}&apos; interface=&apos;default&apos;&gt;&lt;Attribute name=&apos;ensembl_gene_id&apos;/&gt;&lt;Attribute name=&apos;kegg_enzyme&apos;/&gt;&lt;/Dataset&gt;&lt;/Query&gt;"> --output-document=@@dataDir@@/ecAssocFromVectorbaseBiomart.tab --content-disposition</wgetArgs>
+     <wgetArgs url="https://biomart.vectorbase.org/biomart/martservice?query=&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;Query virtualSchemaName=&apos;vb_mart_1908&apos; formatter=&apos;TSV&apos; header=&apos;0&apos; uniqueRows=&apos;0&apos; count=&apos;&apos; datasetConfigVersion=&apos;0.6&apos;&gt;&lt;Dataset name=&apos;${biomartDataset}&apos; interface=&apos;default&apos;&gt;&lt;Attribute name=&apos;ensembl_gene_id&apos;/&gt;&lt;Attribute name=&apos;kegg_enzyme&apos;/&gt;&lt;/Dataset&gt;&lt;/Query&gt;"> --output-document=@@dataDir@@/ecAssocFromVectorbaseBiomart.tab --content-disposition</wgetArgs>
      
      <unpack>orthomclUnpackVectorbaseEc @@dataDir@@/ecAssocFromVectorbaseBiomart.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -4904,7 +4902,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
-  <!-- TODO: RETIRE THIS.  identical to the peripheral proteome version, except goes into a different graph template -->
   <datasetClass class="orthomclUniprotEcForCore" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="abbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
@@ -4925,7 +4922,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!-- identical to the core proteome version, except goes into a different graph template -->
   <datasetClass class="orthomclUniprotEcForPeripheral" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="abbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
