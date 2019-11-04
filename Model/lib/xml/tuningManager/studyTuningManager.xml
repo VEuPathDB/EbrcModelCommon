@@ -1263,7 +1263,7 @@ UNION ALL
                  group by dataset_name)
         select nvl(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
                ot.source_id as ontology_term_source_id,
-               nvl(term_synonym.definition, ot.definition) as description,
+               term_synonym.definition as description,
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
