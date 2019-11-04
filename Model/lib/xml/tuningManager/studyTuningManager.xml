@@ -1769,6 +1769,7 @@ create table &prefixEntoInsSplIO&1 (
     </comment>
     <internalDependency name="ObsObsIO"/>
     <internalDependency name="HousePartIO"/>
+    <internalDependency name="PartObsIO"/>
     <internalDependency name="Metadata"/>
     <internalDependency name="ObsSampleIO"/>
     <internalDependency name="Ontology"/>
