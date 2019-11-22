@@ -1,7 +1,6 @@
 <project name="EbrcModelCommon" default="Installation" basedir=".">
 
   <import file="${projectsDir}/WDK/build.xml" />
-  <import file="${projectsDir}/CBIL/build.xml" />
   <import file="${projectsDir}/ReFlow/build.xml" />
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
