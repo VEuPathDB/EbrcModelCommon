@@ -4434,7 +4434,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
@@ -4476,7 +4476,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
@@ -4561,7 +4561,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
@@ -4647,7 +4647,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
@@ -4731,7 +4731,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC" 
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC" 
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   scope="dontcare"
 		   type="proteome"
@@ -4801,7 +4801,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC" 
+    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC" 
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   scope="dontcare"
 		   type="proteome"
