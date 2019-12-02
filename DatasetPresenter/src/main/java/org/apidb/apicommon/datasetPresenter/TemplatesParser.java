@@ -253,7 +253,7 @@ public class TemplatesParser {
       a = line.split("=");
       if (!a[0].equals("anchorFile") || a.length != 2)
         throw new UserException("In file '" + templateFilePath + "' the line '"
-            + line + "' should be a anchorFile=");
+            + line + "' should be an anchorFile=");
       template.setAnchorFileName(a[1]);
 
       // the rest should be prop=
