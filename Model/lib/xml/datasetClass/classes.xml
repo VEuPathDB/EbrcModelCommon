@@ -5508,5 +5508,35 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="ISATabPopBio" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="studyType"></prop> <!-- fromChado, litCuration, ... -->
+    <prop name="studyName"></prop> <!-- VBP0000123 -->
+    <prop name="version"></prop>   <!-- 1, 2 ? -->
+    <graphTemplateFile name="popbioRoot.xml"/>
+
+    <datasetLoader
+        datasetName="ISATab_${studyType}_${studyName}_RSRC"
+        version="${version}"
+        plugin="ApiCommonData::Load::Plugin::InsertInvestigations"
+        scope="global">
+
+      <manualGet fileOrDir="common/empty">
+          <dir name="final">
+          </dir>
+      </manualGet>
+
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${studyType}/${studyName}/${version}/final @@dataDir@@/final</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+
+      <pluginArgs>--metaDataRoot @@dataDir@@ --investigationBaseName i_investigation.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --skipDatasetLookup</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+
 </datasetClasses>
 
