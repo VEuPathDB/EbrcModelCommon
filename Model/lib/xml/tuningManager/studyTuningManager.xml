@@ -1449,6 +1449,82 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="PropertyTypeNoOverride" prefixEnabled="true">
+    <comment>
+       Data type and filter method for metadata properties.
+    </comment>
+    <internalDependency name="DefaultChars"/>
+    <internalDependency name="InferredParams"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE &prefixPropertyTypeNoOverride&1 NOLOGGING AS
+        WITH override
+             AS ( SELECT 'not age' AS property, 'not number' AS type, 'range' AS filter FROM dual WHERE 1=0
+                ),
+             pan_metadata
+             AS (  SELECT property, value, property_id
+                   FROM &prefixInferredParams
+                   WHERE property NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT property, value, property_id
+                   FROM &prefixInferredChars
+                   WHERE property NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT property, value, property_id
+                   FROM &prefixDefaultChars
+                   WHERE property NOT IN (SELECT property FROM override)
+                ),
+             term_attributes
+             AS (SELECT MAX(property) as property, property_id, COUNT(DISTINCT value) AS distinct_values,
+                        MIN(apidb.is_number(value)) AS is_number,
+                        MIN(apidb.is_date(value)) AS is_date
+                 FROM pan_metadata
+                 WHERE value IS NOT NULL
+                 GROUP BY property_id
+                )
+          SELECT o.property, ot.ontology_term_id as property_id, ot.source_id as property_source_id,
+                 o.type, o.filter, NULL as distinct_values
+          FROM override o, sres.OntologyTerm ot
+          WHERE o.property = ot.name(+)
+      UNION ALL
+        SELECT ta.property AS property, ot.ontology_term_id as property_id, ot.source_id as property_source_id,
+               CASE
+                 WHEN ta.is_date = 1
+                   THEN 'date'
+                 WHEN ta.is_number = 1
+                   THEN 'number'
+                 ELSE 'string'
+               END AS type,
+               CASE
+                 WHEN ta.is_date = 1
+                   THEN 'range'
+                 WHEN ta.is_number = 1
+                      AND ta.distinct_values > 10
+                      AND lower(ta.property) NOT LIKE '%code%'
+                   THEN 'range'
+                 ELSE 'membership'
+               END AS filter,
+               ta.distinct_values
+        FROM term_attributes ta, sres.OntologyTerm ot
+        WHERE ta.property_id = ot.ontology_term_id(+)
+       ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE UNIQUE INDEX proptype_ix&1
+          ON &prefixPropertyTypeNoOverride&1 (property_id, property)
+        TABLESPACE indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX proptyp_ix&1
+          ON &prefixPropertyTypeNoOverride&1 (property, property_id, type, filter)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
   <tuningTable name="HouseholdMD" prefixEnabled="true">
     <comment>
       Metadata table specific for household filter in household record
