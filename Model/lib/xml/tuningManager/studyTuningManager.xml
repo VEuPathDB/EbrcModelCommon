@@ -1534,7 +1534,20 @@ UNION ALL
     <sql>
       <![CDATA[
         CREATE TABLE &prefixNewPropertyType&1 NOLOGGING AS
-        WITH term_attributes
+        WITH pan_metadata
+             AS (  SELECT property, value, property_id
+                   FROM &prefixInferredParams
+                   WHERE property NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT property, value, property_id
+                   FROM &prefixInferredChars
+                   WHERE property NOT IN (SELECT property FROM override)
+                 UNION
+                   SELECT property, value, property_id
+                   FROM &prefixDefaultChars
+                   WHERE property NOT IN (SELECT property FROM override)
+                ),
+             term_attributes
              AS (SELECT MAX(property) as property, property_id, COUNT(DISTINCT value) AS distinct_values,
                         MIN(apidb.is_number(value)) AS is_number,
                         MIN(apidb.is_date(value)) AS is_date
