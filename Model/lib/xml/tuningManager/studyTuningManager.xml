@@ -1576,14 +1576,14 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
-        CREATE UNIQUE INDEX proptype_ix&1
+        CREATE UNIQUE INDEX proptypename_idx&1
           ON &prefixNewPropertyType&1 (property_id, property)
         TABLESPACE indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX proptyp_ix&1
+        CREATE INDEX proptypid_idx&1
           ON &prefixNewPropertyType&1 (property, property_id, type, filter)
         TABLESPACE indx
       ]]>
