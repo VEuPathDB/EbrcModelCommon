@@ -219,8 +219,7 @@
     <externalDependency name="results.RnaExpression"/>
     <externalDependency name="results.SegmentDiffResult"/>
     <externalDependency name="results.SeqVariation"/>
-    <externalDependency name="results.OtuAbundance"/>
-    <externalDependency name="results.AlphaDiversity"/>
+    <externalDependency name="results.LineageAbundance"/>
     <externalDependency name="apidb.SequenceVariation"/>
     <externalDependency name="apidb.MassSpecSummary"/>
     <externalDependency name="apidb.ChrCopyNumber"/>
@@ -288,11 +287,8 @@
     select protocol_app_node_id, 'Results::RnaExpression' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from Results.RnaExpression)
       union
-    select protocol_app_node_id, 'Results::OtuAbundance' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.OtuAbundance)
-    union
-    select protocol_app_node_id, 'Results::AlphaDiversity' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.AlphaDiversity)
+    select protocol_app_node_id, 'Results::LineageAbundance' as result_table from study.ProtocolAppNode
+      where protocol_app_node_id in (select protocol_app_node_id from Results.LineageAbundance)
     union
     select protocol_app_node_id, 'Results::SegmentDiffResult' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from Results.SegmentDiffResult)
