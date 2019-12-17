@@ -146,8 +146,8 @@
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
-    <prop name="ebiOrganismName">&ebiOrganismName;</prop>
-    <prop name="ebiVersion">&ebiVersion;</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
     <prop name="releaseDate">version of the data, in date format 2012-11-29</prop>
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
