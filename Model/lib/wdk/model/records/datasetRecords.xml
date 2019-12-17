@@ -127,7 +127,7 @@
                 <![CDATA[ <i class="fa fa-download"></i> ]]>
               </displayText>
               <url> 
-                <![CDATA[ /common/downloads/release-%%buildNumber%%/$$dataset_sha1_digest$$ ]]>
+                <![CDATA[ @WEBAPP_BASE_URL@/downloads/release-%%buildNumber%%/$$dataset_sha1_digest$$ ]]>
               </url>
          </linkAttribute>
        </attributeQueryRef>
