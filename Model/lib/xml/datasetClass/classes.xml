@@ -140,6 +140,42 @@
 
   <!-- Category: genome -->
 
+
+  <datasetClass class="ebi_primary_genome" category="" datasetFileHint="">
+    <purpose>Load the primary genome sequence and annotation for an organism, when the data is provided from ebi mysql dump.  </purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
+    <prop name="ebiOrganismName">&ebiOrganismName;</prop>
+    <prop name="ebiVersion">&ebiVersion;</prop>
+    <prop name="releaseDate">version of the data, in date format 2012-11-29</prop>
+
+    <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
+              version="${ebiVersion}"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="genome"
+              scope="organism"
+              organismAbbrev="${organismAbbrev}"
+              releaseDate="${releaseDate}">
+
+      <!-- this requires .wgetrc with ftp_name and ftp_password -->
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/${ebiVersion}/coredb/${ebiOrganismName}/${ebiOrganismName}_core_*.gz"></wgetArgs>
+
+
+     <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/genome/${ebiVersion}/final/chromosomeMap.txt @@dataDir@@/</unpack>
+     <unpack>generateDatabaseSchemaXml >@@dataDir@@/gusSchemaDefinitions.xml</unpack>
+     <unpack>gunzip -c @@dataDir@@/*.gz >@@dataDir@@/${ebiOrganismName}.sql</unpack>
+     <unpack></unpack>
+
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+
 <!-- chromosomeMap.txt file with 3 tab delimited columns, source_id,chromosome,chromosome_order_number, must be in final dir for chromosomes -->
   <datasetClass class="genbank_primary_genome" category="" datasetFileHint="">
     <purpose>Load the primary genome sequence and annotation for an organism, when the data is provided in a GenBank format file.  </purpose>
