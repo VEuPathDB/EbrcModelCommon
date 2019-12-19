@@ -18,6 +18,28 @@
        </sql>
     </sqlQuery>
 
+    <sqlQuery excludeProjects="ClinEpiDB" name="SitemapDatasets">
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+          ]]>
+       </sql>
+    </sqlQuery>
+
+    <sqlQuery includeProjects="ClinEpiDB" name="SitemapDatasets">
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'isPublic' and dprop.value = 'true'
+          ]]>
+       </sql>
+    </sqlQuery>
+
     <sqlQuery name="ByReferenceName">
         <testParamValues>
             <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>
@@ -204,7 +226,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
        </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB,Gates,ICEMR">
+    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
         <testParamValues>
           <paramValue name="user_id">48</paramValue>
         </testParamValues>
@@ -231,7 +253,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR">
+    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
         <testParamValues>
           <paramValue name="text_expression">GeneDB*</paramValue>
         </testParamValues>
@@ -249,7 +271,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
     </sqlQuery>
 
 
-<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,ICEMR"
+<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
              processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
              doNotTest="true">
         <paramRef ref="sharedParams.ds_gene_ids"/>

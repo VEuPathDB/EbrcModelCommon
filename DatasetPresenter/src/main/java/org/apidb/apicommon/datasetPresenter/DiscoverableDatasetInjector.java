@@ -3,6 +3,7 @@
  */
 package org.apidb.apicommon.datasetPresenter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class DiscoverableDatasetInjector extends DatasetInjector {
         continue;
 
       try {
-        DatasetInjector injector = injectorClass.newInstance();
+        DatasetInjector injector = injectorClass.getDeclaredConstructor().newInstance();
         injector.setDatasetName(getDatasetName());
         injector.setPrimaryContact(getPrimaryContact());
 
@@ -84,7 +85,9 @@ public class DiscoverableDatasetInjector extends DatasetInjector {
           injector.addPropValues(propValues);
           injectors.add(injector);
         }
-      } catch (InstantiationException | IllegalAccessException ex) {
+      } catch (InstantiationException | IllegalAccessException |
+          IllegalArgumentException | InvocationTargetException |
+          NoSuchMethodException | SecurityException ex) {
         throw new UserException(
             "Unable to create instance of " + injectorClass, ex);
       }

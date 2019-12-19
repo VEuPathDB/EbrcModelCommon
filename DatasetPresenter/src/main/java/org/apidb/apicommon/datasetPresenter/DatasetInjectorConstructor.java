@@ -1,5 +1,6 @@
 package org.apidb.apicommon.datasetPresenter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,9 +115,11 @@ public class DatasetInjectorConstructor {
     try {
       injectorClass = Class.forName(datasetInjectorClassName).asSubclass(
           DatasetInjector.class);
-      di = injectorClass.newInstance();
-    } catch (ClassNotFoundException | IllegalAccessException
-        | InstantiationException ex) {
+      di = injectorClass.getDeclaredConstructor().newInstance();
+    }
+    catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
+        IllegalArgumentException | InvocationTargetException |
+        NoSuchMethodException | SecurityException ex) {
       throw new UserException("Can't find DatasetInjector subclass with name '"
           + datasetInjectorClassName + "'", ex);
     }

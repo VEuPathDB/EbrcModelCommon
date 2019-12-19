@@ -1,20 +1,17 @@
 <project name="EbrcModelCommon" default="Installation" basedir=".">
 
   <import file="${projectsDir}/WDK/build.xml" />
-  <import file="${projectsDir}/CBIL/build.xml" />
   <import file="${projectsDir}/ReFlow/build.xml" />
-
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooo  Installation  oooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
-  <target name="EbrcModelCommon-Installation" depends="EbrcModelCommon-MavenInstallation,
-                                            EbrcModelCommon/DatasetPresenter-Installation,
-                                            EbrcModelCommon/Model-Installation,
-                                            ReFlow-Installation,
-                                            WDK-Installation">
-
+  <target name="EbrcModelCommon-Installation" depends="WDK-Installation,
+                                                       ReFlow-Installation,
+                                                       EbrcModelCommon-MavenInstallation,
+                                                       EbrcModelCommon/DatasetPresenter-Installation,
+                                                       EbrcModelCommon/Model-Installation">
     <ant target="defaultProjectInstall">
       <property name="project" value="EbrcModelCommon" />
     </ant>

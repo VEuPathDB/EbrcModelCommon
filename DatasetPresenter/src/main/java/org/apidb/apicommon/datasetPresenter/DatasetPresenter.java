@@ -206,7 +206,7 @@ public class DatasetPresenter {
   public Integer getBuildNumberIntroduced() {
     if (propValues.get("buildNumberIntroduced") == null)
       return null;
-    return new Integer(propValues.get("buildNumberIntroduced"));
+    return Integer.valueOf(propValues.get("buildNumberIntroduced"));
   }
 
   public void setBuildNumberRevised(Integer buildNumberRevised) {
@@ -216,7 +216,7 @@ public class DatasetPresenter {
   public Integer getBuildNumberRevised() {
     if (propValues.get("buildNumberRevised") == null)
       return null;
-    return new Integer(propValues.get("buildNumberRevised"));
+    return Integer.valueOf(propValues.get("buildNumberRevised"));
   }
 
   public void setDisplayCategory(Text displayCategory) {
