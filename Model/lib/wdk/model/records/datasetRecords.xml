@@ -6,7 +6,7 @@
 <!-- ============== a class with only one member.  the primary key is always 111 ===========  -->
 
    <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Data Set Release Notes">
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+      <primaryKey>
         <columnRef>release_notes_id</columnRef>
       </primaryKey>
 
@@ -43,7 +43,7 @@
       <!-- primary key definition
            NOTE:  the name here is from apidbtuning.DatasetPresenter NOT apidb.datasource
       -->
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+      <primaryKey>
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
