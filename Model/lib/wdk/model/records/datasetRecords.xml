@@ -1,5 +1,11 @@
 <wdkModel>
 
+  <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB,AllClinEpiDB">Study</constant>
+  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB,AllClinEpiDB">Studies</constant>
+
+  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB,AllClinEpiDB">Data Set</constant>
+  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB,AllClinEpiDB">Data Sets</constant>
+
   <recordClassSet name="DatasetRecordClasses">
 
 
@@ -33,7 +39,7 @@
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
-   <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset">
+   <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset">
            <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
      <testParamValues >
