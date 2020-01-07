@@ -90,7 +90,7 @@
 
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
 
-
+    <prop name="isNotEbiGenome">For any genome which is not coming from mysql dump from EBI.</prop>
     <graphTemplateFile name="project.xml"/>
 
     <!-- This is ONLY HERE so the propsfromDatasets works;  No workflow graph calls this -->
