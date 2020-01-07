@@ -169,35 +169,30 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-create table &prefixPANRecord&1 as
-select distinct pan.protocol_app_node_ID as pan_id
-              , pan.name as pan_name
-              , pan.isa_type as pan_isa_type
-              , ot.name as pan_type
-              , ot.source_id as pan_type_source_id
-              , ot.ontology_term_id as pan_type_id
-from study.protocolappnode pan
-   , sres.ontologyterm ot
-   , study.studylink sl
-   , study.study s
-   , sres.externaldatabase d
-   , SRES.EXTERNALDATABASERELEASE r
-where ot.ONTOLOGY_TERM_ID = pan.type_id
-and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
-and sl.study_id = s.study_id
-and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
-and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and (ot.source_id in ('EUPATH_0000738', --Observation/Event
-                     'PCO_0000024', -- Household
-                     'EUPATH_0000096', --Participant
-                     'EUPATH_0000327', -- CDC light trap
-                     'EUPATH_0025169', -- Insect sample
-                     'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
-                     )
-    OR pan.isa_type = 'Sample'
-    )
-and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-order by pan.name
+        create table &prefixPanRecord&1 as
+        select distinct pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                        pan.isa_type as pan_isa_type, ot.name as pan_type,
+                        ot.source_id as pan_type_source_id,
+                        ot.ontology_term_id as pan_type_id
+        from study.ProtocolAppNode pan, sres.OntologyTerm ot, study.StudyLink sl,
+             study.Study s, sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
+        where ot.ontology_term_id = pan.type_id
+          and pan.protocol_app_node_id = sl.protocol_app_node_id
+          and sl.study_id = s.study_id
+          and s.external_database_release_id = r.external_database_release_id
+          and r.external_database_id = d.external_database_id
+          and (ot.source_id
+               in ('EUPATH_0000738', --Observation/Event
+                   'PCO_0000024', -- Household
+                   'EUPATH_0000096', --Participant
+                   'EUPATH_0000327', -- CDC light trap
+                   'EUPATH_0025169', -- Insect sample
+                   'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
+                  )
+               or pan.isa_type = 'Sample'
+              )
+          and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+        order by pan.name
       ]]>
     </sql>
   </tuningTable>
