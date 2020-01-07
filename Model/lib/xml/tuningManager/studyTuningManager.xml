@@ -15,24 +15,26 @@
     <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
-create table &prefixSampleId&1 as
-select pan.protocol_app_node_id as pan_id, pan.name as pan_name, pi.name as project_id from study.protocolappnode pan, core.projectinfo pi where pan.isa_type = 'Sample' and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-union
-select pan.protocol_app_node_id as pan_id, pan.name as pan_name, pi.name as project_id
-from study.study s
-   , sres.externaldatabase d
-   , sres.externaldatabaserelease r
-   , study.protocolappnode pan
-   , study.studylink sl
-   , core.projectinfo pi
-where s.external_database_release_id = r.external_database_release_id
-and r.external_database_id = d.external_database_id
-and s.study_id = sl.study_id
-and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-and sl.protocol_app_node_id = pan.protocol_app_node_id
-and d.name like '%isolates_genbank_RSRC'
--- using column positions, rather than column names, in ORDER BY on union
-order by 2, 1
+          create table &prefixSampleId&1 as
+          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                 pi.name as project_id
+          from study.ProtocolAppNode pan, core.ProjectInfo pi
+          where pan.isa_type = 'Sample'
+            and pan.row_project_id = pi.project_id
+        union
+          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                 pi.name as project_id
+          from study.Study s, sres.ExternalDatabase d,
+               sres.ExternalDatabaseRelease r, study.ProtocolAppNode pan,
+               study.StudyLink sl, core.ProjectInfo pi
+          where s.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and s.study_id = sl.study_id
+            and pan.row_project_id = pi.project_id
+            and sl.protocol_app_node_id = pan.protocol_app_node_id
+            and d.name like '%isolates_genbank_RSRC'
+        -- using column positions, rather than column names, in ORDER BY on union
+        order by 2, 1
       ]]>
     </sql>
   </tuningTable>
