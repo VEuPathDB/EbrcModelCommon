@@ -2,7 +2,8 @@
 <tuningConfig>
 
 
-  <!-- TODO:  add filterValue here if/when Dataset specific run gets Samples;  until then this query will return zero rows in clinepi context -->
+  <!-- TODO:  add filterValue here if/when Dataset specific run gets Samples;
+              until then this query will return zero rows in clinepi context -->
   <tuningTable name="SampleId" prefixEnabled="true">
     <comment>Which protocol app nodes for sample record
     </comment>
@@ -395,7 +396,7 @@ order by pan.name
   <tuningTable name="HierarchyMap" prefixEnabled="true">
     <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
     </comment>
-    <internalDependency name="DatasetPresenter"/> 
+    <internalDependency name="DatasetPresenter"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.Study"/>
@@ -925,7 +926,7 @@ ORDER BY protocol_app_node_name
     </comment>
     <internalDependency name="DatasetTerm"/>
     <internalDependency name="PANResults"/>
-    <internalDependency name="DatasetPresenter"/> 
+    <internalDependency name="DatasetPresenter"/>
     <externalDependency name="apidb.Datasource"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
@@ -947,6 +948,7 @@ ORDER BY protocol_app_node_name
         , tn.name as organism
         , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan.name END AS pan_name
         , pan.protocol_app_node_id as pan_id
+        , pan.isa_type as pan_isa_type
         , nvl(ot.name, 'dataset') as property
         , ot.source_id AS property_source_id
         , ot.ontology_term_id AS property_id
@@ -992,6 +994,7 @@ UNION ALL
         -- special query for reference strain
         select ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
                tn.name as organism, o.strain_abbrev as pan_name, pan.protocol_app_node_id as pan_id,
+               pan.isa_type as pan_isa_type,
                ot.name as property,
                ot.source_id as property_source_id,
                ot.ontology_term_id as property_id,
@@ -1162,7 +1165,6 @@ UNION ALL
     </sql>
   </tuningTable>
 
-  <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
       Metadata table for new, wide, strongly-typed filter param
@@ -1174,7 +1176,7 @@ UNION ALL
       <![CDATA[
         create table &prefixMetadata&1 nologging as
         select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
-               m.pan_id, m.pan_name,
+               m.pan_id, m.pan_name, m.pan_isa_type,
                m.category, m.property, m.property_id, mt.property_source_id,
                substr(case
                         when m.value != lower(m.value)
@@ -1190,17 +1192,17 @@ UNION ALL
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from &prefixPropertyType mt,
              (  select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        protocol as category, property, property_id, value
                 from &prefixInferredParams
               union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        ancestor_pan_type as category, property, property_id, value
                 from &prefixInferredChars
               union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        null as category, property, property_id, value
                 from &prefixDefaultChars
              ) m
