@@ -538,6 +538,10 @@ ORDER BY external_database_release_id, protocol_app_node_id
                 from &prefixPANRecord panr, study.Output o
                 where panr.pan_type != 'specimen'
                   and panr.pan_id = o.protocol_app_node_id(+)
+              union
+                select c.protocol_app_node_id, c.protocol_app_node_id, o.protocol_app_id
+                from study.Characteristic c, study.Output o
+                where c.protocol_app_node_id = o.protocol_app_node_id(+)
              )
         where pan_id
               not in (select pan.protocol_app_node_id
