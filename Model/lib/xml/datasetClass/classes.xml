@@ -149,6 +149,7 @@
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
     <prop name="releaseDate">version of the data, in date format 2012-11-29</prop>
+    <prop name="ebi2gusTag">tag of ebi2gus container</prop>
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
@@ -160,14 +161,13 @@
               organismAbbrev="${organismAbbrev}"
               releaseDate="${releaseDate}">
 
-      <!-- this requires .wgetrc with ftp_name and ftp_password -->
-      <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/${ebiVersion}/coredb/${ebiOrganismName}/${ebiOrganismName}_core_*.gz"></wgetArgs>
 
-
-     <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/genome/${ebiVersion}/final/chromosomeMap.txt @@dataDir@@/</unpack>
-     <unpack>generateDatabaseSchemaXml >@@dataDir@@/gusSchemaDefinitions.xml</unpack>
-     <unpack>gunzip -c @@dataDir@@/*.gz >@@dataDir@@/${ebiOrganismName}.sql</unpack>
-     <unpack></unpack>
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/ebi_primary_genome/${ebiVersion}/final/">
+        <dir name="final">
+           <descrip></descrip>
+           <file name="chromosomeMap.txt">chromosome map file</file>
+        </dir>
+      </manualGet>
 
      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
