@@ -4430,7 +4430,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
+    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
 		   version="TODAY"
 		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
 		   type="proteome"
@@ -4962,7 +4962,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="dontcare">
   
-     <wgetArgs url="https://${project}.org/{webSubDir}/webservices/GeneQuestions/GenesByTaxon.xml?organism=${organismName}&amp;o-fields=ec_numbers"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
+     <wgetArgs url="https://${project}.org/${webSubDir}/webservices/GeneQuestions/GenesByTaxon.xml?organism=${organismName}&amp;o-fields=ec_numbers"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
 
      <unpack>orthomclUnpackEupathDB_EC_XML @@dataDir@@/ecAssocFromEuPathDB.xml @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
      
