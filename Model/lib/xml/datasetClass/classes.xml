@@ -3016,7 +3016,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               >
     <wgetArgs url="ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
     <unpack>gunzip @@dataDir@@/pdb_seqres.txt.gz</unpack>
-    <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile @@dataDir@@/pdb.fsa</unpack>
+    <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile  @@dataDir@@/pdb.fsa.tmp</unpack>
+    <unpack><![CDATA[cat @@dataDir@@/pdb.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/pdb.fsa]]></unpack>
+    <unpack>rm @@dataDir@@/pdb.fsa.tmp</unpack>
     <unpack>xdformat -p @@dataDir@@/pdb.fsa</unpack>
     <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
     <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --sequenceFile  @@dataDir@@/pdb.fsa --SOTermName 'polypeptide' --SOExtDbRlsSpec 'SO_RSRC|%' --noSequence --regexSourceId  '>(\w+)\s+mol:protein' --regexDesc 'length:\d+\s+(.+)$' --tableName "DoTS::ExternalAASequence"</pluginArgs>
