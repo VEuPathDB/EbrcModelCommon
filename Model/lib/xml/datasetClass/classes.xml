@@ -148,13 +148,14 @@
     <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
+    <prop name="genomeVersion">matches assembly source id from ebi</prop>
     <prop name="releaseDate">version of the data, in date format 2012-11-29</prop>
     <prop name="ebi2gusTag">tag of ebi2gus container</prop>
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
-              version="${ebiVersion}"
+              version="${genomeVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               type="genome"
               scope="organism"
