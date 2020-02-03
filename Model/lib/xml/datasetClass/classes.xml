@@ -2288,8 +2288,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
-
   </datasetClass>
+
+
+  <datasetClass class="chipSeqSample_QuerySRA" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="experimentName"/>
+    <prop name="sampleName"/>
+    <prop name="sraQueryString"/>
+    <prop name="inputName">The name of the sample in the same experiment which can serve as control for this one, if such a control exists (leave empty if there is no control). If this sample is itself a control, you MUST repeat its sample name here (do not leave empty).</prop>
+    <prop name="fragmentLength">If known, the fragment length. Else, leave empty</prop>
+
+    <graphTemplateFile name="chipSeqSamples.xml"/>
+
+      <!-- we load a fake resource here so we can make a getAndUnpackOutput -->
+      <!-- to declare existence of sample file that is acquired by experiment, for test mode -->
+    <datasetLoader datasetName="${organismAbbrev}_${experimentName}_${sampleName}_chipSeqSample_RSRC" version="dontcare"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="chipseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass> 
 
 
   <!-- NOTE: this dataset class only gets the sequences, it does not map
