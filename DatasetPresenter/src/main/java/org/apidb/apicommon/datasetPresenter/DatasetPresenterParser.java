@@ -207,50 +207,41 @@ public class DatasetPresenterParser extends XmlParser {
   static Map<String, Map<String, String>> parseDefaultInjectorsFile(String fileName) {
     
     if (fileName == null) return null;
-    
-    BufferedReader in = null;
 
     Map<String, Map<String, String>> index = new HashMap<String, Map<String, String>>();
-    try {
-      try {
-        in = new BufferedReader(new FileReader(fileName));
-        while (in.ready()) {
-          String line = in.readLine();
-          if (line == null)
-            break; // to dodge findbugs error
-          line = line.trim();
-          String[] columns = line.split("\t");
-          if (columns.length != 3)
-            throw new UserException("Default injectors file " + fileName + " does not have three columns in this row: " + System.getProperty("line.separator") + line + System.getProperty("line.separator"));
+    try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
+      String line;
+      while ((line = in.readLine()) != null) {
+        line = line.trim();
+        String[] columns = line.split("\t");
+        if (columns.length != 3)
+          throw new UserException("Default injectors file " + fileName + " does not have three columns in this row: " + System.getProperty("line.separator") + line + System.getProperty("line.separator"));
 
-          if(columns[1].equals(""))
-              columns[1] = null;
+        if(columns[1].equals(""))
+            columns[1] = null;
 
-          // This should not happen ... but just in case
-          if(columns[0].equals(""))
-              columns[0] = null;
+        // This should not happen ... but just in case
+        if(columns[0].equals(""))
+            columns[0] = null;
 
-          if (index.containsKey(columns[0])) {
-            if (index.get(columns[0]).containsKey(columns[1]))
-              throw new UserException("Default Injectors file " + fileName
-                  + " contains duplicate type and subtype: " + columns[0]
-                  + ", " + columns[1]);
-            index.get(columns[0]).put(columns[1], columns[2]);
-          } else {
-            Map<String, String> m = new HashMap<String, String>();
-            m.put(columns[1], columns[2]);
-            index.put(columns[0], m);
-          }
+        if (index.containsKey(columns[0])) {
+          if (index.get(columns[0]).containsKey(columns[1]))
+            throw new UserException("Default Injectors file " + fileName
+                + " contains duplicate type and subtype: " + columns[0]
+                + ", " + columns[1]);
+          index.get(columns[0]).put(columns[1], columns[2]);
         }
-
-      } catch (FileNotFoundException ex) {
-        throw new UserException("Default Injectors file " + fileName
-            + " not found");
-      } finally {
-        if (in != null)
-          in.close();
+        else {
+          Map<String, String> m = new HashMap<String, String>();
+          m.put(columns[1], columns[2]);
+          index.put(columns[0], m);
+        }
       }
-    } catch (IOException ex) {
+    }
+    catch (FileNotFoundException ex) {
+      throw new UserException("Default Injectors file " + fileName + " not found");
+    }
+    catch (IOException ex) {
       throw new UnexpectedException(ex);
     }
     return index;

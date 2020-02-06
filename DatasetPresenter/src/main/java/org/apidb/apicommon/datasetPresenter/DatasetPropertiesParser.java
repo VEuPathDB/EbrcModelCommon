@@ -27,49 +27,42 @@ public class DatasetPropertiesParser  {
     * @param datasetnameToProperties
     */
   static void parseFile(String propFileName, Map<String,Map<String,String>> datasetNameToProperties, Set<String> duplicateDatasetNames) {
-    BufferedReader in = null;
-
     Map<String,String> datasetProperties = null;
-    try {
-      try {
-        in = new BufferedReader(new FileReader(propFileName));
-
-        while (in.ready()) {
-          String line = in.readLine();
-          if (line == null)
-            break; // to dodge findbugs erro
-          line = line.trim();
-          if (line.startsWith("#"))
-            continue;
-          if (line.length() == 0)
-            continue;
-          
-          String[] a = line.split("=",2);
-          if (a[0].equals("datasetLoaderName")) {
-            datasetProperties = new HashMap<String, String>();
-            if (datasetNameToProperties.containsKey(a[1])) {
-              duplicateDatasetNames.add(a[1]);
-            } else {
-              if (!a[1].endsWith("_RSRC")) throw new UserException("Dataset Properties file " + propFileName + " contains dataset " + a[1] + " which does not end in _RSRC");
-
-              if(a[1].contains(":")) {
-                  String[] aa = a[1].split(":",2);
-                  datasetNameToProperties.put(aa[1], datasetProperties);
-              }
-
-              datasetNameToProperties.put(a[1], datasetProperties);
-            }
+    try (BufferedReader in = new BufferedReader(new FileReader(propFileName))) {
+      String line;
+      while ((line = in.readLine()) != null) {
+        line = line.trim();
+        if (line.startsWith("#"))
+          continue;
+        if (line.length() == 0)
+          continue;
+        
+        String[] a = line.split("=",2);
+        if (a[0].equals("datasetLoaderName")) {
+          datasetProperties = new HashMap<String, String>();
+          if (datasetNameToProperties.containsKey(a[1])) {
+            duplicateDatasetNames.add(a[1]);
           }
-          datasetProperties.put(a[0], a[1]);
+          else {
+            if (!a[1].endsWith("_RSRC"))
+              throw new UserException("Dataset Properties file " + propFileName +
+                  " contains dataset " + a[1] + " which does not end in _RSRC");
+
+            if(a[1].contains(":")) {
+                String[] aa = a[1].split(":",2);
+                datasetNameToProperties.put(aa[1], datasetProperties);
+            }
+
+            datasetNameToProperties.put(a[1], datasetProperties);
+          }
         }
-      } catch (FileNotFoundException ex) {
-        throw new UserException("Dataset Properties file " + propFileName
-            + " not found");
-      } finally {
-        if (in != null)
-          in.close();
+        datasetProperties.put(a[0], a[1]);
       }
-    } catch (IOException ex) {
+    }
+    catch (FileNotFoundException ex) {
+      throw new UserException("Dataset Properties file " + propFileName + " not found");
+    }
+    catch (IOException ex) {
       throw new UnexpectedException(ex);
     }
   }
