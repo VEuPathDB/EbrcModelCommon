@@ -244,7 +244,7 @@ FROM (select dataset_presenter_id, value as study_access
 from apidbtuning.datasetproperty 
 where  property = 'studyAccess') d,
 (select dataset_presenter_id, restriction_level as study_access
- from @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@
+ from studyaccess.ValidDatasetUser@ACCT_DBLINK@
  where user_id = $$user_id$$  
  AND (approval_status < 1 or approval_status is NULL)
 ) u

@@ -897,7 +897,7 @@ FROM (
    FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ 
   WHERE key in ('organization'))t2,
 (SELECT user_id, dataset_presenter_id, start_date, purpose, approval_status 
-   FROM @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@ 
+   FROM studyaccess.ValidDatasetUser@ACCT_DBLINK@ 
   WHERE purpose is not NULL
     AND (approval_status is NULL OR approval_status = 0) )t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
