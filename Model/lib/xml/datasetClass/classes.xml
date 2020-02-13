@@ -2325,8 +2325,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
-
   </datasetClass>
+
+
+  <datasetClass class="chipSeqSample_QuerySRA" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="experimentName"/>
+    <prop name="sampleName"/>
+    <prop name="sraQueryString"/>
+    <prop name="inputName">The name of the sample in the same experiment which can serve as control for this one, if such a control exists (leave empty if there is no control). If this sample is itself a control, you MUST repeat its sample name here (do not leave empty).</prop>
+    <prop name="fragmentLength">If known, the fragment length. Else, leave empty</prop>
+
+    <graphTemplateFile name="chipSeqSamples.xml"/>
+
+      <!-- we load a fake resource here so we can make a getAndUnpackOutput -->
+      <!-- to declare existence of sample file that is acquired by experiment, for test mode -->
+    <datasetLoader datasetName="${organismAbbrev}_${experimentName}_${sampleName}_chipSeqSample_RSRC" version="dontcare"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="chipseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass> 
 
 
   <!-- NOTE: this dataset class only gets the sequences, it does not map
@@ -3720,7 +3749,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               >
     <wgetArgs url="ftp://ftp.ncbi.nih.gov/blast/db/FASTA/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --accept=nr.gz </wgetArgs>
     <unpack>gunzip @@dataDir@@/nr.gz </unpack>
-    <unpack>shortenDefLine --inputFile @@dataDir@@/nr --outputFile @@dataDir@@/nrdb-short-defline.fsa</unpack>
+    <unpack>shortenDefLine --inputFile @@dataDir@@/nr --outputFile @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack>
+    <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/nrdb-short-defline.fsa]]></unpack>
+    <unpack>rm @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack> 
     <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa | perl -e '$flag=0; while(<>){if ($_ =~ />/){if ($_ =~ /sp\|/){$flag=1;}else{$flag=0;}} if ($flag == 1){ print;}}'> @@dataDir@@/nrdb-short-defline-sp.fsa]]></unpack>
     <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline-sp.fsa"/>
     <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline.fsa"/>
