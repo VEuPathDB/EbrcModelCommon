@@ -1350,12 +1350,13 @@ UNION ALL
     </sql>
   </tuningTable>
 
-  <tuningTable name="Samples" alwaysUpdate="true" prefixEnabled="true">
+  <tuningTable name="Samples" prefixEnabled="true">
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
     <internalDependency name="InferredParams"/>
     <internalDependency name="PropertyType"/>
     <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="study.ProtocolAppNode"/>
     <ancillaryTable name="Participants"/>
     <ancillaryTable name="Observations"/>
     <ancillaryTable name="LightTraps"/>
