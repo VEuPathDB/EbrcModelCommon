@@ -5642,7 +5642,26 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="ExternalResourceUrl" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
 
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="ExternalResourceUrl_${name}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::InsertExternalResourceUrl"
+           scope="global"
+           type="externalResourceUrl"
+           >
+      <manualGet fileOrDir="common/externalResourceUrl/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--inputFile @@dataDir@@/final/URLs.tab --core_version ${version}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 </datasetClasses>
 
