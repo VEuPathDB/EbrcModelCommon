@@ -1318,27 +1318,78 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-  <datasetClass class="NASeqFromFasta" category="" datasetFileHint="">
-    <purpose></purpose>
+  <datasetClass class="rRNAReference" category="" datasetFileHint="">
+    <purpose>Assign OTUs to experimental rRNA sequences</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
-    <prop name="soTermName"/>
 
     <graphTemplateFile name="microbiomeRoot.xml"/>
 
-    <datasetLoader datasetName="NASeqFromFasta_${name}_RSRC"
+    <datasetLoader datasetName="rRNAReference_RSRC"
 	      version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::LoadNASequencesFromFasta"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="global"
               type="sres"
              >
-      <manualGet fileOrDir="${projectName}/common/NASeqFromFasta/${name}/${version}/final/sequences.fsa">
+
+      <manualGet fileOrDir="common/empty">
         <dir name="final">
         </dir>
       </manualGet>
+      <unpack> mkdir -pv @@dataDir@@ </unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/rRNAReference/${name}/${version}/final/training_set.${version}.fa.gz @@dataDir@@/trainingSet.fa.gz </unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/rRNAReference/${name}/${version}/final/species_assignment.${version}.fa.gz @@dataDir@@/speciesAssignment.fa.gz </unpack>
 
-      <pluginArgs> --fastaFile  @@dataDir@@/sequences.fsa --externalDatabaseName  %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --SOTermName ${soTermName}  --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="rRNAExperiment" category="" datasetFileHint="">
+    <purpose>Copy the manual delivery files</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name"/>
+    <prop name="version"/>
+    <prop name="samplesInfoFile"/>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+
+    <datasetLoader datasetName="otuDADA2_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="population_biology"
+              scope="global"
+            >
+<!-- Also this used to copy a file, analysisConfig.xml --> 
+      <manualGet fileOrDir="${projectName}/common/otu/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>if [ $( find @@manualDeliveryDir@@/${projectName}/common/otu/${name}/${version}/final/ | wc -l ) -ne $( find @@dataDir@@/final/ | wc -l ) ] ; then echo "Not all copied?"; exit 1; fi </unpack>
+      <unpack>mv @@dataDir@@/final/ @@dataDir@@/fastqsFromManualDelivery/</unpack>
+      <unpack>find @@dataDir@@/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  </unpack>
+      <unpack>rmdir -v --ignore-fail-on-non-empty @@dataDir@@/fastqsFromManualDelivery</unpack>
+      <unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/otu/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/${samplesInfoFile} ; fi </unpack>
+      
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+  <datasetClass class="lineageTaxonLinkingTable" category="" datasetFileHint="">
+    <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+   
+    <datasetLoader datasetName="LineageTaxonLinkingTable_RSRC" version="dontcare"
+              plugin="ApiCommonData::Load::LineageTaxonLinkingTable"
+              type="sres"
+              scope="global"
+            >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4126,96 +4177,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-  <datasetClass class="otuProfiles" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="name"/>
-    <prop name="version"/>
-
-    <graphTemplateFile name="microbiomeRoot.xml"/>
-   
-    <datasetLoader datasetName="otu_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              type="population_biology"
-              scope="global"
-            >
-
-      <manualGet fileOrDir="${projectName}/common/otu/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-
-  <datasetClass class="otuProfilesDADA2" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="name"/>
-    <prop name="version"/>
-    <prop name="multiplexed"/>
-    <prop name="barcodesType"/>
-    <prop name="samplesInfoFile"/>
-    <prop name="isPaired"/>
-    <prop name="trimLeft"/>
-    <prop name="trimLeftR"/>
-    <prop name="truncLen"/>
-    <prop name="truncLenR"/>
-    <prop name="readLen"/>
-    <prop name="platform"/>
-    <prop name="sraStudyId"/>
-    <prop name="mergeTechReps"/>
-
-    <graphTemplateFile name="microbiomeRoot.xml"/>
-
-    <datasetLoader datasetName="otuDADA2_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              type="population_biology"
-              scope="global"
-            >
-
-      <manualGet fileOrDir="${projectName}/common/otu/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-
-  <datasetClass class="taxonMapping" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="name"/>
-    <prop name="version"/>
-
-    <graphTemplateFile name="microbiomeRoot.xml"/>
-   
-    <datasetLoader datasetName="taxonMapping_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::InsertSequenceTaxon"
-              type="sres"
-              scope="global"
-            >
-
-      <manualGet fileOrDir="${projectName}/common/curatedTaxonomy/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/sequenceToTaxonHierarchy.txt"/> <!-- maps na_sequence source_id to a string -->
-      <getAndUnpackOutput file="@@dataDir@@/final/taxonMapping.xml"/> <!-- manual override string to ncbi taxonomy -->
-
-      <pluginArgs>--dbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --sequenceToTaxonHierarchyFile @@dataDir@@/final/sequenceToTaxonHierarchy.txt --taxonMappingFile @@dataDir@@/final/taxonMapping.xml</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
   <datasetClass class="phylogeneticProfiles" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
