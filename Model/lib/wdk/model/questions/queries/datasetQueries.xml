@@ -270,7 +270,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        </sql>
     </sqlQuery>
 
-    <processQuery name="DatasetsByText"
+    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
           processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
        <!-- <paramRef ref="organismParams.solr_search_organism"/> -->
        <paramRef ref="sharedParams.text_expression"/>
