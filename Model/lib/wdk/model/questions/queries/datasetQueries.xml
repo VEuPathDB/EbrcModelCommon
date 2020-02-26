@@ -270,6 +270,18 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        </sql>
     </sqlQuery>
 
+    <processQuery name="DatasetsByText"
+          processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+       <!-- <paramRef ref="organismParams.solr_search_organism"/> -->
+       <paramRef ref="sharedParams.text_expression"/>
+       <paramRef ref="sharedParams.solr_doc_type" default="dataset"/>
+       <paramRef ref="sharedParams.solr_text_fields"/>
+       <!-- the parameter below caches the results for 30 minutes -->
+       <paramRef ref="sharedParams.timestamp" interval="1800" />
+       <wsColumn name="dataset_id" width="50"/>
+       <wsColumn name="max_score" width="10" columnType="float"/>
+       <!-- <wsColumn name="fields_matched" width="500"/> -->
+    </processQuery>
 
 <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
              processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
