@@ -204,7 +204,7 @@
          </description>
     </question>
 
-    <question name="DatasetsByText"
+    <question name="DatasetsByText" excludeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB"
         displayName="Text (keyword)"
         shortDisplayName="Text"
         queryRef="DatasetIds.DatasetsByText"
