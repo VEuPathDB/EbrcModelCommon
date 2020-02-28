@@ -556,6 +556,7 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
              absolute_abundance, ncbi_tax_id, lineage, kingdom, phylum, class,
              rank_order, family, genus, species,
              constraint taxRelAbund&1_pk primary key(name, lineage))
+             organization index
         nologging
         as SELECT
            sp.name,
@@ -564,13 +565,13 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
            la.raw_count as absolute_abundance,
            st.ncbi_tax_id,
            la.lineage,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\1') as kingdom,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\2') as phylum,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\3') as class,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\4') as rank_order,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\5') as family,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\6') as genus,
-           regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\7') as species
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\1') as VARCHAR(20)) as kingdom,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\2') as VARCHAR(50)) as phylum,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\3') as VARCHAR(50)) as class,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\4') as VARCHAR(50)) as rank_order,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\5') as VARCHAR(100)) as family,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\6') as VARCHAR(100)) as genus,
+           cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\7') as VARCHAR(100)) as species
         FROM
              results.LineageAbundance la,
              results.LineageTaxon lt,
@@ -579,20 +580,6 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
          WHERE la.lineage = lt.lineage (+)
           AND lt.taxon_id = st.taxon_id (+)
           AND la.protocol_app_node_id = sp.output_pan_id
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        CREATE UNIQUE INDEX TaxRelAbund_uix&1
-          ON TaxonRelativeAbundance&1 (name, protocol_app_node_id, lineage)
-          TABLESPACE INDX
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        CREATE INDEX TaxRelAbund_ncbi&1
-          ON TaxonRelativeAbundance&1 (ncbi_tax_id)
-          TABLESPACE INDX
       ]]>
     </sql>
   </tuningTable>
