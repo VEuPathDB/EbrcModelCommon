@@ -1682,4 +1682,212 @@
        <subtrack name="test3" />
     </track>
   </url> -->
+
+
+<!-- VectorBase starts here -->
+
+  <subtrackSet project="VectorBase" name="Anophelinae" suffixes="_span;_gene">
+    <track>aalbSTECLA</track>
+    <track>aaraDongola</track>
+    <track>aatrEBRO</track>
+    <track>achrACHKN1017</track>
+    <track>acolNgousso</track>
+    <track>aculA-37</track>
+    <track>adarCoari</track>
+    <track>adirWRAIR2</track>
+    <track>aepiEpiroticus2</track>
+    <track>afarFAR1</track>
+    <track>afunFUMOZ</track>
+    <track>agamPEST</track>
+    <track>amacmaculatus3</track>
+    <track>amelCM1001059_A</track>
+    <track>amerMAF</track>
+    <track>aminMINIMUS1</track>
+    <track>aquaSANGWE</track>
+    <track>asinChina</track>
+    <track>asinSINENSIS</track>
+    <track>asteIndian</track>
+    <track>asteSDA-500</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Brachycera" suffixes="_span;_gene">
+    <track>gausTTRI</track>
+    <track>gbreIAEA</track>
+    <track>gfusIAEA</track>
+    <track>gmorYale</track>
+    <track>gpalIAEA</track>
+    <track>gpapIAEA</track>
+    <track>mdomaabys</track>
+    <track>scalUSDA</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Chelicerata" suffixes="_span;_gene">
+    <track>iscaISE6</track>
+    <track>iscaWikel</track>
+    <track>ldelUoL-UT</track>
+    <track>sscaArlian</track>
+    <track></track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Culicinae" suffixes="_span;_gene">
+    <track>aaegLVP_AGWG</track>
+    <track>aalbFoshan</track>
+    <track>cquiJohannesburg</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Gastropoda" suffixes="_span;_gene">
+    <track>bglaBB02</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Hemiptera" suffixes="_span;_gene">
+    <track>clecHarlan</track>
+    <track>rproCDC</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Phlebotominae" suffixes="_span;_gene">
+    <track>llonJacobina</track>
+    <track>ppapIsrael</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Phthiraptera" suffixes="_span;_gene">
+    <track>phumUSDA</track>
+  </subtrackSet>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
+    <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
+    <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
+    <org organism="Anopheles christyi ACHKN1017" abbrev="achrACHKN1017" />
+    <org organism="Anopheles coluzzii Ngousso" abbrev="acolNgousso" />
+    <org organism="Anopheles culicifacies A-37" abbrev="aculA-37" />
+    <org organism="Anopheles darlingi Coari" abbrev="adarCoari" />
+    <org organism="Anopheles dirus WRAIR2" abbrev="adirWRAIR2" />
+    <org organism="Anopheles epiroticus Epiroticus2" abbrev="aepiEpiroticus2" />
+    <org organism="Anopheles farauti FAR1" abbrev="afarFAR1" />
+    <org organism="Anopheles funestus FUMOZ" abbrev="afunFUMOZ" />
+    <org organism="Anopheles gambiae str. PEST" abbrev="agamPEST" />
+    <org organism="Anopheles maculatus maculatus3" abbrev="amacmaculatus3" />
+    <org organism="Anopheles melas CM1001059_A" abbrev="amelCM1001059_A" />
+    <org organism="Anopheles merus MAF" abbrev="amerMAF" />
+    <org organism="Anopheles minimus MINIMUS1" abbrev="aminMINIMUS1" />
+    <org organism="Anopheles quadriannulatus SANGWE" abbrev="aquaSANGWE" />
+    <org organism="Anopheles sinensis China" abbrev="asinChina" />
+    <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
+    <org organism="Anopheles stephensi Indian" abbrev="asteIndian" />
+    <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Anophelinae" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Glossina austeni TTRI" abbrev="gausTTRI" />
+    <org organism="Glossina brevipalpis IAEA" abbrev="gbreIAEA" />
+    <org organism="Glossina fuscipes IAEA" abbrev="gfusIAEA" />
+    <org organism="Glossina morsitans Yale" abbrev="gmorYale" />
+    <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
+    <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
+    <org organism="Musca domestica aabys" abbrev="mdomaabys" />
+    <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Brachycera" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
+    <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
+    <org organism="Leptotrombidium deliense UoL-UT" abbrev="ldelUoL-UT" />
+    <org organism="Sarcoptes scabiei Arlian" abbrev="sscaArlian" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Chelicerata" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
+    <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
+    <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Culicinae" />
+    </track>
+  </url>
+
+
+  <!-- TODO:  add at least one more synteny track for this organism -->
+  <url project="VectorBase" type="synteny">
+    <org organism="Biomphalaria glabrata BB02" abbrev="bglaBB02" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Gastropoda" />
+      <!-- TODO
+      <subtrack name="someabbrev_span" />
+      <subtrack name="someabbrev_gene" />
+      -->
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Cimex lectularius Harlan" abbrev="clecHarlan" />
+    <org organism="Rhodnius prolixus CDC" abbrev="rproCDC" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Hemiptera" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Phlebotomus papatasi Israel" abbrev="ppapIsrael" />
+    <org organism="Lutzomyia longipalpis Jacobina" abbrev="llonJacobina" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Phlebotominae" />
+    </track>
+  </url>
+
+  <!-- TODO:  add at least one more synteny track for this organism -->
+  <url project="VectorBase" type="synteny">
+    <org organism="Pediculus humanus USDA" abbrev="phumUSDA" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Phthiraptera" />
+      <!-- TODO
+      <subtrack name="someabbrev_span" />
+      <subtrack name="someabbrev_gene" />
+      -->
+    </track>
+  </url>
+
+  <!-- TODO:  no group for this one... add at least one more abbrev -->
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles coluzzii Mali-NIH" abbrev="acolMali-NIH" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack name="acolMali-NIH_span" />
+      <subtrack name="acolMali-NIH_gene" />
+      <!-- TODO
+      <subtrack name="someabbrev_span" />
+      <subtrack name="someabbrev_gene" />
+      -->
+    </track>
+  </url>
+
+  <!-- TODO:  no group for this one... add at least one more abbrev -->
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles gambiae Pimperena" abbrev="agamPimperena" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack name="agamPimperena_span" />
+      <subtrack name="agamPimperena_gene" />
+      <!-- TODO
+      <subtrack name="someabbrev_span" />
+      <subtrack name="someabbrev_gene" />
+      -->
+    </track>
+  </url>
+
+
+
+
+
+
+
+
+
+
+
 </gbrowseImageUrls>
