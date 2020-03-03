@@ -1854,39 +1854,15 @@
     </track>
   </url>
 
-  <!-- TODO:  no group for this one... add at least one more abbrev -->
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles coluzzii Mali-NIH" abbrev="acolMali-NIH" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack name="acolMali-NIH_span" />
       <subtrack name="acolMali-NIH_gene" />
-      <!-- TODO
-      <subtrack name="someabbrev_span" />
-      <subtrack name="someabbrev_gene" />
-      -->
+      <subtrack name="acolNgousso_span" />
+      <subtrack name="acolNgousso_gene" />
     </track>
   </url>
-
-  <!-- TODO:  no group for this one... add at least one more abbrev -->
-  <url project="VectorBase" type="synteny">
-    <org organism="Anopheles gambiae Pimperena" abbrev="agamPimperena" />
-    <track name="Synteny" abbrevFirst="true">
-      <subtrack name="agamPimperena_span" />
-      <subtrack name="agamPimperena_gene" />
-      <!-- TODO
-      <subtrack name="someabbrev_span" />
-      <subtrack name="someabbrev_gene" />
-      -->
-    </track>
-  </url>
-
-
-
-
-
-
-
-
 
 
 
