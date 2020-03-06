@@ -1872,4 +1872,34 @@ UNION  -- NOTE: the following pulls in insect sample data
     </sql>
   </tuningTable>
 
+  <tuningTable name="RecordCount" prefixEnabled="false">
+    <comment>generates the counts for each type_id for each study in study.protocolappnode.
+    </comment>
+    <internalDependency name="DatasetPresenter"/>
+    <externalDependency name="Study.ProtocolAppNode"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <sql>
+      <![CDATA[
+        create table RecordCount&1 nologging as
+        with coredata as (
+        select inv.algorithm_invocation_id, inv.comment_string, o.ontology_term_id,o.name,count(*) as record_count
+        from study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv
+        where o.ontology_term_id = pan.type_id
+        and inv.algorithm_invocation_id = pan.row_alg_invocation_id
+        group by inv.algorithm_invocation_id,inv.comment_string, o.ontology_term_id,o.name
+        )
+        select dp.dataset_presenter_id, dp.name, dp.display_name, t.name as record_type, t.record_count
+        from apidbtuning.datasetpresenter dp,  coredata t
+        where dp.name = replace(regexp_substr(t.comment_string,'data//ISASimple\S+RSRC'),'data//','')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index rcd_ct_ix&1
+        on RecordCount&1 (dataset_presenter_id, record_type)
+        tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
 </tuningConfig>
