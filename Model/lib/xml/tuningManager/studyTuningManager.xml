@@ -1886,11 +1886,22 @@ UNION  -- NOTE: the following pulls in insect sample data
         from study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv
         where o.ontology_term_id = pan.type_id
         and inv.algorithm_invocation_id = pan.row_alg_invocation_id
+        and pan.protocol_app_node_id not in (
+           select distinct panout.protocol_app_node_id
+           from study.input, study.output, study.protocolappnode panin, study.protocolappnode panout, sres.ontologyterm otin, sres.ontologyterm otout
+           where input.protocol_app_id = output.protocol_app_id
+           and input.protocol_app_node_id = panin.protocol_app_node_id
+           and panin.type_id = otin.ontology_term_id
+           and otin.name = 'Household'
+           and output.protocol_app_node_id = panout.protocol_app_node_id
+           and panout.type_id = otout.ontology_term_id
+           and otout.name = 'Household'
+           )
         group by inv.algorithm_invocation_id,inv.comment_string, o.ontology_term_id,o.name
         )
         select dp.dataset_presenter_id, dp.name, dp.display_name, t.name as record_type, t.record_count
         from apidbtuning.datasetpresenter dp,  coredata t
-        where dp.name = replace(regexp_substr(t.comment_string,'data//ISASimple\S+RSRC'),'data//','')
+        where dp.name = regexp_replace(regexp_substr(t.comment_string,'extDbRlsSpec\s+''\S+RSRC'),'extDbRlsSpec\s+''','')
       ]]>
     </sql>
     <sql>
