@@ -182,38 +182,20 @@
   <!-- Text search -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-
-    <question name="DatasetsByTextSearch"
-      displayName="Text (keyword)"
-      shortDisplayName="Text"
-      fullAnswer="false"
-      queryRef="DatasetIds.ByKeyword"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true"
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-      <attributesList
-         summary="display_name,contact,institution"
-         sorting="display_name asc" />
-        <summary>
-             Find data sets by keyword search. Use * as a wildcard
-         </summary>
-         <description>
-           <![CDATA[
-             Find data sets by keyword search. Use * as a wildcard
-          ]]>
-         </description>
-    </question>
-
-    <question name="DatasetsByText" excludeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB"
+    <question name="DatasetsByText"
+        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
         displayName="Text (keyword)"
         shortDisplayName="Text"
         queryRef="DatasetIds.DatasetsByText"
-        recordClassRef="DatasetRecordClasses.DatasetRecordClass">
+        recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+        noSummaryOnSingleRecord="true">
 
       <attributesList summary="display_name,contact,institution,max_score" sorting="max_score desc" /> 
 
       <summary>
-        Find data sets by keyword search. Use * as a wildcard
+        <![CDATA[
+          Find data sets by keyword search. Use * as a wildcard
+        ]]>
       </summary>
 
       <description>

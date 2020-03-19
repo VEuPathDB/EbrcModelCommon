@@ -253,29 +253,11 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-        <testParamValues>
-          <paramValue name="text_expression">GeneDB*</paramValue>
-        </testParamValues>
-
-        <paramRef ref="sharedParams.text_expression"/>
-        <column name="dataset_id"/>
-
-        <sql>
-          <![CDATA[
-                   select DISTINCT dataset_presenter_id as dataset_id 
-                   from apidbtuning.datasetdetail
-                   where contains(search_string,replace(lower($$text_expression$$),'*','%'),1)>0
-          ]]>
-       </sql>
-    </sqlQuery>
-
     <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
           processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
-       <!-- <paramRef ref="organismParams.solr_search_organism"/> -->
        <paramRef ref="sharedParams.text_expression"/>
-       <paramRef ref="sharedParams.solr_doc_type" default="dataset"/>
-       <paramRef ref="sharedParams.solr_text_fields"/>
+       <paramRef ref="sharedParams.document_type" default="dataset"/>
+       <paramRef ref="sharedParams.text_fields"/>
        <!-- the parameter below caches the results for 30 minutes -->
        <paramRef ref="sharedParams.timestamp" interval="1800" />
        <wsColumn name="dataset_id" width="50"/>
