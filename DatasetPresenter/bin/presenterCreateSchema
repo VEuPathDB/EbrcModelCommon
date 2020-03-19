@@ -144,7 +144,7 @@ sub createTables {
         dataset_taxon_id          number(12),
         dataset_presenter_id      varchar2(15),
         taxon_id                  number(12),
-        name                      varchar(150),
+        name                      varchar2(200),
         constraint DatasetNameTaxon${suffix}_pk primary key (dataset_taxon_id)
   -- ,  constraint DatasetNameTaxon${suffix}_fk FOREIGN KEY (dataset_presenter_id) REFERENCES $schema.DatasetPresenter$suffix (dataset_presenter_id)
       )";
