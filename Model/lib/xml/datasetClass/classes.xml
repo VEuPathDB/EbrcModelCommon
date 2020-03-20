@@ -4710,7 +4710,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
@@ -4753,7 +4753,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)\n" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion "%DATASET_VERSION%" --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
