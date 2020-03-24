@@ -90,7 +90,7 @@
 
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
 
-
+    <prop name="isNotEbiGenome">For any genome which is not coming from mysql dump from EBI.</prop>
     <graphTemplateFile name="project.xml"/>
 
     <!-- This is ONLY HERE so the propsfromDatasets works;  No workflow graph calls this -->
@@ -148,26 +148,27 @@
     <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
+    <prop name="genomeVersion">matches assembly source id from ebi</prop>
     <prop name="releaseDate">version of the data, in date format 2012-11-29</prop>
+    <prop name="ebi2gusTag">tag of ebi2gus container</prop>
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
-              version="${ebiVersion}"
+              version="${genomeVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               type="genome"
               scope="organism"
               organismAbbrev="${organismAbbrev}"
               releaseDate="${releaseDate}">
 
-      <!-- this requires .wgetrc with ftp_name and ftp_password -->
-      <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/${ebiVersion}/coredb/${ebiOrganismName}/${ebiOrganismName}_core_*.gz"></wgetArgs>
 
-
-     <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/genome/ebi_primary_genome/${ebiVersion}/final/chromosomeMap.txt @@dataDir@@/</unpack>
-     <unpack>generateDatabaseSchemaXml >@@dataDir@@/gusSchemaDefinitions.xml</unpack>
-     <unpack>gunzip -c @@dataDir@@/*.gz >@@dataDir@@/${ebiOrganismName}.sql</unpack>
-     <unpack></unpack>
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/ebi_primary_genome/${ebiVersion}/final/">
+        <dir name="final">
+           <descrip></descrip>
+           <file name="chromosomeMap.txt">chromosome map file</file>
+        </dir>
+      </manualGet>
 
      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
@@ -2145,6 +2146,42 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="ebiRnaSeqExperiment" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+
+
+
+    <graphTemplateFile name="ebiRNASeq.xml"/>
+    <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_RSRC" version="${version}"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="rnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment.  To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
 
   <datasetClass class="rnaSeqSample" category="" datasetFileHint="">
@@ -2652,7 +2689,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               organismAbbrev="${organismAbbrev}">
   
-     <wgetArgs url="www.uniprot.org/uniprot/?query=taxonomy%3a${speciesNcbiTaxonId}+AND+keyword%3a181&amp;force=yes&amp;format=tab&amp;columns=id,genes,organism,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="www.uniprot.org/uniprot/?query=taxonomy%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tab&amp;columns=id,genes,organism,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>printOrgSpecificGeneToEC --infile @@dataDir@@/ecAssocFromUniprot.tab --outfile @@dataDir@@/${organismAbbrev}LocTagToEC.tab --orgAbbrev ${organismAbbrev}</unpack>     
 
@@ -5566,7 +5603,26 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="ExternalResourceUrl" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
 
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="ExternalResourceUrl_${name}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::InsertExternalResourceUrl"
+           scope="global"
+           type="externalResourceUrl"
+           >
+      <manualGet fileOrDir="common/externalResourceUrl/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--inputFile @@dataDir@@/final/URLs.tab --core_version ${version}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 </datasetClasses>
 
