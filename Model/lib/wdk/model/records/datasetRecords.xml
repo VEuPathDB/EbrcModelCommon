@@ -752,10 +752,8 @@ select dataset_id,
 from (
 select distinct dsnt.dataset_presenter_id as dataset_id
  , case when tn.name is null then null
-        else '<i>' || substr(tn.name, 1, 1) || '.' ||
-                                     substr(tn.name, instr(tn.name, ' ', 1, 1), decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)) - instr(tn.name, ' ', 1, 1)) || '</i>' ||
-                                     substr(tn.name, decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)))
-              end as org
+        else '<i>' || substr(tn.name, 0, instr(tn.name, ' ', 1, 2) -1) || '</i>' || substr(tn.name, instr(tn.name, ' ', 1, 2))
+         end as org
 from apidbtuning.datasetnametaxon dsnt
  , sres.taxonname tn
  where dsnt.taxon_id = tn.taxon_id (+)
