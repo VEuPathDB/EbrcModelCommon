@@ -5,7 +5,7 @@
     <!-- ************************************************************ -->
     <!-- SourceId -->  
     <!-- ************************************************************ -->
-    
+
     <question name="AllDatasets"
       displayName="Data Sets"
       shortDisplayName="All DS"
@@ -31,7 +31,6 @@
      <propertyList name="forSitemap"/>
     </question>
 
-        
     <question name="Studies"
       displayName="Studies"
       shortDisplayName="Studies"
@@ -45,7 +44,6 @@
       </description>
     </question>
 
-     
     <question name="DatasetsByDatasetNames"
       displayName="Data Sets by dataset names"
       shortDisplayName="Search"
@@ -58,7 +56,7 @@
          Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
       </description>
     </question>
-   
+
     <question name="DatasetsByReferenceName"
       displayName="Data Sets used to generate a table or result"
       shortDisplayName="Reference"
@@ -85,7 +83,6 @@
       </description>
     </question>
 
-    
     <question name="DatasetsByQuestionName"
       displayName="Data Sets used in a search"
       shortDisplayName="Search"
@@ -99,7 +96,6 @@
       </description>
     </question>
 
-    
     <question name="DatasetsById"
       displayName="Data Sets by ID"
       shortDisplayName="ID"
@@ -113,7 +109,6 @@
       </description>
     </question>
 
-    
     <question name="DatasetsByRecordClass"
       displayName="Data Sets used on a record page for an organism"
       shortDisplayName="Record"
@@ -127,7 +122,6 @@
       </description>
     </question>
 
-    
     <question name="DatasetsByType"
       displayName="Data Sets used on a record page for a type"
       shortDisplayName="Type"
@@ -141,7 +135,6 @@
       </description>
     </question>
 
-    
     <question name="DatasetsByTypeAndSubtype"
       displayName="Data Sets used on a record page for a type and subtype"
       shortDisplayName="TypeAndSubtype"
@@ -189,28 +182,39 @@
   <!-- Text search -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+    <question name="DatasetsByText"
+        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        displayName="Text (keyword)"
+        shortDisplayName="Text"
+        queryRef="DatasetIds.DatasetsByText"
+        recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+        noSummaryOnSingleRecord="true">
 
-    <question name="DatasetsByTextSearch"
-      displayName="Text (keyword)"
-      shortDisplayName="Text"
-      fullAnswer="false"
-      queryRef="DatasetIds.ByKeyword"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true"
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-      <attributesList
-         summary="display_name,contact,institution"
-         sorting="display_name asc" />
-        <summary>
-             Find data sets by keyword search. Use * as a wildcard
-         </summary>
-         <description>
-           <![CDATA[
-             Find data sets by keyword search. Use * as a wildcard
-          ]]>
-         </description>
-    </question>    
+      <attributesList summary="display_name,contact,institution,max_score" sorting="max_score desc" /> 
 
+      <summary>
+        <![CDATA[
+          Find data sets by keyword search. Use * as a wildcard
+        ]]>
+      </summary>
+
+      <description>
+        <![CDATA[
+          Find data sets by keyword search. Use * as a wildcard
+        ]]>
+      </description>
+
+      <dynamicAttributes>
+        <columnAttribute name="max_score" displayName="Score" align="center">
+          <reporter name="histogram" displayName="Histogram" scopes=""
+              implementation="org.gusdb.wdk.model.report.reporter.HistogramAttributeReporter">
+            <description>Display the histogram of the values of this attribute</description>
+            <property name="type">int</property>
+          </reporter>
+        </columnAttribute>
+      </dynamicAttributes>
+
+    </question>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <!-- search of Gene List -->

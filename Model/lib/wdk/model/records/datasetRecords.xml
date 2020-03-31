@@ -1,5 +1,11 @@
 <wdkModel>
 
+  <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB,AllClinEpiDB">Study</constant>
+  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB,AllClinEpiDB">Studies</constant>
+
+  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB,AllClinEpiDB">Data Set</constant>
+  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB,AllClinEpiDB">Data Sets</constant>
+
   <recordClassSet name="DatasetRecordClasses">
 
 
@@ -33,7 +39,7 @@
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
-   <recordClass name="DatasetRecordClass" displayName="Data Set" urlName="dataset">
+   <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset">
            <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
      <testParamValues >
@@ -746,10 +752,8 @@ select dataset_id,
 from (
 select distinct dsnt.dataset_presenter_id as dataset_id
  , case when tn.name is null then null
-        else '<i>' || substr(tn.name, 1, 1) || '.' ||
-                                     substr(tn.name, instr(tn.name, ' ', 1, 1), decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)) - instr(tn.name, ' ', 1, 1)) || '</i>' ||
-                                     substr(tn.name, decode(instr(tn.name, ' ', 1, 2), 0, length(tn.name) + 1, instr(tn.name, ' ', 1, 2)))
-              end as org
+        else '<i>' || substr(tn.name, 0, instr(tn.name, ' ', 1, 2) -1) || '</i>' || substr(tn.name, instr(tn.name, ' ', 1, 2))
+         end as org
 from apidbtuning.datasetnametaxon dsnt
  , sres.taxonname tn
  where dsnt.taxon_id = tn.taxon_id (+)
@@ -763,9 +767,7 @@ from apidbtuning.datasetnametaxon dsnt
             <![CDATA[
           select distinct dataset_id, expects_multiple,
                   case when organism_count = 1 and oa.organism_name is not null and expects_multiple = 0
-                       then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
-                                     substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>' ||
-                                     substr(oa.organism_name, decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)))
+                       then '<i>' || substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2) -1) || '</i>' || substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 2))
                        when expects_multiple=1 and organism_count > 1 and (regexp_count(oa.organism_name, substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2)))) = organism_count
                        then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
                                      substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'
@@ -897,7 +899,7 @@ FROM (
    FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ 
   WHERE key in ('organization'))t2,
 (SELECT user_id, dataset_presenter_id, start_date, purpose, approval_status 
-   FROM @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@ 
+   FROM studyaccess.ValidDatasetUser@ACCT_DBLINK@ 
   WHERE purpose is not NULL
     AND (approval_status is NULL OR approval_status = 0) )t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4

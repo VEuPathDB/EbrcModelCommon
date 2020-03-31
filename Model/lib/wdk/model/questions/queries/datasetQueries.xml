@@ -244,7 +244,7 @@ FROM (select dataset_presenter_id, value as study_access
 from apidbtuning.datasetproperty 
 where  property = 'studyAccess') d,
 (select dataset_presenter_id, restriction_level as study_access
- from @USER_SCHEMA@ValidDatasetUser@USER_DBLINK@
+ from studyaccess.ValidDatasetUser@ACCT_DBLINK@
  where user_id = $$user_id$$  
  AND (approval_status < 1 or approval_status is NULL)
 ) u
@@ -253,23 +253,17 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByKeyword" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-        <testParamValues>
-          <paramValue name="text_expression">GeneDB*</paramValue>
-        </testParamValues>
-
-        <paramRef ref="sharedParams.text_expression"/>
-        <column name="dataset_id"/>
-
-        <sql>
-          <![CDATA[
-                   select DISTINCT dataset_presenter_id as dataset_id 
-                   from apidbtuning.datasetdetail
-                   where contains(search_string,replace(lower($$text_expression$$),'*','%'),1)>0
-          ]]>
-       </sql>
-    </sqlQuery>
-
+    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+          processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+       <paramRef ref="sharedParams.text_expression"/>
+       <paramRef ref="sharedParams.document_type" default="dataset"/>
+       <paramRef ref="sharedParams.text_fields"/>
+       <!-- the parameter below caches the results for 30 minutes -->
+       <paramRef ref="sharedParams.timestamp" interval="1800" />
+       <wsColumn name="dataset_id" width="50"/>
+       <wsColumn name="max_score" width="10" columnType="float"/>
+       <!-- <wsColumn name="fields_matched" width="500"/> -->
+    </processQuery>
 
 <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
              processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"

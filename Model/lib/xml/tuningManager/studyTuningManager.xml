@@ -2,7 +2,8 @@
 <tuningConfig>
 
 
-  <!-- TODO:  add filterValue here if/when Dataset specific run gets Samples;  until then this query will return zero rows in clinepi context -->
+  <!-- TODO:  add filterValue here if/when Dataset specific run gets Samples;
+              until then this query will return zero rows in clinepi context -->
   <tuningTable name="SampleId" prefixEnabled="true">
     <comment>Which protocol app nodes for sample record
     </comment>
@@ -14,24 +15,26 @@
     <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
-create table &prefixSampleId&1 as
-select pan.protocol_app_node_id as pan_id, pan.name as pan_name, pi.name as project_id from study.protocolappnode pan, core.projectinfo pi where pan.isa_type = 'Sample' and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-union
-select pan.protocol_app_node_id as pan_id, pan.name as pan_name, pi.name as project_id
-from study.study s
-   , sres.externaldatabase d
-   , sres.externaldatabaserelease r
-   , study.protocolappnode pan
-   , study.studylink sl
-   , core.projectinfo pi
-where s.external_database_release_id = r.external_database_release_id
-and r.external_database_id = d.external_database_id
-and s.study_id = sl.study_id
-and pan.ROW_PROJECT_ID = pi.PROJECT_ID
-and sl.protocol_app_node_id = pan.protocol_app_node_id
-and d.name like '%isolates_genbank_RSRC'
--- using column positions, rather than column names, in ORDER BY on union
-order by 2, 1
+          create table &prefixSampleId&1 as
+          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                 pi.name as project_id
+          from study.ProtocolAppNode pan, core.ProjectInfo pi
+          where pan.isa_type = 'Sample'
+            and pan.row_project_id = pi.project_id
+        union
+          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                 pi.name as project_id
+          from study.Study s, sres.ExternalDatabase d,
+               sres.ExternalDatabaseRelease r, study.ProtocolAppNode pan,
+               study.StudyLink sl, core.ProjectInfo pi
+          where s.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and s.study_id = sl.study_id
+            and pan.row_project_id = pi.project_id
+            and sl.protocol_app_node_id = pan.protocol_app_node_id
+            and d.name like '%isolates_genbank_RSRC'
+        -- using column positions, rather than column names, in ORDER BY on union
+        order by 2, 1
       ]]>
     </sql>
   </tuningTable>
@@ -166,35 +169,30 @@ order by 2, 1
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-create table &prefixPANRecord&1 as
-select distinct pan.protocol_app_node_ID as pan_id
-              , pan.name as pan_name
-              , pan.isa_type as pan_isa_type
-              , ot.name as pan_type
-              , ot.source_id as pan_type_source_id
-              , ot.ontology_term_id as pan_type_id
-from study.protocolappnode pan
-   , sres.ontologyterm ot
-   , study.studylink sl
-   , study.study s
-   , sres.externaldatabase d
-   , SRES.EXTERNALDATABASERELEASE r
-where ot.ONTOLOGY_TERM_ID = pan.type_id
-and pan.PROTOCOL_APP_NODE_ID = sl.PROTOCOL_APP_NODE_ID
-and sl.study_id = s.study_id
-and s.EXTERNAL_DATABASE_RELEASE_ID = r.EXTERNAL_DATABASE_RELEASE_ID
-and r.EXTERNAL_DATABASE_ID = d.external_database_id
-and (ot.source_id in ('EUPATH_0000738', --Observation/Event
-                     'PCO_0000024', -- Household
-                     'EUPATH_0000096', --Participant
-                     'EUPATH_0000327', -- CDC light trap
-                     'EUPATH_0025169', -- Insect sample
-                     'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
-                     )
-    OR pan.isa_type = 'Sample'
-    )
-and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-order by pan.name
+        create table &prefixPanRecord&1 as
+        select distinct pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+                        pan.isa_type as pan_isa_type, ot.name as pan_type,
+                        ot.source_id as pan_type_source_id,
+                        ot.ontology_term_id as pan_type_id
+        from study.ProtocolAppNode pan, sres.OntologyTerm ot, study.StudyLink sl,
+             study.Study s, sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
+        where ot.ontology_term_id = pan.type_id
+          and pan.protocol_app_node_id = sl.protocol_app_node_id
+          and sl.study_id = s.study_id
+          and s.external_database_release_id = r.external_database_release_id
+          and r.external_database_id = d.external_database_id
+          and (ot.source_id
+               in ('EUPATH_0000738', --Observation/Event
+                   'PCO_0000024', -- Household
+                   'EUPATH_0000096', --Participant
+                   'EUPATH_0000327', -- CDC light trap
+                   'EUPATH_0025169', -- Insect sample
+                   'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
+                  )
+               or pan.isa_type = 'Sample'
+              )
+          and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+        order by pan.name
       ]]>
     </sql>
   </tuningTable>
@@ -221,8 +219,7 @@ order by pan.name
     <externalDependency name="results.RnaExpression"/>
     <externalDependency name="results.SegmentDiffResult"/>
     <externalDependency name="results.SeqVariation"/>
-    <externalDependency name="results.OtuAbundance"/>
-    <externalDependency name="results.AlphaDiversity"/>
+    <externalDependency name="results.LineageAbundance"/>
     <externalDependency name="apidb.SequenceVariation"/>
     <externalDependency name="apidb.MassSpecSummary"/>
     <externalDependency name="apidb.ChrCopyNumber"/>
@@ -290,11 +287,8 @@ order by pan.name
     select protocol_app_node_id, 'Results::RnaExpression' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from Results.RnaExpression)
       union
-    select protocol_app_node_id, 'Results::OtuAbundance' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.OtuAbundance)
-    union
-    select protocol_app_node_id, 'Results::AlphaDiversity' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.AlphaDiversity)
+    select protocol_app_node_id, 'Results::LineageAbundance' as result_table from study.ProtocolAppNode
+      where protocol_app_node_id in (select protocol_app_node_id from Results.LineageAbundance)
     union
     select protocol_app_node_id, 'Results::SegmentDiffResult' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from Results.SegmentDiffResult)
@@ -395,7 +389,7 @@ order by pan.name
   <tuningTable name="HierarchyMap" prefixEnabled="true">
     <comment>Maps each dataset name to the name of the external database to use for ontology synonyms and relationships
     </comment>
-    <internalDependency name="DatasetPresenter"/> 
+    <internalDependency name="DatasetPresenter"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.Study"/>
@@ -528,7 +522,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
                                union
                                  select protocol_app_node_id
                                  from study.ProtocolAppNode
-                                 where isa_type = 'Phenotype'
+                                 where isa_type in ('Phenotype','Genotype')
                               )
                 connect by prior input_pan_id = output_pan_id
               union
@@ -540,6 +534,10 @@ ORDER BY external_database_release_id, protocol_app_node_id
                 from &prefixPANRecord panr, study.Output o
                 where panr.pan_type != 'specimen'
                   and panr.pan_id = o.protocol_app_node_id(+)
+              union
+                select c.protocol_app_node_id, c.protocol_app_node_id, o.protocol_app_id
+                from study.Characteristic c, study.Output o
+                where c.protocol_app_node_id = o.protocol_app_node_id(+)
              )
         where pan_id
               not in (select pan.protocol_app_node_id
@@ -925,7 +923,7 @@ ORDER BY protocol_app_node_name
     </comment>
     <internalDependency name="DatasetTerm"/>
     <internalDependency name="PANResults"/>
-    <internalDependency name="DatasetPresenter"/> 
+    <internalDependency name="DatasetPresenter"/>
     <externalDependency name="apidb.Datasource"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
@@ -947,6 +945,7 @@ ORDER BY protocol_app_node_name
         , tn.name as organism
         , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan.name END AS pan_name
         , pan.protocol_app_node_id as pan_id
+        , pan.isa_type as pan_isa_type
         , nvl(ot.name, 'dataset') as property
         , ot.source_id AS property_source_id
         , ot.ontology_term_id AS property_id
@@ -992,6 +991,7 @@ UNION ALL
         -- special query for reference strain
         select ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
                tn.name as organism, o.strain_abbrev as pan_name, pan.protocol_app_node_id as pan_id,
+               pan.isa_type as pan_isa_type,
                ot.name as property,
                ot.source_id as property_source_id,
                ot.ontology_term_id as property_id,
@@ -1162,7 +1162,6 @@ UNION ALL
     </sql>
   </tuningTable>
 
-  <!-- renamed from MetadataWithoutNulls -->
   <tuningTable name="Metadata" prefixEnabled="true">
     <comment>
       Metadata table for new, wide, strongly-typed filter param
@@ -1174,7 +1173,7 @@ UNION ALL
       <![CDATA[
         create table &prefixMetadata&1 nologging as
         select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
-               m.pan_id, m.pan_name,
+               m.pan_id, m.pan_name, m.pan_isa_type,
                m.category, m.property, m.property_id, mt.property_source_id,
                substr(case
                         when m.value != lower(m.value)
@@ -1190,17 +1189,17 @@ UNION ALL
                case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
         from &prefixPropertyType mt,
              (  select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        protocol as category, property, property_id, value
                 from &prefixInferredParams
               union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        ancestor_pan_type as category, property, property_id, value
                 from &prefixInferredChars
               union all
                 select dataset_type, dataset_subtype, organism, dataset_name,
-                       pan_id, pan_name,
+                       pan_id, pan_name, pan_isa_type,
                        null as category, property, property_id, value
                 from &prefixDefaultChars
              ) m
@@ -1347,12 +1346,13 @@ UNION ALL
     </sql>
   </tuningTable>
 
-  <tuningTable name="Samples" alwaysUpdate="true" prefixEnabled="true">
+  <tuningTable name="Samples" prefixEnabled="true">
     <comment>lots of columns for sample meta data. used for sample record
       </comment>
     <internalDependency name="InferredParams"/>
     <internalDependency name="PropertyType"/>
     <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="study.ProtocolAppNode"/>
     <ancillaryTable name="Participants"/>
     <ancillaryTable name="Observations"/>
     <ancillaryTable name="LightTraps"/>
@@ -1868,6 +1868,47 @@ UNION  -- NOTE: the following pulls in insect sample data
         CREATE INDEX &prefixEntomd_houseid&1
           ON &prefixEntomologyMD&1 (household_id, entomology_id)
         TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="RecordCount" prefixEnabled="false">
+    <comment>generates the counts for each type_id for each study in study.protocolappnode.
+    </comment>
+    <internalDependency name="DatasetPresenter"/>
+    <externalDependency name="Study.ProtocolAppNode"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <sql>
+      <![CDATA[
+        create table RecordCount&1 nologging as
+        with coredata as (
+        select inv.algorithm_invocation_id, inv.comment_string, o.ontology_term_id,o.name,count(*) as record_count
+        from study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv
+        where o.ontology_term_id = pan.type_id
+        and inv.algorithm_invocation_id = pan.row_alg_invocation_id
+        and pan.protocol_app_node_id not in (
+           select distinct panout.protocol_app_node_id
+           from study.input, study.output, study.protocolappnode panin, study.protocolappnode panout, sres.ontologyterm otin, sres.ontologyterm otout
+           where input.protocol_app_id = output.protocol_app_id
+           and input.protocol_app_node_id = panin.protocol_app_node_id
+           and panin.type_id = otin.ontology_term_id
+           and otin.name = 'Household'
+           and output.protocol_app_node_id = panout.protocol_app_node_id
+           and panout.type_id = otout.ontology_term_id
+           and otout.name = 'Household'
+           )
+        group by inv.algorithm_invocation_id,inv.comment_string, o.ontology_term_id,o.name
+        )
+        select dp.dataset_presenter_id, dp.name, dp.display_name, t.name as record_type, t.record_count
+        from apidbtuning.datasetpresenter dp,  coredata t
+        where dp.name = regexp_replace(regexp_substr(t.comment_string,'extDbRlsSpec\s+["'']\S+RSRC'),'extDbRlsSpec\s+["'']','')
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index rcd_ct_ix&1
+        on RecordCount&1 (dataset_presenter_id, record_type)
+        tablespace indx
       ]]>
     </sql>
   </tuningTable>

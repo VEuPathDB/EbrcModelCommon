@@ -82,54 +82,42 @@ public class TemplatesParser {
    * @param templatesFilePath
    *          Full path to a templates file to parse.
    */
-  static void parseTemplatesFile(TemplateSet targetTemplateSet,
-      String templatesFilePath) {
-    BufferedReader in = null;
-
-    try {
-      try {
-        in = new BufferedReader(new FileReader(templatesFilePath));
-
-        StringBuffer templateStrBuf = new StringBuffer();
-        boolean foundFirst = false;
-        while (in.ready()) {
-          String line = in.readLine();
-          if (line == null)
-            break; // to dodge findbugs error
-          if (!foundFirst) {
-            line = line.trim();
-            if (line.startsWith("#"))
-              continue;
-            if (line.length() == 0)
-              continue;
-            if (line.equals(TEMPLATE_START)) {
-              foundFirst = true;
-              templateStrBuf = new StringBuffer();
-            } else {
-              throw new UserException("Templates file " + templatesFilePath
-                  + " must start with " + TEMPLATE_START);
-            }
+  static void parseTemplatesFile(TemplateSet targetTemplateSet, String templatesFilePath) {
+    try (BufferedReader in = new BufferedReader(new FileReader(templatesFilePath))) {
+      StringBuffer templateStrBuf = new StringBuffer();
+      boolean foundFirst = false;
+      String line;
+      while ((line = in.readLine()) != null) {
+        if (!foundFirst) {
+          line = line.trim();
+          if (line.startsWith("#"))
+            continue;
+          if (line.length() == 0)
+            continue;
+          if (line.equals(TEMPLATE_START)) {
+            foundFirst = true;
+            templateStrBuf = new StringBuffer();
           } else {
-            if (line.trim().equals(TEMPLATE_START)) {
-              processTemplate(targetTemplateSet, templateStrBuf.toString(),
-                  templatesFilePath);
-              templateStrBuf = new StringBuffer();
-            } else {
-              templateStrBuf.append(line + Template.nl);
-            }
+            throw new UserException("Templates file " + templatesFilePath
+                + " must start with " + TEMPLATE_START);
+          }
+        } else {
+          if (line.trim().equals(TEMPLATE_START)) {
+            processTemplate(targetTemplateSet, templateStrBuf.toString(),
+                templatesFilePath);
+            templateStrBuf = new StringBuffer();
+          } else {
+            templateStrBuf.append(line + Template.nl);
           }
         }
-        processTemplate(targetTemplateSet, templateStrBuf.toString(),
-            templatesFilePath);
-
-      } catch (FileNotFoundException ex) {
-        throw new UserException("Templates file " + templatesFilePath
-            + " not found");
-      } finally {
-        if (in != null)
-          in.close();
       }
-    } catch (IOException ex) {
+      processTemplate(targetTemplateSet, templateStrBuf.toString(),
+          templatesFilePath);
+    }
+    catch (FileNotFoundException ex) {
+      throw new UserException("Templates file " + templatesFilePath + " not found");
+    }
+    catch (IOException ex) {
       throw new UnexpectedException(ex);
     }
   }
