@@ -196,9 +196,12 @@
 
         <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact" 
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
+        <attributesList summary="organism_prefix,eupath_release,newcategory,summary,contact" 
+                        includeProjects="EuPathDB"/>
+
 
         <attributesList summary="study_categories,summary,eupath_release,card_questions" 
-                        includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
+                        includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
