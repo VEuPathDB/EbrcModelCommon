@@ -27,7 +27,7 @@
       <table name="ReleaseNotes"
              displayName="Dataset Release Notes"
              queryRef="DatasetReleaseNotesTables.ReleaseNotes">
-        <columnAttribute name="build_number" displayName="EuPathDB Build #"/>
+        <columnAttribute name="build_number" displayName="VEuPathDB Build #"/>
         <columnAttribute name="release_date" displayName="Release Date"/>
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
@@ -176,7 +176,7 @@
          <columnAttribute name="build_number_introduced" internal="true"/>
          <columnAttribute name="type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date" 
-                          help="The EuPathDB release number and date that the dataset first appeared in EuPathDB. "/> 
+                          help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/> 
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
          <columnAttribute name="release_policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
@@ -391,7 +391,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Data Set Release History"
                queryRef="DatasetTables.GenomeHistory">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="build" displayName="EuPathDB Build"/>
+            <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
             <columnAttribute name="project" displayName="Project"/>
@@ -728,7 +728,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
                         WHEN dsc.affiliation is not null THEN dsc.affiliation
-                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact EuPathDB for more details</a>' 
+                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>' 
                    END as contact,
                     CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
                         ELSE   dsc.affiliation END as institution,
