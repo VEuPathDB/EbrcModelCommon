@@ -774,7 +774,9 @@ from apidbtuning.datasetnametaxon dsnt
                        when expects_multiple=1 and organism_count > 1 and (regexp_count(oa.organism_name, substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2)))) = organism_count
                        then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
                                      substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'
-                       else '' end as organism_prefix
+                       when expects_multiple > 0
+                       then 'multiple organisms'
+                       else 'undetermined' end as organism_prefix
                        
            from (
             select dsp.dataset_presenter_id as dataset_id, dsp.type, 
