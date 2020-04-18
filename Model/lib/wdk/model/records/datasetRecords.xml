@@ -788,7 +788,7 @@ from apidbtuning.datasetnametaxon dsnt
                       end as expects_multiple
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
             where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
-            group by dsp.type, dsp.dataset_presenter_id, dsp.dataset_name_pattern
+            group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
             )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
             where dsp.dataset_id = dsnt.dataset_presenter_id (+)
             and dsnt.taxon_id = oa.component_taxon_id (+)
