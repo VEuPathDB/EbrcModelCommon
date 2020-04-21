@@ -912,7 +912,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001271 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001271">
-        <rdfs:label xml:lang="en">RNA-seq assay</rdfs:label>
+        <rdfs:label xml:lang="en">RNA-Seq assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
