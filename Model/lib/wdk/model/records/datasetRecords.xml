@@ -121,7 +121,7 @@
 
 <!--
       <attributeQueryRef ref="DatasetAttributes.ExpTechnique">
-         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that EuPathDB made to the data (e.g. link outs to other data bases.)"/>
+         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that VEuPathDB made to the data (e.g. link outs to other data bases.)"/>
        </attributeQueryRef>
 -->
 
@@ -382,7 +382,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Release History"
                queryRef="DatasetTables.History">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="build" displayName="EuPathDB Build #"/>
+            <columnAttribute name="build" displayName="VEuPathDB Build #"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="note" displayName="Note"/>
         </table>  
