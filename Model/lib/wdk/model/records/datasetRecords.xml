@@ -486,9 +486,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
                            nvl(
                            decode(dsp.subtype,  -- using terms defined in Ontology OBI
                                   'array','transcription profiling by array',
-                                  'rnaseq','RNA-seq',
+                                  'rnaseq','RNA-Seq',
                                   'chip_chip','ChIP-chip',
-                                  'chipseq','ChIP-seq',
+                                  'chipseq','ChIP-Seq',
                                   'rtpcr','transcription profiling by RT-PCR',
                                   'sage_tag','serial analysis of gene expression',	
                                   'smallNcRna','RNA-Seq',
