@@ -394,7 +394,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
-            <columnAttribute name="project" displayName="Project"/>
             <columnAttribute name="genome_source" displayName="Genome Source"/>
             <columnAttribute name="genome_version" displayName="Genome Version"/>
             <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
@@ -695,7 +694,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
-                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                         'release ' || release_number || ' / ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, ebd.release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
@@ -705,7 +704,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                           and ebd.project = '@PROJECT_ID@')
                   where rn = 1) history,
                  (select build_number,
-                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                         'release ' || release_number || ' / ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
                         where project = '@PROJECT_ID@') introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
