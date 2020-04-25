@@ -985,7 +985,7 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <sql includeProjects="EuPathDB">
               SELECT dataset_id, text, url, description
               FROM ApidbTuning.DatasetHyperLinks
-              WHERE url NOT LIKE '/a/app/jbrowse/%'
+              WHERE url NOT LIKE '%jbrowse/%'
             </sql>
       </sqlQuery>
 
