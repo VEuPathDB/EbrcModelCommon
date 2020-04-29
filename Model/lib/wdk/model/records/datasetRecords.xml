@@ -121,7 +121,7 @@
 
 <!--
       <attributeQueryRef ref="DatasetAttributes.ExpTechnique">
-         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that EuPathDB made to the data (e.g. link outs to other data bases.)"/>
+         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that VEuPathDB made to the data (e.g. link outs to other data bases.)"/>
        </attributeQueryRef>
 -->
 
@@ -382,7 +382,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Release History"
                queryRef="DatasetTables.History">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="build" displayName="EuPathDB Build #"/>
+            <columnAttribute name="build" displayName="VEuPathDB Build #"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="note" displayName="Note"/>
         </table>  
@@ -394,7 +394,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
-            <columnAttribute name="project" displayName="Project"/>
             <columnAttribute name="genome_source" displayName="Genome Source"/>
             <columnAttribute name="genome_version" displayName="Genome Version"/>
             <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
@@ -486,9 +485,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
                            nvl(
                            decode(dsp.subtype,  -- using terms defined in Ontology OBI
                                   'array','transcription profiling by array',
-                                  'rnaseq','RNA-seq',
+                                  'rnaseq','RNA-Seq',
                                   'chip_chip','ChIP-chip',
-                                  'chipseq','ChIP-seq',
+                                  'chipseq','ChIP-Seq',
                                   'rtpcr','transcription profiling by RT-PCR',
                                   'sage_tag','serial analysis of gene expression',	
                                   'smallNcRna','RNA-Seq',
@@ -695,7 +694,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
-                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                         'release ' || release_number || ' / ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, ebd.release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
@@ -705,7 +704,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                           and ebd.project = '@PROJECT_ID@')
                   where rn = 1) history,
                  (select build_number,
-                         project || ' ' || release_number || ' / ' || release_date as eupath_release
+                         'release ' || release_number || ' / ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
                         where project = '@PROJECT_ID@') introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
@@ -774,19 +773,21 @@ from apidbtuning.datasetnametaxon dsnt
                        when expects_multiple=1 and organism_count > 1 and (regexp_count(oa.organism_name, substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2)))) = organism_count
                        then '<i>' || substr(oa.organism_name, 1, 1) || '.' ||
                                      substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'
-                       else '' end as organism_prefix
+                       when expects_multiple > 0
+                       then 'multiple organisms'
+                       else 'undetermined' end as organism_prefix
                        
            from (
             select dsp.dataset_presenter_id as dataset_id, dsp.type, 
                      count(*) as organism_count,
                      -- if the dataset_name_pattern starts w/ a % we won't append an organism prefix to the datasetDisplayName
-                     case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or dsp.type = 'isolates'
+                     case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or (dsp.type = 'isolates' and dsp.subtype = 'sequencing_typed')
                       then 1
                       else 0
                       end as expects_multiple
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
             where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
-            group by dsp.type, dsp.dataset_presenter_id, dsp.dataset_name_pattern
+            group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
             )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
             where dsp.dataset_id = dsnt.dataset_presenter_id (+)
             and dsnt.taxon_id = oa.component_taxon_id (+)

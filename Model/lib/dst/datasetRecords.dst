@@ -36,7 +36,7 @@ prop=isGraphCustom
        '${graphYAxisDescription}' as y_axis,
        '${isGraphCustom}' as is_graph_custom,
        CASE WHEN REGEXP_LIKE ('${datasetName}','rnaSeq') 
-            THEN 'RNA-seq' ELSE 'other' END AS assay_type,
+            THEN 'RNA-Seq' ELSE 'other' END AS assay_type,
        ${graphPriorityOrderGrouping} as order_num
        from dual
 >templateTextEnd<

@@ -34,7 +34,7 @@
         <stringParam name="user_id"
                      prompt="User Id"
                      number="true">
-            <help>EuPathDB user_id</help>
+            <help>VEuPathDB user_id</help>
         </stringParam>
         
         <stringParam name="dataset_type"
