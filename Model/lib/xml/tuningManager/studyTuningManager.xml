@@ -131,7 +131,7 @@
         create table &prefixDatasetTerm&1 nologging as
         select distinct ed.name as hierarchy_dataset_name, ot.ontology_term_id,
                         ot.source_id, syn.ontology_synonym as name,
-                        syn.definition, syn.display_order
+                        syn.definition, syn.display_order, syn.variable
         from sres.OntologyTerm ot, sres.OntologySynonym syn,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
         where ot.ontology_term_id = syn.ontology_term_id
@@ -140,6 +140,7 @@
           and ed.name
               in (select hierarchy_dataset_name
                   from &prefixHierarchyMap)
+          and syn.is_preferred=1
       ]]>
     </sql>
     <sql>
@@ -1269,6 +1270,7 @@ UNION ALL
                term_synonym.definition as description,
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
+               term_synonym.variable,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
                parent.parent_ontology_term_source_id, unit_term.name as units,
                cast(pt.type as varchar2(20)) as type,
