@@ -1661,6 +1661,69 @@ create table &prefixObsSampleIO&1 (
       ]]>
     </sql>
   </tuningTable>
+
+  <tuningTable name="HouseSampleIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to observation relation
+    </comment>
+    <internalDependency name="HousePartIO"/>
+    <internalDependency name="PartObsIO"/>
+    <internalDependency name="ObsSampleIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixHouseSampleIO&1 (
+  household_id,
+  sample_id,
+  CONSTRAINT &prefixhouseSampleio_pk&1 PRIMARY KEY (household_id,sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select hp.household_id, os.sample_id
+  from &prefixPartObsIO po, &prefixHousePartIO hp, &prefixObsSampleIO os
+  where po.participant_id = hp.participant_id
+  and po.observation_id = os.observation_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsplhouseio&1
+          ON &prefixHouseSampleIO&1 (sample_id,household_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+  
+  <tuningTable name="PartSampleIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for household to observation relation
+    </comment>
+    <internalDependency name="PartObsIO"/>
+    <internalDependency name="ObsSampleIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixPartSampleIO&1 (
+  participant_id,
+  sample_id,
+  CONSTRAINT &prefixPartSampleio_pk&1 PRIMARY KEY (participant_id,sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select po.participant_id, os.sample_id
+  from &prefixPartObsIO po, &prefixObsSampleIO os
+  where po.observation_id = os.observation_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsplPartio&1
+          ON &prefixPartSampleIO&1 (sample_id,participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+  
   <tuningTable name="ObsObsIO" prefixEnabled="true">
     <comment>
       Metadata table specific for Observation to Sample relation
@@ -1723,7 +1786,7 @@ create table &prefixHouseEntoIO&1 (
 
   <tuningTable name="EntoInsSplIO" prefixEnabled="true">
     <comment>
-      Metadata table specific for household to Entomology relation
+      Metadata table specific for Entomology to insect sample relation
     </comment>
     <internalDependency name="PANIO"/>
     <sql>
@@ -1829,6 +1892,41 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
       <![CDATA[
         CREATE INDEX &prefixObsmd_obsid&1
           ON &prefixObservationMD&1 (observation_id, participant_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="SampleMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for sample filter 
+    </comment>
+    <internalDependency name="ObservationMD"/>
+    <sql>
+      <![CDATA[
+create table &prefixSampleMD&1 (
+  ontology_term_name,
+  sample_id,
+  observation_id,
+  participant_id,
+  household_id,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,sample_id,observation_id,participant_id,string_value) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select ontology_term_name, sample_id, observation_id, participant_id, household_id, string_value, number_value, date_value
+  from &prefixObservationMD
+  where sample_id != observation_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixSplmd_obsid&1
+          ON &prefixSampleMD&1 (observation_id, sample_id)
         TABLESPACE indx
       ]]>
     </sql>
