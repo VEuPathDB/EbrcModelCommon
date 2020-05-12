@@ -131,10 +131,13 @@
         create table &prefixDatasetTerm&1 nologging as
         select distinct ed.name as hierarchy_dataset_name, ot.ontology_term_id,
                         ot.source_id, syn.ontology_synonym as name,
-                        syn.definition, syn.display_order, syn.variable
+                        syn.definition, syn.display_order, syn.variable,
+                        MIN(shortsyn.ontology_synonym) OVER (PARTITION BY shortsyn.ontology_term_id) as shortname
         from sres.OntologyTerm ot, sres.OntologySynonym syn,
+             sres.OntologySynonym shortsyn,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
         where ot.ontology_term_id = syn.ontology_term_id
+          and syn.ontology_term_id = shortsyn.ontology_term_id
           and syn.external_database_release_id = edr.external_database_release_id
           and edr.external_database_id = ed.external_database_id
           and ed.name
