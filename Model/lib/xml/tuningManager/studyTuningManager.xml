@@ -1909,7 +1909,7 @@ create table &prefixSampleMD&1 (
   string_value,
   number_value,
   date_value,
-  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,sample_id,observation_id,participant_id,string_value) 
+  CONSTRAINT &prefixSmplmd_pk&1 PRIMARY KEY (ontology_term_name,sample_id,observation_id,participant_id,string_value) 
   )
   ORGANIZATION index
   nologging
