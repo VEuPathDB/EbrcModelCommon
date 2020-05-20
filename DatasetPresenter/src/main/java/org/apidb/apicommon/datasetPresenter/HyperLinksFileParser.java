@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.gusdb.fgputil.runtime.GusHome;
 import org.gusdb.fgputil.xml.Text;
 import org.gusdb.fgputil.xml.XmlParser;

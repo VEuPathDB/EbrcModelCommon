@@ -3,7 +3,7 @@ package org.apidb.apicommon.datasetPresenter;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.gusdb.fgputil.xml.Text;
 import org.gusdb.fgputil.xml.XmlParser;
 import org.xml.sax.SAXException;

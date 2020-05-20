@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.gusdb.fgputil.runtime.GusHome;
 import org.gusdb.fgputil.xml.NamedValue;
 import org.gusdb.fgputil.xml.Text;
