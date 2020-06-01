@@ -1210,6 +1210,35 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
+        insert into &prefixMetadata&1
+        (dataset_type, dataset_subtype, organism, dataset_name, pan_id,
+         pan_name, pan_isa_type, category, property, property_id,
+         property_source_id, string_value)
+        select *
+        from (with sample_term
+                   as (select max(ontology_term_id) as ontology_term_id,
+                              max(source_id) as source_id,
+                              max(name) as name
+                       from sres.OntologyTerm
+                       where name = 'Sample')
+              select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name, m.pan_id,
+                     m.pan_name, m.pan_isa_type, m.category,
+                     nvl(st.name, 'Sample name') as property,
+                     st.ontology_term_id as property_id,
+                     st.source_id as property_source_id,
+                     replace(m.pan_name, ' (Sequence Variation)', '') as string_value
+              from &prefixMetadata&1 m, sample_term st
+              where dataset_name
+                    in ('cposSilveira_NGS_SNPsAndVariations',
+                        'cposSilveira_HTS_SNP_Whole_Population_Genome_SNP_RSRC')
+                and pan_name not like '%(DNA Sequencing)'
+                and dataset_type != 'genome'
+                and category is null
+             )
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create index &prefixmwn_ixone&1
         on &prefixMetadata&1 (property_source_id, pan_id, dataset_name, category, string_value, number_value, date_value)
         tablespace indx
