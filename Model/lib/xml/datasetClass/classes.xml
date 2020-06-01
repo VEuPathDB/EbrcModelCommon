@@ -2133,7 +2133,35 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
 
 
-  <datasetClass class="rnaSeqSample" category="" datasetFileHint="">
+ <datasetClass class="ebiVCFfile" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+
+
+    <graphTemplateFile name="ebiVCFfile.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_VCF_RSRC" version="dont_care"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="to_do"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
+
+
+ <datasetClass class="rnaSeqSample" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="experimentName">Name of rnaSeq experiment, it should be consistent with "name" defined in "rnaSeqExperiment".</prop>
