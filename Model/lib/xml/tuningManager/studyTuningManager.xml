@@ -1220,8 +1220,8 @@ UNION ALL
                               max(source_id) as source_id,
                               max(name) as name
                        from sres.OntologyTerm
-                       where name = 'Sample')
-              select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name, m.pan_id,
+                       where source_id = 'NCIT_C42614')
+              select distinct m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name, m.pan_id,
                      m.pan_name, m.pan_isa_type, m.category,
                      nvl(st.name, 'Sample name') as property,
                      st.ontology_term_id as property_id,
