@@ -2189,6 +2189,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
 
@@ -2201,13 +2202,46 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="to_do"
               organismAbbrev="${organismAbbrev}">
 
+        <manualGet fileOrDir="common/empty">
+           <dir name="final"/> 
+  <!--         <dir name="@@dataDir@@"/>  -->
+        </manualGet>
+ 
+       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/  @@dataDir@@/final</unpack>
+
+        <getAndUnpackOutput dir="@@dataDir@@/final"/>
+        <getAndUnpackOutput file="@@dataDir@@/final/${name}.vcf.gz"/>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
+
+ <datasetClass class="ebiGFF3file" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+
+
+    <graphTemplateFile name="ebiGFF3file.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_GFF3_RSRC" version="dont_care"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="to_do"
+              organismAbbrev="${organismAbbrev}">
+
       <manualGet fileOrDir="common/empty">
       </manualGet>
 
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
 
 
 
