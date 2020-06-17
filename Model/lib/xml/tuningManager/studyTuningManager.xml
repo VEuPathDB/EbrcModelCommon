@@ -963,10 +963,13 @@ ORDER BY protocol_app_node_name
                                    '_RSRC', ''),
                            '_', ' ')
             ELSE dsp.display_name
-          END as value
+          END as value,
+          nvl(mt.name, 'assay') as ancestor_pan_type,
+          mt.ontology_term_id as ancestor_pan_type_id
         from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
              sres.TaxonName tn, apidbTuning.DatasetPresenter dsp, apidb.organism o,
+             sres.OntologyTerm mt,
              (  select s.study_id, i.external_database_release_id, i.name
                 from study.Study s, study.Study i
                 where s.investigation_id = i.study_id
@@ -991,6 +994,7 @@ ORDER BY protocol_app_node_name
           and replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name (+)
           and (tn.name_class = 'scientific name' or tn.name_class is null)
           and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
+          and pan.type_id = mt.ontology_term_id(+)
 UNION ALL
         -- special query for reference strain
         select ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
@@ -999,10 +1003,12 @@ UNION ALL
                ot.name as property,
                ot.source_id as property_source_id,
                ot.ontology_term_id as property_id,
-               study_release.name as study_name, tn.name as value
+               study_release.name as study_name, tn.name as value,
+               nvl(mt.name, 'assay') as ancestor_pan_type,
+               mt.ontology_term_id as ancestor_pan_type_id
         from study.ProtocolAppNode pan, study.StudyLink sl, sres.OntologyTerm ot,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.TaxonName tn, apidb.Organism o,
+             sres.TaxonName tn, apidb.Organism o, sres.OntologyTerm mt,
              (  select s.study_id, i.external_database_release_id, i.name
                 from study.Study s, study.Study i
                 where s.investigation_id = i.study_id
@@ -1027,6 +1033,7 @@ UNION ALL
                     then 'NCIT_C14209' -- "Fungal organism"
                   else 'OPL_0000232' -- "parasite organism"
                 end
+          and pan.type_id = mt.ontology_term_id(+)
         order by organism, dataset_name, pan_name
       ]]>
     </sql>
