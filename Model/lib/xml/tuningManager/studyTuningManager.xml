@@ -1135,10 +1135,11 @@ UNION ALL
         	min, max, null as average, upper_quartile, lower_quartile
  	from (
      	  select m.property_source_id, 
-            	cast(min(m.date_value) as varchar2(100)) as min, 
-            	cast(max(m.date_value) as varchar2(100)) as max,
-            	cast(percentile_disc(.75) within group (order by m.date_value) as varchar2(100)) as upper_quartile,
-            	cast(percentile_disc(.25) within group (order by m.date_value) as varchar2(100)) as lower_quartile
+              cast(to_char(min(m.date_value),'YYYY-MM-DD') AS varchar2(100)) as min,                                           
+              cast(to_char(max(m.date_value),'YYYY-MM-DD') AS varchar2(100)) as max,                                           
+              cast(to_char(percentile_disc(.75) within group (order by m.date_value),'YYYY-MM-DD') as varchar2(100)) as upper_quartile,
+              cast(to_char(percentile_disc(.25) within group (order by m.date_value),'YYYY-MM-DD') as varchar2(100)) as lower_quartile
+
      	  from &prefixmetadata m,
           	&prefixpropertytype pt
      	  where m.date_value is not null
