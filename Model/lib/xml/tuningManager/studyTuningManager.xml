@@ -1280,6 +1280,18 @@ UNION ALL
                    where leaf.property_id = ancestor.ontology_term_id
                      and leaf.dataset_name = hmap.dataset_name
                      and hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
+             DatasetOntologyVars
+             as (
+                   select ontology_term_id,apidb.tab_to_string(set(cast(COLLECT(distinct name) AS apidb.varchartab)), ', ') as variable_name from
+                   (
+                     select ontology_term_id, regexp_replace(substr(variable, instr(variable, ',', 1, lvl) + 1, instr(variable, ',', 1, lvl + 1) - instr(variable, ',', 1, lvl) - 1),'\w+::','') name 
+                     from
+                      ( select ',' || variable || ',' as variable, ontology_term_id from &prefixDatasetTerm ),
+                      ( select level as lvl from dual connect by level <= 100 )
+                     where lvl <= length(variable) - length(replace(variable, ',')) - 1
+                     ) 
+                     group by ontology_term_id
+              ),
              DatasetInfo
              -- columns that are functions of dataset
              as (select dataset_name, max(dataset_type) as dataset_type,
@@ -1299,6 +1311,7 @@ UNION ALL
                nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
                term_synonym.display_order,
                term_synonym.variable,
+               otv.variable_name,
                parent.parent_ontology_term_name, parent.parent_ontology_term_id,
                parent.parent_ontology_term_source_id, unit_term.name as units,
                cast(pt.type as varchar2(20)) as type,
@@ -1308,7 +1321,7 @@ UNION ALL
                end as is_range,
                cast(1 as number(1)) as precision,
                di.organism, dot.dataset_name, di.dataset_type, di.dataset_subtype
-        from DatasetOntologyTerm dot, sres.OntologyTerm ot, &prefixHierarchyMap hmap,
+        from DatasetOntologyTerm dot, DatasetOntologyVars otv, sres.OntologyTerm ot, &prefixHierarchyMap hmap,
              &prefixDatasetTerm term_synonym, &prefixPropertyType pt,
              sres.OntologyTerm unit_term, DatasetInfo di,
              (select orel.hierarchy_dataset_name, orel.child_ontology_term_id,
@@ -1320,6 +1333,7 @@ UNION ALL
                 and orel.hierarchy_dataset_name = dt.hierarchy_dataset_name(+)
              ) parent
         where dot.ontology_term_id = ot.ontology_term_id
+          and dot.ontology_term_id =otv.ontology_term_id
           and dot.dataset_name = hmap.dataset_name
           and dot.ontology_term_id = term_synonym.ontology_term_id(+)
           and hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name(+)
