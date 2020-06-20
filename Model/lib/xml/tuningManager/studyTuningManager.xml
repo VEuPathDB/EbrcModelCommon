@@ -1267,8 +1267,8 @@ UNION ALL
   <tuningTable name="Ontology" prefixEnabled="true">
     <comment>
     </comment>
-    <internalDependency name="DatasetLeafTerm"/>
     <internalDependency name="DatasetTerm"/>
+    <internalDependency name="DatasetLeafTerm"/>
     <internalDependency name="DefaultChars"/>
     <internalDependency name="HierarchyMap"/>
     <internalDependency name="InferredParams"/>
@@ -1344,7 +1344,7 @@ UNION ALL
                 and orel.hierarchy_dataset_name = dt.hierarchy_dataset_name(+)
              ) parent
         where dot.ontology_term_id = ot.ontology_term_id
-          and dot.ontology_term_id =otv.ontology_term_id
+          and dot.ontology_term_id = otv.ontology_term_id(+)
           and dot.dataset_name = hmap.dataset_name
           and dot.ontology_term_id = term_synonym.ontology_term_id(+)
           and hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name(+)
