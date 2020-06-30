@@ -158,6 +158,15 @@
        </attributeQueryRef>
 
 
+       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+         <columnAttribute name="disease" displayName="Disease"/>
+         <columnAttribute name="sex" displayName="Sex"/>
+         <columnAttribute name="Sample_Type" displayName="Sample Type"/>
+         <columnAttribute name="Participant_Type" displayName="Participant Type"/>
+         <columnAttribute name="Study_Type" displayName="Study Type"/>
+       </attributeQueryRef>
+       
+       
 
        <attributeQueryRef ref="DatasetAttributes.All">
          <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
@@ -200,8 +209,12 @@
                         includeProjects="EuPathDB"/>
 
 
-        <attributesList summary="study_categories,summary,eupath_release,card_questions" 
-                        includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
+	<attributesList summary="study_categories,summary,eupath_release,card_questions,disease,sex,Sample_Type,Participant_Type,Study_Type" 
+			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
+
+	<attributesList summary="study_categories,summary,eupath_release,card_questions" 
+			includeProjects="MicrobiomeDB"/>
+
 
 
 <!-- to add a column to link somewhere, for example pubmed publication
@@ -658,6 +671,61 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
 
 
+      <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <column name="dataset_id"/>
+        <column name="disease"/>
+        <column name="sex"/>
+	<column name="Sample_Type"/>
+        <column name="Participant_Type"/>
+         <column name="Study_Type"/>
+	 
+         <sql>
+           <![CDATA[
+		    select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type from apidbtuning.datasetpresenter pres
+		    left join
+		    (WITH syn AS ( 
+		    SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label 
+		    FROM sres.ontologySynonym  s
+		    LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
+		    LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
+		    LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
+		    WHERE ed.name = 'OntologyTerm_classifications_RSRC'
+		    ),
+		    val AS (SELECT * FROM syn),
+		    names AS (
+		    SELECT ed.name as NAME, s1.study_id study_id, s1.external_database_release_id
+		    FROM study.study s1
+		    LEFT JOIN study.study s0 ON s1.investigation_id = s0.study_id
+		    LEFT JOIN sres.ExternalDataBaseRelease edr ON s1.external_database_release_ID = edr.external_database_release_ID
+		    LEFT JOIN sres.EXTERNALDATABASE ed ON edr.external_database_id = ed.external_database_id
+		    WHERE s0.STUDY_ID != s1.STUDY_ID
+		    ),
+		    tableb as (
+		    SELECT names.name, syn.source_id, syn.label,
+		    LISTAGG(ssc.value, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
+		    LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
+		    LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids 
+		    FROM study.StudyCharacteristic ssc
+		    LEFT JOIN names ON ssc.study_id = names.study_id
+		    LEFT JOIN syn ON ssc.qualifier_id = syn.ontology_term_id
+		    LEFT JOIN val ON ssc.value_id = val.ontology_term_id
+		    GROUP BY names.name, syn.source_id, syn.label
+		    )
+		    select * from (
+		    (select name, label , raw_values from tableb)
+		    )
+		    pivot                                                                                                         
+		    (                                                                                                          
+		    max(raw_values)                                                                                              
+		    for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type)
+		    )
+		    ORDER BY name
+		    ) table2
+		    on pres.name = table2.name
+           ]]>
+         </sql>
+      </sqlQuery>
+      
 
       <sqlQuery name="All"  isCacheable="false">
          <column name="dataset_id"/>
