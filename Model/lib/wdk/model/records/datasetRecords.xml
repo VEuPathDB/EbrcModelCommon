@@ -701,7 +701,7 @@ left join
      ),
      tableb as (
      SELECT names.name, syn.source_id, syn.label,
-     LISTAGG(ssc.value, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
+     LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
      LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
      LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids 
      FROM study.StudyCharacteristic ssc
