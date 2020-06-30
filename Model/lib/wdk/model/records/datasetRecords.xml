@@ -158,7 +158,7 @@
        </attributeQueryRef>
 
 
-       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
          <columnAttribute name="Sample_Type" displayName="Sample Type"/>
@@ -210,10 +210,7 @@
 
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions,disease,sex,Sample_Type,Participant_Type,Study_Type" 
-			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
-
-	<attributesList summary="study_categories,summary,eupath_release,card_questions" 
-			includeProjects="MicrobiomeDB"/>
+			includeProjects="MicrobiomeDB, ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
 
@@ -671,7 +668,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
 
 
-      <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
         <column name="dataset_id"/>
         <column name="disease"/>
         <column name="sex"/>
