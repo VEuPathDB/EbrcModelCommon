@@ -101,10 +101,7 @@ SQL
     select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
     from (select pan_id,
 --               listagg(value, ',') within group (order by value) as value
-                 regexp_replace(regexp_replace(regexp_replace(rtrim(xmlagg(XMLELEMENT(e,text,',').EXTRACT('//text()') ORDER BY text).GetClobVal(),','),
-                                                              '.quot;', '\"'),
-                                               '.gt;', '>'),
-                                '.apos;', '''') as value
+                 dbms_xmlgen.convert(rtrim(xmlagg(XMLELEMENT(e,text,',').EXTRACT('//text()') ORDER BY text).GetClobVal(),','), 1) as value
           from (select pan_id, '\"' || property_source_id || '\"=> ''' || listagg(value,' | ') within group (order by value)  || '''' as text
                 from (pmd) 
                 where type != 'number'                
