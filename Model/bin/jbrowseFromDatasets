@@ -38,9 +38,11 @@ foreach my $file (@files) {
 
       unless(-d $orgGusHomeDirectoryAA) {
         system("mkdir -p  $orgGusHomeDirectoryAA") == 0 or die "mkdir failed for directory $orgGusHomeDirectoryAA: $?";
-        system("chmod guo+rw  $orgGusHomeDirectoryAA") == 0 or die "chmod failed for directory $orgGusHomeDirectoryAA: $?";
-        system("chmod guo+rw $orgGusHomeDirectory") == 0 or die "mkdir failed for directory $orgGusHomeDirectory: $?";
       }
+
+      system("chmod guo+rw  $orgGusHomeDirectoryAA") == 0 or die "chmod failed for directory $orgGusHomeDirectoryAA: $?";
+      system("chmod guo+rw $orgGusHomeDirectory") == 0 or die "chmod failed for directory $orgGusHomeDirectory: $?";
+
 
       unless(-d $orgGeneratedTracksDir) {
         system("mkdir -p $orgGeneratedTracksDir") == 0 or die "mkdir failed for directory $orgGeneratedTracksDir: $?";
