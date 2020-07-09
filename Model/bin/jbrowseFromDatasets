@@ -33,10 +33,13 @@ foreach my $file (@files) {
       my $orgGeneratedTracksConf = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
       my $orgGeneratedTracksConfAa = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/aa/$CONF_FILE_BASENAME";
 
-      my $orgGusHomeDirectory = "$GUS_HOME_BASE/$organismAbbrev/aa";
+      my $orgGusHomeDirectoryAA = "$GUS_HOME_BASE/$organismAbbrev/aa";
+      my $orgGusHomeDirectory = "$GUS_HOME_BASE/$organismAbbrev";
 
-      unless(-d $orgGusHomeDirectory) {
-        system("mkdir -p  $orgGusHomeDirectory") == 0 or die "mkdir failed for directory $orgGusHomeDirectory: $?";
+      unless(-d $orgGusHomeDirectoryAA) {
+        system("mkdir -p  $orgGusHomeDirectoryAA") == 0 or die "mkdir failed for directory $orgGusHomeDirectoryAA: $?";
+        system("chmod guo+rw  $orgGusHomeDirectoryAA") == 0 or die "chmod failed for directory $orgGusHomeDirectoryAA: $?";
+        system("chmod guo+rw $orgGusHomeDirectory") == 0 or die "mkdir failed for directory $orgGusHomeDirectory: $?";
       }
 
       unless(-d $orgGeneratedTracksDir) {
