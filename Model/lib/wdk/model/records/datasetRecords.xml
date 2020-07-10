@@ -208,7 +208,7 @@
                         includeProjects="EuPathDB"/>
 
 
-	<attributesList summary="study_categories,summary,eupath_release,card_questions,disease,sex,Sample_Type,Participant_Type,Study_Type" 
+	<attributesList summary="study_categories,study_access,summary,eupath_release,card_questions,disease,sex,Sample_Type,Participant_Type,Study_Type" 
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
