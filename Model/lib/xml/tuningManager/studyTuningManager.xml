@@ -1573,6 +1573,11 @@ create table &prefixComPartIO&1 (
   select distinct ch.community_id, hp.participant_id
   from &prefixComHouseIO ch,  &prefixHousePartIO hp
   where ch.household_id = hp.household_id
+UNION
+  select distinct input_pan_id as community_id, output_pan_id as participant_id
+  from &orefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0035127'
+  and output_pan_type_source_id = 'EUPATH_0000096'
       ]]>
     </sql>
     <sql>
