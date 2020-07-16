@@ -138,7 +138,7 @@
          </linkAttribute>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes">
+       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="study_categories" displayName="Category"/>
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility" 
@@ -208,7 +208,7 @@
                         includeProjects="EuPathDB"/>
 
 
-	<attributesList summary="study_categories,summary,eupath_release,card_questions,disease,sex,Sample_Type,Participant_Type,Study_Type" 
+	<attributesList summary="disease,study_access,summary,eupath_release,card_questions,sex,Sample_Type,Participant_Type,Study_Type" 
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
@@ -629,7 +629,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false">
+      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <column name="dataset_id"/>
          <column name="study_categories"/>
          <column name="project_availability"/>
