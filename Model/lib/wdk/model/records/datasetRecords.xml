@@ -647,7 +647,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, dp.study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
