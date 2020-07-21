@@ -3219,8 +3219,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="sres"
               >
-    <wgetArgs url="ftp://ftp.ncbi.nih.gov/pub/taxonomy/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=2 --include list --accept=gi_taxid_prot.dmp.gz,taxdump.tar.gz</wgetArgs>
-    <unpack>gunzip @@dataDir@@/gi_taxid_prot.dmp.gz</unpack>
+    <wgetArgs url="ftp://ftp.ncbi.nih.gov/pub/taxonomy/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=2 --include list --accept=taxdump.tar.gz</wgetArgs>
     <unpack>$currDir=`pwd`; cd @@dataDir@@ ; tar -xzf taxdump.tar.gz ; rm -f taxdump.tar ; cd $currDir</unpack>
     <pluginArgs>--names @@dataDir@@/names.dmp --nodes @@dataDir@@/nodes.dmp --gencode @@dataDir@@/gencode.dmp --merged @@dataDir@@/merged.dmp --verbose</pluginArgs>
   </datasetLoader>
