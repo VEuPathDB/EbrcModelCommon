@@ -779,7 +779,7 @@ from apidbtuning.datasetnametaxon dsnt
                        
            from (
             select dsp.dataset_presenter_id as dataset_id, dsp.type, 
-                     count(*) as organism_count,
+                     count(distinct dsnt.taxon_id) as organism_count,
                      -- if the dataset_name_pattern starts w/ a % we won't append an organism prefix to the datasetDisplayName
                      case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or (dsp.type = 'isolates' and dsp.subtype = 'sequencing_typed')
                       then 1
