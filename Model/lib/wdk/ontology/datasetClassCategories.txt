@@ -37,6 +37,7 @@ enzymeDB	http://edamontology.org/topic_0089	Ontology and Terminology	function
 productNames	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
 comments	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
 geneName	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
+ebiGFF3file	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
 geneFeatureLODScores	http://edamontology.org/topic_3298	Phenomics	genetic_mapping	
 genbank_primary_genome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
 ebi_primary_genome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
@@ -61,6 +62,7 @@ familyRepresentative-isolateSequencesFasta	http://edamontology.org/topic_0199	Ge
 isolatesUpdateIsReference	http://edamontology.org/topic_0199	Genetic Variation	isolates	sequencing_typed
 updateIsolatesByContinents	http://edamontology.org/topic_0199	Genetic Variation	isolates	
 updateIsolateFeaturesByProductAlias	http://edamontology.org/topic_0199	Genetic Variation	isolates	
+ebiVCFfile	http://edamontology.org/topic_0199	Genetic Variation	isolates	
 metaboliteProfiles	http://edamontology.org/topic_3172	Metabolomics	metabolite_levels	FILL
 compoundMassSpec	http://edamontology.org/topic_3172	Metabolomics	metabolite_levels	FILL
 chipChipMetaData	http://edamontology.org/topic_3173	Epigenomics	metadata	chip-chip
