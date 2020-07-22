@@ -1489,6 +1489,234 @@ UNION ALL
     </sql>
   </tuningTable>
 
+  <tuningTable name="ComComObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for comunity to community observation relation
+    </comment>
+<!--
+    <internalDependency name="PANIO"/>
+-->
+    <sql>
+      <![CDATA[
+create table &prefixComComObsIO&1 (
+  community_id,
+  community_observation_id,
+  CONSTRAINT &prefixcomcomobsio_pk&1 PRIMARY KEY (community_id,community_observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as community_id, output_pan_id as community_observation_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0035127'
+  and output_pan_type_source_id = 'EUPATH_0035127'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixcomcomobsio&1
+          ON &prefixComComObsIO&1 (community_observation_id,community_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ComHouseIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for comunity to community observation relation
+    </comment>
+<!--
+    <internalDependency name="PANIO"/>
+-->
+    <sql>
+      <![CDATA[
+create table &prefixComHouseIO&1 (
+  community_id,
+  household_id,
+  CONSTRAINT &prefixcomhouseio_pk&1 PRIMARY KEY (community_id,household_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct input_pan_id as community_id, output_pan_id as household_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0035127'
+  and output_pan_type_source_id = 'PCO_0000024'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixcomhouseio&1
+          ON &prefixComHouseIO&1 (household_id,community_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+<!-- note that there may be direct com to part outputs as not requirement that all participants have a house as per washB -->
+  <tuningTable name="ComPartIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for comunity to participant relation
+    </comment>
+    <internalDependency name="ComHouseIO"/>
+    <internalDependency name="HousePartIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixComPartIO&1 (
+  community_id,
+  participant_id,
+  CONSTRAINT &prefixcompartio_pk&1 PRIMARY KEY (community_id,participant_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct ch.community_id, hp.participant_id
+  from &prefixComHouseIO ch,  &prefixHousePartIO hp
+  where ch.household_id = hp.household_id
+UNION
+  select distinct input_pan_id as community_id, output_pan_id as participant_id
+  from &prefixPANIO 
+  where input_pan_type_source_id = 'EUPATH_0035127'
+  and output_pan_type_source_id = 'EUPATH_0000096'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixpartcomio&1
+          ON &prefixComPartIO&1 (participant_id,community_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ComObsIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for comunity to observation relation
+    </comment>
+    <internalDependency name="ComPartIO"/>
+    <internalDependency name="PartObsIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixComObsIO&1 (
+  community_id,
+  observation_id,
+  CONSTRAINT &prefixcomobsio_pk&1 PRIMARY KEY (community_id,observation_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct cp.community_id, po.observation_id
+  from &prefixComPartIO cp,  &prefixPartObsIO po 
+  where cp.participant_id = po.participant_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixobscomio&1
+          ON &prefixComObsIO&1 (observation_id,community_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="ComSampleIO" prefixEnabled="true">
+    <comment>
+      Metadata table specific for comunity to sample relation
+    </comment>
+    <internalDependency name="ComObsIO"/>
+    <internalDependency name="ObsSampleIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixComSampleIO&1 (
+  community_id,
+  sample_id,
+  CONSTRAINT &prefixcomsampleio_pk&1 PRIMARY KEY (community_id,sample_id) 
+  )
+  ORGANIZATION index
+  nologging
+  as
+  select distinct co.community_id, os.sample_id
+  from &prefixComObsIO co,  &prefixObsSampleIO os 
+  where co.observation_id = os.observation_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixsamplecomio&1
+          ON &prefixComSampleIO&1 (sample_id,community_id)
+        TABLESPACE indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="CommunityMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for community metadata in community filter
+    </comment>
+    <internalDependency name="Metadata"/>
+    <internalDependency name="Ontology"/>
+    <internalDependency name="ComComObsIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixCommunityMD&1 (
+  ontology_term_name,
+  community_id,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefixcomunmd_pk&1 PRIMARY KEY (ontology_term_name,community_id,string_value) 
+  )
+  ORGANIZATION index
+  nologging
+  as 
+select distinct m.property_source_id as ontology_term_name, 
+ m.pan_id as community_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0035127')   
+   )
+ and m.pan_id not in (select distinct community_observation_id from &prefixComComObsIO)
+      ]]>
+    </sql>
+  </tuningTable>
+  
+  <tuningTable name="CommunityObsMD" prefixEnabled="true">
+    <comment>
+      Metadata table specific for community observation metadata in community filter
+    </comment>
+    <internalDependency name="Metadata"/>
+    <internalDependency name="Ontology"/>
+    <internalDependency name="ComComObsIO"/>
+    <sql>
+      <![CDATA[
+create table &prefixCommunityObsMD&1 (
+  ontology_term_name,
+  community_observation_id,
+  string_value,
+  number_value,
+  date_value,
+  CONSTRAINT &prefixcomunobsmd_pk&1 PRIMARY KEY (ontology_term_name,community_observation_id,string_value) 
+  )
+  ORGANIZATION index
+  nologging
+  as 
+select distinct m.property_source_id as ontology_term_name, 
+ m.pan_id as community_observation_id, m.string_value, m.number_value, m.date_value
+ from &prefixMetaData m
+ where m.property_source_id in (
+ select distinct o.ontology_term_source_id
+ from &prefixOntology o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in ('EUPATH_0035127')   
+   )
+ and m.pan_id in (select distinct community_observation_id from &prefixComComObsIO)
+      ]]>
+    </sql>
+  </tuningTable>
+  
   <tuningTable name="HouseholdMD" prefixEnabled="true">
     <comment>
       Metadata table specific for household filter in household record
@@ -1747,7 +1975,7 @@ create table &prefixHouseSampleIO&1 (
   
   <tuningTable name="PartSampleIO" prefixEnabled="true">
     <comment>
-      Metadata table specific for household to observation relation
+      Metadata table specific for participant to sample relation
     </comment>
     <internalDependency name="PartObsIO"/>
     <internalDependency name="ObsSampleIO"/>
@@ -1777,7 +2005,7 @@ create table &prefixPartSampleIO&1 (
   
   <tuningTable name="ObsObsIO" prefixEnabled="true">
     <comment>
-      Metadata table specific for Observation to Sample relation
+      Metadata table specific for Observation to sub observation relation
     </comment>
     <internalDependency name="PANIO"/>
     <sql>

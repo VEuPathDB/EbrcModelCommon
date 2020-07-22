@@ -3364,6 +3364,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="studyName"></prop>
     <prop name="version"></prop>
     <prop name="webDisplayOntologyName"></prop>
+    <prop name="nameForFilenames"></prop>
 
     <graphTemplateFile name="clinepiRoot.xml"/>
 
@@ -3387,6 +3388,33 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="ClinEpiStudyCharacteristics" category="" datasetFileHint="">
+  <!-- not currently used (moved to ClinEpiWorkflow template) but left here in case it might be used later -->
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
+    <prop name="groupName"></prop>
+    <prop name="studyName"></prop>
+    <prop name="version"></prop>
+
+    <graphTemplateFile name="clinepiRoot.xml"/>
+
+  <datasetLoader datasetName="${subProjectName}_${groupName}_${studyName}_studyCharacteristics_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::InsertStudyCharacteristics"
+              scope="global"
+              >
+
+
+      <manualGet fileOrDir="${projectName}/${subProjectName}/${groupName}/${studyName}/${version}/final/studyCharacteristics.txt">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/studyCharacteristics.txt" />
+
+    <pluginArgs>--file @@dataDir@@/studyCharacteristics.txt --extDbRlsSpec 'ISASimple_${subProjectName}_${groupName}_${studyName}_RSRC|${version}' </pluginArgs>
+  </datasetLoader>
+
+  </datasetClass>
 
   <datasetClass class="dumpMissingGenbankIsolateMappers" category="" datasetFileHint="">
     <purpose></purpose>
