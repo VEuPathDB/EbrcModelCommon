@@ -2196,10 +2196,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="ebiVCFfile.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_VCF_RSRC" version="dont_care"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_VCF_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="organism"
-              type="to_do"
+              type="isolates"
               organismAbbrev="${organismAbbrev}">
 
         <manualGet fileOrDir="common/empty">
@@ -2231,10 +2231,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="ebiGFF3file.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_GFF3_RSRC" version="dont_care"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_GFF3_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="organism"
-              type="to_do"
+              type="gene_annotation"
               organismAbbrev="${organismAbbrev}">
 
         <manualGet fileOrDir="common/empty">
