@@ -163,6 +163,10 @@
          <columnAttribute name="Sample_Type" displayName="Sample Type"/>
          <columnAttribute name="Participant_Type" displayName="Participant Type"/>
          <columnAttribute name="Study_Type" displayName="Study Type"/>
+         <columnAttribute name="HH_count" displayName="# of households"/>
+         <columnAttribute name="Part_count" displayName="# of participants"/>
+         <columnAttribute name="Obser_count" displayName="# of observations"/>
+         <columnAttribute name="Samp_count" displayName="# of samples"/>
        </attributeQueryRef>
        
 
@@ -208,7 +212,7 @@
                         includeProjects="EuPathDB"/>
 
 
-	<attributesList summary="disease,study_access,summary,eupath_release,card_questions,sex,Sample_Type,Participant_Type,Study_Type" 
+	<attributesList summary="disease,study_access,summary,eupath_release,card_questions,sex,Sample_Type,Participant_Type,Study_Type,HH_count,Part_count,Obser_count,Samp_count" 
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
@@ -675,10 +679,14 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 	<column name="Sample_Type"/>
         <column name="Participant_Type"/>
         <column name="Study_Type"/>
+        <column name="HH_count"/>
+        <column name="Part_count"/>
+        <column name="Obser_count"/>
+        <column name="Samp_count"/>
 	
         <sql>
           <![CDATA[
-select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type from apidbtuning.datasetpresenter pres
+select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.HH_count, table2.Part_count, table2.Obser_count, table2.Samp_count from apidbtuning.datasetpresenter pres
 
 left join
 
@@ -716,7 +724,7 @@ left join
   pivot                                                                                                                            
   (                                                                                                                               
   max(raw_values)                                                                                                                 
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type)
+  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type, 'Households' as HH_count, 'Participants' as Part_count, 'Observations' as Obser_count, 'Samples' as Samp_count)
     )
     ORDER BY name
     ) table2
