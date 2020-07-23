@@ -170,10 +170,10 @@
          <columnAttribute name="Participant_Type" displayName="Population included"/>
          <columnAttribute name="Study_Type" displayName="Study Type"/>
          <columnAttribute name="Study_Design" displayName="Study Design"/>
-         <columnAttribute name="HH_count" displayName="# of households"/>
-         <columnAttribute name="Part_count" displayName="# of participants"/>
-         <columnAttribute name="Obser_count" displayName="# of observations"/>
-         <columnAttribute name="Samp_count" displayName="# of samples"/>
+         <columnAttribute name="HH_count" displayName="Households"/>
+         <columnAttribute name="Part_count" displayName="Participants"/>
+         <columnAttribute name="Obser_count" displayName="Observations"/>
+         <columnAttribute name="Samp_count" displayName="Samples"/>
        </attributeQueryRef>
        
 
