@@ -3420,7 +3420,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
   <datasetClass class="ClinEpiStudyCharacteristics" category="" datasetFileHint="">
-  <datasetClass class="ClinEpiStudyCharacteristics" category="" datasetFileHint="">
   <!-- not currently used (moved to ClinEpiWorkflow template) but left here in case it might be used later -->
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
