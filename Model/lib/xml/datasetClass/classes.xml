@@ -3483,69 +3483,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>    
   </datasetClass>
 
-  <!-- will eventually turn into sunbeam -->
-  <datasetClass class="snakemakeTest" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
-
-    <graphTemplateFile name="microbiomeRoot.xml"/>
-
-    <datasetLoader datasetName="snakemake_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              type="population_biology"
-              scope="global"
-            >
-
-      <manualGet fileOrDir="${projectName}/common/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-
-  </datasetClass>
-
-  <datasetClass class="DADA2Taxonomy" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
-
-    <datasetLoader datasetName="DADA2Taxonomy_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="dontcare"
-              >
-      <manualGet fileOrDir="${projectName}/common/DADA2Taxonomy/${version}/final/DADA2Taxonomy_trainSet.fa.gz">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-  <datasetClass class="OverrideTaxonMapping" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
-
-    <datasetLoader datasetName="OverrideTaxonMapping_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="dontcare"
-              >
-      <manualGet fileOrDir="${projectName}/common/curatedTaxonomy/${name}/${version}/final/taxonMapping.xml">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
   <datasetClass class="oboOntology" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="name">&name;</prop>
@@ -3561,18 +3498,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!--This dataset class is created for IDO only. We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology. -->
   <datasetClass class="oboOntologyDummy" category="" datasetFileHint="">
