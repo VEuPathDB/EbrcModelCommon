@@ -1361,15 +1361,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
             >
 <!-- Also this used to copy a file, analysisConfig.xml --> 
-      <manualGet fileOrDir="${projectName}/common/rRNAExperiment/${name}/${version}/final/">
+      <manualGet fileOrDir="${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/">
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>if [ $( find @@manualDeliveryDir@@/${projectName}/common/rRNAExperiment/${name}/${version}/final/ | wc -l ) -ne $( find @@dataDir@@/final/ | wc -l ) ] ; then echo "Not all copied?"; exit 1; fi </unpack>
+      <unpack>if [ $( find @@manualDeliveryDir@@/${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/ | wc -l ) -ne $( find @@dataDir@@/final/ | wc -l ) ] ; then echo "Not all copied?"; exit 1; fi </unpack>
       <unpack>mv @@dataDir@@/final/ @@dataDir@@/fastqsFromManualDelivery/</unpack>
       <unpack>find @@dataDir@@/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  </unpack>
       <unpack>rmdir -v --ignore-fail-on-non-empty @@dataDir@@/fastqsFromManualDelivery</unpack>
-      <unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/rRNAExperiment/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/${samplesInfoFile} ; fi </unpack>
+      <unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/${samplesInfoFile} ; fi </unpack>
       
       <pluginArgs></pluginArgs>
     </datasetLoader>
