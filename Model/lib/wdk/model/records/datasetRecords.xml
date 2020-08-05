@@ -731,49 +731,69 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 	
         <sql>
           <![CDATA[
-select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.HH_count, table2.Part_count, table2.Obser_count, table2.Samp_count from apidbtuning.datasetpresenter pres   
+
+select mm.*, counts.HH_count, counts.Part_count,counts.Obser_count,counts.Samp_count  
+from (
+
+  select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years
+  from apidbtuning.datasetpresenter pres                                                                                         
+
+left join                                                                                                                        
+
+(WITH syn AS (                                                                                                                 
+   SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label                                                      
+   FROM sres.ontologySynonym  s                                                                                                
+   LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID             
+   LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id                                     
+   LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id                                                   
+   WHERE ed.name = 'OntologyTerm_classifications_RSRC'                                                                          
+   ),                                                                                                                            
+   val AS (SELECT * FROM syn),                                                                                                    
+   names AS (                                                                                                                 
+      SELECT ed.name as NAME, s1.study_id study_id, s1.external_database_release_id                                              
+      FROM study.study s1                                                                                                        
+      LEFT JOIN study.study s0 ON s1.investigation_id = s0.study_id                                                               
+      LEFT JOIN sres.ExternalDataBaseRelease edr ON s1.external_database_release_ID = edr.external_database_release_ID          
+      LEFT JOIN sres.EXTERNALDATABASE ed ON edr.external_database_id = ed.external_database_id                                           WHERE s0.STUDY_ID != s1.STUDY_ID                                                                                            
+     ),                                                                                                                          
+   tableb AS (                                                                                                                    
+     SELECT names.name, syn.source_id, syn.label,                                                                               
+     LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,                                
+     LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,                        
+     LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids                       
+     FROM study.StudyCharacteristic ssc                                                                                           
+     LEFT JOIN names ON ssc.study_id = names.study_id                                                                             
+     LEFT JOIN syn ON ssc.qualifier_id = syn.ontology_term_id                                                                   
+     LEFT JOIN val ON ssc.value_id = val.ontology_term_id                                                                       
+     GROUP BY names.name, syn.source_id, syn.label                                                                               
+     )                                                                                                                              
+  select * from (                                                                                                               
+  (select name, label , raw_values from tableb)                                                                                   
+  )                                                                                                                               
+
+pivot            
+  (                                                                                                                             
+  max(raw_values)                                                                                                                 
+  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years)                                 
+  )                                                                                                                             
+  ORDER BY name                                                                                                                 
+  ) table2                                                                                                                      
+  on pres.name = table2.name  
+) mm
+
 
 left join
 
-(WITH syn AS ( 
-       SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label 
-       FROM sres.ontologySynonym  s
-       LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
-       LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
-       LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
-       WHERE ed.name = 'OntologyTerm_classifications_RSRC'
-),
-     val AS (SELECT * FROM syn),
-     names AS (
-     SELECT ed.name as NAME, s1.study_id study_id, s1.external_database_release_id
-     FROM study.study s1
-     LEFT JOIN study.study s0 ON s1.investigation_id = s0.study_id
-     LEFT JOIN sres.ExternalDataBaseRelease edr ON s1.external_database_release_ID = edr.external_database_release_ID
-     LEFT JOIN sres.EXTERNALDATABASE ed ON edr.external_database_id = ed.external_database_id
-     WHERE s0.STUDY_ID != s1.STUDY_ID
-     ),
-     tableb as (
-     SELECT names.name, syn.source_id, syn.label,
-     LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
-     LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
-     LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids 
-     FROM study.StudyCharacteristic ssc
-     LEFT JOIN names ON ssc.study_id = names.study_id
-     LEFT JOIN syn ON ssc.qualifier_id = syn.ontology_term_id
-     LEFT JOIN val ON ssc.value_id = val.ontology_term_id
-     GROUP BY names.name, syn.source_id, syn.label
-     )
-  select * from (
-  (select name, label , raw_values from tableb)
-  )
-  pivot                                                                                                                            
-  (                                                                                                                               
-  max(raw_values)                                                                                                                 
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years, 'Households' as HH_count, 'Participants' as Part_count, 'Observations' as Obser_count, 'Samples' as Samp_count)    
-    )
-    ORDER BY name
-    ) table2
-    on pres.name = table2.name
+(select dataset_presenter_id, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount                         
+pivot            
+  (                                                                                                                            
+  max(record_count)                                                                                                             
+  for record_type in ('Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count) 
+  )                                                                                                                               
+
+ORDER BY dataset_presenter_id) counts
+
+ON mm.dataset_id = counts.dataset_presenter_id
           ]]>
         </sql>
       </sqlQuery>
