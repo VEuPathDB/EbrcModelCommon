@@ -732,7 +732,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <sql>
           <![CDATA[
 
-select mm.*, counts.HH_count, counts.Part_count,counts.Obser_count,counts.Samp_count  
+select mm.*,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count   
 from (
 
   select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years
