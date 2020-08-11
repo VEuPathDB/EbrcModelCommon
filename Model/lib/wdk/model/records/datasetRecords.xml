@@ -173,9 +173,9 @@
          <columnAttribute name="Country" displayName="Country"/>
          <columnAttribute name="Years" displayName="Years"/>
          <columnAttribute name="HH_count" displayName="Households"/>
-         <columnAttribute name="Part_count" displayName="Participants"/>
-         <columnAttribute name="Obser_count" displayName="Observations"/>
-         <columnAttribute name="Samp_count" displayName="Samples"/>
+         <columnAttribute name="Part_count" displayName="Participants" type="number"/>
+         <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
+         <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
        </attributeQueryRef>
        
 
@@ -725,7 +725,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 	<column name="Country"/>
         <column name="Years"/>
         <column name="HH_count"/>
-        <column name="Part_count"/>
+        <column name="Part_count" columnType="number" />
         <column name="Obser_count"/>
         <column name="Samp_count"/>
 	
