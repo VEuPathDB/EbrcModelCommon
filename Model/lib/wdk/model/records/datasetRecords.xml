@@ -172,7 +172,7 @@
          <columnAttribute name="Study_Design" displayName="Study Design"/>
          <columnAttribute name="Country" displayName="Country"/>
          <columnAttribute name="Years" displayName="Years"/>
-         <columnAttribute name="HH_count" displayName="Households"/>
+         <columnAttribute name="HH_count" displayName="Households" type="number"/>
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
          <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
          <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
@@ -724,10 +724,10 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <column name="Study_Design"/>
 	<column name="Country"/>
         <column name="Years"/>
-        <column name="HH_count"/>
-        <column name="Part_count" columnType="number" />
-        <column name="Obser_count"/>
-        <column name="Samp_count"/>
+        <column name="HH_count" columnType="number"/>
+        <column name="Part_count" columnType="number"/>
+        <column name="Obser_count" columnType="number"/>
+        <column name="Samp_count" columnType="number"/>
 	
         <sql>
           <![CDATA[
