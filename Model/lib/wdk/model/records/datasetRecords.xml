@@ -212,6 +212,7 @@
                           help="The person or organization that serves as a source of information concerning this dataset."/>
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>
+         <columnAttribute name="email" displayName="Email"/>
          <columnAttribute name="short_attribution" internal="true"/>
        </attributeQueryRef>
 
@@ -876,9 +877,10 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
 
       <sqlQuery name="Contacts"  isCacheable="false">
-	    <column name="dataset_id"/>
-		<column name="contact"/>
+	<column name="dataset_id"/>
+	<column name="contact"/>
         <column name="institution"/>
+        <column name="email"/>
         <column name="short_attribution"/>
             <sql>
             <![CDATA[
@@ -887,9 +889,10 @@ ON mm.dataset_id = counts.dataset_presenter_id
                         WHEN dsc.affiliation is not null THEN dsc.affiliation
                         ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
                    END as contact,
-                    CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
                         ELSE   dsc.affiliation END as institution,
-                    nvl(dsp.short_attribution, dsc.name) as short_attribution
+                   dsc.email as email,
+                   nvl(dsp.short_attribution, dsc.name) as short_attribution
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
