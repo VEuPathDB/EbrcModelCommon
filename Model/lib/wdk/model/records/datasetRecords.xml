@@ -212,7 +212,7 @@
                           help="The person or organization that serves as a source of information concerning this dataset."/>
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>
-         <columnAttribute name="email" displayName="Email"/>
+         <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" internal="true"/>
        </attributeQueryRef>
 
