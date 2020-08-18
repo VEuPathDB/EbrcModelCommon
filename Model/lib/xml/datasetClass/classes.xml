@@ -214,12 +214,12 @@
     </datasetLoader>
   </datasetClass>
 
+  <!-- done automatically for all primary genomes
   <datasetClass class="insertScaffoldGapFeatures" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="genomeDbName"/>
     <prop name="version">&version;</prop>
-    <!-- DOCUMENTED SO FAR -->
 
     <graphTemplateFile name="primaryVirtualGenome.xml"/>
 
@@ -235,9 +235,11 @@
         </dir>
       </manualGet>
 
-     <pluginArgs>--extDbRlsName ${genomeDbName} --extDbRlsVer ${version} --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+     <pluginArgs>- -extDbRlsName ${genomeDbName} - -extDbRlsVer ${version} - -SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
+  -->
+
 
 <!-- chromosomeMap.txt file with 3 tab delimited columns, source_id,chromosome,chromosome_order_number, must be in final dir for chromosomes -->
   <datasetClass class="genbank_secondary_genome" category="genome" datasetFileHint="">
