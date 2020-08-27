@@ -4594,11 +4594,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="projectName">Vectorbase, for example.</prop>
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
-    <prop name="orthomclAbbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
-    <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery</prop>
-    <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
+    <prop name="orthomclAbbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986.</prop>
+    <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery.</prop>
+    <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database.</prop>
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The name of this organism, just used for log messages</prop>
+    <prop name="organismName">The name of this organism, which will be used on the site. If you are replacing a core organism, you should use the same name but append text like (genome build 49).</prop>
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
@@ -4607,6 +4607,25 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 		   plugin="ApiCommonData::Load::Plugin::LoadNothing"
 		   type="orthomclEbi"
 		   subType="peripheral"
+		   scope="dontcare" > 
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+  <datasetClass class="orthomclRetireCoreOrganism" category="OrthoMCL" datasetFileHint="">
+    <purpose>Change the core organism abbrev, like aaeg, to aaeg-old. This class is used when you don't want to undo a core organism but want to add an updated build as a peripheral. After running this, the aaeg abbrev can be used to load the new version as a peripheral organism.</purpose>
+    <prop name="abbrevList">Comma separated list of abbrevs, like: aaeg,pfal,scer</prop>
+    <prop name="buildNumber">which build number (eg 49) will this be done for</prop>
+
+    <graphTemplateFile name="orthomclRetireCoreOrganisms.xml"/>
+
+    <datasetLoader datasetName="${abbrevList}_orthomclRetireCore_RSRC"
+		   version="TODAY"
+		   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+		   type="orthomclRetireCore"
+		   subType="core"
 		   scope="dontcare" > 
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
