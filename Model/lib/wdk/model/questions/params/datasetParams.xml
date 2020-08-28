@@ -111,6 +111,29 @@
     </enumParam>
 
 
+    <enumParam name="enrichmentType"
+                     prompt="Target Enrichment Type"
+                     multiPick="false"
+                     quote="false">
+      <noTranslation value="true" includeProjects="EuPathDB" />
+      <help>Choose what enrichment type you would like to analyze</help>
+      <enumList>
+        <enumValue default="true">
+          <term>over-represented</term>
+          <internal>over-represented</internal>
+        </enumValue>
+        <enumValue>
+          <term>under-represented</term>
+          <internal>under-represented</internal>
+        </enumValue>  
+        <enumValue>
+          <term>both</term>
+          <internal>both</internal>
+        </enumValue>  
+      </enumList>
+    </enumParam>
+
+
 
     <flatVocabParam name="datasetSelection"
                     queryRef="datasetVQ.geneListUserDataset"

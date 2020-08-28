@@ -270,8 +270,9 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
              doNotTest="true">
         <paramRef ref="sharedParams.ds_gene_ids"/>
         <paramRef ref="datasetParams.datasetSelection"/>
-        <paramRef ref="datasetParams.datasetCutoffType"/>
-        <paramRef ref="datasetParams.datasetCutoff"/>
+        <paramRef ref="datasetParams.enrichmentType"/>
+<!--        <paramRef ref="datasetParams.datasetCutoffType"/> -->
+<!--        <paramRef ref="datasetParams.datasetCutoff"/> -->
         <paramRef ref="datasetParams.threshold"/>
         <paramRef ref="datasetParams.orthologyFlag"/>
 	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
