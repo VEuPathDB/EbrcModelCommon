@@ -4608,6 +4608,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 		   type="orthomclEbi"
 		   subType="peripheral"
 		   scope="dontcare" > 
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal></descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
@@ -4619,7 +4624,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="abbrevList">Comma separated list of abbrevs, like: aaeg,pfal,scer</prop>
     <prop name="buildNumber">which build number (eg 49) will this be done for</prop>
 
-    <graphTemplateFile name="orthomclRetireCoreOrganisms.xml"/>
+    <graphTemplateFile name="orthomclRetireCoreTemplate.xml"/>
 
     <datasetLoader datasetName="${abbrevList}_orthomclRetireCore_RSRC"
 		   version="TODAY"
@@ -4627,6 +4632,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 		   type="orthomclRetireCore"
 		   subType="core"
 		   scope="dontcare" > 
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal></descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
