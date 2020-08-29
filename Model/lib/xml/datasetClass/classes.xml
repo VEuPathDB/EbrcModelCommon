@@ -4603,7 +4603,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
     <datasetLoader datasetName="${orthomclAbbrev}_orthomclPeripheralFromEbi_RSRC"
-		   version="TODAY"
+		   version="${version}"
 		   plugin="ApiCommonData::Load::Plugin::LoadNothing"
 		   type="orthomclEbi"
 		   subType="peripheral"
