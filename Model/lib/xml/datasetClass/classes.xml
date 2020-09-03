@@ -4597,6 +4597,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="orthomclAbbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986.</prop>
     <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery.</prop>
     <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database.</prop>
+    <prop name="ebi2gusTag">99, for example</prop>
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
     <prop name="organismName">The name of this organism, which will be used on the site. If you are replacing a core organism, you should use the same name but append text like (genome build 49).</prop>
 
