@@ -609,7 +609,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
                                       'isolates', 'Population Biology',
                                       'SNP', 'Population Biology',
                                       'population_biology', 'Population Biology',
-                                      'resequencing', 'Comparative Genomics', --TODO will need to decode based on subtype at some point
+                                      'resequencing', 'Comparative Genomics',
+				      'metabolite_levels', 'Metabolite Levels',
                                       null)
                                       ) as category
                     from ApidbTuning.DatasetPresenter dsp
