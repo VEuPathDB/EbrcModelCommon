@@ -2119,7 +2119,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
     <prop name="alignWithCdsCoordinates">Use CDS model for alignment, [false|true]. Use false if not sure what to use.</prop>
 <!--    <prop name="doDegSeq">only want to set to true is data provider wants DEGSeq ran on dataset without replicates. Check with data provider.</prop> -->
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="hisat.xml"/>
     <qaNotes>To begin with QA, check if symbolic links of analysisConfig.xml and a FASTQ file for each sample are created under @@dataDir@@/final. Next, go to @@websiteFilesDir@@/${projectName}/@@version@@/real/webServices/${projectName}/release-CURRENT/${organismAbbrev}/bigwig/${organismAbbrev}_${name}_rnaSeq_RSRC, get normalized bigwig files, and visualize the rnaSeq alignment coverages by GBrowse track. Lastly, query the tables: ApiDB.ProfileElement, ApiDB.Profile, ApiDB.ProfileElementName and ApiDB.ProfileSet, to check if the reasonable number of intensity profiles are loaded. In the case of time series rnaSeq, also check the tables: RAD.AnalysisInput, RAD.AnalysisResultImp, RAD.Anaalysis, RAD.LogicalGroupLink and RAD.LogicalGroup to find out if the the reasonalble number of differentially expressed genes are loaded.</qaNotes>
    <!-- Inquiry: Always follow naming convention -->
     <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeq_RSRC" version="${version}"
