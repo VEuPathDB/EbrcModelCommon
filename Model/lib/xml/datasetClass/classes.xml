@@ -4623,6 +4623,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="orthomclPeripheralFromVEuPathDB" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, gene names, EC numbers and product descriptions from a VEuPathDB site. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
     <prop name="projectName">VectorBase,Schisto,plasmo for example.</prop>
+    <prop name="version">A date or build number that determines the version of the data</prop>
     <prop name="orthomclAbbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986.</prop>
     <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery.</prop>
     <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database.</prop>
@@ -4632,7 +4633,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
     <datasetLoader datasetName="${orthomclAbbrev}_PeripheralFromVEuPathDB_RSRC"
-		   version="TODAY"
+		   version="${version}"
 		   plugin="ApiCommonData::Load::Plugin::LoadNothing"
 		   type="orthomclVEuPathDB"
 		   subType="peripheral"
