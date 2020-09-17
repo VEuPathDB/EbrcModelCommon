@@ -913,6 +913,29 @@
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="insertAGPPiece" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="topSeqSOTerm"/>
+    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_AGP_Piece_RSRC"
+              version="${version}"
+          plugin="ApiCommonData::Load::Plugin::InsertAGPPiece"
+              scope="organism"
+              type="genome"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/${topSeqSOTerm}_assembly_agp/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--agpFile @@dataDir@@/final/assembly.agp --AGPPieceExtDbName %DATASET_NAME% --AGPPieceExtDbRlsVer %DATASET_VERSION%</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <!-- Category: genomeFeature -->
   <!-- NOTE: THIS CLASS IS NOT TO BE USED FOR THE PRIMARY ANNOTATION -->
   <datasetClass class="unofficialGeneFeatures_GFF2" category="" datasetFileHint="">
