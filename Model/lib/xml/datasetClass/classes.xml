@@ -930,7 +930,7 @@
               type="genome"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/${topSeqSOTerm}_assembly_agp/${version}/final/">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/${assembledLevel}_assembly_agp/${version}/final/">
         <dir name="final">
         </dir>
       </manualGet>                        
