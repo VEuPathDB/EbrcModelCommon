@@ -920,7 +920,7 @@
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
-    <prop name="topSeqSOTerm"/>
+    <prop name="assembledLevel"/>
     <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/> 
     
     <datasetLoader datasetName="${organismAbbrev}_AGP_Piece_RSRC"
