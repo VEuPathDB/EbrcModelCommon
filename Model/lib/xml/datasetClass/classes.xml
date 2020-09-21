@@ -923,7 +923,7 @@
     <prop name="assembledLevel"/>
     <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/> 
     
-    <datasetLoader datasetName="${organismAbbrev}_AGP_Piece_RSRC"
+    <datasetLoader datasetName="${organismAbbrev}_${assembledLevel}_AGP_Piece_RSRC"
               version="${version}"
           plugin="ApiCommonData::Load::Plugin::InsertAGPPiece"
               scope="organism"
