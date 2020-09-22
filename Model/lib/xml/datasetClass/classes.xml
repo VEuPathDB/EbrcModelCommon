@@ -4653,6 +4653,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <purpose>Change the core organism abbrev, like aaeg, to aaeg-old. This class is used when you don't want to undo a core organism but want to add an updated build as a peripheral. After running this, the aaeg abbrev can be used to load the new version as a peripheral organism.</purpose>
     <prop name="abbrevList">Comma separated list of abbrevs, like: aaeg,pfal,scer</prop>
     <prop name="buildNumber">which build number (eg 49) will this be done for</prop>
+    <prop name="skipIfAlreadyDone">yes or true, to skip the abbrev if it has already been changed, as opposed to die</prop>
 
     <graphTemplateFile name="orthomclRetireCoreTemplate.xml"/>
 
