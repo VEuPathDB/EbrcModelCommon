@@ -190,20 +190,22 @@
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
-         <columnAttribute name="usage" internal="true"/>
-         <columnAttribute name="caveat" internal="true"/>
-         <columnAttribute name="acknowledgement" internal="true"/>
-         <columnAttribute name="is_species_scope" internal="true"/>
-         <columnAttribute name="build_number_introduced" internal="true"/>
-         <columnAttribute name="type" internal="true"/>
+         <columnAttribute name="usage" displayName="Usage" internal="true"/>
+         <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
+         <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
+         <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
+         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
+         <columnAttribute name="type" displayName="Type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date"
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="release_policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
-         <columnAttribute name="release_policy"  displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+         <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
+         <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
          <columnAttribute name="pmids" displayName="Publications" sortable="false"
+                          help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"
                           help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -213,7 +215,7 @@
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>
          <columnAttribute name="email" internal="true"/>
-         <columnAttribute name="short_attribution" internal="true"/>
+         <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
         <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
@@ -835,6 +837,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
          <column name="build_number_introduced"/>
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
          <column name="pmids"/>
+         <column name="pmids_download"/>
          <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
@@ -847,10 +850,12 @@ ON mm.dataset_id = counts.dataset_presenter_id
                    dsp.is_species_scope,
                    dsp.build_number_introduced,
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
-                   pubs.pmids
+                   pubs.pmids,
+                   pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id,
-                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids
+                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids,
+                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
