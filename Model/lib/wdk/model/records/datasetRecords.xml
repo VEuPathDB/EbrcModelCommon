@@ -375,17 +375,14 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Links -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="HyperLinks"
-               displayName="Link Outs"
+               displayName="Relevant pages at @PROJECT_ID@ and external resources"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="text" displayName="Description"/>
+            <columnAttribute name="text" internal="true"/>
             <columnAttribute name="url" internal="true"/>
 
-            <columnAttribute name="description" internal="true"/>
-
-
             <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
-                           displayName="Link Out">
+                           displayName="Links">
 
                  <displayText>
                     <![CDATA[
@@ -435,7 +432,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"
-               displayName="Searches that use this Data Set"
+               displayName="Searches at @PROJECT_ID@ that explore this Data Set (and provide Download)"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
