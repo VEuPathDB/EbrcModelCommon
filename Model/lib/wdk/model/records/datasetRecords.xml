@@ -176,6 +176,10 @@
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
          <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
          <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
+         <columnAttribute name="AdditionalData" displayName="Additional Data"/>
+         <columnAttribute name="Age" displayName="Age"/>
+         <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
+         <columnAttribute name="ProjectName" displayName="Project Name"/>
        </attributeQueryRef>
 
 
@@ -732,6 +736,10 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <column name="Part_count" columnType="number"/>
         <column name="Obser_count" columnType="number"/>
         <column name="Samp_count" columnType="number"/>
+        <column name="AdditionalData"/>
+        <column name="Age"/>
+        <column name="WHO"/>
+        <column name="ProjectName"/>
 
         <sql>
           <![CDATA[
@@ -739,7 +747,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 select mm.*,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
 from (
 
-  select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years
+  select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
   from apidbtuning.datasetpresenter pres
 
 left join
@@ -791,7 +799,7 @@ left join
 pivot
   (
   max(raw_values)
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years)
+  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years, 'Additional data' as AdditionalData, 'Age' as Age, 'WHO indicator subdomain' as WHO, 'Project name' as ProjectName)
   )
   ORDER BY name
   ) table2
