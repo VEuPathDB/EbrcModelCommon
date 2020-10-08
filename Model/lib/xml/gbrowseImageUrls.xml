@@ -322,6 +322,7 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="NfAc_gene" />
+      <subtrack set="all_gene" />
     </track>
   </url>
 
@@ -338,6 +339,7 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
+      <subtrack set="NfAc_gene" />
     </track>
   </url>
 
