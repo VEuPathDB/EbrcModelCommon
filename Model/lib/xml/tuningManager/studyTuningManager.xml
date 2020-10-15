@@ -1097,7 +1097,9 @@ UNION ALL
  	select s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
                null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
  	from (
-  	  select property_source_id, listagg(string_value,'|') within group(order by string_value) as distinct_values   
+  	  select property_source_id,
+                 cast (substr(xmlagg(xmlelement(e, string_value,'|').extract('//text()') order by string_value).GetClobVal(), 1, 3990) as varchar2(4000))
+                   as distinct_values
   	  from (
 		select distinct m.property_source_id, m.string_value    
     		from &prefixmetadata m,
@@ -1105,7 +1107,7 @@ UNION ALL
     		where m.string_value is not null
     		and m.property_source_id = pt.property_source_id
     		and pt.type = 'string'
-    		and pt.distinct_values < 80
+--    		and pt.distinct_values < 80
   		)
   	group by property_source_id
  	) s,
@@ -1413,6 +1415,7 @@ UNION ALL
     <ancillaryTable name="Observations"/>
     <ancillaryTable name="LightTraps"/>
     <ancillaryTable name="Households"/>
+    <ancillaryTable name="Communitys"/>
     <program commandLine="buildPANRecordAttributesTT"/>
   </tuningTable>
 

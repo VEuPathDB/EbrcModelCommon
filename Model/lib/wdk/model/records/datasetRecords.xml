@@ -139,7 +139,6 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-         <columnAttribute name="study_categories" displayName="Category"/>
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility"
            help="Some studies require that the user requests approval to access certain functionality (they will be prompted when attempting the action):
@@ -157,16 +156,30 @@
          <columnAttribute name="request_needs_approval" internal="true"/>
        </attributeQueryRef>
 
+
+       <attributeQueryRef ref="DatasetAttributes.MicrobiomeStudyAttributes" includeProjects="MicrobiomeDB">
+         <columnAttribute name="study_categories" displayName="Category"/>
+       </attributeQueryRef>
+
+
+
        <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
          <columnAttribute name="Sample_Type" displayName="Sample Type"/>
-         <columnAttribute name="Participant_Type" displayName="Participant Type"/>
-         <columnAttribute name="Study_Type" displayName="Study Type"/>
-         <columnAttribute name="HH_count" displayName="# of households"/>
-         <columnAttribute name="Part_count" displayName="# of participants"/>
-         <columnAttribute name="Obser_count" displayName="# of observations"/>
-         <columnAttribute name="Samp_count" displayName="# of samples"/>
+         <columnAttribute name="Participant_Type" displayName="Population included"/>
+         <columnAttribute name="Study_Type" displayName="Investigation Type"/>
+         <columnAttribute name="Study_Design" displayName="Study Design"/>
+         <columnAttribute name="Country" displayName="Country"/>
+         <columnAttribute name="Years" displayName="Years"/>
+         <columnAttribute name="HH_count" displayName="Households" type="number"/>
+         <columnAttribute name="Part_count" displayName="Participants" type="number"/>
+         <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
+         <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
+         <columnAttribute name="AdditionalData" displayName="Additional Data"/>
+         <columnAttribute name="Age" displayName="Age"/>
+         <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
+         <columnAttribute name="ProjectName" displayName="Project Name"/>
        </attributeQueryRef>
 
 
@@ -181,20 +194,22 @@
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
-         <columnAttribute name="usage" internal="true"/>
-         <columnAttribute name="caveat" internal="true"/>
-         <columnAttribute name="acknowledgement" internal="true"/>
-         <columnAttribute name="is_species_scope" internal="true"/>
-         <columnAttribute name="build_number_introduced" internal="true"/>
-         <columnAttribute name="type" internal="true"/>
+         <columnAttribute name="usage" displayName="Usage" internal="true"/>
+         <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
+         <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
+         <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
+         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
+         <columnAttribute name="type" displayName="Type" internal="true"/>
          <columnAttribute name="eupath_release" displayName="Release # / Date"
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="release_policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
-         <columnAttribute name="release_policy"  displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+         <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
+         <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
          <columnAttribute name="pmids" displayName="Publications" sortable="false"
+                          help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"
                           help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -203,7 +218,8 @@
                           help="The person or organization that serves as a source of information concerning this dataset."/>
          <columnAttribute name="institution" displayName="Contact Institution"
                           help="The institution where the Contact is located. "/>
-         <columnAttribute name="short_attribution" internal="true"/>
+         <columnAttribute name="email" internal="true"/>
+         <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
         <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
@@ -212,7 +228,7 @@
                         includeProjects="EuPathDB"/>
 
 
-	<attributesList summary="disease,study_access,summary,eupath_release,card_questions,sex,Sample_Type,Participant_Type,Study_Type,HH_count,Part_count,Obser_count,Samp_count"
+	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 
@@ -363,17 +379,14 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Links -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="HyperLinks"
-               displayName="Link Outs"
+               displayName="Relevant pages at @PROJECT_ID@ and external resources"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="text" displayName="Description"/>
+            <columnAttribute name="text" internal="true"/>
             <columnAttribute name="url" internal="true"/>
 
-            <columnAttribute name="description" internal="true"/>
-
-
             <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
-                           displayName="Link Out">
+                           displayName="Links">
 
                  <displayText>
                     <![CDATA[
@@ -423,7 +436,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"
-               displayName="Searches that use this Data Set"
+               displayName="Explore this dataset at @PROJECT_ID@"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
@@ -599,7 +612,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
                                       'isolates', 'Population Biology',
                                       'SNP', 'Population Biology',
                                       'population_biology', 'Population Biology',
-                                      'resequencing', 'Comparative Genomics', --TODO will need to decode based on subtype at some point
+                                      'resequencing', 'Comparative Genomics',
+				      'metabolite_levels', 'Metabolite Levels',
                                       null)
                                       ) as category
                     from ApidbTuning.DatasetPresenter dsp
@@ -635,7 +649,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <column name="dataset_id"/>
-         <column name="study_categories"/>
          <column name="project_availability"/>
          <column name="study_access"/>
          <column name="policy_url"/>
@@ -651,7 +664,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id, dp.study_categories, dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
@@ -665,12 +678,46 @@ and trim(value) is not null
 pivot
 (
    max(value)
-   for property in ('studyCategories' as study_categories,'projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
             </sql>
       </sqlQuery>
+
+
+
+
+
+      <sqlQuery name="MicrobiomeStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB">
+         <column name="dataset_id"/>
+         <column name="study_categories"/>
+            <sql>
+            <![CDATA[
+select pres.dataset_presenter_id as dataset_id, dp.study_categories
+from apidbtuning.datasetpresenter pres, (
+select * from (
+select dataset_presenter_id, property, value
+from apidbtuning.datasetproperty
+where  property in ('studyCategories')
+and trim(value) is not null
+-- TEMPLATE_ANCHOR injectDatasetQuestions
+
+-- TEMPLATE_ANCHOR injectProjectAvailability
+)
+pivot
+(
+   max(value)
+   for property in ('studyCategories' as study_categories )
+)) dp
+where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
+            ]]>
+            </sql>
+      </sqlQuery>
+
+
+
+
 
       <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
         <column name="dataset_id"/>
@@ -679,35 +726,59 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 	<column name="Sample_Type"/>
         <column name="Participant_Type"/>
         <column name="Study_Type"/>
-        <column name="HH_count"/>
-        <column name="Part_count"/>
-        <column name="Obser_count"/>
-        <column name="Samp_count"/>
+        <column name="Study_Design"/>
+	<column name="Country"/>
+        <column name="Years"/>
+        <column name="HH_count" columnType="number"/>
+        <column name="Part_count" columnType="number"/>
+        <column name="Obser_count" columnType="number"/>
+        <column name="Samp_count" columnType="number"/>
+        <column name="AdditionalData"/>
+        <column name="Age"/>
+        <column name="WHO"/>
+        <column name="ProjectName"/>
 
         <sql>
           <![CDATA[
-select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.HH_count, table2.Part_count, table2.Obser_count, table2.Samp_count from apidbtuning.datasetpresenter pres
+
+select mm.*,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
+from (
+
+  select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
+  from apidbtuning.datasetpresenter pres
 
 left join
 
 (WITH syn AS (
-       SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label
-       FROM sres.ontologySynonym  s
-       LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
-       LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
-       LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
-       WHERE ed.name = 'OntologyTerm_classifications_RSRC'
-),
-     val AS (SELECT * FROM syn),
-     names AS (
-     SELECT ed.name as NAME, s1.study_id study_id, s1.external_database_release_id
-     FROM study.study s1
-     LEFT JOIN study.study s0 ON s1.investigation_id = s0.study_id
-     LEFT JOIN sres.ExternalDataBaseRelease edr ON s1.external_database_release_ID = edr.external_database_release_ID
-     LEFT JOIN sres.EXTERNALDATABASE ed ON edr.external_database_id = ed.external_database_id
-     WHERE s0.STUDY_ID != s1.STUDY_ID
+   SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label
+   FROM sres.ontologySynonym  s
+   LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
+   LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
+   LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
+   WHERE ed.name = 'OntologyTerm_classifications_RSRC'
+   ),
+   val AS (SELECT * FROM syn),
+   names AS (
+     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
+       FROM study.study s1
+       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
+       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
+       WHERE s1.STUDY_ID IN (SELECT s1.study_id FROM study.study s1
+       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
+       WHERE s0.STUDY_ID!=s1.STUDY_ID)
+     union
+     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
+       FROM study.study s1
+       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
+       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
+       WHERE s1.STUDY_ID NOT IN (SELECT s1.study_id FROM study.study s1
+       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
+       WHERE s0.STUDY_ID!=s1.STUDY_ID)
+       AND s1.STUDY_ID NOT IN (SELECT s0.study_id FROM study.study s1
+       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
+       WHERE s0.STUDY_ID!=s1.STUDY_ID)
      ),
-     tableb as (
+   tableb AS (
      SELECT names.name, syn.source_id, syn.label,
      LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
      LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
@@ -721,14 +792,30 @@ left join
   select * from (
   (select name, label , raw_values from tableb)
   )
-  pivot
+
+pivot
   (
   max(raw_values)
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type, 'Households' as HH_count, 'Participants' as Part_count, 'Observations' as Obser_count, 'Samples' as Samp_count)
-    )
-    ORDER BY name
-    ) table2
-    on pres.name = table2.name
+  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years, 'Additional data' as AdditionalData, 'Age' as Age, 'WHO indicator subdomain' as WHO, 'Project name' as ProjectName)
+  )
+  ORDER BY name
+  ) table2
+  on pres.name = table2.name
+) mm
+
+
+left join
+
+(select dataset_presenter_id, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
+pivot
+  (
+  max(record_count)
+  for record_type in ('Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
+  )
+
+ORDER BY dataset_presenter_id) counts
+
+ON mm.dataset_id = counts.dataset_presenter_id
           ]]>
         </sql>
       </sqlQuery>
@@ -755,6 +842,7 @@ left join
          <column name="build_number_introduced"/>
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
          <column name="pmids"/>
+         <column name="pmids_download"/>
          <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
@@ -767,10 +855,12 @@ left join
                    dsp.is_species_scope,
                    dsp.build_number_introduced,
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
-                   pubs.pmids
+                   pubs.pmids,
+                   pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id,
-                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids
+                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids,
+                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
@@ -798,9 +888,10 @@ left join
 
 
       <sqlQuery name="Contacts"  isCacheable="false">
-	    <column name="dataset_id"/>
-		<column name="contact"/>
+	<column name="dataset_id"/>
+	<column name="contact"/>
         <column name="institution"/>
+        <column name="email"/>
         <column name="short_attribution"/>
             <sql>
             <![CDATA[
@@ -809,9 +900,10 @@ left join
                         WHEN dsc.affiliation is not null THEN dsc.affiliation
                         ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
                    END as contact,
-                    CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
                         ELSE   dsc.affiliation END as institution,
-                    nvl(dsp.short_attribution, dsc.name) as short_attribution
+                   dsc.email as email,
+                   nvl(dsp.short_attribution, dsc.name) as short_attribution
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
@@ -967,7 +1059,7 @@ from apidbtuning.datasetnametaxon dsnt
 	    <column name="purpose"/>
             <sql>
               <![CDATA[
-SELECT t1.name,t2.value as organization,t3.start_date,t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name
+SELECT t1.name,t2.value as organization,t3.start_date, t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name
 FROM (
     SELECT user_id, listagg(value,' ') within group( order by key ) as name
     FROM (
@@ -1067,7 +1159,7 @@ WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presente
             <sql includeProjects="EuPathDB">
               SELECT dataset_id, text, url, description
               FROM ApidbTuning.DatasetHyperLinks
-              WHERE url NOT LIKE '%jbrowse/%'
+              WHERE url NOT LIKE '%/jbrowse%'
             </sql>
       </sqlQuery>
 
