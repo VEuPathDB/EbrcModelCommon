@@ -248,7 +248,7 @@ where  property = 'studyAccess') d,
    INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r
      ON v.restriction_level_id = r.restriction_level_id
  where user_id = $$user_id$$
- AND (approval_status < 1 or approval_status is NULL)
+ AND (approval_status_id < 1 or approval_status_id is NULL)
 ) u
 WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
           ]]>
