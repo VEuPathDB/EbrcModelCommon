@@ -244,8 +244,8 @@ FROM (select dataset_presenter_id, value as study_access
 from apidbtuning.datasetproperty
 where  property = 'studyAccess') d,
 (select v.dataset_presenter_id, r.name as study_access
- from studyaccess.ValidDatasetUser@ACCT_DBLINK@ v
-   INNER JOIN studyaccess.restriction_level r
+ from studyaccess.end_users@ACCT_DBLINK@ v
+   INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r
      ON v.restriction_level_id = r.restriction_level_id
  where user_id = $$user_id$$
  AND (approval_status < 1 or approval_status is NULL)
