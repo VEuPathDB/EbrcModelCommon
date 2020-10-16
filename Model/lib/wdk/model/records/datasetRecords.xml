@@ -1075,8 +1075,8 @@ FROM (
    FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@
   WHERE key in ('organization'))t2,
 (SELECT user_id, dataset_presenter_id, start_date, purpose, a.name AS approval_status
-   FROM studyaccess.ValidDatasetUser@ACCT_DBLINK@ v
-     INNER JOIN studyaccess.approval_status a
+   FROM studyaccess.end_users@ACCT_DBLINK@ v
+     INNER JOIN studyaccess.approval_status@ACCT_DBLINK@ a
        ON v.approval_status_id = a.approval_status_id
   WHERE purpose is not NULL
     AND a.name = 'approved')t3,
