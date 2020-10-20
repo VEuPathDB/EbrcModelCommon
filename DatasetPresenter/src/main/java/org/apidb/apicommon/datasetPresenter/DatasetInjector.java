@@ -398,6 +398,42 @@ public abstract class DatasetInjector {
 
   }
 
+ protected String getOrganismNamesForFilesFromDatasetName() {
+    if (_datasetName.equals("")) {
+      return "";
+    }
+
+    try {
+      String[] tokens = _datasetName.split("_");
+      String organismAbbrev = tokens[0];
+     
+      if(organismAbbrev.equals("")){
+        return "";
+      } else {
+
+        String projectName = getPropValue("projectName");
+        Map<String, Map<String, String>> globalProps = this.getGlobalDatasetProperties();
+
+        for(int i = 0; i < tokens.length - 1; i++) {
+          String orgPropsKey = projectName + ":" + organismAbbrev + "_RSRC";
+
+          Map<String, String> orgProps = globalProps.get(orgPropsKey);
+          if (orgProps == null) {
+            organismAbbrev +=  "_" + tokens[i+1];
+          } else {
+           String orgNameForFiles =  orgProps.get("organismNameForFiles");
+            return orgNameForFiles;
+          }
+        } 
+        return organismAbbrev;
+      } 
+    } catch (Exception e) {
+      LOG.error("Unable to get organism abbrev display from dataset name", e);
+      return "";
+    }
+
+  }
+
   protected void setOrganismAbbrevFromDatasetName() {
     String organismAbbrev = this.getOrganismAbbrevFromDatasetName();
     setPropValue("organismAbbrev", organismAbbrev);
@@ -405,6 +441,9 @@ public abstract class DatasetInjector {
 
     String organismAbbrevDisplay = this.getOrganismAbbrevDisplayFromDatasetName();
     setPropValue("organismAbbrevDisplay", organismAbbrevDisplay);
+
+    String organismNameForFiles = this.getOrganismNamesForFilesFromDatasetName();
+    setPropValue("organismNameForFiles", organismNameForFiles);
   }
 
   /**
