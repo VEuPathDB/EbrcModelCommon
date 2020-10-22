@@ -1413,6 +1413,7 @@ UNION ALL
     <ancillaryTable name="Observations"/>
     <ancillaryTable name="LightTraps"/>
     <ancillaryTable name="Households"/>
+    <ancillaryTable name="Communitys"/>
     <program commandLine="buildPANRecordAttributesTT"/>
   </tuningTable>
 

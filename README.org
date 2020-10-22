@@ -1,0 +1,38 @@
+* EbrcModelCommon
+
+shared data types definitions, and their structured searches, for ebrc sites
+Specialization for specific websites at: 
+  + [[https://github.com/VEuPathDB/ApiCommonModel][ApiCommonModel]]
+  + [[https://github.com/VEuPathDB/OrthoMCLModel][OrthoMCLModel]]
+  + [[https://github.com/VEuPathDB/ClinEpiModel][ClinEpiModel]]
+  + [[https://github.com/VEuPathDB/MicrobiomeModel][MicrobiomeModel]]
+
+** Dependencies
+
+   + yarn / npm / ant
+   + WEBAPP_PROP_FILE file (file with one property for the webapp target directory)
+      webappTargetDir=BLAH
+   + environment variables for GUS_HOME and PROJECT_HOME
+   + Internal Dependencies
+     + WDK, ReFlow
+
+** Installation instructions.
+
+   + bld EbrcModelCommon
+   + changes to wdk model xml files requires reload of tomcat instance
+
+** Operating instructions.
+
+   + Typical usage is to use thie in conjunction with component model project
+
+** Manifest
+
+   + Model/bin :: scripts referenced in tuning manager config;  scripts for converting dataset xml into other formats (propertiesFromDatasets, jbrowseFromDatasets)
+   + Model/lib/dst :: dataset template files for common records
+   + Model/lib/perl :: utils used by tm scripts
+   + Model/lib/wdk :: xml files which define common/shared wdk records, searches, params.
+   + Model/lib/xml :: common tuning manager configuration and classes.xml (API for dataset classes)
+   + Model/src/main/java/org/apidb/apicommon/model/datasetInjector :: java code per data class for managing template injection
+   + Model/src/main/java/org/apidb/apicommon/model/userdataset :: Type Handlers for User Datasets
+
+

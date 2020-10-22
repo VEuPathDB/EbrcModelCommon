@@ -91,8 +91,9 @@
     </enumParam>
 
 
+
     <enumParam name="orthologyFlag"
-                     prompt="Use orthology?"
+                     prompt="Use Orthology?"
                      multiPick="false"
                      quote="false">
       <noTranslation value="true" includeProjects="EuPathDB" />
@@ -110,7 +111,38 @@
     </enumParam>
 
 
+    <enumParam name="enrichmentType"
+                     prompt="Target Enrichment Type"
+                     multiPick="false"
+                     quote="false">
+      <noTranslation value="true" includeProjects="EuPathDB" />
+      <help>Choose what enrichment type you would like to analyze</help>
+      <enumList>
+        <enumValue default="true">
+          <term>over-represented</term>
+          <internal>over-represented</internal>
+        </enumValue>
+        <enumValue>
+          <term>under-represented</term>
+          <internal>under-represented</internal>
+        </enumValue>  
+        <enumValue>
+          <term>both</term>
+          <internal>both</internal>
+        </enumValue>  
+      </enumList>
+    </enumParam>
 
+
+
+    <flatVocabParam name="datasetSelection"
+                    queryRef="datasetVQ.geneListUserDataset"
+                    prompt="Target Gene List"
+                    quote="false"
+                    multiPick="false" >
+      <help>A Gene List dataset you have imported into your workspace, and that is installed in @PROJECT_ID@ </help>
+    </flatVocabParam>
+    
 
         <flatVocabParam name="dataset_name"
                      queryRef="datasetVQ.extDbNames"
@@ -166,6 +198,34 @@ select 'any', -1 from dual
             </sql>
    </sqlQuery>
 
+
+<sqlQuery name="geneListUserDataset" isCacheable="false">
+  <paramRef ref="InternalParams.user_id"/> 
+      <column name="internal" />
+      <column name="term" />
+      <sql>                                                                                                                     
+select  term, internal from ( 
+
+  select 0 as term1, 0 as internal1, 'Choose a Gene List, if you have any' as internal, 'Choose a Gene List, if you have any' as term, 'Choose a Gene List, if you have any' as display, 1 as num from dual 
+  
+  UNION
+                                                                                           
+  select distinct a.user_dataset_id as term1, a.user_dataset_id as internal1, name as internal, name as term, name as display, 3 as num                                                                                                                        
+  from ApiDbUserDatasets.installedUserDataset i, ApiDbUserDatasets.UserDatasetAccessControl a, ApiDbUserDatasets.UD_GeneId g     
+  where a.user_id =  '222043440'   
+  and a.user_dataset_id = i.user_dataset_id
+  and g.user_dataset_id = i.user_dataset_id                                                                                     
+  and (i.is_invalid is null or i.is_invalid = 0)                                                                                  
+                                          
+    
+  ) order by num, display
+
+      </sql>
+</sqlQuery>
+
+
+
+   
    <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
             <column name="internal"/>
             <column name="term"/>
