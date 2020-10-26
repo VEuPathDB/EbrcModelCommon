@@ -1369,12 +1369,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="rRNAExperiment" category="" datasetFileHint="">
-    <purpose>Copy the manual delivery files</purpose>
+  <datasetClass class="MicrobiomeStudy" category="" datasetFileHint="">
+    <purpose>Copy the manual delivery files for a study. One study is what corresponds to one study card, one presenter, and one sheet of sample details on MicrobiomeDB - which can involve multiple analyses</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="name"/>
     <prop name="version"/>
     <prop name="samplesInfoFile"/>
+    <prop name="sampleToWgsFastqFileName"/>
+    <prop name="runDADA2"/>
+    <prop name="runHumann"/>
 
     <graphTemplateFile name="microbiomeRoot.xml"/>
 
@@ -1383,17 +1386,22 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="population_biology"
               scope="global"
             >
-<!-- Also this used to copy a file, analysisConfig.xml --> 
-      <manualGet fileOrDir="${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/">
+      <manualGet fileOrDir="${projectName}/common/MicrobiomeStudy/${name}/${version}/final/">
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>if [ $( find @@manualDeliveryDir@@/${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/ | wc -l ) -ne $( find @@dataDir@@/final/ | wc -l ) ] ; then echo "Not all copied?"; exit 1; fi </unpack>
-      <unpack>mv @@dataDir@@/final/ @@dataDir@@/fastqsFromManualDelivery/</unpack>
-      <unpack>find @@dataDir@@/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  </unpack>
-      <unpack>rmdir -v --ignore-fail-on-non-empty @@dataDir@@/fastqsFromManualDelivery</unpack>
-      <unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/16sAmpliconDNAStudy/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/${samplesInfoFile} ; fi </unpack>
+      <unpack>mv @@dataDir@@/final @@dataDir@@/staging </unpack>
+      <unpack>if [ $( find -L @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/ | wc -l ) -ne $( find -L @@dataDir@@/staging/ | wc -l ) ] ; then echo "Not all copied?"; exit 1; fi </unpack>
+      <unpack>if test "${runDADA2}" = true ; then mkdir @@dataDir@@/DADA2_${name} ; fi </unpack>
+      <unpack>if test "${runHumann}" = true ; then mkdir @@dataDir@@/Humann_${name} ; fi </unpack>
+      <unpack>if test -d @@dataDir@@/staging/16s ; then mv @@dataDir@@/staging/16s/ @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery/ ; elif test "${runDADA2}" = true ; then mv @@dataDir@@/staging/ @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery/ ; mkdir @@dataDir@@/staging/; fi </unpack>
+      <unpack>if test "${runDADA2}" = true ; then find @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  ; fi </unpack>
+      <unpack>if test "${runDADA2}" = true ; then rmdir -v --ignore-fail-on-non-empty @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery; fi</unpack>
       
+<unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/DADA2_${name}/${samplesInfoFile} ; fi </unpack>
+      <unpack>if test "${sampleToWgsFastqFileName}" ; then mv @@dataDir@@/staging/${sampleToWgsFastqFileName} @@dataDir@@/Humann_${name}/${sampleToWgsFastqFileName} ; fi </unpack>
+
+      <unpack>rmdir -v @@dataDir@@/staging</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
