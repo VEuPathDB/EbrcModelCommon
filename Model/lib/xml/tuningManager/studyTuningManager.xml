@@ -187,6 +187,7 @@
                    'EUPATH_0000096', --Participant
                    'EUPATH_0000327', -- CDC light trap
                    'EUPATH_0025169', -- Insect sample
+                   'EUPATH_0035127', -- Community
                    'OBI_0100051','EUPATH_0000609' -- SPecimentype (need to replace with specimen)
                   )
                or pan.isa_type = 'Sample'
