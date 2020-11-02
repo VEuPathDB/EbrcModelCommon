@@ -371,7 +371,7 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
     String sql = "SELECT name, taxon_id, type, subtype, is_species_scope "
-        + "FROM " + table + " WHERE name like ?"
+        + "FROM " + table + " WHERE name like ?";
     return dbConnection.prepareStatement(sql);
   }
 
