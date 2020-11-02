@@ -963,6 +963,7 @@ from apidbtuning.datasetnametaxon dsnt
             )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
             where dsp.dataset_id = dsnt.dataset_presenter_id (+)
             and dsnt.taxon_id = oa.component_taxon_id (+)
+            and  dsnt.name like oa.public_abbrev || '%'
             ]]>
             </sql>
       </sqlQuery>
