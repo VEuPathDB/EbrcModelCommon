@@ -106,6 +106,10 @@
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
        </attributeQueryRef>
 
+    <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
+         <columnAttribute  name="project_id" displayName="VEuPathDB Project"
+                          help="babla"/>
+       </attributeQueryRef>
 <!--
 
        <attributeQueryRef ref="DatasetAttributes.Category">
@@ -189,8 +193,8 @@
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="version" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
-          <columnAttribute name="version" displayName="Dataset version" help="Dataset version from which data was obtained." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+         <columnAttribute name="version" displayName="Data set version" help="Data set version from which data was obtained."  internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+          <columnAttribute name="version" displayName="Data set version" help="Data set version from which data was obtained." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
@@ -224,7 +228,8 @@
 
         <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
-        <attributesList summary="organism_prefix,eupath_release,newcategory,summary,contact"
+
+        <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
 
@@ -913,11 +918,25 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
 
 
+    <sqlQuery name="Projects"  isCacheable="false">
+        <column name="dataset_id"/>
+        <column name="project_id"/>
+
+            <sql>
+            <![CDATA[
+               select dsp.dataset_presenter_id as dataset_id,
+                      ds.project_id
+                 from apidbTuning.DatasetPresenter dsp, apidb.datasource ds
+                where ds.name (+) = dsp.name
+            ]]>
+            </sql>
+    </sqlQuery>
+
 
       <sqlQuery name="Organisms"  isCacheable="false">
         <column name="dataset_id"/>
         <column name="organism_prefix"/>
-
+ 
             <sql excludeProjects="EuPathDB">
             <![CDATA[
 select dataset_id,
@@ -948,20 +967,20 @@ from apidbtuning.datasetnametaxon dsnt
                        when expects_multiple > 0
                        then 'multiple organisms'
                        else 'undetermined' end as organism_prefix
-
            from (
-            select dsp.dataset_presenter_id as dataset_id, dsp.type,
+                select dsp.dataset_presenter_id as dataset_id, dsp.type,
                      count(distinct dsnt.taxon_id) as organism_count,
                      -- if the dataset_name_pattern starts w/ a % we won't append an organism prefix to the datasetDisplayName
                      case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or (dsp.type = 'isolates' and dsp.subtype = 'sequencing_typed')
                       then 1
                       else 0
                       end as expects_multiple
-            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
-            where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
-            group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
-            )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
-            where dsp.dataset_id = dsnt.dataset_presenter_id (+)
+                 from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
+                where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
+                group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
+               ) dsp, 
+              ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
+          where dsp.dataset_id = dsnt.dataset_presenter_id (+)
             and dsnt.taxon_id = oa.component_taxon_id (+)
             and  dsnt.name like oa.public_abbrev || '%'
             ]]>
