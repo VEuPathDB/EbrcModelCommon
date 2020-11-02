@@ -539,6 +539,7 @@ public class DatasetPresenterSetLoader {
     stmt.setString(1, datasetPresenterId);
     stmt.setString(2, pair.getName());
     stmt.setInt(3, pair.getTaxonId());
+    stmt.setInt(4, pair.getNcbiTaxId());
     stmt.execute();
   }
 
