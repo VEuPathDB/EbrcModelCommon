@@ -369,9 +369,9 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
-    String table = "Apidb.Datasource";
-    String sql = "SELECT name, taxon_id, type, subtype, is_species_scope "
-        + "FROM " + table + " WHERE name like ?";
+    String sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, t.ncbi_tax_id "
+        + "FROM  apidb.datasource ds, sres.taxon t " 
+        + "WHERE ds.taxon_id = t.taxon_id AND name like ?";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -529,8 +529,8 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getNameTaxonStmt() throws SQLException {
     String table = config.getUsername() + ".DatasetNameTaxon" + suffix;
     String sql = "INSERT INTO " + table
-        + " (dataset_taxon_id, dataset_presenter_id, name, taxon_id)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?)";
+        + " (dataset_taxon_id, dataset_presenter_id, name, taxon_id, ncbi_tax_id)" 
+        + " VALUES (" + table + "_sq.nextval, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
