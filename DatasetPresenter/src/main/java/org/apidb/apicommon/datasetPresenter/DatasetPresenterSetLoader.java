@@ -371,7 +371,7 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, t.ncbi_tax_id "
         + "FROM  apidb.datasource ds, sres.taxon t " 
-        + "WHERE ds.taxon_id = t.taxon_id AND name like ?";
+        + "WHERE ds.taxon_id = t.taxon_id(+) AND name like ?";
     return dbConnection.prepareStatement(sql);
   }
 
