@@ -15,21 +15,22 @@ DatasetRecordClasses.DatasetRecordClass.AccessRequest	topic_0219_synonym	Curatio
 DatasetRecordClasses.DatasetRecordClass.DatasetGeneTable	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	DatasetGeneTable								download
 DatasetRecordClasses.DatasetRecordClass.primary_key	topic_0219_synonym		DatasetRecordClasses.DatasetRecordClass	attribute	primary_key					1	results		download
 DatasetRecordClasses.DatasetRecordClass.bulk_download_url	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	bulk_download_url						results	record	download
-DatasetRecordClasses.DatasetRecordClass.organism_prefix	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	
+DatasetRecordClasses.DatasetRecordClass.organism_prefix	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	download
+DatasetRecordClasses.DatasetRecordClass.project_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	project_id						results	record	download
 DatasetRecordClasses.DatasetRecordClass.category	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	category						results	record	
-DatasetRecordClasses.DatasetRecordClass.newcategory	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	newcategory						results	record	
-DatasetRecordClasses.DatasetRecordClass.version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	version						results	record	
+DatasetRecordClasses.DatasetRecordClass.newcategory	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	newcategory						results	record	download
+DatasetRecordClasses.DatasetRecordClass.version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	version						results	record	download
 DatasetRecordClasses.DatasetRecordClass.dataset_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_id								
 DatasetRecordClasses.DatasetRecordClass.dataset_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name								
 DatasetRecordClasses.DatasetRecordClass.dataset_name_pattern	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name_pattern								
 DatasetRecordClasses.DatasetRecordClass.display_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	display_name								
 DatasetRecordClasses.DatasetRecordClass.short_display_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_display_name								
-DatasetRecordClasses.DatasetRecordClass.description	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description						results	record	download
-DatasetRecordClasses.DatasetRecordClass.protocol	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	protocol								download
-DatasetRecordClasses.DatasetRecordClass.usage	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	usage								download
-DatasetRecordClasses.DatasetRecordClass.caveat	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	caveat								download
-DatasetRecordClasses.DatasetRecordClass.acknowledgement	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	acknowledgement								download
-DatasetRecordClasses.DatasetRecordClass.is_species_scope	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	is_species_scope								download
+DatasetRecordClasses.DatasetRecordClass.description	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description						results	record	
+DatasetRecordClasses.DatasetRecordClass.protocol	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	protocol								
+DatasetRecordClasses.DatasetRecordClass.usage	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	usage								
+DatasetRecordClasses.DatasetRecordClass.caveat	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	caveat								
+DatasetRecordClasses.DatasetRecordClass.acknowledgement	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	acknowledgement								
+DatasetRecordClasses.DatasetRecordClass.is_species_scope	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	is_species_scope								
 DatasetRecordClasses.DatasetRecordClass.build_number_introduced	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	build_number_introduced								download
 DatasetRecordClasses.DatasetRecordClass.type	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	type								download
 DatasetRecordClasses.DatasetRecordClass.eupath_release	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eupath_release						results	record	download
