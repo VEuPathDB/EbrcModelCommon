@@ -106,9 +106,8 @@
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
        </attributeQueryRef>
 
-    <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
-         <columnAttribute  name="project_id" displayName="VEuPathDB Project"
-                          help="babla"/>
+       <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
+         <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 <!--
 
@@ -226,16 +225,14 @@
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-        <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact" 
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
-
 	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
-
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
 			includeProjects="MicrobiomeDB"/>
