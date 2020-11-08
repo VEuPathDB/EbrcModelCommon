@@ -106,9 +106,8 @@
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
        </attributeQueryRef>
 
-    <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
-         <columnAttribute  name="project_id" displayName="VEuPathDB Project"
-                          help="babla"/>
+       <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
+         <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 <!--
 
@@ -193,8 +192,8 @@
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="version" displayName="Data set version" help="Data set version from which data was obtained."  internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
-          <columnAttribute name="version" displayName="Data set version" help="Data set version from which data was obtained." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+         <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+          <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
@@ -226,16 +225,14 @@
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-        <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact" 
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
-
 	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
-
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
 			includeProjects="MicrobiomeDB"/>
