@@ -48,14 +48,14 @@
         </testParamValues>
 
         <paramRef ref="datasetParams.reference_name"/>
-        <paramRef ref="datasetParams.record_class"/>        
-        <paramRef ref="datasetParams.taxon"/>        
+        <paramRef ref="datasetParams.record_class"/>
+        <paramRef ref="datasetParams.taxon"/>
         <column name="dataset_id"/>
         <sql>
           <![CDATA[
 select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
                    from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-                   where ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID 
+                   where ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID
                    and ('any' = '$$taxon$$' or (dnt.taxon_id = 0 or dnt.taxon_id = $$taxon$$))
                    and ref.target_name = $$reference_name$$
                    and ref.record_type = $$record_class$$
@@ -70,14 +70,14 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
         </testParamValues>
 
         <paramRef ref="datasetParams.reference_name"/>
-        <paramRef ref="datasetParams.record_class"/>        
+        <paramRef ref="datasetParams.record_class"/>
         <column name="dataset_id"/>
         <sql>
           <![CDATA[
-          select distinct ref.dataset_presenter_id as dataset_id, 
+          select distinct ref.dataset_presenter_id as dataset_id,
                  ref.target_name, ref.record_type
           from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-          where ref.dataset_presenter_id = dnt.dataset_presenter_id 
+          where ref.dataset_presenter_id = dnt.dataset_presenter_id
           and ref.target_name = $$reference_name$$
           and ref.record_type = $$record_class$$
           ]]>
@@ -102,7 +102,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
        </sql>
     </sqlQuery>
 
-    
+
     <sqlQuery name="ByExternalDatabaseNames">
         <testParamValues>
             <paramValue name="dataset_name">taxonomy_RSRC</paramValue>
@@ -113,7 +113,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
         <sql>
           <![CDATA[
           select distinct dataset_presenter_id as dataset_id
-          from APIDBTUNING.datasetnametaxon 
+          from APIDBTUNING.datasetnametaxon
           where name IN ($$dataset_name$$)
           ]]>
        </sql>
@@ -123,13 +123,13 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
     <sqlQuery name="ByQuestionName">
         <testParamValues>
             <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>
-        </testParamValues>     
+        </testParamValues>
 
         <paramRef ref="datasetParams.question_name"/>
         <column name="dataset_id"/>
         <sql>
           <![CDATA[
-                   select dsp.dataset_presenter_id as dataset_id 
+                   select dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
                    and ref.target_name = $$question_name$$
@@ -150,7 +150,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
 
         <sql>
           <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
                    and ref.record_type = $$record_class$$
@@ -172,7 +172,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
 
         <sql>
           <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
                    and ref.record_type = $$record_class$$
@@ -195,7 +195,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
 
         <sql>
           <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id 
+                   select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
                    and ref.record_type = $$record_class$$
@@ -241,12 +241,14 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
           <![CDATA[
 SELECT d.dataset_presenter_id as dataset_id, d.dataset_presenter_id as study_id, CASE WHEN u.study_access is null THEN d.study_access ELSE u.study_access END as restriction_level
 FROM (select dataset_presenter_id, value as study_access
-from apidbtuning.datasetproperty 
+from apidbtuning.datasetproperty
 where  property = 'studyAccess') d,
-(select dataset_presenter_id, restriction_level as study_access
- from studyaccess.ValidDatasetUser@ACCT_DBLINK@
- where user_id = $$user_id$$  
- AND (approval_status < 1 or approval_status is NULL)
+(select v.dataset_presenter_id, r.name as study_access
+ from studyaccess.end_users@ACCT_DBLINK@ v
+   INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r
+     ON v.restriction_level_id = r.restriction_level_id
+ where user_id = $$user_id$$
+ AND (approval_status_id < 1 or approval_status_id is NULL)
 ) u
 WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
           ]]>
