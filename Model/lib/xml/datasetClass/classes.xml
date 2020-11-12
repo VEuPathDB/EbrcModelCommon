@@ -5708,5 +5708,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!--dataset class for updating RNAseq profiles after patch builds-->
+  <datasetClass class="ebiRnaSeqExperimentPatch" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+
+    <graphTemplateFile name="ebiRNASeq.xml"/>
+    <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_patch_RSRC" version="${version}"
+          plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="rnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <!--uses same analysis config as the full load so no need to fetch-->
+      <manualGet fileOrDir="common/empty">
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 </datasetClasses>
 

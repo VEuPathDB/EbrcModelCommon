@@ -106,6 +106,9 @@
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
        </attributeQueryRef>
 
+       <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
+         <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
+       </attributeQueryRef>
 <!--
 
        <attributeQueryRef ref="DatasetAttributes.Category">
@@ -189,8 +192,8 @@
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="version" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
-          <columnAttribute name="version" displayName="Dataset version" help="Dataset version from which data was obtained." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+         <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+          <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
          <columnAttribute name="protocol" internal="true"/>
@@ -222,15 +225,14 @@
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-        <attributesList summary="organism_prefix,version,newcategory,summary,eupath_release,contact"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact" 
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
-        <attributesList summary="organism_prefix,eupath_release,newcategory,summary,contact"
-                        includeProjects="EuPathDB"/>
 
+        <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
+                        includeProjects="EuPathDB"/>
 
 	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
-
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
 			includeProjects="MicrobiomeDB"/>
@@ -913,11 +915,25 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
 
 
+    <sqlQuery name="Projects"  isCacheable="false">
+        <column name="dataset_id"/>
+        <column name="project_id"/>
+
+            <sql>
+            <![CDATA[
+               select dsp.dataset_presenter_id as dataset_id,
+                      ds.project_id
+                 from apidbTuning.DatasetPresenter dsp, apidb.datasource ds
+                where ds.name (+) = dsp.name
+            ]]>
+            </sql>
+    </sqlQuery>
+
 
       <sqlQuery name="Organisms"  isCacheable="false">
         <column name="dataset_id"/>
         <column name="organism_prefix"/>
-
+ 
             <sql excludeProjects="EuPathDB">
             <![CDATA[
 select dataset_id,
@@ -948,21 +964,22 @@ from apidbtuning.datasetnametaxon dsnt
                        when expects_multiple > 0
                        then 'multiple organisms'
                        else 'undetermined' end as organism_prefix
-
            from (
-            select dsp.dataset_presenter_id as dataset_id, dsp.type,
+                select dsp.dataset_presenter_id as dataset_id, dsp.type,
                      count(distinct dsnt.taxon_id) as organism_count,
                      -- if the dataset_name_pattern starts w/ a % we won't append an organism prefix to the datasetDisplayName
                      case when substr(dsp.dataset_name_pattern, 0, 1) = '%' or (dsp.type = 'isolates' and dsp.subtype = 'sequencing_typed')
                       then 1
                       else 0
                       end as expects_multiple
-            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
-            where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
-            group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
-            )dsp ,ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
-            where dsp.dataset_id = dsnt.dataset_presenter_id (+)
+                 from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetNameTaxon dsnt
+                where dsp.dataset_presenter_id = dsnt.dataset_presenter_id (+)
+                group by dsp.type, dsp.subtype, dsp.dataset_presenter_id, dsp.dataset_name_pattern
+               ) dsp, 
+              ApidbTuning.DatasetNameTaxon dsnt, apidbtuning.OrganismAttributes oa
+          where dsp.dataset_id = dsnt.dataset_presenter_id (+)
             and dsnt.taxon_id = oa.component_taxon_id (+)
+            and  dsnt.name like oa.public_abbrev || '%'
             ]]>
             </sql>
       </sqlQuery>
@@ -1074,10 +1091,12 @@ FROM (
 (SELECT user_id, value
    FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@
   WHERE key in ('organization'))t2,
-(SELECT user_id, dataset_presenter_id, start_date, purpose, approval_status
-   FROM studyaccess.ValidDatasetUser@ACCT_DBLINK@
+(SELECT user_id, dataset_presenter_id, start_date, purpose, a.name AS approval_status
+   FROM studyaccess.end_users@ACCT_DBLINK@ v
+     INNER JOIN studyaccess.approval_status@ACCT_DBLINK@ a
+       ON v.approval_status_id = a.approval_status_id
   WHERE purpose is not NULL
-    AND (approval_status is NULL OR approval_status = 0) )t3,
+    AND a.name = 'approved')t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
 
 WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
