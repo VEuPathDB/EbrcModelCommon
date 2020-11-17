@@ -1076,7 +1076,7 @@ from apidbtuning.datasetnametaxon dsnt
 	    <column name="purpose"/>
             <sql>
               <![CDATA[
-SELECT t1.name,t2.value as organization,t3.start_date, t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name
+SELECT t1.name,t2.value as organization, to_char(CAST(t3.start_date AS DATE) , 'YYYY-MM-DD' ) as start_date, t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name
 FROM (
     SELECT user_id, listagg(value,' ') within group( order by key ) as name
     FROM (
@@ -1098,8 +1098,8 @@ FROM (
   WHERE purpose is not NULL
     AND a.name = 'approved')t3,
 (SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter)t4
-
 WHERE t1.user_id = t2.user_id and t1.user_id=t3.user_id  and t3.dataset_presenter_id  = t4.dataset_presenter_id
+ORDER by start_date desc
 
  ]]>
 
