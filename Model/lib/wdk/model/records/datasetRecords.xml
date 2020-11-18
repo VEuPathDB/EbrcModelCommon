@@ -320,6 +320,36 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </table>
 
 
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- clinepi versioning download files table -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               displayName="Data Download Versions"
+               queryRef="DatasetTables.DownloadVersion">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+
+            <columnAttribute name="version_number" inReportMaker="false" internal="true"/>
+
+            <linkAttribute name="version_number_link" inReportMaker="false" internal="false"
+                           displayName="Download link">
+                 <displayText>
+                    <![CDATA[ 
+			     $$version_number$$                                                                                
+		    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[ @WEBAPP_BASE_URL@/downloads/release-$$build_number$$/$$dataset_sha1_digest$$ ]]>
+                 </url>
+            </linkAttribute>
+            <columnAttribute name="build_number" displayName="Release #"/>
+            <columnAttribute name="release_date" displayName="Release Date"/>
+            <columnAttribute name="note" displayName="Updates"/>
+            <columnAttribute name="dataset_sha1_digest" internal="true"/>     
+        </table>
+
+
+
 
        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Isolates / Samples -->
@@ -1064,6 +1094,32 @@ from apidbtuning.datasetnametaxon dsnt
             ]]>
             </sql>
       </sqlQuery>
+
+
+
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <column name="dataset_name"/>
+            <column name="dataset_id"/>
+            <column name="release_date"/>
+            <column name="version_number"/>
+            <column name="note"/>
+            <column name="dataset_sha1_digest"/>
+            <column name="build_number"/>
+            <sql>
+            <![CDATA[                                                                                                          
+SELECT dataset_name, dataset_id, build_number, release_date , 'Version ' || ROW_NUMBER() OVER (PARTITION BY dataset_id ORDER BY dataset_id, build_number) as version_number, note, dataset_sha1_digest                                                                
+FROM (                                                                                                                          
+   SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MM-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number                                                 
+   FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp                        
+   WHERE dh.build_number = bd.build_number                                                                                       
+   AND  dh.dataset_presenter_id = dp.dataset_presenter_id                                                                        
+   ORDER by dh.build_number                                                                                                      
+   ) ORDER by build_number                                                                                                       
+            
+	    ]]>
+        </sql>
+</sqlQuery>
+
 
 
 
