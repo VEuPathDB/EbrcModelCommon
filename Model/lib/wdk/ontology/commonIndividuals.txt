@@ -4,6 +4,7 @@ topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	D
 DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
 DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs						results	record	download
+DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Contacts	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Contacts						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Isolates	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Isolates						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Publications	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Publications						results	record	download
