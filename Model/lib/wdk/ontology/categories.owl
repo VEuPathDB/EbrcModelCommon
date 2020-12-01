@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://purl.obolibrary.org/obo/eupath/category/categories.owl#"
      xml:base="http://purl.obolibrary.org/obo/eupath/category/categories.owl"
-     xmlns:edamontology="http://edamontology.org/"
-     xmlns:obo="http://purl.obolibrary.org/obo/"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:edamontology="http://edamontology.org/">
     <owl:Ontology rdf:about="http://purl.obolibrary.org/obo/eupath/category/categories.owl"/>
     
 
@@ -20,23 +20,18 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/hasNarrowSynonym"/>
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/hasRelatedSynonym"/>
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#label">
-        <rdfs:label>label</rdfs:label>
-    </owl:AnnotationProperty>
     <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasExactSynonym"/>
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000115"/>
-    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym"/>
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/hasExactSynonym"/>
     <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000412">
         <rdfs:label xml:lang="en">imported from</rdfs:label>
     </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000115"/>
     <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasNarrowSynonym"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#label">
+        <rdfs:label>label</rdfs:label>
+    </owl:AnnotationProperty>
     <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasDefinition"/>
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/hasDefinition"/>
     <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym"/>
-    <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/hasBroadSynonym"/>
     
 
 
@@ -67,14 +62,14 @@
     <owl:Class rdf:about="http://edamontology.org/data_0916">
         <rdfs:label>Gene report</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasExactSynonym>Gene structure (repot)</obo:hasExactSynonym>
-        <obo:hasExactSynonym>Gene annotation</obo:hasExactSynonym>
-        <obo:hasExactSynonym>Nucleic acid features (gene and transcript structure)</obo:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Gene structure (repot)</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>A report on predicted or actual gene structure, regions which make an RNA product and features such as promoters, coding regions, splice sites etc.</oboInOwl:hasDefinition>
+        <oboInOwl:hasExactSynonym>Gene function (report)</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Nucleic acid features (gene and transcript structure)</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>A report on predicted or actual gene structure, regions which make an RNA product and features such as promoters, coding regions, splice sites etc.</obo:IAO_0000115>
-        <obo:hasExactSynonym>Gene function (report)</obo:hasExactSynonym>
-        <obo:hasExactSynonym>Gene features report</obo:hasExactSynonym>
-        <obo:hasDefinition>A report on predicted or actual gene structure, regions which make an RNA product and features such as promoters, coding regions, splice sites etc.</obo:hasDefinition>
-        <obo:hasExactSynonym>Gene and transcript structure (report)</obo:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Gene and transcript structure (report)</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Gene annotation</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Gene features report</oboInOwl:hasExactSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -85,9 +80,9 @@
     <owl:Class rdf:about="http://edamontology.org/data_2044">
         <rdfs:label>Sequence</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>One or more molecular sequences, possibly with associated annotation.</obo:hasDefinition>
+        <oboInOwl:hasExactSynonym>Sequences</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>One or more molecular sequences, possibly with associated annotation.</obo:IAO_0000115>
-        <obo:hasExactSynonym>Sequences</obo:hasExactSynonym>
+        <oboInOwl:hasDefinition>One or more molecular sequences, possibly with associated annotation.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -98,8 +93,8 @@
     <owl:Class rdf:about="http://edamontology.org/data_2711">
         <rdfs:label>Genome report</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>An informative report of general information concerning a genome as a whole.</obo:hasDefinition>
-        <obo:IAO_0000115>An informative report of general information concerning a genome as a whole.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>A human-readable collection of information concerning a genome as a whole.</oboInOwl:hasDefinition>
+        <obo:IAO_0000115>A human-readable collection of information concerning a genome as a whole.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -111,8 +106,10 @@
         <rdfs:label>Protein sequence</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/data_2044"/>
         <obo:IAO_0000115>One or more protein sequences, possibly with associated annotation.</obo:IAO_0000115>
-        <obo:hasDefinition>One or more protein sequences, possibly with associated annotation.</obo:hasDefinition>
-        <obo:hasExactSynonym>Protein sequences</obo:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Amino acid sequence</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Protein sequences</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Amino acid sequences</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>One or more protein sequences, possibly with associated annotation.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -123,12 +120,12 @@
     <owl:Class rdf:about="http://edamontology.org/data_2977">
         <rdfs:label>Nucleic acid sequence</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/data_2044"/>
-        <obo:hasExactSynonym>Nucleotide sequence</obo:hasExactSynonym>
-        <obo:hasDefinition>One or more nucleic acid sequences, possibly with associated annotation.</obo:hasDefinition>
-        <obo:hasExactSynonym>Nucleotide sequences</obo:hasExactSynonym>
-        <obo:hasNarrowSynonym>DNA sequence</obo:hasNarrowSynonym>
-        <obo:hasExactSynonym>Nucleic acid sequences</obo:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Nucleotide sequence</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Nucleic acid sequences</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>One or more nucleic acid sequences, possibly with associated annotation.</obo:IAO_0000115>
+        <oboInOwl:hasExactSynonym>Nucleotide sequences</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>One or more nucleic acid sequences, possibly with associated annotation.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>DNA sequence</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -139,10 +136,11 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0080">
         <rdfs:label>Sequence analysis</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasExactSynonym>Sequences</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence databases</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The archival, processing and analysis of molecular sequences (monomer composition of polymers) including molecular sequence data resources, sequence sites, alignments, motifs and profiles.</obo:IAO_0000115>
-        <obo:hasExactSynonym>Sequences</obo:hasExactSynonym>
-        <obo:hasNarrowSynonym>Sequence databases</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The archival, processing and analysis of molecular sequences (monomer composition of polymers) including molecular sequence data resources, sequence sites, alignments, motifs and profiles.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>The archival, processing and analysis of molecular sequences (monomer composition of polymers) including molecular sequence data resources, sequence sites, alignments, motifs and profiles.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Biological sequences</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -153,12 +151,15 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0081">
         <rdfs:label>Structure analysis</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasExactSynonym>Structural bioinformatics</obo:hasExactSynonym>
-        <obo:hasDefinition>The curation, processing and analysis of the structure of biological molecules, typically proteins and nucleic acids and other macromolecules.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Computational structural biology</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Structure data resources</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Structure databases</obo:hasNarrowSynonym>
-        <obo:IAO_0000115>The curation, processing and analysis of the structure of biological molecules, typically proteins and nucleic acids and other macromolecules.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Molecular structure</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Structure data resources</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>The curation, processing, analysis and prediction of data about the structure of biological molecules, typically proteins and nucleic acids and other macromolecules.</obo:IAO_0000115>
+        <oboInOwl:hasExactSynonym>Biomolecular structure</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Computational structural biology</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Structures</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Structural bioinformatics</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>The curation, processing, analysis and prediction of data about the structure of biological molecules, typically proteins and nucleic acids and other macromolecules.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Structure databases</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -169,12 +170,14 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0089">
         <rdfs:label>Ontology and terminology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Applied ontology</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The conceptualisation, categorisation and nomenclature (naming) of entities or phenomena within biology or bioinformatics. This includes formal ontologies, controlled vocabularies, structured glossary, symbols and terminology or other related resource.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Terminology</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Upper ontology</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The conceptualisation, categorisation and nomenclature (naming) of entities or phenomena within biology or bioinformatics. This includes formal ontologies, controlled vocabularies, structured glossary, symbols and terminology or other related resource.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Ontology</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Ontologies</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Applied ontology</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The conceptualisation, categorisation and nomenclature (naming) of entities or phenomena within biology or bioinformatics. This includes formal ontologies, controlled vocabularies, structured glossary, symbols and terminology or other related resource.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Ontologies</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Ontology relations</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Terminology</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Ontology</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -185,12 +188,12 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0102">
         <rdfs:label>Mapping</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
-        <obo:hasNarrowSynonym>Genetic linkage</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The mapping of complete (typically nucleotide) sequences. Mapping (in the sense of short read alignment, or more generally, just alignment) has application in RNA-Seq analysis (mapping of transcriptomics reads), variant discovery (e.g. mapping of exome capture), and re-sequencing (mapping of WGS reads). </obo:hasDefinition>
-        <obo:hasNarrowSynonym>Linkage</obo:hasNarrowSynonym>
-        <obo:IAO_0000115>The mapping of complete (typically nucleotide) sequences. Mapping (in the sense of short read alignment, or more generally, just alignment) has application in RNA-Seq analysis (mapping of transcriptomics reads), variant discovery (e.g. mapping of exome capture), and re-sequencing (mapping of WGS reads). </obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Synteny</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Linkage mapping</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Linkage mapping</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>The mapping of complete (typically nucleotide) sequences. Mapping (in the sense of short read alignment, or more generally, just alignment) has application in RNA-Seq analysis (mapping of transcriptomics reads), variant discovery (e.g. mapping of exome capture), and re-sequencing (mapping of WGS reads).</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Genetic linkage</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Linkage</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The mapping of complete (typically nucleotide) sequences. Mapping (in the sense of short read alignment, or more generally, just alignment) has application in RNA-Seq analysis (mapping of transcriptomics reads), variant discovery (e.g. mapping of exome capture), and re-sequencing (mapping of WGS reads).</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Synteny</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -201,9 +204,9 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0108">
         <rdfs:label>Protein expression</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0121"/>
+        <oboInOwl:hasNarrowSynonym>Translation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The translation of mRNA into protein and subsequent protein processing in the cell.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The translation of mRNA into protein and subsequent protein processing in the cell.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Translation</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The translation of mRNA into protein and subsequent protein processing in the cell.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -214,12 +217,10 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0114">
         <rdfs:label>Gene structure</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>Gene structure, regions which make an RNA product and features such as promoters, coding regions, gene fusion, splice sites etc.
-</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Fusion genes</obo:hasNarrowSynonym>
-        <obo:IAO_0000115>Gene structure, regions which make an RNA product and features such as promoters, coding regions, gene fusion, splice sites etc.
-</obo:IAO_0000115>
-        <obo:hasExactSynonym>Gene features</obo:hasExactSynonym>
+        <oboInOwl:hasDefinition>Gene structure, regions which make an RNA product and features such as promoters, coding regions, gene fusion, splice sites etc.</oboInOwl:hasDefinition>
+        <obo:IAO_0000115>Gene structure, regions which make an RNA product and features such as promoters, coding regions, gene fusion, splice sites etc.</obo:IAO_0000115>
+        <oboInOwl:hasExactSynonym>Gene features</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Fusion genes</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -230,11 +231,16 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0121">
         <rdfs:label>Proteomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasNarrowSynonym>Protein and peptide identification</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Top-down proteomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Peptide identification</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Quantitative proteomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Targeted proteomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Discovery proteomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Protein and peptide identification, especially in the study of whole proteomes of organisms.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Peptide identification</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Protein and peptide identification, especially in the study of whole proteomes of organisms.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Metaproteomics</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein and peptide identification</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Protein and peptide identification, especially in the study of whole proteomes of organisms.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Metaproteomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Bottom-up proteomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -245,10 +251,10 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0123">
         <rdfs:label>Protein properties</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>The study of the physical and biochemical properties of peptides and proteins, for example the hydrophobic, hydrophilic and charge properties of a protein.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Protein hydropathy</obo:hasNarrowSynonym>
-        <obo:hasExactSynonym>Protein physicochemistry</obo:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein hydropathy</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The study of the physical and biochemical properties of peptides and proteins, for example the hydrophobic, hydrophilic and charge properties of a protein.</obo:IAO_0000115>
+        <oboInOwl:hasExactSynonym>Protein physicochemistry</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>The study of the physical and biochemical properties of peptides and proteins, for example the hydrophobic, hydrophilic and charge properties of a protein.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -259,14 +265,18 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0128">
         <rdfs:label>Protein interactions</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0602"/>
-        <obo:hasNarrowSynonym>Protein-DNA interaction</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein interactome</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Protein-protein, protein-DNA/RNA and protein-ligand interactions, including analysis of known interactions and prediction of putative interactions.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Protein-ligand interactions</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein-nucleic acid interactions</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Protein-protein, protein-DNA/RNA and protein-ligand interactions, including analysis of known interactions and prediction of putative interactions.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Protein interaction networks</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein-protein interactions</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein-RNA interaction</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-RNA interaction</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-RNA interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-nucleic acid interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-protein interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein interaction map</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Protein-protein, protein-DNA/RNA and protein-ligand interactions, including analysis of known interactions and prediction of putative interactions.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Protein-DNA interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-DNA interaction</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein-ligand interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein interaction networks</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -277,11 +287,11 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0140">
         <rdfs:label>Protein targeting and localisation</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Protein targeting</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein sorting</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The study of how proteins are transported within and without the cell, including signal peptides, protein subcellular localisation and export.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Protein targeting</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein localisation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The study of how proteins are transported within and without the cell, including signal peptides, protein subcellular localisation and export.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The study of how proteins are transported within and without the cell, including signal peptides, protein subcellular localisation and export.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Protein localisation</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein sorting</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -292,16 +302,16 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0157">
         <rdfs:label>Sequence composition, complexity and repeats</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
-        <obo:hasNarrowSynonym>Low complexity sequences</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Nucleic acid repeats</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Sequence composition</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein repeats</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein sequence repeats</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Sequence repeats</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The archival, processing and analysis of the basic character composition of molecular sequences, for example character or word frequency, ambiguity, complexity, particularly regions of low complexity, and repeats or the repetitive nature of molecular sequences.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Repeat sequences</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence repeats</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein repeats</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Nucleic acid repeats</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence complexity</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence composition</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein sequence repeats</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The archival, processing and analysis of the basic character composition of molecular sequences, for example character or word frequency, ambiguity, complexity, particularly regions of low complexity, and repeats or the repetitive nature of molecular sequences.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Sequence complexity</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Repeat sequences</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Low complexity sequences</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The archival, processing and analysis of the basic character composition of molecular sequences, for example character or word frequency, ambiguity, complexity, particularly regions of low complexity, and repeats or the repetitive nature of molecular sequences.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -313,7 +323,7 @@
         <rdfs:label>Sequence comparison</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
         <obo:IAO_0000115>The comparison of two or more molecular sequences, for example sequence alignment and clustering.</obo:IAO_0000115>
-        <obo:hasDefinition>The comparison of two or more molecular sequences, for example sequence alignment and clustering.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>The comparison of two or more molecular sequences, for example sequence alignment and clustering.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -324,14 +334,14 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0160">
         <rdfs:label>Sequence sites, features and motifs</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
-        <obo:hasNarrowSynonym>Sequence features</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Sequence profiles</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Sequence sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Functional sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>HMMs</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Sequence motifs</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The archival, detection, prediction and analysis of positional features such as functional and other key sites, in molecular sequences and the conserved patterns (motifs, profiles etc.) that may be used to describe them.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Sequence sites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence profiles</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence features</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The archival, detection, prediction and analysis of positional features such as functional and other key sites, in molecular sequences and the conserved patterns (motifs, profiles etc.) that may be used to describe them.</obo:IAO_0000115>
-        <obo:hasDefinition>The archival, detection, prediction and analysis of positional features such as functional and other key sites, in molecular sequences and the conserved patterns (motifs, profiles etc.) that may be used to describe them.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>HMMs</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Sequence motifs</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Functional sites</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -342,9 +352,9 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0196">
         <rdfs:label>Sequence assembly</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
+        <oboInOwl:hasDefinition>The assembly of fragments of a DNA sequence to reconstruct the original sequence.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The assembly of fragments of a DNA sequence to reconstruct the original sequence.</obo:IAO_0000115>
-        <obo:hasDefinition>The assembly of fragments of a DNA sequence to reconstruct the original sequence.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Assembly</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Assembly</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -355,12 +365,13 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0199">
         <rdfs:label>Genetic variation</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Polymorphism</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Mutation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Stable, naturally occuring mutations in a nucleotide sequence including alleles, naturally occurring mutations such as single base nucleotide substitutions, deletions and insertions, RFLPs and other polymorphisms.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Genomic variation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Polymorphism</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Stable, naturally occuring mutations in a nucleotide sequence including alleles, naturally occurring mutations such as single base nucleotide substitutions, deletions and insertions, RFLPs and other polymorphisms.</obo:IAO_0000115>
-        <obo:hasDefinition>Stable, naturally occuring mutations in a nucleotide sequence including alleles, naturally occurring mutations such as single base nucleotide substitutions, deletions and insertions, RFLPs and other polymorphisms.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Somatic mutations</obo:hasNarrowSynonym>
-        <obo:hasExactSynonym>DNA variation</obo:hasExactSynonym>
-        <obo:hasNarrowSynonym>Mutation</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Somatic mutations</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>DNA variation</oboInOwl:hasExactSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -371,8 +382,10 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0219">
         <rdfs:label>Data submission, annotation and curation</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>Deposition and curation of database accessions, including annotation, typically with terms from a controlled vocabulary.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Database curation</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Deposition and curation of database accessions, including annotation, typically with terms from a controlled vocabulary.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Data curation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Data provenance</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Database curation</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Deposition and curation of database accessions, including annotation, typically with terms from a controlled vocabulary.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
@@ -384,14 +397,16 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0601">
         <rdfs:label>Protein modifications</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0121"/>
-        <obo:hasDefinition>Protein chemical modifications, e.g. post-translational modifications.</obo:hasDefinition>
-        <obo:hasRelatedSynonym>GO:0006464</obo:hasRelatedSynonym>
-        <obo:hasNarrowSynonym>Protein post-translational modifications</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein chemical modifications</obo:hasNarrowSynonym>
-        <obo:hasRelatedSynonym>MOD:00000</obo:hasRelatedSynonym>
-        <obo:hasExactSynonym>Protein post-translational modification</obo:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Post-translation modifications</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein chemical modifications</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein post-translational modifications</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasRelatedSynonym>MOD:00000</oboInOwl:hasRelatedSynonym>
+        <oboInOwl:hasDefinition>Protein chemical modifications, e.g. post-translational modifications.</oboInOwl:hasDefinition>
+        <oboInOwl:hasExactSynonym>PTMs</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>Protein chemical modifications, e.g. post-translational modifications.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Post-translation modifications</obo:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Protein post-translational modification</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasRelatedSynonym>GO:0006464</oboInOwl:hasRelatedSynonym>
+        <oboInOwl:hasExactSynonym>Post-translational modifications</oboInOwl:hasExactSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -402,22 +417,24 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0602">
         <rdfs:label>Molecular interactions, pathways and networks</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Biological networks</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Networks</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Signaling pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Cellular process pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Gene regulatory networks</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Disease pathways</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Molecular interactions, biological pathways, networks and other models.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>Molecular interactions, biological pathways, networks and other models.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Gene regulatory networks</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Biological pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Molecular interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Interactome</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Molecular interactions, biological pathways, networks and other models.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Environmental information processing pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Signal transduction pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Molecular interactions</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Biological pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Biological models</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Genetic information processing pathways</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Interactions</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Biological models</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Networks</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Signaling pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Cellular process pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Genetic information processing pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Environmental information processing pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Interactions</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Biological networks</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Disease pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Metabolic pathways</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Signal transduction pathways</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -428,9 +445,9 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0607">
         <rdfs:label>Laboratory information management</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Laboratory resources</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Laboratory management and resources, for example, catalogues of biological resources for use in the lab including cell lines, viruses, plasmids, phages, DNA probes and primers and so on.</obo:hasDefinition>
         <obo:IAO_0000115>Laboratory management and resources, for example, catalogues of biological resources for use in the lab including cell lines, viruses, plasmids, phages, DNA probes and primers and so on.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Laboratory resources</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Laboratory management and resources, for example, catalogues of biological resources for use in the lab including cell lines, viruses, plasmids, phages, DNA probes and primers and so on.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -441,12 +458,11 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0632">
         <rdfs:label>Probes and primers</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
-        <obo:IAO_0000115>Molecular probes (e.g. a peptide probe or DNA microarray probe) or PCR primers and hybridisation oligos in a nucleic acid sequence.
-</obo:IAO_0000115>
-        <obo:hasDefinition>Molecular probes (e.g. a peptide probe or DNA microarray probe) or PCR primers and hybridisation oligos in a nucleic acid sequence.
-</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Primers</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Probes</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Molecular probes (e.g. a peptide probe or DNA microarray probe) or PCR primers and hybridisation oligos in a nucleic acid sequence.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Primers</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>Molecular probes (e.g. a peptide probe or DNA microarray probe) or PCR primers and hybridisation oligos in a nucleic acid sequence.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Primer quality</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Probes</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -457,8 +473,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0637">
         <rdfs:label>Taxonomy</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>Organism classification, identification and naming.</obo:hasDefinition>
         <obo:IAO_0000115>Organism classification, identification and naming.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>Organism classification, identification and naming.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -469,25 +485,25 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0749">
         <rdfs:label>Transcription factors and regulatory sites</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3125"/>
-        <obo:hasNarrowSynonym>TATA signals</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>CAAT signals</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>CCAAT box</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Attenuators</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>CpG islands</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Transcription factors</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Proteins that bind to DNA and control transcription of DNA to mRNA (transcription factors) and also transcriptional regulatory sites, elements and regions (such as promoters, enhancers, silencers and boundary elements / insulators) in nucleotide sequences.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>-10 signals</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Enhancers</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>CAT box</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Proteins that bind to DNA and control transcription of DNA to mRNA (transcription factors) and also transcriptional regulatory sites, elements and regions (such as promoters, enhancers, silencers and boundary elements / insulators) in nucleotide sequences.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>-10 signals</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>TFBS</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>CCAAT box</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Promoters</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Transcription factor binding sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Isochores</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Transcription factors</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Terminators</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>CAT box</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Transcriptional regulatory sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Enhancers</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Proteins that bind to DNA and control transcription of DNA to mRNA (transcription factors) and also transcriptional regulatory sites, elements and regions (such as promoters, enhancers, silencers and boundary elements / insulators) in nucleotide sequences.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>-35 signals</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Attenuators</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>CpG islands</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>GC signals</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>CAAT signals</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Isochores</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Transcriptional regulatory sites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>TATA signals</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Promoters</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>GC signals</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Terminators</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>-35 signals</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>TFBS</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Transcription factor binding sites</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -498,7 +514,7 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0753">
         <rdfs:label>Metabolic pathways</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0602"/>
-        <obo:hasDefinition>Metabolic pathways.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>Metabolic pathways.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>Metabolic pathways.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
@@ -510,8 +526,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0754">
         <rdfs:label>Signaling pathways</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0602"/>
-        <obo:hasDefinition>Signaling pathways.</obo:hasDefinition>
         <obo:IAO_0000115>Signaling pathways.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>Signaling pathways.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -523,8 +539,8 @@
         <rdfs:label>Mobile genetic elements</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0160"/>
         <obo:IAO_0000115>Mobile genetic elements, such as transposons, Plasmids, Bacteriophage elements and Group II introns.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Transposons</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Mobile genetic elements, such as transposons, Plasmids, Bacteriophage elements and Group II introns.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Transposons</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Mobile genetic elements, such as transposons, Plasmids, Bacteriophage elements and Group II introns.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -535,10 +551,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_0804">
         <rdfs:label>Immunology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Computational immunology</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The application of information technology to immunology such as immunological processes, immunological genes, proteins and peptide ligands, antigens and so on.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The application of information technology to immunology such as immunological processes, immunological genes, proteins and peptide ligands, antigens and so on.</obo:IAO_0000115>
-        <obo:hasDefinition>The application of information technology to immunology such as immunological processes, immunological genes, proteins and peptide ligands, antigens and so on.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Immunoinformatics</obo:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -549,7 +563,7 @@
     <owl:Class rdf:about="http://edamontology.org/topic_1302">
         <rdfs:label>PolyA signal or sites</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0114"/>
-        <obo:hasDefinition>Regions or sites in a eukaryotic and eukaryotic viral RNA sequence which directs endonuclease cleavage or polyadenylation of an RNA transcript.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>Regions or sites in a eukaryotic and eukaryotic viral RNA sequence which directs endonuclease cleavage or polyadenylation of an RNA transcript.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>Regions or sites in a eukaryotic and eukaryotic viral RNA sequence which directs endonuclease cleavage or polyadenylation of an RNA transcript.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
@@ -561,7 +575,7 @@
     <owl:Class rdf:about="http://edamontology.org/topic_1307">
         <rdfs:label>Splice sites</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0114"/>
-        <obo:hasDefinition>Splice sites in a nucleotide sequence or alternative RNA splicing events.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>Splice sites in a nucleotide sequence or alternative RNA splicing events.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>Splice sites in a nucleotide sequence or alternative RNA splicing events.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
@@ -573,10 +587,11 @@
     <owl:Class rdf:about="http://edamontology.org/topic_1775">
         <rdfs:label>Function analysis</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Protein function analysis</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Protein function prediction</obo:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Functional analysis</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein function analysis</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Protein function prediction</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The study of gene and protein function including the prediction of functional properties of a protein.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The study of gene and protein function including the prediction of functional properties of a protein.</obo:IAO_0000115>
-        <obo:hasDefinition>The study of gene and protein function including the prediction of functional properties of a protein.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -587,10 +602,33 @@
     <owl:Class rdf:about="http://edamontology.org/topic_2259">
         <rdfs:label>Systems biology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Biological modelling</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The holistic modelling and analysis of complex biological systems and the interactions therein.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Biological system modelling</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The holistic modelling and analysis of complex biological systems and the interactions therein.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Biological modelling</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Biological system modelling</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The holistic modelling and analysis of complex biological systems and the interactions therein.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Systems modelling</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/topic_2269 -->
+
+    <owl:Class rdf:about="http://edamontology.org/topic_2269">
+        <rdfs:label>Statistics and probability</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0140"/>
+        <oboInOwl:hasNarrowSynonym>Descriptive statistics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Bayesian methods</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Multivariate statistics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Biostatistics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Gaussian processes</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Probabilistic graphical model</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The application of statistical methods to biological problems.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Inferential statistics</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>The application of statistical methods to biological problems.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Markov processes</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Probability</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Statistics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -601,8 +639,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_2754">
         <rdfs:label>Introns</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0114"/>
-        <obo:hasDefinition>Introns in a nucleotide sequences.</obo:hasDefinition>
         <obo:IAO_0000115>Introns in a nucleotide sequences.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>Introns in a nucleotide sequences.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -613,14 +651,15 @@
     <owl:Class rdf:about="http://edamontology.org/topic_2885">
         <rdfs:label>DNA polymorphism</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0199"/>
-        <obo:hasNarrowSynonym>VNTR</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>SNP</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>snps</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Microsatellites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>DNA polymorphism.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>DNA polymorphism.</obo:IAO_0000115>
-        <obo:hasDefinition>DNA polymorphism.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Microsatellites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>RFLP</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Single nucleotide polymorphism</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>SNP</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Variable number of tandem repeat polymorphism</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Single nucleotide polymorphism</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Variable number of tandem repeat polymorphism</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>VNTR</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>RFLP</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -631,8 +670,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3050">
         <rdfs:label>Biodiversity</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>The degree of variation of life forms within a given ecosystem, biome or an entire planet.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The degree of variation of life forms within a given ecosystem, biome or an entire planet.</obo:IAO_0000115>
-        <obo:hasDefinition>The degree of variation of life forms within a given ecosystem, biome or an entire planet.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -643,13 +682,15 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3068">
         <rdfs:label>Literature and language</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>The scientific literature, language processing, reference information, and documentation.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>References</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Literature</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Scientific literature</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Citations</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Language</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Bibliography</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The scientific literature, language processing, reference information, and documentation.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>References</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Bibliography</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The scientific literature, language processing, reference information, and documentation.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Citations</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Documentation</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Scientific literature</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Documentation</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -660,14 +701,14 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3125">
         <rdfs:label>DNA binding sites</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0160"/>
-        <obo:hasDefinition>Nucleic acids binding to some other molecule.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Scaffold-attachment region</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Nucleic acids binding to some other molecule.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Scaffold-attachment region</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Matrix-attachment region</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Restriction sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Nucleosome exclusion sequences</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Ribosome binding sites</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Matrix/scaffold attachment region</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Matrix-attachment region</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Ribosome binding sites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Nucleic acids binding to some other molecule.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Nucleosome exclusion sequences</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Matrix/scaffold attachment region</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Restriction sites</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -678,8 +719,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3127">
         <rdfs:label>DNA replication and recombination</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3125"/>
-        <obo:hasDefinition>DNA replication or recombination.</obo:hasDefinition>
         <obo:IAO_0000115>DNA replication or recombination.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>DNA replication or recombination.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -690,8 +731,16 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3172">
         <rdfs:label>Metabolomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasNarrowSynonym>Metabonomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Mass spectrometry-based metabolomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>MS-based metabolomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The systematic study of metabolites, the chemical processes they are involved, and the chemical fingerprints of specific cellular processes in a whole cell, tissue, organ or organism.</obo:IAO_0000115>
-        <obo:hasDefinition>The systematic study of metabolites, the chemical processes they are involved, and the chemical fingerprints of specific cellular processes in a whole cell, tissue, organ or organism.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>NMR-based metabolomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>LC-MS-based metabolomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Exometabolomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Metabolites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The systematic study of metabolites, the chemical processes they are involved, and the chemical fingerprints of specific cellular processes in a whole cell, tissue, organ or organism.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Metabolome</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -702,8 +751,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3173">
         <rdfs:label>Epigenomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>The study of the epigenetic modifications of a whole cell, tissue, organism etc.</obo:hasDefinition>
         <obo:IAO_0000115>The study of the epigenetic modifications of a whole cell, tissue, organism etc.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>The study of the epigenetic modifications of a whole cell, tissue, organism etc.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -714,15 +763,16 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3174">
         <rdfs:label>Metagenomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasNarrowSynonym>Biome sequencing</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The study of genetic material recovered from environmental samples, and associated environmental data.</obo:hasDefinition>
-        <obo:hasBroadSynonym>Environmental omics</obo:hasBroadSynonym>
-        <obo:hasNarrowSynonym>Environmental sequencing</obo:hasNarrowSynonym>
-        <obo:hasBroadSynonym>Ecogenomics</obo:hasBroadSynonym>
-        <obo:hasBroadSynonym>Environmental genomics</obo:hasBroadSynonym>
-        <obo:hasBroadSynonym>Community genomics</obo:hasBroadSynonym>
+        <oboInOwl:hasBroadSynonym>Environmental genomics</oboInOwl:hasBroadSynonym>
+        <oboInOwl:hasBroadSynonym>Community genomics</oboInOwl:hasBroadSynonym>
+        <oboInOwl:hasBroadSynonym>Environmental omics</oboInOwl:hasBroadSynonym>
+        <oboInOwl:hasBroadSynonym>Ecogenomics</oboInOwl:hasBroadSynonym>
+        <oboInOwl:hasNarrowSynonym>Biome sequencing</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasBroadSynonym>Environmental sequencing</oboInOwl:hasBroadSynonym>
+        <oboInOwl:hasBroadSynonym>Biome sequencing</oboInOwl:hasBroadSynonym>
         <obo:IAO_0000115>The study of genetic material recovered from environmental samples, and associated environmental data.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Shotgun metagenomics</obo:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The study of genetic material recovered from environmental samples, and associated environmental data.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Shotgun metagenomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -733,10 +783,10 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3175">
         <rdfs:label>DNA structural variation</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0199"/>
-        <obo:hasDefinition>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</obo:hasDefinition>
+        <oboInOwl:hasDefinition>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</oboInOwl:hasDefinition>
+        <oboInOwl:hasExactSynonym>Genomic structural variation</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Structural variation</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</obo:IAO_0000115>
-        <obo:hasExactSynonym>Genomic structural variation</obo:hasExactSynonym>
-        <obo:hasExactSynonym>Structural variation</obo:hasExactSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -747,8 +797,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3298">
         <rdfs:label>Phenomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors. </obo:hasDefinition>
-        <obo:IAO_0000115>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors. </obo:IAO_0000115>
+        <obo:IAO_0000115>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>Phenomes, or the study of the change in phenotype (the physical and biochemical traits of organisms) in response to genetic and environmental factors.</oboInOwl:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -759,8 +809,9 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3299">
         <rdfs:label>Evolutionary biology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasExactSynonym>Evolution</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>The evolutionary processes, from the genetic to environmental scale, that produced life in all its diversity.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>The evolutionary processes, from the genetic to environmental scale, that produced life in all its diversity.</obo:IAO_0000115>
-        <obo:hasDefinition>The evolutionary processes, from the genetic to environmental scale, that produced life in all its diversity.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -771,11 +822,13 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3305">
         <rdfs:label>Public health and epidemiology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasNarrowSynonym>Epidemiology</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Public health</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Topic concerning the the patterns, cause, and effect of disease within populations.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>Topic concerning the the patterns, cause, and effect of disease within populations.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Public health</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Epidemiology</obo:hasNarrowSynonym>
-        <obo:hasDefinition>Topic concerning the the patterns, cause, and effect of disease within populations.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+        <oboInOwl:hasExactSynonym rdf:resource="https://en.wikipedia.org/wiki/Epidemiology"/>
+        <oboInOwl:hasExactSynonym rdf:resource="https://en.wikipedia.org/wiki/Public_health"/>
     </owl:Class>
     
 
@@ -785,11 +838,11 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3308">
         <rdfs:label>Transcriptomics</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>The analysis of transcriptomes, or a set of all the RNA molecules in a specific cell, tissue etc.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Metatranscriptomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Transcriptome</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Comparative transcriptomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The analysis of transcriptomes, or a set of all the RNA molecules in a specific cell, tissue etc.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Transcriptome</obo:hasNarrowSynonym>
-        <obo:hasDefinition>The analysis of transcriptomes, or a set of all the RNA molecules in a specific cell, tissue etc.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>Metatranscriptomics</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Comparative transcriptomics</obo:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -800,8 +853,8 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3345">
         <rdfs:label>Data identity and mapping</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>Topic concerning the identity of biological entities, or reports on such entities, and the mapping of entities and records in different databases.</oboInOwl:hasDefinition>
         <obo:IAO_0000115>Topic concerning the identity of biological entities, or reports on such entities, and the mapping of entities and records in different databases.</obo:IAO_0000115>
-        <obo:hasDefinition>Topic concerning the identity of biological entities, or reports on such entities, and the mapping of entities and records in different databases.</obo:hasDefinition>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -812,9 +865,9 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3346">
         <rdfs:label>Sequence search</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0080"/>
-        <obo:hasDefinition>The search and retrieval from a database on the basis of molecular sequence similarity.</obo:hasDefinition>
-        <obo:hasExactSynonym>Sequence database search</obo:hasExactSynonym>
         <obo:IAO_0000115>The search and retrieval from a database on the basis of molecular sequence similarity.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>The search and retrieval from a database on the basis of molecular sequence similarity.</oboInOwl:hasDefinition>
+        <oboInOwl:hasExactSynonym>Sequence database search</oboInOwl:hasExactSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -825,21 +878,21 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3512">
         <rdfs:label>Gene transcripts</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0114"/>
-        <obo:hasExactSynonym>mRNA features</obo:hasExactSynonym>
-        <obo:hasDefinition>Transcription of DNA into RNA and features of a messenger RNA (mRNA) molecules including precursor RNA, primary (unprocessed) transcript and fully processed molecules.</obo:hasDefinition>
-        <obo:hasNarrowSynonym>PolyA site</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Coding RNA</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>cDNA</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Transit peptide coding sequence</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Gene transcript features</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>mRNA</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Introns</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>PolyA site</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>cDNA</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Coding RNA</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>EST</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>mRNA</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Transit peptide coding sequence</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>PolyA signal</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>mRNA features</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Gene transcript features</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Fusion transcripts</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Transcription of DNA into RNA and features of a messenger RNA (mRNA) molecules including precursor RNA, primary (unprocessed) transcript and fully processed molecules.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Fusion transcripts</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Introns</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>EST</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Signal peptide coding sequence</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>PolyA signal</obo:hasNarrowSynonym>
-        <obo:hasNarrowSynonym>Exons</obo:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Signal peptide coding sequence</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>Transcription of DNA into RNA and features of a messenger RNA (mRNA) molecules including precursor RNA, primary (unprocessed) transcript and fully processed molecules.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Exons</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -850,10 +903,12 @@
     <owl:Class rdf:about="http://edamontology.org/topic_3697">
         <rdfs:label>Microbial ecology</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <obo:hasDefinition>The ecology of microorganisms including their relationship with one another and their environment.</obo:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Community analysis</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The ecology of microorganisms including their relationship with one another and their environment.</obo:IAO_0000115>
-        <obo:hasNarrowSynonym>Microbiome</obo:hasNarrowSynonym>
-        <obo:hasExactSynonym>Environmental microbiology</obo:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>Environmental microbiology</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasNarrowSynonym>Microbiome</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasDefinition>The ecology of microorganisms including their relationship with one another and their environment.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Molecular community analysis</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -862,7 +917,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0000537 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0000537">
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">copy number variation profiling</rdfs:label>
+        <rdfs:label>copy number variation profiling assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3175"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -872,7 +927,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0000716 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0000716">
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChIP-seq assay</rdfs:label>
+        <rdfs:label>ChIP-seq assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3173"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -882,7 +937,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001204 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001204">
-        <rdfs:label xml:lang="en">SNP microarray</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SNP microarray</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2885"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -892,7 +947,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001247 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001247">
-        <rdfs:label xml:lang="en">genotyping by high throughput sequencing assay</rdfs:label>
+        <rdfs:label>genotyping by high throughput sequencing assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2885"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -902,7 +957,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001248 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001248">
-        <rdfs:label xml:lang="en">ChIP-chip assay</rdfs:label>
+        <rdfs:label>ChIP-chip assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3173"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -912,7 +967,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001271 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001271">
-        <rdfs:label xml:lang="en">RNA-Seq assay</rdfs:label>
+        <rdfs:label>RNA-seq assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -922,7 +977,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001361 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001361">
-        <rdfs:label xml:lang="en">transcription profiling by RT-PCR assay</rdfs:label>
+        <rdfs:label>transcription profiling by RT-PCR assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -932,7 +987,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0001393 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001393">
-        <rdfs:label xml:lang="en">comparative genomic hybridization by array assay</rdfs:label>
+        <rdfs:label>comparative genomic hybridization by array assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3175"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -942,7 +997,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0002029 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0002029">
-        <rdfs:label xml:lang="en">serial analysis of gene expression</rdfs:label>
+        <rdfs:label>serial analysis of gene expression assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -952,7 +1007,7 @@
     <!-- http://purl.obolibrary.org/obo/OBI_0400148 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0400148">
-        <rdfs:label xml:lang="en">DNA microarray</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DNA microarray</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
@@ -960,5 +1015,5 @@
 
 
 
-<!-- Generated by the OWL API (version 3.2.4.1806) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 1.3.5.1016) http://owlapi.sourceforge.net -->
 
