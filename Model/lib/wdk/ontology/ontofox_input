@@ -45,6 +45,9 @@ http://edamontology.org/topic_0121 #Proteomics
 http://edamontology.org/topic_0123 #Protein properties
 http://edamontology.org/topic_0140 #Protein targeting and localization
 http://edamontology.org/topic_2269 #Statistics and probability
+http://edamontology.org/operation_3560 #Maximum occurence analysis
+http://edamontology.org/topic_3315 #Mathematics
+http://edamontology.org/data_2884 #Plot
 http://edamontology.org/topic_0219 #Annotation and curation
 http://edamontology.org/topic_0601 #Protein modifications
 http://edamontology.org/topic_0602 #Molecular interactions
@@ -181,6 +184,13 @@ http://edamontology.org/data_2976 #Protein Sequence
 subClassOf http://edamontology.org/data_2044 #Sequence
 http://edamontology.org/topic_2269 #Statistics and probability
 subClassOf http://edamontology.org/topic_0140 #Protein targeting and localization
+http://edamontology.org/operation_3560 #Maximum occurence analysis
+subClassOf http://edamontology.org/topic_2269 #Statistics and probability
+http://edamontology.org/topic_3315 #Mathematics
+subClassOf http://edamontology.org/topic_2269 #Statistics and probability
+http://edamontology.org/data_2884 #Plot
+subClassOf http://edamontology.org/topic_2269 #Statistics and probability
+
 
 [Source term retrieval setting]
 includeNoIntermediates
