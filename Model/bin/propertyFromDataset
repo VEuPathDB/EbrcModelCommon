@@ -22,7 +22,7 @@ fi
 
   if [ $datasetFile -nt "$GUS_HOME/lib/prop/datasetProperties/$propFile" ]
   then
-      echo "workflowDataset2PropsFile $datasetFile \$PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetClass/classes.xml"
+      echo "workflowDataset2PropsFile $datasetFile \$PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetClass/classes.xml -skipXmlValidation"
       workflowDataset2PropsFile  $datasetFile $PROJECT_HOME/ApiCommonModel/Model/lib/xml/datasetClass/classes.xml -skipXmlValidation
   else 
       echo "$propFile already up to date"
