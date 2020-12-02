@@ -100,6 +100,19 @@
     
 
 
+    <!-- http://edamontology.org/data_2884 -->
+
+    <owl:Class rdf:about="http://edamontology.org/data_2884">
+        <rdfs:label>Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2269"/>
+        <oboInOwl:hasExactSynonym>Graph data</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>Biological data that has been plotted as a graph of some type, or plotting instructions for rendering such a graph.</oboInOwl:hasDefinition>
+        <obo:IAO_0000115>Biological data that has been plotted as a graph of some type, or plotting instructions for rendering such a graph.</obo:IAO_0000115>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://edamontology.org/data_2976 -->
 
     <owl:Class rdf:about="http://edamontology.org/data_2976">
@@ -126,6 +139,18 @@
         <oboInOwl:hasExactSynonym>Nucleotide sequences</oboInOwl:hasExactSynonym>
         <oboInOwl:hasDefinition>One or more nucleic acid sequences, possibly with associated annotation.</oboInOwl:hasDefinition>
         <oboInOwl:hasNarrowSynonym>DNA sequence</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/operation_3560 -->
+
+    <owl:Class rdf:about="http://edamontology.org/operation_3560">
+        <rdfs:label>Maximum occurence analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2269"/>
+        <oboInOwl:hasDefinition>A method for making numerical assessments about the maximum percent of time that a conformer of a flexible macromolecule can exist and still be compatible with the experimental data.</oboInOwl:hasDefinition>
+        <obo:IAO_0000115>A method for making numerical assessments about the maximum percent of time that a conformer of a flexible macromolecule can exist and still be compatible with the experimental data.</obo:IAO_0000115>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -843,6 +868,25 @@
         <oboInOwl:hasNarrowSynonym>Transcriptome</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasNarrowSynonym>Comparative transcriptomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>The analysis of transcriptomes, or a set of all the RNA molecules in a specific cell, tissue etc.</obo:IAO_0000115>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/topic_3315 -->
+
+    <owl:Class rdf:about="http://edamontology.org/topic_3315">
+        <rdfs:label>Mathematics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2269"/>
+        <oboInOwl:hasNarrowSynonym>Dynymical systems theory</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Monte Carlo methods</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>The study of numbers (quantity) and other topics including structure, space, and change.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Dynamical systems</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Graph analytics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasExactSynonym>Maths</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasDefinition>The study of numbers (quantity) and other topics including structure, space, and change.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Dynamic systems</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Multivariate analysis</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
