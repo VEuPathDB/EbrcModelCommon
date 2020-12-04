@@ -5735,5 +5735,27 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+  <datasetClass class="auxiliaryDummy" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   scope="organism"
+                   type="unknown"
+                   organismAbbrev="${organismAbbrev}">
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 </datasetClasses>
 
