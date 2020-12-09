@@ -55,6 +55,12 @@ public class NcbiTaxonomy extends DatasetInjector {
 
             String projectName = map.get("projectName");
 
+            if(!projectName.equals("UniDB")) {
+                injectTemplate("projectIdForPrimaryKey");                
+            }
+
+
+
 
             if(props.getKey().endsWith("_Llinas_TransFactorBindingSites_GFF2_RSRC")) {
                 String organismAbbrev = map.get("organismAbbrev");
