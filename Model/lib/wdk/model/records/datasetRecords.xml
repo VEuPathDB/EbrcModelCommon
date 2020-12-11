@@ -323,6 +323,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!--
         <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Data Download Versions"
                queryRef="DatasetTables.DownloadVersion">
@@ -347,7 +348,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Updates"/>
             <columnAttribute name="dataset_sha1_digest" internal="true"/>     
         </table>
-
+-->
 
 
 
@@ -1096,7 +1097,7 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-
+<!--
 <sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
@@ -1119,7 +1120,7 @@ FROM (
 	    ]]>
         </sql>
 </sqlQuery>
-
+-->
 
 
 
