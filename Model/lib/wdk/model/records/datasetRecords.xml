@@ -953,9 +953,12 @@ ON mm.dataset_id = counts.dataset_presenter_id
             <sql>
             <![CDATA[
                select dsp.dataset_presenter_id as dataset_id,
-                      ds.project_id
-                 from apidbTuning.DatasetPresenter dsp, apidb.datasource ds
+                      dp.value as project_id
+                 from apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
+                      apidbTuning.DatasetProperty dp
                 where ds.name (+) = dsp.name
+                  and dsp.dataset_presenter_id = dp.dataset_presenter_id
+                  and dp.property = 'projectName'
             ]]>
             </sql>
     </sqlQuery>
