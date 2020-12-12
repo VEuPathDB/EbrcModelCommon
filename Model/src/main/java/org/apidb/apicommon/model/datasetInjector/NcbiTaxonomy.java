@@ -56,7 +56,7 @@ public class NcbiTaxonomy extends DatasetInjector {
             String projectName = map.get("projectName");
 
             if(!projectName.equals("UniDB")) {
-                injectTemplate("projectIdForPrimaryKeyGeneRecord");                
+		//                injectTemplate("projectIdForPrimaryKeyGeneRecord");                
             }
 
 
