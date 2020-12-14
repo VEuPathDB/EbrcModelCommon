@@ -1,7 +1,5 @@
 package org.apidb.apicommon.datasetPresenter;
 
-import org.apidb.apicommon.datasetPresenter.DatasetInjector;
-
 public class TestInjector extends DatasetInjector {
 
   @Override

@@ -1,9 +1,7 @@
 package org.apidb.apicommon.datasetPresenter;
 
-import org.apidb.apicommon.datasetPresenter.DatasetInjector;
-
 public class RnaSeqInjector extends  DatasetInjector {
-  
+
   /*
    * getPropValues() gets the property values provided by the datasetPresenter
    * xml file. they are validated against the names provided in
@@ -12,7 +10,6 @@ public class RnaSeqInjector extends  DatasetInjector {
    * this is just convenience, rather than tailoring the list per template, it
    * is safe to pass all in, because unneeded ones will be ignored.
    */
-
   @Override
   public void injectTemplates() {
       // TODO: split out param query templates (not urgent)

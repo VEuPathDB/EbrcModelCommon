@@ -323,6 +323,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!--
         <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Data Download Versions"
                queryRef="DatasetTables.DownloadVersion">
@@ -347,7 +348,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Updates"/>
             <columnAttribute name="dataset_sha1_digest" internal="true"/>     
         </table>
-
+-->
 
 
 
@@ -952,9 +953,12 @@ ON mm.dataset_id = counts.dataset_presenter_id
             <sql>
             <![CDATA[
                select dsp.dataset_presenter_id as dataset_id,
-                      ds.project_id
-                 from apidbTuning.DatasetPresenter dsp, apidb.datasource ds
+                      dp.value as project_id
+                 from apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
+                      apidbTuning.DatasetProperty dp
                 where ds.name (+) = dsp.name
+                  and dsp.dataset_presenter_id = dp.dataset_presenter_id
+                  and dp.property = 'projectName'
             ]]>
             </sql>
     </sqlQuery>
@@ -1096,7 +1100,7 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-
+<!--
 <sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
@@ -1119,7 +1123,7 @@ FROM (
 	    ]]>
         </sql>
 </sqlQuery>
-
+-->
 
 
 
