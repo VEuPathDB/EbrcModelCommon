@@ -964,6 +964,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                     projprop dp
                WHERE ds.name (+) = dsp.name
                AND dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
+            ]]>
             </sql>
     </sqlQuery>
 
