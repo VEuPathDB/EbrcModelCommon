@@ -959,7 +959,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                  WHERE property = 'projectName')
                SELECT dsp.dataset_presenter_id as dataset_id, dsp.name,
                       CASE WHEN (dp.project IS NOT NULL) THEN dp.project
-                           ELSE '' END  as project_id
+                           ELSE ' ' END  as project_id
                FROM apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
                     projprop dp
                WHERE ds.name (+) = dsp.name
