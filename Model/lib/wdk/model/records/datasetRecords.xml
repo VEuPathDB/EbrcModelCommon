@@ -964,15 +964,6 @@ ON mm.dataset_id = counts.dataset_presenter_id
                     projprop dp
                WHERE ds.name (+) = dsp.name
                AND dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
-
-               select dsp.dataset_presenter_id as dataset_id,
-                      dp.value as project_id
-                 from apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
-                      apidbTuning.DatasetProperty dp
-                where ds.name (+) = dsp.name
-                  and dsp.dataset_presenter_id = dp.dataset_presenter_id
-                  and dp.property = 'projectName'
-            ]]>
             </sql>
     </sqlQuery>
 
