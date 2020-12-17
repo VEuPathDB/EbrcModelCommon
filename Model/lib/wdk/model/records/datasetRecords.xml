@@ -950,6 +950,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
         <column name="dataset_id"/>
         <column name="project_id"/>
 
+
             <sql>
             <![CDATA[
                WITH projprop AS (
