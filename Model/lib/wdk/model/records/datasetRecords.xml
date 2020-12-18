@@ -323,7 +323,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-<!--
         <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Data Download Versions"
                queryRef="DatasetTables.DownloadVersion">
@@ -332,23 +331,27 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <columnAttribute name="version_number" inReportMaker="false" internal="true"/>
 
-            <linkAttribute name="version_number_link" inReportMaker="false" internal="false"
+            <textAttribute name="version_number_link" inReportMaker="false" internal="false"
                            displayName="Download link">
-                 <displayText>
-                    <![CDATA[ 
-			     $$version_number$$                                                                                
-		    ]]>
-                 </displayText>
-                 <url>
-                    <![CDATA[ @WEBAPP_BASE_URL@/downloads/release-$$build_number$$/$$dataset_sha1_digest$$ ]]>
-                 </url>
-            </linkAttribute>
+              <text>
+                <![CDATA[
+                  <button
+                    type="button"
+                    class="study-action link"
+                    data-study-id="$$dataset_id$$"
+                    data-args='{
+                      "type": "download",
+                      "downloadUrl": "@WEBAPP_BASE_URL@/downloads/release-$$build_number$$/$$dataset_sha1_digest$$"
+                    }'
+                  >$$version_number$$</button>
+                ]]>
+              </text>
+            </textAttribute>
             <columnAttribute name="build_number" displayName="Release #"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="note" displayName="Updates"/>
             <columnAttribute name="dataset_sha1_digest" internal="true"/>     
         </table>
--->
 
 
 
@@ -1105,7 +1108,6 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-<!--
 <sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
@@ -1128,7 +1130,6 @@ FROM (
 	    ]]>
         </sql>
 </sqlQuery>
--->
 
 
 
