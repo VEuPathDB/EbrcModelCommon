@@ -901,7 +901,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
                          'release ' || release_number || ' / ' || release_date as eupath_release
-                  from (select dh.dataset_presenter_id, dh.build_number, ebd.release_date,
+                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MM-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
                                                               order by ebd.release_number desc) rn
