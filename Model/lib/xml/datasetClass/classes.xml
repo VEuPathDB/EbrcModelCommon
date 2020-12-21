@@ -4897,9 +4897,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/proteins.fasta.gz --abbrev ${abbrev} --geneRegex "^>(\S+)" --outputFile @@dataDir@@/${abbrev}Proteome.fasta </unpack> 
+      <unpack>if [ -e @@dataDir@@/proteins.fasta.gz ]; then gunzip -d @@dataDir@@/proteins.fasta.gz; fi</unpack>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta   --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "^>\S+\s+(.*)"  --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/proteins.fasta --outputFile @@dataDir@@/exemplars.fasta --geneIdRegex 'gene=(\S+)' --proteinIdRegex '^>(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
+
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta --abbrev ${abbrev} --geneRegex "gene=(\S+)" --outputFile @@dataDir@@/${abbrev}Proteome.fasta </unpack> 
+
+      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/proteins.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
+
+      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
+
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/${abbrev}Proteome.fasta --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexDesc "product=(.+)"  --tableName "DoTS::ExternalAASequence"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
