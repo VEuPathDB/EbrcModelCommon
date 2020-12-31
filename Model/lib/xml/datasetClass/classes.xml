@@ -4883,12 +4883,17 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
-    <datasetLoader datasetName="${abbrev}_PeripheralProteomeFromManualDelivery_RSRC" 
+    <datasetLoader datasetName="${orthomclAbbrev}_PeripheralFromManualDelivery_RSRC" 
 		   plugin="ApiCommonData::Load::Plugin::LoadNothing"
 		   scope="dontcare"
 		   type="orthomclManualDelivery"
 		   subType="peripheral"
 		   version="${version}">
+
+      <manualGet fileOrDir="OrthoMCL/proteomes/${organismName}/${version}/final/proteins.fasta.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
 
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
