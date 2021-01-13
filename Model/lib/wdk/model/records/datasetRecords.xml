@@ -329,23 +329,22 @@ OR if the linkName and or URL require access to other attributes....also how to 
                queryRef="DatasetTables.StudyCharacteristicTable">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-
-            <columnAttribute name="disease" displayName="Disease"/>
-            <columnAttribute name="sex" displayName="Sex"/>
-	    <columnAttribute name="Sample_Type" displayName="Sample Type"/>
-            <columnAttribute name="Participant_Type" displayName="Population included"/>
-            <columnAttribute name="Study_Type"  displayName="Investigation Type"/>
-            <columnAttribute name="Study_Design"  displayName="Study Design"/>
-	    <columnAttribute name="Country"  displayName="Country"/>
-            <columnAttribute name="Years"  displayName="Years"/>
-            <columnAttribute name="HH_count"  displayName="Households"/>
-            <columnAttribute name="Part_count" displayName="Participants"/>
-            <columnAttribute name="Obser_count" displayName="Observations"/>
-            <columnAttribute name="Samp_count"  displayName="Samples"/>
-            <columnAttribute name="AdditionalData"  displayName="Additional Data"/>
-            <columnAttribute name="Age"  displayName="Age"/>
-            <columnAttribute name="WHO"  displayName="WHO indicator subdomain"/>
-            <columnAttribute name="ProjectName"  displayName="Project Name"/>
+            <columnAttribute name="disease" displayName="Disease" sortable="false"/>
+            <columnAttribute name="sex" displayName="Sex" sortable="false"/>
+	    <columnAttribute name="Sample_Type" displayName="Sample Type" sortable="false"/>
+            <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/>
+            <columnAttribute name="Study_Type"  displayName="Investigation Type" sortable="false"/>
+            <columnAttribute name="Study_Design"  displayName="Study Design" sortable="false"/>
+	    <columnAttribute name="Country"  displayName="Country" sortable="false"/>
+            <columnAttribute name="Years"  displayName="Years" sortable="false"/>
+            <columnAttribute name="HH_count"  displayName="Households" sortable="false"/>
+            <columnAttribute name="Part_count" displayName="Participants" sortable="false"/>
+            <columnAttribute name="Obser_count" displayName="Observations" sortable="false"/>
+            <columnAttribute name="Samp_count"  displayName="Samples" sortable="false"/>
+            <columnAttribute name="AdditionalData"  displayName="Additional Data" sortable="false"/>
+            <columnAttribute name="Age"  displayName="Age" sortable="false"/>
+            <columnAttribute name="WHO"  displayName="WHO indicator subdomain" sortable="false"/>
+            <columnAttribute name="ProjectName"  displayName="Project Name" sortable="false"/>
         </table>
 
 
