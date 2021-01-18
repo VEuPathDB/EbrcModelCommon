@@ -324,7 +324,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Study Characteristic -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="StudyCharacteristicTable"
+        <table name="StudyCharacteristicTable" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Study Characteristics"
                queryRef="DatasetTables.StudyCharacteristicTable">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -1139,7 +1139,7 @@ from apidbtuning.datasetnametaxon dsnt
 
 
 
-      <sqlQuery name="StudyCharacteristicTable"  isCacheable='false'>
+      <sqlQuery name="StudyCharacteristicTable"  isCacheable='false'  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="disease"/>
