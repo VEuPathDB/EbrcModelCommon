@@ -192,7 +192,7 @@
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
          <columnAttribute name="short_display_name" internal="true"/>
-         <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
+         <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,EuPathDB"/>
           <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
          <columnAttribute name="description" displayName="Description" sortable="false"
                           help="A full description of the dataset."/>
@@ -203,23 +203,21 @@
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
          <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # / Date"
+         <columnAttribute name="eupath_release" displayName="Release # / Date" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
          <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
          <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="pmids" displayName="Publications" sortable="false"
-                          help="PubMed links related to the dataset."/>
-         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"
-                          help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Contacts">
-         <columnAttribute name="contact" displayName="Contact"
+         <columnAttribute name="contact" displayName="Contact" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                           help="The person or organization that serves as a source of information concerning this dataset."/>
-         <columnAttribute name="institution" displayName="Contact Institution"
+         <columnAttribute name="institution" displayName="Contact Institution" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                           help="The institution where the Contact is located. "/>
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
