@@ -7,9 +7,12 @@ import org.apidb.apicommon.datasetPresenter.DatasetInjector;
 
 public class NcbiTaxonomy extends DatasetInjector {
 
+  private static final boolean SKIP_ORGANISM_DEFAULT_REFS = true;
 
   @Override
   public void injectTemplates() {
+
+    if (SKIP_ORGANISM_DEFAULT_REFS) return;
 
     Map<String, Map<String, String>> globalProps = getGlobalDatasetProperties();
 
@@ -21,202 +24,159 @@ public class NcbiTaxonomy extends DatasetInjector {
     Map<String, String> ecOrgs = new HashMap<String, String>();
 
     // Find all reference organisms and inject for organism param default
-    for (Map.Entry<String, Map<String, String>> props : globalProps.entrySet()) {
-        Map<String, String> map = props.getValue();
+    for (Map.Entry<String, Map<String, String>> propSetMap : globalProps.entrySet()) {
 
+      String propSetName = propSetMap.getKey();
+      Map<String, String> propSet = propSetMap.getValue();
 
-        if(props.getKey().endsWith("_epitope_IEDB_RSRC")) {
-            String organismAbbrev = map.get("organismAbbrev");
-            String orgPropsKey = organismAbbrev + "_RSRC";
+      if (propSetName.endsWith("_epitope_IEDB_RSRC")) {
 
-            // TODO:  this should be removed once the dataset files are correct.  Currently some FUngi ones are missing organism datasets
-            if(globalProps.get(orgPropsKey) != null) {
+        String organismAbbrev = getPropOrThrow(propSetName, propSet, "organismAbbrev");
+        String orgPropsKey = organismAbbrev + "_RSRC";
+        Map<String, String> orgProps = getOrgPropsOrThrow(globalProps, orgPropsKey);
 
-                String organismFullName = globalProps.get(orgPropsKey).get("organismFullName");
-                
-                String iedbProjectName = globalProps.get(orgPropsKey).get("projectName");
+        String projectName = getPropOrThrow(orgPropsKey, orgProps, "projectName");
+        String organismFullName = getPropOrThrow(orgPropsKey, orgProps, "organismFullName");
+        boolean isReferenceStrain = "true".equalsIgnoreCase(orgProps.get("isReferenceStrain"));
 
-                if(globalProps.get(orgPropsKey).get("isReferenceStrain").toLowerCase().equals("true")) {
-                    if(iedbOrgs.containsKey(iedbProjectName)) {
-                        String iedbOrgsString = iedbOrgs.get(iedbProjectName);
-                        iedbOrgsString = iedbOrgsString + "," + organismFullName;
-                        iedbOrgs.put(iedbProjectName, iedbOrgsString);
-                        iedbOrgs.put("EuPathDB", iedbOrgsString);
-                    }
-                    else {
-                        iedbOrgs.put(iedbProjectName, organismFullName);
-                        iedbOrgs.put("EuPathDB", organismFullName);
-                    }
-                }
-            }
+        if (isReferenceStrain) {
+          addOrganism(iedbOrgs, projectName, organismFullName);
+        }
+      }
+
+      if (propSet.containsKey("projectName") && propSetName.startsWith(propSet.get("projectName"))) {
+
+        String projectName = getPropOrThrow(propSetName, propSet, "projectName");
+
+        if (!projectName.equals("UniDB")) {
+          injectTemplate("projectIdForPrimaryKey");
         }
 
-        if(map.containsKey("projectName") && props.getKey().startsWith(map.get("projectName")) ) {
+        String organismAbbrev = getPropOrThrow(propSetName, propSet, "organismAbbrev");
+        String orgPropsKey = projectName + ":" + organismAbbrev + "_RSRC";
+        Map<String, String> orgProps = getOrgPropsOrThrow(globalProps, orgPropsKey);
 
-            String projectName = map.get("projectName");
+        String organismFullName = getPropOrThrow(orgPropsKey, orgProps, "organismFullName");
+        boolean isReferenceStrain = "true".equalsIgnoreCase(orgProps.get("isReferenceStrain"));
 
-            if(!projectName.equals("UniDB")) {
-		//                injectTemplate("projectIdForPrimaryKeyGeneRecord");                
-            }
-
-
-
-
-            if(props.getKey().endsWith("_Llinas_TransFactorBindingSites_GFF2_RSRC")) {
-                String organismAbbrev = map.get("organismAbbrev");
-                String orgPropsKey = projectName + ":" + organismAbbrev + "_RSRC";
-                String organismFullName = globalProps.get(orgPropsKey).get("organismFullName");
-
-                if(globalProps.get(orgPropsKey).get("isReferenceStrain").toLowerCase().equals("true")) {
-                    if(tfbsOrgs.containsKey(projectName)) {
-                        String tfbsOrgsString = tfbsOrgs.get(projectName);
-                        tfbsOrgsString = tfbsOrgsString + "," + organismFullName;
-                        tfbsOrgs.put(projectName, tfbsOrgsString);
-                        tfbsOrgs.put("EuPathDB", tfbsOrgsString);
-                    }
-                    else {
-                        tfbsOrgs.put(projectName, organismFullName);
-                        tfbsOrgs.put("EuPathDB", organismFullName);
-                    }
-                }
-            }
-
-
-            if(props.getKey().endsWith("_ECAssociations_RSRC")) {
-                String organismAbbrev = map.get("organismAbbrev");
-                String orgPropsKey = projectName + ":" + organismAbbrev + "_RSRC";
-                String organismFullName = globalProps.get(orgPropsKey).get("organismFullName");
-
-                if(globalProps.get(orgPropsKey).get("isReferenceStrain").toLowerCase().equals("true")) {
-                    if(ecOrgs.containsKey(projectName)) {
-                        String ecOrgsString = ecOrgs.get(projectName);
-                        ecOrgsString = ecOrgsString + "," + organismFullName;
-                        ecOrgs.put(projectName, ecOrgsString);
-                        ecOrgs.put("EuPathDB", ecOrgsString);
-                    }
-                    else {
-                        ecOrgs.put(projectName, organismFullName);
-                        ecOrgs.put("EuPathDB", organismFullName);
-                    }
-                }
-            }
-
-            if(map.containsKey("isReferenceStrain") && 
-               map.get("isReferenceStrain").toLowerCase().equals("true")) {
-            
-
-                String organismFullName = map.get("organismFullName");
-
-                if(map.get("isAnnotatedGenome").toLowerCase().equals("true")) {
-                    if(refOrgsAnnot.containsKey(projectName)) {
-                        String refOrgsAnnotString = refOrgsAnnot.get(projectName);
-                        
-                        refOrgsAnnotString = refOrgsAnnotString + "," + organismFullName;
-                        refOrgsAnnot.put(projectName, refOrgsAnnotString);
-                        refOrgsAnnot.put("EuPathDB", refOrgsAnnotString);
-                    }
-                    else {
-                        refOrgsAnnot.put(projectName, organismFullName);
-                        refOrgsAnnot.put("EuPathDB", organismFullName);
-                    }
-                }
-                
-                if(refOrgs.containsKey(projectName)) {
-                    String refOrgsString = refOrgs.get(projectName);
-                    
-                    refOrgsString = refOrgsString + "," + organismFullName;
-                    refOrgs.put(projectName, refOrgsString);
-                    refOrgs.put("EuPathDB", refOrgsString);
-                }
-                else {
-                    refOrgs.put(projectName, organismFullName);
-                    refOrgs.put("EuPathDB", organismFullName);
-                }
-            }
+        if (propSetName.endsWith("_Llinas_TransFactorBindingSites_GFF2_RSRC") && isReferenceStrain) {
+          addOrganism(tfbsOrgs, projectName, organismFullName);
         }
+
+        if (propSetName.endsWith("_ECAssociations_RSRC") && isReferenceStrain) {
+          addOrganism(ecOrgs, projectName, organismFullName);
+        }
+
+        if ("true".equalsIgnoreCase(propSet.get("isReferenceStrain"))) {
+
+          organismFullName = getPropOrThrow(propSetName, propSet, "organismFullName");
+
+          if ("true".equalsIgnoreCase(propSet.get("isAnnotatedGenome"))) {
+            addOrganism(refOrgsAnnot, projectName, organismFullName);
+          }
+
+          addOrganism(refOrgs, projectName, organismFullName);
+        }
+      }
     }
 
+    // Reference Organism Defaults
 
-
-    /**  Reference Organism Defaults
     // All Annotated Reference Organisms
     for (Map.Entry<String, String> refOrg : refOrgsAnnot.entrySet()) {
-        setPropValue("projectName", refOrg.getKey());
+      setPropValue("projectName", refOrg.getKey());
 
-        if(!refOrg.getKey().equals("EuPathDB")) {
-            setPropValue("referenceOrganisms", refOrg.getValue());
-                        injectTemplate("referenceOrganisms");
-            //        System.out.println("Injecting annot ref orgs:  "  + refOrg.getKey() + "\t" + refOrg.getValue());
-        }
-    }
-
+      if (!refOrg.getKey().equals("EuPathDB")) {
+      setPropValue("referenceOrganisms", refOrg.getValue());
+      injectTemplate("referenceOrganisms");
+      System.out.println("Injecting annot ref orgs: " + refOrg.getKey() + "\t" + refOrg.getValue()); } }
+    
     // All Reference Organisms
     for (Map.Entry<String, String> refOrg : refOrgs.entrySet()) {
-        setPropValue("projectName", refOrg.getKey());
-        setPropValue("referenceOrganisms", refOrg.getValue());
+      setPropValue("projectName", refOrg.getKey()); setPropValue("referenceOrganisms", refOrg.getValue());
+      System.out.println("Injecting ref orgs: " + refOrg.getKey() + "\t" + refOrg.getValue());
 
-        //        System.out.println("Injecting ref orgs:  "  + refOrg.getKey() + "\t" + refOrg.getValue());
-
-        if(refOrg.getKey().equals("EuPathDB")) {
-            //            injectTemplate("genomicOrganismOverridePortal");
-        }
-        else {
-            injectTemplate("genomicOrganismOverride");
-        }
+      if (refOrg.getKey().equals("EuPathDB")) { // injectTemplate("genomicOrganismOverridePortal"); } else {
+        injectTemplate("genomicOrganismOverride");
+      }
     }
 
     for (Map.Entry<String, String> refOrg : tfbsOrgs.entrySet()) {
-        setPropValue("projectName", refOrg.getKey());
-        setPropValue("referenceOrganisms", refOrg.getValue());
+      setPropValue("projectName", refOrg.getKey());
+      setPropValue("referenceOrganisms", refOrg.getValue());
 
-        if(refOrg.getKey().equals("EuPathDB")) {
-            //            injectTemplate("geneTfbsOrganismOverridePortal");
-        }
-        else {
-            injectTemplate("geneTfbsOrganismOverride");
-        }
-
+      if (refOrg.getKey().equals("EuPathDB")) {
+        injectTemplate("geneTfbsOrganismOverridePortal");
+      }
+      else {
+        injectTemplate("geneTfbsOrganismOverride");
+      }
     }
 
     for (Map.Entry<String, String> refOrg : ecOrgs.entrySet()) {
-        setPropValue("projectName", refOrg.getKey());
-        setPropValue("referenceOrganisms", refOrg.getValue());
+      setPropValue("projectName", refOrg.getKey());
+      setPropValue("referenceOrganisms", refOrg.getValue());
 
-        if(refOrg.getKey().equals("EuPathDB")) {
-            //            injectTemplate("geneEcOrganismOverridePortal");
-        }
-        else {
-            injectTemplate("geneEcOrganismOverride");
-        }
-
-
+      if (refOrg.getKey().equals("EuPathDB")) {
+        injectTemplate("geneEcOrganismOverridePortal");
+      }
+      else {
+        injectTemplate("geneEcOrganismOverride");
+      }
     }
-
 
     for (Map.Entry<String, String> refOrg : iedbOrgs.entrySet()) {
-        setPropValue("projectName", refOrg.getKey());
-        setPropValue("referenceOrganisms", refOrg.getValue());
+      setPropValue("projectName", refOrg.getKey());
+      setPropValue("referenceOrganisms", refOrg.getValue());
 
-        if(refOrg.getKey().equals("EuPathDB")) {
-            //            injectTemplate("geneEpitopeOrganismOverridePortal");
-        }
-        else {
-            injectTemplate("geneEpitopeOrganismOverride");
-        }
+      if (refOrg.getKey().equals("EuPathDB")) {
+        injectTemplate("geneEpitopeOrganismOverridePortal");
+      }
+      else {
+        injectTemplate("geneEpitopeOrganismOverride");
+      }
     }
-    **/
+  }
 
+  private static String getPropOrThrow(String propSetName, Map<String, String> propSet, String key) {
+    String value = propSet.get(key);
+    if (key == null) {
+      throw new RuntimeException("Prop set for '" + propSetName + "' does not contain property '" + key + "'.");
+    }
+    return value;
+  }
 
+  private static Map<String, String> getOrgPropsOrThrow(Map<String, Map<String, String>> globalProps, String orgPropsKey) {
+    Map<String,String> orgProps = globalProps.get(orgPropsKey);
+    if (orgProps == null) {
+      throw new RuntimeException("Global dataset properties does not contain an organism propset with key '" + orgPropsKey + "'.");
+    }
+    return orgProps;
+  }
+
+  private static void addOrganism(Map<String, String> orgMap, String projectName, String organismFullName) {
+    if (orgMap.containsKey(projectName)) {
+      String orgsString = orgMap.get(projectName);
+      orgsString = orgsString + "," + organismFullName;
+      orgMap.put(projectName, orgsString);
+      orgMap.put("EuPathDB", orgsString);
+    }
+    else {
+      orgMap.put(projectName, organismFullName);
+      orgMap.put("EuPathDB", organismFullName);
+    }
   }
 
   @Override
   public void addModelReferences() {
-      addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByTaxon"); 
-      addWdkReference("SequenceRecordClasses.SequenceRecordClass", "question", "GenomicSequenceQuestions.SequencesByTaxon"); 
-      addWdkReference("PopsetRecordClasses.PopsetRecordClass", "question", "PopsetQuestions.PopsetByTaxon"); 
-      addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "attribute", "overview"); 
+    addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question",
+        "GeneQuestions.GenesByTaxon");
+    addWdkReference("SequenceRecordClasses.SequenceRecordClass", "question",
+        "GenomicSequenceQuestions.SequencesByTaxon");
+    addWdkReference("PopsetRecordClasses.PopsetRecordClass", "question", "PopsetQuestions.PopsetByTaxon");
+    addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "attribute", "overview");
 
-      addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "Taxonomy");
+    addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "Taxonomy");
   }
 
   // second column is for documentation
@@ -225,6 +185,5 @@ public class NcbiTaxonomy extends DatasetInjector {
     String[][] propertiesDeclaration = {};
     return propertiesDeclaration;
   }
-
 
 }
