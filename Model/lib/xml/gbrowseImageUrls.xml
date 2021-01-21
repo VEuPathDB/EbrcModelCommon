@@ -421,6 +421,7 @@
   <subtrackSet name="Pucciniomycetes_gene" project="FungiDB" suffixes="_span;_gene">
     <track>mlar98AG31</track>
     <track>pgraCRL75-36-700-3</track>
+    <track>pstr93-210</track>
     <track>ptri1-1BBBDRace1</track>
   </subtrackSet>
 
@@ -456,6 +457,7 @@
     <track>cglaCBS138</track>
     <track>chaeB11899</track>
     <track>cparCDC317</track>
+    <track>cpseB12108</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
     <track>scerS288c</track>
@@ -472,6 +474,7 @@
 
   <subtrackSet name="Herpotrichiellaceae" project="FungiDB" suffixes="_span;_gene">
     <track>eoliCBS72588</track>
+    <track>ederNIHUT8656</track>
     <track>emesCBS40295</track>
     <track>fpedCBS271-37</track>
     <track>ccarKSF</track>
@@ -519,6 +522,8 @@
     <track>aochIBT24754</track>
     <track>asteIBT23096</track>
     <track>afisNRRL181</track>
+    <track>alenIFM54703</track>
+    <track>atheHMRAF39</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -612,6 +617,7 @@
     <track>sreiSRZ2</track>
     <track>mgloCBS7966</track>
     <track>mresKCTC27527</track>
+    <track>mresCBS7877</track>
   </subtrackSet>
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -667,6 +673,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
+    <org abbrev="pstr93-210" organism="Puccinia striiformis strain 93-210"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -722,6 +729,7 @@
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
+    <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
@@ -759,6 +767,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
+    <org abbrev="ederNIHUT8656" organism="Exophiala dermatitidis NIH/UT8656"/>
     <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
@@ -820,6 +829,8 @@
     <org abbrev="aochIBT24754" organism="Aspergillus ochraceoroseus IBT 24754"/>
     <org abbrev="asteIBT23096" organism="Aspergillus steynii IBT 23096"/>
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
+    <org abbrev="alenIFM54703" organism="Aspergillus lentulus strain IFM 54703"/>
+    <org abbrev="atheHMRAF39" organism="Aspergillus thermomutatus strain HMR AF 39"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -959,6 +970,7 @@
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
     <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
+    <org abbrev="mresCBS7877" organism="Malassezia restricta CBS 7877"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
