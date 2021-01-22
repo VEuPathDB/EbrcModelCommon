@@ -528,6 +528,9 @@ public abstract class DatasetInjector {
     }
 
     Map<String, String> exptProps = globalProps.get(_datasetName);
+    if (exptProps == null) {
+      throw new RuntimeException("No global props exist for dataset '" + _datasetName + "'.");
+    }
     String exptName = "";
     if (exptProps.containsKey("experimentName")) {
         exptName = exptProps.get("experimentName");
