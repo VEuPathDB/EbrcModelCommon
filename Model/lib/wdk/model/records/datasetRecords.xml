@@ -215,9 +215,9 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Contacts">
-         <columnAttribute name="contact" displayName="Contact" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+         <columnAttribute name="contact" displayName="Contact" 
                           help="The person or organization that serves as a source of information concerning this dataset."/>
-         <columnAttribute name="institution" displayName="Contact Institution" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+         <columnAttribute name="institution" displayName="Contact Institution" 
                           help="The institution where the Contact is located. "/>
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
