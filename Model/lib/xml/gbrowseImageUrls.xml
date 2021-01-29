@@ -460,6 +460,7 @@
     <track>cpseB12108</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
+    <track>huvaAWRI3580</track>
     <track>scerS288c</track>
     <track>ylipCLIB122</track>
     <track>ylipCLIB89W29</track>
@@ -530,6 +531,7 @@
     <track>ncraOR74A</track>
     <track>ntetFGSC2508</track>
     <track>ndisFGSC8579</track>
+    <track>ttheATCC42464</track>
     <track>smack-hell</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
@@ -651,6 +653,8 @@
     <track>hcapG217B</track>
     <track>hcapH88</track>
     <track>hcapH143</track>
+    <track>bderER-3</track>
+    <track>bgilSLH14081</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
@@ -732,6 +736,7 @@
     <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
+    <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
@@ -841,6 +846,7 @@
     <org abbrev="ncraOR74A" organism="Neurospora crassa OR74A"/>
     <org abbrev="ntetFGSC2508" organism="Neurospora tetrasperma FGSC 2508"/>
     <org abbrev="ndisFGSC8579" organism="Neurospora discreta FGSC 8579"/>
+    <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
@@ -1028,6 +1034,8 @@
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
     <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
+    <org abbrev = "bderER-3" organism="Blastomyces dermatitidis ER-3"/>
+    <org abbrev = "bgilSLH14081" organism="Blastomyces gilchristii SLH14081"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
