@@ -1780,7 +1780,12 @@
   <subtrackSet project="VectorBase" name="Culicinae" suffixes="_span;_gene">
     <track>aaegLVP_AGWG</track>
     <track>aalbFoshan</track>
+    <track>aalbFPA</track>
     <track>cquiJohannesburg</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Ceratopogonidae" suffixes="_span;_gene">
+    <track>csonPIR-s-3</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Gastropoda" suffixes="_span;_gene">
@@ -1855,12 +1860,20 @@
   <url project="VectorBase" type="synteny">
     <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
+    <org organism="Aedes albopictus isolate FPA" abbrev="aalbFPA" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
+      <subtrack set="Ceratopogonidae" />
     </track>
   </url>
 
+  <url project="VectorBase" type="synteny">
+    <org organism="Culicoides sonorensis strain PIR-s-3" abbrev="csonPIR-s-3" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Ceratopogonidae" />
+      <subtrack set="Culicinae" />
+    </track>
 
   <!-- TODO:  add at least one more synteny track for this organism -->
   <url project="VectorBase" type="synteny">
