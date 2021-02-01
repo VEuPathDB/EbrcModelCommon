@@ -198,6 +198,7 @@
       <subtrack set="human_gene" />
       <subtrack set="rodent_gene" />
       <subtrack set="aves_gene" />
+      <subtrack set="Hepatocystis_gene" />
     </track>
   </url>
 
@@ -236,6 +237,7 @@
       <subtrack set="human_genomic" />
       <subtrack set="rodent_genomic" />
       <subtrack set="aves_genomic" />
+      <subtrack set="Hepatocystis_genomic" />
     </track>
     <track name="GeneDensity" />
   </url>
@@ -254,6 +256,7 @@
       <subtrack set="rodent_gene" />
       <subtrack set="aves_gene" />
       <subtrack set="human_gene" />
+      <subtrack set="Hepatocystis_gene" />
     </track>
   </url>
 
@@ -271,6 +274,7 @@
       <subtrack set="rodent_genomic" />
       <subtrack set="aves_genomic" />
       <subtrack set="human_genomic" />
+      <subtrack set="Hepatocystis_genomic" />
     </track>
     <track name="GeneDensity" />
   </url>
