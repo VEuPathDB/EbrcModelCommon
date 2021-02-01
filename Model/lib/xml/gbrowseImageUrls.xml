@@ -108,6 +108,14 @@
     <track>prelSGS1-like</track>
   </subtrackSet>
 
+  <subtrackSet project="PlasmoDB" name="Hepatocystis_gene" suffixes="_span;_gene">
+    <track>hpil2019</track>
+  </subtrackSet>
+
+  <subtrackSet project="PlasmoDB" name="Hepatocystis_genomic" suffixes="_span">
+    <track>hpil2019</track>
+  </subtrackSet>
+
   <subtrackSet project="PlasmoDB" name="laverania_gene" suffixes="_span;_gene">
     <track>padlG01</track>
     <track>pbilG01</track>
@@ -284,6 +292,27 @@
     <track name="Scaffolds" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="aves_genomic" />
+      <subtrack set="rodent_genomic" />
+      <subtrack set="human_genomic" />
+    </track>
+    <track name="GeneDensity" />
+  </url>
+
+  <url project="PlasmoDB" type="synteny">
+    <org organism="Hepatocystis sp. ex Piliocolobus tephrosceles 2019" abbrev="hpil2019" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Hepatocystis_gene" />
+      <subtrack set="rodent_gene" />
+      <subtrack set="human_gene" />
+    </track>
+  </url>
+
+  <url project="PlasmoDB" type="genomic">
+    <org organism="Hepatocystis sp. ex Piliocolobus tephrosceles 2019" abbrev="hpil2019" />
+    <track name="Scaffolds" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Hepatocystis_genomic" />
       <subtrack set="rodent_genomic" />
       <subtrack set="human_genomic" />
     </track>
