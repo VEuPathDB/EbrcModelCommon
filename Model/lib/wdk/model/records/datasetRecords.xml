@@ -202,7 +202,7 @@
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
          <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # / Date" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+         <columnAttribute name="eupath_release" displayName="Release # / Date" 
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
@@ -927,7 +927,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
                          'release ' || release_number || ' / ' || release_date as eupath_release
-                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MM-DD') as release_date,
+                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
                                                               order by ebd.release_number desc) rn
