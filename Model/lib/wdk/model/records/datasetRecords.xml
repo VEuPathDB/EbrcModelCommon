@@ -194,8 +194,7 @@
          <columnAttribute name="short_display_name" internal="true"/>
          <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,EuPathDB"/>
           <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
-         <columnAttribute name="description" displayName="Description" sortable="false"
-                          help="A full description of the dataset."/>
+         <columnAttribute name="description" displayName="Description" sortable="false"/>
          <columnAttribute name="protocol" internal="true"/>
          <columnAttribute name="usage" displayName="Usage" internal="true"/>
          <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
@@ -203,7 +202,7 @@
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
          <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # / Date" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+         <columnAttribute name="eupath_release" displayName="Release # / Date" 
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
@@ -340,7 +339,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="Obser_count" displayName="Observations" sortable="false"/>
             <columnAttribute name="Samp_count"  displayName="Samples" sortable="false"/>
             <columnAttribute name="AdditionalData"  displayName="Additional Data" sortable="false"/>
-            <columnAttribute name="Age"  displayName="Age" sortable="false"/>
+           <!-- <columnAttribute name="Age"  displayName="Age" sortable="false"/> -->
             <columnAttribute name="WHO"  displayName="WHO indicator subdomain" sortable="false"/>
             <columnAttribute name="ProjectName"  displayName="Project Name" sortable="false"/>
         </table>
@@ -351,7 +350,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
-               displayName="Data Download Versions"
+               displayName="Data Versions"
                queryRef="DatasetTables.DownloadVersion">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
@@ -928,7 +927,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
                          'release ' || release_number || ' / ' || release_date as eupath_release
-                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MM-DD') as release_date,
+                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
                                                               order by ebd.release_number desc) rn
@@ -1153,7 +1152,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="Obser_count" columnType="number"/>
             <column name="Samp_count" columnType="number"/>
             <column name="AdditionalData"/>
-            <column name="Age"/>
+           <!-- <column name="Age"/> -->
             <column name="WHO"/>
             <column name="ProjectName"/>
 	    
@@ -1257,7 +1256,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
             <![CDATA[                                                                                                          
 SELECT dataset_name, dataset_id, build_number, release_date , 'Version ' || ROW_NUMBER() OVER (PARTITION BY dataset_id ORDER BY dataset_id, build_number) as version_number, note, dataset_sha1_digest                                                                
 FROM (                                                                                                                          
-   SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MM-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number                                                 
+   SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MON-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number                                                 
    FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp                        
    WHERE dh.build_number = bd.build_number                                                                                       
    AND  dh.dataset_presenter_id = dp.dataset_presenter_id                                                                        
