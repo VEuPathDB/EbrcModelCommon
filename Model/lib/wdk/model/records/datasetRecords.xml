@@ -185,6 +185,12 @@
          <columnAttribute name="ProjectName" displayName="Project Name"/>
        </attributeQueryRef>
 
+      <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB,AllClinEpiDB">
+	 <columnAttribute name="total" displayName="Total requests" type="number" />
+         <columnAttribute name="approved" displayName="Approved requests" type="number"/>
+         <columnAttribute name="percent_approved" displayName="Percent approved"/>
+       </attributeQueryRef>
+
 
 
        <attributeQueryRef ref="DatasetAttributes.All">
@@ -228,7 +234,7 @@
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
-	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
+	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions,total,approved,percent_approved"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
@@ -535,17 +541,31 @@ OR if the linkName and or URL require access to other attributes....also how to 
 -->
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- request stats table -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	<table name="AccessRequestStats" includeProjects="ClinEpiDB,AllClinEpiDB"
+               displayName="Study Request Stats"
+               queryRef="DatasetTables.AccessRequestStats">
+          <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+          <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+          <columnAttribute name="total" displayName="Total requests"/>
+	  <columnAttribute name="approved" displayName="Approved requests"/>
+	  <columnAttribute name="approved_percent" displayName="Percent approved"/>
+
+        </table>
+
+       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- request table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-	<table name="AccessRequest" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="AccessRequest" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Study Request Records"
                queryRef="DatasetTables.AccessRequest">
           <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
           <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
           <columnAttribute name="name" displayName="Name"/>
-	  <columnAttribute name="organization" displayName="Organization"/>
-	  <columnAttribute name="start_date" displayName="Date"/>
-	  <columnAttribute name="purpose" displayName="Purpose"/>
+          <columnAttribute name="organization" displayName="Organization"/>
+          <columnAttribute name="start_date" displayName="Date"/>
+          <columnAttribute name="purpose" displayName="Purpose"/>
 
         </table>
 
@@ -777,6 +797,43 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             </sql>
       </sqlQuery>
 
+
+
+    <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
+        <column name="dataset_id"/>
+        <column name="total"/>
+        <column name="approved"/>
+        <column name="percent_approved"/>
+
+        <sql>
+          <![CDATA[
+select pres.dataset_presenter_id as dataset_id, 
+       CASE
+         WHEN total = 0 THEN ''
+         ELSE CAST(total AS VARCHAR(10))
+       END as total,
+       CASE
+         WHEN total = 0 and approved = 0 THEN ''
+         ELSE CAST(approved AS VARCHAR(10))
+       END as approved,
+       CASE  
+         WHEN total > 0  THEN ROUND(100*approved/total,0)||'%'
+         ELSE ''
+       END as percent_approved
+from   apidbtuning.datasetpresenter pres
+LEFT OUTER JOIN  (
+  select DATASET_PRESENTER_ID,  
+         count(case when purpose is not null then 1 end) as total, 
+         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved
+  from studyaccess.end_users@ACCT_DBLINK@ eu
+  group by dataset_presenter_id
+) mycounts
+ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
+
+
+      ]]>
+        </sql>
+      </sqlQuery>
 
 
 
@@ -1266,6 +1323,36 @@ FROM (
 	    ]]>
         </sql>
 </sqlQuery>
+
+
+      <sqlQuery name="AccessRequestStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
+            <column name="dataset_id"/>
+            <column name="dataset_name"/>
+            <column name="total"/>
+            <column name="approved"/>
+            <column name="approved_percent"/>
+            <sql>
+              <![CDATA[
+
+
+select pres.dataset_presenter_id as dataset_id, pres.name as dataset_name, total, approved, ROUND(100*approved/total,0)||'%' as approved_percent
+from  apidbtuning.datasetpresenter pres,
+(
+  select DATASET_PRESENTER_ID,  
+         count(case when purpose is not null then 1 end) as total, 
+         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved
+  from studyaccess.end_users@ACCT_DBLINK@ eu
+  group by dataset_presenter_id
+) mycounts
+where pres.dataset_presenter_id = mycounts.dataset_presenter_id
+and total != 0
+
+               ]]>
+
+            </sql>
+      </sqlQuery>
+
+
 
 
 
