@@ -546,7 +546,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- request stats table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 	<table name="AccessRequestStats" includeProjects="ClinEpiDB,AllClinEpiDB"
-               displayName="Data access statistics"
+               displayName="Data Access Statistics
+"
                queryRef="DatasetTables.AccessRequestStats">
           <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
           <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
