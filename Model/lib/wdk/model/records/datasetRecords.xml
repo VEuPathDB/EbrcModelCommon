@@ -175,6 +175,7 @@
          <columnAttribute name="Study_Design" displayName="Study Design"/>
          <columnAttribute name="Country" displayName="Country"/>
          <columnAttribute name="Years" displayName="Years"/>
+         <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
          <columnAttribute name="HH_count" displayName="Households" type="number"/>
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
          <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
@@ -334,6 +335,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="Study_Design"  displayName="Study Design" sortable="false"/>
 	    <columnAttribute name="Country"  displayName="Country" sortable="false"/>
             <columnAttribute name="Years"  displayName="Years" sortable="false"/>
+            <columnAttribute name="Variable_count" displayName="Variables" sortable="false"/>
             <columnAttribute name="HH_count"  displayName="Households" sortable="false"/>
             <columnAttribute name="Part_count" displayName="Participants" sortable="false"/>
             <columnAttribute name="Obser_count" displayName="Observations" sortable="false"/>
@@ -791,6 +793,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <column name="Study_Design"/>
 	<column name="Country"/>
         <column name="Years"/>
+        <column name="Variable_count" columnType="number"/>
         <column name="HH_count" columnType="number"/>
         <column name="Part_count" columnType="number"/>
         <column name="Obser_count" columnType="number"/>
@@ -803,7 +806,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <sql>
           <![CDATA[
 
-select mm.*,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
+select mm.*,TRIM(TO_CHAR(counts.Variable_count, '999,999,999,999,999')) Variable_count,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
 from (
 
   select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
@@ -868,11 +871,11 @@ pivot
 
 left join
 
-(select dataset_presenter_id, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
+(select dataset_presenter_id, Variable_count, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
 pivot
   (
   max(record_count)
-  for record_type in ('Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
+  for record_type in ('Variable' as Variable_count, 'Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
   )
 
 ORDER BY dataset_presenter_id) counts
@@ -1159,7 +1162,7 @@ from apidbtuning.datasetnametaxon dsnt
             <sql>
             <![CDATA[
             
-select mm.*,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
+select mm.*,TRIM(TO_CHAR(counts.Variable_count, '999,999,999,999,999')) Variable_count, TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
 from (
 
   select pres.dataset_presenter_id as dataset_id, pres.name as dataset_name, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
@@ -1224,11 +1227,11 @@ pivot
 
 left join
 
-(select dataset_presenter_id, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
+(select dataset_presenter_id, Variable_count, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
 pivot
   (
   max(record_count)
-  for record_type in ('Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
+  for record_type in ('Variable' as Variable_count, 'Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
   )
 
 ORDER BY dataset_presenter_id) counts
