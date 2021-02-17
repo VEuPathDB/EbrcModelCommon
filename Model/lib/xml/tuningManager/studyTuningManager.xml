@@ -2292,6 +2292,19 @@ UNION  -- NOTE: the following pulls in insect sample data
     </sql>
     <sql>
       <![CDATA[
+        INSERT INTO RecordCount&1
+        SELECT tp.dataset_presenter_id,dp.name,dp.display_name, 'Variable' AS RECORD_TYPE, count(o.ONTOLOGY_SYNONYM_ID) AS RECORD_COUNT
+        FROM apidbtuning.DATASETProperty tp
+        LEFT JOIN apidbtuning.datasetpresenter dp ON tp.dataset_presenter_id=dp.dataset_presenter_id
+        LEFT JOIN sres.EXTERNALDATABASE e ON e.name= 'OntologyTerm_' || tp.value || '_RSRC'
+        LEFT JOIN sres.EXTERNALDATABASERELEASE rel ON e.EXTERNAL_DATABASE_ID = rel.EXTERNAL_DATABASE_ID 
+        LEFT JOIN sres.ONTOLOGYSYNONYM o ON rel.EXTERNAL_DATABASE_RELEASE_ID = o.EXTERNAL_DATABASE_RELEASE_ID 
+        WHERE tp.property='webDisplayOntologyName'
+        GROUP BY tp.dataset_presenter_id,dp.name,dp.display_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create index rcd_ct_ix&1
         on RecordCount&1 (dataset_presenter_id, record_type)
         tablespace indx
