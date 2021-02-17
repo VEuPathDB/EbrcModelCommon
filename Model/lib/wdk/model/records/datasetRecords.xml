@@ -1209,6 +1209,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="Study_Design"/>
 	    <column name="Country"/>
             <column name="Years"/>
+            <column name="Variable_count" columnType="number"/>
             <column name="HH_count" columnType="number"/>
             <column name="Part_count" columnType="number"/>
             <column name="Obser_count" columnType="number"/>
