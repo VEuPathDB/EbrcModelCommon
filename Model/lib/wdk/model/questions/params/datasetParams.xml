@@ -212,7 +212,7 @@ select  term, internal from (
                                                                                            
   select distinct a.user_dataset_id as term1, a.user_dataset_id as internal1, name as internal, name as term, name as display, 3 as num                                                                                                                        
   from ApiDbUserDatasets.installedUserDataset i, ApiDbUserDatasets.UserDatasetAccessControl a, ApiDbUserDatasets.UD_GeneId g     
-  where a.user_id =  '222043440'   
+  where a.user_id =  '1926010'  ----- should also update user_id in ApiCommonModel/Model/lib/wdk/model/stepAnalysisParams.xml   
   and a.user_dataset_id = i.user_dataset_id
   and g.user_dataset_id = i.user_dataset_id                                                                                     
   and (i.is_invalid is null or i.is_invalid = 0)                                                                                  
