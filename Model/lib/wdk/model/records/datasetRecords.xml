@@ -416,9 +416,43 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </table>
 -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <!-- Publications -->
+        <!-- Publications (display name for ClinEpiDB) -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="Publications"
+        <table name="PublicationsClinEpiDB"
+	       includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               displayName="Selected Publications"
+               queryRef="DatasetTables.Publications">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
+            <columnAttribute name="citation" internal="true"/>
+
+
+            <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
+                           displayName="PubMed Link">
+
+                 <displayText>
+                    <![CDATA[
+                    $$citation$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                             http://www.ncbi.nlm.nih.gov/pubmed/$$pmid$$
+                    ]]>
+                 </url>
+            </linkAttribute>
+
+
+        </table>
+
+
+
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Publications (display name for VEuPathDB) -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="PublicationsVEuPathDB"
+	       excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Associated Publications"
                queryRef="DatasetTables.Publications">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -443,6 +477,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
 
         </table>
+
 
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
