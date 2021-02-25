@@ -418,9 +418,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Publications (display name for ClinEpiDB) -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="PublicationsClinEpiDB"
-	       includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
-               displayName="Selected Publications"
+        <table name="Publications"
+               displayName="Selected Publications" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                queryRef="DatasetTables.Publications">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
@@ -451,7 +450,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Publications (display name for VEuPathDB) -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="PublicationsVEuPathDB"
+        <table name="Publications"
 	       excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Associated Publications"
                queryRef="DatasetTables.Publications">
