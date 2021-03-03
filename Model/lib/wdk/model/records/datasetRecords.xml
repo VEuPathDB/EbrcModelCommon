@@ -235,7 +235,7 @@
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
-	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions,total,approved,percent_approved"
+	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
