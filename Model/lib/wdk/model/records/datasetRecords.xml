@@ -190,6 +190,7 @@
 	 <columnAttribute name="total" displayName="Total requests" type="number" />
          <columnAttribute name="approved" displayName="Approved requests" type="number"/>
          <columnAttribute name="percent_approved" displayName="Percent approved"/>
+         <columnAttribute name="sort_order" internal="true" displayName="Total for sorting"/>
        </attributeQueryRef>
 
 
@@ -842,31 +843,71 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
         <column name="total"/>
         <column name="approved"/>
         <column name="percent_approved"/>
+	<column name="sort_order"/>
 
         <sql>
           <![CDATA[
-select pres.dataset_presenter_id as dataset_id, 
-       CASE
-         WHEN total = 0 THEN ''
-         ELSE CAST(total AS VARCHAR(10))
-       END as total,
-       CASE
-         WHEN total = 0 and approved = 0 THEN ''
-         ELSE CAST(approved AS VARCHAR(10))
-       END as approved,
-       CASE  
-         WHEN total > 0  THEN ROUND(100*approved/total,0)||'%'
-         ELSE ''
-       END as percent_approved
-from   apidbtuning.datasetpresenter pres
-LEFT OUTER JOIN  (
-  select DATASET_PRESENTER_ID,  
-         count(case when purpose is not null then 1 end) as total, 
-         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved
-  from studyaccess.end_users@ACCT_DBLINK@ eu
-  group by dataset_presenter_id
-) mycounts
-ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
+select * from (
+select dataset_id, total,approved, percent_approved, total as sort_order from (
+select pres.dataset_presenter_id as dataset_id,                                                                                 
+     CASE                                                                                                                         
+     WHEN total = 0 THEN 'N/A'                                                                                                     
+     ELSE CAST(total AS VARCHAR(10))                                                                                            
+     END as total,                                                                                                                
+     CASE                                                                                                                         
+     WHEN total = 0 and approved = 0 THEN 'N/A'                                                                                    
+     ELSE CAST(approved AS VARCHAR(10))                                                                                         
+     END as approved,                                                                                                             
+     CASE                                                                                                                         
+     WHEN total > 0  THEN ROUND(100*approved/total,0)||'%'                                                                      
+     ELSE 'N/A'                                                                                                                    
+     END as percent_approved                                                                                                      
+from  apidbtuning.datasetpresenter pres   
+
+LEFT OUTER JOIN  (                                                                                                               
+
+select DATASET_PRESENTER_ID,                                                                                                      
+count(case when purpose is not null then 1 end) as total,                                                                  
+count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved                                     
+from studyaccess.end_users@acctdbN.profile  eu                                                                                        
+group by dataset_presenter_id                                                                                                     
+) mycounts                                                                                                                          
+ON pres.dataset_presenter_id = mycounts.dataset_presenter_id      
+)  where total != 'N/A' and total is not null
+order by lpad(sort_order, 5) DESC, lpad(total, 5) DESC
+) 
+
+UNION ALL
+
+select * from (
+select dataset_id, total,approved, percent_approved, total as sort_order from (
+select pres.dataset_presenter_id as dataset_id,                                                                                  
+      CASE                                                                                                                         
+      WHEN total = 0 or total is null THEN 'N/A'                                                                                 
+      ELSE CAST(total AS VARCHAR(10))                                                                                            
+      END as total,                                                                                                                
+      CASE                                                                                                                         
+      WHEN (total = 0 or total is null) and approved = 0 or approved is null THEN 'N/A'                                 
+      ELSE CAST(approved AS VARCHAR(10))                                                                                         
+      END as approved,                                                                                                             
+      CASE                                                                                                                         
+      WHEN total > 0  THEN ROUND(100*approved/total,0)||'%'                                                                      
+      ELSE 'N/A'                                                                                                               
+      END as percent_approved                                                                                                      
+      from   apidbtuning.datasetpresenter pres   
+      
+LEFT OUTER JOIN  (                                                                                                        
+
+select DATASET_PRESENTER_ID,                                                                                                      
+count(case when purpose is not null then 1 end) as total,                                                                  
+count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved                                     
+from studyaccess.end_users@acctdbN.profile  eu                                                                                        
+group by dataset_presenter_id                                                                                                     
+) mycounts                                                                                                                          
+ON pres.dataset_presenter_id = mycounts.dataset_presenter_id      
+)  where total = 'N/A' or total is null
+order by lpad(sort_order, 5)  DESC
+) 
 
 
       ]]>
