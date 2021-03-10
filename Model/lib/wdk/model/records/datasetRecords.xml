@@ -869,7 +869,7 @@ LEFT OUTER JOIN  (
 select DATASET_PRESENTER_ID,                                                                                                      
 count(case when purpose is not null then 1 end) as total,                                                                  
 count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved                                     
-from studyaccess.end_users@acctdbN.profile  eu                                                                                        
+from studyaccess.end_users@ACCT_DBLINK@.profile  eu
 group by dataset_presenter_id                                                                                                     
 ) mycounts                                                                                                                          
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id      
@@ -901,7 +901,7 @@ LEFT OUTER JOIN  (
 select DATASET_PRESENTER_ID,                                                                                                      
 count(case when purpose is not null then 1 end) as total,                                                                  
 count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved                                     
-from studyaccess.end_users@acctdbN.profile  eu                                                                                        
+from studyaccess.end_users@ACCT_DBLINK@.profile  eu
 group by dataset_presenter_id                                                                                                     
 ) mycounts                                                                                                                          
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id      
