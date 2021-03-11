@@ -1157,11 +1157,10 @@
   <datasetClass class="unidbComponentProject" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
-    <prop name="databaseInstance"/>
     <prop name="workflowVersion"/>
 
     <graphTemplateFile name="unidb.xml"/>
-    <datasetLoader datasetName="${projectName}_${databaseInstance}_${workflowVersion}_UniDB_RSRC"
+    <datasetLoader datasetName="${projectName}_${workflowVersion}_UniDB_RSRC"
               version="${workflowVersion}"
 	            plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="global"
@@ -1169,7 +1168,7 @@
               subType=""
               organismAbbrev="">
 
-      <manualGet fileOrDir="${projectName}/unidb/${databaseInstance}/${workflowVersion}/final">
+      <manualGet fileOrDir="${projectName}/unidb/${workflowVersion}/final">
         <dir name="final">
         </dir>
       </manualGet>
