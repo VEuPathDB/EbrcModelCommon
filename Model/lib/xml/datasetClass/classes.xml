@@ -1373,7 +1373,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="projectName">&projectName;</prop>
     <prop name="name"/>
     <prop name="version"/>
-    <prop name="samplesInfoFile"/>
+    <prop name="samplesInfoFileName"/>
     <prop name="sampleToWgsFastqFileName"/>
     <prop name="runDADA2"/>
     <prop name="runHumann"/>
@@ -1397,7 +1397,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>if test "${runDADA2}" = true ; then find @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  ; fi </unpack>
       <unpack>if test "${runDADA2}" = true ; then rmdir -v --ignore-fail-on-non-empty @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery; fi</unpack>
       
-<unpack>if test "${samplesInfoFile}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${samplesInfoFile} @@dataDir@@/DADA2_${name}/${samplesInfoFile} ; fi </unpack>
+<unpack>if test "${samplesInfoFileName}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${samplesInfoFileName} @@dataDir@@/DADA2_${name}/${samplesInfoFileName} ; fi </unpack>
+<unpack>if test "${sraSampleAndRunIdsFileName}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${sraSampleAndRunIdsFileName} @@dataDir@@/DADA2_${name}/${sraSampleAndRunIdsFileName} ; fi </unpack>
       <unpack>if test "${sampleToWgsFastqFileName}" ; then mv @@dataDir@@/staging/${sampleToWgsFastqFileName} @@dataDir@@/Humann_${name}/${sampleToWgsFastqFileName} ; fi </unpack>
 
       <unpack>rmdir -v @@dataDir@@/staging</unpack>
