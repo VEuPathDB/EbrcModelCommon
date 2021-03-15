@@ -2629,7 +2629,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="productNames.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_function_${name}_product_names_RSRC" version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertTranscriptProductFromTabFile"
+	      plugin="ApiCommonData::Load::Plugin::InsertProductFromTabFile"
               scope="organism"
               type="gene_annotation"
               organismAbbrev="${organismAbbrev}">
