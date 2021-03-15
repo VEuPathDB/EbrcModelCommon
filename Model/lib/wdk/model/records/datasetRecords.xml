@@ -144,9 +144,11 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility"
-           help="Some studies require that the user requests approval to access certain functionality (they will be prompted when attempting the action):
-                 if 'controlled', to download; if 'protected', to access specific search results and download; if 'private', to run a search or analysis and download.
-                 If a study is classified as 'limited', it will behave as 'controlled' when the user is logged in, and as 'protected' for a guest user. "/>
+           help="Some studies require that the user requests approval to access certain functionality 
+(they will be prompted when attempting the action): 
+if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
+In controlled studies the user will be allowed to access the data automatically upon request submission,
+while in protected and private studies there will be human intervention in the decision."/>
          <columnAttribute name="policy_url" internal="true"/>
          <columnAttribute name="card_headline" internal="true"/>
          <columnAttribute name="card_points" internal="true"/>
