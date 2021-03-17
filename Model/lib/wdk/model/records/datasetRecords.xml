@@ -187,12 +187,13 @@
        </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB,AllClinEpiDB">
-	 <columnAttribute name="total" displayName="Total requests" type="number" />
-         <columnAttribute name="approved" displayName="Approved requests" type="number"/>
+        <columnAttribute name="total" displayName="Total requests" />
+         <columnAttribute name="approved" displayName="Approved requests" />
          <columnAttribute name="percent_approved" displayName="Percent approved"/>
+	 <columnAttribute name="total_number"  type="number" />
+         <columnAttribute name="approved_number"  type="number"/>
+         <columnAttribute name="percent_approved_number"  type="number"/>
        </attributeQueryRef>
-
-
 
        <attributeQueryRef ref="DatasetAttributes.All">
          <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
@@ -207,9 +208,9 @@
          <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
          <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
-         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" internal="true"/>
+         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # / Date" 
+         <columnAttribute name="eupath_release" displayName="Release # and Date" 
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
@@ -229,13 +230,15 @@
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact" 
+      <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
 
-	<attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions,total,approved,percent_approved"
+      <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
+        <attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
 			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
@@ -839,36 +842,51 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
     <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
-        <column name="total"/>
-        <column name="approved"/>
-        <column name="percent_approved"/>
+        <column name="total" sortingColumn="total_number" />
+        <column name="approved" sortingColumn="approved_number" />
+        <column name="percent_approved" sortingColumn="percent_approved_number" />
+        <column name="total_number"/>
+        <column name="approved_number"/>
+        <column name="percent_approved_number"/>
 
         <sql>
           <![CDATA[
-select pres.dataset_presenter_id as dataset_id, 
+select dataset_id, 
+       nvl(total_number, 0) as total_number,
+       nvl(approved_number, 0) as approved_number,
+       nvl(percent_approved_number, 0) as percent_approved_number,
        CASE
-         WHEN total = 0 THEN ''
-         ELSE CAST(total AS VARCHAR(10))
+         WHEN total_number = 0 THEN ''
+         ELSE CAST(total_number AS VARCHAR(10))
        END as total,
        CASE
-         WHEN total = 0 and approved = 0 THEN ''
-         ELSE CAST(approved AS VARCHAR(10))
+         WHEN (total_number = 0 AND approved_number = 0) THEN ''
+         ELSE CAST(approved_number AS VARCHAR(10))
        END as approved,
-       CASE  
-         WHEN total > 0  THEN ROUND(100*approved/total,0)||'%'
+       CASE
+         WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
          ELSE ''
        END as percent_approved
+from
+(
+select pres.dataset_presenter_id as dataset_id, total_number, approved_number,percent_approved_number
 from   apidbtuning.datasetpresenter pres
 LEFT OUTER JOIN  (
+  select DATASET_PRESENTER_ID, total_number, approved_number,
+       CASE  
+         WHEN total_number > 0  THEN ROUND(100*approved_number/total_number,0)
+         ELSE 0
+       END as percent_approved_number
+  from ( 
   select DATASET_PRESENTER_ID,  
-         count(case when purpose is not null then 1 end) as total, 
-         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved
-  from studyaccess.end_users@ACCT_DBLINK@ eu
-  group by dataset_presenter_id
+         count(case when purpose is not null then 1 end) as total_number, 
+         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved_number
+    from studyaccess.end_users@ACCT_DBLINK@ eu
+    group by dataset_presenter_id
+  )
 ) mycounts
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
-
-
+)
       ]]>
         </sql>
       </sqlQuery>
@@ -1022,7 +1040,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
-                         'release ' || release_number || ' / ' || release_date as eupath_release
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
@@ -1032,7 +1050,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                           and ebd.project = '@PROJECT_ID@')
                   where rn = 1) history,
                  (select build_number,
-                         'release ' || release_number || ' / ' || release_date as eupath_release
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
                         where project = '@PROJECT_ID@') introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
