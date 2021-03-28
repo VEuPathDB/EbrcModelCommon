@@ -858,14 +858,17 @@ select dataset_id,
        nvl(approved_number, 0) as approved_number,
        nvl(percent_approved_number, 0) as percent_approved_number,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN total_number = 0 THEN ''
          ELSE CAST(total_number AS VARCHAR(10))
        END as total,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN (total_number = 0 AND approved_number = 0) THEN ''
          ELSE CAST(approved_number AS VARCHAR(10))
        END as approved,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
          ELSE ''
        END as percent_approved
@@ -880,7 +883,7 @@ LEFT OUTER JOIN  (
          ELSE 0
        END as percent_approved_number
   from ( 
-  select DATASET_PRESENTER_ID,  
+    select DATASET_PRESENTER_ID,  
          count(case when purpose is not null then 1 end) as total_number, 
          count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved_number
     from studyaccess.end_users@ACCT_DBLINK@ eu
@@ -888,7 +891,9 @@ LEFT OUTER JOIN  (
   )
 ) mycounts
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
-)
+) mystudies, apidbtuning.datasetproperty dp
+where mystudies.dataset_id = dp.dataset_presenter_id
+and dp.property= 'studyAccess'
       ]]>
         </sql>
       </sqlQuery>
