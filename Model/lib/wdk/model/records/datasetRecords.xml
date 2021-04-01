@@ -219,7 +219,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
          <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR,VectorBase" help="PubMed links related to the dataset."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -234,7 +234,7 @@ while in protected and private studies there will be human intervention in the d
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact"
-                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
+                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB,VectorBase"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
