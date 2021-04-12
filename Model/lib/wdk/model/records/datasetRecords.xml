@@ -104,6 +104,7 @@
        <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
+         <columnAttribute  name="organism_download"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
@@ -144,9 +145,11 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility"
-           help="Some studies require that the user requests approval to access certain functionality (they will be prompted when attempting the action):
-                 if 'controlled', to download; if 'protected', to access specific search results and download; if 'private', to run a search or analysis and download.
-                 If a study is classified as 'limited', it will behave as 'controlled' when the user is logged in, and as 'protected' for a guest user. "/>
+           help="Some studies require that the user requests approval to access certain functionality 
+(they will be prompted when attempting the action): 
+if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
+In controlled studies the user will be allowed to access the data automatically upon request submission,
+while in protected and private studies there will be human intervention in the decision."/>
          <columnAttribute name="policy_url" internal="true"/>
          <columnAttribute name="card_headline" internal="true"/>
          <columnAttribute name="card_points" internal="true"/>
@@ -217,7 +220,7 @@
          <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"/>
          <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR,VectorBase" help="PubMed links related to the dataset."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -232,7 +235,7 @@
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact"
-                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
+                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB,VectorBase"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
@@ -856,14 +859,17 @@ select dataset_id,
        nvl(approved_number, 0) as approved_number,
        nvl(percent_approved_number, 0) as percent_approved_number,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN total_number = 0 THEN ''
          ELSE CAST(total_number AS VARCHAR(10))
        END as total,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN (total_number = 0 AND approved_number = 0) THEN ''
          ELSE CAST(approved_number AS VARCHAR(10))
        END as approved,
        CASE
+         WHEN dp.value in ('public','prerelease') THEN 'NA'
          WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
          ELSE ''
        END as percent_approved
@@ -878,7 +884,7 @@ LEFT OUTER JOIN  (
          ELSE 0
        END as percent_approved_number
   from ( 
-  select DATASET_PRESENTER_ID,  
+    select DATASET_PRESENTER_ID,  
          count(case when purpose is not null then 1 end) as total_number, 
          count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved_number
     from studyaccess.end_users@ACCT_DBLINK@ eu
@@ -886,7 +892,9 @@ LEFT OUTER JOIN  (
   )
 ) mycounts
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
-)
+) mystudies, apidbtuning.datasetproperty dp
+where mystudies.dataset_id = dp.dataset_presenter_id
+and dp.property= 'studyAccess'
       ]]>
         </sql>
       </sqlQuery>
@@ -1114,13 +1122,18 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
       <sqlQuery name="Organisms"  isCacheable="false">
         <column name="dataset_id"/>
+        <column name="organism_download"/>
         <column name="organism_prefix"/>
  
             <sql excludeProjects="EuPathDB">
             <![CDATA[
 select dataset_id,
   regexp_replace(
-    utl_i18n.unescape_reference(to_char( dbms_lob.substr(xmlagg(xmlelement(e,org,'<br>').extract('//text()')  order by org).getclobval() , 4000, 1)) ) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+    utl_i18n.unescape_reference(to_char( dbms_lob.substr(xmlagg(xmlelement(e,org,'<br>').extract('//text()')  order by org).getclobval() , 4000, 1)) ) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix,
+
+replace(replace(
+     regexp_replace(utl_i18n.unescape_reference(to_char( dbms_lob.substr(xmlagg(xmlelement(e,org,'').extract('//text()')  order by org).getclobval() , 4000, 1)) ) , '<br>[A-Za-z\. <>&]+$', ''),'<i>',''),'</i>', '') AS organism_download 
+
 from (
 select distinct dsnt.dataset_presenter_id as dataset_id
  , case when tn.name is null then null
