@@ -1503,6 +1503,8 @@
     <track>tcruSylvioX10-1-2012</track>
     <track>tcruTCC</track>
     <track>tcruYC6</track>
+    <track>tcruCL</truck>
+    <track>tcruG</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1528,6 +1530,10 @@
 
   <subtrackSet project="TriTrypDB" name="crithidia_gene" suffixes="_span;_gene">
     <track>cfasCfCl</track>
+  </subtrackSet>
+
+  <subtrackSet project="TriTrypDB" name="Angomonas_gene" suffixes="_span;_gene">
+    <track>adeaATCCPRA-265</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="leptomonas_gene" suffixes="_span;_gene">
@@ -1600,6 +1606,8 @@
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
     <org organism="Trypanosoma cruzi Y C6" abbrev="tcruYC6" />
+    <org organism="Trypanosoma cruzi strain CL" abbrev="tcruCL" />
+    <org organism="Trypanosoma cruzi strain G" abbrev="tcruG" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
@@ -1662,6 +1670,21 @@
      </track>
 
   </url>
+
+  <url project="TriTrypDB" type="synteny">
+    <org organism="Angomonas deanei strain Crithidia deanei Carvalho (ATCC PRA-265)" abbrev="adeaATCCPRA-265"/>
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Angomonas_gene"/>
+      <subtrack set="crithidia_gene"/>
+      <subtrack set="monterogeii_gene"/>
+      <subtrack name="lmajFriedlin_span"/>
+      <subtrack name="lmajFriedlin_gene"/>
+      <subtrack name="tbruTREU927_span"/>
+      <subtrack name="tbruTREU927_gene"/>
+     </track>
+  </url>
+
 
   <url project="TriTrypDB" type="synteny">
     <org organism="Leptomonas pyrrhocoris H10" abbrev="lpyrH10" />
