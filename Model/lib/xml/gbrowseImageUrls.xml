@@ -1862,6 +1862,10 @@
     <track>phumUSDA</track>
   </subtrackSet>
 
+  <subtrackSet project="VectorBase" name="Drosophilidae" suffixes="_span;_gene">
+    <track>dmeliso-1</track>
+  </subtrackSet>
+
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
     <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
@@ -1977,6 +1981,19 @@
     <track name="Synteny" abbrevFirst="true">
       <subtrack name="acolMali-NIH_span" />
       <subtrack name="acolMali-NIH_gene" />
+      <subtrack name="acolNgousso_span" />
+      <subtrack name="acolNgousso_gene" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Drosophila melanogaster iso-1" abbrev="dmeliso-1" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack name="Drosophilidae" />
+      <subtrack name="aaegLVP_AGWG_span" />
+      <subtrack name="aaegLVP_AGWG_gene" />
+      <subtrack name="aalbSTECLA_span" />
+      <subtrack name="aalbSTECLA_gene" />
       <subtrack name="acolNgousso_span" />
       <subtrack name="acolNgousso_gene" />
     </track>
