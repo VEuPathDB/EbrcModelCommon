@@ -454,6 +454,7 @@
   <subtrackSet name="Pucciniomycetes_gene" project="FungiDB" suffixes="_span;_gene">
     <track>mlar98AG31</track>
     <track>pgraCRL75-36-700-3</track>
+    <track>psorRO10H11247</track>
     <track>pstr93-210</track>
     <track>ptri1-1BBBDRace1</track>
   </subtrackSet>
@@ -494,6 +495,7 @@
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
     <track>huvaAWRI3580</track>
+    <track>hguiUTAD222</track>
     <track>scerS288c</track>
     <track>ylipCLIB122</track>
     <track>ylipCLIB89W29</track>
@@ -565,6 +567,7 @@
     <track>ntetFGSC2508</track>
     <track>ndisFGSC8579</track>
     <track>ttheATCC42464</track>
+    <track>pansSmat</track>
     <track>smack-hell</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
@@ -661,6 +664,7 @@
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>ztriIPO323</track>
+    <track>ztriST99CH3D1</track>
     <track>cgeo1.58</track>
   </subtrackSet>
 
@@ -688,6 +692,7 @@
     <track>hcapH143</track>
     <track>bderER-3</track>
     <track>bgilSLH14081</track>
+    <track>bperEI222</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
@@ -710,6 +715,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
+    <org abbrev="psorRO10H11247" organism="Puccinia sorghi strain RO10H11247"/>
     <org abbrev="pstr93-210" organism="Puccinia striiformis strain 93-210"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
     <track name="Gene"/>
@@ -770,6 +776,7 @@
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
+    <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
@@ -880,6 +887,7 @@
     <org abbrev="ntetFGSC2508" organism="Neurospora tetrasperma FGSC 2508"/>
     <org abbrev="ndisFGSC8579" organism="Neurospora discreta FGSC 8579"/>
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
+    <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
@@ -1028,6 +1036,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
+    <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1069,6 +1078,7 @@
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
     <org abbrev = "bderER-3" organism="Blastomyces dermatitidis ER-3"/>
     <org abbrev = "bgilSLH14081" organism="Blastomyces gilchristii SLH14081"/>
+    <org abbrev = "bperEI222" organism="Blastomyces percursus strain EI222"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
