@@ -494,6 +494,7 @@
     <track>cpseB12108</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
+    <track>pkudCBS573</track>
     <track>huvaAWRI3580</track>
     <track>hguiUTAD222</track>
     <track>scerS288c</track>
@@ -573,8 +574,10 @@
     <track>moryBR32</track>
     <track>treeQM6a</track>
     <track>tvirGv29-8</track>
+    <track>opicUAMH11346</track>
     <track>ssch1099-18</track>
     <track>sbra5110</track>
+    <track>cgraM1-001</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
@@ -607,6 +610,7 @@
     <track>kdejCBS10117</track>
     <track>khevCBS569</track>
     <track>tmesDSM1558</track>
+    <track>tasaCBS2479</track>
   </subtrackSet>
 
   <subtrackSet name="Albuginaceae" project="FungiDB" suffixes="_span;_gene">
@@ -626,6 +630,7 @@
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>bcinB05-10</track>
     <track>sscl1980UF-70</track>
+    <track>pdes20631-21</track>
   </subtrackSet>
 
   <subtrackSet name="Pythiales" project="FungiDB" suffixes="_span;_gene">
@@ -639,6 +644,7 @@
   </subtrackSet>
 
   <subtrackSet name="Onygenales" project="FungiDB" suffixes="_span;_gene">
+    <track>aapiARSEF7405</track>
     <track>cposSilveira</track>
     <track>cposRMSCC3488</track>
     <track>cposC735deltSOWgp</track>
@@ -666,6 +672,7 @@
     <track>ztriIPO323</track>
     <track>ztriST99CH3D1</track>
     <track>cgeo1.58</track>
+    <track>vgalCBS43764</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -677,6 +684,7 @@
     <track>pramPr-102</track>
     <track>psojP6497</track>
     <track>haraEmoy2</track>
+    <track>blacSF5</track>
   </subtrackSet>
 
   <subtrackSet name="Trichocomaceae" project="FungiDB" suffixes="_span;_gene">
@@ -699,7 +707,6 @@
     <track>lproJHH5317</track>
     <track>sapiIHEM14462</track>
   </subtrackSet>
-
 
   <url project="FungiDB" type="synteny">
     <org abbrev="lproJHH5317" organism="Lomentospora prolificans JHH-5317"/>
@@ -775,6 +782,7 @@
     <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
+    <org abbrev="pkudCBS573" organism="Pichia kudriavzevii strain CBS573"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
     <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
@@ -893,8 +901,10 @@
     <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
+    <org abbrev="opicUAMH11346" organism="Ophiostoma piceae UAMH 11346"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
+    <org abbrev="cgraM1-001" organism="Colletotrichum graminicola M1.001"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Sordariomycetes"/>
@@ -937,6 +947,7 @@
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
+    <org abbrev="tasaCBS2479" organism="Trichosporon asahii var. asahii CBS 2479"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Tremellomycetes"/>
@@ -975,6 +986,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
+    <org abbrev="pdes20631-21" organism="Pseudogymnoascus destructans 20631-21"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Leotiomycetes"/>
@@ -997,6 +1009,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="aapiARSEF7405" organism="Ascosphaera apis ARSEF 7405"/>
     <org abbrev="cimmRS" organism="Coccidioides immitis RS"/>
     <org abbrev="cimmH538-4" organism="Coccidioides immitis H538.4"/>
     <org abbrev="cposC735deltSOWgp" organism="Coccidioides posadasii C735 delta SOWgp"/>
@@ -1038,6 +1051,7 @@
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
     <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
+    <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
@@ -1054,6 +1068,7 @@
     <org abbrev="pramPr-102" organism="Phytophthora ramorum strain Pr102"/>
     <org abbrev="psojP6497" organism="Phytophthora sojae strain P6497"/>
     <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
+    <org abbrev="blacSF5" organism="Bremia lactucae strain SF5"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Peronosporales"/>
