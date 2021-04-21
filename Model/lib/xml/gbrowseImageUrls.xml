@@ -1055,7 +1055,12 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
-      <subtrack set="Aspergillaceae"/>
+      <subtrack name="afumAf293_span" />
+      <subtrack name="afumAf293_gene" />
+      <subtrack name="anidFGSCA4_span" />
+      <subtrack name="anidFGSCA4_gene" />
+      <subtrack name="aoryRIB40_span" />
+      <subtrack name="aoryRIB39_gene" />
     </track>
   </url>
 
