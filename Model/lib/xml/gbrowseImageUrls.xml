@@ -1798,7 +1798,9 @@
   <url project="HostDB" type="dna">
     <org organism="Homo sapiens REF" abbrev="hsapREF" />
     <org organism="Mus musculus C57BL6J" abbrev="mmusC57BL6J" />
-    <org organism="Macaca mulatta isolate 17573" abbrev="mmul17573" />
+    <org organism="Bos taurus breed Hereford" abbrev="btauHereford" />
+    <org organism="Macaca mulatta isolate AG07107" abbrev="mmulAG07107" />
+    <org organism="Macaca fascicularis REF" abbrev="mfasREF" />
     <track name="Gene" />
 
   </url>
