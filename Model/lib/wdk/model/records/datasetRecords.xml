@@ -104,7 +104,7 @@
        <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
-         <columnAttribute  name="organism_download"/>
+       <!--   <columnAttribute  name="organism_download"/>   -->
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
@@ -1122,8 +1122,8 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
       <sqlQuery name="Organisms"  isCacheable="false">
         <column name="dataset_id"/>
-        <column name="organism_download"/>
-        <column name="organism_prefix"/>
+       <!--  <column name="organism_download"/> -->
+       <column name="organism_prefix"/>
  
             <sql excludeProjects="EuPathDB">
             <![CDATA[
