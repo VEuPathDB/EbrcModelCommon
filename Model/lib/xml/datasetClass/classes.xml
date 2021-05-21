@@ -85,7 +85,7 @@
     <prop name="genomeVersion">The date or version number for this organism's genome, as determined by its provider.  If a date, typically the date the data was downloaded.   FIX:  WHAT DO WE USE THIS FOR?</prop>
     <prop name="annotationIncludesTRNAs">[true|false] If true then this genome's annotation includes predicted tRNAs.  This property is read by workflow steps that predict tRNAs.   If it is true those steps are skipped.</prop>
     <prop name="runExportPred">[true|false]  If "true" then the ExportPred program should be run on this organism. Typically only true for Plasmodium organisms</prop>
-    <prop name="taxonHierarchyForBlastxFilter">A space delimited list of scientific names for taxa to be used to filter NRDB protein matches against this organism's genome  sequence.  For example:  Eukaryota Apicomplexa Plasmodium.  This will FIX THIS... EXPLAIN IT.</prop>
+    <prop name="taxonFilterForNRProteinsAlignedToGenome">A comma delimited scientific names to be used to filter NRDB protein matches against this organism's genome  sequence. Use just genus name for now. For example:  Plasmodium.</prop>
     <prop name="isHugeGenome">[true|false] If true then skip making orfs and skip generating download files for orfs</prop>
 
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
@@ -214,12 +214,12 @@
     </datasetLoader>
   </datasetClass>
 
+  <!-- done automatically for all primary genomes
   <datasetClass class="insertScaffoldGapFeatures" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="genomeDbName"/>
     <prop name="version">&version;</prop>
-    <!-- DOCUMENTED SO FAR -->
 
     <graphTemplateFile name="primaryVirtualGenome.xml"/>
 
@@ -235,9 +235,11 @@
         </dir>
       </manualGet>
 
-     <pluginArgs>--extDbRlsName ${genomeDbName} --extDbRlsVer ${version} --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+     <pluginArgs>- -extDbRlsName ${genomeDbName} - -extDbRlsVer ${version} - -SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
+  -->
+
 
 <!-- chromosomeMap.txt file with 3 tab delimited columns, source_id,chromosome,chromosome_order_number, must be in final dir for chromosomes -->
   <datasetClass class="genbank_secondary_genome" category="genome" datasetFileHint="">
@@ -918,20 +920,20 @@
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
-    <prop name="topSeqSOTerm"/>
-    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_AGP_Piece_RSRC"
+    <prop name="assembledLevel"/>
+    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/> 
+    
+    <datasetLoader datasetName="${organismAbbrev}_${assembledLevel}_AGP_Piece_RSRC"
               version="${version}"
           plugin="ApiCommonData::Load::Plugin::InsertAGPPiece"
               scope="organism"
               type="genome"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/${topSeqSOTerm}_assembly_agp/${version}/final/">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/genome/${assembledLevel}_assembly_agp/${version}/final/">
         <dir name="final">
         </dir>
-      </manualGet>
+      </manualGet>                        
       <pluginArgs>--agpFile @@dataDir@@/final/assembly.agp --AGPPieceExtDbName %DATASET_NAME% --AGPPieceExtDbRlsVer %DATASET_VERSION%</pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -1396,7 +1398,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>if test -d @@dataDir@@/staging/16s ; then mv @@dataDir@@/staging/16s/ @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery/ ; elif test "${runDADA2}" = true ; then mv @@dataDir@@/staging/ @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery/ ; mkdir @@dataDir@@/staging/; fi </unpack>
       <unpack>if test "${runDADA2}" = true ; then find @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery -type f -not \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \) -delete  ; fi </unpack>
       <unpack>if test "${runDADA2}" = true ; then rmdir -v --ignore-fail-on-non-empty @@dataDir@@/DADA2_${name}/fastqsFromManualDelivery; fi</unpack>
-      
 <unpack>if test "${samplesInfoFileName}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${samplesInfoFileName} @@dataDir@@/DADA2_${name}/${samplesInfoFileName} ; fi </unpack>
 <unpack>if test "${sraSampleAndRunIdsFileName}" ; then cp @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudy/${name}/${version}/final/${sraSampleAndRunIdsFileName} @@dataDir@@/DADA2_${name}/${sraSampleAndRunIdsFileName} ; fi </unpack>
       <unpack>if test "${sampleToWgsFastqFileName}" ; then mv @@dataDir@@/staging/${sampleToWgsFastqFileName} @@dataDir@@/Humann_${name}/${sampleToWgsFastqFileName} ; fi </unpack>
@@ -2150,7 +2151,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
     <prop name="alignWithCdsCoordinates">Use CDS model for alignment, [false|true]. Use false if not sure what to use.</prop>
 <!--    <prop name="doDegSeq">only want to set to true is data provider wants DEGSeq ran on dataset without replicates. Check with data provider.</prop> -->
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="hisat.xml"/>
     <qaNotes>To begin with QA, check if symbolic links of analysisConfig.xml and a FASTQ file for each sample are created under @@dataDir@@/final. Next, go to @@websiteFilesDir@@/${projectName}/@@version@@/real/webServices/${projectName}/release-CURRENT/${organismAbbrev}/bigwig/${organismAbbrev}_${name}_rnaSeq_RSRC, get normalized bigwig files, and visualize the rnaSeq alignment coverages by GBrowse track. Lastly, query the tables: ApiDB.ProfileElement, ApiDB.Profile, ApiDB.ProfileElementName and ApiDB.ProfileSet, to check if the reasonable number of intensity profiles are loaded. In the case of time series rnaSeq, also check the tables: RAD.AnalysisInput, RAD.AnalysisResultImp, RAD.Anaalysis, RAD.LogicalGroupLink and RAD.LogicalGroup to find out if the the reasonalble number of differentially expressed genes are loaded.</qaNotes>
    <!-- Inquiry: Always follow naming convention -->
     <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeq_RSRC" version="${version}"
@@ -2212,6 +2213,35 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+
+  <!--dataset class for updating RNAseq profiles after patch builds-->
+  <datasetClass class="ebiRnaSeqExperimentPatch" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+
+    <graphTemplateFile name="ebiRNASeq.xml"/>
+    <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_patch_RSRC" version="${version}"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="rnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <!--uses same analysis config as the full load so no need to fetch-->
+      <manualGet fileOrDir="common/empty">
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
 
@@ -2606,7 +2636,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="productNames.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_function_${name}_product_names_RSRC" version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertTranscriptProductFromTabFile"
+	      plugin="ApiCommonData::Load::Plugin::InsertProductFromTabFile"
               scope="organism"
               type="gene_annotation"
               organismAbbrev="${organismAbbrev}">
@@ -3250,8 +3280,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="sres"
               >
-    <wgetArgs url="ftp://ftp.ncbi.nih.gov/pub/taxonomy/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=2 --include list --accept=gi_taxid_prot.dmp.gz,taxdump.tar.gz</wgetArgs>
-<!--    <unpack>gunzip @@dataDir@@/gi_taxid_prot.dmp.gz</unpack>  -->
+    <wgetArgs url="ftp://ftp.ncbi.nih.gov/pub/taxonomy/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=2 --include list --accept=taxdump.tar.gz</wgetArgs>
     <unpack>$currDir=`pwd`; cd @@dataDir@@ ; tar -xzf taxdump.tar.gz ; rm -f taxdump.tar ; cd $currDir</unpack>
     <pluginArgs>--names @@dataDir@@/names.dmp --nodes @@dataDir@@/nodes.dmp --gencode @@dataDir@@/gencode.dmp --merged @@dataDir@@/merged.dmp --verbose</pluginArgs>
   </datasetLoader>
@@ -3420,36 +3449,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-  <datasetClass class="ISASimpleClinEpiPreview" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="subProjectName"></prop>
-    <prop name="groupName"></prop>
-    <prop name="studyName"></prop>
-    <prop name="version"></prop>
-
-    <graphTemplateFile name="clinepiRoot.xml"/>
-
-  <datasetLoader datasetName="ISASimple_${subProjectName}_${groupName}_${studyName}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="global"
-              >
-
-
-      <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${groupName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final" />
-
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs> 
-  </datasetLoader>
-
-  </datasetClass>
-
   <datasetClass class="ClinEpiStudyCharacteristics" category="" datasetFileHint="">
   <!-- not currently used (moved to ClinEpiWorkflow template) but left here in case it might be used later -->
     <purpose></purpose>
@@ -3514,6 +3513,69 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>    
   </datasetClass>
 
+  <!-- will eventually turn into sunbeam -->
+  <datasetClass class="snakemakeTest" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+
+    <datasetLoader datasetName="snakemake_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="population_biology"
+              scope="global"
+            >
+
+      <manualGet fileOrDir="${projectName}/common/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+  <datasetClass class="DADA2Taxonomy" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+
+    <datasetLoader datasetName="DADA2Taxonomy_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="dontcare"
+              >
+      <manualGet fileOrDir="${projectName}/common/DADA2Taxonomy/${version}/final/DADA2Taxonomy_trainSet.fa.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="OverrideTaxonMapping" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+
+    <datasetLoader datasetName="OverrideTaxonMapping_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="dontcare"
+              >
+      <manualGet fileOrDir="${projectName}/common/curatedTaxonomy/${name}/${version}/final/taxonMapping.xml">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="oboOntology" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="name">&name;</prop>
@@ -3529,6 +3591,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--This dataset class is created for IDO only. We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology. -->
   <datasetClass class="oboOntologyDummy" category="" datasetFileHint="">
@@ -5705,34 +5779,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
       <pluginArgs>--inputFile @@dataDir@@/final/URLs.tab --core_version ${version}</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-  <!--dataset class for updating RNAseq profiles after patch builds-->
-  <datasetClass class="ebiRnaSeqExperimentPatch" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
-    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
-    <prop name="ebiVersion">matches ebi ftp directory name</prop>
-
-    <graphTemplateFile name="ebiRNASeq.xml"/>
-    <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_patch_RSRC" version="${version}"
-          plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="organism"
-              type="transcript_expression"
-              subType="rnaseq"
-              organismAbbrev="${organismAbbrev}">
-
-      <!--uses same analysis config as the full load so no need to fetch-->
-      <manualGet fileOrDir="common/empty">
-      </manualGet>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
