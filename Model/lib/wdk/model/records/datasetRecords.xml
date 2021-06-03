@@ -550,6 +550,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="text" inReportMaker="false" internal="true"/>
+            <columnAttribute name="url" inReportMaker="false" internal="true"/>
+            <columnAttribute name="description" inReportMaker="false" internal="true"/>
             <columnAttribute name="record_type" displayName="Record Type" />
             <columnAttribute name="target_type" displayName="Type of Reference"/>
             <columnAttribute name="target_name" displayName="Name"/>
@@ -1538,18 +1541,47 @@ ORDER by start_date desc
 
 
       <sqlQuery name="References"  isCacheable='false'>
-            <column name="dataset_name"/>
             <column name="dataset_id"/>
+            <column name="dataset_name"/>
+            <column name="text"/>
+            <column name="url"/>
+            <column name="description"/>
             <column name="record_type"/>
             <column name="target_type"/>
             <column name="target_name"/>
             <sql>
             <![CDATA[
-                     select dsp.dataset_presenter_id as dataset_id, dsp.name as dataset_name, ref.record_type, ref.target_type,
-                     replace (ref.target_name, ':', '') as target_name
-                     from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
-                     where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                    order by dsp.name, ref.target_type, ref.record_type, ref.target_name
+            with genome_hyperlinks as (
+    select 
+        dataset_id,
+        dhs.dataset_name,
+        text,
+        url,
+        description,
+        '' as record_type,
+        '' as target_type,
+        '' as target_name
+    from ApidbTuning.DatasetHyperLinks dhs
+)
+
+, project_website_links as (
+  select 
+    dsp.dataset_presenter_id as dataset_id,
+    dsp.name as dataset_name,
+    '' as text,
+    '' as url,
+    '' as description,
+    ref.record_type,
+    ref.target_type,
+    replace (ref.target_name, ':', '') as target_name
+  from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
+  where dsp.dataset_presenter_id = ref.dataset_presenter_id
+    and ref.target_type = 'question'
+)
+
+select * from genome_hyperlinks
+union
+select * from project_website_links
             ]]>
             </sql>
       </sqlQuery>
