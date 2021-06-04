@@ -1527,8 +1527,13 @@ ORDER by start_date desc
 
 
             <sql excludeProjects="EuPathDB">
-              SELECT dataset_presenter_id AS dataset_id, text, url, description
+              SELECT dataset_presenter_id AS dataset_id,
+                 text,
+                 url,
+                 description
               FROM ApidbTuning.DatasetHyperLINK
+              WHERE url NOT LIKE '%jbrowse%'
+               AND text NOT LIKE '%DEFAULT_PROJECT%'
             </sql>
 
 
