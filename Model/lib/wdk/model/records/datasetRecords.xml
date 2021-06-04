@@ -104,7 +104,7 @@
        <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
-       <!--   <columnAttribute  name="organism_download"/>   -->
+         <columnAttribute  name="organism_download" displayName="Organism(s) (source or reference)"/>  
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
@@ -1122,7 +1122,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
       <sqlQuery name="Organisms"  isCacheable="false">
         <column name="dataset_id"/>
-       <!--  <column name="organism_download"/> -->
+	<column name="organism_download"/>
        <column name="organism_prefix"/>
  
             <sql excludeProjects="EuPathDB">
@@ -1158,7 +1158,17 @@ from apidbtuning.datasetnametaxon dsnt
                                      substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'
                        when expects_multiple > 0
                        then 'multiple organisms'
-                       else 'undetermined' end as organism_prefix
+                       else 'undetermined' end as organism_prefix,
+		       
+		       case when organism_count = 1 and oa.organism_name is not null and expects_multiple = 0                  
+		       then substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2) -1) || substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 2))                                                                                      
+                       when expects_multiple=1 and organism_count > 1 and (regexp_count(oa.organism_name, substr(oa.organism_name, 0, instr(oa.organism_name, ' ', 1, 2)))) = organism_count                                                   
+		       then substr(oa.organism_name, 1, 1) || '.' ||                                                       
+                       substr(oa.organism_name, instr(oa.organism_name, ' ', 1, 1), decode(instr(oa.organism_name, ' ', 1, 2), 0, length(oa.organism_name) + 1, instr(oa.organism_name, ' ', 1, 2)) - instr(oa.organism_name, ' ', 1, 1)) || '</i>'      
+                       when expects_multiple > 0                                                                           
+		       then 'multiple organisms'                                                            
+		       else 'undetermined' end as organism_download   
+
            from (
                 select dsp.dataset_presenter_id as dataset_id, dsp.type,
                      count(distinct dsnt.taxon_id) as organism_count,
