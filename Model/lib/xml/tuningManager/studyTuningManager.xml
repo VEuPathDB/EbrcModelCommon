@@ -978,7 +978,7 @@ ORDER BY protocol_app_node_name
                 select s.study_id, s.external_database_release_id, s.name
                 from study.Study s) study_release,
              (select max(ontology_term_id) as ontology_term_id,
-                     max(source_id) as source_id, initcap(max(name)) as name
+                     max(source_id) as source_id, max(name) as name
               from sres.OntologyTerm
               where source_id = 'IAO_0000100' -- "data set"
              ) ot
