@@ -978,7 +978,7 @@ ORDER BY protocol_app_node_name
                 select s.study_id, s.external_database_release_id, s.name
                 from study.Study s) study_release,
              (select max(ontology_term_id) as ontology_term_id,
-                     max(source_id) as source_id, initcap(max(name)) as name
+                     max(source_id) as source_id, max(name) as name
               from sres.OntologyTerm
               where source_id = 'IAO_0000100' -- "data set"
              ) ot
@@ -1323,7 +1323,12 @@ UNION ALL
         select nvl(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
                ot.source_id as ontology_term_source_id,
                term_synonym.definition as description,
-               nvl(term_synonym.name, case ot.name when 'env_feature' then 'Habitat' else ot.name end) as display_name,
+               nvl(term_synonym.name,
+                   case ot.name
+                     when 'env_feature' then 'Habitat'
+                     when 'data set' then 'Data Set'
+                     else ot.name
+                   end) as display_name,
                term_synonym.display_order,
                term_synonym.variable,
                otv.variable_name,
