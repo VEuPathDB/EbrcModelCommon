@@ -1548,7 +1548,7 @@ ORDER by start_date desc
             <column name="description"/>
             <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
               SELECT dataset_id, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
+              FROM ApidbTuning.GenomicsHyperLink
             </sql>
 
 
@@ -1560,7 +1560,7 @@ ORDER by start_date desc
 
             <sql includeProjects="EuPathDB">
               SELECT dataset_id, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
+              FROM ApidbTuning.GenomicsHyperLink
               WHERE url NOT LIKE '%/jbrowse%'
             </sql>
       </sqlQuery>
