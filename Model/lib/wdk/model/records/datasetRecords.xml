@@ -489,7 +489,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Links -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="HyperLinks"
-               displayName="Relevant pages at @PROJECT_ID@ and external resources"
+               displayName="Relevant pages external resources"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" internal="true"/>
@@ -546,7 +546,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"
-               displayName="Explore this dataset"
+               displayName="Explore this dataset within @PROJECT_ID@"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
