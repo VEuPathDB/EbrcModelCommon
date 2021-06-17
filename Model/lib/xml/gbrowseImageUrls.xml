@@ -456,6 +456,7 @@
     <track>pgraCRL75-36-700-3</track>
     <track>psorRO10H11247</track>
     <track>pstr93-210</track>
+    <track>pstr93TX-2</track>
     <track>ptri1-1BBBDRace1</track>
   </subtrackSet>
 
@@ -581,6 +582,7 @@
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
+    <track>fcirNRRL25331</track>
     <track>fgraPH-1</track>
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
@@ -609,6 +611,7 @@
     <track>kbesCBS10118</track>
     <track>kdejCBS10117</track>
     <track>khevCBS569</track>
+    <track>kmanCBS8507</track>
     <track>tmesDSM1558</track>
     <track>tasaCBS2479</track>
   </subtrackSet>
@@ -649,6 +652,7 @@
     <track>cposRMSCC3488</track>
     <track>cposC735deltSOWgp</track>
     <track>cimmH538-4</track>
+    <track>cimmWA_211</track>
     <track>cimmRS</track>
     <track>pbraPb03</track>
     <track>pbraPb18</track>
@@ -662,6 +666,7 @@
     <track>mgloCBS7966</track>
     <track>mresKCTC27527</track>
     <track>mresCBS7877</track>
+    <track>msymATCC42132</track>
   </subtrackSet>
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -676,6 +681,7 @@
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
+    <track>peffR13</track>
     <track>pinfT30-4</track>
     <track>pcapLT1534</track>
     <track>pcinCBS144-22</track>
@@ -698,6 +704,7 @@
     <track>hcapG217B</track>
     <track>hcapH88</track>
     <track>hcapH143</track>
+    <track>bderATCC26199</track>
     <track>bderER-3</track>
     <track>bgilSLH14081</track>
     <track>bperEI222</track>
@@ -724,6 +731,7 @@
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
     <org abbrev="psorRO10H11247" organism="Puccinia sorghi strain RO10H11247"/>
     <org abbrev="pstr93-210" organism="Puccinia striiformis strain 93-210"/>
+    <org abbrev="pstr93TX-2" organism="Puccinia striiformis 93TX-2"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -913,6 +921,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="fcirNRRL25331" organism="Fusarium circinatum NRRL 25331"/>
     <org abbrev="fgraPH-1" organism="Fusarium graminearum PH-1"/>
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
@@ -946,6 +955,7 @@
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
+    <org abbrev="kmanCBS8507" organism="Kwoniella mangroviensis CBS 8507"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
     <org abbrev="tasaCBS2479" organism="Trichosporon asahii var. asahii CBS 2479"/>
     <track name="Gene"/>
@@ -1012,6 +1022,7 @@
     <org abbrev="aapiARSEF7405" organism="Ascosphaera apis ARSEF 7405"/>
     <org abbrev="cimmRS" organism="Coccidioides immitis RS"/>
     <org abbrev="cimmH538-4" organism="Coccidioides immitis H538.4"/>
+    <org abbrev="cimmWA_211" organism="Coccidioides immitis WA_211"/>
     <org abbrev="cposC735deltSOWgp" organism="Coccidioides posadasii C735 delta SOWgp"/>
     <org abbrev="cposSilveira" organism="Coccidioides posadasii str. Silveira"/>
     <org abbrev="cposRMSCC3488" organism="Coccidioides posadasii RMSCC 3488"/>
@@ -1031,6 +1042,7 @@
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
     <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
     <org abbrev="mresCBS7877" organism="Malassezia restricta CBS 7877"/>
+    <org abbrev="msymATCC42132" organism="Malassezia sympodialis ATCC 42132"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
@@ -1065,6 +1077,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="peffR13" organism="Peronospora effusa R13"/>
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
     <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
@@ -1096,6 +1109,7 @@
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
     <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
+    <org abbrev = "bderATCC26199" organism="Blastomyces dermatitidis ATCC 26199"/>
     <org abbrev = "bderER-3" organism="Blastomyces dermatitidis ER-3"/>
     <org abbrev = "bgilSLH14081" organism="Blastomyces gilchristii SLH14081"/>
     <org abbrev = "bperEI222" organism="Blastomyces percursus strain EI222"/>
