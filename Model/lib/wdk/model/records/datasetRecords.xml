@@ -554,8 +554,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="url" inReportMaker="false" internal="true"/>
             <columnAttribute name="description" inReportMaker="false" internal="true"/>
             <columnAttribute name="record_type" displayName="Record Type" />
-            <columnAttribute name="target_type" displayName="Type of Reference"/>
             <columnAttribute name="target_name" displayName="Name"/>
+            <columnAttribute name="link_type" displayName="link_type"/>
         </table>
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -1552,41 +1552,56 @@ ORDER by start_date desc
             <column name="url"/>
             <column name="description"/>
             <column name="record_type"/>
-            <column name="target_type"/>
             <column name="target_name"/>
-            <sql>
+            <column name="link_type"/>
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
-            with genome_hyperlinks as (
-    select 
-        dataset_id,
-        dhs.dataset_name,
-        text,
-        url,
-        description,
-        '' as record_type,
-        '' as target_type,
-        '' as target_name
-    from ApidbTuning.DatasetHyperLinks dhs
-)
+                  with projectQuestionLinks as (
+                      select dsp.dataset_presenter_id as dataset_id
+                          , dsp.name as dataset_name
+                          , '' as text
+                          , '' as url
+                          , '' as description
+                          , ref.record_type
+                          , replace (ref.target_name, ':', '') as target_name
+                          , 'question' as link_type
+                      from ApidbTuning.datasetmodelref ref
+                          , ApidbTuning.DatasetPresenter dsp
+                      where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                          and ref.target_type = 'question'
+                      order by dsp.name
+                          , ref.record_type
+                          , ref.target_name
+                  )
 
-, project_website_links as (
-  select 
-    dsp.dataset_presenter_id as dataset_id,
-    dsp.name as dataset_name,
-    '' as text,
-    '' as url,
-    '' as description,
-    ref.record_type,
-    ref.target_type,
-    replace (ref.target_name, ':', '') as target_name
-  from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
-  where dsp.dataset_presenter_id = ref.dataset_presenter_id
-    and ref.target_type = 'question'
-)
+                  select dataset_id
+                        , dataset_name
+                        , text
+                        , url
+                        , description
+                        , '' as record_type
+                        , '' as target_name
+                        , 'genomicsInternal' as link_type
+                  from apidbtuning.datasethyperlinks
+                  where url like '/%'
+                  union
+                  select * from projectQuestionLinks
+            ]]>
+            </sql>
 
-select * from genome_hyperlinks
-union
-select * from project_website_links
+	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <![CDATA[
+                    select dsp.dataset_presenter_id as dataset_id
+                          , dsp.name as dataset_name
+                          , '' as text
+                          , '' as url
+                          , '' as description
+                          , ref.record_type
+                          , replace (ref.target_name, ':', '') as target_name
+                          , 'question' as link_type
+                    from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
+                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
+                    order by dsp.name, ref.record_type, ref.target_name
             ]]>
             </sql>
       </sqlQuery>
