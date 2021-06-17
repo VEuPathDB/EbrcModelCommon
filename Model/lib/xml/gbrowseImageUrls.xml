@@ -499,6 +499,7 @@
     <track>huvaAWRI3580</track>
     <track>hguiUTAD222</track>
     <track>scerS288c</track>
+    <track>klacNRRLY-1140</track>
     <track>ylipCLIB122</track>
     <track>ylipCLIB89W29</track>
   </subtrackSet>
@@ -515,6 +516,7 @@
     <track>ederNIHUT8656</track>
     <track>emesCBS40295</track>
     <track>fpedCBS271-37</track>
+    <track>rmacCBS650.93</track>
     <track>ccarKSF</track>
     <track>cimmCBS83496</track>
   </subtrackSet>
@@ -573,6 +575,7 @@
     <track>smack-hell</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
+    <track>cpur20.1</track>
     <track>treeQM6a</track>
     <track>tvirGv29-8</track>
     <track>opicUAMH11346</track>
@@ -624,6 +627,7 @@
   <subtrackSet name="Agaricomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>pchrRP-78</track>
     <track>ccinokay7-130</track>
+    <track>postPC15</track>
   </subtrackSet>
 
   <subtrackSet name="Blastocladiomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -631,6 +635,7 @@
   </subtrackSet>
 
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>bgraTritici96224</track>
     <track>bcinB05-10</track>
     <track>sscl1980UF-70</track>
     <track>pdes20631-21</track>
@@ -794,6 +799,7 @@
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
     <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288C"/>
+    <org abbrev="klacNRRLY-1140" organism="Kluyveromyces lactis NRRL Y-1140"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
     <track name="Gene"/>
@@ -831,6 +837,7 @@
     <org abbrev="ederNIHUT8656" organism="Exophiala dermatitidis NIH/UT8656"/>
     <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
+    <org abbrev="rmacCBS650.93" organism="Rhinocladiella mackenziei CBS 650.93"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <track name="Gene"/>
@@ -907,6 +914,7 @@
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mory70-15" organism="Pyricularia oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
+    <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
     <org abbrev="opicUAMH11346" organism="Ophiostoma piceae UAMH 11346"/>
@@ -976,6 +984,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="pchrRP-78" organism="Phanerochaete chrysosporium RP-78"/>
     <org abbrev="ccinokay7-130" organism="Coprinopsis cinerea okayama7#130"/>
+    <org abbrev="postPC15" organism="Pleurotus ostreatus PC15"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Agaricomycetes"/>
@@ -994,6 +1003,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
     <org abbrev="pdes20631-21" organism="Pseudogymnoascus destructans 20631-21"/>
