@@ -1824,6 +1824,7 @@
 
   <subtrackSet project="VectorBase" name="Anophelinae" suffixes="_span;_gene">
     <track>aalbSTECLA</track>
+    <track>aalbSTECLA2020</track>
     <track>aaraDongola</track>
     <track>aatrEBRO</track>
     <track>achrACHKN1017</track>
@@ -1843,6 +1844,7 @@
     <track>asinChina</track>
     <track>asinSINENSIS</track>
     <track>asteIndian</track>
+    <track>asteIndian2020</track>
     <track>asteSDA-500</track>
   </subtrackSet>
 
@@ -1851,6 +1853,7 @@
     <track>gausTTRI</track>
     <track>gbreIAEA</track>
     <track>gfusIAEA</track>
+    <track>gfusIAEA2018</track>
     <track>gmorYale</track>
     <track>gpalIAEA</track>
     <track>gpapIAEA</track>
@@ -1897,6 +1900,7 @@
 
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
+    <org organism="Anopheles albimanus STECLA 2020" abbrev="aalbSTECLA2020" />
     <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
     <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
     <org organism="Anopheles christyi ACHKN1017" abbrev="achrACHKN1017" />
@@ -1916,6 +1920,7 @@
     <org organism="Anopheles sinensis China" abbrev="asinChina" />
     <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
     <org organism="Anopheles stephensi Indian" abbrev="asteIndian" />
+    <org organism="Anopheles stephensi Indian 2020" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Anophelinae" />
@@ -1927,6 +1932,7 @@
     <org organism="Glossina austeni TTRI" abbrev="gausTTRI" />
     <org organism="Glossina brevipalpis IAEA" abbrev="gbreIAEA" />
     <org organism="Glossina fuscipes IAEA" abbrev="gfusIAEA" />
+    <org organism="Glossina fuscipes IAEA 2018" abbrev="gfusIAEA2018" />
     <org organism="Glossina morsitans Yale" abbrev="gmorYale" />
     <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
     <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
