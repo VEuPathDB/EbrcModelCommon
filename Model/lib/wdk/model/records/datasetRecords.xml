@@ -1527,11 +1527,11 @@ ORDER by start_date desc
 
 	    <sql>
             select dataset_id
-	      , text
-	      , url
-	      , description
-	    from apidbtuning.datasethyperlinks
-	    where url not like '/%'
+              , text
+              , url
+              , description
+            from apidbtuning.datasethyperlink
+            where url not like '/%'
 
             </sql>
 
