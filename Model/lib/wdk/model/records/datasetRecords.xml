@@ -1526,14 +1526,12 @@ ORDER by start_date desc
             <column name="description"/>
 
 	    <sql>
-            select dataset_id
+          SELECT dataset_presenter_id AS dataset_id
               , text
               , url
               , description
-            from apidbtuning.datasethyperlink
-            where url not like '/%'
-
-            </sql>
+          FROM ApidbTuning.DatasetHyperLINK
+      </sql>
 
       </sqlQuery>
 
