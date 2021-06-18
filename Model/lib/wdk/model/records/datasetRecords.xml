@@ -1569,8 +1569,7 @@ ORDER by start_date desc
 		        , '' as record_type
 		        , '' as target_name
 		        , 'genomicsInternal' as link_type
-	        from apidbtuning.datasethyperlinks
-                where url like '/%'
+	        from apidbtuning.GenomicsInternalHyperlink
 	        union
 	        select * from projectQuestionLinks
 
