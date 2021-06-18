@@ -489,7 +489,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Links -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="HyperLinks"
-               displayName="Relevant pages external resources"
+               displayName="External resources"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" internal="true"/>
@@ -1525,23 +1525,16 @@ ORDER by start_date desc
             <column name="url"/>
             <column name="description"/>
 
+	    <sql>
+            select dataset_id
+	      , text
+	      , url
+	      , description
+	    from apidbtuning.datasethyperlinks
+	    where url not like '/%'
 
-            <sql excludeProjects="EuPathDB">
-              SELECT dataset_presenter_id AS dataset_id,
-                 text,
-                 url,
-                 description
-              FROM ApidbTuning.DatasetHyperLINK
-              WHERE url NOT LIKE '%jbrowse%'
-               AND text NOT LIKE '%DEFAULT_PROJECT%'
             </sql>
 
-
-            <sql includeProjects="EuPathDB">
-              SELECT dataset_id, text, url, description
-              FROM ApidbTuning.DatasetHyperLinks
-              WHERE url NOT LIKE '%/jbrowse%'
-            </sql>
       </sqlQuery>
 
 
@@ -1556,37 +1549,38 @@ ORDER by start_date desc
             <column name="link_type"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
-                  with projectQuestionLinks as (
-                      select dsp.dataset_presenter_id as dataset_id
-                          , dsp.name as dataset_name
-                          , '' as text
-                          , '' as url
-                          , '' as description
-                          , ref.record_type
-                          , replace (ref.target_name, ':', '') as target_name
-                          , 'question' as link_type
-                      from ApidbTuning.datasetmodelref ref
-                          , ApidbTuning.DatasetPresenter dsp
-                      where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                          and ref.target_type = 'question'
-                      order by dsp.name
-                          , ref.record_type
-                          , ref.target_name
-                  )
+		with projectQuestionLinks as (
+		    select dsp.dataset_presenter_id as dataset_id
+			, dsp.name as dataset_name
+			, '' as text
+			, '' as url
+			, '' as description
+			, ref.record_type
+			, replace (ref.target_name, ':', '') as target_name
+			, 'question' as link_type
+		    from ApidbTuning.datasetmodelref ref
+		    left join ApidbTuning.DatasetPresenter dsp
+			on dsp.dataset_presenter_id = ref.dataset_presenter_id
+			and ref.target_type = 'question'
+		    order by dsp.name
+			, ref.record_type
+			, ref.target_name
+		)
 
-                  select dataset_id
-                        , dataset_name
-                        , text
-                        , url
-                        , description
-                        , '' as record_type
-                        , '' as target_name
-                        , 'genomicsInternal' as link_type
-                  from apidbtuning.datasethyperlinks
-                  where url like '/%'
-                  union
-                  select * from projectQuestionLinks
-            ]]>
+	        select dataset_id
+		        , dataset_name
+		        , text
+		        , url
+		        , description
+		        , '' as record_type
+		        , '' as target_name
+		        , 'genomicsInternal' as link_type
+	        from apidbtuning.datasethyperlinks
+                where url like '/%'
+	        union
+	        select * from projectQuestionLinks
+
+	    ]]>
             </sql>
 
 	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
