@@ -549,7 +549,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Explore this dataset within @PROJECT_ID@"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" inReportMaker="false" internal="true"/>
             <columnAttribute name="url" inReportMaker="false" internal="true"/>
             <columnAttribute name="description" inReportMaker="false" internal="true"/>
@@ -1538,7 +1537,6 @@ ORDER by start_date desc
 
       <sqlQuery name="References"  isCacheable='false'>
             <column name="dataset_id"/>
-            <column name="dataset_name"/>
             <column name="text"/>
             <column name="url"/>
             <column name="description"/>
@@ -1549,7 +1547,6 @@ ORDER by start_date desc
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
-			, dsp.name as dataset_name
 			, '' as text
 			, '' as url
 			, '' as description
@@ -1560,13 +1557,11 @@ ORDER by start_date desc
 		    left join ApidbTuning.DatasetPresenter dsp
 			on dsp.dataset_presenter_id = ref.dataset_presenter_id
 			and ref.target_type = 'question'
-		    order by dsp.name
-			, ref.record_type
+		    order by ref.record_type
 			, ref.target_name
 		)
 
 	        select dataset_id
-		        , dataset_name
 		        , text
 		        , url
 		        , description
@@ -1584,7 +1579,6 @@ ORDER by start_date desc
 	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
                     select dsp.dataset_presenter_id as dataset_id
-                          , dsp.name as dataset_name
                           , '' as text
                           , '' as url
                           , '' as description
@@ -1593,7 +1587,7 @@ ORDER by start_date desc
                           , 'question' as link_type
                     from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
                     where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                    order by dsp.name, ref.record_type, ref.target_name
+                    order by ref.record_type, ref.target_name
             ]]>
             </sql>
       </sqlQuery>
