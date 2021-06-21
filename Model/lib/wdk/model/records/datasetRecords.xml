@@ -1587,7 +1587,7 @@ ORDER by start_date desc
 			, ref.target_name
 		)
 
-	        select dataset_id
+	        select dataset_presenter_id as dataset_id
 		        , text
 		        , url
 		        , description
