@@ -215,7 +215,7 @@ while in protected and private studies there will be human intervention in the d
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR,VectorBase" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -239,7 +239,7 @@ while in protected and private studies there will be human intervention in the d
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact"
-                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB,VectorBase"/>
+                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
                         includeProjects="EuPathDB"/>
