@@ -553,10 +553,12 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Explore this dataset within @PROJECT_ID@"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" inReportMaker="false" internal="true"/>
             <columnAttribute name="url" inReportMaker="false" internal="true"/>
             <columnAttribute name="description" inReportMaker="false" internal="true"/>
             <columnAttribute name="record_type" displayName="Record Type" />
+            <columnAttribute name="target_type" displayName="Type of Reference"/>
             <columnAttribute name="target_name" displayName="Name"/>
             <columnAttribute name="link_type" displayName="link_type"/>
         </table>
@@ -1563,35 +1565,42 @@ ORDER by start_date desc
 
       <sqlQuery name="References"  isCacheable='false'>
             <column name="dataset_id"/>
+            <column name="dataset_name"/>
             <column name="text"/>
             <column name="url"/>
             <column name="description"/>
             <column name="record_type"/>
+            <column name="target_type"/>
             <column name="target_name"/>
             <column name="link_type"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
-			, '' as text
+			, dsp.name as dataset_name
+                        , '' as text
 			, '' as url
 			, '' as description
 			, ref.record_type
+                        , ref.target_type
 			, replace (ref.target_name, ':', '') as target_name
 			, 'question' as link_type
 		    from ApidbTuning.datasetmodelref ref
 		    left join ApidbTuning.DatasetPresenter dsp
 			on dsp.dataset_presenter_id = ref.dataset_presenter_id
-			and ref.target_type = 'question'
-		    order by ref.record_type
+		    order by dsp.name
+                        , ref.target_type
+                        , ref.record_type
 			, ref.target_name
 		)
 
 	        select dataset_presenter_id as dataset_id
-		        , text
+		        , '' as dataset_name
+                        , text
 		        , url
 		        , description
 		        , '' as record_type
+                        , '' as target_type
 		        , '' as target_name
 		        , 'genomicsInternal' as link_type
 	        from apidbtuning.GenomicsInternalHyperlink
