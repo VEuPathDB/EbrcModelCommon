@@ -47,6 +47,7 @@
     <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
+    <track>pknoA1H1</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
     <track>preiCDC</track>
@@ -75,6 +76,7 @@
     <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
+    <track>pknoA1H1</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
     <track>preiCDC</track>
@@ -87,7 +89,13 @@
     <track>pyoeyoelii17X</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pvinvinckeivinckei</track>
+    <track>pvinvinckeiCY</track>
+    <track>pvinbrucechwattiDA</track>
+    <track>pvinCameroonEL</track>
+    <track>pvinlentumDE</track>
     <track>pvinpetteriCR</track>
+    <track>pvinpetteriCR2020</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="rodent_genomic" suffixes="_span">
@@ -95,7 +103,13 @@
     <track>pyoeyoelii17X</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pvinvinckeivinckei</track>
+    <track>pvinvinckeiCY</track>
+    <track>pvinbrucechwattiDA</track>
+    <track>pvinCameroonEL</track>
+    <track>pvinlentumDE</track>
     <track>pvinpetteriCR</track>
+    <track>pvinpetteriCR2020</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="aves_gene" suffixes="_span;_gene">
@@ -185,6 +199,7 @@
     <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
@@ -224,6 +239,7 @@
     <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
@@ -250,7 +266,12 @@
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
+    <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
+    <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
+    <org organism="Plasmodium vinckei Cameroon EL" abbrev="pvinCameroonEL" />
+    <org organism="Plasmodium vinckei lentum DE" abbrev="pvinlentumDE" />
     <org organism="Plasmodium vinckei petteri strain CR" abbrev="pvinpetteriCR" />
+    <org organism="Plasmodium vinckei petteri CR 2020" abbrev="pvinpetteriCR2020" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="rodent_gene" />
@@ -266,9 +287,15 @@
     <org organism="Plasmodium yoelii yoelii 17XNL" abbrev="pyoeyoelii17XNL" />
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
+    <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
+    <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
+    <org organism="Plasmodium vinckei Cameroon EL" abbrev="pvinCameroonEL" />
+    <org organism="Plasmodium vinckei lentum DE" abbrev="pvinlentumDE" />
     <org organism="Plasmodium vinckei petteri strain CR" abbrev="pvinpetteriCR" />
+    <org organism="Plasmodium vinckei petteri CR 2020" abbrev="pvinpetteriCR2020" />
     <track name="Scaffolds" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="rodent_genomic" />
