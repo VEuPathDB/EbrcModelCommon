@@ -14,7 +14,7 @@
           <![CDATA[
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
-            where category != 'Link outs'
+            --where category != 'Link outs'
           ]]>
        </sql>
     </sqlQuery>
