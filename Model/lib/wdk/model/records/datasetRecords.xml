@@ -620,6 +620,18 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
         </table>
 
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Transcript type counts -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="TranscriptTypeCounts" 
+               excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Gene Types"
+               queryRef="DatasetTables.TranscriptTypeCounts">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="gene_type"  displayName="Gene type"/>
+            <columnAttribute name="transcript_type" displayName="Transcript type"/>
+            <columnAttribute name="transcript_count" displayName="Transcript count"/>
+        </table>
 
 
       </recordClass>
@@ -1755,6 +1767,35 @@ where p.dataset = graph_descrip.dataset
 and graph_descrip.dataset = dnt.name) g
              ]]>
             </sql>
+      </sqlQuery>
+
+      <sqlQuery name="TranscriptTypeCounts">
+            <column name="dataset_id"/>
+            <column name="gene_type"/>
+            <column name="transcript_type"/>
+            <column name="transcript_count"/>
+
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <![CDATA[
+              select dsp.dataset_presenter_id as dataset_id
+                , ta.gene_type
+                , ta.transcript_type
+                , count(*) as transcript_count
+              from apidbtuning.organismattributes oa
+                , apidbtuning.transcriptattributes ta
+                , apidbtuning.datasetpresenter dsp
+                , apidbtuning.datasetnametaxon dnt
+              where oa.component_taxon_id = ta.taxon_id
+              and oa.project_id = ta.project_id
+              and oa.component_taxon_id = dnt.taxon_id
+              and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dsp.type = 'genome'
+              --and dsp.dataset_presenter_id = 'DS_b08fa4ba88'
+              group by oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
+              order by count(*) desc;
+            ]]>
+            </sql>
+
       </sqlQuery>
 
 <!--
