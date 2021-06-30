@@ -660,7 +660,17 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_count" displayName="Dataset count"/>
         </table>
 
-
+        
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- External Resources and Databases for genomes -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="ExternalDatabases" 
+               excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Additional external databases"
+               queryRef="DatasetTables.ExternalDatabases">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="name"  displayName="Name"/>
+        </table>
 
 
       </recordClass>
@@ -1832,7 +1842,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="feature_count"/>
 
             <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
-              select dsp.dataset_presenter_id
+              select dsp.dataset_presenter_id as dataset_id
                 , sa.sequence_type
                 , fl.feature_type
                 , count(*) as feature_count
@@ -1875,6 +1885,88 @@ and graph_descrip.dataset = dnt.name) g
               and dsp.type = 'genome'
               group by dsp.dataset_presenter_id, o_dsp.category
             order by count(*) desc
+            </sql>
+
+      </sqlQuery>
+
+
+      <sqlQuery name="ExternalDatabases">
+            <column name="dataset_id"/>
+            <column name="name"/>
+
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+              select dsp.dataset_presenter_id as dataset_id
+              , ext.dataset as name
+              from apidbtuning.datasetnametaxon dnt, apidbtuning.datasetpresenter dsp,
+
+              (select distinct * from (
+              SELECT 
+            edd.dataset_presenter_display_name AS dataset
+            ,ga.taxon_id
+              FROM
+            sres.dbref db
+              , DOTS.dbrefnafeature dbna
+              , apidbtuning.ExternalDbDatasetPresenter edd
+              , sres.externaldatabaserelease edr
+              , ApidbTuning.geneAttributes ga
+              WHERE
+            db.external_database_release_id = edd.external_database_release_id
+            AND edr.external_database_release_id = edd.external_database_release_id
+            AND dbna.db_ref_id = db.db_ref_id
+            AND ga.na_feature_id = dbna.na_feature_id
+            UNION
+              SELECT 
+            edd.dataset_presenter_display_name AS dataset
+            , ta.taxon_id
+              FROM
+            sres.dbref db
+              , DOTS.dbrefnafeature dbna
+              , apidbtuning.ExternalDbDatasetPresenter edd
+              , sres.externaldatabaserelease edr
+              , ApidbTuning.transcriptAttributes ta
+              WHERE
+            db.external_database_release_id = edd.external_database_release_id
+            AND edr.external_database_release_id = edd.external_database_release_id
+            AND dbna.db_ref_id = db.db_ref_id
+            AND ta.na_feature_id = dbna.na_feature_id
+            UNION
+              SELECT d.name as dataset
+              , ga.taxon_id
+              FROM
+            sres.dbref dbr
+              , DOTS.dbrefnafeature dbrf
+              , sres.externaldatabaserelease r
+              , sres.externaldatabase d
+              , ApidbTuning.geneAttributes ga
+              , APIDB.EXTERNALRESOURCEURL eru
+              WHERE dbr.external_database_release_id = r.external_database_release_id
+              and r.external_database_id = d.external_database_id
+              and dbr.db_ref_id = dbrf.db_ref_id
+              and dbrf.na_feature_id = ga.na_feature_id
+              and upper(d.name) = eru.database_name
+              UNION
+              SELECT d.name as dataset
+              , ta.taxon_id
+              FROM
+            sres.dbref dbr
+              , DOTS.dbrefaafeature dbrf
+              , Dots.aafeature aaf
+              , sres.externaldatabaserelease r
+              , sres.externaldatabase d
+              , ApidbTuning.transcriptAttributes ta
+              , APIDB.EXTERNALRESOURCEURL eru
+              WHERE dbr.external_database_release_id = r.external_database_release_id
+              and r.external_database_id = d.external_database_id
+              and dbr.db_ref_id = dbrf.db_ref_id
+              and dbrf.aa_feature_id = aaf.aa_feature_id
+              and aaf.aa_sequence_id = ta.aa_sequence_id
+              and upper(d.name) = eru.database_name
+              )
+              ) ext
+              where ext.taxon_id = dnt.taxon_id
+              and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dsp.type = 'genome'
+              order by ext.dataset
             </sql>
 
       </sqlQuery>
