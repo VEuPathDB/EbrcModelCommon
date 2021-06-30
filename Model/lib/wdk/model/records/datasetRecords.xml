@@ -646,8 +646,26 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="feature_count" displayName="Feature count"/>
         </table>
 
+
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Other data associated with genomes -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="GenomeAssociatedData" 
+               excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Additional data associated with this genome"
+               queryRef="DatasetTables.GenomeAssociatedData">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="category"  displayName="Category"/>
+            <columnAttribute name="dataset_count" displayName="Dataset count"/>
+        </table>
+
+
+
+
       </recordClass>
     </recordClassSet>
+
 
 
 
@@ -1831,6 +1849,32 @@ and graph_descrip.dataset = dnt.name) g
               and dsp.type = 'genome'
               group by dsp.dataset_presenter_id, sa.sequence_type, fl.feature_type
               order by count(*) desc
+            </sql>
+
+      </sqlQuery>
+
+
+       <sqlQuery name="GenomeAssociatedData">
+            <column name="dataset_id"/>
+            <column name="category"/>
+            <column name="dataset_count"/>
+
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+              select dsp.dataset_presenter_id as dataset_id
+                , o_dsp.category
+                , count(*) as dataset_count
+              from apidbtuning.organismattributes oa
+                , apidbtuning.datasetpresenter o_dsp
+                , apidbtuning.datasetnametaxon o_dnt
+                , apidbtuning.datasetnametaxon dnt
+                , apidbtuning.datasetpresenter dsp
+              where oa.component_taxon_id = o_dnt.taxon_id
+              and o_dnt.dataset_presenter_id = o_dsp.dataset_presenter_id
+              and oa.component_taxon_id = dnt.taxon_id
+              and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dsp.type = 'genome'
+              group by dsp.dataset_presenter_id, o_dsp.category
+            order by count(*) desc
             </sql>
 
       </sqlQuery>
