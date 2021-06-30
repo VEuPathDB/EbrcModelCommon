@@ -1776,7 +1776,6 @@ and graph_descrip.dataset = dnt.name) g
             <column name="transcript_count"/>
 
             <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
-            <![CDATA[
               select dsp.dataset_presenter_id as dataset_id
                 , ta.gene_type
                 , ta.transcript_type
@@ -1790,10 +1789,8 @@ and graph_descrip.dataset = dnt.name) g
               and oa.component_taxon_id = dnt.taxon_id
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
-              --and dsp.dataset_presenter_id = 'DS_b08fa4ba88'
               group by oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
-              order by count(*) desc;
-            ]]>
+              order by count(*) desc
             </sql>
 
       </sqlQuery>
