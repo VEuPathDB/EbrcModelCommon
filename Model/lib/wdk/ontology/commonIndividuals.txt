@@ -1,14 +1,14 @@
  			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
 			eupath/eupath.owl#recordClassName	eupath/eupath.owl#targetType	eupath/eupath.owl#name	EUPATH_0000052	eupath/eupath.owl#shortDisplayName	eupath/eupath.owl#description	eupath/eupath.owl#geneOrTranscript	EUPATH_0000274	eupath/eupath.owl#scope	eupath/eupath.owl#scope	eupath/eupath.owl#scope
 topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	Data Provenance	DP	Data submission, annotation and curation		3	internal		
-topic_3365_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_analysis	Data Analysis	DA	Data architecture, analysis and design		4	internal		
+topic_3308_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			comparative_transcriptomics	Comparative transcriptomics	CT	Data context		2	internal		
 DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
-DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	http://edamontology.org/topic_3365	Data Analysis	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs						results	record	download
-DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts						results	record	download
-DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts						results	record	download
-DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData						results	record	download
-DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases						results	record	download
+DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs						results	record	download
+DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts						results	record	download
+DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts						results	record	download
+DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData						results	record	download
+DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases						results	record	download
 DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21	results	record	download
 DatasetRecordClasses.DatasetRecordClass.Contacts	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Contacts					22	results	record	download
 DatasetRecordClasses.DatasetRecordClass.StudyCharacteristicTable	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	StudyCharacteristicTable					18	results	record	download
