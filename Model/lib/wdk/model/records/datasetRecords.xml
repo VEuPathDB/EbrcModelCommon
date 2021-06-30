@@ -633,6 +633,18 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="transcript_count" displayName="Transcript count"/>
         </table>
 
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Sequence type counts -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="SequenceTypeCounts" 
+               excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Sequence Types"
+               queryRef="DatasetTables.SequenceTypeCounts">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="sequence_type"  displayName="Sequence type"/>
+            <columnAttribute name="feature_type" displayName="Feature type"/>
+            <columnAttribute name="feature_count" displayName="Feature count"/>
+        </table>
 
       </recordClass>
     </recordClassSet>
@@ -1790,6 +1802,34 @@ and graph_descrip.dataset = dnt.name) g
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
               group by oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
+              order by count(*) desc
+            </sql>
+
+      </sqlQuery>
+
+      <sqlQuery name="SequenceTypeCounts">
+            <column name="dataset_id"/>
+            <column name="sequence_type"/>
+            <column name="feature_type"/>
+            <column name="feature_count"/>
+
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+              select dsp.dataset_presenter_id
+                , sa.sequence_type
+                , fl.feature_type
+                , count(*) as feature_count
+              from apidbtuning.organismattributes oa
+                , ApidbTuning.GenomicSeqAttributes sa
+                , apidb.featurelocation fl
+                , apidbtuning.datasetpresenter dsp
+                , apidbtuning.datasetnametaxon dnt
+              where oa.component_taxon_id = sa.taxon_id
+              and oa.project_id = sa.project_id
+              and sa.na_sequence_id = fl.na_sequence_id
+              and oa.component_taxon_id = dnt.taxon_id
+              and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dsp.type = 'genome'
+              group by dsp.dataset_presenter_id, sa.sequence_type, fl.feature_type
               order by count(*) desc
             </sql>
 
