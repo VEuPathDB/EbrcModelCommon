@@ -546,6 +546,16 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Note"/>
         </table>
 
+        <table name="DatasetHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               displayName="Data Set Release History"
+               queryRef="DatasetTables.DatasetHistory">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="build" displayName="VEuPathDB Build"/>
+            <columnAttribute name="release_date" displayName="Release Date"/>
+            <columnAttribute name="release_number" displayName="Release"/>
+            <columnAttribute name="note" displayName="Note"/>
+        </table>
+
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -1317,6 +1327,29 @@ from apidbtuning.datasetnametaxon dsnt
                     bd.project, bd.release_number, dh.genome_source,
 	                  dh.genome_version, dh.annotation_source, dh.annotation_version,
                     dh.functional_annotation_source, dh.functional_annotation_version,dh.note
+             from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
+             where dh.build_number = bd.build_number
+               and bd.project = '@PROJECT_ID@'
+             order by bd.build_number
+            ]]>
+            </sql>
+      </sqlQuery>
+
+      <sqlQuery name="DatasetHistory"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="build"/>
+            <column name="release_date"/>
+            <column name="project"/>
+            <column name="release_number"/>
+            <column name="note"/>
+            <sql>
+            <![CDATA[
+             select dh.dataset_presenter_id as dataset_id
+               , bd.build_number as build
+               , to_char(bd.release_date, 'yyyy-mm-dd') as release_date
+               , bd.project
+               , bd.release_number
+               , dh.functional_annotation_version,dh.note
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
              where dh.build_number = bd.build_number
                and bd.project = '@PROJECT_ID@'
