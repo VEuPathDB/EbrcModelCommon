@@ -1700,7 +1700,8 @@ ORDER by start_date desc
 		        , '' as target_name
 		        , 'genomicsInternal' as link_type
 	        from apidbtuning.GenomicsInternalHyperlink
-	        union
+	        where url not like '%app/record/organism/%'
+                union
 	        select * from projectQuestionLinks
 
 	    ]]>
