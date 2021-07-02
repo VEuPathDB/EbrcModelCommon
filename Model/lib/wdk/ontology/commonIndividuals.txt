@@ -6,6 +6,7 @@ DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.Data
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
 DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs						results	record	download
 DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts						results	record	download
+DatasetRecordClasses.DatasetRecordClass.GeneTypeCounts	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	GeneTypeCounts						results	record	download
 DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts						results	record	download
 DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData						results	record	download
 DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3308	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases						results	record	download

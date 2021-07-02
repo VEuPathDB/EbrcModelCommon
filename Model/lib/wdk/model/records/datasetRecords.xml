@@ -635,12 +635,24 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="TranscriptTypeCounts" 
                excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
-               displayName="Gene Types"
+               displayName="Transcript Types"
                queryRef="DatasetTables.TranscriptTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="gene_type"  displayName="Gene type"/>
             <columnAttribute name="transcript_type" displayName="Transcript type"/>
             <columnAttribute name="transcript_count" displayName="Transcript count"/>
+        </table>
+
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Gene type counts -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="GeneTypeCounts" 
+               excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Gene Types"
+               queryRef="DatasetTables.GeneTypeCounts">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="gene_type"  displayName="Gene type"/>
+            <columnAttribute name="gene_count" displayName="Gene count"/>
         </table>
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -1862,6 +1874,30 @@ and graph_descrip.dataset = dnt.name) g
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
               group by oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
+              order by count(*) desc
+            </sql>
+
+      </sqlQuery>
+
+      <sqlQuery name="GeneTypeCounts">
+            <column name="dataset_id"/>
+            <column name="gene_type"/>
+            <column name="gene_count"/>
+
+            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+              select dsp.dataset_presenter_id as dataset_id
+                , ga.gene_type
+                , count(*) as gene_count
+              from apidbtuning.organismattributes oa
+                , apidbtuning.geneattributes ga
+                , apidbtuning.datasetpresenter dsp
+                , apidbtuning.datasetnametaxon dnt
+              where oa.component_taxon_id = ga.taxon_id
+              and oa.project_id = ga.project_id
+              and oa.component_taxon_id = dnt.taxon_id
+              and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dsp.type = 'genome'
+              group by oa.project_id, dsp.dataset_presenter_id, ga.gene_type
               order by count(*) desc
             </sql>
 
