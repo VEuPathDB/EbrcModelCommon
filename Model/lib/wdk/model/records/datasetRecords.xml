@@ -674,7 +674,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="GenomeAssociatedData" 
                excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
-               displayName="Additional data associated with this genome"
+               displayName="Additional kinds of  data associated with this genome"
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="category"  displayName="Category"/>
@@ -1949,6 +1949,7 @@ and graph_descrip.dataset = dnt.name) g
               and oa.component_taxon_id = dnt.taxon_id
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
+              and o_dsp.category != 'Annotation, curation and identifiers'
               group by dsp.dataset_presenter_id, o_dsp.category
             order by count(*) desc
             </sql>
