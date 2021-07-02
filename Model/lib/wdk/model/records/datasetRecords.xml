@@ -652,8 +652,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                queryRef="DatasetTables.SequenceTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="sequence_type"  displayName="Sequence type"/>
-            <columnAttribute name="feature_type" displayName="Feature type"/>
-            <columnAttribute name="feature_count" displayName="Feature count"/>
+            <columnAttribute name="sequence_count" displayName="Sequence count"/>
         </table>
 
 
@@ -1871,14 +1870,12 @@ and graph_descrip.dataset = dnt.name) g
       <sqlQuery name="SequenceTypeCounts">
             <column name="dataset_id"/>
             <column name="sequence_type"/>
-            <column name="feature_type"/>
-            <column name="feature_count"/>
+            <column name="sequence_count"/>
 
             <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , sa.sequence_type
-                , fl.feature_type
-                , count(*) as feature_count
+                , count(*) as sequence_count
               from apidbtuning.organismattributes oa
                 , ApidbTuning.GenomicSeqAttributes sa
                 , apidb.featurelocation fl
@@ -1890,7 +1887,7 @@ and graph_descrip.dataset = dnt.name) g
               and oa.component_taxon_id = dnt.taxon_id
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
-              group by dsp.dataset_presenter_id, sa.sequence_type, fl.feature_type
+              group by dsp.dataset_presenter_id, sa.sequence_type
               order by count(*) desc
             </sql>
 
