@@ -227,6 +227,9 @@ while in protected and private studies there will be human intervention in the d
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
        </attributeQueryRef>
 
+      <attributeQueryRef ref="DatasetAttributes.genecounts">
+         <columnAttribute name="gene_count" displayName="Genes" help="Total gene count" align="right" />
+      </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.Contacts">
          <columnAttribute name="contact" displayName="Contact" 
@@ -709,6 +712,25 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <testRowCountSql>
         select count(*) from ApidbTuning.DatasetPresenter
       </testRowCountSql>
+
+      <sqlQuery name="genecounts" isCacheable="false">
+        <column name="dataset_id"/>
+        <column name="gene_count"/>
+        <sql>
+          select dsp.dataset_presenter_id as dataset_id
+            , count(*) as gene_count
+          from apidbtuning.organismattributes oa
+            , apidbtuning.geneattributes ga
+            , apidbtuning.datasetpresenter dsp
+            , apidbtuning.datasetnametaxon dnt
+          where oa.component_taxon_id = ga.taxon_id
+          and oa.project_id = ga.project_id
+          and oa.component_taxon_id = dnt.taxon_id
+          and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+          and dsp.type = 'genome'
+          group by oa.project_id, dsp.dataset_presenter_id
+        </sql>
+      </sqlQuery>
 
       <sqlQuery name="ExpTechnique" isCacheable="false">
          <column name="exp_technique"/>
