@@ -34,23 +34,23 @@ plasmoMapp	http://edamontology.org/topic_0160	Sequence sites, features and motif
 insertOldAnnotation	http://edamontology.org/topic_0160	Sequence sites, features and motifs	feature	
 geneOntology	http://edamontology.org/topic_0089	Ontology and Terminology	function	
 enzymeDB	http://edamontology.org/topic_0089	Ontology and Terminology	function	
-productNames	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
-comments	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
-geneName	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
-ebiGFF3file	http://edamontology.org/topic_0219	Annotation and Curation	gene_annotation	
+productNames	http://edamontology.org/topic_0622	Annotation and Curation	gene_annotation	
+comments	http://edamontology.org/topic_0622	Annotation and Curation	gene_annotation	
+geneName	http://edamontology.org/topic_0622	Annotation and Curation	gene_annotation	
+ebiGFF3file	http://edamontology.org/topic_0622	Annotation and Curation	gene_annotation	
 geneFeatureLODScores	http://edamontology.org/topic_3298	Phenomics	genetic_mapping	
-genbank_primary_genome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-ebi_primary_genome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-embl_primary_genome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-NoPreprocess_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-NoPreprocess_secondary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-GTF_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-GFF_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-fasta_primary_genome_sequence	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-primaryVirtualGenome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-primaryVirtualGenomeAllowSplits	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-secondaryVirtualGenome	http://edamontology.org/topic_0219	Annotation and Curation	genome	
-ChromosomeColors	http://edamontology.org/topic_0219	Annotation and Curation	genome	
+genbank_primary_genome	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+ebi_primary_genome	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+embl_primary_genome	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+NoPreprocess_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+NoPreprocess_secondary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+GTF_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+GFF_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+fasta_primary_genome_sequence	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+primaryVirtualGenome	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+primaryVirtualGenomeAllowSplits	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+secondaryVirtualGenome	http://edamontology.org/topic_0622	Annotation and Curation	genome	
+ChromosomeColors	http://edamontology.org/topic_0622	Annotation and Curation	genome	
 yeastTwoHybrid	http://edamontology.org/topic_0128	Protein Interactions	interaction	
 isolateSNPsFromChip	http://edamontology.org/topic_0199	Genetic Variation	isolates	${platform}
 SNPs_HTS_Experiment	http://edamontology.org/topic_0199	Genetic Variation	isolates	HTS_SNP
@@ -71,10 +71,10 @@ proteinMicroarrayMetaData	http://edamontology.org/topic_0804	Immunoproteins, gen
 SnpMetaData	http://edamontology.org/topic_0199	Genetic Variation	metadata	SNP
 SNPChipMetaData	http://edamontology.org/topic_0199	Genetic Variation	metadata	SNPChip
 cghArrayPlatform	http://edamontology.org/topic_0632	probedesign	microarray_platform	cgh_array
-genbank_organelle_genome	http://edamontology.org/topic_0219	Annotation and Curation	organellar_genome	
-embl_organelle_genome	http://edamontology.org/topic_0219	Annotation and Curation	organellar_genome	
-NoPreprocess_organelle_genome_features	http://edamontology.org/topic_0219	Annotation and Curation	organellar_genome	
-fasta_organelle_genome	http://edamontology.org/topic_0219	Annotation and Curation	organellar_genome	
+genbank_organelle_genome	http://edamontology.org/topic_0622	Annotation and Curation	organellar_genome	
+embl_organelle_genome	http://edamontology.org/topic_0622	Annotation and Curation	organellar_genome	
+NoPreprocess_organelle_genome_features	http://edamontology.org/topic_0622	Annotation and Curation	organellar_genome	
+fasta_organelle_genome	http://edamontology.org/topic_0622	Annotation and Curation	organellar_genome	
 organism	http://edamontology.org/topic_0637	Taxonomy	organism	
 orthomclPhyletic	http://edamontology.org/topic_3299	orthology	orthology	
 orthomcl	http://edamontology.org/topic_3299	orthology	orthology	
@@ -143,14 +143,14 @@ chipChipPlatform	http://edamontology.org/topic_0632	probedesign	transcript_expre
 pfalLocationsWithSqlLdr			unknown	
 validateOrganismInfo				
 referenceStrain				
-genbank_secondary_genome	http://edamontology.org/topic_0219	Annotation and Curation		
-embl_secondary_genome	http://edamontology.org/topic_0219	Annotation and Curation		
-GeneDB_GFF_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation		
-GeneDB_GFF_secondary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation		
-GeneDB_GFF_organelle_genome_features	http://edamontology.org/topic_0219	Annotation and Curation		
-Broad_GFF_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation		
-NoPreprocess_GTF_primary_genome_features	http://edamontology.org/topic_0219	Annotation and Curation		
-fasta_secondary_genome	http://edamontology.org/topic_0219	Annotation and Curation		
+genbank_secondary_genome	http://edamontology.org/topic_0622	Annotation and Curation		
+embl_secondary_genome	http://edamontology.org/topic_0622	Annotation and Curation		
+GeneDB_GFF_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation		
+GeneDB_GFF_secondary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation		
+GeneDB_GFF_organelle_genome_features	http://edamontology.org/topic_0622	Annotation and Curation		
+Broad_GFF_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation		
+NoPreprocess_GTF_primary_genome_features	http://edamontology.org/topic_0622	Annotation and Curation		
+fasta_secondary_genome	http://edamontology.org/topic_0622	Annotation and Curation		
 transcriptsFromReferenceStrain			ESTs	
 epitopesFromReferenceStrain				
 clonedInsertEndsFromReferenceStrain				

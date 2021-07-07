@@ -65,6 +65,8 @@ http://edamontology.org/topic_3173 #Epigenomics
 http://edamontology.org/topic_3298 #Phenomics
 http://edamontology.org/topic_3299 #Evolutionary biology
 http://edamontology.org/topic_3308 #Transcriptomics
+http://edamontology.org/topic_0622 #Genomics
+
 http://edamontology.org/topic_3345 #Identity and mapping
 http://edamontology.org/topic_0160 # Sequence sites, features and motifs
 
@@ -171,6 +173,8 @@ subClassOf http://edamontology.org/topic_0199
 http://edamontology.org/topic_3299 #Evolutionary biology
 subClassOf http://www.w3.org/2002/07/owl#Thing
 http://edamontology.org/topic_3308 #Transcriptomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0622 #Transcriptomics
 subClassOf http://www.w3.org/2002/07/owl#Thing
 http://edamontology.org/topic_3173 #Epigenomics
 subClassOf http://www.w3.org/2002/07/owl#Thing
