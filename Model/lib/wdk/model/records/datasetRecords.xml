@@ -134,6 +134,12 @@
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
        </attributeQueryRef>
 
+        <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes">
+         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs" removable="false"/>
+         <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
+       </attributeQueryRef>
+
+
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
@@ -246,7 +252,7 @@ while in protected and private studies there will be human intervention in the d
        </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
-        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,megabase_pairs"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
@@ -1149,6 +1155,23 @@ ON mm.dataset_id = counts.dataset_presenter_id
                      on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
             ]]>
          </sql>
+      </sqlQuery>
+
+      <sqlQuery name="GenomicsDatasetAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <column name="dataset_id"/>
+        <column name="megabase_pairs"/>
+        <column name="genecount"/>
+
+        <sql>
+          <![CDATA[
+          select dsp.dataset_presenter_id as dataset_id
+              , oa.megabps as megabase_pairs
+              , nullif(oa.genecount, 0) as genecount
+          from apidbtuning.datasetpresenter dsp
+              left join apidbtuning.organismattributes oa
+                  on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+          ]]>
+        </sql>
       </sqlQuery>
 
       <sqlQuery name="All"  isCacheable="false">
