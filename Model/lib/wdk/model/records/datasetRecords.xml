@@ -685,13 +685,13 @@ OR if the linkName and or URL require access to other attributes....also how to 
                displayName="Explore other Categories of Data Associated with this Genome"
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="category"  displayName="Category" internal="true"/>
+            <columnAttribute name="category"  displayName="Category"/>
+            <columnAttribute name="dataset_count" displayName="Dataset count" internal="true"/>
             <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
-                           displayName="Category">
-
+                           displayName="Dataset count">
                  <displayText>
                     <![CDATA[
-                    $$category$$
+                    $$dataset_count$$
                     ]]>
                  </displayText>
                  <url>
@@ -700,8 +700,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
                     ]]>
                  </url>
             </linkAttribute>
-            
-            <columnAttribute name="dataset_count" displayName="Dataset count"/>
         </table>
 
         
