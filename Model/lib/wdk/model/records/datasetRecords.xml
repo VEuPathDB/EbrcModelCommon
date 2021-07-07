@@ -1140,8 +1140,8 @@ ON mm.dataset_id = counts.dataset_presenter_id
          <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id
-                 , case when oa.is_annotated_genome = 1 then 'Genome Sequence and Annotation for <i>' || oa.species || '</i> ' || oa.strain
-                        when oa.is_annotated_genome = 0 then 'Genome Sequence for <i>' || oa.species || '</i> ' || oa.strain
+                 , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
+                        when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'   
                         else dsp.display_name
                    end as display_name
             from apidbtuning.datasetpresenter dsp
