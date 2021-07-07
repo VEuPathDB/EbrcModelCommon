@@ -129,6 +129,11 @@
        </attributeQueryRef>
 -->
 
+
+       <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
+         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
+       </attributeQueryRef>
+
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
@@ -201,7 +206,7 @@ while in protected and private studies there will be human intervention in the d
        <attributeQueryRef ref="DatasetAttributes.All">
          <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
          <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
-         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
+<!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
          <columnAttribute name="short_display_name" internal="true"/>
          <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,EuPathDB"/>
           <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
@@ -496,7 +501,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Links -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="HyperLinks"
-               displayName="External resources"
+               displayName="External Resources"
                queryRef="DatasetTables.HyperLinks">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="text" internal="true"/>
@@ -677,10 +682,25 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="GenomeAssociatedData" 
                excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
-               displayName="Additional kinds of  data associated with this genome"
+               displayName="Explore other Categories of Data Associated with this Genome"
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="category"  displayName="Category"/>
+            <columnAttribute name="category"  displayName="Category" internal="true"/>
+            <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
+                           displayName="Category">
+
+                 <displayText>
+                    <![CDATA[
+                    $$category$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                          @WEBAPP_BASE_URL@/search/dataset/DatasetsByCategory?param.dataset_category=$$category$$&autoRun=1
+                    ]]>
+                 </url>
+            </linkAttribute>
+            
             <columnAttribute name="dataset_count" displayName="Dataset count"/>
         </table>
 
@@ -690,10 +710,11 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="ExternalDatabases" 
                excludeProjects="EupathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
-               displayName="Additional external databases"
+               displayName="External Databases Associated to Genome Annotation"
                queryRef="DatasetTables.ExternalDatabases">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="name"  displayName="Name"/>
+            <columnAttribute name="id_url"  displayName="URL"/>
         </table>
 
 
@@ -1108,13 +1129,35 @@ ON mm.dataset_id = counts.dataset_presenter_id
       </sqlQuery>
 
 
+      <sqlQuery name="DatasetDisplayName"  isCacheable="false">
+         <column name="dataset_id"/>
+         <column name="display_name" ignoreCase="true"/>
 
+         <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id, dsp.display_name from apidbtuning.datasetpresenter dsp
+            ]]>
+         </sql>
+
+         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id
+                 , case when oa.is_annotated_genome = 1 then 'Genome Sequence and Annotation for <i>' || oa.species || '</i> ' || oa.strain
+                        when oa.is_annotated_genome = 0 then 'Genome Sequence for <i>' || oa.species || '</i> ' || oa.strain
+                        else dsp.display_name
+                   end as display_name
+            from apidbtuning.datasetpresenter dsp
+                 left join apidbtuning.organismattributes oa
+                     on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+            ]]>
+         </sql>
+      </sqlQuery>
 
       <sqlQuery name="All"  isCacheable="false">
          <column name="dataset_id"/>
          <column name="dataset_name"/>
          <column name="dataset_name_pattern"/>
-         <column name="display_name" ignoreCase="true"/>
+<!--         <column name="display_name" ignoreCase="true"/> -->
          <column name="short_display_name"/>
          <column name="description"/>
          <column name="version"/>
@@ -1131,7 +1174,8 @@ ON mm.dataset_id = counts.dataset_presenter_id
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
-                   dsp.display_name, ds.version,
+                   --dsp.display_name, 
+                   ds.version,
                    dsp.short_display_name, dsp.description,
                    nvl(dsp.summary, dsp.description) as summary,
                    dsp.protocol, dsp.usage, 
@@ -1983,16 +2027,19 @@ and graph_descrip.dataset = dnt.name) g
       <sqlQuery name="ExternalDatabases">
             <column name="dataset_id"/>
             <column name="name"/>
+            <column name="id_url"/>
+            
 
             <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
-              , ext.dataset as name
+              , ext.dataset as name, id_url
               from apidbtuning.datasetnametaxon dnt, apidbtuning.datasetpresenter dsp,
 
               (select distinct * from (
               SELECT 
             edd.dataset_presenter_display_name AS dataset
             ,ga.taxon_id
+            , edr.id_url
               FROM
             sres.dbref db
               , DOTS.dbrefnafeature dbna
@@ -2008,6 +2055,7 @@ and graph_descrip.dataset = dnt.name) g
               SELECT 
             edd.dataset_presenter_display_name AS dataset
             , ta.taxon_id
+            , edr.id_url
               FROM
             sres.dbref db
               , DOTS.dbrefnafeature dbna
@@ -2022,6 +2070,7 @@ and graph_descrip.dataset = dnt.name) g
             UNION
               SELECT d.name as dataset
               , ga.taxon_id
+            , eru.id_url
               FROM
             sres.dbref dbr
               , DOTS.dbrefnafeature dbrf
@@ -2037,6 +2086,7 @@ and graph_descrip.dataset = dnt.name) g
               UNION
               SELECT d.name as dataset
               , ta.taxon_id
+            , eru.id_url
               FROM
             sres.dbref dbr
               , DOTS.dbrefaafeature dbrf
