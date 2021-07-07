@@ -139,6 +139,11 @@
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
+        <attributeQueryRef ref="DatasetAttributes.LatestVersion">
+         <columnAttribute name="genome_version" displayName="Genome Version" removable="false"/>
+         <columnAttribute name="annotation_version" displayName="Annotation Version" removable="false"/>
+         <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version" removable="false"/>
+       </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
@@ -252,7 +257,7 @@ while in protected and private studies there will be human intervention in the d
        </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
-        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,megabase_pairs"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact"
@@ -1174,6 +1179,40 @@ ON mm.dataset_id = counts.dataset_presenter_id
           ]]>
         </sql>
       </sqlQuery>
+
+      <sqlQuery name="LatestVersion" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <column name="dataset_id"/>
+        <column name="genome_version"/>
+        <column name="annotation_version"/>
+        <column name="functional_annotation_version"/>
+
+        <sql>
+          <![CDATA[
+		with all_versions as (
+		     select dh.dataset_presenter_id as dataset_id
+		       , bd.project
+		       , bd.release_number
+		       , dh.genome_version
+		       , dh.annotation_version
+		       , dh.functional_annotation_version
+		       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.release_number desc) rn
+		     from ApidbTuning.DatasetHistory dh
+		       , ApidbTuning.EupathBuildDates bd
+		     where dh.build_number = bd.build_number
+		       and bd.project = '@PROJECT_ID@'
+		     order by dh.dataset_presenter_id
+		       , bd.release_number desc
+		)
+		select dataset_id
+		  , genome_version
+		  , annotation_version
+		  , functional_annotation_version
+		from all_versions
+		where rn = 1
+          ]]>
+        </sql>
+      </sqlQuery>
+
 
       <sqlQuery name="All"  isCacheable="false">
          <column name="dataset_id"/>
