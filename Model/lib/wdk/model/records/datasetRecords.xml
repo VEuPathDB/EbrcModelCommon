@@ -1837,6 +1837,7 @@ ORDER by start_date desc
 	        where url not like '%app/record/organism/%'
                 union
 	        select * from projectQuestionLinks
+                order by text
 
 	    ]]>
             </sql>
