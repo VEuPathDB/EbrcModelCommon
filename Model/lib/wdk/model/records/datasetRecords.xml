@@ -567,6 +567,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
+            <columnAttribute name="version" displayName="Data Set Version"/>
             <columnAttribute name="note" displayName="Note"/>
         </table>
 
@@ -1439,19 +1440,26 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="release_date"/>
             <column name="project"/>
             <column name="release_number"/>
+            <column name="version"/>
             <column name="note"/>
             <sql>
             <![CDATA[
              select dh.dataset_presenter_id as dataset_id
-               , bd.build_number as build
-               , to_char(bd.release_date, 'yyyy-mm-dd') as release_date
-               , bd.project
-               , bd.release_number
-               , dh.functional_annotation_version,dh.note
-             from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
-             where dh.build_number = bd.build_number
-               and bd.project = '@PROJECT_ID@'
-             order by bd.build_number
+		   , bd.build_number as build
+		   , to_char(bd.release_date, 'yyyy-mm-dd') as release_date
+		   , bd.project
+		   , bd.release_number
+		   , ds.version
+		   , dh.note
+		 from ApidbTuning.DatasetHistory dh
+		   , ApidbTuning.EupathBuildDates bd
+		   , apidb.datasource ds
+		   , ApidbTuning.DatasetPresenter dsp
+		 where dh.build_number = bd.build_number
+		   and bd.project = '@PROJECT_ID@'
+		   and ds.name (+) = dsp.name
+		   and dh.dataset_presenter_id = dsp.dataset_presenter_id
+		 order by bd.build_number
             ]]>
             </sql>
       </sqlQuery>
