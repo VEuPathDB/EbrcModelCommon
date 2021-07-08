@@ -723,7 +723,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Resources and Databases for genomes -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="ExternalDatabases" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="External Databases Associated to Genome Annotation"
                queryRef="DatasetTables.ExternalDatabases">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -2132,13 +2132,13 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-      <sqlQuery name="ExternalDatabases" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="ExternalDatabases" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_id"/>
             <column name="name"/>
             <column name="id_url"/>
             
 
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
 		   <![CDATA[
                     with full_urls_table as (
 			      select dsp.dataset_presenter_id as dataset_id
