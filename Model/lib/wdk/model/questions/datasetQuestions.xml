@@ -160,6 +160,19 @@
       </description>
     </question>
 
+    <question name="DatasetsByCategory"
+      displayName="Data Sets by Category"
+      shortDisplayName="Category"
+      fullAnswer="true"
+      queryRef="DatasetIds.ByCategory"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find data sets that are associated with a particular category
+      </description>
+    </question>
+
+
     <question name="DatasetsByUserId"
       displayName="Data Sets study_access level based on user_id"
       shortDisplayName="StudyAccess"
