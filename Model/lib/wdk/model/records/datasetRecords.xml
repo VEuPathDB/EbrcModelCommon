@@ -2009,7 +2009,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="transcript_type"/>
             <column name="transcript_count"/>
 
-            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <sql excludeProjects="MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , ta.gene_type
                 , ta.transcript_type
@@ -2034,7 +2034,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="gene_type"/>
             <column name="gene_count"/>
 
-            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <sql excludeProjects="MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , ga.gene_type
                 , count(*) as gene_count
@@ -2058,7 +2058,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="sequence_type"/>
             <column name="sequence_count"/>
 
-            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <sql excludeProjects="MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , sa.sequence_type
                 , count(*) as sequence_count
@@ -2085,7 +2085,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="category"/>
             <column name="dataset_count"/>
 
-            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <sql excludeProjects="MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , o_dsp.category
                 , count(*) as dataset_count
@@ -2113,7 +2113,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="id_url"/>
             
 
-            <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
+            <sql excludeProjects="MicrobiomeDB, ClinEpiDB, AllClinEpiDB">
 		   <![CDATA[
                     with full_urls_table as (
 			      select dsp.dataset_presenter_id as dataset_id
