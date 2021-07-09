@@ -1207,27 +1207,29 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
           <![CDATA[
-		with all_versions as (
-		     select dh.dataset_presenter_id as dataset_id
-		       , bd.project
-		       , bd.release_number
-		       , dh.genome_version
-		       , dh.annotation_version
-		       , dh.functional_annotation_version
-		       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.release_number desc) rn
-		     from ApidbTuning.DatasetHistory dh
-		       , ApidbTuning.EupathBuildDates bd
-		     where dh.build_number = bd.build_number
-		       and bd.project = '@PROJECT_ID@'
-		     order by dh.dataset_presenter_id
-		       , bd.release_number desc
-		)
-		select dataset_id
-		  , genome_version
-		  , annotation_version
-		  , functional_annotation_version
-		from all_versions
-		where rn = 1
+                   with all_versions as (
+                   select dh.dataset_presenter_id
+                       , bd.project
+                       , bd.release_number
+                       , dh.genome_version
+                       , dh.annotation_version
+                       , dh.functional_annotation_version
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.release_number desc) rn
+                     from ApidbTuning.DatasetHistory dh
+                       , ApidbTuning.EupathBuildDates bd 
+                     where dh.build_number = bd.build_number
+                     order by dh.dataset_presenter_id
+                       , bd.release_number desc
+                ) ,
+                all_versions_filtered as (
+                  select * from all_versions where rn = 1
+                )
+                select dsp.dataset_presenter_id as dataset_id
+                  , av.genome_version
+                  , av.annotation_version
+                  , av.functional_annotation_version
+                from all_versions_filtered av, apidbtuning.datasetpresenter dsp
+                where dsp.dataset_presenter_id = av.dataset_presenter_id (+)
           ]]>
         </sql>
       </sqlQuery>
