@@ -139,14 +139,14 @@
        </attributeQueryRef>
 
         <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs" removable="false"/>
+         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs" removable="true"/>
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
         <attributeQueryRef ref="DatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
-         <columnAttribute name="genome_version" displayName="Genome Version" removable="false"/>
-         <columnAttribute name="annotation_version" displayName="Annotation Version" removable="false"/>
-         <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version" removable="false"/>
+         <columnAttribute name="genome_version" displayName="Genome Version" removable="true"/>
+         <columnAttribute name="annotation_version" displayName="Annotation Version" removable="true"/>
+         <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version" removable="true"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
@@ -702,6 +702,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="category"  displayName="Category"/>
+            <columnAttribute name="organism"  displayName="organism" internal="true"/>
             <columnAttribute name="dataset_count" displayName="Dataset count" internal="true"/>
             <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
                            displayName="Dataset count">
@@ -712,7 +713,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                  </displayText>
                  <url>
                     <![CDATA[
-                          @WEBAPP_BASE_URL@/search/dataset/DatasetsByCategory?param.dataset_category=$$category$$&autoRun=1
+                          @WEBAPP_BASE_URL@/search/dataset/DatasetsByCategoryAndOrganism?param.organism=$$organism$$&param.dataset_category=$$category$$&autoRun=1
                     ]]>
                  </url>
             </linkAttribute>
@@ -2109,23 +2110,27 @@ and graph_descrip.dataset = dnt.name) g
             <column name="dataset_id"/>
             <column name="category"/>
             <column name="dataset_count"/>
-
+            <column name="organism"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
               select dsp.dataset_presenter_id as dataset_id
                 , o_dsp.category
+                , tn.name as organism
                 , count(*) as dataset_count
               from apidbtuning.organismattributes oa
                 , apidbtuning.datasetpresenter o_dsp
                 , apidbtuning.datasetnametaxon o_dnt
                 , apidbtuning.datasetnametaxon dnt
+                , sres.taxonname tn
                 , apidbtuning.datasetpresenter dsp
               where oa.component_taxon_id = o_dnt.taxon_id
               and o_dnt.dataset_presenter_id = o_dsp.dataset_presenter_id
               and oa.component_taxon_id = dnt.taxon_id
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              and dnt.taxon_id = tn.taxon_id
+              and tn.name_class = 'scientific name'
               and dsp.type = 'genome'
-              and o_dsp.category != 'Genomics'
-              group by dsp.dataset_presenter_id, o_dsp.category
+              and o_dsp.category not in ('Genomics', 'Link outs')
+              group by dsp.dataset_presenter_id, o_dsp.category, tn.name
             order by count(*) desc
             </sql>
 

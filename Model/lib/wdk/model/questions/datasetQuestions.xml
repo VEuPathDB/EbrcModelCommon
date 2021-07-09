@@ -160,15 +160,18 @@
       </description>
     </question>
 
-    <question name="DatasetsByCategory"
-      displayName="Data Sets by Category"
+    <question name="DatasetsByCategoryAndOrganism"
+      displayName="Data Sets by Category and organism"
       shortDisplayName="Category"
       fullAnswer="true"
-      queryRef="DatasetIds.ByCategory"
+      queryRef="DatasetIds.ByCategoryAndOrganism"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true">
+      <attributesList summary="organism_prefix,newcategory,pmids,summary,contact" 
+                      sorting="contact asc"
+       />
       <description>
-         Find data sets that are associated with a particular category
+         Find data sets that are associated with a particular category and organism
       </description>
     </question>
 
