@@ -162,6 +162,7 @@
 
     <question name="DatasetsByCategoryAndOrganism"
       displayName="Data Sets by Category and organism"
+      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
       shortDisplayName="Category"
       fullAnswer="true"
       queryRef="DatasetIds.ByCategoryAndOrganism"
