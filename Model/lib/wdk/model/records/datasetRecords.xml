@@ -683,7 +683,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Sequence type counts -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="SequenceTypeCounts" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
                displayName="Sequence Types"
                queryRef="DatasetTables.SequenceTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -2079,12 +2079,12 @@ and graph_descrip.dataset = dnt.name) g
 
       </sqlQuery>
 
-      <sqlQuery name="SequenceTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="SequenceTypeCounts" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <column name="dataset_id"/>
             <column name="sequence_type"/>
             <column name="sequence_count"/>
 
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
               select dsp.dataset_presenter_id as dataset_id
                 , sa.sequence_type
                 , count(*) as sequence_count
