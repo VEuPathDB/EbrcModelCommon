@@ -684,7 +684,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="SequenceTypeCounts" 
                excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
-               displayName="Sequence Types"
+               displayName="Sequence Types (Highest Level of Assembly)"
                queryRef="DatasetTables.SequenceTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="sequence_type"  displayName="Sequence type"/>
@@ -2112,10 +2112,10 @@ and graph_descrip.dataset = dnt.name) g
             <column name="dataset_count"/>
             <column name="organism"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+             select dataset_id, category, organism, count(*) as dataset_count from (
               select dsp.dataset_presenter_id as dataset_id
-                , o_dsp.category
+                , nvl(o_dsp.display_category, o_dsp.category) as category
                 , tn.name as organism
-                , count(*) as dataset_count
               from apidbtuning.organismattributes oa
                 , apidbtuning.datasetpresenter o_dsp
                 , apidbtuning.datasetnametaxon o_dnt
@@ -2130,7 +2130,8 @@ and graph_descrip.dataset = dnt.name) g
               and tn.name_class = 'scientific name'
               and dsp.type = 'genome'
               and o_dsp.category not in ('Genomics', 'Link outs')
-              group by dsp.dataset_presenter_id, o_dsp.category, tn.name
+              )
+              group by dataset_id, category, organism
             order by count(*) desc
             </sql>
 
