@@ -14,8 +14,8 @@ dbxref_gene2Uniprot	http://edamontology.org/topic_3345	Data Identity and Mapping
 dbxref_gene2Entrez	http://edamontology.org/topic_3345	Data Identity and Mapping	dbxref	
 EcNumberGenus	http://edamontology.org/topic_1775	Function Analysis	ECToGenus	
 referenceStrain-epitope_sequences_IEDB	http://edamontology.org/topic_0804	immunoproteins,genes,antigens	epitope	
-referenceStrain-dbEST	http://edamontology.org/topic_3308	Transcriptomics	EST	
-referenceStrain-ESTsFromFasta	http://edamontology.org/topic_3308	Transcriptomics	EST	
+referenceStrain-dbEST	http://purl.obolibrary.org/obo/SO_0000345	Transcriptomics	EST	
+referenceStrain-ESTsFromFasta	http://purl.obolibrary.org/obo/SO_0000345	Transcriptomics	EST	
 PDBProteinSequences	http://edamontology.org/data_2976	Protein Sequence	external_sequences	
 updatePDBTaxon	http://edamontology.org/topic_0637	Taxonomy	external_sequences	
 interproscanData	http://edamontology.org/topic_3345	Data Identity and Mapping	external_sequences	
