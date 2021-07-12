@@ -2092,12 +2092,10 @@ and graph_descrip.dataset = dnt.name) g
                 , count(*) as sequence_count
               from apidbtuning.organismattributes oa
                 , ApidbTuning.GenomicSeqAttributes sa
-                , apidb.featurelocation fl
                 , apidbtuning.datasetpresenter dsp
                 , apidbtuning.datasetnametaxon dnt
               where oa.component_taxon_id = sa.taxon_id
               and oa.project_id = sa.project_id
-              and sa.na_sequence_id = fl.na_sequence_id
               and oa.component_taxon_id = dnt.taxon_id
               and dnt.dataset_presenter_id = dsp.dataset_presenter_id
               and dsp.type = 'genome'
