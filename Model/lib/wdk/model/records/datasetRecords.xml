@@ -697,7 +697,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Other data associated with genomes -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="GenomeAssociatedData" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"
                displayName="Explore other Categories of Data Associated with this Genome"
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -2106,12 +2106,12 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-       <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
             <column name="dataset_id"/>
             <column name="category"/>
             <column name="dataset_count"/>
             <column name="organism"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
              select dataset_id, category, organism, count(*) as dataset_count from (
               select dsp.dataset_presenter_id as dataset_id
                 , nvl(o_dsp.display_category, o_dsp.category) as category
