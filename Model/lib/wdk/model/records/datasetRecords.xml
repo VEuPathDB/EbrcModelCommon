@@ -53,7 +53,7 @@
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <primaryKey aliasQueryRef="DatasetAttributes.DatasetAlias" excludeProjects="ClinEpiDB,MicrobiomeDB">
+      <primaryKey aliasQueryRef="DatasetAttributes.DatasetAlias">
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
@@ -1432,7 +1432,7 @@ from apidbtuning.datasetnametaxon dsnt
       <sqlQuery name="DatasetAlias" doNotTest="true">
          <column name="dataset_id"/>
          <column name="old_dataset_id"/>
-         <sql>
+         <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
             <![CDATA[
                 select dataset_presenter_id as dataset_id,
                          dataset_presenter_id as old_dataset_id
@@ -1448,6 +1448,14 @@ from apidbtuning.datasetnametaxon dsnt
                     and oa.component_taxon_id = dnt.taxon_id
               ]]>
          </sql>
+
+        <sql includeProjects="ClinEpiDB,MicrobiomeDB">
+        <![CDATA[
+                  select dataset_presenter_id as dataset_id,
+                         dataset_presenter_id as old_dataset_id
+                  from apidbTuning.DatasetPresenter
+        ]]>
+        </sql>
       </sqlQuery>
 
     </querySet>
