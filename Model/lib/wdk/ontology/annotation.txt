@@ -3,6 +3,7 @@
 Gene Structure	http://edamontology.org/topic_0114	Gene models	2
 Identity and mapping	http://edamontology.org/topic_3345	Link outs	4
 Annotation and curation	http://edamontology.org/topic_0219	Annotation, curation and identifiers	3
+Genomics	http://edamontology.org/topic_0622	Genomics	3
 Function analysis	http://edamontology.org/topic_1775	Function prediction	18
 Taxonomy	http://edamontology.org/topic_0637	Taxonomy	8
 Evolutionary biology	http://edamontology.org/topic_3299	Orthology and synteny	9
@@ -51,6 +52,7 @@ Sequence sites, features and motifs	http://edamontology.org/topic_0160	Sequence 
 DNA Microarray	http://purl.obolibrary.org/obo/OBI_0400148	DNA Microarray	121
 RNASeq	http://purl.obolibrary.org/obo/OBI_0001271	RNASeq	122
 RT PCR	http://purl.obolibrary.org/obo/OBI_0001361	RT PCR	123
+EST	http://purl.obolibrary.org/obo/SO_0000345	EST	124
 CHIP Seq	http://purl.obolibrary.org/obo/OBI_0000716	CHIP Seq	124
 chip chip	http://purl.obolibrary.org/obo/OBI_0001248	ChIP chip	125
 SAGE	http://purl.obolibrary.org/obo/OBI_0002029	SAGE	126
