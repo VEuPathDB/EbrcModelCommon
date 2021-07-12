@@ -1895,10 +1895,12 @@ ORDER by start_date desc
 	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
             <![CDATA[
                     select dsp.dataset_presenter_id as dataset_id
+                          , dsp.name as dataset_name
                           , '' as text
                           , '' as url
                           , '' as description
                           , ref.record_type
+                          , ref.target_type
                           , replace (ref.target_name, ':', '') as target_name
                           , 'question' as link_type
                     from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
