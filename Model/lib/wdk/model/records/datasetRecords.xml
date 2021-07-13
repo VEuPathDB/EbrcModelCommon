@@ -730,20 +730,14 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="name"  internal="true"/>
             <columnAttribute name="id_url"  internal="true"/>
-            <linkAttribute name="external_link" inReportMaker="false" internal="false"
+            <textAttribute name="external_link" inReportMaker="false" internal="false"
                            displayName="Name">
-
-                 <displayText>
+                 <text>
                     <![CDATA[
-                    $$name$$
+                    <a href=$$id_url$$ target="_blank">$$name$$</a>
                     ]]>
-                 </displayText>
-                 <url>
-                    <![CDATA[
-                          $$id_url$$
-                    ]]>
-                 </url>
-            </linkAttribute>
+                 </text>
+            </textAttribute>
         </table>
 
 
