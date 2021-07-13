@@ -49,7 +49,7 @@
       <!-- primary key definition
            NOTE:  the name here is from apidbtuning.DatasetPresenter NOT apidb.datasource
       -->
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin" includeProjects="ClinEpiDB,MicrobiomeDB">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin" includeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
@@ -1432,7 +1432,7 @@ from apidbtuning.datasetnametaxon dsnt
       <sqlQuery name="DatasetAlias" doNotTest="true">
          <column name="dataset_id"/>
          <column name="old_dataset_id"/>
-         <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
+         <sql excludeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
             <![CDATA[
                 select dataset_presenter_id as dataset_id,
                          dataset_presenter_id as old_dataset_id
@@ -1449,7 +1449,7 @@ from apidbtuning.datasetnametaxon dsnt
               ]]>
          </sql>
 
-        <sql includeProjects="ClinEpiDB,MicrobiomeDB">
+        <sql includeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
         <![CDATA[
                   select dataset_presenter_id as dataset_id,
                          dataset_presenter_id as old_dataset_id
