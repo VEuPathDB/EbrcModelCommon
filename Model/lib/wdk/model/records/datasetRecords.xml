@@ -1847,7 +1847,7 @@ ORDER by start_date desc
             <column name="target_type"/>
             <column name="target_name"/>
             <column name="link_type"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
@@ -1886,7 +1886,7 @@ ORDER by start_date desc
 	    ]]>
             </sql>
 
-	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
             <![CDATA[
                     select dsp.dataset_presenter_id as dataset_id
                           , dsp.name as dataset_name
