@@ -1399,6 +1399,7 @@
     <track>tgonVAND</track>
     <track>tgonp89</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>sneuSOSN1</track>
     <track>sneuSN3</track>
     <track>hhamHH34</track>
@@ -1427,6 +1428,7 @@
     <track>tgonVEG</track>
     <track>tgonRH</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>hhamHH34</track>
     <track>csuiWienI</track>
   </subtrackSet>
@@ -1503,6 +1505,7 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Neospora caninum Liverpool" abbrev="ncanLIV" />
+    <org organism="Neospora caninum Liverpool 2019" abbrev="ncanLiverpool2019" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
