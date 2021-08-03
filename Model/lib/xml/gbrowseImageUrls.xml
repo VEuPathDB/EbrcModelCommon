@@ -365,17 +365,17 @@
     <track>edisSAW760</track>
     <track>emosLaredo</track>
     <track>einvIP1</track>
+    <track>mbalATCC30984</track>
+    <track>acasNeff</track>
   </subtrackSet>
 
   <subtrackSet project="AmoebaDB" name="NfAc_gene" suffixes="_span;_gene">
-    <track>acasNeff</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
     <track>ngruNEG-M</track>
   </subtrackSet>
 
   <url project="AmoebaDB" type="synteny">
-    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
@@ -396,6 +396,8 @@
     <org organism="Entamoeba invadens IP1" abbrev="einvIP1" />
     <org organism="Entamoeba nuttalli P19" abbrev="enutP19" />
     <org organism="Entamoeba moshkovskii Laredo" abbrev="emosLaredo" />
+    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
+    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
