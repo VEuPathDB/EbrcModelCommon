@@ -365,17 +365,17 @@
     <track>edisSAW760</track>
     <track>emosLaredo</track>
     <track>einvIP1</track>
+    <track>mbalATCC30984</track>
+    <track>acasNeff</track>
   </subtrackSet>
 
   <subtrackSet project="AmoebaDB" name="NfAc_gene" suffixes="_span;_gene">
-    <track>acasNeff</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
     <track>ngruNEG-M</track>
   </subtrackSet>
 
   <url project="AmoebaDB" type="synteny">
-    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
@@ -396,6 +396,8 @@
     <org organism="Entamoeba invadens IP1" abbrev="einvIP1" />
     <org organism="Entamoeba nuttalli P19" abbrev="enutP19" />
     <org organism="Entamoeba moshkovskii Laredo" abbrev="emosLaredo" />
+    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
+    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
@@ -604,6 +606,7 @@
     <track>moryBR32</track>
     <track>cpur20.1</track>
     <track>treeQM6a</track>
+    <track>treeQM6a2017</track>
     <track>tvirGv29-8</track>
     <track>opicUAMH11346</track>
     <track>ssch1099-18</track>
@@ -943,6 +946,7 @@
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
+    <org abbrev="treeQM6a2017" organism="Trichoderma reesei QM6a 2017"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
     <org abbrev="opicUAMH11346" organism="Ophiostoma piceae UAMH 11346"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
@@ -1397,6 +1401,7 @@
     <track>tgonVAND</track>
     <track>tgonp89</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>sneuSOSN1</track>
     <track>sneuSN3</track>
     <track>hhamHH34</track>
@@ -1425,6 +1430,7 @@
     <track>tgonVEG</track>
     <track>tgonRH</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>hhamHH34</track>
     <track>csuiWienI</track>
   </subtrackSet>
@@ -1501,6 +1507,7 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Neospora caninum Liverpool" abbrev="ncanLIV" />
+    <org organism="Neospora caninum Liverpool 2019" abbrev="ncanLiverpool2019" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
@@ -1555,12 +1562,14 @@
     <track>ldonBPK282A1</track>
     <track>ldonCL-SL</track>
     <track>ldonLV9</track>
+    <track>ldonHU3</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
     <track>lmajSD75.1</track>
     <track>lmexMHOMGT2001U1103</track>
-    <track>ltarParrATCC12531otTarII</track>
+    <track>ltarParrotTarII</track>
+    <track>ltarParrotTarII2019</track>
     <track>lgerLEM452</track>
     <track>laetL147</track>
     <track>laraLEM1108</track>
@@ -1646,12 +1655,14 @@
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
     <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
+    <org organism="Leishmania donovani HU3" abbrev="ldonHU3" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
     <org organism="Leishmania major strain SD 75.1" abbrev="lmajSD75.1" />
     <org organism="Leishmania mexicana MHOM/GT/2001/U1103" abbrev="lmexMHOMGT2001U1103" />
     <org organism="Leishmania tarentolae Parrot-TarII" abbrev="ltarParrotTarII" />
+    <org organism="Leishmania tarentolae Parrot Tar II 2019" abbrev="ltarParrotTarII2019" />
     <org organism="Leishmania aethiopica L147" abbrev="laetL147" />
     <org organism="Leishmania arabica strain LEM1108" abbrev="laraLEM1108" />
     <org organism="Leishmania enriettii strain LEM3045" abbrev="lenrLEM3045" />
@@ -1971,7 +1982,7 @@
     <org organism="Anopheles sinensis China" abbrev="asinChina" />
     <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
     <org organism="Anopheles stephensi Indian" abbrev="asteIndian" />
-    <org organism="Anopheles stephensi Indian 2020" abbrev="asteIndian2020" />
+    <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Anophelinae" />
