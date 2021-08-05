@@ -298,7 +298,7 @@
       where protocol_app_node_id in (select protocol_app_node_id from Results.SeqVariation)
     union
       select protocol_app_node_id, 'ApiDB::SequenceVariation' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.sequencevariation)
+      where protocol_app_node_id in (select protocol_app_node_id from study.ProtocolAppNode where name like '% (Sequence Variation)')
     union
       select protocol_app_node_id, 'ApiDB::MassSpecSummary' as result_table from study.ProtocolAppNode
       where protocol_app_node_id in (select protocol_app_node_id from apidb.MASSSPECSUMMARY)
