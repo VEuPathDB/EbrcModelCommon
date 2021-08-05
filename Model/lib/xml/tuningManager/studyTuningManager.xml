@@ -333,7 +333,8 @@
     <sql>
       <![CDATA[
         create table &prefixPANIO&1 nologging as
-        select io.* from (
+        select distinct io.*
+        from (
         select i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
                o.protocol_app_node_id output_pan_id,
                in_type.source_id as input_pan_type_source_id,
