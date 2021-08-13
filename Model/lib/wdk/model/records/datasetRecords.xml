@@ -2204,23 +2204,10 @@ and graph_descrip.dataset = dnt.name) g
 			      and dbrf.na_feature_id = ga.na_feature_id
 			      and upper(d.name) = eru.database_name
 			      UNION
-			      SELECT d.name as dataset
-			      , ta.taxon_id
-			    , eru.id_url
-			      FROM
-			    sres.dbref dbr
-			      , DOTS.dbrefaafeature dbrf
-			      , Dots.aafeature aaf
-			      , sres.externaldatabaserelease r
-			      , sres.externaldatabase d
-			      , ApidbTuning.transcriptAttributes ta
-			      , APIDB.EXTERNALRESOURCEURL eru
-			      WHERE dbr.external_database_release_id = r.external_database_release_id
-			      and r.external_database_id = d.external_database_id
-			      and dbr.db_ref_id = dbrf.db_ref_id
-			      and dbrf.aa_feature_id = aaf.aa_feature_id
-			      and aaf.aa_sequence_id = ta.aa_sequence_id
-			      and upper(d.name) = eru.database_name
+			      SELECT dataset
+			      , taxon_id
+                              , id_url
+			      FROM apidbTuning.DatabaseTaxonUrl
 			      )
 			      ) ext
 			      where ext.taxon_id = dnt.taxon_id
