@@ -1263,7 +1263,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
                    pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id,
-                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || pmid || '</a>', ', ') within group (order by pmid) as pmids,
+                         listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
                          listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
