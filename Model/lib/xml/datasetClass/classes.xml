@@ -1370,6 +1370,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="EukMarkersReference" category="" datasetFileHint="">
+    <purpose>Reference to align WGS reads against</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+
+    <graphTemplateFile name="microbiomeRoot.xml"/>
+
+    <datasetLoader datasetName="EukMarkersReference_RSRC"
+	      version="${version}"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              type="sres"
+             >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack> mkdir -pv @@dataDir@@ </unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.1.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.2.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.3.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.4.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.rev.1.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/refdb.rev.2.bt2 @@dataDir@@</unpack>
+      <unpack> cp @@manualDeliveryDir@@/${projectName}/common/EukMarkersReference/${name}/${version}/final/marker-to-taxon-id.tsv @@dataDir@@</unpack>
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="MicrobiomeStudy" category="" datasetFileHint="">
     <purpose>Copy the manual delivery files for a study. One study is what corresponds to one study card, one presenter, and one sheet of sample details on MicrobiomeDB - which can involve multiple analyses</purpose>
     <prop name="projectName">&projectName;</prop>
