@@ -1246,7 +1246,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
          <column name="pmids"/>
          <column name="pmids_download"/>
-         <sql>
+         <sql excludeProjects="UniDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
@@ -1285,6 +1285,54 @@ ON mm.dataset_id = counts.dataset_presenter_id
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
+	      and ds.name (+) = dsp.name
+            ]]>
+         </sql>
+
+         <sql includeProjects="UniDB">
+            <![CDATA[
+WITH relinfo as (
+select dsp.dataset_presenter_id,  prop.value as project, dsp.name
+from APIDBTUNING.datasetpresenter dsp, apidbtuning.datasetproperty prop
+where dsp.dataset_presenter_id = prop.dataset_presenter_id
+and prop.property = 'projectName')
+select  dsp.dataset_presenter_id as dataset_id,
+                   dsp.name as dataset_name, dsp.dataset_name_pattern,
+                   ds.version,
+                   dsp.short_display_name, dsp.description,
+                   nvl(dsp.summary, dsp.description) as summary,
+                   dsp.protocol, dsp.usage,
+                   dsp.type,
+                   dsp.is_species_scope,
+                   dsp.build_number_introduced,
+                   CASE WHEN (r.project is null) THEN  introduced.project ELSE r.project END || ' rel.' || nvl(history.eupath_release, introduced.eupath_release)  as eupath_release,
+                   pubs.pmids,
+                   pubs.pmids_download
+            from apidbTuning.DatasetPresenter dsp, apidb.datasource ds, relinfo r,
+                 (select dataset_presenter_id,
+--                       listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
+                         dbms_xmlgen.convert( rtrim(xmlagg(xmlelement(e, '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ').extract('//text()') order by pmid).getclobval(), ', '), 1) as pmids,
+                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                  from ApidbTuning.DatasetPublication
+                  group by dataset_presenter_id) pubs,
+                 (select dataset_presenter_id,
+                         release_number || ', ' || release_date as eupath_release, project
+                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
+                               ebd.release_number, ebd.project,
+                               row_number() over (partition by dh.dataset_presenter_id
+                                                              order by ebd.release_number desc) rn
+                        from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
+                        where dh.build_number = ebd.build_number )
+                  where rn = 1) history,
+                 (select build_number,
+                         release_number || ', ' || release_date as eupath_release, project
+                  from apidbTuning.EupathBuildDates
+                        ) introduced
+            where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
+              and dsp.build_number_introduced = introduced.build_number(+)
+              and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
+              and dsp.dataset_presenter_id = r.dataset_presenter_id(+)
+              and r.project = introduced.project(+)
 	      and ds.name (+) = dsp.name
             ]]>
          </sql>
