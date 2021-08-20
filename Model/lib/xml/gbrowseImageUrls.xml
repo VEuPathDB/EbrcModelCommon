@@ -47,6 +47,7 @@
     <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
+    <track>pknoA1H1</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
     <track>preiCDC</track>
@@ -75,6 +76,7 @@
     <track>pvivPvl01</track>
     <track>pcynM</track>
     <track>pknoH</track>
+    <track>pknoA1H1</track>
     <track>pcynB</track>
     <track>pgabSY75</track>
     <track>preiCDC</track>
@@ -87,7 +89,13 @@
     <track>pyoeyoelii17X</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pvinvinckeivinckei</track>
+    <track>pvinvinckeiCY</track>
+    <track>pvinbrucechwattiDA</track>
+    <track>pvinCameroonEL</track>
+    <track>pvinlentumDE</track>
     <track>pvinpetteriCR</track>
+    <track>pvinpetteriCR2020</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="rodent_genomic" suffixes="_span">
@@ -95,7 +103,13 @@
     <track>pyoeyoelii17X</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pvinvinckeivinckei</track>
+    <track>pvinvinckeiCY</track>
+    <track>pvinbrucechwattiDA</track>
+    <track>pvinCameroonEL</track>
+    <track>pvinlentumDE</track>
     <track>pvinpetteriCR</track>
+    <track>pvinpetteriCR2020</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="aves_gene" suffixes="_span;_gene">
@@ -185,6 +199,7 @@
     <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
@@ -224,6 +239,7 @@
     <org organism="Plasmodium vivax-like Pvl01" abbrev="pvivPvl01" />
     <org organism="Plasmodium cynomolgi strain M" abbrev="pcynM" />
     <org organism="Plasmodium knowlesi strain H" abbrev="pknoH" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium cynomolgi strain B" abbrev="pcynB" />
     <org organism="Plasmodium gaboni strain SY75" abbrev="pgabSY75" />
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
@@ -250,7 +266,12 @@
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
+    <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
+    <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
+    <org organism="Plasmodium vinckei Cameroon EL" abbrev="pvinCameroonEL" />
+    <org organism="Plasmodium vinckei lentum DE" abbrev="pvinlentumDE" />
     <org organism="Plasmodium vinckei petteri strain CR" abbrev="pvinpetteriCR" />
+    <org organism="Plasmodium vinckei petteri CR 2020" abbrev="pvinpetteriCR2020" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="rodent_gene" />
@@ -266,9 +287,15 @@
     <org organism="Plasmodium yoelii yoelii 17XNL" abbrev="pyoeyoelii17XNL" />
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
+    <org organism="Plasmodium knowlesi strain A1H1" abbrev="pknoA1H1" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
+    <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
+    <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
+    <org organism="Plasmodium vinckei Cameroon EL" abbrev="pvinCameroonEL" />
+    <org organism="Plasmodium vinckei lentum DE" abbrev="pvinlentumDE" />
     <org organism="Plasmodium vinckei petteri strain CR" abbrev="pvinpetteriCR" />
+    <org organism="Plasmodium vinckei petteri CR 2020" abbrev="pvinpetteriCR2020" />
     <track name="Scaffolds" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="rodent_genomic" />
@@ -342,6 +369,7 @@
 
   <subtrackSet project="AmoebaDB" name="NfAc_gene" suffixes="_span;_gene">
     <track>acasNeff</track>
+    <track>mbalATCC30984</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
     <track>ngruNEG-M</track>
@@ -349,6 +377,7 @@
 
   <url project="AmoebaDB" type="synteny">
     <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
+    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
@@ -454,7 +483,9 @@
   <subtrackSet name="Pucciniomycetes_gene" project="FungiDB" suffixes="_span;_gene">
     <track>mlar98AG31</track>
     <track>pgraCRL75-36-700-3</track>
+    <track>psorRO10H11247</track>
     <track>pstr93-210</track>
+    <track>pstr93TX-2</track>
     <track>ptri1-1BBBDRace1</track>
   </subtrackSet>
 
@@ -493,8 +524,11 @@
     <track>cpseB12108</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
+    <track>pkudCBS573</track>
     <track>huvaAWRI3580</track>
+    <track>hguiUTAD222</track>
     <track>scerS288c</track>
+    <track>klacNRRLY-1140</track>
     <track>ylipCLIB122</track>
     <track>ylipCLIB89W29</track>
   </subtrackSet>
@@ -511,6 +545,7 @@
     <track>ederNIHUT8656</track>
     <track>emesCBS40295</track>
     <track>fpedCBS271-37</track>
+    <track>rmacCBS650.93</track>
     <track>ccarKSF</track>
     <track>cimmCBS83496</track>
   </subtrackSet>
@@ -535,7 +570,7 @@
     <track>afumA1163</track>
     <track>aclaNRRL1</track>
     <track>aflaNRRL3357</track>
-    <track>akawIFO4308</track>
+    <track>alIFO4308</track>
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
     <track>anigATCC1015</track>
@@ -565,16 +600,22 @@
     <track>ntetFGSC2508</track>
     <track>ndisFGSC8579</track>
     <track>ttheATCC42464</track>
+    <track>pansSmat</track>
     <track>smack-hell</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
+    <track>cpur20.1</track>
     <track>treeQM6a</track>
+    <track>treeQM6a2017</track>
     <track>tvirGv29-8</track>
+    <track>opicUAMH11346</track>
     <track>ssch1099-18</track>
     <track>sbra5110</track>
+    <track>cgraM1-001</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
+    <track>fcirNRRL25331</track>
     <track>fgraPH-1</track>
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
@@ -603,7 +644,9 @@
     <track>kbesCBS10118</track>
     <track>kdejCBS10117</track>
     <track>khevCBS569</track>
+    <track>kmanCBS8507</track>
     <track>tmesDSM1558</track>
+    <track>tasaCBS2479</track>
   </subtrackSet>
 
   <subtrackSet name="Albuginaceae" project="FungiDB" suffixes="_span;_gene">
@@ -614,6 +657,7 @@
   <subtrackSet name="Agaricomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>pchrRP-78</track>
     <track>ccinokay7-130</track>
+    <track>postPC15</track>
   </subtrackSet>
 
   <subtrackSet name="Blastocladiomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -621,8 +665,10 @@
   </subtrackSet>
 
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>bgraTritici96224</track>
     <track>bcinB05-10</track>
     <track>sscl1980UF-70</track>
+    <track>pdes20631-21</track>
   </subtrackSet>
 
   <subtrackSet name="Pythiales" project="FungiDB" suffixes="_span;_gene">
@@ -636,10 +682,12 @@
   </subtrackSet>
 
   <subtrackSet name="Onygenales" project="FungiDB" suffixes="_span;_gene">
+    <track>aapiARSEF7405</track>
     <track>cposSilveira</track>
     <track>cposRMSCC3488</track>
     <track>cposC735deltSOWgp</track>
     <track>cimmH538-4</track>
+    <track>cimmWA_211</track>
     <track>cimmRS</track>
     <track>pbraPb03</track>
     <track>pbraPb18</track>
@@ -653,6 +701,7 @@
     <track>mgloCBS7966</track>
     <track>mresKCTC27527</track>
     <track>mresCBS7877</track>
+    <track>msymATCC42132</track>
   </subtrackSet>
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -661,10 +710,13 @@
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>ztriIPO323</track>
+    <track>ztriST99CH3D1</track>
     <track>cgeo1.58</track>
+    <track>vgalCBS43764</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
+    <track>peffR13</track>
     <track>pinfT30-4</track>
     <track>pcapLT1534</track>
     <track>pcinCBS144-22</track>
@@ -673,6 +725,7 @@
     <track>pramPr-102</track>
     <track>psojP6497</track>
     <track>haraEmoy2</track>
+    <track>blacSF5</track>
   </subtrackSet>
 
   <subtrackSet name="Trichocomaceae" project="FungiDB" suffixes="_span;_gene">
@@ -686,15 +739,16 @@
     <track>hcapG217B</track>
     <track>hcapH88</track>
     <track>hcapH143</track>
+    <track>bderATCC26199</track>
     <track>bderER-3</track>
     <track>bgilSLH14081</track>
+    <track>bperEI222</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
     <track>lproJHH5317</track>
     <track>sapiIHEM14462</track>
   </subtrackSet>
-
 
   <url project="FungiDB" type="synteny">
     <org abbrev="lproJHH5317" organism="Lomentospora prolificans JHH-5317"/>
@@ -710,7 +764,9 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
+    <org abbrev="psorRO10H11247" organism="Puccinia sorghi strain RO10H11247"/>
     <org abbrev="pstr93-210" organism="Puccinia striiformis strain 93-210"/>
+    <org abbrev="pstr93TX-2" organism="Puccinia striiformis 93TX-2"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -769,8 +825,11 @@
     <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
+    <org abbrev="pkudCBS573" organism="Pichia kudriavzevii strain CBS573"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
-    <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288c"/>
+    <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
+    <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288C"/>
+    <org abbrev="klacNRRLY-1140" organism="Kluyveromyces lactis NRRL Y-1140"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
     <track name="Gene"/>
@@ -780,8 +839,8 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="mcirCBS277-49" organism="Mucor circinelloides f. lusitanicus CBS 277.49"/>
-    <org abbrev="mcir1006PhL" organism="Mucor circinelloides f. circinelloides 1006PhL"/>
+    <org abbrev="mcirCBS277-49" organism="Mucor lusitanicus CBS 277.49"/>
+    <org abbrev="mcir1006PhL" organism="Mucor circinelloides 1006PhL"/>
     <org abbrev="pblaNRRL1555" organism="Phycomyces blakesleeanus NRRL 1555(-)"/>
     <org abbrev="rdelRA99-880" organism="Rhizopus delemar RA 99-880"/>
     <track name="Gene"/>
@@ -808,6 +867,7 @@
     <org abbrev="ederNIHUT8656" organism="Exophiala dermatitidis NIH/UT8656"/>
     <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
+    <org abbrev="rmacCBS650.93" organism="Rhinocladiella mackenziei CBS 650.93"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <track name="Gene"/>
@@ -851,7 +911,7 @@
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
     <org abbrev="anigATCC13496" organism="Aspergillus niger ATCC 13496"/>
     <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
-    <org abbrev="akawIFO4308" organism="Aspergillus kawachii IFO 4308"/>
+    <org abbrev="alIFO4308" organism="Aspergillus luchuensis IFO 4308"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
     <org abbrev="aacuATCC16872" organism="Aspergillus aculeatus ATCC 16872"/>
@@ -862,7 +922,7 @@
     <org abbrev="atubCBS134.48" organism="Aspergillus tubingensis CBS 134.48"/>
     <org abbrev="averCBS583.65" organism="Aspergillus versicolor CBS 583.65"/>
     <org abbrev="awenDTO134E9" organism="Aspergillus wentii DTO 134E9"/>
-    <org abbrev="azonCBS506.65" organism="Aspergillus zonatus CBS 506.65"/>
+    <org abbrev="azonCBS506.65" organism="Penicilliopsis zonata CBS 506.65"/>
     <org abbrev="aoryRIB40" organism="Aspergillus oryzae RIB40"/>
     <org abbrev="aochIBT24754" organism="Aspergillus ochraceoroseus IBT 24754"/>
     <org abbrev="asteIBT23096" organism="Aspergillus steynii IBT 23096"/>
@@ -880,13 +940,18 @@
     <org abbrev="ntetFGSC2508" organism="Neurospora tetrasperma FGSC 2508"/>
     <org abbrev="ndisFGSC8579" organism="Neurospora discreta FGSC 8579"/>
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
+    <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
-    <org abbrev="mory70-15" organism="Magnaporthe oryzae 70-15"/>
-    <org abbrev="moryBR32" organism="Magnaporthe oryzae BR32"/>
+    <org abbrev="mory70-15" organism="Pyricularia oryzae 70-15"/>
+    <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
+    <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
+    <org abbrev="treeQM6a2017" organism="Trichoderma reesei QM6a 2017"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
+    <org abbrev="opicUAMH11346" organism="Ophiostoma piceae UAMH 11346"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
+    <org abbrev="cgraM1-001" organism="Colletotrichum graminicola M1.001"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Sordariomycetes"/>
@@ -895,15 +960,16 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="fcirNRRL25331" organism="Fusarium circinatum NRRL 25331"/>
     <org abbrev="fgraPH-1" organism="Fusarium graminearum PH-1"/>
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
-    <org abbrev="foxy54006" organism="Fusarium oxysporum f. sp. cubense tropical race 4 54006"/>
+    <org abbrev="foxy54006" organism="Fusarium odoratissimum NRRL 54006"/>
     <org abbrev="foxyrace1" organism="Fusarium oxysporum f. sp. cubense race 1"/>
-    <org abbrev="foxyrace4" organism="Fusarium oxysporum f. sp. cubense race 4"/>
+    <org abbrev="foxyrace4" organism="Fusarium odoratissimum strain race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
-    <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum FOSC 3-a"/>
+    <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum NRRL 32931"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
     <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
@@ -924,11 +990,13 @@
     <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
-    <org abbrev="cdeuR265" organism="Cryptococcus deuterogattii R265"/>
+    <org abbrev="cdeuR265" organism="Cryptococcus gattii VGII R265"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
+    <org abbrev="kmanCBS8507" organism="Kwoniella mangroviensis CBS 8507"/>
     <org abbrev="tmesDSM1558" organism="Tremella mesenterica DSM 1558"/>
+    <org abbrev="tasaCBS2479" organism="Trichosporon asahii var. asahii CBS 2479"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Tremellomycetes"/>
@@ -947,6 +1015,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="pchrRP-78" organism="Phanerochaete chrysosporium RP-78"/>
     <org abbrev="ccinokay7-130" organism="Coprinopsis cinerea okayama7#130"/>
+    <org abbrev="postPC15" organism="Pleurotus ostreatus PC15"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Agaricomycetes"/>
@@ -965,8 +1034,10 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
+    <org abbrev="pdes20631-21" organism="Pseudogymnoascus destructans 20631-21"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Leotiomycetes"/>
@@ -975,13 +1046,13 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="pultDAOMBR144" organism="Pythium ultimum DAOM BR144"/>
-    <org abbrev="pultBR650" organism="Pythium ultimum var. sporangiiferum BR650"/>
-    <org abbrev="pirrDAOMBR486" organism="Pythium irregulare DAOM BR486"/>
-    <org abbrev="piwaDAOMBR242034" organism="Pythium iwayamai DAOM BR242034"/>
+    <org abbrev="pultDAOMBR144" organism="Globisporangium ultimum DAOM BR144"/>
+    <org abbrev="pultBR650" organism="Globisporangium ultimum var. sporangiiferum BR650"/>
+    <org abbrev="pirrDAOMBR486" organism="Globisporangium irregulare DAOM BR486"/>
+    <org abbrev="piwaDAOMBR242034" organism="Globisporangium iwayamae DAOM BR242034"/>
     <org abbrev="parrATCC12531" organism="Pythium arrhenomanes ATCC 12531"/>
     <org abbrev="paphDAOMBR444" organism="Pythium aphanidermatum DAOM BR444"/>
-    <org abbrev="pvexDAOMBR484" organism="Pythium vexans DAOM BR484"/>
+    <org abbrev="pvexDAOMBR484" organism="Phytopythium vexans DAOM BR484"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pythiales"/>
@@ -989,8 +1060,10 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="aapiARSEF7405" organism="Ascosphaera apis ARSEF 7405"/>
     <org abbrev="cimmRS" organism="Coccidioides immitis RS"/>
     <org abbrev="cimmH538-4" organism="Coccidioides immitis H538.4"/>
+    <org abbrev="cimmWA_211" organism="Coccidioides immitis WA_211"/>
     <org abbrev="cposC735deltSOWgp" organism="Coccidioides posadasii C735 delta SOWgp"/>
     <org abbrev="cposSilveira" organism="Coccidioides posadasii str. Silveira"/>
     <org abbrev="cposRMSCC3488" organism="Coccidioides posadasii RMSCC 3488"/>
@@ -1010,6 +1083,7 @@
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
     <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
     <org abbrev="mresCBS7877" organism="Malassezia restricta CBS 7877"/>
+    <org abbrev="msymATCC42132" organism="Malassezia sympodialis ATCC 42132"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ustilaginomycetes"/>
@@ -1028,15 +1102,23 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
+    <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
+    <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
-      <subtrack set="Aspergillaceae"/>
+      <subtrack name="afumAf293_span" />
+      <subtrack name="afumAf293_gene" />
+      <subtrack name="anidFGSCA4_span" />
+      <subtrack name="anidFGSCA4_gene" />
+      <subtrack name="aoryRIB40_span" />
+      <subtrack name="aoryRIB39_gene" />
     </track>
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="peffR13" organism="Peronospora effusa R13"/>
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
     <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
@@ -1045,6 +1127,7 @@
     <org abbrev="pramPr-102" organism="Phytophthora ramorum strain Pr102"/>
     <org abbrev="psojP6497" organism="Phytophthora sojae strain P6497"/>
     <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
+    <org abbrev="blacSF5" organism="Bremia lactucae strain SF5"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Peronosporales"/>
@@ -1067,8 +1150,10 @@
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
     <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
+    <org abbrev = "bderATCC26199" organism="Blastomyces dermatitidis ATCC 26199"/>
     <org abbrev = "bderER-3" organism="Blastomyces dermatitidis ER-3"/>
     <org abbrev = "bgilSLH14081" organism="Blastomyces gilchristii SLH14081"/>
+    <org abbrev = "bperEI222" organism="Blastomyces percursus strain EI222"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
@@ -1316,6 +1401,7 @@
     <track>tgonVAND</track>
     <track>tgonp89</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>sneuSOSN1</track>
     <track>sneuSN3</track>
     <track>hhamHH34</track>
@@ -1344,6 +1430,7 @@
     <track>tgonVEG</track>
     <track>tgonRH</track>
     <track>ncanLIV</track>
+    <track>ncanLiverpool2019</track>
     <track>hhamHH34</track>
     <track>csuiWienI</track>
   </subtrackSet>
@@ -1420,6 +1507,7 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Neospora caninum Liverpool" abbrev="ncanLIV" />
+    <org organism="Neospora caninum Liverpool 2019" abbrev="ncanLiverpool2019" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="all_gene" />
@@ -1474,12 +1562,14 @@
     <track>ldonBPK282A1</track>
     <track>ldonCL-SL</track>
     <track>ldonLV9</track>
+    <track>ldonHU3</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
     <track>lmajSD75.1</track>
     <track>lmexMHOMGT2001U1103</track>
-    <track>ltarParrATCC12531otTarII</track>
+    <track>ltarParrotTarII</track>
+    <track>ltarParrotTarII2019</track>
     <track>lgerLEM452</track>
     <track>laetL147</track>
     <track>laraLEM1108</track>
@@ -1503,6 +1593,8 @@
     <track>tcruSylvioX10-1-2012</track>
     <track>tcruTCC</track>
     <track>tcruYC6</track>
+    <track>tcruCL</track>
+    <track>tcruG</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="brucei_gene" suffixes="_span;_gene">
@@ -1528,6 +1620,10 @@
 
   <subtrackSet project="TriTrypDB" name="crithidia_gene" suffixes="_span;_gene">
     <track>cfasCfCl</track>
+  </subtrackSet>
+
+  <subtrackSet project="TriTrypDB" name="Angomonas_gene" suffixes="_span;_gene">
+    <track>adeaATCCPRA-265</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="leptomonas_gene" suffixes="_span;_gene">
@@ -1559,12 +1655,14 @@
     <org organism="Leishmania donovani BPK282A1" abbrev="ldonBPK282A1" />
     <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
+    <org organism="Leishmania donovani HU3" abbrev="ldonHU3" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
     <org organism="Leishmania major strain SD 75.1" abbrev="lmajSD75.1" />
     <org organism="Leishmania mexicana MHOM/GT/2001/U1103" abbrev="lmexMHOMGT2001U1103" />
     <org organism="Leishmania tarentolae Parrot-TarII" abbrev="ltarParrotTarII" />
+    <org organism="Leishmania tarentolae Parrot Tar II 2019" abbrev="ltarParrotTarII2019" />
     <org organism="Leishmania aethiopica L147" abbrev="laetL147" />
     <org organism="Leishmania arabica strain LEM1108" abbrev="laraLEM1108" />
     <org organism="Leishmania enriettii strain LEM3045" abbrev="lenrLEM3045" />
@@ -1600,6 +1698,8 @@
     <org organism="Trypanosoma cruzi Sylvio X10/1-2012" abbrev="tcruSylvioX10-1-2012" />
     <org organism="Trypanosoma cruzi TCC" abbrev="tcruTCC" />
     <org organism="Trypanosoma cruzi Y C6" abbrev="tcruYC6" />
+    <org organism="Trypanosoma cruzi strain CL" abbrev="tcruCL" />
+    <org organism="Trypanosoma cruzi strain G" abbrev="tcruG" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="cruzi_gene" />
@@ -1662,6 +1762,21 @@
      </track>
 
   </url>
+
+  <url project="TriTrypDB" type="synteny">
+    <org organism="Angomonas deanei strain Crithidia deanei Carvalho (ATCC PRA-265)" abbrev="adeaATCCPRA-265"/>
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Angomonas_gene"/>
+      <subtrack set="crithidia_gene"/>
+      <subtrack set="monterogeii_gene"/>
+      <subtrack name="lmajFriedlin_span"/>
+      <subtrack name="lmajFriedlin_gene"/>
+      <subtrack name="tbruTREU927_span"/>
+      <subtrack name="tbruTREU927_gene"/>
+     </track>
+  </url>
+
 
   <url project="TriTrypDB" type="synteny">
     <org organism="Leptomonas pyrrhocoris H10" abbrev="lpyrH10" />
@@ -1745,7 +1860,9 @@
   <url project="HostDB" type="dna">
     <org organism="Homo sapiens REF" abbrev="hsapREF" />
     <org organism="Mus musculus C57BL6J" abbrev="mmusC57BL6J" />
-    <org organism="Macaca mulatta isolate 17573" abbrev="mmul17573" />
+    <org organism="Bos taurus breed Hereford" abbrev="btauHereford" />
+    <org organism="Macaca mulatta isolate AG07107" abbrev="mmulAG07107" />
+    <org organism="Macaca fascicularis REF" abbrev="mfasREF" />
     <track name="Gene" />
 
   </url>
@@ -1769,6 +1886,7 @@
 
   <subtrackSet project="VectorBase" name="Anophelinae" suffixes="_span;_gene">
     <track>aalbSTECLA</track>
+    <track>aalbSTECLA2020</track>
     <track>aaraDongola</track>
     <track>aatrEBRO</track>
     <track>achrACHKN1017</track>
@@ -1788,13 +1906,16 @@
     <track>asinChina</track>
     <track>asinSINENSIS</track>
     <track>asteIndian</track>
+    <track>asteIndian2020</track>
     <track>asteSDA-500</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Brachycera" suffixes="_span;_gene">
+    <track>dmeliso-1</track>
     <track>gausTTRI</track>
     <track>gbreIAEA</track>
     <track>gfusIAEA</track>
+    <track>gfusIAEA2018</track>
     <track>gmorYale</track>
     <track>gpalIAEA</track>
     <track>gpapIAEA</track>
@@ -1841,6 +1962,7 @@
 
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
+    <org organism="Anopheles albimanus STECLA 2020" abbrev="aalbSTECLA2020" />
     <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
     <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
     <org organism="Anopheles christyi ACHKN1017" abbrev="achrACHKN1017" />
@@ -1851,7 +1973,7 @@
     <org organism="Anopheles epiroticus Epiroticus2" abbrev="aepiEpiroticus2" />
     <org organism="Anopheles farauti FAR1" abbrev="afarFAR1" />
     <org organism="Anopheles funestus FUMOZ" abbrev="afunFUMOZ" />
-    <org organism="Anopheles gambiae str. PEST" abbrev="agamPEST" />
+    <org organism="Anopheles gambiae PEST" abbrev="agamPEST" />
     <org organism="Anopheles maculatus maculatus3" abbrev="amacmaculatus3" />
     <org organism="Anopheles melas CM1001059_A" abbrev="amelCM1001059_A" />
     <org organism="Anopheles merus MAF" abbrev="amerMAF" />
@@ -1860,6 +1982,7 @@
     <org organism="Anopheles sinensis China" abbrev="asinChina" />
     <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
     <org organism="Anopheles stephensi Indian" abbrev="asteIndian" />
+    <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Anophelinae" />
@@ -1867,9 +1990,11 @@
   </url>
 
   <url project="VectorBase" type="synteny">
+    <org organism="Drosophila melanogaster iso-1" abbrev="dmeliso-1" />
     <org organism="Glossina austeni TTRI" abbrev="gausTTRI" />
     <org organism="Glossina brevipalpis IAEA" abbrev="gbreIAEA" />
     <org organism="Glossina fuscipes IAEA" abbrev="gfusIAEA" />
+    <org organism="Glossina fuscipes IAEA 2018" abbrev="gfusIAEA2018" />
     <org organism="Glossina morsitans Yale" abbrev="gmorYale" />
     <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
     <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
@@ -1893,7 +2018,7 @@
   <url project="VectorBase" type="synteny">
     <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
-    <org organism="Aedes albopictus isolate FPA" abbrev="aalbFPA" />
+    <org organism="Aedes albopictus Foshan FPA" abbrev="aalbFPA" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
@@ -1958,7 +2083,6 @@
       <subtrack name="acolNgousso_gene" />
     </track>
   </url>
-
 
 
 </gbrowseImageUrls>

@@ -872,6 +872,20 @@
     </owl:Class>
     
 
+    <!-- http://edamontology.org/topic_0622 -->
+
+    <owl:Class rdf:about="http://edamontology.org/topic_0622">
+        <rdfs:label>Genomics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Genome Annotation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Whole genomes</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</obo:IAO_0000115>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
 
     <!-- http://edamontology.org/topic_3315 -->
 
@@ -1014,6 +1028,14 @@
         <rdfs:label>RNA-seq assay</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
+    </owl:Class>
+
+
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/SO_0000345">
+        <rdfs:label>EST</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
+        <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/so.owl"/>
     </owl:Class>
     
 

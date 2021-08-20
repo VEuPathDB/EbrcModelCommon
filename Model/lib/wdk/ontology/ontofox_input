@@ -65,6 +65,8 @@ http://edamontology.org/topic_3173 #Epigenomics
 http://edamontology.org/topic_3298 #Phenomics
 http://edamontology.org/topic_3299 #Evolutionary biology
 http://edamontology.org/topic_3308 #Transcriptomics
+http://edamontology.org/topic_0622 #Genomics
+
 http://edamontology.org/topic_3345 #Identity and mapping
 http://edamontology.org/topic_0160 # Sequence sites, features and motifs
 
@@ -172,6 +174,8 @@ http://edamontology.org/topic_3299 #Evolutionary biology
 subClassOf http://www.w3.org/2002/07/owl#Thing
 http://edamontology.org/topic_3308 #Transcriptomics
 subClassOf http://www.w3.org/2002/07/owl#Thing
+http://edamontology.org/topic_0622 #Transcriptomics
+subClassOf http://www.w3.org/2002/07/owl#Thing
 http://edamontology.org/topic_3173 #Epigenomics
 subClassOf http://www.w3.org/2002/07/owl#Thing
 http://edamontology.org/topic_3345 #Identity and mapping
@@ -212,6 +216,7 @@ http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
 http://purl.obolibrary.org/obo/OBI_0001204 #SNP Microarray
 http://purl.obolibrary.org/obo/OBI_0400148 #DNA Microarray
 http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+http://purl.obolibrary.org/obo/SO_0000345 # EST
 http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
 http://purl.obolibrary.org/obo/OBI_0000716 #CHIP Seq
 http://purl.obolibrary.org/obo/OBI_0001248 # chip chip
@@ -229,6 +234,8 @@ subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/SO_0000345 # EST
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
