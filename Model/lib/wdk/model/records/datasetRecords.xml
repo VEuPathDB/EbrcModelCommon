@@ -2208,6 +2208,7 @@ and graph_descrip.dataset = dnt.name) g
 			      , taxon_id
                               , id_url
 			      FROM apidbTuning.DatabaseTaxonUrl
+			      WHERE dataset != 'GeneDB: The Sanger Institute Pathogen Genomics Database'
 			      ) ext
 			      where ext.taxon_id = dnt.taxon_id
 			      and dnt.dataset_presenter_id = dsp.dataset_presenter_id
