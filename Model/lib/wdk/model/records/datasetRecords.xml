@@ -57,14 +57,14 @@
           <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Data Set" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+      <idAttribute name="primary_key" displayName="Data Set" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                    help="Click a data set to go to the full data set record">
           <text>
               <![CDATA[ $$display_name$$ ]]>
           </text>
       </idAttribute>
 
-      <idAttribute name="primary_key" displayName="Study" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+      <idAttribute name="primary_key" displayName="Study" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                    help="Click a study to go to the full study record">
           <text>
               <![CDATA[ $$display_name$$ ]]>
@@ -105,7 +105,7 @@
       <!-- =================================================================== -->
 
 
-       <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
          <columnAttribute  name="organism_download" displayName="Organism(s) (source or reference)"/>  
@@ -122,7 +122,7 @@
        </attributeQueryRef>
 -->
 
-       <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
                           help= "Datasets are assigned to categories based on the biological attributes of the data." />
        </attributeQueryRef>
@@ -138,18 +138,18 @@
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
        </attributeQueryRef>
 
-        <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="megabase_pairs" displayName="Megabase Pairs" removable="true"/>
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
-        <attributeQueryRef ref="DatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <attributeQueryRef ref="DatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="genome_version" displayName="Genome Version" removable="true"/>
          <columnAttribute name="annotation_version" displayName="Annotation Version" removable="true"/>
          <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version" removable="true"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
@@ -162,7 +162,7 @@
          </linkAttribute>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="study_access" displayName="Study Accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
@@ -189,7 +189,7 @@ while in protected and private studies there will be human intervention in the d
 
 
 
-       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
          <columnAttribute name="Sample_Type" displayName="Sample Type"/>
@@ -235,8 +235,8 @@ while in protected and private studies there will be human intervention in the d
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
-         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB,AllClinEpiDB">
@@ -247,7 +247,7 @@ while in protected and private studies there will be human intervention in the d
                           help= "A request from the data provider stipulating the proper use of unpublished data. "  />
        </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.genecounts" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <attributeQueryRef ref="DatasetAttributes.genecounts" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="gene_count" displayName="Genes" help="Total gene count" align="right" />
       </attributeQueryRef>
 
@@ -262,14 +262,14 @@ while in protected and private studies there will be human intervention in the d
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
-                        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"/>
+                        excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
 
         <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
                         includeProjects="EuPathDB"/>
 
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
         <attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
-			includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"/>
+			includeProjects="ClinEpiDB,AllClinEpiDB"/>
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
 			includeProjects="MicrobiomeDB"/>
@@ -308,7 +308,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
      <!-- =================================================================== -->
 
       <table name="ExampleGraphs"
-	     excludeProjects="EuPathDB,ClinEpiDB,ICEMR,Gates,AllClinEpiDB,MicrobiomeDB"
+	     excludeProjects="EuPathDB,ClinEpiDB,AllClinEpiDB,MicrobiomeDB"
 	     displayName="Example Graphs"
 	     queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
   <textAttribute name="thumbnail" displayName="Preview">
@@ -361,7 +361,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Study Characteristic -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="StudyCharacteristicTable" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="StudyCharacteristicTable" includeProjects="ClinEpiDB,AllClinEpiDB"
                displayName="Study Characteristics"
                queryRef="DatasetTables.StudyCharacteristicTable">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -390,7 +390,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="DownloadVersion"  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="DownloadVersion"  includeProjects="ClinEpiDB,AllClinEpiDB"
                displayName="Data Versions"
                queryRef="DatasetTables.DownloadVersion">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -452,7 +452,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Publications (display name for ClinEpiDB) -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="Publications"
-               displayName="Selected Publications" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               displayName="Selected Publications" includeProjects="ClinEpiDB,AllClinEpiDB"
                queryRef="DatasetTables.Publications">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
@@ -484,7 +484,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Publications (display name for VEuPathDB) -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="Publications"
-	       excludeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+	       excludeProjects="ClinEpiDB,AllClinEpiDB"
                displayName="Associated Publications"
                queryRef="DatasetTables.Publications">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -553,7 +553,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Note"/>
         </table>
 -->
-        <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Data Set Release History"
                queryRef="DatasetTables.GenomeHistory">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -569,7 +569,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Note"/>
         </table>
 
-        <table name="DatasetHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="DatasetHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Data Set Release History"
                queryRef="DatasetTables.DatasetHistory">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -602,7 +602,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
        <table name="Version"
                displayName="Provider's Version"
-	       excludeProjects="MicrobiomeDB,ClinEpiDB,ICEMR,Gates,AllClinEpiDB"
+	       excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                queryRef="DatasetTables.Version">
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -642,7 +642,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- request table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="AccessRequest" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        <table name="AccessRequest" includeProjects="ClinEpiDB,AllClinEpiDB"
                displayName="Data Access Records"
                queryRef="DatasetTables.AccessRequest">
           <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -658,7 +658,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Transcript type counts -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="TranscriptTypeCounts" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Transcript Types"
                queryRef="DatasetTables.TranscriptTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -671,7 +671,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Gene type counts -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="GeneTypeCounts" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Gene Types"
                queryRef="DatasetTables.GeneTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -683,7 +683,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Sequence type counts -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="SequenceTypeCounts" 
-               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Sequence Types (Highest Level of Assembly)"
                queryRef="DatasetTables.SequenceTypeCounts">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -697,7 +697,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- Other data associated with genomes -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="GenomeAssociatedData" 
-               excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB"
+               excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"
                displayName="Explore other Categories of Data Associated with this Genome"
                queryRef="DatasetTables.GenomeAssociatedData">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -724,7 +724,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- External Resources and Databases for genomes -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="ExternalDatabases" 
-               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+               excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="External Databases Associated to Genome Annotation"
                queryRef="DatasetTables.ExternalDatabases">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -757,10 +757,10 @@ OR if the linkName and or URL require access to other attributes....also how to 
         select count(*) from ApidbTuning.DatasetPresenter
       </testRowCountSql>
 
-      <sqlQuery name="genecounts" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="genecounts" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
         <column name="gene_count"/>
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
           select dsp.dataset_presenter_id as dataset_id
             , count(*) as gene_count
           from apidbtuning.organismattributes oa
@@ -906,7 +906,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_sha1_digest"/>
         <column name="dataset_display_name"/>
         <column name="dataset_id"/>
@@ -920,7 +920,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <column name="dataset_id"/>
          <column name="project_availability"/>
          <column name="study_access"/>
@@ -1049,7 +1049,7 @@ and dp.property= 'studyAccess'
 
 
 
-      <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
         <column name="disease"/>
         <column name="sex"/>
@@ -1156,13 +1156,13 @@ ON mm.dataset_id = counts.dataset_presenter_id
          <column name="dataset_id"/>
          <column name="display_name" ignoreCase="true"/>
 
-         <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+         <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id, dsp.display_name from apidbtuning.datasetpresenter dsp
             ]]>
          </sql>
 
-         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id
                  , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
@@ -1176,12 +1176,12 @@ ON mm.dataset_id = counts.dataset_presenter_id
          </sql>
       </sqlQuery>
 
-      <sqlQuery name="GenomicsDatasetAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="GenomicsDatasetAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
         <column name="megabase_pairs"/>
         <column name="genecount"/>
 
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
           <![CDATA[
           select dsp.dataset_presenter_id as dataset_id
               , oa.megabps as megabase_pairs
@@ -1193,13 +1193,13 @@ ON mm.dataset_id = counts.dataset_presenter_id
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="LatestVersion" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="LatestVersion" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
         <column name="genome_version"/>
         <column name="annotation_version"/>
         <column name="functional_annotation_version"/>
 
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
           <![CDATA[
                    with all_versions as (
                    select dh.dataset_presenter_id
@@ -1539,7 +1539,7 @@ from apidbtuning.datasetnametaxon dsnt
             </sql>
       </sqlQuery>
 
-      <sqlQuery name="GenomeHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="GenomeHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="build"/>
             <column name="release_date"/>
@@ -1552,7 +1552,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="functional_annotation_source"/>
             <column name="functional_annotation_version"/>
             <column name="note"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
              select dh.dataset_presenter_id as dataset_id, bd.build_number as build, to_char(bd.release_date, 'yyyy-mm-dd') as release_date,
                     bd.project, bd.release_number, dh.genome_source,
@@ -1566,7 +1566,7 @@ from apidbtuning.datasetnametaxon dsnt
             </sql>
       </sqlQuery>
 
-      <sqlQuery name="DatasetHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="DatasetHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="build"/>
             <column name="release_date"/>
@@ -1574,7 +1574,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="release_number"/>
             <column name="version"/>
             <column name="note"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
              select dh.dataset_presenter_id as dataset_id
 		   , bd.build_number as build
@@ -1615,7 +1615,7 @@ from apidbtuning.datasetnametaxon dsnt
 
 
 
-      <sqlQuery name="StudyCharacteristicTable"  isCacheable='false'  includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="StudyCharacteristicTable"  isCacheable='false'  includeProjects="ClinEpiDB,AllClinEpiDB">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="disease"/>
@@ -1724,7 +1724,7 @@ ON mm.dataset_id = counts.dataset_presenter_id
 
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,AllClinEpiDB">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="release_date"/>
@@ -1779,7 +1779,7 @@ and total != 0
 
 
 
-      <sqlQuery name="AccessRequest"  isCacheable="false" includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="AccessRequest"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
 	    <column name="dataset_id"/>
 	    <column name="dataset_name"/>
             <column name="name"/>
@@ -1896,7 +1896,7 @@ ORDER by start_date desc
             <column name="target_type"/>
             <column name="target_name"/>
             <column name="link_type"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
@@ -1935,7 +1935,7 @@ ORDER by start_date desc
 	    ]]>
             </sql>
 
-	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
+	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
             <![CDATA[
                     select dsp.dataset_presenter_id as dataset_id
                           , dsp.name as dataset_name
@@ -2084,13 +2084,13 @@ and graph_descrip.dataset = dnt.name) g
             </sql>
       </sqlQuery>
 
-      <sqlQuery name="TranscriptTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="TranscriptTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="gene_type"/>
             <column name="transcript_type"/>
             <column name="transcript_count"/>
 
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , ta.gene_type
                 , ta.transcript_type
@@ -2110,12 +2110,12 @@ and graph_descrip.dataset = dnt.name) g
 
       </sqlQuery>
 
-      <sqlQuery name="GeneTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="GeneTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="gene_type"/>
             <column name="gene_count"/>
 
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , ga.gene_type
                 , count(*) as gene_count
@@ -2134,12 +2134,12 @@ and graph_descrip.dataset = dnt.name) g
 
       </sqlQuery>
 
-      <sqlQuery name="SequenceTypeCounts" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="SequenceTypeCounts" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="sequence_type"/>
             <column name="sequence_count"/>
 
-            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
               select dsp.dataset_presenter_id as dataset_id
                 , sa.sequence_type
                 , count(*) as sequence_count
@@ -2159,12 +2159,12 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-       <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
+       <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
             <column name="dataset_id"/>
             <column name="category"/>
             <column name="dataset_count"/>
             <column name="organism"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR,EuPathDB">
+            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
              select dataset_id, category, organism, count(*) as dataset_count from (
               select dsp.dataset_presenter_id as dataset_id
                 , nvl(o_dsp.display_category, o_dsp.category) as category
@@ -2191,13 +2191,13 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-      <sqlQuery name="ExternalDatabases" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      <sqlQuery name="ExternalDatabases" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <column name="dataset_id"/>
             <column name="name"/>
             <column name="id_url"/>
             
 
-            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+            <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
 		   <![CDATA[
                     with full_urls_table as (
 			      select dsp.dataset_presenter_id as dataset_id
