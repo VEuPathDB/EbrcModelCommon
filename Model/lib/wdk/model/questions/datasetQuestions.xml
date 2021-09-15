@@ -162,7 +162,7 @@
 
     <question name="DatasetsByCategoryAndOrganism"
       displayName="Data Sets by Category and organism"
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+      excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
       shortDisplayName="Category"
       fullAnswer="true"
       queryRef="DatasetIds.ByCategoryAndOrganism"
@@ -183,7 +183,7 @@
       fullAnswer="true"
       queryRef="DatasetIds.ByUserId"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      includeProjects="ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+      includeProjects="ClinEpiDB,AllClinEpiDB"
       noSummaryOnSingleRecord="true">
       <attributesList summary="study_id, restriction_level" />
       <description>
@@ -200,7 +200,7 @@
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <question name="DatasetsByText"
-        excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR"
+        excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
         displayName="Text (keyword)"
         shortDisplayName="Text"
         queryRef="DatasetIds.DatasetsByText"
@@ -244,7 +244,7 @@
       queryRef="DatasetIds.ByGeneList"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
-      excludeProjects="MicrobiomeDB,ClinEpiDB,Gates,AllClinEpiDB,ICEMR">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
       <description>
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
