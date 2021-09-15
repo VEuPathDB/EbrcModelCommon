@@ -202,33 +202,33 @@
     <comment>Table of protocol app node ids and the name of the result table where they are referenced
     </comment>
     <internalDependency name="PANExtDbRls"/>
-    <externalDependency name="results.NaFeatureDiffResult"/>
-    <externalDependency name="results.ReporterIntensity"/>
-    <externalDependency name="results.SegmentResult"/>
+    <externalDependency name="apidb.ChrCopyNumber"/>
+    <externalDependency name="apidb.CrisprPhenotype"/>
+    <externalDependency name="apidb.GeneCopyNumber"/>
+    <externalDependency name="apidb.IntronJunction"/>
+    <externalDependency name="apidb.MassSpecSummary"/>
+    <externalDependency name="apidb.RflpGenotype"/>
+    <externalDependency name="apidb.RflpGenotypeNumber"/>
     <externalDependency name="results.CompoundMassSpec"/>
-    <externalDependency name="results.NaFeatureHostResponse"/>
-    <externalDependency name="results.NaFeatureExpression"/>
     <externalDependency name="results.EditingEvent"/>
     <externalDependency name="results.FamilyDiffResult"/>
     <externalDependency name="results.FamilyExpression"/>
     <externalDependency name="results.GeneDiffResult"/>
     <externalDependency name="results.GeneExpression"/>
     <externalDependency name="results.GeneSimilarity"/>
+    <externalDependency name="results.LineageAbundance"/>
+    <externalDependency name="results.NaFeatureDiffResult"/>
+    <externalDependency name="results.NAFeatureExpression"/>
+    <externalDependency name="results.NaFeatureHostResponse"/>
     <externalDependency name="results.ReporterDiffResult"/>
     <externalDependency name="results.ReporterExpression"/>
+    <externalDependency name="results.ReporterIntensity"/>
     <externalDependency name="results.RnaDiffResult"/>
     <externalDependency name="results.RnaExpression"/>
     <externalDependency name="results.SegmentDiffResult"/>
+    <externalDependency name="results.SegmentResult"/>
     <externalDependency name="results.SeqVariation"/>
-    <externalDependency name="results.LineageAbundance"/>
-    <externalDependency name="apidb.SequenceVariation"/>
-    <externalDependency name="apidb.MassSpecSummary"/>
-    <externalDependency name="apidb.ChrCopyNumber"/>
-    <externalDependency name="apidb.GeneCopyNumber"/>
-    <externalDependency name="apidb.IntronJunction"/>
-    <externalDependency name="apidb.RflpGenotype"/>
-    <externalDependency name="apidb.RflpGenotypeNumber"/>
-    <externalDependency name="apidb.crisprphenotype"/>
+    <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
     create table &prefixPANResults&1 as
@@ -1069,7 +1069,6 @@ UNION ALL
       Ontology terms used in each dataset as properties that have values
     </comment>
     <internalDependency name="DefaultChars"/>
-    <internalDependency name="PropertyType"/>
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[

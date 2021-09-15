@@ -71,7 +71,6 @@ order by organism, species, genus
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>lineage abundances</comment>
     <externalDependency name="results.LineageAbundance"/>
-    <externalDependency name="results.LineageTaxon"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="study.ProtocolAppNode"/>
@@ -401,6 +400,8 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
   <tuningTable name="DatasetPresenter" alwaysUpdate="true">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <internalDependency name="GenomicSeqAttributes"/>
+    <externalDependency name="core.ProjectInfo"/>
+    <externalDependency name="sres.ExternalDatabase"/>
     <ancillaryTable name="DatasetContact"/>
     <ancillaryTable name="DatasetProperty"/>
     <ancillaryTable name="DatasetHyperLink"/>
@@ -539,7 +540,6 @@ create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_seque
       ]]>
     </sql>
   </tuningTable>
-
 
 
   <tuningTable name="TaxonRelativeAbundance">
