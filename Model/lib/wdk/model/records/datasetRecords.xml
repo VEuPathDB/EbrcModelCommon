@@ -180,6 +180,18 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="request_email_bcc" internal="true"/>
          <columnAttribute name="request_email_body" internal="true"/>
          <columnAttribute name="request_needs_approval" internal="true"/>
+         <linkAttribute name="analyze" displayName="Explore &amp; analyze" sortable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
+           <displayText>
+             <![CDATA[
+               <div style="text-align: center">
+                 <i style="color: black; font-size: 2em;" class="ebrc-icon-edaIcon"></i>
+               </div>
+             ]]>
+           </displayText>
+           <url>
+             @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/~latest
+           </url>
+         </linkAttribute>
        </attributeQueryRef>
 
 
@@ -268,7 +280,7 @@ while in protected and private studies there will be human intervention in the d
                         includeProjects="EuPathDB"/>
 
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
-        <attributesList summary="disease,Study_Type,Study_Design,Part_count,Country,Years,study_access,card_questions"
+        <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
 			includeProjects="ClinEpiDB,AllClinEpiDB"/>
 
 	<attributesList summary="study_categories,summary,eupath_release,card_questions"
