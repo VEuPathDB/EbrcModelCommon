@@ -2317,25 +2317,4 @@ UNION  -- NOTE: the following pulls in insect sample data
     </sql>
   </tuningTable>
 
-  <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
-    <comment>
-      Metadata table specific for observation filter 
-    </comment>
-    <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="SRes.ExternalDatabase"/>
-    <externalDependency name="SRes.ExternalDatabaseRelease"/>
-    <externalDependency name="EDA.Study"/>
-    <sql>
-      <![CDATA[
-create table StudyIdDatsetId&1 as
-SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID
-FROM EDA.STUDY s
-LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
-LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
-LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
-      ]]>
-    </sql>
-  </tuningTable>
-
-
 </tuningConfig>
