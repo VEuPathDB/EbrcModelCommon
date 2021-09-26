@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tuningConfig>
+  <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
+    <comment>EDA Study ID, Dataset presenter ID (hash)
+    </comment>
+    <internalDependency name="DatasetPresenter"/>
+    <externalDependency name="SRes.ExternalDatabase"/>
+    <externalDependency name="SRes.ExternalDatabaseRelease"/>
+    <externalDependency name="EDA.Study"/>
+    <sql>
+      <![CDATA[
+create table StudyIdDatasetId&1 as
+SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID
+FROM EDA.STUDY s
+LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
+LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
+LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+      ]]>
+    </sql>
+  </tuningTable>
+
+
+</tuningConfig>
+
