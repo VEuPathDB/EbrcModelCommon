@@ -116,7 +116,7 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="ClinEpiDB">
-         <columnAttribute  name="eda_study_id" displayName"Eda Study ID"/>
+         <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
        </attributeQueryRef>
 <!--
 
