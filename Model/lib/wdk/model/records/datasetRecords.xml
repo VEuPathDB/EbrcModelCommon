@@ -114,6 +114,10 @@
        <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
          <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
+
+       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="ClinEpiDB">
+         <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
+       </attributeQueryRef>
 <!--
 
        <attributeQueryRef ref="DatasetAttributes.Category">
@@ -785,6 +789,21 @@ OR if the linkName and or URL require access to other attributes....also how to 
           and dnt.dataset_presenter_id = dsp.dataset_presenter_id
           and dsp.type = 'genome'
           group by oa.project_id, dsp.dataset_presenter_id
+        </sql>
+      </sqlQuery>
+
+      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB">
+        <column name="dataset_id"/>
+        <column name="eda_study_id"/>
+        <sql>
+          <![CDATA[
+            select 
+              dataset_presenter_id as dataset_id,
+              study_stable_id as eda_study_id
+            from apidbtuning.datasetpresenter
+            left join apidbtuning.studyiddatasetid
+            on dataset_id = dataset_presenter_id
+          ]]>
         </sql>
       </sqlQuery>
 
