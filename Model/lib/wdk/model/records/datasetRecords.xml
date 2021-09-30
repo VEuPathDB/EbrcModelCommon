@@ -795,13 +795,15 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB">
         <column name="dataset_id"/>
         <column name="eda_study_id"/>
-        <sql includeProjects="ClinEpiDB">
-          select 
-            dataset_presenter_id as dataset_id,
-            study_stable_id as eda_study_id
-          from apidbtuning.datasetpresenter
-          left join apidbtuning.studyiddatasetid
-          on dataset_id = dataset_presenter_id
+        <sql>
+          <![CDATA[
+            select 
+              dataset_presenter_id as dataset_id,
+              study_stable_id as eda_study_id
+            from apidbtuning.datasetpresenter
+            left join apidbtuning.studyiddatasetid
+            on dataset_id = dataset_presenter_id
+          ]]>
         </sql>
       </sqlQuery>
 
