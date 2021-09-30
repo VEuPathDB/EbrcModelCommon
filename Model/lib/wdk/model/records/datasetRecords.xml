@@ -793,6 +793,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
       </sqlQuery>
 
       <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB">
+        <column name="dataset_id"/>
         <column name="eda_study_id"/>
         <sql includeProjects="ClinEpiDB">
           select 
