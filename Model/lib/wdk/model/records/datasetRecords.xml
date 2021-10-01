@@ -217,7 +217,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
          <columnAttribute name="HH_count" displayName="Households" type="number"/>
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
-         <columnAttribute name="Obser_count" displayName="Observations" type="number"/>
+         <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" type="number"/>
          <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
          <columnAttribute name="AdditionalData" displayName="Additional Data"/>
          <columnAttribute name="Age" displayName="Age"/>
@@ -377,11 +377,13 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Study Characteristic -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <!-- NOTE: We're reusing the attribute query here -->
         <table name="StudyCharacteristicTable" includeProjects="ClinEpiDB,AllClinEpiDB"
                displayName="Study Characteristics"
-               queryRef="DatasetTables.StudyCharacteristicTable">
+               queryRef="DatasetAttributes.StudyCharacteristic">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+<!--            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/> -->
             <columnAttribute name="disease" displayName="Disease" sortable="false"/>
             <columnAttribute name="sex" displayName="Sex" sortable="false"/>
 	    <columnAttribute name="Sample_Type" displayName="Sample Type" sortable="false"/>
@@ -393,7 +395,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="Variable_count" displayName="Variables" sortable="false"/>
             <columnAttribute name="HH_count"  displayName="Households" sortable="false"/>
             <columnAttribute name="Part_count" displayName="Participants" sortable="false"/>
-            <columnAttribute name="Obser_count" displayName="Observations" sortable="false"/>
+            <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" sortable="false"/>
             <columnAttribute name="Samp_count"  displayName="Samples" sortable="false"/>
             <columnAttribute name="AdditionalData"  displayName="Additional Data" sortable="false"/>
            <!-- <columnAttribute name="Age"  displayName="Age" sortable="false"/> -->
@@ -1102,82 +1104,136 @@ and dp.property= 'studyAccess'
 
         <sql>
           <![CDATA[
-
-select mm.*,TRIM(TO_CHAR(counts.Variable_count, '999,999,999,999,999')) Variable_count,TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
-from (
-
-  select pres.dataset_presenter_id as dataset_id, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
-  from apidbtuning.datasetpresenter pres
-
-left join
-
-(WITH syn AS (
-   SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label
-   FROM sres.ontologySynonym  s
-   LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
-   LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
-   LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
-   WHERE ed.name = 'OntologyTerm_classifications_RSRC'
-   ),
-   val AS (SELECT * FROM syn),
-   names AS (
-     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
-       FROM study.study s1
-       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
-       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
-       WHERE s1.STUDY_ID IN (SELECT s1.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-     union
-     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
-       FROM study.study s1
-       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
-       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
-       WHERE s1.STUDY_ID NOT IN (SELECT s1.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-       AND s1.STUDY_ID NOT IN (SELECT s0.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-     ),
-   tableb AS (
-     SELECT names.name, syn.source_id, syn.label,
-     LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
-     LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
-     LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids
-     FROM study.StudyCharacteristic ssc
-     LEFT JOIN names ON ssc.study_id = names.study_id
-     LEFT JOIN syn ON ssc.qualifier_id = syn.ontology_term_id
-     LEFT JOIN val ON ssc.value_id = val.ontology_term_id
-     GROUP BY names.name, syn.source_id, syn.label
-     )
-  select * from (
-  (select name, label , raw_values from tableb)
-  )
-
-pivot
-  (
-  max(raw_values)
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years, 'Additional data' as AdditionalData, 'Age' as Age, 'WHO indicator subdomain' as WHO, 'Project name' as ProjectName)
-  )
-  ORDER BY name
-  ) table2
-  on pres.name = table2.name
-) mm
-
-
-left join
-
-(select dataset_presenter_id, Variable_count, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
-pivot
-  (
-  max(record_count)
-  for record_type in ('Variable' as Variable_count, 'Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
-  )
-
-ORDER BY dataset_presenter_id) counts
-
-ON mm.dataset_id = counts.dataset_presenter_id
+                   WITH etypes AS
+                     (SELECT sd.study_stable_id
+                           , sd.dataset_id as dataset_id
+                           , etg.display_name
+                           , etg.stable_id
+                           , COUNT(*) AS entity_type_count
+                     FROM eda.entityattributes ea
+                        , eda.entitytypegraph etg
+                        , apidbtuning.studyiddatasetid sd
+                     WHERE ea.entity_type_id = etg.entity_type_id
+                     AND etg.study_stable_id = sd.study_stable_id
+                     GROUP BY sd.study_stable_id
+                            , sd.dataset_id
+                            , etg.stable_id
+                            , etg.display_name
+                     ),
+                     all_counts AS
+                     (SELECT  dataset_id
+                           , listagg(etypes.display_name || ':' || entity_type_count, '; ') 
+                             within GROUP (ORDER BY etypes.display_name) all_counts
+                     FROM etypes
+                     GROUP BY dataset_id
+                     ),
+                     select_counts AS
+                     (SELECT dataset_id
+                           , TRIM(TO_CHAR(HH_count, '999,999,999,999,999')) HH_count
+                           , TRIM(TO_CHAR(Part_count, '999,999,999,999,999')) Part_count
+                           , TRIM(TO_CHAR(Obser_count, '999,999,999,999,999')) Obser_count
+                           , TRIM(TO_CHAR(Samp_count, '999,999,999,999,999')) Samp_count
+                     FROM
+                       (SELECT dataset_id
+                             , entity_type_count
+                             , stable_id
+                        FROM etypes
+                       ) 
+                       pivot 
+                         ( MAX(entity_type_count) 
+                           FOR stable_id IN ('PCO_0000024' AS HH_count
+                                           , 'EUPATH_0000096' AS Part_count
+                                           , 'EUPATH_0000738' AS Obser_count
+                                           , 'EUPATH_0000609' AS Samp_count) 
+                         )
+                     ),
+                     syn AS 
+                     (SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label
+                      FROM sres.ontologySynonym  s
+                      LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
+                      LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
+                      LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
+                      WHERE ed.name = 'OntologyTerm_classifications_RSRC'
+                       ) ,
+                     study_chars as
+                      (select dataset_id
+                            , disease
+                            , sex
+                            , Sample_Type
+                            , Participant_Type
+                            , Study_Type
+                            , Study_Design
+                            , Country
+                            , Years
+                            , AdditionalData 
+                            , Age
+                            , WHO
+                            , ProjectName 
+                       from
+                        (select sd.dataset_id, syn.label, sc.value
+                         from eda.studycharacteristic sc
+                            , eda.study s
+                            , apidbtuning.studyiddatasetid sd
+                            , syn
+                         where sc.attribute_id = syn.ontology_term_id
+                         and s.stable_id = sd.study_stable_id
+                         and sc.study_id = s.study_id)
+                         pivot
+                          (
+                           listagg(value, ', ')
+                           for label in ('Disease' as Disease
+                                       , 'Sample type' as Sample_Type
+                                       , 'Sex' as Sex
+                                       , 'Population included' as Participant_Type
+                                       , 'Investigation type' as Study_Type
+                                       , 'Study design' as Study_Design
+                                       , 'Country' as Country
+                                       , 'Years' as Years
+                                       , 'Additional data' as AdditionalData
+                                       , 'Age' as Age
+                                       , 'WHO indicator subdomain' as WHO
+                                       , 'Project name' as ProjectName)
+                           )
+                       ),
+                       variable_counts as 
+                        (select sd.dataset_id, count(distinct att.stable_id) as Variable_count
+                         from eda.attribute att
+                            , eda.entitytype et
+                            , eda.study s
+                            , apidbtuning.studyiddatasetid sd
+                         where att.entity_type_id = et.entity_type_id
+                         and et.study_id = s.study_id
+                         and s.stable_id = sd.study_stable_id
+                        group by sd.dataset_id
+                       )
+                       select dsp.dataset_presenter_id as dataset_id
+                           ,  all_counts.all_counts
+                           , select_counts.HH_count
+                           , select_counts.Part_count
+                           , select_counts.Obser_count
+                           , select_counts.Samp_count
+                           , variable_counts.Variable_count
+                           , study_chars.disease
+                           , study_chars.sex
+                           , study_chars.Sample_Type
+                           , study_chars.Participant_Type
+                           , study_chars.Study_Type
+                           , study_chars.Study_Design
+                           , study_chars.Country
+                           , study_chars.Years
+                           , study_chars.AdditionalData
+                           , study_chars.Age
+                           , study_chars.WHO
+                           , study_chars.ProjectName
+                       from apidbtuning.datasetpresenter dsp
+                          , all_counts
+                          , select_counts
+                          , study_chars
+                          , variable_counts
+                       where dsp.dataset_presenter_id = all_counts.dataset_id (+)
+                        and dsp.dataset_presenter_id = select_counts.dataset_id (+)
+                        and dsp.dataset_presenter_id = study_chars.dataset_id (+)
+                        and dsp.dataset_presenter_id = variable_counts.dataset_id (+)
           ]]>
         </sql>
       </sqlQuery>
@@ -1642,117 +1698,6 @@ from apidbtuning.datasetnametaxon dsnt
             ]]>
             </sql>
       </sqlQuery>
-
-
-
-
-      <sqlQuery name="StudyCharacteristicTable"  isCacheable='false'  includeProjects="ClinEpiDB,AllClinEpiDB">
-            <column name="dataset_name"/>
-            <column name="dataset_id"/>
-            <column name="disease"/>
-            <column name="sex"/>
-	    <column name="Sample_Type"/>
-            <column name="Participant_Type"/>
-            <column name="Study_Type"/>
-            <column name="Study_Design"/>
-	    <column name="Country"/>
-            <column name="Years"/>
-            <column name="Variable_count" columnType="number"/>
-            <column name="HH_count" columnType="number"/>
-            <column name="Part_count" columnType="number"/>
-            <column name="Obser_count" columnType="number"/>
-            <column name="Samp_count" columnType="number"/>
-            <column name="AdditionalData"/>
-           <!-- <column name="Age"/> -->
-            <column name="WHO"/>
-            <column name="ProjectName"/>
-	    
-            <sql>
-            <![CDATA[
-            
-select mm.*,TRIM(TO_CHAR(counts.Variable_count, '999,999,999,999,999')) Variable_count, TRIM(TO_CHAR(counts.HH_count, '999,999,999,999,999')) HH_count , TRIM(TO_CHAR(counts.Part_count, '999,999,999,999,999')) Part_count , TRIM(TO_CHAR(counts.Obser_count, '999,999,999,999,999')) Obser_count, TRIM(TO_CHAR(counts.Samp_count, '999,999,999,999,999'))Samp_count
-from (
-
-  select pres.dataset_presenter_id as dataset_id, pres.name as dataset_name, table2.disease, table2.sex, table2.Sample_Type, table2.Participant_Type, table2.Study_Type,table2.Study_Design,table2.Country, table2.Years, table2.AdditionalData ,table2.Age, table2.WHO,  table2.ProjectName
-  from apidbtuning.datasetpresenter pres
-
-left join
-
-(WITH syn AS (
-   SELECT s.ontology_term_id,  ot.source_id,  s.ontology_synonym as label
-   FROM sres.ontologySynonym  s
-   LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
-   LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
-   LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
-   WHERE ed.name = 'OntologyTerm_classifications_RSRC'
-   ),
-   val AS (SELECT * FROM syn),
-   names AS (
-     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
-       FROM study.study s1
-       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
-       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
-       WHERE s1.STUDY_ID IN (SELECT s1.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-     union
-     SELECT ed.name NAME, s1.study_id study_id, s1.external_database_release_id
-       FROM study.study s1
-       LEFT JOIN sres.EXTERNALDATABASERELEASE edr ON s1.EXTERNAL_DATABASE_RELEASE_ID=edr.EXTERNAL_DATABASE_RELEASE_ID
-       LEFT JOIN sres.EXTERNALDATABASE ed ON edr.EXTERNAL_DATABASE_ID=ed.EXTERNAL_DATABASE_ID
-       WHERE s1.STUDY_ID NOT IN (SELECT s1.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-       AND s1.STUDY_ID NOT IN (SELECT s0.study_id FROM study.study s1
-       LEFT JOIN study.study s0 ON s1.INVESTIGATION_ID=s0.STUDY_ID
-       WHERE s0.STUDY_ID!=s1.STUDY_ID)
-     ),
-   tableb AS (
-     SELECT names.name, syn.source_id, syn.label,
-     LISTAGG(ssc.value, ', ') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as raw_values,
-     LISTAGG(val.label, ',') WITHIN GROUP (ORDER BY ssc.study_id, ssc.qualifier_id) as controlled_values,
-     LISTAGG(val.source_id, ',') WITHIN GROUP (ORDER BY ssc.study_id,ssc.qualifier_id) as value_source_ids
-     FROM study.StudyCharacteristic ssc
-     LEFT JOIN names ON ssc.study_id = names.study_id
-     LEFT JOIN syn ON ssc.qualifier_id = syn.ontology_term_id
-     LEFT JOIN val ON ssc.value_id = val.ontology_term_id
-     GROUP BY names.name, syn.source_id, syn.label
-     )
-  select * from (
-  (select name, label , raw_values from tableb)
-  )
-
-pivot
-  (
-  max(raw_values)
-  for label in ('Disease' as Disease,'Sample type' as Sample_Type,'Sex' as Sex,'Population included' as Participant_Type,'Investigation type' as Study_Type,'Study design' as Study_Design, 'Country' as Country, 'Years' as Years, 'Additional data' as AdditionalData, 'Age' as Age, 'WHO indicator subdomain' as WHO, 'Project name' as ProjectName)
-  )
-  ORDER BY name
-  ) table2
-  on pres.name = table2.name
-) mm
-
-
-left join
-
-(select dataset_presenter_id, Variable_count, HH_count, Part_count, Obser_count, Samp_count from ApidbTuning.RecordCount
-pivot
-  (
-  max(record_count)
-  for record_type in ('Variable' as Variable_count, 'Household' as HH_count,'Participant' as Part_count,'Observation' as Obser_count,'Sample' as Samp_count)
-  )
-
-ORDER BY dataset_presenter_id) counts
-
-ON mm.dataset_id = counts.dataset_presenter_id
-	    
-            ]]>
-            </sql>
-      </sqlQuery>
-
-
-
-
 
 
 <sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,AllClinEpiDB">
