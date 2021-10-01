@@ -115,7 +115,7 @@
          <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="ClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="ClinEpiDB,AllClinEpiDB">
          <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
        </attributeQueryRef>
 <!--
@@ -792,7 +792,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB">
+      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
         <column name="eda_study_id"/>
         <sql>
