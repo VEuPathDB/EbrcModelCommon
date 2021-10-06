@@ -1,0 +1,102 @@
+#!/usr/bin/perl
+
+use strict;
+
+use File::Temp qw/ tempdir /;
+
+use Data::Dumper;
+
+use Getopt::Long qw(GetOptions);
+
+use EbrcModelCommon::Model::tmUtils;
+
+use DBI;
+
+#my ($propfile, $instance, $schema, $suffix, $debug);
+my ($propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug, $report);
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
+           "debug!" => \$debug,
+           "report!" => \$report,
+	  );
+die "required parameter missing" unless ($propfile && $instance && ($suffix || $report));
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+$|=1;
+
+
+# create table
+  &createEmptyTable($dbh,$suffix);
+
+
+# insert statement examples
+#  my $insertStatement = "INSERT INTO GbrowseTracksOrganism$suffix (organism, type, gtracks) VALUES (?,?,?)";
+#  my $insertRow = $dbh->prepare($insertStatement);
+
+
+# query 
+  # species, datasetpresenter name, datasetpresenter id
+my $sql = "select blah from whatever"; 
+my $sh = $dbh->prepare($sql);
+$sh->execute() or die "Can't prepare SQL statement: $DBI::errstr\n";
+
+
+
+# loop over rows
+while(my ($var1, $var2, ...) = $sh->fetchrow_array()) {
+  # whatever string replacements 
+  $var1 =~ s/replace/something/;
+  $var1 =~ s/\s//;
+
+
+  print "$var1\t$var2\n";
+
+  # insert into table
+  #$insertRow->execute($var1,$var2) or die "Can't execute SQL statement: $DBI::errstr\n";
+   
+}
+$sh->finish();
+$insertRow->finish();
+
+# create indexes if needed (prrobalby not)
+#&createIndex($dbh, $suffix);
+$dbh->commit(); # could roll back your changes (to remove the table you would need to $dhb->do("drop table GbrowseTracksOrganism") or die "";
+$dbh->disconnect();
+
+
+#example
+# sub createEmptyTable {
+#      my ($dbh, $suffix) = @_;
+
+#     $dbh->do(<<SQL) or die "creating table";
+#      create table GbrowseTracksOrganism$suffix (
+# 	organism     varchar2(80),
+#         type         varchar2(20),
+# 	gtracks      varchar2(2000)
+#   ) nologging
+# SQL
+# $dbh->{PrintError} = 0;
+
+# }
+
+# example
+# sub createIndex {
+#      my ($dbh, $suffix) = @_;
+
+#     $dbh->do(<<SQL) or die "creating index";
+#      create index gto_ix$suffix on GbrowseTracksOrganism$suffix (organism, type, gtracks)
+# SQL
+# $dbh->{PrintError} = 0;
+#}
+
+
+1;
+
