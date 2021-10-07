@@ -1070,9 +1070,9 @@
     
 
 
-    <!-- http://purl.obolibrary.org/obo/OBI_0400148 -->
+    <!-- http://purl.obolibrary.org/obo/OBI_0001985 -->
 
-    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0400148">
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001985">
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DNA microarray</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
