@@ -120,8 +120,8 @@ antiCodon	http://edamontology.org/topic_0160	sequence sites, features and motifs
 eupathOntologyTerms	http://edamontology.org/topic_0089	Ontology and Terminology	sres	
 GeneImage	http://edamontology.org/topic_0140	Protein targeting and localization	subcellular_localization	
 orthomclClades	http://edamontology.org/topic_3299	orthology	taxonomy	
-microarrayExpressionExperiment	http://purl.obolibrary.org/obo/OBI_0400148	Microarray Assay	transcript_expression	array
-microarrayExpressionExperimentWithProviderProbeMapping	http://purl.obolibrary.org/obo/OBI_0400148	Microarray Assay	transcript_expression	array
+microarrayExpressionExperiment	http://purl.obolibrary.org/obo/OBI_0001985	Microarray Assay	transcript_expression	array
+microarrayExpressionExperimentWithProviderProbeMapping	http://purl.obolibrary.org/obo/OBI_0001985	Microarray Assay	transcript_expression	array
 chipChipExperiment	http://purl.obolibrary.org/obo/OBI_0001248	chipchip	transcript_expression	chip_chip
 chipChipSample	http://purl.obolibrary.org/obo/OBI_0001248	chipchip	transcript_expression	chip_chip
 chipSeqExperiment	http://purl.obolibrary.org/obo/OBI_0000716	chipseq	transcript_expression	chipseq
