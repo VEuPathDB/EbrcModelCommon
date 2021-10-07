@@ -34,7 +34,7 @@ $|=1;
 
 
 # create table
-  &createEmptyTable($dbh,$suffix);
+#  &createEmptyTable($dbh,$suffix);
 
 
 # insert statement examples
@@ -44,31 +44,50 @@ $|=1;
 
 # query 
   # species, datasetpresenter name, datasetpresenter id
-my $sql = "select blah from whatever"; 
+my $sql = <<SQL;
+    select
+        dnt.dataset_presenter_id,
+        dsp.display_name,
+        oa.species
+    from
+        apidbtuning.datasetnametaxon dnt,
+        apidbtuning.organismattributes oa,
+        apidbtuning.datasetpresenter dsp
+    where 
+        dnt.taxon_id = oa.component_taxon_id (+)
+        and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+SQL
+ 
 my $sh = $dbh->prepare($sql);
 $sh->execute() or die "Can't prepare SQL statement: $DBI::errstr\n";
 
 
 
-# loop over rows
-while(my ($var1, $var2, ...) = $sh->fetchrow_array()) {
+# loop over rows dataset_presenter_id, display_name, species
+while(my ($dpid, $name, $species) = $sh->fetchrow_array()) {
   # whatever string replacements 
-  $var1 =~ s/replace/something/;
-  $var1 =~ s/\s//;
+#  $var1 =~ s/replace/something/;
+#  $var1 =~ s/\s//;
+  if($species ne '') {
+    if($name =~ m/$species/) {
+      print "$name\t";
+      $name =~ s/$species/<i>$species<\/i>/g;
+      print "$name\n";
+    }
+  }
 
-
-  print "$var1\t$var2\n";
+  #print $name;
 
   # insert into table
   #$insertRow->execute($var1,$var2) or die "Can't execute SQL statement: $DBI::errstr\n";
    
 }
 $sh->finish();
-$insertRow->finish();
+#$insertRow->finish();
 
 # create indexes if needed (prrobalby not)
 #&createIndex($dbh, $suffix);
-$dbh->commit(); # could roll back your changes (to remove the table you would need to $dhb->do("drop table GbrowseTracksOrganism") or die "";
+#$dbh->commit(); # could roll back your changes (to remove the table you would need to $dhb->do("drop table GbrowseTracksOrganism") or die "";
 $dbh->disconnect();
 
 
