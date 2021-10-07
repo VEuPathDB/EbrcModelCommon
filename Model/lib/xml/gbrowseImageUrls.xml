@@ -15,14 +15,19 @@
 
 
 <!-- TrichDB -->
+  <subtrackSet project="TrichDB" name="all_gene" suffixes="_span;_gene">
+    <track>tvagG3</track>
+    <track>tfoeK</track>
+  </subtrackSet>
 
   <url project="TrichDB" type="dna">
     <org organism="Trichomonas vaginalis G3" abbrev="tvagG3" />
+    <org organism="Tritrichomonas foetus strain K" abbrev="tfoeK" />
     <track name="Gene" />
-    <track name="EST" />
-    <track name="BLASTX" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="all_gene" />
+    </track>
   </url>
-
 
 <!-- PlasmoDB -->
 
