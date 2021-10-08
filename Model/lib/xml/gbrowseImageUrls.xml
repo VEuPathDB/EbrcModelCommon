@@ -512,6 +512,15 @@
     <track>ainvNJM9701</track>
   </subtrackSet>
 
+  <subtrackSet name="Taphrinomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>tdefPYCC5710</track>
+  </subtrackSet>
+
+  <subtrackSet name="Saccharomycetales_incertae_sedis" project="FungiDB" suffixes="_span;_gene">
+    <track>drugCBS613</track>
+  </subtrackSet>
+
+
   <subtrackSet name="Saccharomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>calbSC5314</track>
     <track>calbSC5314_B</track>
@@ -758,6 +767,7 @@
     <track>bderER-3</track>
     <track>bgilSLH14081</track>
     <track>bperEI222</track>
+    <track>epasEp9510</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
@@ -904,6 +914,24 @@
       <subtrack set="Herpotrichiellaceae"/>
       <subtrack set="Onygenales"/>
       <subtrack set="Trichocomaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="tdefPYCC5710" organism="Taphrina deformans PYCC 5710"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Taphrinomycetes"/>
+      <subtrack set="Aspergillaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="drugCBS613" organism="Diutina rugosa CBS 613"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Saccharomycetales_incertae_sedis"/>
+      <subtrack set="Saccharomycetes"/>
     </track>
   </url>
 
@@ -1185,6 +1213,7 @@
     <org abbrev = "bderER-3" organism="Blastomyces dermatitidis ER-3"/>
     <org abbrev = "bgilSLH14081" organism="Blastomyces gilchristii SLH14081"/>
     <org abbrev = "bperEI222" organism="Blastomyces percursus strain EI222"/>
+    <org abbrev = "epasEp9510" organism="Emergomyces pasteurianus Ep9510"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
