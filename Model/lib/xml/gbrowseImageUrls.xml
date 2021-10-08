@@ -530,6 +530,7 @@
     <track>cpseB12108</track>
     <track>ctroMYA3404</track>
     <track>clusATCC42720</track>
+    <track>dhanCBS767</track>
     <track>pkudCBS573</track>
     <track>huvaAWRI3580</track>
     <track>hguiUTAD222</track>
@@ -663,11 +664,16 @@
   <subtrackSet name="Agaricomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>pchrRP-78</track>
     <track>ccinokay7-130</track>
+    <track>ccin326</track>
     <track>postPC15</track>
   </subtrackSet>
 
   <subtrackSet name="Blastocladiomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>amacATCC38327</track>
+  </subtrackSet>
+
+  <subtrackSet name="Orbiliomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>aflaCBSH-5679</track>
   </subtrackSet>
 
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -835,6 +841,7 @@
     <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
     <org abbrev="ctroMYA3404" organism="Candida tropicalis MYA-3404"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
+    <org abbrev="dhanCBS767" organism="Debaryomyces hansenii CBS767"/>
     <org abbrev="pkudCBS573" organism="Pichia kudriavzevii strain CBS573"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
     <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
@@ -1025,6 +1032,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="pchrRP-78" organism="Phanerochaete chrysosporium RP-78"/>
     <org abbrev="ccinokay7-130" organism="Coprinopsis cinerea okayama7#130"/>
+    <org abbrev="ccin326" organism="Coprinopsis cinerea #326"/>
     <org abbrev="postPC15" organism="Pleurotus ostreatus PC15"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1040,6 +1048,16 @@
       <subtrack set="Blastocladiomycetes"/>
       <subtrack set="Chytridiomycetes_gene"/>
       <subtrack set="Zygomycetes"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev = "aflaCBSH-5679" organism="Arthrobotrys flagrans CBS H-5679"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Orbiliomycetes"/>
+      <subtrack set="Leotiomycetes"/>
+      <subtrack set="Sordariomycetes"/>
     </track>
   </url>
 
