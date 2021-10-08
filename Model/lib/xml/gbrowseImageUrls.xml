@@ -524,6 +524,7 @@
     <track>caurB11245</track>
     <track>cduoB09383</track>
     <track>cglaCBS138</track>
+    <track>cglaBG2</track>
     <track>chaeB11899</track>
     <track>cparCDC317</track>
     <track>cpseB12108</track>
@@ -711,6 +712,8 @@
 
   <subtrackSet name="Pneumocystidomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>pjirSE8</track>
+    <track>pmacP2C</track>
+    <track>pcanCanA</track>
   </subtrackSet>
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -826,6 +829,7 @@
     <org abbrev="caurB11245" organism="Candida auris strain B11245"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="cglaBG2" organism="Candida glabrata BG2"/>
     <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
     <org abbrev="cpseB12108" organism="Candida pseudohaemulonii strain B12108"/>
@@ -1099,6 +1103,8 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="pjirSE8" organism="Pneumocystis jirovecii SE8"/>
+    <org abbrev="pmacP2C" organism="Pneumocystis sp. macacae isolate P2C"/>
+    <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pneumocystidomycetes"/>
