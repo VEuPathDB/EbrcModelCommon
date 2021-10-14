@@ -1481,6 +1481,7 @@
 
   <subtrackSet project="ToxoDB" name="Eimeria_gene" suffixes="_span;_gene">
     <track>etenHoughton</track>
+    <track>etenHoughton2021</track>
     <track>emaxWeybridge</track>
     <track>eaceHoughton</track>
     <track>ebruHoughton</track>
@@ -1606,6 +1607,7 @@
 
   <url project="ToxoDB" type="synteny">
     <org organism="Eimeria tenella strain Houghton" abbrev="etenHoughton" />
+    <org organism="Eimeria tenella Houghton 2021" abbrev="etenHoughton2021" />
     <org organism="Eimeria maxima Weybridge" abbrev="emaxWeybridge"/>
     <org organism="Eimeria acervulina Houghton" abbrev="eaceHoughton"/>
     <org organism="Eimeria brunetti Houghton" abbrev="ebruHoughton"/>
