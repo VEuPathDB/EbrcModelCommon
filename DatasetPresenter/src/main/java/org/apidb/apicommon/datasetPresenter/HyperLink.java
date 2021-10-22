@@ -8,6 +8,7 @@ public class HyperLink {
   private String description;
     private String type; // optinally provided by the default Hyperlinks file
     private String subtype; // optinally provided by the default Hyperlinks file
+    private String isPublication; // optionally add 'yes' to indicate that this is a publication link.
 
   public void setUrl(Text url) {
     this.url = url.getText();
@@ -48,6 +49,19 @@ public class HyperLink {
   public String getSubtype() {
     return subtype;
   }
+
+  public void setIsPublication(String isPublication) {
+    if (isPublication.toLowerCase() == "yes") {
+      this.isPublication = "Y";
+    } else {
+      this.isPublication = "N";
+    }
+
+  }
+
+  public String getIsPublication() {
+    return isPublication;
+  } 
 
   
 }

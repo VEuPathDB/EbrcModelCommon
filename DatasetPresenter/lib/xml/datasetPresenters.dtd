@@ -33,6 +33,7 @@
           annotationSource CDATA #IMPLIED
           annotationVersion CDATA #IMPLIED
 >
+<!ATTLIST link isPublication CDATA #IMPLIED>
 <!ATTLIST wdkReference
           recordClass CDATA #REQUIRED
           type CDATA #REQUIRED
