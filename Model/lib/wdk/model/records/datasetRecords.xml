@@ -1295,10 +1295,11 @@ and dp.property= 'studyAccess'
                        , dh.genome_version
                        , dh.annotation_version
                        , dh.functional_annotation_version
-                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.release_number desc) rn
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY to_number(bd.release_number) desc) rn
                      from ApidbTuning.DatasetHistory dh
                        , ApidbTuning.EupathBuildDates bd 
                      where dh.build_number = bd.build_number
+                       and bd.project = '@PROJECT_ID@'
                      order by dh.dataset_presenter_id
                        , bd.release_number desc
                 ) ,
