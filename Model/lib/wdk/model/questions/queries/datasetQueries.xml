@@ -223,6 +223,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
                    from apidbtuning.datasetpresenter dsp
                    where nvl(dsp.display_category, dsp.category) = $$dataset_category$$
                    and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
+                   and case when lower(display_category) = 'rnaseq' then 'rnaseq' else lower(subtype) end like lower($$dataset_subtype$$)
           ]]>
        </sql>
     </sqlQuery>
