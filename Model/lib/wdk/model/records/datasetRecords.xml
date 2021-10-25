@@ -1858,6 +1858,7 @@ ORDER by start_date desc
               , description
           FROM ApidbTuning.DatasetHyperLINK
           WHERE url not like '/%'
+          AND url not like '%genedb.org%'
       </sql>
 
       </sqlQuery>
