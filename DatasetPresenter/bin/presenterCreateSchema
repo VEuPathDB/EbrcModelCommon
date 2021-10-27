@@ -109,6 +109,7 @@ sub createTables {
         text                             varchar2(4000),
         description                      varchar2(4000),
         url                              varchar2(2000),
+        isPublication                    varchar2(1),
         constraint DatasetHyperLink${suffix}_pk primary key (dataset_link_id)
  -- ,   constraint DatasetHyperLink${suffix}_fk FOREIGN KEY (dataset_presenter_id) REFERENCES $schema.DatasetPresenter$suffix (dataset_presenter_id)
       )";

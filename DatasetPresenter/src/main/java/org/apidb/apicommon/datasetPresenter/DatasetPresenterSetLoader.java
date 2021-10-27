@@ -590,8 +590,8 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getLinkStmt() throws SQLException {
     String table = config.getUsername() + ".DatasetHyperLink" + suffix;
     String sql = "INSERT INTO " + table
-        + " (dataset_link_id, dataset_presenter_id, text, description, url)" + " VALUES ("
-        + table + "_sq.nextval, ?, ?, ?, ?)";
+        + " (dataset_link_id, dataset_presenter_id, text, description, url, isPublication)" + " VALUES ("
+        + table + "_sq.nextval, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -601,6 +601,7 @@ public class DatasetPresenterSetLoader {
     stmt.setString(2, link.getText());
     stmt.setString(3, link.getDescription());
     stmt.setString(4, link.getUrl());
+    stmt.setString(5, link.getIsPublication());
     stmt.execute();
   }
 

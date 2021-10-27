@@ -602,7 +602,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"
-               displayName="Explore this dataset within @PROJECT_ID@"
+               displayName="Explore this dataset within this website"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
@@ -626,6 +626,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="organism" displayName="Reference Organism"/>
             <columnAttribute name="version" displayName="Version"/>
+            <columnAttribute name="project_id" displayName="Project"/>
         </table>
 
 <!--
@@ -1295,10 +1296,11 @@ and dp.property= 'studyAccess'
                        , dh.genome_version
                        , dh.annotation_version
                        , dh.functional_annotation_version
-                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.release_number desc) rn
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY to_number(bd.release_number) desc) rn
                      from ApidbTuning.DatasetHistory dh
                        , ApidbTuning.EupathBuildDates bd 
                      where dh.build_number = bd.build_number
+                       and bd.project = '@PROJECT_ID@'
                      order by dh.dataset_presenter_id
                        , bd.release_number desc
                 ) ,
@@ -1857,6 +1859,7 @@ ORDER by start_date desc
               , description
           FROM ApidbTuning.DatasetHyperLINK
           WHERE url not like '/%'
+          AND url not like '%genedb.org%'
       </sql>
 
       </sqlQuery>
@@ -1934,13 +1937,15 @@ ORDER by start_date desc
             <column name="dataset_id"/>
             <column name="version"/>
             <column name="organism"/>
+            <column name="project_id"/>
             <sql excludeProjects="EuPathDB">
             <![CDATA[
                     with TaxonScientificName as (
                     select taxon_id,name
                     from sres.taxonname where
                     name_class = 'scientific name')
-                    select dataset_name, dataset_id,organism, version from (
+                    select dataset_name, dataset_id,organism, version, '@PROJECT_ID@' as project_id
+                    from (
                       select distinct dnt.name as dataset_name,
                            dnt.dataset_presenter_id as dataset_id,
                            case when dnt.taxon_id = 0
@@ -1958,9 +1963,25 @@ ORDER by start_date desc
             ]]>
             </sql>
             <sql includeProjects="EuPathDB">
-              select dsp.dataset_presenter_id as dataset_id, dsp.name as dataset_name, '' as version, '' as organism
-              from ApidbTuning.DatasetPresenter dsp
-              where dsp.name = 'no version for portal'
+              WITH TaxonScientificName AS (
+                    SELECT component_taxon_id  as taxon_id, organism_name as name
+                    FROM apidbtuning.organismattributes 
+              ) SELECT dataset_name, dataset_id,organism, version, project_id
+                FROM (
+                    select distinct dnt.name as dataset_name, ds.project_id,
+                           dnt.dataset_presenter_id as dataset_id,
+                           case when dnt.taxon_id = 0
+                           then 'ALL'
+                           else tn.name
+                           end as organism,
+                            replace (ds.version, '_gus4','') as version
+                      from TaxonScientificName tn, ApidbTuning.DatasetNameTaxon dnt,
+                           apidb.datasource ds
+                      where dnt.taxon_id = tn.taxon_id(+)
+                      and  ds.name = dnt.name
+                      and not ds.taxon_id is null
+                     order by dnt.name
+                )
             </sql>
       </sqlQuery>
 
