@@ -105,11 +105,11 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/$dtdFile $dtdPath");
-system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$refFile $refPath");
-system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/xml/datasetPresenters/$linksFile $linksPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/config/$refFile $refPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/lib/config/$linksFile $linksPath");
 
 my $contactsXmlFile = "contacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
