@@ -5084,6 +5084,29 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <!-- oooooooooooooooooooooooooooo END OF OrthoMCL-DB Specific classes ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
+  <datasetClass class="PopBio_temp" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="vbId"/>
+    <prop name="projectName"/>
+    <prop name="version"/>
+
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="PopBio_temp_${vbId}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::LoadNothing"
+           scope="global"
+           type="population_biology"
+           >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
   
   <datasetClass class="Pathways" category="" datasetFileHint="">
     <purpose></purpose>
