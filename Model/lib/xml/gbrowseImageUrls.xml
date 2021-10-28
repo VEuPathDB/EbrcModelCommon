@@ -1633,11 +1633,14 @@
     <track>ldonCL-SL</track>
     <track>ldonLV9</track>
     <track>ldonHU3</track>
+    <track>lenrMCAVBR2001CUR178</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
     <track>lmajSD75.1</track>
+    <track>lmarMHOMTH2012LSCM1</track>
     <track>lmexMHOMGT2001U1103</track>
+    <track>loriMHOMTH2014LSCM4</track>
     <track>ltarParrotTarII</track>
     <track>ltarParrotTarII2019</track>
     <track>lgerLEM452</track>
@@ -1648,7 +1651,9 @@
     <track>lenrLEM3045</track>
     <track>lpanMHOMCOL81L13</track>
     <track>lpanMHOMPA94PSC1</track>
+    <track>lsp.GhanaMHOMGH2012GH5</track>
     <track>lspMARLEM2494</track>
+    <track>lsp.NamibiaMPRONA1975252LV425</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="cruzi_gene" suffixes="_span;_gene">
@@ -1711,6 +1716,7 @@
 
   <subtrackSet project="TriTrypDB" name="Paratrypanosoma_gene" suffixes="_span;_gene">
     <track>pconCUL13</track>
+    <track>pherMCOEPA1965C119</track>
   </subtrackSet>
 
   <subtrackSet project="TriTrypDB" name="Bodo_gene" suffixes="_span;_gene">
@@ -1726,11 +1732,14 @@
     <org organism="Leishmania donovani CL-SL" abbrev="ldonCL-SL" />
     <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
     <org organism="Leishmania donovani HU3" abbrev="ldonHU3" />
+    <org organism="Leishmania enriettii MCAV/BR/2001/CUR178" abbrev="lenrMCAVBR2001CUR178" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
     <org organism="Leishmania major strain SD 75.1" abbrev="lmajSD75.1" />
+    <org organism="Leishmania martiniquensis MHOM/TH/2012/LSCM1" abbrev="lmarMHOMTH2012LSCM1" />
     <org organism="Leishmania mexicana MHOM/GT/2001/U1103" abbrev="lmexMHOMGT2001U1103" />
+    <org organism="Leishmania orientalis MHOM/TH/2014/LSCM4" abbrev="loriMHOMTH2014LSCM4" />
     <org organism="Leishmania tarentolae Parrot-TarII" abbrev="ltarParrotTarII" />
     <org organism="Leishmania tarentolae Parrot Tar II 2019" abbrev="ltarParrotTarII2019" />
     <org organism="Leishmania aethiopica L147" abbrev="laetL147" />
@@ -1741,7 +1750,9 @@
     <org organism="Leishmania panamensis strain MHOM/PA/94/PSC-1" abbrev="lpanMHOMPA94PSC1" />
     <org organism="Leishmania tropica L590" abbrev="ltroL590" />
     <org organism="Leishmania turanica strain LEM423" abbrev="lturLEM423" />
+    <org organism="Leishmania sp. Ghana MHOM/GH/2012/GH5" abbrev="lsp.GhanaMHOMGH2012GH5" />
     <org organism="Leishmania sp. MAR LEM2494" abbrev="lspMARLEM2494" />
+    <org organism="Leishmania sp. Namibia MPRO/NA/1975/252/LV425" abbrev="lsp.NamibiaMPRONA1975252LV425" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="leish_gene" />
@@ -1897,6 +1908,7 @@
 
   <url project="TriTrypDB" type="synteny">
     <org organism="Paratrypanosoma confusum CUL13" abbrev="pconCUL13" />
+    <org organism="Porcisia hertigi MCOE/PA/1965/C119" abbrev="pherMCOEPA1965C119" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Paratrypanosoma_gene" />
