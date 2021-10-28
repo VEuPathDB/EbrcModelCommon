@@ -311,7 +311,8 @@ order by organism, species, genus
     <sql>
       <![CDATA[
 CREATE TABLE &prefixGenomicSeqAttributes&1 NOLOGGING AS
-SELECT cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar2(20)) as project_id,
+SELECT --+ NO_PARALLEL
+       cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar2(20)) as project_id,
        SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
        sequence.c_count, sequence.g_count, sequence.t_count,
        (sequence.length
