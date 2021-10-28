@@ -1638,6 +1638,7 @@
     <track>lmajFriedlin</track>
     <track>lmajLV39c5</track>
     <track>lmajSD75.1</track>
+    <track>lspMARLEM2494</track>
     <track>lmarMHOMTH2012LSCM1</track>
     <track>lmexMHOMGT2001U1103</track>
     <track>loriMHOMTH2014LSCM4</track>
@@ -1652,7 +1653,6 @@
     <track>lpanMHOMCOL81L13</track>
     <track>lpanMHOMPA94PSC1</track>
     <track>lsp.GhanaMHOMGH2012GH5</track>
-    <track>lspMARLEM2494</track>
     <track>lsp.NamibiaMPRONA1975252LV425</track>
   </subtrackSet>
 
@@ -1737,6 +1737,7 @@
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
     <org organism="Leishmania major strain SD 75.1" abbrev="lmajSD75.1" />
+    <org organism="Leishmania martiniquensis LEM2494" abbrev="lspMARLEM2494" />
     <org organism="Leishmania martiniquensis MHOM/TH/2012/LSCM1" abbrev="lmarMHOMTH2012LSCM1" />
     <org organism="Leishmania mexicana MHOM/GT/2001/U1103" abbrev="lmexMHOMGT2001U1103" />
     <org organism="Leishmania orientalis MHOM/TH/2014/LSCM4" abbrev="loriMHOMTH2014LSCM4" />
@@ -1751,7 +1752,6 @@
     <org organism="Leishmania tropica L590" abbrev="ltroL590" />
     <org organism="Leishmania turanica strain LEM423" abbrev="lturLEM423" />
     <org organism="Leishmania sp. Ghana MHOM/GH/2012/GH5" abbrev="lsp.GhanaMHOMGH2012GH5" />
-    <org organism="Leishmania sp. MAR LEM2494" abbrev="lspMARLEM2494" />
     <org organism="Leishmania sp. Namibia MPRO/NA/1975/252/LV425" abbrev="lsp.NamibiaMPRONA1975252LV425" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
