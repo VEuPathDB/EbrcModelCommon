@@ -65,21 +65,27 @@ $sh->execute() or die "Can't prepare SQL statement: $DBI::errstr\n";
 
 # loop over rows dataset_presenter_id, display_name, species
 while(my ($dpid, $name, $species) = $sh->fetchrow_array()) {
-  # whatever string replacements 
-#  $var1 =~ s/replace/something/;
-#  $var1 =~ s/\s//;
+  
+  # Enclose species name in italics tags 
   if($species ne '') {
     if($name =~ m/$species/) {
       print "$name\t";
       $name =~ s/$species/<i>$species<\/i>/g;
       print "$name\n";
     }
+
+    # Try matching shortened species name (ex. P. falciparum)
+    my ($short_species) = $species =~ s/^(\w)\w*(\s+\w+)*/$1.$2/r;
+    if($name =~ m/$short_species/) {
+      print "$name\t";
+      $name =~ s/$short_species/<i>$short_species<\/i>/g;
+      print "$name\n";
+    }
   }
 
-  #print $name;
 
   # insert into table
-  #$insertRow->execute($var1,$var2) or die "Can't execute SQL statement: $DBI::errstr\n";
+  # $insertRow->execute($dpid, $name, $species) or die "Can't execute SQL statement: $DBI::errstr\n";
    
 }
 $sh->finish();
