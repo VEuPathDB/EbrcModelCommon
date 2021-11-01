@@ -223,6 +223,7 @@ http://purl.obolibrary.org/obo/OBI_0001248 # chip chip
 http://purl.obolibrary.org/obo/OBI_0001247 # NGS SNP
 http://purl.obolibrary.org/obo/OBI_0001393 # CGH Array
 http://purl.obolibrary.org/obo/OBI_0000537 # CNV
+http://purl.obolibrary.org/obo/OBI_0002913 # arthropod specimen collection process
 
 [Top level source term URIs and target direct superclass URIs]
 http://purl.obolibrary.org/obo/OBI_0001204 #SNP Microarray
@@ -247,6 +248,8 @@ http://purl.obolibrary.org/obo/OBI_0000716 #CHIP Seq
 subClassOf http://edamontology.org/topic_3173 #Epigenomics
 http://purl.obolibrary.org/obo/OBI_0001248 # chip chip
 subClassOf http://edamontology.org/topic_3173 #Epigenomics
+http://purl.obolibrary.org/obo/OBI_0002913 # arthropod specimen collection process
+subClassOf http://edamontology.org/topic_3050 # Biodiversity
 
 [Source annotation URIs]
 http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym
