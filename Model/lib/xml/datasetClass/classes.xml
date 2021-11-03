@@ -5096,6 +5096,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
            plugin="ApiCommonData::Load::Plugin::LoadNothing"
            scope="global"
            type="population_biology"
+           subType="mapveu"
            >
       <manualGet fileOrDir="common/empty">
         <dir name="final">
