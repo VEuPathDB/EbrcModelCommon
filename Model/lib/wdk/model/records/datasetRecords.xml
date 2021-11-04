@@ -1916,7 +1916,19 @@ ORDER by start_date desc
                 union
 	        select * from projectQuestionLinks
                 order by text
-
+		union
+		select dsp.dataset_presenter_id as dataset_id
+		       , '' as dataset_name
+		       , 'View this Data Set in MapVEu' as text
+		       , 'https://vectorbase.org/popbio-map/web/?projectID=' || p.value as url
+		       , 'View this Data Set in MapVEu' as description
+		       , '' as record_type
+		       , '' as target_type
+		       , '' as target_name
+		       , 'genomicsInternal' as link_type
+		from apidbtuning.datasetpresenter dsp, apidbtuning.datasetproperty p
+		where dsp.name like 'PopBio_Study%' and dsp.dataset_presenter_id = p.dataset_presenter_id 
+		      and p.property = 'vbId'
 	    ]]>
             </sql>
 
