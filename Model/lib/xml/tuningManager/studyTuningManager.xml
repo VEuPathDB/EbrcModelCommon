@@ -1191,6 +1191,12 @@ UNION ALL
                m.pan_id, m.pan_name, m.pan_isa_type,
                m.category, m.property, m.property_id, mt.property_source_id,
                substr(m.value, 1, 250) as string_value,
+               case
+                 when m.value = lower(m.value)
+                      and upper(substr(m.value, 1, 1)) || substr(m.value, 2) != value
+                 then 1
+                 else 0
+               end as capitalization_flag,
                case when mt.type = 'number'
                       then apidb.parse_and_round_number(m.value)
                     else cast(null as number)
