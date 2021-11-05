@@ -1881,6 +1881,7 @@ ORDER by start_date desc
           FROM ApidbTuning.DatasetHyperLINK
           WHERE url not like '/%'
           AND url not like '%genedb.org%'
+          AND isPublication != 'Y' OR isPublication is null
       </sql>
 
       </sqlQuery>
