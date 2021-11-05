@@ -264,8 +264,10 @@
         <oboInOwl:hasNarrowSynonym>Discovery proteomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000115>Protein and peptide identification, especially in the study of whole proteomes of organisms.</obo:IAO_0000115>
         <oboInOwl:hasDefinition>Protein and peptide identification, especially in the study of whole proteomes of organisms.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>MS-based targeted proteomics</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasNarrowSynonym>Metaproteomics</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasNarrowSynonym>Bottom-up proteomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>MS-based untargeted proteomics</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -473,6 +475,25 @@
         <obo:IAO_0000115>Laboratory management and resources, for example, catalogues of biological resources for use in the lab including cell lines, viruses, plasmids, phages, DNA probes and primers and so on.</obo:IAO_0000115>
         <oboInOwl:hasNarrowSynonym>Laboratory resources</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasDefinition>Laboratory management and resources, for example, catalogues of biological resources for use in the lab including cell lines, viruses, plasmids, phages, DNA probes and primers and so on.</oboInOwl:hasDefinition>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/topic_0622 -->
+
+    <owl:Class rdf:about="http://edamontology.org/topic_0622">
+        <rdfs:label>Genomics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <oboInOwl:hasDefinition>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Genomes</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Exomes</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Personal genomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Viral genomics</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000115>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</obo:IAO_0000115>
+        <oboInOwl:hasNarrowSynonym>Genome annotation</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Synthetic genomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Whole genomes</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -764,6 +785,8 @@
         <oboInOwl:hasNarrowSynonym>LC-MS-based metabolomics</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasNarrowSynonym>Exometabolomics</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasNarrowSynonym>Metabolites</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>MS-based untargeted metabolomics</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>MS-based targeted metabolomics</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasDefinition>The systematic study of metabolites, the chemical processes they are involved, and the chemical fingerprints of specific cellular processes in a whole cell, tissue, organ or organism.</oboInOwl:hasDefinition>
         <oboInOwl:hasNarrowSynonym>Metabolome</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
@@ -806,12 +829,17 @@
     <!-- http://edamontology.org/topic_3175 -->
 
     <owl:Class rdf:about="http://edamontology.org/topic_3175">
-        <rdfs:label>DNA structural variation</rdfs:label>
+        <rdfs:label>Structural variation</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0199"/>
-        <oboInOwl:hasDefinition>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Deletion</oboInOwl:hasNarrowSynonym>
         <oboInOwl:hasExactSynonym>Genomic structural variation</oboInOwl:hasExactSynonym>
-        <oboInOwl:hasExactSynonym>Structural variation</oboInOwl:hasExactSynonym>
+        <oboInOwl:hasExactSynonym>DNA structural variation</oboInOwl:hasExactSynonym>
         <obo:IAO_0000115>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</obo:IAO_0000115>
+        <oboInOwl:hasDefinition>Variation in chromosome structure including microscopic and submicroscopic types of variation such as deletions, duplications, copy-number variants, insertions, inversions and translocations.</oboInOwl:hasDefinition>
+        <oboInOwl:hasNarrowSynonym>Inversion</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Insertion</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Duplication</oboInOwl:hasNarrowSynonym>
+        <oboInOwl:hasNarrowSynonym>Translocation</oboInOwl:hasNarrowSynonym>
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
@@ -871,20 +899,6 @@
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
-
-    <!-- http://edamontology.org/topic_0622 -->
-
-    <owl:Class rdf:about="http://edamontology.org/topic_0622">
-        <rdfs:label>Genomics</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <oboInOwl:hasDefinition>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</oboInOwl:hasDefinition>
-        <oboInOwl:hasNarrowSynonym>Genome Annotation</oboInOwl:hasNarrowSynonym>
-        <oboInOwl:hasNarrowSynonym>Whole genomes</oboInOwl:hasNarrowSynonym>
-        <obo:IAO_0000115>Whole genomes of one or more organisms, or genomes in general, such as meta-information on genomes, genome projects, gene names etc.</obo:IAO_0000115>
-        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
-    </owl:Class>
-    
-
 
 
     <!-- http://edamontology.org/topic_3315 -->
@@ -1029,14 +1043,6 @@
         <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
-
-
-
-    <owl:Class rdf:about="http://purl.obolibrary.org/obo/SO_0000345">
-        <rdfs:label>EST</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
-        <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/so.owl"/>
-    </owl:Class>
     
 
 
@@ -1060,6 +1066,16 @@
     
 
 
+    <!-- http://purl.obolibrary.org/obo/OBI_0001985 -->
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001985">
+        <rdfs:label>microarray assay</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
+        <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://purl.obolibrary.org/obo/OBI_0002029 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0002029">
@@ -1070,11 +1086,11 @@
     
 
 
-    <!-- http://purl.obolibrary.org/obo/OBI_0001985 -->
+    <!-- http://purl.obolibrary.org/obo/OBI_0002913 -->
 
-    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001985">
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DNA microarray</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_3308"/>
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0002913">
+        <rdfs:label>arthropod specimen collection process</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_2885"/>
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
 </rdf:RDF>
