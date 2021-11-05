@@ -475,6 +475,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
             <columnAttribute name="citation" internal="true"/>
+            <columnAttribute name="url" internal="true"/>
 
 
             <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
@@ -508,6 +509,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
             <columnAttribute name="citation" internal="true"/>
+            <columnAttribute name="url" internal="true"/>
 
 
             <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
@@ -520,7 +522,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                  </displayText>
                  <url>
                     <![CDATA[
-                             http://www.ncbi.nlm.nih.gov/pubmed/$$pmid$$
+                    $$url$$
                     ]]>
                  </url>
             </linkAttribute>
@@ -1608,12 +1610,25 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="dataset_id"/>
             <column name="pmid"/>
             <column name="citation"/>
+            <column name="url"/>
             <sql>
             <![CDATA[
-             select dataset_presenter_id as dataset_id, pmid, citation
-             from ApidbTuning.DatasetPublication
-             where pmid is not null
-             order by dataset_publication_id
+              with pmidPublications as (
+                  select dataset_presenter_id as dataset_id
+                        , pmid
+                        , citation
+                        , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid as url
+                  from ApidbTuning.DatasetPublication
+                  where pmid is not null
+                  order by dataset_publication_id
+              ) select dataset_presenter_id as dataset_id
+                       , null as pmid
+                       , text as citation
+                       , url
+                from apidbtuning.datasethyperlink
+                where isPublication = 'Y'
+                union
+                select * from pmidPublications
             ]]>
             </sql>
       </sqlQuery>
