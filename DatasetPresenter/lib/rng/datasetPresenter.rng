@@ -90,6 +90,9 @@
 	  </zeroOrMore>
 	  <zeroOrMore>
 	    <element name="link">
+	      <optional>
+		<attribute name="isPublication"/>
+	      </optional>
               <optional>
                 <element name="text">
                   <text/>
