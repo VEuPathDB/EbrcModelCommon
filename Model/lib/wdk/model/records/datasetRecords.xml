@@ -1477,7 +1477,7 @@ from apidbtuning.datasetnametaxon dsnt
          <column name="old_dataset_id"/>
          <sql excludeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
             <![CDATA[
-                select dataset_presenter_id as dataset_id,
+                  select dataset_presenter_id as dataset_id,
                          dataset_presenter_id as old_dataset_id
                   from apidbTuning.DatasetPresenter
                 union
@@ -1489,6 +1489,12 @@ from apidbtuning.datasetnametaxon dsnt
                   where dsp.type = 'genome'
                     and dsp.dataset_presenter_id = dnt.dataset_presenter_id
                     and oa.component_taxon_id = dnt.taxon_id
+                union
+                  select dataset_presenter_id as dataset_id,
+                         'DS_' ||
+                           lower(substr(standard_hash(replace(name, '_ebi_', '_'), 'SHA1'), 0, 10))
+                           as old_dataset_id
+                  from apidbtuning.datasetpresenter where name like '%_ebi_%'
               ]]>
          </sql>
 
