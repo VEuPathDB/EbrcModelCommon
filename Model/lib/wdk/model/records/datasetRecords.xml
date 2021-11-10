@@ -1339,6 +1339,15 @@ and dp.property= 'studyAccess'
          <column name="pmids_download"/>
          <sql excludeProjects="UniDB">
             <![CDATA[
+with allpubs as (
+                      select dp.dataset_presenter_id
+                        , nvl2(dp.pmid,'<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>', '<a href="' || dh.url ||'">' || dh.text || '</a>') as publink
+                        , dp.pmid
+                      from apidbtuning.datasetPublication dp
+                      left join apidbtuning.datasethyperlink dh
+                        on dp.dataset_presenter_id = dh.dataset_presenter_id
+                        and dh.isPublication is not null
+                    )
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
                    --dsp.display_name, 
@@ -1353,12 +1362,11 @@ and dp.property= 'studyAccess'
                    pubs.pmids,
                    pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
-                 (select dataset_presenter_id,
---                       listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
-                         dbms_xmlgen.convert( rtrim(xmlagg(xmlelement(e, '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ').extract('//text()') order by pmid).getclobval(), ', '), 1) as pmids,
-                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
-                  from ApidbTuning.DatasetPublication
-                  group by dataset_presenter_id) pubs,
+                 (select dataset_presenter_id
+                       , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
+                       , listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                     from allpubs
+                     group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
                          '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
@@ -1626,7 +1634,7 @@ from apidbtuning.datasetnametaxon dsnt
                        , text as citation
                        , url
                 from apidbtuning.datasethyperlink
-                where isPublication = 'Y'
+                where isPublication = 'N'
                 union
                 select * from pmidPublications
             ]]>
