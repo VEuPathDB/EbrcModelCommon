@@ -1346,7 +1346,7 @@ with allpubs as (
                       from apidbtuning.datasetPublication dp
                       left join apidbtuning.datasethyperlink dh
                         on dp.dataset_presenter_id = dh.dataset_presenter_id
-                        and dh.isPublication is not null
+                        and dh.isPublication = 'Y'
                     )
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
@@ -1634,7 +1634,7 @@ from apidbtuning.datasetnametaxon dsnt
                        , text as citation
                        , url
                 from apidbtuning.datasethyperlink
-                where isPublication = 'N'
+                where isPublication = 'Y'
                 union
                 select * from pmidPublications
             ]]>
