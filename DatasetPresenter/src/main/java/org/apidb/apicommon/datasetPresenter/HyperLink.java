@@ -51,7 +51,7 @@ public class HyperLink {
   }
 
   public void setIsPublication(String isPublication) {
-    if (isPublication.toLowerCase() == "yes") {
+    if (isPublication.toLowerCase().equals("yes")) {
       this.isPublication = "Y";
     } else {
       this.isPublication = "N";
