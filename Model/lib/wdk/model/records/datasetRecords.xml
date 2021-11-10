@@ -251,7 +251,7 @@ while in protected and private studies there will be human intervention in the d
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="References" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
