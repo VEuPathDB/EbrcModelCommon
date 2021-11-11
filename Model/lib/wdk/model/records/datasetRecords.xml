@@ -251,7 +251,7 @@ while in protected and private studies there will be human intervention in the d
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
-         <columnAttribute name="pmids" displayName="Publications" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
+         <columnAttribute name="pmids" displayName="References" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
@@ -475,6 +475,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
             <columnAttribute name="citation" internal="true"/>
+            <columnAttribute name="url" internal="true"/>
 
 
             <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
@@ -508,6 +509,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
             <columnAttribute name="citation" internal="true"/>
+            <columnAttribute name="url" internal="true"/>
 
 
             <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
@@ -520,7 +522,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
                  </displayText>
                  <url>
                     <![CDATA[
-                             http://www.ncbi.nlm.nih.gov/pubmed/$$pmid$$
+                    $$url$$
                     ]]>
                  </url>
             </linkAttribute>
@@ -1337,6 +1339,15 @@ and dp.property= 'studyAccess'
          <column name="pmids_download"/>
          <sql excludeProjects="UniDB">
             <![CDATA[
+with allpubs as (
+                      select dp.dataset_presenter_id
+                        , nvl2(dp.pmid,'<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>', '<a href="' || dh.url ||'">' || dh.text || '</a>') as publink
+                        , dp.pmid
+                      from apidbtuning.datasetPublication dp
+                      left join apidbtuning.datasethyperlink dh
+                        on dp.dataset_presenter_id = dh.dataset_presenter_id
+                        and dh.isPublication = 'Y'
+                    )
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
                    --dsp.display_name, 
@@ -1351,12 +1362,11 @@ and dp.property= 'studyAccess'
                    pubs.pmids,
                    pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
-                 (select dataset_presenter_id,
---                       listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
-                         dbms_xmlgen.convert( rtrim(xmlagg(xmlelement(e, '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ').extract('//text()') order by pmid).getclobval(), ', '), 1) as pmids,
-                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
-                  from ApidbTuning.DatasetPublication
-                  group by dataset_presenter_id) pubs,
+                 (select dataset_presenter_id
+                       , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
+                       , listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                     from allpubs
+                     group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
                          '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
@@ -1608,12 +1618,25 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="dataset_id"/>
             <column name="pmid"/>
             <column name="citation"/>
+            <column name="url"/>
             <sql>
             <![CDATA[
-             select dataset_presenter_id as dataset_id, pmid, citation
-             from ApidbTuning.DatasetPublication
-             where pmid is not null
-             order by dataset_publication_id
+              with pmidPublications as (
+                  select dataset_presenter_id as dataset_id
+                        , pmid
+                        , citation
+                        , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid as url
+                  from ApidbTuning.DatasetPublication
+                  where pmid is not null
+                  order by dataset_publication_id
+              ) select dataset_presenter_id as dataset_id
+                       , null as pmid
+                       , text as citation
+                       , url
+                from apidbtuning.datasethyperlink
+                where isPublication = 'Y'
+                union
+                select * from pmidPublications
             ]]>
             </sql>
       </sqlQuery>
@@ -1866,6 +1889,7 @@ ORDER by start_date desc
           FROM ApidbTuning.DatasetHyperLINK
           WHERE url not like '/%'
           AND url not like '%genedb.org%'
+          AND isPublication != 'Y' OR isPublication is null
       </sql>
 
       </sqlQuery>
