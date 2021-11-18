@@ -1482,15 +1482,13 @@ select  dsp.dataset_presenter_id as dataset_id,
     <sqlQuery name="Projects"  isCacheable="false">
         <column name="dataset_id"/>
         <column name="project_id"/>
-
-
             <sql>
             <![CDATA[
                WITH projprop AS (
                  SELECT dataset_presenter_id, value as project
                  FROM apidbTuning.DatasetProperty
                  WHERE property = 'projectName')
-               SELECT dsp.dataset_presenter_id as dataset_id, dsp.name,
+               SELECT DISTINCT dsp.dataset_presenter_id as dataset_id, dsp.name,
                       CASE WHEN (dp.project IS NOT NULL) THEN dp.project
                            ELSE ' ' END  as project_id
                FROM apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
