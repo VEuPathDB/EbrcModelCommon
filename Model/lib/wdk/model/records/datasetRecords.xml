@@ -1337,7 +1337,58 @@ and dp.property= 'studyAccess'
          <column name="eupath_release" sortingColumn="build_number_introduced"/>
          <column name="pmids"/>
          <column name="pmids_download"/>
-         <sql excludeProjects="UniDB">
+         <sql excludeProjects="EuPathDB,UniDB">
+            <![CDATA[
+    with allpubs as (
+                      select dp.dataset_presenter_id
+                        , nvl2(dp.pmid,'<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>', '<a href="' || dh.url ||'">' || dh.text || '</a>') as publink
+                        , dp.pmid
+                      from apidbtuning.datasetPublication dp
+                      left join apidbtuning.datasethyperlink dh
+                        on dp.dataset_presenter_id = dh.dataset_presenter_id
+                        and dh.isPublication = 'Y'
+                    )
+            select dsp.dataset_presenter_id as dataset_id,
+                   dsp.name as dataset_name, dsp.dataset_name_pattern,
+                   --dsp.display_name,
+                   ds.version,
+                   dsp.short_display_name, dsp.description,
+                   nvl(dsp.summary, dsp.description) as summary,
+                   dsp.protocol, dsp.usage,
+                   dsp.type,
+                   dsp.is_species_scope,
+                   dsp.build_number_introduced,
+                   nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
+                   pubs.pmids,
+                   pubs.pmids_download
+            from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
+                 (select dataset_presenter_id
+                       , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
+                       , listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                     from allpubs
+                     group by dataset_presenter_id) pubs,
+                 (select dataset_presenter_id,
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+                  from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
+                               ebd.release_number, ebd.project,
+                               row_number() over (partition by dh.dataset_presenter_id
+                                                              order by ebd.release_number desc) rn
+                        from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
+                        where dh.build_number = ebd.build_number
+                          and ebd.project = '@PROJECT_ID@')
+                  where rn = 1) history,
+                 (select build_number,
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+                  from apidbTuning.EupathBuildDates
+                        where project = '@PROJECT_ID@') introduced
+            where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
+              and dsp.build_number_introduced = introduced.build_number(+)
+              and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
+	      and ds.name (+) = dsp.name
+            ]]>
+         </sql>
+
+         <sql includeProjects="EuPathDB">
             <![CDATA[
 with allpubs as (
                       select dp.dataset_presenter_id
@@ -1385,8 +1436,26 @@ with allpubs as (
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
+              and NOT dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
+    UNION ALL
+        select dsp.dataset_presenter_id as dataset_id,
+               dsp.name as dataset_name, dsp.dataset_name_pattern,
+               '' as version,
+               dsp.short_display_name, dsp.description,
+               nvl(dsp.summary, dsp.description) as summary,
+               dsp.protocol, dsp.usage,
+               dsp.type,
+               dsp.is_species_scope,
+               dsp.build_number_introduced,
+               '' as eupath_release,
+               TO_CLOB('') as pmids,
+               '' as pmids_download
+       from apidbTuning.DatasetPresenter dsp
+       where dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
+
             ]]>
          </sql>
+
 
          <sql includeProjects="UniDB">
             <![CDATA[
