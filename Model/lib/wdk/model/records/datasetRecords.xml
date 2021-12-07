@@ -604,7 +604,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"
-               displayName="Explore this dataset within this website"
+               displayName="Explore this Data Set within this Website"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
