@@ -738,6 +738,7 @@
     <track>pjirSE8</track>
     <track>pmacP2C</track>
     <track>pcanCanA</track>
+    <track>poryCS1</track>
   </subtrackSet>
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -1161,6 +1162,7 @@
     <org abbrev="pjirSE8" organism="Pneumocystis jirovecii SE8"/>
     <org abbrev="pmacP2C" organism="Pneumocystis sp. macacae isolate P2C"/>
     <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
+    <org abbrev="poryCS1" organism="Pneumocystis oryctolagi CS1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pneumocystidomycetes"/>
