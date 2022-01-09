@@ -594,6 +594,7 @@
     <track>afumA1163</track>
     <track>aclaNRRL1</track>
     <track>aflaNRRL3357</track>
+    <track>aflaNRRL3357_2020</track>
     <track>alIFO4308</track>
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
@@ -739,6 +740,7 @@
     <track>pmacP2C</track>
     <track>pcanCanA</track>
     <track>poryCS1</track>
+    <track>pwak2A</track>
   </subtrackSet>
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -961,6 +963,7 @@
     <org abbrev="afumA1163" organism="Aspergillus fumigatus A1163"/>
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
     <org abbrev="aflaNRRL3357" organism="Aspergillus flavus NRRL3357"/>
+    <org abbrev="aflaNRRL357_2020" organism="Aspergillus flavus NRRL3357 2020"/>
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
@@ -1163,6 +1166,7 @@
     <org abbrev="pmacP2C" organism="Pneumocystis sp. macacae isolate P2C"/>
     <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
     <org abbrev="poryCS1" organism="Pneumocystis oryctolagi CS1"/>
+    <org abbrev="pwak2A" organism="Pneumocystis wakefieldiae 2A"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pneumocystidomycetes"/>
