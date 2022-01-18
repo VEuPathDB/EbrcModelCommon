@@ -1996,8 +1996,10 @@
     <track>aalbSTECLA</track>
     <track>aalbSTECLA2020</track>
     <track>aaraDongola</track>
+    <track>aaraDONGOLA2021</track>
     <track>aatrEBRO</track>
     <track>achrACHKN1017</track>
+    <track>acolMOPTI</track>
     <track>acolNgousso</track>
     <track>aculA-37</track>
     <track>adarCoari</track>
@@ -2044,6 +2046,7 @@
     <track>aaegLVP_AGWG</track>
     <track>aalbFoshan</track>
     <track>aalbFPA</track>
+    <track>aalbC6-36</track>
     <track>cquiJHB</track>
     <track>cquiJohannesburg</track>
   </subtrackSet>
@@ -2074,8 +2077,10 @@
     <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
     <org organism="Anopheles albimanus STECLA 2020" abbrev="aalbSTECLA2020" />
     <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
+    <org organism="Anopheles arabiensis DONGOLA 2021" abbrev="aaraDONGOLA2021" />
     <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
     <org organism="Anopheles christyi ACHKN1017" abbrev="achrACHKN1017" />
+    <org organism="Anopheles coluzzii MOPTI" abbrev="acolMOPTI"/>
     <org organism="Anopheles coluzzii Ngousso" abbrev="acolNgousso" />
     <org organism="Anopheles culicifacies A-37" abbrev="aculA-37" />
     <org organism="Anopheles darlingi Coari" abbrev="adarCoari" />
@@ -2130,6 +2135,7 @@
     <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
     <org organism="Aedes albopictus Foshan FPA" abbrev="aalbFPA" />
+    <org organism="Aedes albopictus C6/36" abbrev="aalbC6-36" />
     <org organism="Culex quinquefasciatus JHB" abbrev="cquiJHB" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
     <track name="Synteny" abbrevFirst="true">
