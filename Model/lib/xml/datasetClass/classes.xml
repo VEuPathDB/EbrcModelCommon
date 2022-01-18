@@ -1440,6 +1440,95 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="MicrobiomeStudyEda" category="" datasetFileHint="">
+    <purpose>Copy the ISA sheet and the result files for a study. Fail if the files are not right </purpose>
+    <prop name="name"/>
+    <prop name="version"/>
+    <prop name="sampleDetailsDir"/>
+    <prop name="name"/>
+
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="MicrobiomeStudyEDA_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="population_biology"
+              scope="global"
+            >
+      <manualGet fileOrDir="${projectName}/common/MicrobiomeStudyEda/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>mkdir -pv @@dataDir@@/results </unpack>
+      <unpack>mv @@dataDir@@/final/*tsv @@dataDir@@/results/ </unpack>
+      <unpack>rmdir -v @@dataDir@@/final </unpack>
+      <unpack>mkdir -pv @@dataDir@@/ISA/${sampleDetailsDir} </unpack>
+      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="MicrobiomeOwlEda" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>mkdir -pv @@dataDir@@</unpack>
+      <unpack>if test -f @@dataDir@@/${name}.owl ; then unlink @@dataDir@@/${name}.owl ; fi</unpack>
+      <unpack>if test -f @@dataDir@@/${name}.eda.txt ; then unlink @@dataDir@@/${name}.eda.txt ; fi</unpack>
+      <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.owl @@dataDir@@/${name}.owl</unpack>
+      <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.eda.txt @@dataDir@@/${name}.eda.txt</unpack>
+      <pluginArgs>--inFile  @@dataDir@@/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="CommonTermsOwlEda" category="" datasetFileHint="">
+    <purpose></purpose>
+
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_EuPathIsa_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/production/eupath_isa.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="OnlineObiOwlEda" category="" datasetFileHint="">
+    <purpose></purpose>
+
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="OBO_Ontology_OBI_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+      <wgetArgs url="http://purl.obolibrary.org/obo/OBI.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/OBI.owl </wgetArgs>
+      <pluginArgs>--inFile @@dataDir@@/OBI.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="lineageTaxonLinkingTable" category="" datasetFileHint="">
     <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
@@ -5522,10 +5611,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
-
 
   <!-- dataset class for loading sample metadata -->
   
