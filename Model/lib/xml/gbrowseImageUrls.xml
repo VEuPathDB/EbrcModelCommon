@@ -467,6 +467,7 @@
 
   <subtrackSet project="GiardiaDB" name="all_gene" suffixes="_span;_gene">
     <track>gassAWB</track>
+    <track>gassAWB2019</track>
     <track>gassA2DH</track>
     <track>gassBGS</track>
     <track>gassBGS_B</track>
@@ -478,6 +479,7 @@
 
   <url project="GiardiaDB" type="synteny">
     <org organism="Giardia Assemblage A isolate WB" abbrev="gassAWB"/>
+    <org organism="Giardia Assemblage A isolate WB 2019" abbrev="gassAWB2019"/>
     <org organism="Giardia Assemblage A2 isolate DH" abbrev="gassA2DH"/>
     <org organism="Giardia Assemblage B isolate GS" abbrev="gassBGS"/>
     <org organism="Giardia Assemblage B isolate GS_B" abbrev="gassBGS_B"/>
