@@ -16,7 +16,6 @@
  <!ELEMENT contactId (#PCDATA)>
  <!ELEMENT link (text?,description?,url)>
  <!ELEMENT text (#PCDATA)>
- <!ELEMENT description (#PCDATA)>
  <!ELEMENT url (#PCDATA)>
  <!ELEMENT pubmedId (#PCDATA)>
  <!ELEMENT wdkReference (#PCDATA)>
