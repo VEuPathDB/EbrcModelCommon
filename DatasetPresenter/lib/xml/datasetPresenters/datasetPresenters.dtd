@@ -2,6 +2,7 @@
  <!ELEMENT datasetPresenter (displayName, shortDisplayName?, shortAttribution?, displayCategory?, summary, description, usage?, protocol?, caveat?, acknowledgement?, releasePolicy?, history*, primaryContactId, contactId*, link*, pubmedId*, wdkReference*, templateInjector?)>
  <!ELEMENT displayName (#PCDATA)>
  <!ELEMENT shortDisplayName (#PCDATA)>
+ <!ELEMENT shortAttribution (#PCDATA)>
  <!ELEMENT displayCategory (#PCDATA)>
  <!ELEMENT summary (#PCDATA)>
  <!ELEMENT description (#PCDATA)>
@@ -15,7 +16,6 @@
  <!ELEMENT contactId (#PCDATA)>
  <!ELEMENT link (text?,description?,url)>
  <!ELEMENT text (#PCDATA)>
- <!ELEMENT description (#PCDATA)>
  <!ELEMENT url (#PCDATA)>
  <!ELEMENT pubmedId (#PCDATA)>
  <!ELEMENT wdkReference (#PCDATA)>
