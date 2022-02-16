@@ -192,7 +192,7 @@ while in protected and private studies there will be human intervention in the d
              ]]>
            </displayText>
            <url>
-             @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/~latest
+             @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/new
            </url>
          </linkAttribute>
        </attributeQueryRef>
