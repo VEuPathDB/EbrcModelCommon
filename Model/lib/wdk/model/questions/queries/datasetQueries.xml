@@ -226,7 +226,6 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
                           and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$) )
                    or (dsp.category = 'Immunology' 
                        and lower(display_category) = lower($$dataset_subtype$$) )
-                   or (category= $$dataset_category$$ )
           ]]>
        </sql>
     </sqlQuery>
