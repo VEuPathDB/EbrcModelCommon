@@ -218,7 +218,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
         <column name="dataset_id"/>
 
         <sql>
-          <![CDATA[
+          <![CDATA[ 
                    select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetpresenter dsp
                    where  (category IS NULL and dsp.display_category = $$dataset_category$$)
