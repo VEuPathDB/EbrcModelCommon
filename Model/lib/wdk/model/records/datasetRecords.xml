@@ -1944,6 +1944,7 @@ ORDER by start_date desc
 		    from ApidbTuning.datasetmodelref ref
 		    left join ApidbTuning.DatasetPresenter dsp
 			on dsp.dataset_presenter_id = ref.dataset_presenter_id
+                    where NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
 		    order by dsp.name
                         , ref.target_type
                         , ref.record_type
