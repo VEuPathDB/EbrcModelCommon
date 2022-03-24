@@ -385,6 +385,7 @@
     <track>mbalATCC30984</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
+    <track>nfowTy</track>
     <track>ngruNEG-M</track>
   </subtrackSet>
 
@@ -393,6 +394,7 @@
     <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
+    <org organism="Naegleria fowleri strain Ty"  abbrev="nfowTy" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
