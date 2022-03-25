@@ -385,6 +385,7 @@
     <track>mbalATCC30984</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
+    <track>nfowTy</track>
     <track>ngruNEG-M</track>
   </subtrackSet>
 
@@ -393,6 +394,7 @@
     <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
+    <org organism="Naegleria fowleri strain Ty"  abbrev="nfowTy" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
@@ -553,6 +555,7 @@
     <track>ctroMYA3404-2020</track>
     <track>clusATCC42720</track>
     <track>cfab65</track>
+    <track>dfabCBS789</track>
     <track>dhanCBS767</track>
     <track>pkudCBS573</track>
     <track>huvaAWRI3580</track>
@@ -582,6 +585,7 @@
     <track>cbanCBS173.52</track>
     <track>ccarKSF</track>
     <track>cimmCBS83496</track>
+    <track>cpsaCBS110553</track>
   </subtrackSet>
 
   <subtrackSet name="Cyphellophoraceae" project="FungiDB" suffixes="_span;_gene">
@@ -736,6 +740,7 @@
     <track>plutPb01</track>
     <track>tmenTIMM2789</track>
     <track>trubCBS118892</track>
+    <track>ttonCBS112818</track>
     <track>uree1704</track>
   </subtrackSet>
 
@@ -752,6 +757,7 @@
     <track>pjirSE8</track>
     <track>pmacP2C</track>
     <track>pcanCanA</track>
+    <track>pjirRU7</track>
     <track>poryCS1</track>
     <track>pwak2A</track>
   </subtrackSet>
@@ -881,6 +887,7 @@
     <org abbrev="ctroMYA3404-2020" organism="Candida tropicalis MYA-3404 2020"/>
     <org abbrev="clusATCC42720" organism="Clavispora lusitaniae ATCC 42720"/>
     <org abbrev="cfab65" organism="Cyberlindnera fabianii 65"/>
+    <org abbrev="dfabCBS789" organism="Debaryomyces fabryi CBS 789"/>
     <org abbrev="dhanCBS767" organism="Debaryomyces hansenii CBS767"/>
     <org abbrev="pkudCBS573" organism="Pichia kudriavzevii strain CBS573"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
@@ -931,6 +938,7 @@
     <org abbrev="cbanCBS173.52" organism="Cladophialophora bantiana CBS 173.52"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
+    <org abbrev="cpsaCBS110553" organism="Cladophialophora psammophila CBS 110553"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Herpotrichiellaceae"/>
@@ -1165,6 +1173,7 @@
     <org abbrev="plutPb01" organism="Paracoccidioides lutzii Pb01"/>
     <org abbrev="tmenTIMM2789" organism="Trichophyton mentagrophytes TIMM 2789"/>
     <org abbrev="trubCBS118892" organism="Trichophyton rubrum CBS 118892"/>
+    <org abbrev="ttonCBS112818" organism="Trichophyton tonsurans CBS 112818"/>
     <org abbrev="uree1704" organism="Uncinocarpus reesii 1704"/> 
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1190,6 +1199,7 @@
     <org abbrev="pjirSE8" organism="Pneumocystis jirovecii SE8"/>
     <org abbrev="pmacP2C" organism="Pneumocystis sp. macacae isolate P2C"/>
     <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
+    <org abbrev="pjirRU7" organism="Pneumocystis jirovecii RU7"/>
     <org abbrev="poryCS1" organism="Pneumocystis oryctolagi CS1"/>
     <org abbrev="pwak2A" organism="Pneumocystis wakefieldiae 2A"/>
     <track name="Gene"/>
@@ -1981,6 +1991,9 @@
     <org organism="Bos taurus breed Hereford" abbrev="btauHereford" />
     <org organism="Macaca mulatta isolate AG07107" abbrev="mmulAG07107" />
     <org organism="Macaca fascicularis REF" abbrev="mfasREF" />
+    <org organism="Gallus gallus isolate bGalGal1" abbrev="ggalbGalGal1"/>
+    <org organism="Rattus norvegicus BN/NHsdMcwi" abbrev="rnorBNNHsdMcwi"/>
+    <org organism="Canis lupus familiaris isolate SID07034" abbrev="clupfamiliarisSID07034"/>
     <track name="Gene" />
 
   </url>
