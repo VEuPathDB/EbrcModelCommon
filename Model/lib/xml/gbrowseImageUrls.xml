@@ -2087,6 +2087,12 @@
     <track>rproCDC</track>
   </subtrackSet>
 
+  <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
+    <track>dsilDsil-2018</track>
+    <track>rmicRmic-2018</track>
+    <track>rsanRsan-2018</track>
+  </subtrackSet>
+
   <subtrackSet project="VectorBase" name="Phlebotominae" suffixes="_span;_gene">
     <track>llonJacobina</track>
     <track>ppapIsrael</track>
@@ -2202,6 +2208,16 @@
       <subtrack set="Phlebotominae" />
     </track>
   </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
+    <org organism="Rhipicephalus microplus Rmic-2018" abbrev="rmicRmic-2018" />
+    <org organism="Rhipicephalus sanguineus Rsan-2018" abbrev="rsanRsan-2018" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Ixodidae" />
+    </track>
+  </url>
+
 
   <!-- TODO:  add at least one more synteny track for this organism -->
   <url project="VectorBase" type="synteny">
