@@ -602,7 +602,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="References"
+        <table name="References" excludeProjects="MicrobiomeDB"
                displayName="Explore this Data Set within this Website"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -1929,7 +1929,7 @@ ORDER by start_date desc
             <column name="target_type"/>
             <column name="target_name"/>
             <column name="link_type"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
+            <sql excludeProjects="ClinEpiDB,AllClinEpiDB,EuPathDB">
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
@@ -1980,7 +1980,7 @@ ORDER by start_date desc
 	    ]]>
             </sql>
 
-	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
+	    <sql includeProjects="ClinEpiDB,AllClinEpiDB,EuPathDB">
             <![CDATA[
                     select dsp.dataset_presenter_id as dataset_id
                           , dsp.name as dataset_name
