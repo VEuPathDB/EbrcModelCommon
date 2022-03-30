@@ -2058,8 +2058,6 @@
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Chelicerata" suffixes="_span;_gene">
-    <track>iscaISE6</track>
-    <track>iscaWikel</track>
     <track>ldelUoL-UT</track>
     <track>sscaArlian</track>
     <track></track>
@@ -2089,6 +2087,8 @@
 
   <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
     <track>dsilDsil-2018</track>
+    <track>iscaWikel</track>
+    <track>iscaISE6</track>
     <track>rmicRmic-2018</track>
     <track>rsanRsan-2018</track>
   </subtrackSet>
@@ -2151,12 +2151,11 @@
   </url>
 
   <url project="VectorBase" type="synteny">
-    <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
-    <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Leptotrombidium deliense UoL-UT" abbrev="ldelUoL-UT" />
     <org organism="Sarcoptes scabiei Arlian" abbrev="sscaArlian" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Chelicerata" />
+      <subtrack set="Ixodidae" />
     </track>
   </url>
 
@@ -2211,10 +2210,13 @@
 
   <url project="VectorBase" type="synteny">
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
+    <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
+    <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
     <org organism="Rhipicephalus microplus Rmic-2018" abbrev="rmicRmic-2018" />
     <org organism="Rhipicephalus sanguineus Rsan-2018" abbrev="rsanRsan-2018" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Ixodidae" />
+      <subtrack set="Chelicerata" />
     </track>
   </url>
 
