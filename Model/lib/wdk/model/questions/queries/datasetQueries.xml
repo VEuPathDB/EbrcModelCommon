@@ -222,6 +222,7 @@ select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.rec
                    select DISTINCT dsp.dataset_presenter_id as dataset_id
                    from apidbtuning.datasetpresenter dsp
                    where  (category IS NULL and dsp.display_category = $$dataset_category$$)
+                   or (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
                    or (nvl(dsp.display_category, dsp.category) = $$dataset_category$$
                           and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$) )
                    or (dsp.category = 'Immunology' 
