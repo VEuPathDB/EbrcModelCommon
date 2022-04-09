@@ -385,6 +385,7 @@
     <track>mbalATCC30984</track>
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
+    <track>nfowTy</track>
     <track>ngruNEG-M</track>
   </subtrackSet>
 
@@ -393,6 +394,7 @@
     <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
+    <org organism="Naegleria fowleri strain Ty"  abbrev="nfowTy" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
@@ -1989,6 +1991,9 @@
     <org organism="Bos taurus breed Hereford" abbrev="btauHereford" />
     <org organism="Macaca mulatta isolate AG07107" abbrev="mmulAG07107" />
     <org organism="Macaca fascicularis REF" abbrev="mfasREF" />
+    <org organism="Gallus gallus isolate bGalGal1" abbrev="ggalbGalGal1"/>
+    <org organism="Rattus norvegicus BN/NHsdMcwi" abbrev="rnorBNNHsdMcwi"/>
+    <org organism="Canis lupus familiaris isolate SID07034" abbrev="clupfamiliarisSID07034"/>
     <track name="Gene" />
 
   </url>
@@ -2053,8 +2058,6 @@
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Chelicerata" suffixes="_span;_gene">
-    <track>iscaISE6</track>
-    <track>iscaWikel</track>
     <track>ldelUoL-UT</track>
     <track>sscaArlian</track>
     <track></track>
@@ -2080,6 +2083,14 @@
   <subtrackSet project="VectorBase" name="Hemiptera" suffixes="_span;_gene">
     <track>clecHarlan</track>
     <track>rproCDC</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
+    <track>dsilDsil-2018</track>
+    <track>iscaWikel</track>
+    <track>iscaISE6</track>
+    <track>rmicRmic-2018</track>
+    <track>rsanRsan-2018</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Phlebotominae" suffixes="_span;_gene">
@@ -2140,12 +2151,11 @@
   </url>
 
   <url project="VectorBase" type="synteny">
-    <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
-    <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Leptotrombidium deliense UoL-UT" abbrev="ldelUoL-UT" />
     <org organism="Sarcoptes scabiei Arlian" abbrev="sscaArlian" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Chelicerata" />
+      <subtrack set="Ixodidae" />
     </track>
   </url>
 
@@ -2197,6 +2207,19 @@
       <subtrack set="Phlebotominae" />
     </track>
   </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
+    <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
+    <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
+    <org organism="Rhipicephalus microplus Rmic-2018" abbrev="rmicRmic-2018" />
+    <org organism="Rhipicephalus sanguineus Rsan-2018" abbrev="rsanRsan-2018" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Ixodidae" />
+      <subtrack set="Chelicerata" />
+    </track>
+  </url>
+
 
   <!-- TODO:  add at least one more synteny track for this organism -->
   <url project="VectorBase" type="synteny">

@@ -575,6 +575,18 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="note" displayName="Note"/>
         </table>
 -->
+
+
+        <table name="RNASeqSamplesInternal" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+               displayName="Internal Table for TPM average per sample"
+               queryRef="DatasetTables.RNASeqSamplesInternal">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="study_name"/>
+            <columnAttribute name="sample"/>
+            <columnAttribute name="switch_strands"/>
+            <columnAttribute name="average_value"/>
+        </table>
+
         <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Data Set Release History"
                queryRef="DatasetTables.GenomeHistory">
@@ -1637,6 +1649,45 @@ from apidbtuning.datasetnametaxon dsnt
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="DatasetTables" queryType="table"
               isCacheable='false'>
+
+      <sqlQuery name="RNASeqSamplesInternal"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="study_name"/>
+            <column name="sample"/>
+            <column name="switch_strands"/>
+            <column name="average_value"/>
+            <sql>
+            <![CDATA[
+                     select dnt.dataset_presenter_id as dataset_id
+                          , ps.study_name
+                          , ps.PROTOCOL_APP_NODE_NAME as sample
+                          , dp.value as switch_strands
+                          , avg(r.value) as average_value
+                     from apidbtuning.profilesamples ps
+                        , results.nafeatureexpression r
+                        , apidbtuning.datasetnametaxon dnt
+                        , apidbtuning.datasetproperty dp
+                     where dataset_type = 'transcript_expression'
+                     and dataset_subtype = 'rnaseq'
+                     and profile_type = 'values'
+                     and ps.study_name like '% - tpm - unique%'
+                     and ps.protocol_app_node_id = r.protocol_app_node_id
+                     and ps.dataset_name = dnt.name
+                     and dnt.dataset_presenter_id = dp.dataset_presenter_id
+                     and dp.property = 'switchStrandsProfiles'
+                     group by dnt.dataset_presenter_id
+                            , dp.value
+                            , ps.study_name
+                           , ps.PROTOCOL_APP_NODE_NAME
+            ]]>
+            </sql>
+      </sqlQuery>
+
+
+
+
+
+
 
       <sqlQuery name="Publications"  isCacheable='false'>
             <column name="dataset_id"/>
