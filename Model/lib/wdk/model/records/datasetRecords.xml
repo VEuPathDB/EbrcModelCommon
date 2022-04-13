@@ -1039,36 +1039,48 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
       </sqlQuery>
 
 
-
-    <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
+       <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
-        <column name="total" sortingColumn="total_number" />
-        <column name="approved" sortingColumn="approved_number" />
-        <column name="percent_approved" sortingColumn="percent_approved_number" />
-        <column name="total_number"/>
-        <column name="approved_number"/>
-        <column name="percent_approved_number"/>
+        <column name="total" columnType="number" sortingColumn="total_number" />
+        <column name="approved" columnType="number" sortingColumn="approved_number" />
+        <column name="percent_approved" columnType="number" sortingColumn="percent_approved_number" />
+        <column name="total_number" columnType="number"/>
+        <column name="approved_number" columnType="number"/>
+        <column name="percent_approved_number" columnType="number"/>
 
         <sql>
           <![CDATA[
 select dataset_id, 
-       nvl(total_number, 0) as total_number,
-       nvl(approved_number, 0) as approved_number,
-       nvl(percent_approved_number, 0) as percent_approved_number,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
-         WHEN total_number = 0 THEN ''
-         ELSE CAST(total_number AS VARCHAR(10))
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN total_number is null THEN 0.5
+         ELSE total_number
+       END as total_number,
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN approved_number is null THEN 0.5
+         ELSE approved_number
+       END as approved_number,
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN percent_approved_number is null THEN 0.5
+         ELSE percent_approved_number
+       END as percent_approved_number,
+       '------',
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
+         WHEN total_number > 0 THEN CAST(total_number AS VARCHAR(10))
+         ELSE '0'
        END as total,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
-         WHEN (total_number = 0 AND approved_number = 0) THEN ''
-         ELSE CAST(approved_number AS VARCHAR(10))
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
+         WHEN approved_number > 0 THEN CAST(approved_number AS VARCHAR(10))
+         ELSE '0'
        END as approved,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
          WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
-         ELSE ''
+         ELSE '0'
        END as percent_approved
 from
 (
@@ -1082,16 +1094,19 @@ LEFT OUTER JOIN  (
        END as percent_approved_number
   from ( 
     select DATASET_PRESENTER_ID,  
-         count(case when purpose is not null then 1 end) as total_number, 
-         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved_number
+         count(1) as total_number, 
+         count(case when approval_status_id = 0 then 1 end) as approved_number
     from studyaccess.end_users@ACCT_DBLINK@ eu
     group by dataset_presenter_id
   )
 ) mycounts
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
-) mystudies, apidbtuning.datasetproperty dp
+) mystudies, 
+  apidbtuning.datasetproperty dp
 where mystudies.dataset_id = dp.dataset_presenter_id
-and dp.property= 'studyAccess'
+  and dp.property= 'studyAccess'
+order by dp.value, dataset_id
+
       ]]>
         </sql>
       </sqlQuery>
