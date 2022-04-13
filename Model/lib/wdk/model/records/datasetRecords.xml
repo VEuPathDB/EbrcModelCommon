@@ -224,7 +224,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="AdditionalData" displayName="Additional Data"/>
          <columnAttribute name="Age" displayName="Age"/>
          <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
-         <columnAttribute name="ProjectName" displayName="Project Name"/>
+         <columnAttribute name="ProjectName" displayName="Project name"/>
        </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB,AllClinEpiDB">
