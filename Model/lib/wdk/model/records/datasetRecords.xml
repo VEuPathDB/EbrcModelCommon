@@ -118,7 +118,7 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="ClinEpiDB,AllClinEpiDB">
-         <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
+         <columnAttribute  name="eda_study_id" displayName="EDA study ID"/>
        </attributeQueryRef>
 <!--
 
@@ -170,7 +170,7 @@
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study Accessibility"
+         <columnAttribute name="study_access" displayName="Study accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
 if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
@@ -210,18 +210,18 @@ while in protected and private studies there will be human intervention in the d
        <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
-         <columnAttribute name="Sample_Type" displayName="Sample Type"/>
+         <columnAttribute name="Sample_Type" displayName="Sample type"/>
          <columnAttribute name="Participant_Type" displayName="Population included"/>
-         <columnAttribute name="Study_Type" displayName="Investigation Type"/>
-         <columnAttribute name="Study_Design" displayName="Study Design"/>
+         <columnAttribute name="Study_Type" displayName="Investigation type"/>
+         <columnAttribute name="Study_Design" displayName="Study design"/>
          <columnAttribute name="Country" displayName="Country"/>
          <columnAttribute name="Years" displayName="Years"/>
          <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
          <columnAttribute name="HH_count" displayName="Households" type="number"/>
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
-         <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" type="number"/>
+         <columnAttribute name="Obser_count" displayName="Participant repeated measures" type="number"/>
          <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
-         <columnAttribute name="AdditionalData" displayName="Additional Data"/>
+         <columnAttribute name="AdditionalData" displayName="Additional data"/>
          <columnAttribute name="Age" displayName="Age"/>
          <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
          <columnAttribute name="ProjectName" displayName="Project name"/>
