@@ -249,7 +249,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
          <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # and Date" 
+         <columnAttribute name="eupath_release" displayName="Release # and date" 
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
@@ -272,7 +272,7 @@ while in protected and private studies there will be human intervention in the d
        <attributeQueryRef ref="DatasetAttributes.Contacts">
          <columnAttribute name="contact" displayName="Contact" 
                           help="The person or organization that serves as a source of information concerning this dataset."/>
-         <columnAttribute name="institution" displayName="Contact Institution" 
+         <columnAttribute name="institution" displayName="Contact institution" 
                           help="The institution where the Contact is located. "/>
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
