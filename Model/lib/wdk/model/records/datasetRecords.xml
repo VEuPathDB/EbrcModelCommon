@@ -66,11 +66,8 @@
 
       <idAttribute name="primary_key" displayName="Study" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                    help="Click a study to go to the full study record">
-          <display>
+          <text>
               <![CDATA[ $$display_name$$ ]]>
-          </display>
-         <text>
-              $$dataset_id$$
           </text>
       </idAttribute>
 
