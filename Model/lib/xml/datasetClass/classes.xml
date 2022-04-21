@@ -6280,6 +6280,38 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+  
+  <datasetClass class="legacyDatasets" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+  <datasetLoader datasetName="Legacy_Datasets_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::InsertLegacyDataset"
+              scope="global"
+              type="sres"
+              >
+    <manualGet fileOrDir="common/dataset/LegacyDatasetNames/${version}/final/datasetnames.txt">
+        <dir name="final">
+        </dir>
+    </manualGet>
+    <pluginArgs>--legacyDatasetFile @@dataDir@@/datasetnames.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+  
+  <datasetClass class="productionDatasets" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+  <datasetLoader datasetName="Production_Dataset_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::InsertProductionDatasets"
+              scope="global"
+              type="sres"
+              >
+    <manualGet>
+        <dir>
+        </dir>
+    </manualGet>
+    <pluginArgs>--projectName "${projectName}" --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+  </datasetLoader>
+  </datasetClass>  
 
 </datasetClasses>
 
