@@ -341,9 +341,23 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
 -->
 
+
+
+
   <!-- =================================================================================== -->
   <!-- TABLES ++++++++-->
   <!-- ================================================================================= -->
+
+
+      <table name="DatasetAlias"
+	     excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+	     displayName="Dataset Alias"
+	     queryRef="DatasetAttributes.DatasetAlias" inReportMaker="false">
+        <columnAttribute name="dataset_id"/>
+        <columnAttribute name="old_dataset_id"/>
+    </table>
+
+
 
      <!-- =================================================================== -->
      <!-- Example Graphs ++++++++-->
@@ -384,6 +398,11 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
          <propertyList name="excludeFromDumper"><value>true</value></propertyList>
       </table>
+
+
+
+
+
 
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
