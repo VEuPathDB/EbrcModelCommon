@@ -36,6 +36,34 @@
 
     </recordClass>
 
+<!-- ============== Internal class for tracking datasets from previous releases ===========  -->
+
+   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+        <columnRef>dataset_presenter_id</columnRef>
+        <columnRef>project_name</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="Dataset Name">
+        <text>
+          <![CDATA[
+            $$dataset_presenter_id$$
+          ]]>
+        </text>
+      </idAttribute>
+      <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
+      </reporter>
+
+      <attributeQueryRef ref="LegacyDatasetAttributes.DatasetName">
+        <columnAttribute name="dataset_presenter_name" displayName="Dataset Presenter Name" inReportMaker="true"
+                         help= "Name of a Dataset Presenter which was loaded at some point in the past" />
+      </attributeQueryRef>
+
+
+    </recordClass>
+
+
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
@@ -779,7 +807,34 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
 
 
+
+
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
+              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+
+      <testRowCountSql>
+        select count(*) from apidb.legacydataset
+      </testRowCountSql>
+
+      <sqlQuery name="DatasetName" isCacheable="false">
+        <column name="dataset_presenter_name"/>
+        <column name="dataset_presenter_id"/>
+        <column name="project_name"/>
+        <sql>
+          select dataset_presenter_id, dataset_presenter_name, project_name
+          from apidb.legacydataset
+        </sql>
+      </sqlQuery>
+
+      </querySet>
+
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"

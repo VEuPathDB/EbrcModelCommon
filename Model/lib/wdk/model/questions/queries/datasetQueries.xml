@@ -315,4 +315,30 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 </processQuery>
 
   </querySet>
+
+
+  <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
+
+    <sqlQuery name="AllDatasets">
+      <column name="dataset_presenter_id"/>
+      <column name="project_name"/>
+        <sql>
+          <![CDATA[
+                   select dataset_presenter_id from apidb.legacydataset where project_name = '@PROJECT_NAME@'
+          ]]>
+       </sql>
+    </sqlQuery>
+
+
+    <processQuery name="LegacyDatasetIds" includeProjects="EuPathDB"
+                  processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin">
+      <wsColumn name="dataset_presenter_id" width="50" wsName="dataset_presenter_id"/>
+      <wsColumn name="project_name" width="20" />
+    </processQuery>
+
+
+  </querySet>
+
+
+
 </wdkModel>
