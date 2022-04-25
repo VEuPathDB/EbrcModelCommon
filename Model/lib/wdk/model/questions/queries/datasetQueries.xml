@@ -322,10 +322,11 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 
     <sqlQuery name="AllDatasets">
       <column name="dataset_presenter_id"/>
+      <column name="dataset_presenter_name"/>
       <column name="project_name"/>
         <sql>
           <![CDATA[
-                   select dataset_presenter_id from apidb.legacydataset where project_name = '@PROJECT_NAME@'
+                   select dataset_presenter_id, dataset_presenter_name, project_name from apidb.legacydataset where project_name = '@PROJECT_ID@'
           ]]>
        </sql>
     </sqlQuery>
@@ -334,6 +335,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
     <processQuery name="LegacyDatasetIds" includeProjects="EuPathDB"
                   processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin">
       <wsColumn name="dataset_presenter_id" width="50" wsName="dataset_presenter_id"/>
+      <wsColumn name="dataset_presenter_name" width="50" wsName="dataset_presenter_name"/>
       <wsColumn name="project_name" width="20" />
     </processQuery>
 

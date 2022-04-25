@@ -41,6 +41,7 @@
    <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
       <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
         <columnRef>dataset_presenter_id</columnRef>
+        <columnRef>dataset_presenter_name</columnRef>
         <columnRef>project_name</columnRef>
       </primaryKey>
 
@@ -56,8 +57,6 @@
       </reporter>
 
       <attributeQueryRef ref="LegacyDatasetAttributes.DatasetName">
-        <columnAttribute name="dataset_presenter_name" displayName="Dataset Presenter Name" inReportMaker="true"
-                         help= "Name of a Dataset Presenter which was loaded at some point in the past" />
       </attributeQueryRef>
 
 
