@@ -1766,7 +1766,7 @@ from apidbtuning.datasetnametaxon dsnt
               with pmidPublications as (
                   select dataset_presenter_id as dataset_id
                         , pmid
-                        , citation
+                        , regexp_replace(citation, '\s+<', ' <') as citation
                         , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid as url
 			, ROWNUM as rownumber
                   from ApidbTuning.DatasetPublication
