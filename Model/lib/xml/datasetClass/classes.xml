@@ -1262,11 +1262,11 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="referenceStrain-ESTsFromGenbank" category="" datasetFileHint="">
+  <datasetClass class="referenceStrain-GenbankEST" category="" datasetFileHint="">
     <purpose>Gets the sequences from Genbank via Entrez API and loads them into your database instance. Only for reference strains. This class does not map the ESTs to the genomes, use the class transcriptsFromReferenceStrain for each organism, including the reference strain, to map ESTs to the genome.</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
+    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
 
     <graphTemplateFile name="ESTs.xml"/>
 
