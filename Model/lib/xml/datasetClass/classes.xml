@@ -1262,6 +1262,30 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="referenceStrain-ESTsFromGenbank" category="" datasetFileHint="">
+    <purpose>Gets the sequences from Genbank via Entrez API and loads them into your database instance. Only for reference strains. This class does not map the ESTs to the genomes, use the class transcriptsFromReferenceStrain for each organism, including the reference strain, to map ESTs to the genome.</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
+
+    <graphTemplateFile name="ESTs.xml"/>
+
+    <qaNotes>Run script: auditESTsVersusGenbank --dbinstance [this instance] --organism &organismAbbrev;</qaNotes>
+
+    <datasetLoader datasetName="${organismAbbrev}_GenbankEST_RSRC" version="TODAY"
+	      plugin="ApiCommonData::Load::Plugin::LoadESTsFromGenbank"
+              scope="species"
+              type="EST"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --SOExtDbRlsSpec "SO_RSRC|%" --ncbiTaxonId &ncbiTaxonId;</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <!-- This class gets its data from ESTs and transcripts loaded by the
        reference strain.  It finds all of them in the database and maps them to
