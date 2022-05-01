@@ -9,7 +9,6 @@
 
   <target name="EbrcModelCommon-Installation" depends="WDK-Installation,
                                                        ReFlow-Installation,
-                                                       EbrcModelCommon-MavenInstallation,
                                                        EbrcModelCommon/DatasetPresenter-Installation,
                                                        EbrcModelCommon/Model-Installation">
     <ant target="defaultProjectInstall">
@@ -17,12 +16,6 @@
     </ant>
   </target>
 
-  <target name="EbrcModelCommon-MavenInstallation">
-    <ant target="mavenBuildProject">
-      <property name="project" value="EbrcModelCommon" />
-    </ant>
-    <property name="alreadyBuilt" value="true" />
-  </target>
 
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
