@@ -1282,7 +1282,7 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --SOExtDbRlsSpec "SO_RSRC|%" --ncbiTaxonId &ncbiTaxonId;</pluginArgs>
+      <pluginArgs>--extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --SOExtDbRlsSpec "SO_RSRC|%" --ncbiTaxonId ${ncbiTaxonId}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
