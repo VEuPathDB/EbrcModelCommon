@@ -6329,6 +6329,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="sres"
               >
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
     <pluginArgs>--projectName "${projectName}" --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
   </datasetLoader>
   </datasetClass>  
