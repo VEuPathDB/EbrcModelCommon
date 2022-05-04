@@ -1360,7 +1360,7 @@ order by dp.value, dataset_id
                    end as display_name
             from apidbtuning.datasetpresenter dsp
                  left join apidbtuning.organismattributes oa
-                     on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+                     on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             ]]>
          </sql>
       </sqlQuery>
@@ -1377,7 +1377,7 @@ order by dp.value, dataset_id
               , nullif(oa.genecount, 0) as genecount
           from apidbtuning.datasetpresenter dsp
               left join apidbtuning.organismattributes oa
-                  on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
           ]]>
         </sql>
       </sqlQuery>
