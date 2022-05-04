@@ -6330,7 +6330,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="sres"
               >
     <manualGet>
-        <dir>
+        <dir name="final">
         </dir>
     </manualGet>
     <pluginArgs>--projectName "${projectName}" --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
