@@ -6324,7 +6324,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="productionDatasets" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
-  <datasetLoader datasetName="Production_Dataset_RSRC" version="current"
+
+    <graphTemplateFile name="project.xml"/>
+
+  <datasetLoader datasetName="Production_Datasets_RSRC" version="current"
               plugin="ApiCommonData::Load::Plugin::InsertProductionDatasets"
               scope="global"
               type="sres"
