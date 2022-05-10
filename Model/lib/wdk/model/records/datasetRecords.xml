@@ -1397,13 +1397,13 @@ order by dp.value, dataset_id
                        , dh.genome_version
                        , dh.annotation_version
                        , dh.functional_annotation_version
-                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY to_number(bd.release_number) desc) rn
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.build_number desc) rn
                      from ApidbTuning.DatasetHistory dh
                        , ApidbTuning.EupathBuildDates bd 
                      where dh.build_number = bd.build_number
                        and bd.project = '@PROJECT_ID@'
                      order by dh.dataset_presenter_id
-                       , bd.release_number desc
+                       , bd.build_number desc
                 ) ,
                 all_versions_filtered as (
                   select * from all_versions where rn = 1
