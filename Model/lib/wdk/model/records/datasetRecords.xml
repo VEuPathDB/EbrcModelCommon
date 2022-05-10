@@ -633,6 +633,10 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Data Set Release History"
                queryRef="DatasetTables.GenomeHistory">
+            <description includeProjects="VectorBase"><![CDATA[<i>
+                On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 
+              </i>]]>
+            </description>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
@@ -1835,7 +1839,12 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="note"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
-             select dh.dataset_presenter_id as dataset_id, bd.build_number as build, to_char(bd.release_date, 'yyyy-mm-dd') as release_date,
+             select dh.dataset_presenter_id as dataset_id, 
+                    CASE 
+                      WHEN (bd.project = 'VectorBase' AND bd.build_number < 47) THEN NULL
+                      ELSE bd.build_number
+                    END as build,
+                    to_char(bd.release_date, 'yyyy-mm-dd') as release_date,
                     bd.project, bd.release_number, dh.genome_source,
 	                  dh.genome_version, dh.annotation_source, dh.annotation_version,
                     dh.functional_annotation_source, dh.functional_annotation_version,dh.note
