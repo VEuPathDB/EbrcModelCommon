@@ -178,7 +178,7 @@ sub createTables {
       create table $schema.DatasetHistory$suffix (
         dataset_history_id         number(12),
         dataset_presenter_id       varchar2(15),
-        build_number               number(3),
+        build_number               number(8),
         note                       varchar2(1000),
         genome_source              varchar2(300),
         genome_version             varchar2(40),
