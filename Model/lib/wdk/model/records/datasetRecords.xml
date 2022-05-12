@@ -1851,7 +1851,7 @@ from apidbtuning.datasetnametaxon dsnt
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
              where dh.build_number = bd.build_number
                and bd.project = '@PROJECT_ID@'
-             order by bd.build_number
+             order by dh.build_number
             ]]>
             </sql>
       </sqlQuery>
