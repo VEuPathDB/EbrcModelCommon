@@ -39,7 +39,7 @@ public class DatasetPresenter {
   private String subtype;
   private Boolean isSpeciesScope;
   private boolean foundInDb = false;
-  private int maxHistoryBuildNumber = -1;
+  private float maxHistoryBuildNumber = -1;
 
   private DatasetInjectorConstructor datasetInjectorConstructor;
   private List<String> contactIds = new ArrayList<String>(); // includes primary
@@ -199,24 +199,24 @@ public class DatasetPresenter {
     propValues.put("organismShortName", organismShortName);
   }
 
-  public void setBuildNumberIntroduced(Integer buildNumberIntroduced) {
+  public void setBuildNumberIntroduced(Float buildNumberIntroduced) {
      propValues.put("buildNumberIntroduced", buildNumberIntroduced.toString());
   }
 
-  public Integer getBuildNumberIntroduced() {
+  public Float getBuildNumberIntroduced() {
     if (propValues.get("buildNumberIntroduced") == null)
       return null;
-    return Integer.valueOf(propValues.get("buildNumberIntroduced"));
+    return Float.valueOf(propValues.get("buildNumberIntroduced"));
   }
 
-  public void setBuildNumberRevised(Integer buildNumberRevised) {
+  public void setBuildNumberRevised(Float buildNumberRevised) {
      propValues.put("buildNumberRevised", buildNumberRevised.toString());
   }
 
-  public Integer getBuildNumberRevised() {
+  public Float getBuildNumberRevised() {
     if (propValues.get("buildNumberRevised") == null)
       return null;
-    return Integer.valueOf(propValues.get("buildNumberRevised"));
+    return Float.valueOf(propValues.get("buildNumberRevised"));
   }
 
   public void setDisplayCategory(Text displayCategory) {
