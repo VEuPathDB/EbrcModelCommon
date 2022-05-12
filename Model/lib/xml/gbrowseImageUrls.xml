@@ -633,6 +633,8 @@
     <track>afisNRRL181</track>
     <track>alenIFM54703</track>
     <track>atheHMRAF39</track>
+    <track>aeucCBS122712</track>
+    <track>atanNIH1004</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -1018,6 +1020,8 @@
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
     <org abbrev="alenIFM54703" organism="Aspergillus lentulus strain IFM 54703"/>
     <org abbrev="atheHMRAF39" organism="Aspergillus thermomutatus strain HMR AF 39"/>
+    <org abbrev="aeucCBS122712" organism="Aspergillus eucalypticola CBS 122712"/>
+    <org abbrev="atanNIH1004" organism="Aspergillus tanneri NIH1004"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
