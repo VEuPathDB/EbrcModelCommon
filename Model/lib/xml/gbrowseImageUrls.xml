@@ -580,10 +580,12 @@
     <track>eoliCBS72588</track>
     <track>ederNIHUT8656</track>
     <track>emesCBS40295</track>
+    <track>espiCBS89968</track>
     <track>fpedCBS271-37</track>
     <track>rmacCBS650.93</track>
     <track>cbanCBS173.52</track>
     <track>ccarKSF</track>
+    <track>ccarCBS160.54</track>
     <track>cimmCBS83496</track>
     <track>cpsaCBS110553</track>
   </subtrackSet>
@@ -633,6 +635,8 @@
     <track>afisNRRL181</track>
     <track>alenIFM54703</track>
     <track>atheHMRAF39</track>
+    <track>aeucCBS122712</track>
+    <track>atanNIH1004</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -642,6 +646,7 @@
     <track>ttheATCC42464</track>
     <track>pansSmat</track>
     <track>smack-hell</track>
+    <track>gtriR3-111a-1</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
     <track>cpur20.1</track>
@@ -649,6 +654,7 @@
     <track>treeQM6a2017</track>
     <track>tvirGv29-8</track>
     <track>opicUAMH11346</track>
+    <track>rlauRL4</track>
     <track>ssch1099-18</track>
     <track>sbra5110</track>
     <track>cgraM1-001</track>
@@ -738,6 +744,7 @@
     <track>pbraPb03</track>
     <track>pbraPb18</track>
     <track>plutPb01</track>
+    <track>mcanCBS113480</track>
     <track>tmenTIMM2789</track>
     <track>trubCBS118892</track>
     <track>ttonCBS112818</track>
@@ -765,6 +772,7 @@
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>ztriIPO323</track>
     <track>ztriST99CH3D1</track>
+    <track>hwerEXF-2000</track>
     <track>cgeo1.58</track>
     <track>vgalCBS43764</track>
   </subtrackSet>
@@ -773,7 +781,6 @@
     <track>peffR13</track>
     <track>pinfT30-4</track>
     <track>pcapLT1534</track>
-    <track>pcapLT15342021</track>
     <track>pcinCBS144-22</track>
     <track>ppalsbr112.9</track>
     <track>pparINRA-310</track>
@@ -933,10 +940,12 @@
     <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
     <org abbrev="ederNIHUT8656" organism="Exophiala dermatitidis NIH/UT8656"/>
     <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
+    <org abbrev="espiCBS89968" organism="Exophiala spinifera CBS 89968"/>
     <org abbrev="fpedCBS271-37" organism="Fonsecaea pedrosoi CBS 271.37"/>
     <org abbrev="rmacCBS650.93" organism="Rhinocladiella mackenziei CBS 650.93"/>
     <org abbrev="cbanCBS173.52" organism="Cladophialophora bantiana CBS 173.52"/>
     <org abbrev="ccarKSF" organism="Cladophialophora carrionii KSF"/>
+    <org abbrev="ccarCBS160.54" organism="Cladophialophora carrionii CBS 160.54"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <org abbrev="cpsaCBS110553" organism="Cladophialophora psammophila CBS 110553"/>
     <track name="Gene"/>
@@ -1018,6 +1027,8 @@
     <org abbrev="afisNRRL181" organism="Aspergillus fischeri NRRL 181"/>
     <org abbrev="alenIFM54703" organism="Aspergillus lentulus strain IFM 54703"/>
     <org abbrev="atheHMRAF39" organism="Aspergillus thermomutatus strain HMR AF 39"/>
+    <org abbrev="aeucCBS122712" organism="Aspergillus eucalypticola CBS 122712"/>
+    <org abbrev="atanNIH1004" organism="Aspergillus tanneri NIH1004"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -1031,6 +1042,7 @@
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
     <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
+    <org abbrev="gtriR3-111a-1" organism="Gaeumannomyces tritici R3-111a-1"/>
     <org abbrev="mory70-15" organism="Pyricularia oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
@@ -1038,6 +1050,7 @@
     <org abbrev="treeQM6a2017" organism="Trichoderma reesei QM6a 2017"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
     <org abbrev="opicUAMH11346" organism="Ophiostoma piceae UAMH 11346"/>
+    <org abbrev="rlauRL4" organism="Raffaelea lauricola RL4"/>
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
     <org abbrev="cgraM1-001" organism="Colletotrichum graminicola M1.001"/>
@@ -1171,6 +1184,7 @@
     <org abbrev="pbraPb03" organism="Paracoccidioides brasiliensis Pb03"/>
     <org abbrev="pbraPb18" organism="Paracoccidioides brasiliensis Pb18"/>
     <org abbrev="plutPb01" organism="Paracoccidioides lutzii Pb01"/>
+    <org abbrev="mcanCBS113480" organism="Microsporum canis CBS 113480"/>
     <org abbrev="tmenTIMM2789" organism="Trichophyton mentagrophytes TIMM 2789"/>
     <org abbrev="trubCBS118892" organism="Trichophyton rubrum CBS 118892"/>
     <org abbrev="ttonCBS112818" organism="Trichophyton tonsurans CBS 112818"/>
@@ -1212,6 +1226,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
     <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
+    <org abbrev="hwerEXF-2000" organism="Hortaea werneckii EXF-2000"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <track name="Gene"/>
@@ -1230,7 +1245,6 @@
     <org abbrev="peffR13" organism="Peronospora effusa R13"/>
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
-    <org abbrev="pcapLT15342021" organism="Phytophthora capsici Strain LT1534 2021"/>
     <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
     <org abbrev="ppalsbr112.9" organism="Phytophthora palmivora var. palmivora strain sbr112.9"/>
     <org abbrev="pparINRA-310" organism="Phytophthora parasitica INRA-310"/>
