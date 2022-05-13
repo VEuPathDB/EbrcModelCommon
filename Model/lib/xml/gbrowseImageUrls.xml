@@ -425,6 +425,7 @@
 
 
   <subtrackSet project="CryptoDB" name="main_gene" suffixes="_span;_gene">
+    <track>cbov45015</track>
     <track>cparIowaII</track>
     <track>cparIOWA-ATCC</track>
     <track>chomTU502</track>
@@ -435,6 +436,8 @@
     <track>cmurRN66</track>
     <track>cand30847</track>
     <track>cubi39726</track>
+    <track>crya45019</track>
+    <track>cspc37763</track>
     <track>ctyzUGA55</track>
     <track>gnipUnknown</track>
     <track>cvelCCMP2878</track>
@@ -442,6 +445,7 @@
   </subtrackSet>
 
   <url project="CryptoDB" type="synteny">
+    <org organism="Cryptosporidium bovis isolate 45015" abbrev="cbov45015" />
     <org organism="Cryptosporidium parvum Iowa II" abbrev="cparIowaII" />
     <org organism="Cryptosporidium parvum IOWA-ATCC" abbrev="cparIOWA-ATCC" />
     <org organism="Cryptosporidium hominis TU502" abbrev="chomTU502" />
@@ -452,6 +456,8 @@
     <org organism="Cryptosporidium muris RN66" abbrev="cmurRN66" />
     <org organism="Cryptosporidium andersoni isolate 30847" abbrev="cand30847" />
     <org organism="Cryptosporidium ubiquitum isolate 39726" abbrev="cubi39726" />
+    <org organism="Cryptosporidium ryanae 45019" abbrev="crya45019" />
+    <org organism="Cryptosporidium sp. chipmunk genotype I strain 37763" abbrev="cspc37763" />
     <org organism="Cryptosporidium tyzzeri isolate UGA55" abbrev="ctyzUGA55" />
     <org organism="Gregarina niphandrodes Unknown strain" abbrev="gnipUnknown"/>
     <org organism="Chromera velia CCMP2878" abbrev="cvelCCMP2878"/>
