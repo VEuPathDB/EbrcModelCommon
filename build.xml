@@ -1,4 +1,4 @@
-<project name="EbrcModelCommon" default="Installation" basedir=".">
+<project name="EbrcModelCommon" basedir=".">
 
   <import file="${projectsDir}/WDK/build.xml" />
   <import file="${projectsDir}/ReFlow/build.xml" />
@@ -15,7 +15,6 @@
       <property name="project" value="EbrcModelCommon" />
     </ant>
   </target>
-
 
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
