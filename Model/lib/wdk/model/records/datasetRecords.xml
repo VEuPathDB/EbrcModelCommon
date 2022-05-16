@@ -194,6 +194,7 @@
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
+         <columnAttribute name="is_public" internal="true"/>
          <columnAttribute name="study_access" displayName="Study accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
@@ -1046,6 +1047,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <column name="dataset_id"/>
+         <column name="is_public"/>
          <column name="project_availability"/>
          <column name="study_access"/>
          <column name="policy_url"/>
@@ -1061,12 +1063,12 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
+where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
 and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
@@ -1075,7 +1077,7 @@ and trim(value) is not null
 pivot
 (
    max(value)
-   for property in ('projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
