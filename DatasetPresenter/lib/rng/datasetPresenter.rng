@@ -65,7 +65,7 @@
           <zeroOrMore>
             <element name="history">
 	      <attribute name="buildNumber">
-		<data type="integer"/>
+		<data type="float"/>
 	      </attribute>
 	      <optional>
 		<attribute name="genomeSource"/>

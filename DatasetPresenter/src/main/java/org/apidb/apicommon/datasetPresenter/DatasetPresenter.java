@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import org.gusdb.fgputil.xml.NamedValue;
 import org.gusdb.fgputil.xml.Text;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -21,6 +23,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  * 
  */
 public class DatasetPresenter {
+  private static final Logger LOG = Logger.getLogger(DatasetPresenter.class);
 
   // use prop values for properties that might be injected into templates.
   Map<String, String> propValues = new HashMap<String, String>();
@@ -39,7 +42,7 @@ public class DatasetPresenter {
   private String subtype;
   private Boolean isSpeciesScope;
   private boolean foundInDb = false;
-  private int maxHistoryBuildNumber = -1;
+  private float maxHistoryBuildNumber = -1000;
 
   private DatasetInjectorConstructor datasetInjectorConstructor;
   private List<String> contactIds = new ArrayList<String>(); // includes primary
@@ -199,24 +202,24 @@ public class DatasetPresenter {
     propValues.put("organismShortName", organismShortName);
   }
 
-  public void setBuildNumberIntroduced(Integer buildNumberIntroduced) {
+  public void setBuildNumberIntroduced(Float buildNumberIntroduced) {
      propValues.put("buildNumberIntroduced", buildNumberIntroduced.toString());
   }
 
-  public Integer getBuildNumberIntroduced() {
+  public Float getBuildNumberIntroduced() {
     if (propValues.get("buildNumberIntroduced") == null)
       return null;
-    return Integer.valueOf(propValues.get("buildNumberIntroduced"));
+    return Float.valueOf(propValues.get("buildNumberIntroduced"));
   }
 
-  public void setBuildNumberRevised(Integer buildNumberRevised) {
+  public void setBuildNumberRevised(Float buildNumberRevised) {
      propValues.put("buildNumberRevised", buildNumberRevised.toString());
   }
 
-  public Integer getBuildNumberRevised() {
+  public Float getBuildNumberRevised() {
     if (propValues.get("buildNumberRevised") == null)
       return null;
-    return Integer.valueOf(propValues.get("buildNumberRevised"));
+    return Float.valueOf(propValues.get("buildNumberRevised"));
   }
 
   public void setDisplayCategory(Text displayCategory) {
@@ -330,6 +333,8 @@ public class DatasetPresenter {
   }
 
   public void addHistory(History history) {
+    LOG.debug("\n\n*******history.getBuildNumber() " + history.getBuildNumber() );
+    LOG.debug("\n\n*******maxHistoryBuildNumber" + maxHistoryBuildNumber);
 
     // validate that the history elements have increasing build numbers 
     if (history.getBuildNumber() <= maxHistoryBuildNumber) 
@@ -339,6 +344,7 @@ public class DatasetPresenter {
 
     // first history element
     if (histories.size() == 0 ) {
+       LOG.debug("\n\n******* history size is 0");
        setBuildNumberIntroduced(history.getBuildNumber());
     } 
     // other history elements

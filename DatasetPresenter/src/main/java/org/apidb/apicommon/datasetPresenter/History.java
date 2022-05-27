@@ -1,7 +1,7 @@
 package org.apidb.apicommon.datasetPresenter;
 
 public class History {
-  private Integer buildNumber;
+  private Float buildNumber;
   private String genomeSource;
   private String genomeVersion;
   private String annotationSource;
@@ -10,7 +10,7 @@ public class History {
   private String functionalAnnotationVersion;
   private String comment;
   
-  public void setBuildNumber(Integer buildNumber) {
+  public void setBuildNumber(Float buildNumber) {
     this.buildNumber = buildNumber;
   }
    
@@ -42,7 +42,7 @@ public class History {
     this.comment = comment;
   }
   
-  public Integer getBuildNumber() {
+  public Float getBuildNumber() {
     return buildNumber;
   }
   

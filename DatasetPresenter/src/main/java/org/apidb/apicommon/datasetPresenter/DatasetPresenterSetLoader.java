@@ -413,10 +413,10 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, subtype);
     stmt.setBoolean(i++, isSpeciesScope);
 
-    Integer buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
+    Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
 
     if(buildNumberIntroduced == null) {
-        buildNumberIntroduced = Integer.valueOf(0);
+        buildNumberIntroduced = Float.valueOf(0);
     }
 
     stmt.setInt(i++, buildNumberIntroduced.intValue());
@@ -554,7 +554,7 @@ public class DatasetPresenterSetLoader {
   private void loadHistory(String datasetPresenterId, History history,
       PreparedStatement stmt) throws SQLException {
     stmt.setString(1, datasetPresenterId);
-    stmt.setInt(2, history.getBuildNumber());
+    stmt.setFloat(2, history.getBuildNumber());
     stmt.setString(3, history.getGenomeSource());
     stmt.setString(4, history.getGenomeVersion());
     stmt.setString(5, history.getAnnotationSource());

@@ -265,4 +265,19 @@
 
 
   </questionSet>
+
+  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+
+    <question name="Datasets"
+      displayName="All Legacy Datasets"
+      shortDisplayName="Legacy Datasets"
+      fullAnswer="true"
+      queryRef="LegacyDatasetIds.AllDatasets"
+      recordClassRef="DatasetRecordClasses.LegacyDataset"
+      noSummaryOnSingleRecord="true">
+      <description>
+      </description>
+    </question>
+
+  </questionSet>
 </wdkModel>

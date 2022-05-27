@@ -36,6 +36,33 @@
 
     </recordClass>
 
+<!-- ============== Internal class for tracking datasets from previous releases ===========  -->
+
+   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+        <columnRef>dataset_presenter_id</columnRef>
+        <columnRef>dataset_presenter_name</columnRef>
+        <columnRef>project_name</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="Dataset Name">
+        <text>
+          <![CDATA[
+            $$dataset_presenter_id$$
+          ]]>
+        </text>
+      </idAttribute>
+      <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
+      </reporter>
+
+      <attributeQueryRef ref="LegacyDatasetAttributes.DatasetName">
+      </attributeQueryRef>
+
+
+    </recordClass>
+
+
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
@@ -167,7 +194,8 @@
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study Accessibility"
+         <columnAttribute name="is_public" internal="true"/>
+         <columnAttribute name="study_access" displayName="Study accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
 if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
@@ -207,21 +235,21 @@ while in protected and private studies there will be human intervention in the d
        <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
-         <columnAttribute name="Sample_Type" displayName="Sample Type"/>
+         <columnAttribute name="Sample_Type" displayName="Sample type"/>
          <columnAttribute name="Participant_Type" displayName="Population included"/>
-         <columnAttribute name="Study_Type" displayName="Investigation Type"/>
-         <columnAttribute name="Study_Design" displayName="Study Design"/>
+         <columnAttribute name="Study_Type" displayName="Investigation type"/>
+         <columnAttribute name="Study_Design" displayName="Study design"/>
          <columnAttribute name="Country" displayName="Country"/>
          <columnAttribute name="Years" displayName="Years"/>
          <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
          <columnAttribute name="HH_count" displayName="Households" type="number"/>
          <columnAttribute name="Part_count" displayName="Participants" type="number"/>
-         <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" type="number"/>
+         <columnAttribute name="Obser_count" displayName="Participant repeated measures" type="number"/>
          <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
-         <columnAttribute name="AdditionalData" displayName="Additional Data"/>
+         <columnAttribute name="AdditionalData" displayName="Additional data"/>
          <columnAttribute name="Age" displayName="Age"/>
          <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
-         <columnAttribute name="ProjectName" displayName="Project Name"/>
+         <columnAttribute name="ProjectName" displayName="Project name"/>
        </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB,AllClinEpiDB">
@@ -246,7 +274,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
          <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
          <columnAttribute name="type" displayName="Type" internal="true"/>
-         <columnAttribute name="eupath_release" displayName="Release # and Date" 
+         <columnAttribute name="eupath_release" displayName="Release # and date" 
                           help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
          <columnAttribute name="summary" displayName="Summary" sortable="false"
                           help= "A short description of the dataset."/>
@@ -269,7 +297,7 @@ while in protected and private studies there will be human intervention in the d
        <attributeQueryRef ref="DatasetAttributes.Contacts">
          <columnAttribute name="contact" displayName="Contact" 
                           help="The person or organization that serves as a source of information concerning this dataset."/>
-         <columnAttribute name="institution" displayName="Contact Institution" 
+         <columnAttribute name="institution" displayName="Contact institution" 
                           help="The institution where the Contact is located. "/>
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
@@ -314,9 +342,23 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
 -->
 
+
+
+
   <!-- =================================================================================== -->
   <!-- TABLES ++++++++-->
   <!-- ================================================================================= -->
+
+
+      <table name="DatasetAlias"
+	     excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+	     displayName="Dataset Alias"
+	     queryRef="DatasetAttributes.DatasetAlias" inReportMaker="false">
+        <columnAttribute name="dataset_id"/>
+        <columnAttribute name="old_dataset_id"/>
+    </table>
+
+
 
      <!-- =================================================================== -->
      <!-- Example Graphs ++++++++-->
@@ -357,6 +399,11 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
          <propertyList name="excludeFromDumper"><value>true</value></propertyList>
       </table>
+
+
+
+
+
 
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -587,6 +634,10 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
                displayName="Data Set Release History"
                queryRef="DatasetTables.GenomeHistory">
+            <description includeProjects="VectorBase"><![CDATA[<i>
+                On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 
+              </i>]]>
+            </description>
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
             <columnAttribute name="build" displayName="VEuPathDB Build"/>
             <columnAttribute name="release_date" displayName="Release Date"/>
@@ -779,7 +830,34 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
 
 
+
+
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
+              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+
+      <testRowCountSql>
+        select count(*) from apidb.legacydataset
+      </testRowCountSql>
+
+      <sqlQuery name="DatasetName" isCacheable="false">
+        <column name="dataset_presenter_name"/>
+        <column name="dataset_presenter_id"/>
+        <column name="project_name"/>
+        <sql>
+          select dataset_presenter_id, dataset_presenter_name, project_name
+          from apidb.legacydataset
+        </sql>
+      </sqlQuery>
+
+      </querySet>
+
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"
@@ -969,6 +1047,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <column name="dataset_id"/>
+         <column name="is_public"/>
          <column name="project_availability"/>
          <column name="study_access"/>
          <column name="policy_url"/>
@@ -984,12 +1063,12 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
+where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
 and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
@@ -998,7 +1077,7 @@ and trim(value) is not null
 pivot
 (
    max(value)
-   for property in ('projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
@@ -1036,36 +1115,48 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
       </sqlQuery>
 
 
-
-    <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
+       <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
-        <column name="total" sortingColumn="total_number" />
-        <column name="approved" sortingColumn="approved_number" />
-        <column name="percent_approved" sortingColumn="percent_approved_number" />
-        <column name="total_number"/>
-        <column name="approved_number"/>
-        <column name="percent_approved_number"/>
+        <column name="total" columnType="number" sortingColumn="total_number" />
+        <column name="approved" columnType="number" sortingColumn="approved_number" />
+        <column name="percent_approved" columnType="number" sortingColumn="percent_approved_number" />
+        <column name="total_number" columnType="number"/>
+        <column name="approved_number" columnType="number"/>
+        <column name="percent_approved_number" columnType="number"/>
 
         <sql>
           <![CDATA[
 select dataset_id, 
-       nvl(total_number, 0) as total_number,
-       nvl(approved_number, 0) as approved_number,
-       nvl(percent_approved_number, 0) as percent_approved_number,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
-         WHEN total_number = 0 THEN ''
-         ELSE CAST(total_number AS VARCHAR(10))
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN total_number is null THEN 0.5
+         ELSE total_number
+       END as total_number,
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN approved_number is null THEN 0.5
+         ELSE approved_number
+       END as approved_number,
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 0
+         WHEN percent_approved_number is null THEN 0.5
+         ELSE percent_approved_number
+       END as percent_approved_number,
+       '------',
+       CASE
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
+         WHEN total_number > 0 THEN CAST(total_number AS VARCHAR(10))
+         ELSE '0'
        END as total,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
-         WHEN (total_number = 0 AND approved_number = 0) THEN ''
-         ELSE CAST(approved_number AS VARCHAR(10))
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
+         WHEN approved_number > 0 THEN CAST(approved_number AS VARCHAR(10))
+         ELSE '0'
        END as approved,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 'NA'
+         WHEN dp.value in ('public','prerelease') THEN 'N/A'
          WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
-         ELSE ''
+         ELSE '0'
        END as percent_approved
 from
 (
@@ -1079,16 +1170,19 @@ LEFT OUTER JOIN  (
        END as percent_approved_number
   from ( 
     select DATASET_PRESENTER_ID,  
-         count(case when purpose is not null then 1 end) as total_number, 
-         count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved_number
+         count(1) as total_number, 
+         count(case when approval_status_id = 0 then 1 end) as approved_number
     from studyaccess.end_users@ACCT_DBLINK@ eu
     group by dataset_presenter_id
   )
 ) mycounts
 ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
-) mystudies, apidbtuning.datasetproperty dp
+) mystudies, 
+  apidbtuning.datasetproperty dp
 where mystudies.dataset_id = dp.dataset_presenter_id
-and dp.property= 'studyAccess'
+  and dp.property= 'studyAccess'
+order by dp.value, dataset_id
+
       ]]>
         </sql>
       </sqlQuery>
@@ -1272,7 +1366,7 @@ and dp.property= 'studyAccess'
                    end as display_name
             from apidbtuning.datasetpresenter dsp
                  left join apidbtuning.organismattributes oa
-                     on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+                     on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             ]]>
          </sql>
       </sqlQuery>
@@ -1289,7 +1383,7 @@ and dp.property= 'studyAccess'
               , nullif(oa.genecount, 0) as genecount
           from apidbtuning.datasetpresenter dsp
               left join apidbtuning.organismattributes oa
-                  on dsp.name = oa.public_abbrev || '_primary_genome_RSRC'
+                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
           ]]>
         </sql>
       </sqlQuery>
@@ -1309,13 +1403,13 @@ and dp.property= 'studyAccess'
                        , dh.genome_version
                        , dh.annotation_version
                        , dh.functional_annotation_version
-                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY to_number(bd.release_number) desc) rn
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.build_number desc) rn
                      from ApidbTuning.DatasetHistory dh
                        , ApidbTuning.EupathBuildDates bd 
                      where dh.build_number = bd.build_number
                        and bd.project = '@PROJECT_ID@'
                      order by dh.dataset_presenter_id
-                       , bd.release_number desc
+                       , bd.build_number desc
                 ) ,
                 all_versions_filtered as (
                   select * from all_versions where rn = 1
@@ -1696,7 +1790,7 @@ from apidbtuning.datasetnametaxon dsnt
               with pmidPublications as (
                   select dataset_presenter_id as dataset_id
                         , pmid
-                        , citation
+                        , regexp_replace(citation, '\s+<', ' <') as citation
                         , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid as url
 			, ROWNUM as rownumber
                   from ApidbTuning.DatasetPublication
@@ -1747,14 +1841,19 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="note"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
-             select dh.dataset_presenter_id as dataset_id, bd.build_number as build, to_char(bd.release_date, 'yyyy-mm-dd') as release_date,
+             select dh.dataset_presenter_id as dataset_id, 
+                    CASE 
+                      WHEN (bd.project = 'VectorBase' AND bd.build_number < 47) THEN NULL
+                      ELSE bd.build_number
+                    END as build,
+                    to_char(bd.release_date, 'yyyy-mm-dd') as release_date,
                     bd.project, bd.release_number, dh.genome_source,
 	                  dh.genome_version, dh.annotation_source, dh.annotation_version,
                     dh.functional_annotation_source, dh.functional_annotation_version,dh.note
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
              where dh.build_number = bd.build_number
                and bd.project = '@PROJECT_ID@'
-             order by bd.build_number
+             order by dh.build_number
             ]]>
             </sql>
       </sqlQuery>
