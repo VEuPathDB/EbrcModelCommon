@@ -195,7 +195,7 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="is_public" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study accessibility"
+         <columnAttribute name="study_access" displayName="Data accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
 if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
