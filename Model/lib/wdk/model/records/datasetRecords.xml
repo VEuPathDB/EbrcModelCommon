@@ -38,7 +38,7 @@
 
 <!-- ============== Internal class for tracking datasets from previous releases ===========  -->
 
-   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
       <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
         <columnRef>dataset_presenter_id</columnRef>
         <columnRef>dataset_presenter_name</columnRef>
@@ -838,7 +838,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
-              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
 
       <testRowCountSql>
         select count(*) from apidb.legacydataset
