@@ -1262,6 +1262,30 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="referenceStrain-GenbankEST" category="" datasetFileHint="">
+    <purpose>Gets the sequences from Genbank via Entrez API and loads them into your database instance. Only for reference strains. This class does not map the ESTs to the genomes, use the class transcriptsFromReferenceStrain for each organism, including the reference strain, to map ESTs to the genome.</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
+
+    <graphTemplateFile name="ESTs.xml"/>
+
+    <qaNotes>Run script: auditESTsVersusGenbank --dbinstance [this instance] --organism &organismAbbrev;</qaNotes>
+
+    <datasetLoader datasetName="${organismAbbrev}_GenbankEST_RSRC" version="TODAY"
+	      plugin="ApiCommonData::Load::Plugin::LoadESTsFromGenbank"
+              scope="species"
+              type="EST"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%" --SOExtDbRlsSpec "SO_RSRC|%" --ncbiTaxonId ${ncbiTaxonId}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <!-- This class gets its data from ESTs and transcripts loaded by the
        reference strain.  It finds all of them in the database and maps them to
@@ -6280,6 +6304,41 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+  
+  <datasetClass class="legacyDatasets" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+  <datasetLoader datasetName="Legacy_Datasets_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::InsertLegacyDataset"
+              scope="global"
+              type="sres"
+              >
+    <manualGet fileOrDir="common/dataset/LegacyDatasetNames/${version}/final/datasetnames.txt">
+        <dir name="final">
+        </dir>
+    </manualGet>
+    <pluginArgs>--legacyDatasetFile @@dataDir@@/datasetnames.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+  
+  <datasetClass class="productionDatasets" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+
+    <graphTemplateFile name="project.xml"/>
+
+  <datasetLoader datasetName="Production_Datasets_RSRC" version="current"
+              plugin="ApiCommonData::Load::Plugin::InsertProductionDatasets"
+              scope="global"
+              type="sres"
+              >
+    <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+    </manualGet>
+    <pluginArgs>--projectName "${projectName}" --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+  </datasetLoader>
+  </datasetClass>  
 
 </datasetClasses>
 

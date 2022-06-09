@@ -38,7 +38,7 @@ public class BiomTypeHandler extends UserDatasetTypeHandler {
         return DISPLAY;
   }
   @Override
-  public String[] getInstallInAppDbCommand(UserDataset userDataset, Map<String, Path> fileNameToTempFileMap, String projectId) {
+  public String[] getInstallInAppDbCommand(UserDataset userDataset, Map<String, Path> fileNameToTempFileMap, String projectId, Path workingDir) {
       Path metadataJson = fileNameToTempFileMap.get("metadata.json");
       if (metadataJson == null) {
         throw new RuntimeException("Failed to get: metadata.json");

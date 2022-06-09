@@ -335,7 +335,7 @@ order by organism, species, genus
     <sql>
       <![CDATA[
 CREATE TABLE &prefixGenomicSeqAttributes&1 NOLOGGING AS
-SELECT --+ NO_PARALLEL
+SELECT -- formerly NO PARALLEL hint, but Oracle has fixed this, we think
        cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar2(20)) as project_id,
        SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
        sequence.c_count, sequence.g_count, sequence.t_count,
@@ -415,6 +415,11 @@ create unique index SeqAttr_source_id&1 ON &prefixGenomicSeqAttributes&1 (source
     <sql>
       <![CDATA[
 create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_sequence_id)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_id, source_id)
       ]]>
     </sql>
   </tuningTable>
