@@ -3409,6 +3409,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       scope="global"
       type="function">
       <wgetArgs url="http://ftp.ebi.ac.uk/pub/databases/alphafold/accession_ids.txt">--tries=5</wgetArgs>
+      <getAndUnpackOutput file="@@dataDir@@/accession_ids.txt"/>
       <pluginArgs>--inputFile @@dataDir@@/accession_ids.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"/pluginArgs>
     </datasetLoader>
   </datasetClass>
