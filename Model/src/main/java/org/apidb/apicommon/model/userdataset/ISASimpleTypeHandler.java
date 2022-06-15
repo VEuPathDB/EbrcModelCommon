@@ -5,6 +5,9 @@ import org.gusdb.wdk.model.user.dataset.*;
 import org.json.JSONObject;
 
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
@@ -41,9 +44,11 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
     try {
       final UserDatasetMeta meta = userDataset.getMeta();
       final JSONObject metaObject = new JSONObject();
+      final Path metaJsonTmpFile = Path.of(workingDir.toString(), "tmp-meta.json");
       metaObject.put("name", meta.getName());
       metaObject.put("description", meta.getDescription());
       metaObject.put("summary", meta.getSummary());
+      Files.write(metaJsonTmpFile, metaObject.toString().getBytes(StandardCharsets.UTF_8));
       final String gusConfigBinding = String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
           System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
       String[] cmd = {"singularity", "run",
@@ -54,9 +59,9 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
           "loadStudy.bash",
           datasetTmpFile.toString(),
           userDataset.getUserDatasetId().toString(),
-          "'" + metaObject + "'"};
+          metaJsonTmpFile.toString()};
       return cmd;
-    } catch (WdkModelException e) {
+    } catch (WdkModelException | IOException e) {
       throw new RuntimeException(e);
     }
   }
