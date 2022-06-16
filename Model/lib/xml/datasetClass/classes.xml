@@ -3401,7 +3401,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="AlphaFold" category="" datasetFileHint="">
+  <datasetClass class="alphaFold" category="" datasetFileHint="">
     <purpose>Load AlphaFold</purpose>
     <prop name="version">&version;</prop>
     <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
@@ -3410,7 +3410,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       type="function">
       <wgetArgs url="http://ftp.ebi.ac.uk/pub/databases/alphafold/accession_ids.txt">--tries=5</wgetArgs>
       <getAndUnpackOutput file="@@dataDir@@/accession_ids.txt"/>
-      <pluginArgs>--inputFile @@dataDir@@/accession_ids.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"/pluginArgs>
+      <pluginArgs>--inputFile @@dataDir@@/accession_ids.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
