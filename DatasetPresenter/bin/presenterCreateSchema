@@ -172,6 +172,11 @@ sub createTables {
   $sql = "create sequence $schema.DatasetModelRef${suffix}_sq";
   runSql($dbh, $sql, 1);
 
+  $sql = "create index apidbTuning.dsmrix_${suffix}
+            on apidbTuning.DatasetModelRef${suffix} (dataset_presenter_id)
+            tablespace indx";
+  runSql($dbh, $sql, 1);
+
   #######################################################
 
   $sql = "
