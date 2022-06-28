@@ -52,7 +52,7 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
           "--bind", constructGusConfigBinding(),
-          "--bind", System.getenv("ORACLE_HOME") + "/network/admin:/opt/oracle/instantclient_21_6/network/admin",
+          "--bind", constructOracleHomeBinding(),
           "docker://veupathdb/dataset-installer-isasimple:latest",
           "loadStudy.bash",
           datasetTmpFile.toString(),
@@ -79,6 +79,7 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
   public String[] getUninstallInAppDbCommand(Long userDatasetId, String projectId) {
     String[] cmd = {"singularity", "run",
         "--bind", constructGusConfigBinding(),
+        "--bind", constructOracleHomeBinding(),
         "docker://veupathdb/dataset-installer-isasimple:latest",
         "deleteStudy.pl",
         userDatasetId.toString()};
@@ -88,6 +89,10 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
   private String constructGusConfigBinding() {
     return String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
         System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
+  }
+
+  private String constructOracleHomeBinding() {
+    return System.getenv("ORACLE_HOME") + "/network/admin:/opt/oracle/instantclient_21_6/network/admin";
   }
 
   @Override
