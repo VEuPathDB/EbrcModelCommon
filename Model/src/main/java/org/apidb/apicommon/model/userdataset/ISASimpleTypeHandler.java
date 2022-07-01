@@ -49,12 +49,10 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
       metaObject.put("description", meta.getDescription());
       metaObject.put("summary", meta.getSummary());
       Files.write(metaJsonTmpFile, metaObject.toString().getBytes(StandardCharsets.UTF_8));
-      final String gusConfigBinding = String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
-          System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
-          "--bind", gusConfigBinding,
-          "--bind", System.getenv("ORACLE_HOME") + "/network/admin:/opt/oracle/instantclient_21_6/network/admin",
+          "--bind", constructGusConfigBinding(),
+          "--bind", constructOracleHomeBinding(),
           "docker://veupathdb/dataset-installer-isasimple:latest",
           "loadStudy.bash",
           datasetTmpFile.toString(),
@@ -80,11 +78,21 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
   @Override
   public String[] getUninstallInAppDbCommand(Long userDatasetId, String projectId) {
     String[] cmd = {"singularity", "run",
-        "--bind", "$componentGusConfigFile:/gusApp/gus_home/gus.config",
+        "--bind", constructGusConfigBinding(),
+        "--bind", constructOracleHomeBinding(),
         "docker://veupathdb/dataset-installer-isasimple:latest",
         "deleteStudy.pl",
         userDatasetId.toString()};
     return cmd;
+  }
+
+  private String constructGusConfigBinding() {
+    return String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
+        System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
+  }
+
+  private String constructOracleHomeBinding() {
+    return System.getenv("ORACLE_HOME") + "/network/admin:/opt/oracle/instantclient_21_6/network/admin";
   }
 
   @Override
