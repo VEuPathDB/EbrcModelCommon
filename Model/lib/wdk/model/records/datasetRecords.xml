@@ -1281,7 +1281,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                            , sd.dataset_id as dataset_id
                            , etg.display_name
                            , etg.stable_id
-                           , et.count AS entity_type_count
+                           , et.cardinality AS entity_type_count
                      FROM eda.entityattributes ea
                         , eda.entitytypegraph etg
                         , eda.entitytype et
