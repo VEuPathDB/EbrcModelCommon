@@ -1284,7 +1284,6 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                            , et.cardinality AS entity_type_count
                      FROM eda.entitytype et
                         , eda.entitytypegraph etg
-                        , eda.entitytype et
                         , apidbtuning.studyiddatasetid sd
                      WHERE et.entity_type_id = etg.entity_type_id
                      AND etg.study_stable_id = sd.study_stable_id
