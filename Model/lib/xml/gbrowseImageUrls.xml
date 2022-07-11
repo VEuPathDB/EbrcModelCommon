@@ -1700,6 +1700,7 @@
     <track>lenrMCAVBR2001CUR178</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
+    <track>lmajFriedlin2021</track>
     <track>lmajLV39c5</track>
     <track>lmajSD75.1</track>
     <track>lspMARLEM2494</track>
@@ -1751,6 +1752,7 @@
   <subtrackSet project="TriTrypDB" name="tryp_gene" suffixes="_span;_gene">
     <track>tconIL3000</track>
     <track>tconIL3000_2019</track>
+    <track>tequOVI</track>
     <track>tevaSTIB805</track>
     <track>tranSC58</track>
     <track>ttheEdinburgh</track>
@@ -1800,6 +1802,7 @@
     <org organism="Leishmania enriettii MCAV/BR/2001/CUR178" abbrev="lenrMCAVBR2001CUR178" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
+    <org organism="Leishmania major Friedlin 2021" abbrev="lmajFriedlin2021" />
     <org organism="Leishmania major strain LV39c5" abbrev="lmajLV39c5" />
     <org organism="Leishmania major strain SD 75.1" abbrev="lmajSD75.1" />
     <org organism="Leishmania martiniquensis LEM2494" abbrev="lspMARLEM2494" />
@@ -1866,6 +1869,7 @@
     <org organism="Trypanosoma brucei EATRO1125" abbrev="tbruEATRO1125" />
     <org organism="Trypanosoma congolense IL3000" abbrev="tconIL3000" />
     <org organism="Trypanosoma congolense IL3000 2019" abbrev="tconIL3000_2019" />
+    <org organism="Trypanosoma equiperdum OVI" abbrev="tequOVI" />
     <org organism="Trypanosoma evansi strain STIB 805" abbrev="tevaSTIB805" />
     <org organism="Trypanosoma rangeli SC58" abbrev="tranSC58" />
     <org organism="Trypanosoma theileri isolate Edinburgh" abbrev="ttheEdinburgh" />
