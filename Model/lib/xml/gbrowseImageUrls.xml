@@ -139,6 +139,15 @@
     <track>hpil2019</track>
   </subtrackSet>
 
+  <subtrackSet project="PlasmoDB" name="Haemoproteus_gene" suffixes="_span;_gene">
+    <track>htarSISKIN1</track>
+  </subtrackSet>
+
+  <subtrackSet project="PlasmoDB" name="Haemoproteus_genomic" suffixes="_span">
+    <track>htarSISKIN1</track>
+  </subtrackSet>
+
+
   <subtrackSet project="PlasmoDB" name="laverania_gene" suffixes="_span;_gene">
     <track>padlG01</track>
     <track>pbilG01</track>
@@ -363,6 +372,26 @@
     <track name="GeneDensity" />
   </url>
 
+  <url project="PlasmoDB" type="synteny">
+    <org organism="Haemoproteus tartakovskyi strain SISKIN1" abbrev="htarSISKIN1" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Haemoproteus_gene" />
+      <subtrack set="rodent_gene" />
+      <subtrack set="human_gene" />
+    </track>
+  </url>
+
+  <url project="PlasmoDB" type="genomic">
+    <org organism="Haemoproteus tartakovskyi strain SISKIN1" abbrev="htarSISKIN1" />
+    <track name="Scaffolds" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Haemoproteus_genomic" />
+      <subtrack set="rodent_genomic" />
+      <subtrack set="human_genomic" />
+    </track>
+    <track name="GeneDensity" />
+  </url>
 
   <!-- NOTE: NEED TO MAKE _genomic subtrackSets and genomic URLs for all projects/organisms -->
 
