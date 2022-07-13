@@ -533,6 +533,7 @@
 <!-- FungiDB -->
 
   <subtrackSet name="Pucciniomycetes_gene" project="FungiDB" suffixes="_span;_gene">
+    <track>hvasRaceXXXIII</track>
     <track>mlar98AG31</track>
     <track>pgraCRL75-36-700-3</track>
     <track>psorRO10H11247</track>
@@ -549,6 +550,7 @@
 
   <subtrackSet name="Chytridiomycetes_gene" project="FungiDB" suffixes="_span;_gene">
     <track>bdenJEL423</track>
+    <track>bsalBS</track>
     <track>spunDAOMBR117</track>
   </subtrackSet>
 
@@ -636,6 +638,7 @@
   <subtrackSet name="Glomeromycetes" project="FungiDB" suffixes="_span;_gene">
     <track>rirrDAOM181602</track>
     <track>rirrA1DAOM664342</track>
+    <track>rirrC2</track>
   </subtrackSet>
 
   <subtrackSet name="Aspergillaceae" project="FungiDB" suffixes="_span;_gene">
@@ -717,6 +720,7 @@
     <track>cneoB-3501A</track>
     <track>cneoH99</track>
     <track>cneoKN99</track>
+    <track>ccf.gattiiMF34</track>
     <track>cgatWM276</track>
     <track>cgatCA1873</track>
     <track>cgatIND107</track>
@@ -765,6 +769,7 @@
     <track>piwaDAOMBR242034</track>
     <track>parrATCC12531</track>
     <track>paphDAOMBR444</track>
+    <track>pinsPi-s</track>
     <track>pvexDAOMBR484</track>
   </subtrackSet>
 
@@ -810,6 +815,7 @@
     <track>hwerEXF-2000</track>
     <track>cgeo1.58</track>
     <track>vgalCBS43764</track>
+    <track>aaltSRC1lrK2f</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -861,6 +867,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="hvasRaceXXXIII" organism="Hemileia vastatrix Race XXXIII"/>
     <org abbrev="mlar98AG31" organism="Melampsora larici-populina 98AG31"/>
     <org abbrev="pgraCRL75-36-700-3" organism="Puccinia graminis f. sp. tritici CRL 75-36-700-3"/>
     <org abbrev="psorRO10H11247" organism="Puccinia sorghi strain RO10H11247"/>
@@ -887,6 +894,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="bdenJEL423" organism="Batrachochytrium dendrobatidis JEL423"/>
+    <org abbrev="bsalBS" organism="Batrachochytrium salamandrivorans BS"/>
     <org abbrev="spunDAOMBR117" organism="Spizellomyces punctatus DAOM BR117"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -964,6 +972,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="rirrDAOM181602" organism="Rhizophagus irregularis DAOM 181602=DAOM 197198"/>
     <org abbrev="rirrA1DAOM664342" organism="Rhizophagus irregularis A1 (DAOM-664342)"/>
+    <org abbrev="rirrC2" organism="Rhizophagus irregularis C2"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Glomeromycetes"/>
@@ -1123,6 +1132,7 @@
     <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
     <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
     <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
+    <org abbrev="ccf.gattiiMF34" organism="Cryptococcus cf. gattii MF34"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
     <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
     <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
@@ -1201,6 +1211,7 @@
     <org abbrev="piwaDAOMBR242034" organism="Globisporangium iwayamae DAOM BR242034"/>
     <org abbrev="parrATCC12531" organism="Pythium arrhenomanes ATCC 12531"/>
     <org abbrev="paphDAOMBR444" organism="Pythium aphanidermatum DAOM BR444"/>
+    <org abbrev="pinsPi-s" organism="Pythium insidiosum Pi-s"/>
     <org abbrev="pvexDAOMBR484" organism="Phytopythium vexans DAOM BR484"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1264,6 +1275,7 @@
     <org abbrev="hwerEXF-2000" organism="Hortaea werneckii EXF-2000"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
+    <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
