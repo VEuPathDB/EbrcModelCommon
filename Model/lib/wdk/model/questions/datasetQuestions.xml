@@ -266,7 +266,7 @@
 
   </questionSet>
 
-  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
 
     <question name="Datasets"
       displayName="All Legacy Datasets"

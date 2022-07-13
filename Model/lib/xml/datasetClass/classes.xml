@@ -2966,7 +2966,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               organismAbbrev="${organismAbbrev}">
   
-     <wgetArgs url="www.uniprot.org/uniprot/?query=taxonomy%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tab&amp;columns=id,genes,organism,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="legacy.uniprot.org/uniprot/?query=taxonomy%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tab&amp;columns=id,genes,organism,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>printOrgSpecificGeneToEC --infile @@dataDir@@/ecAssocFromUniprot.tab --outfile @@dataDir@@/${organismAbbrev}LocTagToEC.tab --orgAbbrev ${organismAbbrev}</unpack>     
 
@@ -3399,6 +3399,19 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <wgetArgs url="ftp://ftp.expasy.org/databases/enzyme/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --include list  --accept=enzclass.txt,enzyme.dat</wgetArgs>
     <pluginArgs>--InPath @@dataDir@@ --enzymeDbName %DATASET_NAME% --enzymeDbRlsVer %DATASET_VERSION%</pluginArgs>
   </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="alphaFold" category="" datasetFileHint="">
+    <purpose>Load AlphaFold</purpose>
+    <prop name="version">&version;</prop>
+    <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
+      plugin="ApiCommonData::Load::Plugin::InsertAlphaFold"
+      scope="global"
+      type="function">
+      <wgetArgs url="http://ftp.ebi.ac.uk/pub/databases/alphafold/accession_ids.txt">--tries=5</wgetArgs>
+      <getAndUnpackOutput file="@@dataDir@@/accession_ids.txt"/>
+      <pluginArgs>--inputFile @@dataDir@@/accession_ids.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
   </datasetClass>
 
   <datasetClass class="PDBProteinSequences" category="" datasetFileHint="">

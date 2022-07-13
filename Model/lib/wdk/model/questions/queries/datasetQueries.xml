@@ -9,14 +9,40 @@
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <sqlQuery name="AllDatasets">
+        <paramRef ref="InternalParams.user_id"/>
         <column name="dataset_id"/>
-        <sql>
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
           <![CDATA[
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
             where category is null OR category != 'Link outs'
           ]]>
        </sql>
+
+        <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where category is null OR category != 'Link outs'
+            UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i, 
+                 apidbuserdatasets.userdatasetowner o,
+                 apidbuserdatasets.datasetattributes d
+            WHERE i.user_dataset_id = d.user_dataset_id
+            and i.user_dataset_id = o.user_dataset_id
+             and o.USER_ID = $$user_id$$
+            UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i, 
+                 apidbuserdatasets.userdatasetsharedwith s,
+                 apidbuserdatasets.datasetattributes d
+            WHERE i.user_dataset_id = d.user_dataset_id
+             and i.user_dataset_id = s.user_dataset_id
+             and s.recipient_user_id = $$user_id$$
+          ]]>
+       </sql>
+
     </sqlQuery>
 
     <sqlQuery excludeProjects="ClinEpiDB" name="SitemapDatasets">

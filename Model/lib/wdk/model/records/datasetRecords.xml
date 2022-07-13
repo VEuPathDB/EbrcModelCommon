@@ -38,7 +38,7 @@
 
 <!-- ============== Internal class for tracking datasets from previous releases ===========  -->
 
-   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+   <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
       <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
         <columnRef>dataset_presenter_id</columnRef>
         <columnRef>dataset_presenter_name</columnRef>
@@ -194,7 +194,8 @@
 
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
-         <columnAttribute name="study_access" displayName="Study accessibility"
+         <columnAttribute name="is_public" internal="true"/>
+         <columnAttribute name="study_access" displayName="Data accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
 if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download. 
@@ -837,7 +838,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <!-- Attribute queries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
-              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+              isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
 
       <testRowCountSql>
         select count(*) from apidb.legacydataset
@@ -862,9 +863,21 @@ OR if the linkName and or URL require access to other attributes....also how to 
     <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"
               isCacheable='false'>
 
-      <testRowCountSql>
+      <testRowCountSql excludeProjects="ClinEpiDB,AllClinEpiDB">
         select count(*) from ApidbTuning.DatasetPresenter
       </testRowCountSql>
+
+      <testRowCountSql includeProjects="ClinEpiDB,AllClinEpiDB">
+        select count(*) from (
+          select dataset_presenter_id from apidbtuning.datasetpresenter
+          UNION
+          SELECT d.dataset_stable_id
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
+        )
+      </testRowCountSql>
+
 
       <sqlQuery name="genecounts" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
@@ -886,8 +899,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
       </sqlQuery>
 
       <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
-        <column name="dataset_id"/>
-        <column name="eda_study_id"/>
+        <column name="dataset_id" columnType="string"/>
+        <column name="eda_study_id" columnType="string"/>
         <sql>
           <![CDATA[
             select 
@@ -896,13 +909,18 @@ OR if the linkName and or URL require access to other attributes....also how to 
             from apidbtuning.datasetpresenter
             left join apidbtuning.studyiddatasetid
             on dataset_id = dataset_presenter_id
+          UNION
+          SELECT d.dataset_stable_id, d.study_stable_id
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
           ]]>
         </sql>
       </sqlQuery>
 
       <sqlQuery name="ExpTechnique" isCacheable="false">
-         <column name="exp_technique"/>
-         <column name="dataset_id"/>
+         <column name="exp_technique" columnType="string"/>
+         <column name="dataset_id" columnType="string"/>
          <sql>
            <![CDATA[
                    select dsp.dataset_presenter_id as dataset_id,
@@ -946,6 +964,11 @@ OR if the linkName and or URL require access to other attributes....also how to 
                       )
                       as exp_technique
                     from ApidbTuning.DatasetPresenter dsp
+                    UNION
+          SELECT d.dataset_stable_id, null as exp_technique
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
                   ]]>
             </sql>
       </sqlQuery>
@@ -1019,54 +1042,66 @@ OR if the linkName and or URL require access to other attributes....also how to 
       </sqlQuery>
 
       <sqlQuery name="NewCategory" isCacheable="false">
-         <column name="newcategory"/>
-         <column name="dataset_id"/>
+         <column name="newcategory" columnType="string"/>
+         <column name="dataset_id" columnType="string"/>
          <sql>
            <![CDATA[
                        select dsp.dataset_presenter_id as dataset_id,
                               nvl(dsp.display_category, dsp.category) as newcategory
                          from ApidbTuning.DatasetPresenter dsp
+                    UNION
+          SELECT d.dataset_stable_id, null as newcategory
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
                 ]]>
         </sql>
       </sqlQuery>
 
       <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-        <column name="dataset_sha1_digest"/>
-        <column name="dataset_display_name"/>
-        <column name="dataset_id"/>
+        <column name="dataset_sha1_digest" columnType="string"/>
+        <column name="dataset_display_name" columnType="string"/>
+        <column name="dataset_id" columnType="string"/>
           <sql>
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
                          , dsp.display_name as dataset_display_name
                        from ApidbTuning.DatasetPresenter dsp
+
+                    UNION
+          SELECT null as dataset_sha1_digest, d.dataset_stable_id, d.name as dataset_display_name
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
                 ]]>
         </sql>
       </sqlQuery>
 
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-         <column name="dataset_id"/>
-         <column name="project_availability"/>
-         <column name="study_access"/>
-         <column name="policy_url"/>
-         <column name="card_headline"/>
-         <column name="card_points"/>
-         <column name="card_questions"/>
-         <column name="request_protection_level"/>
-         <column name="request_access_fields"/>
-         <column name="request_email"/>
-         <column name="request_email_bcc"/>
-         <column name="request_email_body"/>
-         <column name="request_needs_approval"/>
+         <column name="dataset_id" columnType="string"/>
+         <column name="is_public" columnType="string"/>
+         <column name="project_availability" columnType="string"/>
+         <column name="study_access" columnType="string"/>
+         <column name="policy_url" columnType="string"/>
+         <column name="card_headline" columnType="string"/>
+         <column name="card_points" columnType="string"/>
+         <column name="card_questions" columnType="string"/>
+         <column name="request_protection_level" columnType="string"/>
+         <column name="request_access_fields" columnType="string"/>
+         <column name="request_email" columnType="string"/>
+         <column name="request_email_bcc" columnType="string"/>
+         <column name="request_email_body" columnType="string"/>
+         <column name="request_needs_approval" columnType="string"/>
 
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty
-where  property in ('studyCategories','projectAvailability','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
+where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
 and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
@@ -1075,9 +1110,27 @@ and trim(value) is not null
 pivot
 (
    max(value)
-   for property in ('projectAvailability' as project_availability,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
+                    UNION
+          SELECT d.dataset_stable_id
+               , null as project_availability
+               , 'NA' as is_public
+               , 'NA' as study_access
+               , null as policy_url
+               , 'TODO_CARD_HEADLINE' as card_headline
+               , '[]' as card_points
+               , '[]' as card_questions
+               , null as request_protection_level
+               , null as request_access_fields
+               , null as request_email
+               , null as request_email_bcc
+               , null as request_email_body
+               , null as request_needs_approval
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
             ]]>
             </sql>
       </sqlQuery>
@@ -1087,8 +1140,8 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
 
       <sqlQuery name="MicrobiomeStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB">
-         <column name="dataset_id"/>
-         <column name="study_categories"/>
+         <column name="dataset_id" columnType="string"/>
+         <column name="study_categories" columnType="string"/>
             <sql>
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id, dp.study_categories
@@ -1108,13 +1161,18 @@ pivot
    for property in ('studyCategories' as study_categories )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
+                    UNION
+          SELECT d.dataset_stable_id, null as study_categories
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
             ]]>
             </sql>
       </sqlQuery>
 
 
        <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
-        <column name="dataset_id"/>
+        <column name="dataset_id" columnType="string"/>
         <column name="total" columnType="number" sortingColumn="total_number" />
         <column name="approved" columnType="number" sortingColumn="approved_number" />
         <column name="percent_approved" columnType="number" sortingColumn="percent_approved_number" />
@@ -1140,7 +1198,6 @@ select dataset_id,
          WHEN percent_approved_number is null THEN 0.5
          ELSE percent_approved_number
        END as percent_approved_number,
-       '------',
        CASE
          WHEN dp.value in ('public','prerelease') THEN 'N/A'
          WHEN total_number > 0 THEN CAST(total_number AS VARCHAR(10))
@@ -1179,8 +1236,17 @@ ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
   apidbtuning.datasetproperty dp
 where mystudies.dataset_id = dp.dataset_presenter_id
   and dp.property= 'studyAccess'
-order by dp.value, dataset_id
-
+                    UNION
+          SELECT d.dataset_stable_id
+                 , null
+                 , null
+                 , null
+                 , null
+                 , null
+                 , null
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
       ]]>
         </sql>
       </sqlQuery>
@@ -1189,24 +1255,24 @@ order by dp.value, dataset_id
 
 
       <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB,AllClinEpiDB">
-        <column name="dataset_id"/>
-        <column name="disease"/>
-        <column name="sex"/>
-	<column name="Sample_Type"/>
-        <column name="Participant_Type"/>
-        <column name="Study_Type"/>
-        <column name="Study_Design"/>
-	<column name="Country"/>
-        <column name="Years"/>
+        <column name="dataset_id" columnType="string"/>
+        <column name="disease" columnType="string"/>
+        <column name="sex" columnType="string"/>
+	<column name="Sample_Type" columnType="string"/>
+        <column name="Participant_Type" columnType="string"/>
+        <column name="Study_Type" columnType="string"/>
+        <column name="Study_Design" columnType="string"/>
+	<column name="Country" columnType="string"/>
+        <column name="Years" columnType="string"/>
         <column name="Variable_count" columnType="number"/>
         <column name="HH_count" columnType="number"/>
         <column name="Part_count" columnType="number"/>
         <column name="Obser_count" columnType="number"/>
         <column name="Samp_count" columnType="number"/>
-        <column name="AdditionalData"/>
-        <column name="Age"/>
-        <column name="WHO"/>
-        <column name="ProjectName"/>
+        <column name="AdditionalData" columnType="string"/>
+        <column name="Age" columnType="string"/>
+        <column name="WHO" columnType="string"/>
+        <column name="ProjectName" columnType="string"/>
 
         <sql>
           <![CDATA[
@@ -1215,16 +1281,12 @@ order by dp.value, dataset_id
                            , sd.dataset_id as dataset_id
                            , etg.display_name
                            , etg.stable_id
-                           , COUNT(*) AS entity_type_count
-                     FROM eda.entityattributes ea
+                           , et.cardinality AS entity_type_count
+                     FROM eda.entitytype et
                         , eda.entitytypegraph etg
                         , apidbtuning.studyiddatasetid sd
-                     WHERE ea.entity_type_id = etg.entity_type_id
+                     WHERE et.entity_type_id = etg.entity_type_id
                      AND etg.study_stable_id = sd.study_stable_id
-                     GROUP BY sd.study_stable_id
-                            , sd.dataset_id
-                            , etg.stable_id
-                            , etg.display_name
                      ),
                      all_counts AS
                      (SELECT  dataset_id
@@ -1313,7 +1375,6 @@ order by dp.value, dataset_id
                         group by sd.dataset_id
                        )
                        select dsp.dataset_presenter_id as dataset_id
-                           ,  all_counts.all_counts
                            , select_counts.HH_count
                            , select_counts.Part_count
                            , select_counts.Obser_count
@@ -1340,18 +1401,46 @@ order by dp.value, dataset_id
                         and dsp.dataset_presenter_id = select_counts.dataset_id (+)
                         and dsp.dataset_presenter_id = study_chars.dataset_id (+)
                         and dsp.dataset_presenter_id = variable_counts.dataset_id (+)
+
+                    UNION
+          SELECT d.dataset_stable_id
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
           ]]>
         </sql>
       </sqlQuery>
 
 
       <sqlQuery name="DatasetDisplayName"  isCacheable="false">
-         <column name="dataset_id"/>
-         <column name="display_name" ignoreCase="true"/>
+         <column name="dataset_id" columnType="string"/>
+         <column name="display_name" ignoreCase="true" columnType="string"/>
 
          <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id, dsp.display_name from apidbtuning.datasetpresenter dsp
+                    UNION
+          SELECT d.dataset_stable_id, d.name as display_name
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
             ]]>
          </sql>
 
@@ -1424,22 +1513,22 @@ order by dp.value, dataset_id
 
 
       <sqlQuery name="All"  isCacheable="false">
-         <column name="dataset_id"/>
-         <column name="dataset_name"/>
-         <column name="dataset_name_pattern"/>
+         <column name="dataset_id" columnType="string"/>
+         <column name="dataset_name" columnType="string"/>
+         <column name="dataset_name_pattern" columnType="string"/>
 <!--         <column name="display_name" ignoreCase="true"/> -->
-         <column name="short_display_name"/>
-         <column name="description"/>
-         <column name="version"/>
-         <column name="summary"/>
-         <column name="protocol"/>
-         <column name="usage"/>
-         <column name="type"/>
-         <column name="is_species_scope"/>
-         <column name="build_number_introduced"/>
-         <column name="eupath_release" sortingColumn="build_number_introduced"/>
-         <column name="pmids"/>
-         <column name="pmids_download"/>
+         <column name="short_display_name" columnType="string"/>
+         <column name="description" columnType="string"/>
+         <column name="version" columnType="string"/>
+         <column name="summary" columnType="string"/>
+         <column name="protocol" columnType="string"/>
+         <column name="usage" columnType="string"/>
+         <column name="type" columnType="string"/>
+         <column name="is_species_scope" columnType="string"/>
+         <column name="build_number_introduced" columnType="string"/>
+         <column name="eupath_release" sortingColumn="build_number_introduced" columnType="string"/>
+         <column name="pmids" columnType="string"/>
+         <column name="pmids_download" columnType="string"/>
          <sql excludeProjects="EuPathDB,UniDB">
             <![CDATA[
     with allpubs as (
@@ -1488,6 +1577,25 @@ order by dp.value, dataset_id
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
+                    UNION ALL
+          SELECT d.dataset_stable_id
+               , null as dataset_name
+               , null as dataset_name_pattern
+               , null as version
+               , d.name as short_display_name
+               , to_clob(d.description) as description
+               , to_clob(d.description) as summary
+               , null as protocol
+               , null as usage
+               , null as type
+               , null as is_species_scope
+               , null as build_number_introduced
+               , null as eupath_release
+               , null as pmids
+               , null as pmids_download
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
             ]]>
          </sql>
 
@@ -1626,11 +1734,11 @@ select  dsp.dataset_presenter_id as dataset_id,
 
 
       <sqlQuery name="Contacts"  isCacheable="false">
-	<column name="dataset_id"/>
-	<column name="contact"/>
-        <column name="institution"/>
-        <column name="email"/>
-        <column name="short_attribution"/>
+	<column name="dataset_id" columnType="string"/>
+	<column name="contact" columnType="string"/>
+        <column name="institution" columnType="string"/>
+        <column name="email" columnType="string"/>
+        <column name="short_attribution" columnType="string"/>
             <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
@@ -1645,6 +1753,15 @@ select  dsp.dataset_presenter_id as dataset_id,
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
+                    UNION
+          SELECT d.dataset_stable_id
+               , null as contact
+               , null as institution
+               , null as email
+               , null as short_attribution
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
  ]]>
             </sql>
       </sqlQuery>
@@ -1652,8 +1769,8 @@ select  dsp.dataset_presenter_id as dataset_id,
 
 
     <sqlQuery name="Projects"  isCacheable="false">
-        <column name="dataset_id"/>
-        <column name="project_id"/>
+        <column name="dataset_id" columnType="string"/>
+        <column name="project_id" columnType="string"/>
             <sql>
             <![CDATA[
                WITH projprop AS (
@@ -1667,6 +1784,13 @@ select  dsp.dataset_presenter_id as dataset_id,
                     projprop dp
                WHERE ds.name (+) = dsp.name
                AND dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
+                    UNION
+          SELECT d.dataset_stable_id, p.project as project_id
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d,
+               apidbuserdatasets.userdatasetproject p
+          WHERE i.user_dataset_id = d.user_dataset_id
+          and d.user_dataset_id = p.user_dataset_id
             ]]>
             </sql>
     </sqlQuery>
@@ -1697,8 +1821,8 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
       <sqlQuery name="DatasetAlias" doNotTest="true">
-         <column name="dataset_id"/>
-         <column name="old_dataset_id"/>
+         <column name="dataset_id" columnType="string"/>
+         <column name="old_dataset_id" columnType="string"/>
          <sql excludeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
             <![CDATA[
                   select dataset_presenter_id as dataset_id,
@@ -1727,6 +1851,11 @@ from apidbtuning.datasetnametaxon dsnt
                   select dataset_presenter_id as dataset_id,
                          dataset_presenter_id as old_dataset_id
                   from apidbTuning.DatasetPresenter
+                    UNION
+          SELECT d.dataset_stable_id, d.dataset_stable_id
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
         ]]>
         </sql>
       </sqlQuery>
