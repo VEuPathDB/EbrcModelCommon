@@ -597,6 +597,7 @@
     <track>pkudCBS573</track>
     <track>huvaAWRI3580</track>
     <track>hguiUTAD222</track>
+    <track>sludUTAD17</track>
     <track>leloNRRLYB-4239</track>
     <track>mguiATCC6260</track>
     <track>scerS288c</track>
@@ -614,6 +615,7 @@
   </subtrackSet>
 
   <subtrackSet name="Herpotrichiellaceae" project="FungiDB" suffixes="_span;_gene">
+    <track>eaquCBS119918</track>
     <track>eoliCBS72588</track>
     <track>ederNIHUT8656</track>
     <track>emesCBS40295</track>
@@ -650,6 +652,7 @@
     <track>afijCBS313.89</track>
     <track>aflaNRRL3357</track>
     <track>aflaNRRL3357_2020</track>
+    <track>ahetCBS117.55</track>
     <track>alIFO4308</track>
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
@@ -684,10 +687,12 @@
     <track>ttheATCC42464</track>
     <track>pansSmat</track>
     <track>smack-hell</track>
+    <track>mpoaATCC64411</track>
     <track>gtriR3-111a-1</track>
     <track>mory70-15</track>
     <track>moryBR32</track>
     <track>cpur20.1</track>
+    <track>cmilATCC34164</track>
     <track>treeQM6a</track>
     <track>treeQM6a2017</track>
     <track>tvirGv29-8</track>
@@ -719,6 +724,7 @@
     <track>cneoJEC21</track>
     <track>cneoB-3501A</track>
     <track>cneoH99</track>
+    <track>cneoH992018</track>
     <track>cneoKN99</track>
     <track>ccf.gattiiMF34</track>
     <track>cgatWM276</track>
@@ -942,6 +948,7 @@
     <org abbrev="pkudCBS573" organism="Pichia kudriavzevii strain CBS573"/>
     <org abbrev="huvaAWRI3580" organism="Hanseniaspora uvarum strain AWRI3580"/>
     <org abbrev="hguiUTAD222" organism="Hanseniaspora guilliermondii strain UTAD222"/>
+    <org abbrev="sludUTAD17" organism="Saccharomycodes ludwigii UTAD17"/>
     <org abbrev="leloNRRLYB-4239" organism="Lodderomyces elongisporus NRRL YB-4239"/>
     <org abbrev="mguiATCC6260" organism="Meyerozyma guilliermondii ATCC 6260"/>
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288C"/>
@@ -981,6 +988,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="eaquCBS119918" organism="Exophiala aquamarina CBS 119918"/>
     <org abbrev="eoliCBS72588" organism="Exophiala oligosperma strain CBS 72588"/>
     <org abbrev="ederNIHUT8656" organism="Exophiala dermatitidis NIH/UT8656"/>
     <org abbrev="emesCBS40295" organism="Exophiala mesophila strain CBS 40295"/>
@@ -1047,7 +1055,8 @@
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
     <org abbrev="afijCBS313.89" organism="Aspergillus fijiensis CBS 313.89"/>
     <org abbrev="aflaNRRL3357" organism="Aspergillus flavus NRRL3357"/>
-    <org abbrev="aflaNRRL357_2020" organism="Aspergillus flavus NRRL3357 2020"/>
+    <org abbrev="aflaNRRL3357_2020" organism="Aspergillus flavus NRRL3357 2020"/>
+    <org abbrev="ahetCBS117.55" organism="Aspergillus heteromorphus CBS 117.55"/>
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
@@ -1086,10 +1095,12 @@
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
     <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
+    <org abbrev="mpoaATCC64411" organism="Magnaporthiopsis poae ATCC 64411"/>
     <org abbrev="gtriR3-111a-1" organism="Gaeumannomyces tritici R3-111a-1"/>
     <org abbrev="mory70-15" organism="Pyricularia oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
+    <org abbrev="cmilATCC34164" organism="Cordyceps militaris ATCC 34164"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <org abbrev="treeQM6a2017" organism="Trichoderma reesei QM6a 2017"/>
     <org abbrev="tvirGv29-8" organism="Trichoderma virens Gv29-8"/>
@@ -1131,6 +1142,7 @@
     <org abbrev="cneoJEC21" organism="Cryptococcus neoformans var. neoformans JEC21"/>
     <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
     <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
+    <org abbrev="cneoH992018" organism="Cryptococcus neoformans H99 2018"/>
     <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
     <org abbrev="ccf.gattiiMF34" organism="Cryptococcus cf. gattii MF34"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
