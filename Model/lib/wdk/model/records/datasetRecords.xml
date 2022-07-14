@@ -1281,16 +1281,12 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                            , sd.dataset_id as dataset_id
                            , etg.display_name
                            , etg.stable_id
-                           , COUNT(*) AS entity_type_count
-                     FROM eda.entityattributes ea
+                           , et.cardinality AS entity_type_count
+                     FROM eda.entitytype et
                         , eda.entitytypegraph etg
                         , apidbtuning.studyiddatasetid sd
-                     WHERE ea.entity_type_id = etg.entity_type_id
+                     WHERE et.entity_type_id = etg.entity_type_id
                      AND etg.study_stable_id = sd.study_stable_id
-                     GROUP BY sd.study_stable_id
-                            , sd.dataset_id
-                            , etg.stable_id
-                            , etg.display_name
                      ),
                      all_counts AS
                      (SELECT  dataset_id
