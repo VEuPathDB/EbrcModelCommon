@@ -1396,6 +1396,10 @@
     <track>nbomCQ1</track>
     <track>vcorATCC50505</track>
     <track>aspWSBS2006</track>
+    <track>cdikDv6</track>
+    <track>dmueOu54</track>
+    <track>droeOu19</track>
+    <track>tconT1</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="EdMiOrPs_gene" suffixes="_span;_gene">
@@ -1416,6 +1420,7 @@
     <track>nausERTm2</track>
     <track>nausERTm6</track>
     <track>ndisJUm2807</track>
+    <track>nmajJUm2507</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="ecunEC2_gene" suffixes="_span;_gene">
@@ -1473,6 +1478,10 @@
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
+    <org organism="Cucumispora dikerogammari Dv6" abbrev="cdikDv6"/>
+    <org organism="Dictyocoela muelleri Ou54" abbrev="dmueOu54"/>
+    <org organism="Dictyocoela roeselum Ou19" abbrev="droeOu19"/>
+    <org organism="Thelohania contejeani T1" abbrev="tconT1"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="main_gene" />
@@ -1487,6 +1496,7 @@
     <org organism="Nematocida ausubeli ERTm2" abbrev="nausERTm2" />
     <org organism="Nematocida ausubeli ERTm6" abbrev="nausERTm6" />
     <org organism="Nematocida displodere strain JUm2807" abbrev="ndisJUm2807" />
+    <org organism="Nematocida major JUm2507" abbrev="nmajJUm2507" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Nematocida_gene" />
