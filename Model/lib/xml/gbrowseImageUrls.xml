@@ -1392,7 +1392,9 @@
     <track>heriGB1</track>
     <track>hericanceri</track>
     <track>ncerBRL01</track>
+    <track>ncerBRL</track>
     <track>ncerPA08_1199</track>
+    <track>ngraOu3Ou53</track>
     <track>nbomCQ1</track>
     <track>vcorATCC50505</track>
     <track>aspWSBS2006</track>
@@ -1406,12 +1408,16 @@
     <track>eaedUSNM41457</track>
     <track>mdapUGP3</track>
     <track>ocolOC4</track>
+    <track>ocolGBEP1</track>
+    <track>ocolNOV7</track>
+    <track>ocolFISK171</track>
     <track>pneuMK1</track>
   </subtrackSet>
 
-  <subtrackSet project="MicrosporidiaDB" name="Anncaliia_gene" suffixes="_span;_gene">
+  <subtrackSet project="MicrosporidiaDB" name="Tubulinosematidae_gene" suffixes="_span;_gene">
     <track>aalgPRA109</track>
     <track>aalgPRA339</track>
+    <track>tratFranzen</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="Nematocida_gene" suffixes="_span;_gene">
@@ -1453,13 +1459,16 @@
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
     <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
     <org organism="Ordospora colligata OC4" abbrev="ocolOC4" />
+    <org organism="Ordospora colligata GB-EP-1" abbrev="ocolGBEP1" />
+    <org organism="Ordospora colligata NO-V-7" abbrev="ocolNOV7" />
+    <org organism="Ordospora colligata FI-SK-17-1" abbrev="ocolFISK171" />
     <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="EdMiOrPs_gene" />
       <subtrack set="main_gene" />
       <subtrack set="Nematocida_gene" />
-      <subtrack set="Anncaliia_gene" />
+      <subtrack set="Tubulinosematidae_gene" />
     </track>
   </url>
 
@@ -1474,7 +1483,9 @@
     <org organism="Hepatospora eriocheir strain GB1" abbrev="heriGB1" />
     <org organism="Hepatospora eriocheir strain canceri" abbrev="hericanceri" />
     <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Nosema ceranae BRL" abbrev="ncerBRL" />
     <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
+    <org organism="Nosema granulosis Ou3-Ou53" abbrev="ngraOu3Ou53" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
@@ -1508,9 +1519,10 @@
   <url project="MicrosporidiaDB" type="synteny">
     <org organism="Anncaliia algerae PRA109" abbrev="aalgPRA109" />
     <org organism="Anncaliia algerae PRA339" abbrev="aalgPRA339" />
+    <org organism="Tubulinosema ratisbonensis Franzen" abbrev="tratFranzen" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Anncaliia_gene" />
+      <subtrack set="Tubulinosematidae_gene" />
       <subtrack set="main_gene" />
       <subtrack set="EdMiOrPs_gene" />
     </track>
