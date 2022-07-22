@@ -280,7 +280,6 @@ while in protected and private studies there will be human intervention in the d
                           help= "A short description of the dataset."/>
          <columnAttribute name="pmids" displayName="References" sortable="false" excludeProjects="ClinEpiDB,AllClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB,AllClinEpiDB" help="PubMed links related to the dataset."/>
-         <columnAttribute name="in_apollo" displayName="Available for community annotation in Apollo" help="This genome is available in Apollo for community annotation"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB,AllClinEpiDB">
@@ -303,10 +302,6 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
-
-      <attributeQueryRef ref="DatasetAttributes.ApolloLink">
-         <columnAttribute name="is_in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
-      </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
@@ -1534,7 +1529,6 @@ where mystudies.dataset_id = dp.dataset_presenter_id
          <column name="eupath_release" sortingColumn="build_number_introduced" columnType="string"/>
          <column name="pmids" columnType="string"/>
          <column name="pmids_download" columnType="string"/>
-         <column name="in_apollo" columnType="string"/>
          <sql excludeProjects="EuPathDB,UniDB">
             <![CDATA[
     with allpubs as (
@@ -1558,10 +1552,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                    dsp.build_number_introduced,
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
                    pubs.pmids,
-                   pubs.pmids_download,
-			CASE WHEN (aid.apolloid IS NOT NULL)
-                        THEN 'Apollo'
-                        ELSE 'N/A' END AS in_apollo
+                   pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e,publink, '<br><br>').extract('//text()') order by publink).getclobval(), '<br><br>'), 1) as pmids
@@ -1582,16 +1573,10 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                          '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
                         where project = '@PROJECT_ID@') introduced
-		   , apidbtuning.datasetnametaxon dnt
-                   , apidbtuning.organismattributes tn
-                   , apidbtuning.ApolloID aid
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
-                   and dsp.dataset_presenter_id = dnt.dataset_presenter_id
-                   and dnt.taxon_id = tn.component_taxon_id (+)
-                   and tn.organism_name = aid.organism(+)
                     UNION ALL
           SELECT d.dataset_stable_id
                , null as dataset_name
@@ -1608,7 +1593,6 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                , null as eupath_release
                , null as pmids
                , null as pmids_download
-               , null as in_apollo
           FROM apidbuserdatasets.installeduserdataset i, 
                apidbuserdatasets.datasetattributes d
           WHERE i.user_dataset_id = d.user_dataset_id
@@ -1617,7 +1601,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
 
          <sql includeProjects="EuPathDB">
             <![CDATA[
-            with allpubs as (
+with allpubs as (
                       select dp.dataset_presenter_id
                         , nvl2(dp.pmid,'<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>', '<a href="' || dh.url ||'">' || dh.text || '</a>') as publink
                         , dp.pmid
@@ -1638,10 +1622,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                    dsp.build_number_introduced,
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
                    pubs.pmids,
-                   pubs.pmids_download,
-                   CASE WHEN (aid.apolloid IS NOT NULL)
-                        THEN 'Apollo'
-                        ELSE 'N/A' END AS in_apollo                   
+                   pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
@@ -1661,18 +1642,12 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                  (select build_number,
                          '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
-                        where project = '@PROJECT_ID@') introduced,
-                          apidbtuning.datasetnametaxon dnt
-                        , apidbtuning.organismattributes tn
-                        , apidbtuning.ApolloID aid
+                        where project = '@PROJECT_ID@') introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
               and ds.name (+) = dsp.name
               and NOT dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
-              and dsp.dataset_presenter_id = dnt.dataset_presenter_id
-                   and dnt.taxon_id = tn.component_taxon_id (+)
-                   and tn.organism_name = aid.organism(+)
     UNION ALL
         select dsp.dataset_presenter_id as dataset_id,
                dsp.name as dataset_name, dsp.dataset_name_pattern,
@@ -1685,8 +1660,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                dsp.build_number_introduced,
                '' as eupath_release,
                TO_CLOB('') as pmids,
-               '' as pmids_download,
-               '' as in_apollo
+               '' as pmids_download
        from apidbTuning.DatasetPresenter dsp
        where dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
 	]]>
@@ -1711,10 +1685,7 @@ select  dsp.dataset_presenter_id as dataset_id,
                    dsp.build_number_introduced,
                    CASE WHEN (r.project is null) THEN  introduced.project ELSE r.project END || ' rel.' || nvl(history.eupath_release, introduced.eupath_release)  as eupath_release,
                    pubs.pmids,
-                   pubs.pmids_download,
-                   CASE WHEN (aid.apolloid IS NOT NULL)
-                        THEN 'Apollo'
-                        ELSE 'N/A' END AS in_apollo 
+                   pubs.pmids_download
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds, relinfo r,
                  (select dataset_presenter_id,
 --                       listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
@@ -1734,19 +1705,13 @@ select  dsp.dataset_presenter_id as dataset_id,
                  (select build_number,
                          release_number || ', ' || release_date as eupath_release, project
                   from apidbTuning.EupathBuildDates
-                        ) introduced,
-                          apidbtuning.datasetnametaxon dnt
-                        , apidbtuning.organismattributes tn
-                        , apidbtuning.ApolloID aid
+                        ) introduced
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
               and dsp.dataset_presenter_id = r.dataset_presenter_id(+)
               and r.project = introduced.project(+)
               and ds.name (+) = dsp.name
-              and dsp.dataset_presenter_id = dnt.dataset_presenter_id
-                   and dnt.taxon_id = tn.component_taxon_id (+)
-                   and tn.organism_name = aid.organism(+)
            ]]>
          </sql>
       </sqlQuery>
