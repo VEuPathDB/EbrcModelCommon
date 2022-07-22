@@ -1649,19 +1649,19 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                      from allpubs
                      group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
-                         'ToxoDB rel. ' || release_number || ', ' || release_date as eupath_release
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
                                                               order by ebd.release_number desc) rn
                         from apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
                         where dh.build_number = ebd.build_number
-                          and ebd.project = 'ToxoDB')
+                          and ebd.project = '@PROJECT_ID@')
                   where rn = 1) history,
                  (select build_number,
-                         'ToxoDB rel. ' || release_number || ', ' || release_date as eupath_release
+                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
                   from apidbTuning.EupathBuildDates
-                        where project = 'ToxoDB') introduced,
+                        where project = '@PROJECT_ID@') introduced,
                           apidbtuning.datasetnametaxon dnt
                         , apidbtuning.organismattributes tn
                         , apidbtuning.ApolloID aid
@@ -2043,7 +2043,7 @@ from apidbtuning.datasetnametaxon dsnt
                    , apidbtuning.organismattributes tn
                    , apidbtuning.ApolloID aid
              where dh.build_number = bd.build_number
-               and bd.project = 'ToxoDB'
+               and bd.project = '@PROJECT_ID@'
                and dh.dataset_presenter_id = dnt.dataset_presenter_id
                    and dnt.taxon_id = tn.component_taxon_id (+)
                    and tn.organism_name = aid.organism(+)
