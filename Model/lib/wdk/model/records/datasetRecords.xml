@@ -1774,22 +1774,17 @@ select  dsp.dataset_presenter_id as dataset_id,
         <column name="in_apollo"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
-              select dataset_id, in_apollo, apolloidurl
-              from (
-              select distinct dsnt.dataset_presenter_id as dataset_id
-                       ,CASE WHEN (aid.apolloid IS NOT NULL)
-                        THEN 'Apollo'
-                        ELSE 'N/A' END AS in_apollo
-                       ,CASE WHEN (aid.apolloid IS NOT NULL)
-                        THEN 'https://apollo.veupathdb.org/annotator/loadLink?organism='||aid.apolloid
-                        ELSE '@WEBAPP_BASE_URL@/static-content/faq.html#apollo10' END AS apolloidurl
-             from apidbtuning.datasetnametaxon dsnt
-             , apidbtuning.organismattributes tn
-             , apidbtuning.ApolloID aid
-             where dsnt.taxon_id = tn.component_taxon_id (+)
-             and tn.organism_name = aid.organism(+)
-             )
-             group by dataset_id,in_apollo,apolloidurl
+           WITH apollo_dataset as (
+             SELECT distinct dsnt.dataset_presenter_id, 'Apollo' as in_apollo
+             FROM apidbtuning.datasetnametaxon dsnt
+                , apidbtuning.organismattributes tn
+                , apidbtuning.ApolloID aid
+             WHERE dsnt.taxon_id = tn.component_taxon_id (+)
+               AND tn.organism_name = aid.organism(+)
+               AND aid.apolloid IS NOT NULL
+         ) SELECT dsp.dataset_presenter_id AS dataset_id,   in_apollo
+           FROM apollo_dataset ad, apidbtuning.datasetPresenter dsp
+          WHERE dsp.dataset_presenter_id = ad.dataset_presenter_id (+)
              ]]>
             </sql>
       </sqlQuery>
