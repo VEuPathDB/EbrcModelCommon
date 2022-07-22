@@ -1381,14 +1381,20 @@
 
 <!-- MicrosporidiaDB -->
 
-  <subtrackSet project="MicrosporidiaDB" name="main_gene" suffixes="_span;_gene">
+  <subtrackSet project="MicrosporidiaDB" name="Spraguidae_gene" suffixes="_span;_gene">
+    <track>slop42_110</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Astathelohaniidae_gene" suffixes="_span;_gene">
+    <track>tconT1</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Microsporidia_incertae_sedis_gene" suffixes="_span;_gene">
     <track>aspWSBS2006</track>
     <track>cdikDv6</track>
     <track>eaedUSNM41457</track>
     <track>mdapUGP3</track>
     <track>pneuMK1</track>
-    <track>slop42_110</track>
-    <track>tconT1</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="Dictyocoela_gene" suffixes="_span;_gene">
@@ -1459,18 +1465,30 @@
   </subtrackSet>
 
   <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Spraguea lophii 42_110" abbrev="slop42_110" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Spraguidae_gene"/>
+      <subtrack set="Nosematidae_gene"/>
+      <subtrack set="Enterocytozoonida_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
     <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
     <org organism="Cucumispora dikerogammari Dv6" abbrev="cdikDv6"/>
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
     <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
     <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
-    <org organism="Spraguea lophii 42_110" abbrev="slop42_110" />
-    <org organism="Thelohania contejeani T1" abbrev="tconT1"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="main_gene" />
-      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="Microsporidia_incertae_sedis_gene" />
       <subtrack set="nparERTm1_gene"/>
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="Dictyocoela_gene" />
+      <subtrack set="Ordosporidae_gene" />
     </track>
   </url>
 
@@ -1500,7 +1518,6 @@
       <subtrack set="Tubulinosematidae_gene" />
       <subtrack set="nparERTm1_gene"/>
       <subtrack set="ecunGBM1_gene"/>
-      <subtrack set="main_gene" />
     </track>
   </url>
 
@@ -1510,9 +1527,20 @@
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Pleistophoridae_gene"/>
+      <subtrack set="Astathelohaniidae_gene"/>
       <subtrack set="nparERTm1_gene"/>
       <subtrack set="ecunGBM1_gene"/>
-      <subtrack set="main_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Thelohania contejeani T1" abbrev="tconT1"/>
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Astathelohaniidae_gene"/>
+      <subtrack set="Pleistophoridae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
@@ -1565,8 +1593,8 @@
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Dictyocoela_gene"/>
       <subtrack set="nparERTm1_gene"/>
-      <subtrack set="ecunGBM1_gene"/>
-      <subtrack set="main_gene"/>
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="Microsporidia_incertae_sedis_gene"/>
     </track>
   </url>
 
