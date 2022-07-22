@@ -303,6 +303,10 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
+<attributeQueryRef ref="DatasetAttributes.inApollo">
+         <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
+      </attributeQueryRef>
+
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
@@ -1765,17 +1769,17 @@ select  dsp.dataset_presenter_id as dataset_id,
             </sql>
       </sqlQuery>
 
-      <sqlQuery name="ApolloLink"  isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <sqlQuery name="inApollo"  isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
         <column name="dataset_id"/>
-        <column name="is_in_apollo"/>
+        <column name="in_apollo"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
             <![CDATA[
-              select dataset_id, is_in_apollo, apolloidurl
+              select dataset_id, in_apollo, apolloidurl
               from (
               select distinct dsnt.dataset_presenter_id as dataset_id
                        ,CASE WHEN (aid.apolloid IS NOT NULL)
                         THEN 'Apollo'
-                        ELSE 'N/A' END AS is_in_apollo
+                        ELSE 'N/A' END AS in_apollo
                        ,CASE WHEN (aid.apolloid IS NOT NULL)
                         THEN 'https://apollo.veupathdb.org/annotator/loadLink?organism='||aid.apolloid
                         ELSE '@WEBAPP_BASE_URL@/static-content/faq.html#apollo10' END AS apolloidurl
@@ -1785,8 +1789,8 @@ select  dsp.dataset_presenter_id as dataset_id,
              where dsnt.taxon_id = tn.component_taxon_id (+)
              and tn.organism_name = aid.organism(+)
              )
-             group by dataset_id,is_in_apollo,apolloidurl
- ]]>
+             group by dataset_id,in_apollo,apolloidurl
+             ]]>
             </sql>
       </sqlQuery>
 
