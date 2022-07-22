@@ -308,10 +308,10 @@ while in protected and private studies there will be human intervention in the d
       </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
-        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
+        <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
 
-        <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
+        <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
                         includeProjects="EuPathDB"/>
 
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
