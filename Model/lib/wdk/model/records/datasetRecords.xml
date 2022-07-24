@@ -303,9 +303,9 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-<attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB,ClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
-      </attributeQueryRef>
+       </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
