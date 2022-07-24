@@ -303,7 +303,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
 
-<attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB">
+<attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB,ClinEpiDB">
          <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
       </attributeQueryRef>
 
@@ -1742,7 +1742,7 @@ select  dsp.dataset_presenter_id as dataset_id,
         <column name="institution" columnType="string"/>
         <column name="email" columnType="string"/>
         <column name="short_attribution" columnType="string"/>
-            <sql>
+            <sql includeProjects="ClinEpiDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
@@ -1756,17 +1756,44 @@ select  dsp.dataset_presenter_id as dataset_id,
             from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
-  --                  UNION
-   --       SELECT d.dataset_stable_id
-     --          , null as contact
-    --           , null as institution
-    --           , null as email
-    --           , null as short_attribution
-    --      FROM apidbuserdatasets.installeduserdataset i, 
-    --           apidbuserdatasets.datasetattributes d
-    --      WHERE i.user_dataset_id = d.user_dataset_id
+                    UNION
+          SELECT d.dataset_stable_id
+               , null as contact
+               , null as institution
+               , null as email
+               , null as short_attribution
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
  ]]>
             </sql>
+
+            <sql excludeProjects="ClinEpiDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   CASE WHEN  dsc.name is not null THEN dsc.name
+                        WHEN dsc.affiliation is not null THEN dsc.affiliation
+                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
+                   END as contact,
+                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                        ELSE   dsc.affiliation END as institution,
+                   dsc.email as email,
+                   nvl(dsp.short_attribution, dsc.name) as short_attribution
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
+            where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
+            and dsc.is_primary_contact = 1
+--                    UNION
+--          SELECT d.dataset_stable_id
+--               , null as contact
+--               , null as institution
+--               , null as email
+--               , null as short_attribution
+--          FROM apidbuserdatasets.installeduserdataset i, 
+--               apidbuserdatasets.datasetattributes d
+--          WHERE i.user_dataset_id = d.user_dataset_id
+ ]]>
+            </sql>
+
       </sqlQuery>
 
       <sqlQuery name="inApollo"  isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
