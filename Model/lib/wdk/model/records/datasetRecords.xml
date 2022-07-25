@@ -76,9 +76,6 @@
       <!-- primary key definition
            NOTE:  the name here is from apidbtuning.DatasetPresenter NOT apidb.datasource
       -->
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin" includeProjects="ClinEpiDB,MicrobiomeDB,AllClinEpiDB">
-          <columnRef>dataset_id</columnRef>
-      </primaryKey>
 
       <primaryKey aliasQueryRef="DatasetAttributes.DatasetAlias">
           <columnRef>dataset_id</columnRef>
