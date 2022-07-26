@@ -207,6 +207,7 @@ public class DatasetPresenterSetLoader {
           datasetPresenter.setType(type);
           datasetPresenter.setSubtype(subtype);
           datasetPresenter.setIsSpeciesScope(isSpeciesScope);
+          datasetPresenter.setProjectId(projectId);
         } else {
           if ((first_type == null && type != null)
               || (first_type != null && !type.equals(first_type))
