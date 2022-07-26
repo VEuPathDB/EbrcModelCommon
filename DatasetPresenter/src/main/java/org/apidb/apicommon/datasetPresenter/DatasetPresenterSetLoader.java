@@ -415,7 +415,6 @@ public class DatasetPresenterSetLoader {
 
     stmt.setString(i++, subtype);
     stmt.setBoolean(i++, isSpeciesScope);
-    stmt.setString(i++, projectId);
 
     Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
 
@@ -427,6 +426,7 @@ public class DatasetPresenterSetLoader {
 
     String datasetClassCategory = datasetPresenter.getPropValue("datasetClassCategory");
     stmt.setString(i++, datasetClassCategory);
+    stmt.setString(i++, projectId);
 
     stmt.execute();
   }
