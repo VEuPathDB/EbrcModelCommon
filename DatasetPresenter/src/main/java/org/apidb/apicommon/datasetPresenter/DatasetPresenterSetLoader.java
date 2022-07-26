@@ -185,6 +185,7 @@ public class DatasetPresenterSetLoader {
         String type = rs.getString(3);
         String subtype = rs.getString(4);
         Boolean isSpeciesScope = rs.getBoolean(5);
+        String projectId = rs.getString(6);
 
         // track all dataset names for presenter
         datasetPresenter.addDatasetNameToList(name);
@@ -370,8 +371,9 @@ public class DatasetPresenterSetLoader {
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
-    String sql = "SELECT name, taxon_id, type, subtype, is_species_scope "
-        + "FROM " + table + " WHERE name like ?";
+    String sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
+        + "FROM " + table
+        + " ds, core.ProjectInfo pi WHERE pi.project_id = ds.row_project_id and ds.NAME like ?";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -382,8 +384,8 @@ public class DatasetPresenterSetLoader {
         "display_name, short_display_name, short_attribution, summary, " +
         "protocol, usage, description, caveat, acknowledgement, release_policy, " +
         "display_category, type, subtype, is_species_scope, build_number_introduced, " +
-        "category)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "category, project_id)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -409,9 +411,11 @@ public class DatasetPresenterSetLoader {
 
     String subtype = datasetPresenter.getSubtype() == null ? "" : datasetPresenter.getSubtype();
     boolean isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null ? false : datasetPresenter.getIsSpeciesScope();
+    String projectId = datasetPresenter.getProjectId() == null ? "" : datasetPresenter.getProjectId();
 
     stmt.setString(i++, subtype);
     stmt.setBoolean(i++, isSpeciesScope);
+    stmt.setString(i++, projectId);
 
     Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
 
