@@ -118,8 +118,7 @@ my $contactsXmlFile = "contacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
 if ($is_eda){
-then 
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
 } else {
   system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
 }
