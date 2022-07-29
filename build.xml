@@ -40,7 +40,6 @@
     </ant>
   </target>
 
-   <echo message=" Copy contacts.xml;;;; DO THE COPY! " /> 
     <copy file="${projectsDir}/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml"
           tofile="${projectsDir}/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/contacts.xml" />
 
