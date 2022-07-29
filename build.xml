@@ -40,8 +40,4 @@
     </ant>
   </target>
 
-    <copy file="${projectsDir}/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml"
-          tofile="${projectsDir}/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/contacts.xml" />
-
-
 </project>
