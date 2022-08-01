@@ -17,13 +17,22 @@
             from apidbTuning.DatasetPresenter
             where category is null OR category != 'Link outs'
           ]]>
-       </sql>
+       </sql> 
 
-        <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+        <sql includeProjects="MicrobiomeDB">
           <![CDATA[
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
-            where category is null OR category != 'Link outs'
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
+          ]]>
+       </sql>
+        <sql includeProjects="ClinEpiDB,AllClinEpiDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
             UNION
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
