@@ -1089,7 +1089,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
                 ]]>
         </sql>
           <sql includeProjects="MicrobiomeDB">
->
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
