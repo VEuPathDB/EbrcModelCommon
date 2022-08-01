@@ -299,11 +299,11 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="email" internal="true"/>
          <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
        </attributeQueryRef>
-
+<!--
        <attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
        </attributeQueryRef>
-
+-->
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
         <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
                         excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB"/>
@@ -864,19 +864,27 @@ OR if the linkName and or URL require access to other attributes....also how to 
     <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"
               isCacheable='false'>
 
-      <testRowCountSql excludeProjects="ClinEpiDB,AllClinEpiDB">
+      <testRowCountSql excludeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB">
         select count(*) from ApidbTuning.DatasetPresenter
       </testRowCountSql>
 
       <testRowCountSql includeProjects="ClinEpiDB,AllClinEpiDB">
         select count(*) from (
-          select dataset_presenter_id from apidbtuning.datasetpresenter
+          SELECT dataset_presenter_id 
+          FROM apidbtuning.datasetpresenter
+          WHERE project_id = '@PROJECT_ID@'
           UNION
           SELECT d.dataset_stable_id
           FROM apidbuserdatasets.installeduserdataset i, 
                apidbuserdatasets.datasetattributes d
           WHERE i.user_dataset_id = d.user_dataset_id
         )
+      </testRowCountSql>
+
+      <testRowCountSql includeProjects="MicrobiomeDB">
+          SELECT dataset_presenter_id 
+          FROM apidbtuning.datasetpresenter
+          WHERE project_id = '@PROJECT_ID@'
       </testRowCountSql>
 
 
@@ -895,6 +903,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
           and oa.component_taxon_id = dnt.taxon_id
           and dnt.dataset_presenter_id = dsp.dataset_presenter_id
           and dsp.type = 'genome'
+          and dsp.project_id = '@PROJECT_ID@'
           group by oa.project_id, dsp.dataset_presenter_id
         </sql>
       </sqlQuery>
@@ -910,6 +919,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             from apidbtuning.datasetpresenter
             left join apidbtuning.studyiddatasetid
             on dataset_id = dataset_presenter_id
+            where project_id = '@PROJECT_ID@'
           UNION
           SELECT d.dataset_stable_id, d.study_stable_id
           FROM apidbuserdatasets.installeduserdataset i, 
@@ -1063,18 +1073,29 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <column name="dataset_sha1_digest" columnType="string"/>
         <column name="dataset_display_name" columnType="string"/>
         <column name="dataset_id" columnType="string"/>
-          <sql>
+          <sql includeProjects="ClinEpiDB,AllClinEpiDB">
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
                          , dsp.display_name as dataset_display_name
                        from ApidbTuning.DatasetPresenter dsp
+                       where dsp.project_id = '@PROJECT_ID@'
 
                     UNION
           SELECT null as dataset_sha1_digest, d.dataset_stable_id, d.name as dataset_display_name
           FROM apidbuserdatasets.installeduserdataset i, 
                apidbuserdatasets.datasetattributes d
           WHERE i.user_dataset_id = d.user_dataset_id
+                ]]>
+        </sql>
+          <sql includeProjects="MicrobiomeDB">
+>
+            <![CDATA[
+                       select dsp.dataset_sha1_digest
+                         , dsp.dataset_presenter_id as dataset_id
+                         , dsp.display_name as dataset_display_name
+                       from ApidbTuning.DatasetPresenter dsp
+                       where dsp.project_id = '@PROJECT_ID@'
                 ]]>
         </sql>
       </sqlQuery>
