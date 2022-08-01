@@ -19,14 +19,6 @@
           ]]>
        </sql> 
 
-        <sql includeProjects="MicrobiomeDB">
-          <![CDATA[
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter
-            where (category is null OR category != 'Link outs')
-            and  project_id = '@PROJECT_ID@'
-          ]]>
-       </sql>
         <sql includeProjects="ClinEpiDB,AllClinEpiDB">
           <![CDATA[
             select dataset_presenter_id as dataset_id
@@ -52,6 +44,15 @@
           ]]>
        </sql>
 
+        <sql includeProjects="MicrobiomeDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and project_id = '@PROJECT_ID@'
+          ]]>
+       </sql>
+
     </sqlQuery>
 
     <sqlQuery excludeProjects="ClinEpiDB" name="SitemapDatasets">
@@ -72,6 +73,7 @@
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic' and dprop.value = 'true'
+            and dpres.project_id = '@PROJECT_ID@'
           ]]>
        </sql>
     </sqlQuery>
