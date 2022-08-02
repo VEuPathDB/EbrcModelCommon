@@ -41,6 +41,7 @@ public class DatasetPresenter {
   private String type;
   private String subtype;
   private Boolean isSpeciesScope;
+  private String projectId;
   private boolean foundInDb = false;
   private float maxHistoryBuildNumber = -1000;
 
@@ -154,6 +155,14 @@ public class DatasetPresenter {
 
   public Boolean getIsSpeciesScope() {
     return isSpeciesScope;
+  }
+
+  public void setProjectId(String projectId) {
+    this.projectId = projectId;
+  }
+
+  public String getProjectId() {
+    return projectId;
   }
 
   public void setDatasetNamePattern(String pattern) {

@@ -1381,166 +1381,244 @@
 
 <!-- MicrosporidiaDB -->
 
-  <subtrackSet project="MicrosporidiaDB" name="main_gene" suffixes="_span;_gene">
-    <track>ecunEC1</track>
-    <track>ehelATCC50504</track>
-    <track>eintATCC50506</track>
-    <track>eromSJ2008</track>
+  <subtrackSet project="MicrosporidiaDB" name="Spraguidae_gene" suffixes="_span;_gene">
+    <track>slop42_110</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Astathelohaniidae_gene" suffixes="_span;_gene">
+    <track>tconT1</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Microsporidia_incertae_sedis_gene" suffixes="_span;_gene">
+    <track>aspWSBS2006</track>
+    <track>cdikDv6</track>
+    <track>eaedUSNM41457</track>
+    <track>mdapUGP3</track>
+    <track>pneuMK1</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Dictyocoela_gene" suffixes="_span;_gene">
+    <track>dmueOu54</track>
+    <track>droeOu19</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Enterocytozoonida_gene" suffixes="_span;_gene">
     <track>ebieH348</track>
     <track>ehepTH1</track>
     <track>ecanGB1</track>
     <track>heriGB1</track>
     <track>hericanceri</track>
-    <track>ncerBRL01</track>
-    <track>ncerPA08_1199</track>
-    <track>nbomCQ1</track>
-    <track>vcorATCC50505</track>
-    <track>aspWSBS2006</track>
-  </subtrackSet>
-
-  <subtrackSet project="MicrosporidiaDB" name="EdMiOrPs_gene" suffixes="_span;_gene">
-    <track>eaedUSNM41457</track>
-    <track>mdapUGP3</track>
-    <track>ocolOC4</track>
-    <track>pneuMK1</track>
-  </subtrackSet>
-
-  <subtrackSet project="MicrosporidiaDB" name="Anncaliia_gene" suffixes="_span;_gene">
-    <track>aalgPRA109</track>
-    <track>aalgPRA339</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="Nematocida_gene" suffixes="_span;_gene">
-    <track>nparERTm1</track>
     <track>nparERTm3</track>
     <track>nausERTm2</track>
     <track>nausERTm6</track>
     <track>ndisJUm2807</track>
+    <track>nmajJUm2507</track>
   </subtrackSet>
 
-  <subtrackSet project="MicrosporidiaDB" name="ecunEC2_gene" suffixes="_span;_gene">
+  <subtrackSet project="MicrosporidiaDB" name="Nosematidae_gene" suffixes="_span;_gene">
+    <track>ncerBRL01</track>
+    <track>ncerBRL</track>
+    <track>ncerPA08_1199</track>
+    <track>ngraOu3Ou53</track>
+    <track>nbomCQ1</track>
+    <track>vcorATCC50505</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Ordosporidae_gene" suffixes="_span;_gene">
+    <track>ocolOC4</track>
+    <track>ocolGBEP1</track>
+    <track>ocolNOV7</track>
+    <track>ocolFISK171</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Pleistophoridae_gene" suffixes="_span;_gene">
+    <track>thomUnknown</track>
+    <track>vculfloridensis</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Tubulinosematidae_gene" suffixes="_span;_gene">
+    <track>aalgPRA109</track>
+    <track>aalgPRA339</track>
+    <track>tratFranzen</track>
+  </subtrackSet>
+
+  <subtrackSet project="MicrosporidiaDB" name="Unikaryonidae_gene" suffixes="_span;_gene">
+    <track>ecunEC1</track>
     <track>ecunEC2</track>
-  </subtrackSet>
-
-  <subtrackSet project="MicrosporidiaDB" name="ecunEC3_gene" suffixes="_span;_gene">
     <track>ecunEC3</track>
-  </subtrackSet>
-
-  <subtrackSet project="MicrosporidiaDB" name="ecunEcunIII-L_gene" suffixes="_span;_gene">
     <track>ecunEcunIII-L</track>
+    <track>ehelATCC50504</track>
+    <track>ehelSwiss</track>
+    <track>eintATCC50506</track>
+    <track>eromSJ2008</track>
   </subtrackSet>
 
   <subtrackSet project="MicrosporidiaDB" name="ecunGBM1_gene" suffixes="_span;_gene">
     <track>ecunGBM1</track>
   </subtrackSet>
 
-  <subtrackSet project="MicrosporidiaDB" name="ehelSwiss_gene" suffixes="_span;_gene">
-    <track>ehelSwiss</track>
-  </subtrackSet>
-
-  <subtrackSet project="MicrosporidiaDB" name="SpTrVa_gene" suffixes="_span;_gene">
-    <track>slop42_110</track>
-    <track>thomUnknown</track>
-    <track>vculfloridensis</track>
+  <subtrackSet project="MicrosporidiaDB" name="nparERTm1_gene" suffixes="_span;_gene">
+    <track>nparERTm1</track>
   </subtrackSet>
 
   <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Spraguea lophii 42_110" abbrev="slop42_110" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Spraguidae_gene"/>
+      <subtrack set="Nosematidae_gene"/>
+      <subtrack set="Enterocytozoonida_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
+    <org organism="Cucumispora dikerogammari Dv6" abbrev="cdikDv6"/>
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
     <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
-    <org organism="Ordospora colligata OC4" abbrev="ocolOC4" />
     <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="EdMiOrPs_gene" />
-      <subtrack set="main_gene" />
-      <subtrack set="Nematocida_gene" />
-      <subtrack set="Anncaliia_gene" />
+      <subtrack set="Microsporidia_incertae_sedis_gene" />
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="Dictyocoela_gene" />
+      <subtrack set="Ordosporidae_gene" />
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
     <org organism="Encephalitozoon cuniculi EC1" abbrev="ecunEC1" />
+    <org organism="Encephalitozoon cuniculi EC2" abbrev="ecunEC2" />
+    <org organism="Encephalitozoon cuniculi EC3" abbrev="ecunEC3" />
+    <org organism="Encephalitozoon cuniculi EcunIII-L" abbrev="ecunEcunIII-L" />
     <org organism="Encephalitozoon hellem ATCC 50504" abbrev="ehelATCC50504" />
+    <org organism="Encephalitozoon hellem Swiss" abbrev="ehelSwiss" />
     <org organism="Encephalitozoon intestinalis ATCC 50506" abbrev="eintATCC50506" />
     <org organism="Encephalitozoon romaleae SJ-2008" abbrev="eromSJ2008" />
-    <org organism="Enterocytozoon bieneusi H348" abbrev="ebieH348" />
-    <org organism="Enterocytozoon hepatopenaei strain TH1" abbrev="ehepTH1" />
-    <org organism="Enterospora canceri strain GB1" abbrev="ecanGB1" />
-    <org organism="Hepatospora eriocheir strain GB1" abbrev="heriGB1" />
-    <org organism="Hepatospora eriocheir strain canceri" abbrev="hericanceri" />
-    <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
-    <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
-    <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
-    <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
-    <org organism="Amphiamblys sp. WSBS2006" abbrev="aspWSBS2006" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="main_gene" />
-      <subtrack set="EdMiOrPs_gene" />
-      <subtrack set="Nematocida_gene" />
-    </track>
-  </url>
-
-  <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Nematocida parisii ERTm1" abbrev="nparERTm1" />
-    <org organism="Nematocida parisii ERTm3" abbrev="nparERTm3" />
-    <org organism="Nematocida ausubeli ERTm2" abbrev="nausERTm2" />
-    <org organism="Nematocida ausubeli ERTm6" abbrev="nausERTm6" />
-    <org organism="Nematocida displodere strain JUm2807" abbrev="ndisJUm2807" />
-    <track name="Gene" />
-    <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Nematocida_gene" />
-      <subtrack set="EdMiOrPs_gene" />
-      <subtrack set="SpTrVa_gene" />
+      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="Unikaryonidae_gene" />
+      <subtrack set="nparERTm1_gene"/>
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
     <org organism="Anncaliia algerae PRA109" abbrev="aalgPRA109" />
     <org organism="Anncaliia algerae PRA339" abbrev="aalgPRA339" />
+    <org organism="Tubulinosema ratisbonensis Franzen" abbrev="tratFranzen" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Anncaliia_gene" />
-      <subtrack set="main_gene" />
-      <subtrack set="EdMiOrPs_gene" />
+      <subtrack set="Tubulinosematidae_gene" />
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Spraguea lophii 42_110" abbrev="slop42_110" />
     <org organism="Trachipleistophora hominis Unknown strain" abbrev="thomUnknown" />
     <org organism="Vavraia culicis subsp. floridensis" abbrev="vculfloridensis" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="SpTrVa_gene" />
-      <subtrack set="Nematocida_gene" />
+      <subtrack set="Pleistophoridae_gene"/>
+      <subtrack set="Astathelohaniidae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Encephalitozoon cuniculi EC2" abbrev="ecunEC2" />
+    <org organism="Thelohania contejeani T1" abbrev="tconT1"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="ecunEC2_gene" />
-      <subtrack set="main_gene" />
+      <subtrack set="Astathelohaniidae_gene"/>
+      <subtrack set="Pleistophoridae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Encephalitozoon cuniculi EC3" abbrev="ecunEC3" />
+    <org organism="Ordospora colligata OC4" abbrev="ocolOC4" />
+    <org organism="Ordospora colligata GB-EP-1" abbrev="ocolGBEP1" />
+    <org organism="Ordospora colligata NO-V-7" abbrev="ocolNOV7" />
+    <org organism="Ordospora colligata FI-SK-17-1" abbrev="ocolFISK171" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="ecunEC3_gene" />
-      <subtrack set="main_gene" />
+      <subtrack set="Ordosporidae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Encephalitozoon cuniculi EcunIII-L" abbrev="ecunEcunIII-L" />
+    <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Nosema ceranae BRL" abbrev="ncerBRL" />
+    <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
+    <org organism="Nosema granulosis Ou3-Ou53" abbrev="ngraOu3Ou53" />
+    <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
+    <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="ecunEcunIII-L_gene" />
-      <subtrack set="main_gene"/>
+      <subtrack set="Nosematidae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Enterocytozoon bieneusi H348" abbrev="ebieH348" />
+    <org organism="Enterocytozoon hepatopenaei strain TH1" abbrev="ehepTH1" />
+    <org organism="Enterospora canceri strain GB1" abbrev="ecanGB1" />
+    <org organism="Hepatospora eriocheir strain GB1" abbrev="heriGB1" />
+    <org organism="Hepatospora eriocheir strain canceri" abbrev="hericanceri" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Enterocytozoonida_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Dictyocoela muelleri Ou54" abbrev="dmueOu54"/>
+    <org organism="Dictyocoela roeselum Ou19" abbrev="droeOu19"/>
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Dictyocoela_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="Microsporidia_incertae_sedis_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Nematocida parisii ERTm3" abbrev="nparERTm3" />
+    <org organism="Nematocida ausubeli ERTm2" abbrev="nausERTm2" />
+    <org organism="Nematocida ausubeli ERTm6" abbrev="nausERTm6" />
+    <org organism="Nematocida displodere strain JUm2807" abbrev="ndisJUm2807" />
+    <org organism="Nematocida major JUm2507" abbrev="nmajJUm2507" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Nematocida parisii ERTm1" abbrev="nparERTm1" />
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="nparERTm1_gene"/>
+      <subtrack set="Nematocida_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
     </track>
   </url>
 
@@ -1548,22 +1626,12 @@
     <org organism="Encephalitozoon cuniculi GB-M1" abbrev="ecunGBM1" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="ecunGBM1_gene" />
-      <subtrack set="main_gene" />
-      <subtrack set="Nematocida_gene" />
-    </track>
-
-  </url>
-
-  <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Encephalitozoon hellem Swiss" abbrev="ehelSwiss" />
-    <track name="Gene" />
-    <track name="Synteny" abbrevFirst="true">
-      <subtrack set="ehelSwiss_gene" />
-      <subtrack set="main_gene" />
-      <subtrack set="Nematocida_gene" />
+      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="Unikaryonidae_gene"/>
+      <subtrack set="nparERTm1_gene"/>
     </track>
   </url>
+
 
 <!-- ToxoDB -->
 
@@ -2165,6 +2233,7 @@
     <track>dsilDsil-2018</track>
     <track>iscaWikel</track>
     <track>iscaISE6</track>
+    <track>iscaPalLabHiFi</track>
     <track>rmicRmic-2018</track>
     <track>rsanRsan-2018</track>
   </subtrackSet>
@@ -2240,7 +2309,7 @@
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
     <org organism="Aedes albopictus Foshan FPA" abbrev="aalbFPA" />
     <org organism="Aedes albopictus C6/36 cell line" abbrev="aalbC6-36" />
-    <org organism="Culex quinquefasciatus JHB" abbrev="cquiJHB" />
+    <org organism="Culex quinquefasciatus JHB 2020" abbrev="cquiJHB" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
@@ -2288,6 +2357,7 @@
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
+    <org organism="Ixodes scapularis PalLabHiFi" abbrev="iscaPalLabHiFi" />
     <org organism="Rhipicephalus microplus Rmic-2018" abbrev="rmicRmic-2018" />
     <org organism="Rhipicephalus sanguineus Rsan-2018" abbrev="rsanRsan-2018" />
     <track name="Synteny" abbrevFirst="true">
