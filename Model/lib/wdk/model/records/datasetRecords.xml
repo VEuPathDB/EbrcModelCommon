@@ -1871,7 +1871,10 @@ select  dsp.dataset_presenter_id as dataset_id,
              WHERE dsnt.taxon_id = tn.component_taxon_id (+)
                AND tn.organism_name = aid.organism(+)
                AND aid.apolloid IS NOT NULL
-         ) SELECT dsp.dataset_presenter_id AS dataset_id,   in_apollo
+         ) SELECT dsp.dataset_presenter_id AS dataset_id,
+                        CASE WHEN ( in_apollo IS NOT NULL)
+                        THEN 'Apollo'
+                        ELSE 'N/A' END AS in_apollo
            FROM apollo_dataset ad, apidbtuning.datasetPresenter dsp
           WHERE dsp.dataset_presenter_id = ad.dataset_presenter_id (+)
              ]]>
