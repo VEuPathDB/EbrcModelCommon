@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="datasetPresenters.xslt"?>
+<!DOCTYPE datasetPresenters SYSTEM "datasetPresenters.dtd">
+<datasetPresenters>
+
+  <!-- for ClinEpi -->
+  <internalDataset name="OBO_Ontology_obi_RSRC"/>
+
+
+  <internalDataset name="OntologyTerms" datasetNamePattern="Ontology%"/>  
+  
+</datasetPresenters>
