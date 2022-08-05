@@ -36,6 +36,7 @@ sub createTables {
       create table $schema.DatasetPresenter$suffix (
         dataset_presenter_id         varchar2(15),
         name                         varchar2(200),
+        project_id                   varchar2(40),
         dataset_name_pattern         varchar2(200),
         display_name                 varchar2(200),
         short_display_name           varchar2(200),

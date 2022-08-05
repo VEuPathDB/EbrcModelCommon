@@ -17,13 +17,14 @@
             from apidbTuning.DatasetPresenter
             where category is null OR category != 'Link outs'
           ]]>
-       </sql>
+       </sql> 
 
-        <sql includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+        <sql includeProjects="ClinEpiDB,AllClinEpiDB">
           <![CDATA[
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
-            where category is null OR category != 'Link outs'
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
             UNION
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
@@ -40,6 +41,15 @@
             WHERE i.user_dataset_id = d.user_dataset_id
              and i.user_dataset_id = s.user_dataset_id
              and s.recipient_user_id = $$user_id$$
+          ]]>
+       </sql>
+
+        <sql includeProjects="MicrobiomeDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and project_id = '@PROJECT_ID@'
           ]]>
        </sql>
 
@@ -63,6 +73,7 @@
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic' and dprop.value = 'true'
+            and dpres.project_id = '@PROJECT_ID@'
           ]]>
        </sql>
     </sqlQuery>

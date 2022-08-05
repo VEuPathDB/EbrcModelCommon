@@ -69,6 +69,7 @@ my $modelProjectBase ="ApiCommonModel";
 
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
+my $is_eda = 0;  # to determine if this is a EDA database (with Clin and Mbio data)
 
 while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   my $projectXmlFile = "${project}.xml";
@@ -77,9 +78,11 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   if ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
     $modelProjectBase = "MicrobiomeModel";
+    $is_eda++;
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
     $modelProjectBase = "ClinEpiModel";
+    $is_eda++;
   }
 
   system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
@@ -114,8 +117,11 @@ system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
 my $contactsXmlFile = "contacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
-
+if ($is_eda){
+  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
+} else {
+  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+}
 if($report) {
   $suffix = 1234;
 }
