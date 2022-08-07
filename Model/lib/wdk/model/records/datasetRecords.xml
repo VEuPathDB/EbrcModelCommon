@@ -141,25 +141,11 @@
        <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
        </attributeQueryRef>
-<!--
-
-       <attributeQueryRef ref="DatasetAttributes.Category">
-         <columnAttribute name="category" displayName="Category" inReportMaker="false"
-                          help= "Datasets are assigned to categories based on the biological attributes of the data." />
-       </attributeQueryRef>
--->
 
        <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
          <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
                           help= "Datasets are assigned to categories based on the biological attributes of the data." />
        </attributeQueryRef>
-
-<!--
-      <attributeQueryRef ref="DatasetAttributes.ExpTechnique">
-         <columnAttribute name="exp_technique" displayName="Technology" help="The method or process used to generate the data (functional datasets) or the type of association that VEuPathDB made to the data (e.g. link outs to other data bases.)"/>
-       </attributeQueryRef>
--->
-
 
        <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
          <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
@@ -929,130 +915,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="ExpTechnique" isCacheable="false">
-         <column name="exp_technique" columnType="string"/>
-         <column name="dataset_id" columnType="string"/>
-         <sql>
-           <![CDATA[
-                   select dsp.dataset_presenter_id as dataset_id,
-                      nvl(
-                           nvl(
-                           decode(dsp.subtype,  -- using terms defined in Ontology OBI
-                                  'array','transcription profiling by array',
-                                  'rnaseq','RNA-Seq',
-                                  'chip_chip','ChIP-chip',
-                                  'chipseq','ChIP-Seq',
-                                  'rtpcr','transcription profiling by RT-PCR',
-                                  'sage_tag','serial analysis of gene expression',
-                                  'smallNcRna','RNA-Seq',
-                                  'cgh_array','comparative genomic hybridization by array',
-                                  'copyNumberVariation','copy number variation profiling',
-                                  'originsOfReplication','DNA sequencing',
-	                                'immune_response','proteomic profiling by array',
-	                                '3k_chip','genotyping by SNP array',
-                                  'HTS_SNP','genotyping by high throughput sequencing',
-                                  'barcode','genotyping',
-                                  'hd_array','genotyping by SNP array',
-                                  'sequencing_typed','genotyping',
-                                  'quantitative','mass spectrometry',
-                                   null),
-                           decode(dsp.type,
-                                  'EST','EST sequencing', -- using terms defined in Experimental Factor Ontology (EFO)
-                                 'SNP','genotyping',
-                                 'protein_expression','mass spectrometry',
-                                 'dbxref', 'Link Outs',
-                                 null)
-                            ),
-
-                           decode(dsp.display_category,
-                                'External Links','Link Outs',
-                                'Genomes and Annotation: Microsatellite Markers','Microsatellite Markers',
-                                'Genomes and Annotation: Genetic Map','Genetic Map',
-                                'Genomes and Annotation: Old Annotations','Old Annotations',
-                                'Genomes and Annotation: TF Binding Sites','TF Binding Sites',
-                                'Genomes and Annotation:Organellar','Organellar',
-                                null)
-                      )
-                      as exp_technique
-                    from ApidbTuning.DatasetPresenter dsp
-                    where project_id = '@PROJECT_ID@'
-  --                  UNION
-  --        SELECT d.dataset_stable_id, null as exp_technique
-  --        FROM apidbuserdatasets.installeduserdataset i, 
-  --             apidbuserdatasets.datasetattributes d
-  --        WHERE i.user_dataset_id = d.user_dataset_id
-                  ]]>
-            </sql>
-      </sqlQuery>
-
-
-      <sqlQuery name="Category" isCacheable="false">
-         <column name="category"/>
-         <column name="dataset_id"/>
-         <sql>
-           <![CDATA[
-                   select dsp.dataset_presenter_id as dataset_id,
-                           nvl(  -- dsp.display_category,
-                               decode(dsp.display_category,
-                                  'Comparative Genomics','Comparative Genomics',
-                                  'Compounds and Metabolic Pathways','Compounds and Metabolic Pathways',
-                                  'Compounds and Metabolic pathways','Compounds and Metabolic Pathways',
-                                  --'External Links','External Links',
-                                  'Function','Function',
-                                  'Gene Expression: eQTL','Transcript Expression',
-                                  'General','General',
-                                  'Genomes and Annotation','Genomes and Annotation',
-                                  'Genomes and Annotation: Genetic Map','Genomes and Annotation',
-                                  'Genomes and Annotation: Microsatellite Markers','Genomes and Annotation',
-                                  'Genomes and Annotation: Old Annotations','Genomes and Annotation',
-                                  'Genomes and Annotation: TF Binding Sites','Genomes and Annotation',
-                                  'Genomes and Annotation:Organellar','Genomes and Annotation',
-                                  'Genomics','Comparative Genomics',
-                                  'Host Response','Host Response',
-                                  'Interactions and Cellular Location','Interactions and Cellular Location',
-                                  'Ontology','Ontology',
-                                  'Phenotype','Phenotype',
-                                  'Population Biology','Population Biology',
-                                  'Protein Expression','Protein Expression',
-                                  'Protein Interactions','Protein Interactions',
-                                  'Protein Structure','Protein Structure',
-                                  'RNA Structure','RNA Structure',
-                                  'Subcellular localization','Subcellular Localization',
-                                  'Taxonomy and Phylogeny','Taxonomy and Phylogeny',
-                                  'Transcript Expression','Transcript Expression',
-                                   null),
-                               decode(dsp.type,
-                                      'epitope', 'Genomes and Annotation',
-                                      -- 'dbxref', 'External Links',
-                                      'isolates', 'Population Biology',
-                                      'organellar_genome', 'Genomes and Annotation',
-                                      'genome', 'Genomes and Annotation',
-                                      'EST', 'Transcript Expression',
-                                      'alias', 'Genomes and Annotation',
-                                      'gene_annotation', 'Genomes and Annotation',
-                                      'subcellular_localization', 'Subcellular Localization',
-                                      -- 'aligned_sequence', 'Miscellaneous',
-                                      'orthology', 'Taxonomy and Phylogeny',
-                                      'function', 'Function',
-                                      -- 'external_sequences', 'External Sequences',
-                                      -- 'feature', 'Miscellaneous',
-                                      'sres', 'Ontology',
-                                      'transcript_expression', 'Transcript Expression',
-                                      'transcript_expression_platform', 'Transcript Expression',
-                                      'protein_expression', 'Protein Expression',
-                                      'phenotype','Phenotype',
-                                      'isolates', 'Population Biology',
-                                      'SNP', 'Population Biology',
-                                      'population_biology', 'Population Biology',
-                                      'resequencing', 'Comparative Genomics',
-				      'metabolite_levels', 'Metabolite Levels',
-                                      null)
-                                      ) as category
-                    from ApidbTuning.DatasetPresenter dsp
-                    where project_id = '@PROJECT_ID@'
-                  ]]>
-            </sql>
-      </sqlQuery>
 
       <sqlQuery name="NewCategory" isCacheable="false">
          <column name="newcategory" columnType="string"/>
