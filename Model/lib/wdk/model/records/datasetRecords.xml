@@ -1622,7 +1622,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e,publink, '<br><br>').extract('//text()') order by publink).getclobval(), '<br><br>'), 1) as pmids
-                       , listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                       , listagg( pmid, ', ') within group (order by pmid) as pmids_download
                      from allpubs
                      group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
@@ -1692,11 +1692,11 @@ with allpubs as (
             from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
-                       , listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                       , listagg( pmid, ', ') within group (order by pmid) as pmids_download
                      from allpubs
                      group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,
-                         '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+                         'VEuPathDB rel. ' || release_number || ', ' || release_date as eupath_release
                   from (select dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                                ebd.release_number, ebd.project,
                                row_number() over (partition by dh.dataset_presenter_id
@@ -1756,7 +1756,7 @@ select  dsp.dataset_presenter_id as dataset_id,
                  (select dataset_presenter_id,
 --                       listagg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ') within group (order by pmid) as pmids,
                          dbms_xmlgen.convert( rtrim(xmlagg(xmlelement(e, '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ').extract('//text()') order by pmid).getclobval(), ', '), 1) as pmids,
-                         listagg('https://www.ncbi.nlm.nih.gov/pubmed/' || pmid, ', ') within group (order by pmid) as pmids_download
+                         listagg( pmid, ', ') within group (order by pmid) as pmids_download
                   from ApidbTuning.DatasetPublication
                   group by dataset_presenter_id) pubs,
                  (select dataset_presenter_id,

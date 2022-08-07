@@ -13,7 +13,7 @@
       queryRef="DatasetIds.AllDatasets"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList sorting="eupath_release asc,display_name asc" />
+      <attributesList sorting="eupath_release asc" />
       <description>
          Find all data sets.
       </description>
@@ -207,7 +207,7 @@
         recordClassRef="DatasetRecordClasses.DatasetRecordClass"
         noSummaryOnSingleRecord="true">
 
-      <attributesList summary="display_name,contact,institution,max_score" sorting="max_score desc" /> 
+      <attributesList summary="contact,institution,max_score" sorting="max_score desc" /> 
 
       <summary>
         <![CDATA[
@@ -249,7 +249,7 @@
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
       <attributesList
-         summary="obser_ovelap,exp_overlap,fold_enrichment,percent_ul,percent_ds,p_value,display_name,contact,institution"
+         summary="obser_ovelap,exp_overlap,fold_enrichment,percent_ul,percent_ds,p_value,contact,institution"
          sorting="p_value asc" />
        <dynamicAttributes>
          <columnAttribute name="obser_ovelap" displayName="# Overlapping Genes 1"  align="center" help="Number of overlapped genes identifiers from the input list that could be mapped to this dataset by checking for valid IDs or ortholog transform"/>
