@@ -148,18 +148,18 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
-         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/>
+         <columnAttribute name="display_name" internal="true" displayName="Dataset Name"/>
        </attributeQueryRef>
 
         <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs" removable="true"/>
+         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs"/>
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
         <attributeQueryRef ref="DatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-         <columnAttribute name="genome_version" displayName="Genome Version" removable="true"/>
-         <columnAttribute name="annotation_version" displayName="Annotation Version" removable="true"/>
-         <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version" removable="true"/>
+         <columnAttribute name="genome_version" displayName="Genome Version"/>
+         <columnAttribute name="annotation_version" displayName="Annotation Version"/>
+         <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
