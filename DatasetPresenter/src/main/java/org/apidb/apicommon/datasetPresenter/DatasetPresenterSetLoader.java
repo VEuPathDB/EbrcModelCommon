@@ -372,9 +372,16 @@ public class DatasetPresenterSetLoader {
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
-    String sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
+    String sql;
+
+    if (instance.substring(0, 4).equals("eupa")){
+	sql = "SELECT name, taxon_id, type, subtype, is_species_scope, project_id "
+         "FROM " + table + " WHERE name like ?";
+    } else {
+	sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
         + "FROM " + table
         + " ds, core.ProjectInfo pi WHERE pi.project_id = ds.row_project_id and ds.NAME like ?";
+    }
     return dbConnection.prepareStatement(sql);
   }
 
