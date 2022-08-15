@@ -919,19 +919,27 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <sqlQuery name="NewCategory" isCacheable="false">
          <column name="newcategory" columnType="string"/>
          <column name="dataset_id" columnType="string"/>
-         <sql>
+         <sql excludeProjects="EuPathDB,UniDB">
            <![CDATA[
                        select dsp.dataset_presenter_id as dataset_id,
                               nvl(dsp.display_category, dsp.category) as newcategory
                          from ApidbTuning.DatasetPresenter dsp
                          where project_id = '@PROJECT_ID@'
-   --                 UNION
+  --                  UNION
   --        SELECT d.dataset_stable_id, null as newcategory
   --        FROM apidbuserdatasets.installeduserdataset i, 
   --             apidbuserdatasets.datasetattributes d
   --        WHERE i.user_dataset_id = d.user_dataset_id
                 ]]>
         </sql>
+         <sql includeProjects="EuPathDB,UniDB">
+           <![CDATA[
+                       select dsp.dataset_presenter_id as dataset_id,
+                              nvl(dsp.display_category, dsp.category) as newcategory
+                         from ApidbTuning.DatasetPresenter dsp
+                ]]>
+        </sql>
+
       </sqlQuery>
 
       <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
