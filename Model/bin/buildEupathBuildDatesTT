@@ -53,18 +53,28 @@ my $presentersProjectBase ="ApiCommonPresenters";
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
 
+my $is_eda=0; # boolean to check if this is a EDA db, with Clin and Mbio projects
+
 while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   if ($lowerProject =~/microbiomedb/) {
     $presentersProjectBase = "MicrobiomePresenters";
+    $is_eda++;
     last;
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
+    $is_eda++;
     last;
   }
 }
-my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 
 my $yamlFile = "$ENV{PROJECT_HOME}/$presentersProjectBase/Model/lib/yaml/eupathBuildDates.yaml";
+
+if ($is_eda ==2) { # for EDA db, with Clin and Mbio projects
+  system("cat $ENV{PROJECT_HOME}/ClinEpiPresenters/Model/lib/yaml/eupathBuildDates.yaml $ENV{PROJECT_HOME}/MicrobiomePresenters/Model/lib/yaml/eupathBuildDates.yaml > $ENV{GUS_HOME}/lib/yaml/eupathBuildDatesClinMbio.yaml");
+
+  $yamlFile = "$ENV{GUS_HOME}/lib/yaml/eupathBuildDatesClinMbio.yaml";
+}
+
 my $build_number;
 my $release_date;
 my $project;
