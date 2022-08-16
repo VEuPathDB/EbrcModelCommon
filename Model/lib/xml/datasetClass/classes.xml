@@ -2805,7 +2805,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
 	<!-- TODO test miniflow - need to set this to back organism specific xml -->
 	<!-- <graphTemplateFile name="miniflow.xml"/> -->
-	<graphTemplateFile name="organismSpecificMisc.xml"/> 
+	<graphTemplateFile name="organismSpecificMisc.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertNAFeatureImage"
               datasetName="${organismAbbrev}_${name}_GeneImage_RSRC"
@@ -2822,6 +2822,38 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--file @@dataDir@@/final/geneimage.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+  <datasetClass class="Cellxgene" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+  	<graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertCellxgene"
+              datasetName="${organismAbbrev}_${name}_cellxgene_RSRC"
+              version="${version}"
+              scope="organism"
+              type="transcript_expression"
+              subType="scrnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/scRNASeq/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput file="@@dataDir@@/final/cellxgene.h5ad"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/gene_mapping.txt"/>
+      <pluginArgs>--file @@dataDir@@/final/gene_mapping.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
 
   <datasetClass class="NAFeaturePhenotypeImage" category="phenotype" datasetFileHint="">
     <purpose></purpose>
