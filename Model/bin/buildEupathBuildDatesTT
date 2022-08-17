@@ -71,7 +71,7 @@ my $release_date;
 my $project;
 my $release_number;
 
-if ($instance =~ /\/eda/ ){
+if ($instance =~ /eda/ ){
   &runEDA();
 } else {
   &run();
