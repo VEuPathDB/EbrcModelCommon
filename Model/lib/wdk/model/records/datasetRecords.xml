@@ -2040,6 +2040,7 @@ FROM (
    SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MON-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number                                                 
    FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp                        
    WHERE dh.build_number = bd.build_number                                                                                       
+   AND dp.project_id = bd.project
    AND  dh.dataset_presenter_id = dp.dataset_presenter_id                                                                        
    ORDER by dh.build_number                                                                                                      
    ) ORDER by build_number                                                                                                       
