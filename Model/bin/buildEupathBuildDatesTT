@@ -53,32 +53,29 @@ my $presentersProjectBase ="ApiCommonPresenters";
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
 
-my $is_eda=0; # boolean to check if this is a EDA db, with Clin and Mbio projects
 
 while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   if ($lowerProject =~/microbiomedb/) {
     $presentersProjectBase = "MicrobiomePresenters";
-    $is_eda++;
+    last;
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
-    $is_eda++;
+    last;
   }
 }
 
 my $yamlFile = "$ENV{PROJECT_HOME}/$presentersProjectBase/Model/lib/yaml/eupathBuildDates.yaml";
-
-if ($is_eda ==2) { # for EDA db, with Clin and Mbio projects
-  system("cat $ENV{PROJECT_HOME}/ClinEpiPresenters/Model/lib/yaml/eupathBuildDates.yaml $ENV{PROJECT_HOME}/MicrobiomePresenters/Model/lib/yaml/eupathBuildDates.yaml > $ENV{GUS_HOME}/lib/xml/eupathBuildDatesClinMbio.yaml");
-
-  $yamlFile = "$ENV{GUS_HOME}/lib/xml/eupathBuildDatesClinMbio.yaml";
-}
 
 my $build_number;
 my $release_date;
 my $project;
 my $release_number;
 
-&run();
+if ($instance =~ /\/eda/ ){
+  &runEDA();
+} else {
+  &run();
+}
 
 sub run{
   unless(-e $yamlFile) { # yaml file is not found
@@ -107,6 +104,35 @@ sub run{
   $dbh->commit();
   $dbh->disconnect();
 }
+
+sub runEDA{
+  &usage() if ($help);
+
+  my $insertStatement = "INSERT INTO EupathBuildDates$suffix (build_number, release_date, project, release_number) VALUES (?,?,?,?)";
+  my $insertRow = $dbh->prepare($insertStatement);
+  &createEmptyTable($dbh,$suffix);
+
+  my $presentersProjectBase = ("ClinEpiPresenters", "MicrobiomePresenters");
+
+  foreach my $p ($presentersProjectBase){ 
+    $yamlFile = $yamlFile = "$ENV{PROJECT_HOME}/$presentersProjectBase/Model/lib/yaml/eupathBuildDates.yaml";
+    open(my $fh, $yamlFile) || die "Can't open $yamlFile\n";
+    my $stuff = LoadFile($fh);
+
+    foreach my $buildDate (@{$stuff->{buildDates}}) {
+      $build_number = $buildDate->{build};
+      $release_date = $buildDate->{relDate};
+      for (keys %{$buildDate->{projects}}) {
+	$project = $_;
+	$release_number = $buildDate->{projects}->{$_};
+	$insertRow->execute($build_number, $release_date, $project, $release_number);
+      }
+    }
+  }
+  $dbh->commit();
+  $dbh->disconnect();
+}
+
 
 sub createEmptyTable {
      my ($dbh, $suffix) = @_;
