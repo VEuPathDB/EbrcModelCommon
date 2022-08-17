@@ -2848,7 +2848,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
       <getAndUnpackOutput file="@@dataDir@@/final/cellxgene.h5ad"/>
       <getAndUnpackOutput file="@@dataDir@@/final/gene_mapping.txt"/>
-      <pluginArgs>--file @@dataDir@@/final/gene_mapping.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/final/gene_mapping.txt --extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
