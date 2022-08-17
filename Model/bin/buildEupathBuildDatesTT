@@ -112,10 +112,10 @@ sub runEDA{
   my $insertRow = $dbh->prepare($insertStatement);
   &createEmptyTable($dbh,$suffix);
 
-  my $presentersProjectBase = ("ClinEpiPresenters", "MicrobiomePresenters");
+  my @presentersProjectBase = ("ClinEpiPresenters", "MicrobiomePresenters");
 
-  foreach my $p ($presentersProjectBase){ 
-    $yamlFile = "$ENV{PROJECT_HOME}/$presentersProjectBase/Model/lib/yaml/eupathBuildDates.yaml";
+  foreach my $p (@{presentersProjectBase}){
+    my $yamlFile = "$ENV{PROJECT_HOME}/$p/Model/lib/yaml/eupathBuildDates.yaml";
     open(my $fh, $yamlFile) || die "Can't open $yamlFile\n";
     my $stuff = LoadFile($fh);
 
