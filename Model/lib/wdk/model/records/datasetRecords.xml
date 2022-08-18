@@ -139,7 +139,7 @@
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-         <columnAttribute  name="eda_study_id" displayName="Eda Study ID"/>
+         <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
        </attributeQueryRef>
 
        <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
@@ -152,7 +152,7 @@
        </attributeQueryRef>
 
         <attributeQueryRef ref="DatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
-         <columnAttribute name="megabase_pairs" displayName="Megabase Pairs"/>
+         <columnAttribute name="megabase_pairs" displayName="Megabase pairs"/>
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
