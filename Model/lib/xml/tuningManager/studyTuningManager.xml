@@ -1333,6 +1333,7 @@ UNION ALL
                    case ot.name
                      when 'env_feature' then 'Habitat'
                      when 'data set' then 'Data Set'
+                     when 'obsolete_average mapping coverage' then 'Average mapping coverage'
                      else ot.name
                    end) as display_name,
                term_synonym.display_order,
