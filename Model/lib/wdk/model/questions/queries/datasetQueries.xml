@@ -25,7 +25,7 @@
             from apidbTuning.DatasetPresenter
             where (category is null OR category != 'Link outs')
             and  project_id = '@PROJECT_ID@'
-            and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+            --and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
