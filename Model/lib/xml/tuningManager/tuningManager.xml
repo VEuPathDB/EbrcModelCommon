@@ -243,6 +243,8 @@ order by organism, species, genus
           select * from mononym
         union
           select * from full_name
+        union
+          select 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB' from full_name
         order by 2, 1
       ]]>
     </sql>
