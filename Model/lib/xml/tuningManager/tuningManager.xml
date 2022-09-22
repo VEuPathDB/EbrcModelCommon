@@ -323,6 +323,8 @@ order by organism, species, genus
           select 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB' from full_name
         union
           select 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB' from full_name
+        union
+          select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from full_name
         order by 2, 1
       ]]>
     </sql>
