@@ -244,87 +244,93 @@ order by organism, species, genus
         union
           select * from full_name
         union
-          select 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/rp', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/rp', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/su03', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/su03', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/su4', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/su4', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB' from dual
         union
-          select 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB' from full_name
+          select 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB' from dual
         union
-          select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from full_name
+          select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from dual
+        union
+          select 'soil_flagellate_AND31', 'TriTrypDB' from dual
+        union
+          select 'kinetoplastid_flagellate_LFS2', 'TriTrypDB' from dual
+        union
+          select 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB' from dual
         order by 2, 1
       ]]>
     </sql>
