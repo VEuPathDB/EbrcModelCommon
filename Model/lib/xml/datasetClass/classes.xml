@@ -4047,14 +4047,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
                    >
-
-    <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-    </manualGet>
-
+      <wgetArgs url="http://purl.obolibrary.org/obo/eupath.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath.owl </wgetArgs>
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@dataDir@@/eupath.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
