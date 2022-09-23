@@ -326,9 +326,9 @@ order by organism, species, genus
         union
           select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from dual
         union
-          select 'soil_flagellate_AND31', 'TriTrypDB' from dual
+          select 'soil_flagellate_and31', 'TriTrypDB' from dual
         union
-          select 'kinetoplastid_flagellate_LFS2', 'TriTrypDB' from dual
+          select 'kinetoplastid_flagellate_lfs2', 'TriTrypDB' from dual
         union
           select 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB' from dual
         order by 2, 1
