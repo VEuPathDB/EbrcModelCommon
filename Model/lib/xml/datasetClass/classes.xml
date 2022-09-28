@@ -3436,6 +3436,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="alphaFold" category="" datasetFileHint="">
     <purpose>Load AlphaFold</purpose>
     <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+    
+    <graphTemplateFile name="project.xml"/>
+
     <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
       plugin="ApiCommonData::Load::Plugin::InsertAlphaFold"
       scope="global"
