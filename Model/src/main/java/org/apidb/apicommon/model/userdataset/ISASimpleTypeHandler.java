@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,11 +50,12 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
       metaObject.put("description", meta.getDescription());
       metaObject.put("summary", meta.getSummary());
       Files.write(metaJsonTmpFile, metaObject.toString().getBytes(StandardCharsets.UTF_8));
+      final String imageTag = Optional.ofNullable(System.getenv("ISA_IMAGE_TAG")).orElse("latest");
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
           "--bind", constructGusConfigBinding(),
           "--bind", constructOracleHomeBinding(),
-          "docker://veupathdb/dataset-installer-isasimple:latest",
+          "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
           "loadStudy.bash",
           datasetTmpFile.toString(),
           userDataset.getUserDatasetId().toString(),
