@@ -651,6 +651,7 @@
     <track>afumAf293</track>
     <track>afumA1163</track>
     <track>aclaNRRL1</track>
+    <track>acriGZAAS20.1005</track>
     <track>afijCBS313.89</track>
     <track>aflaNRRL3357</track>
     <track>aflaNRRL3357_2020</track>
@@ -687,6 +688,7 @@
     <track>ntetFGSC2508</track>
     <track>ndisFGSC8579</track>
     <track>ttheATCC42464</track>
+    <track>cgloCBS148.51</track>
     <track>pansSmat</track>
     <track>smack-hell</track>
     <track>mpoaATCC64411</track>
@@ -785,6 +787,7 @@
   <subtrackSet name="Onygenales" project="FungiDB" suffixes="_span;_gene">
     <track>aapiARSEF7405</track>
     <track>cposSilveira</track>
+    <track>cposSilveira2022</track>
     <track>cposRMSCC3488</track>
     <track>cposC735deltSOWgp</track>
     <track>cimmH538-4</track>
@@ -822,9 +825,11 @@
     <track>ztriIPO323</track>
     <track>ztriST99CH3D1</track>
     <track>hwerEXF-2000</track>
+    <track>mphaMS6</track>
     <track>cgeo1.58</track>
     <track>vgalCBS43764</track>
     <track>aaltSRC1lrK2f</track>
+    <track>pterf.teres01</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -1059,6 +1064,7 @@
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
     <org abbrev="afumA1163" organism="Aspergillus fumigatus A1163"/>
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
+    <org abbrev="acriGZAAS20.1005" organism="Aspergillus cristatus GZAAS20.1005"/>
     <org abbrev="afijCBS313.89" organism="Aspergillus fijiensis CBS 313.89"/>
     <org abbrev="aflaNRRL3357" organism="Aspergillus flavus NRRL3357"/>
     <org abbrev="aflaNRRL3357_2020" organism="Aspergillus flavus NRRL3357 2020"/>
@@ -1099,6 +1105,7 @@
     <org abbrev="ntetFGSC2508" organism="Neurospora tetrasperma FGSC 2508"/>
     <org abbrev="ndisFGSC8579" organism="Neurospora discreta FGSC 8579"/>
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
+    <org abbrev="cgloCBS148.51" organism="Chaetomium globosum CBS 148.51"/>
     <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mpoaATCC64411" organism="Magnaporthiopsis poae ATCC 64411"/>
@@ -1245,6 +1252,7 @@
     <org abbrev="cimmWA_211" organism="Coccidioides immitis WA_211"/>
     <org abbrev="cposC735deltSOWgp" organism="Coccidioides posadasii C735 delta SOWgp"/>
     <org abbrev="cposSilveira" organism="Coccidioides posadasii str. Silveira"/>
+    <org abbrev="cposSilveira2022" organism="Coccidioides posadasii strain Silveira 2022"/>
     <org abbrev="cposRMSCC3488" organism="Coccidioides posadasii RMSCC 3488"/>
     <org abbrev="pbraPb03" organism="Paracoccidioides brasiliensis Pb03"/>
     <org abbrev="pbraPb18" organism="Paracoccidioides brasiliensis Pb18"/>
@@ -1292,9 +1300,11 @@
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
     <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="hwerEXF-2000" organism="Hortaea werneckii EXF-2000"/>
+    <org abbrev="mphaMS6" organism="Macrophomina phaseolina MS6"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
+    <org abbrev="pterf.teres01" organism="Pyrenophora teres f. teres 0-1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
