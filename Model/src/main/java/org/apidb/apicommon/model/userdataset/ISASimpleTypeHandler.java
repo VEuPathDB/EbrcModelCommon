@@ -51,7 +51,7 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
       metaObject.put("summary", meta.getSummary());
       Files.write(metaJsonTmpFile, metaObject.toString().getBytes(StandardCharsets.UTF_8));
       final String imageTag = Optional.ofNullable(System.getenv("ISA_IMAGE_TAG"))
-          .filter(String::isBlank)
+          .filter(tagEnv -> !tagEnv.isBlank())
           .orElse("latest");
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
