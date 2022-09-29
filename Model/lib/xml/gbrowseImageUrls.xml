@@ -552,6 +552,7 @@
     <track>bdenJEL423</track>
     <track>bsalBS</track>
     <track>spunDAOMBR117</track>
+    <track>sendMB42</track>
   </subtrackSet>
 
   <subtrackSet name="Saprolegniaceae_gene" project="FungiDB" suffixes="_span;_gene">
@@ -583,6 +584,7 @@
     <track>cdubCD36</track>
     <track>cduoB09383</track>
     <track>cglaCBS138</track>
+    <track>cglaATCC2001CBS138</track>
     <track>cglaBG2</track>
     <track>chaeB11899</track>
     <track>cmetBP57</track>
@@ -692,6 +694,7 @@
     <track>mory70-15</track>
     <track>moryBR32</track>
     <track>cpur20.1</track>
+    <track>maniARSEF549</track>
     <track>cmilATCC34164</track>
     <track>treeQM6a</track>
     <track>treeQM6a2017</track>
@@ -706,6 +709,7 @@
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
     <track>fcirNRRL25331</track>
     <track>fgraPH-1</track>
+    <track>fmanMRC7560</track>
     <track>ffujIMI58289</track>
     <track>foxy4287</track>
     <track>foxyf.conglutinansFo5176</track>
@@ -843,6 +847,7 @@
 
   <subtrackSet name="Ajellomycetaceae" project="FungiDB" suffixes="_span;_gene">
     <track>hcapNAm1</track>
+    <track>hcapG184AR</track>
     <track>hcapG186AR</track>
     <track>hcapG217B</track>
     <track>hcapH88</track>
@@ -901,6 +906,7 @@
     <org abbrev="bdenJEL423" organism="Batrachochytrium dendrobatidis JEL423"/>
     <org abbrev="bsalBS" organism="Batrachochytrium salamandrivorans BS"/>
     <org abbrev="spunDAOMBR117" organism="Spizellomyces punctatus DAOM BR117"/>
+    <org abbrev="sendMB42" organism="Synchytrium endobioticum MB42"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Chytridiomycetes_gene"/>
@@ -933,6 +939,7 @@
     <org abbrev="cdubCD36" organism="Candida dubliniensis CD36"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
+    <org abbrev="cglaATCC2001CBS138" organism="Candida glabrata CBS138 2020"/>
     <org abbrev="cglaBG2" organism="Candida glabrata BG2"/>
     <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cmetBP57" organism="Candida metapsilosis BP57"/>
@@ -1099,6 +1106,7 @@
     <org abbrev="mory70-15" organism="Pyricularia oryzae 70-15"/>
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
+    <org abbrev="maniARSEF549" organism="Metarhizium anisophilae ARSEF 549"/>
     <org abbrev="cmilATCC34164" organism="Cordyceps militaris ATCC 34164"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
     <org abbrev="treeQM6a2017" organism="Trichoderma reesei QM6a 2017"/>
@@ -1118,6 +1126,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev="fcirNRRL25331" organism="Fusarium circinatum NRRL 25331"/>
     <org abbrev="fgraPH-1" organism="Fusarium graminearum PH-1"/>
+    <org abbrev="fmanMRC7560" organism="Fusarium mangiferae MRC7560"/>
     <org abbrev="ffujIMI58289" organism="Fusarium fujikuroi IMI 58289"/>
     <org abbrev="foxy4287" organism="Fusarium oxysporum f. sp. lycopersici 4287"/>
     <org abbrev="foxyf.conglutinansFo5176" organism="Fusarium oxysporum f. sp. conglutinans Fo5176"/>
@@ -1327,6 +1336,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev = "hcapNAm1" organism="Histoplasma capsulatum NAm1"/> 
+    <org abbrev = "hcapG184AR" organism="Histoplasma capsulatum G184AR"/>
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
     <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
