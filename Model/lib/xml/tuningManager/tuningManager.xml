@@ -20,6 +20,32 @@ FROM EDA.STUDY s
 LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
 LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
 LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+-- This is TEMPORARY (used for alpha MapVEU Application)
+UNION
+select case 
+  when d.dataset_presenter_id = 'DS_58e5ff7fe0' then 'IRbase15189545' 
+  when d.dataset_presenter_id = 'DS_cdc2959b28' then '2014-PMI-IR-surveillance' 
+  when d.dataset_presenter_id = 'DS_5d903d8e3e' then '2017-messenger-ir' 
+  when d.dataset_presenter_id = 'DS_357669c17d' then '2016-Mzilahowa-IR-fun' 
+  when d.dataset_presenter_id = 'DS_ce978da76d' then '2017-tawe-botswana' 
+  when d.dataset_presenter_id = 'DS_64ea3f9fb2' then '2018-camara-ivoire' 
+  when d.dataset_presenter_id = 'DS_db15b5599b' then '2016-flies-virus'   
+  when d.dataset_presenter_id = 'DS_463e7346e3' then '2019-sare-sach' 
+  when d.dataset_presenter_id = 'DS_4b8cb8bb2e' then 'VBP_MEGA'   
+  else 'NA' end as study_stable_id,
+d.dataset_presenter_id as dataset_id
+from apidbtuning.datasetpresenter d
+where d.dataset_presenter_id in (
+'DS_58e5ff7fe0',
+'DS_cdc2959b28',
+'DS_5d903d8e3e',
+'DS_357669c17d',
+'DS_ce978da76d',
+'DS_64ea3f9fb2',
+'DS_db15b5599b',
+'DS_463e7346e3',
+'DS_4b8cb8bb2e'
+)
       ]]>
     </sql>
   </tuningTable>
