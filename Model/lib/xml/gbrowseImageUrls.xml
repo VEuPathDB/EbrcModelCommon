@@ -1418,6 +1418,7 @@
     <track>cdikDv6</track>
     <track>eaedUSNM41457</track>
     <track>mdapUGP3</track>
+    <track>mspFIF10</track>
     <track>pneuMK1</track>
   </subtrackSet>
 
@@ -1436,6 +1437,7 @@
 
   <subtrackSet project="MicrosporidiaDB" name="Nematocida_gene" suffixes="_span;_gene">
     <track>nparERTm3</track>
+    <track>nspERTm5</track>
     <track>nausERTm2</track>
     <track>nausERTm6</track>
     <track>ndisJUm2807</track>
@@ -1447,6 +1449,7 @@
     <track>ncerBRL</track>
     <track>ncerPA08_1199</track>
     <track>ngraOu3Ou53</track>
+    <track>napiBRL01</track>
     <track>nbomCQ1</track>
     <track>vcorATCC50505</track>
   </subtrackSet>
@@ -1505,6 +1508,7 @@
     <org organism="Cucumispora dikerogammari Dv6" abbrev="cdikDv6"/>
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
     <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
+    <org organism="Microsporidium sp. FI-F-10" abbrev="mspFIF10" />
     <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
@@ -1586,6 +1590,7 @@
     <org organism="Nosema ceranae BRL" abbrev="ncerBRL" />
     <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
     <org organism="Nosema granulosis Ou3-Ou53" abbrev="ngraOu3Ou53" />
+    <org organism="Nosema apis BRL 01" abbrev="napiBRL01" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <track name="Gene" />
@@ -1624,6 +1629,7 @@
 
   <url project="MicrosporidiaDB" type="synteny">
     <org organism="Nematocida parisii ERTm3" abbrev="nparERTm3" />
+    <org organism="Nematocida sp. ERTm5" abbrev="nspERTm5" />
     <org organism="Nematocida ausubeli ERTm2" abbrev="nausERTm2" />
     <org organism="Nematocida ausubeli ERTm6" abbrev="nausERTm6" />
     <org organism="Nematocida displodere strain JUm2807" abbrev="ndisJUm2807" />
