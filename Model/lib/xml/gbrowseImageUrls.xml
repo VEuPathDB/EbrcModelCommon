@@ -1472,6 +1472,13 @@
     <track>tratFranzen</track>
   </subtrackSet>
 
+  <subtrackSet project="MicrosporidiaDB" name="Dubosqiidae_gene" suffixes="_span;_gene">
+    <track>hmagILBN2</track>
+    <track>hmagBEOM2</track>
+    <track>htvaILG3</track>
+    <track>htvaFIOER33</track>
+  </subtrackSet>
+
   <subtrackSet project="MicrosporidiaDB" name="Unikaryonidae_gene" suffixes="_span;_gene">
     <track>ecunEC1</track>
     <track>ecunEC2</track>
@@ -1498,6 +1505,20 @@
       <subtrack set="Spraguidae_gene"/>
       <subtrack set="Nosematidae_gene"/>
       <subtrack set="Enterocytozoonida_gene"/>
+      <subtrack set="ecunGBM1_gene"/>
+      <subtrack set="nparERTm1_gene"/>
+    </track>
+  </url>
+
+  <url project="MicrosporidiaDB" type="synteny">
+    <org organism="Hamiltosporidium magnivora IL-BN-2" abbrev="hmagILBN2"/>
+    <org organism="Hamiltosporidium magnivora BE-OM-2" abbrev="hmagBEOM2"/>
+    <org organism="Hamiltosporidium tvaerminnensis IL-G-3" abbrev="htvaILG3"/>
+    <org organism="Hamiltosporidium tvaerminnensis FI-OER-3-3" abbrev="htvaFIOER33"/>
+    <track name="Gene" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Dubosqiidae_gene"/>
+      <subtrack set="Microsporidia_incertae_sedis_gene"/>
       <subtrack set="ecunGBM1_gene"/>
       <subtrack set="nparERTm1_gene"/>
     </track>
