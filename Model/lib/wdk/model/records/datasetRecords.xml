@@ -138,7 +138,7 @@
          <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
          <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
        </attributeQueryRef>
 
