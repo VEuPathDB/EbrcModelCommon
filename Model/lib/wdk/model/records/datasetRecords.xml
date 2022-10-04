@@ -894,7 +894,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
         <column name="dataset_id" columnType="string"/>
         <column name="eda_study_id" columnType="string"/>
         <sql>
