@@ -162,7 +162,7 @@
          <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
@@ -175,7 +175,7 @@
          </linkAttribute>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="is_public" internal="true"/>
          <columnAttribute name="study_access" displayName="Data accessibility"
@@ -441,7 +441,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="DownloadVersion"  includeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB"
+        <table name="DownloadVersion"  includeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB,VectorBase"
                displayName="Data Versions"
                queryRef="DatasetTables.DownloadVersion">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -942,7 +942,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       </sqlQuery>
 
-      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
         <column name="dataset_sha1_digest" columnType="string"/>
         <column name="dataset_display_name" columnType="string"/>
         <column name="dataset_id" columnType="string"/>
@@ -961,7 +961,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
           WHERE i.user_dataset_id = d.user_dataset_id
                 ]]>
         </sql>
-          <sql includeProjects="MicrobiomeDB">
+          <sql includeProjects="MicrobiomeDB,VectorBase">
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
@@ -972,7 +972,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,VectorBase">
          <column name="dataset_id" columnType="string"/>
          <column name="is_public" columnType="string"/>
          <column name="project_availability" columnType="string"/>
@@ -1029,7 +1029,7 @@ and project_id = '@PROJECT_ID@'
             ]]>
             </sql>
 
-            <sql includeProjects="MicrobiomeDB">
+            <sql includeProjects="MicrobiomeDB,VectorBase">
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
 from apidbtuning.datasetpresenter pres, (
@@ -2025,7 +2025,7 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,AllClinEpiDB,MicrobiomeDB,VectorBase">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="release_date"/>
