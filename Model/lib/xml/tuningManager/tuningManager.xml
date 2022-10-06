@@ -16,7 +16,7 @@
       <![CDATA[
 create table StudyIdDatasetId&1 as
 SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID,
-       dp.NAME AS STUDY_NAME
+       dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
 FROM EDA.STUDY s
 LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
 LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
@@ -34,7 +34,7 @@ select case
   when d.dataset_presenter_id = 'DS_463e7346e3' then '2019-sare-sach' 
   when d.dataset_presenter_id = 'DS_4b8cb8bb2e' then 'VBP_MEGA'   
   else 'NA' end as study_stable_id,
-d.dataset_presenter_id as dataset_id, d.name as study_name
+d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
 from apidbtuning.datasetpresenter d
 where d.dataset_presenter_id in (
 'DS_58e5ff7fe0',
