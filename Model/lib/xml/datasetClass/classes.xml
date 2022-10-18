@@ -1484,7 +1484,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
       <unpack>mkdir -pv @@dataDir@@/results </unpack>
       <unpack>mv @@dataDir@@/final/*tsv @@dataDir@@/results/ </unpack>
-      <unpack>rmdir -v @@dataDir@@/final </unpack>
       <unpack>mkdir -pv @@dataDir@@/ISA/${sampleDetailsDir} </unpack>
       <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
       <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
