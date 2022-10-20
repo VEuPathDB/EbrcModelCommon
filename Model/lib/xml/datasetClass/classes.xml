@@ -1482,11 +1482,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>mkdir -pv @@dataDir@@/results </unpack>
-      <unpack>mv @@dataDir@@/final/*tsv @@dataDir@@/results/ </unpack>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${groupName}/${studyName}/${version}/final @@dataDir@@/final</unpack>
       <unpack>mkdir -pv @@dataDir@@/ISA/${sampleDetailsDir} </unpack>
-      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
-      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+      <unpack>ln -s @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+      <unpack>ln -s @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
