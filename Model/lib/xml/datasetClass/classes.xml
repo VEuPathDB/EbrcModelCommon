@@ -1486,6 +1486,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>mkdir -pv @@dataDir@@/ISA/${sampleDetailsDir} </unpack>
       <unpack>ln -s @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
       <unpack>ln -s @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+      <unpack>if [ -e @@dataDir@@/final/owlOverride.csv ]; then getEntityAttributesFromOwl.pl -x @@dataDir@@/final/owlOverride.csv > @@dataDir@@/owlAttributes.txt; fi</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
