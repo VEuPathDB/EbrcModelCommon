@@ -58,7 +58,7 @@ DatasetRecordClasses.DatasetRecordClass.in_apollo	topic_0219_synonym	Curation an
 DatasetRecordClasses.DatasetRecordClass.email	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	email							record-internal
 DatasetRecordClasses.DatasetRecordClass.short_attribution	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_attribution								download
 DatasetRecordClasses.DatasetRecordClass.dataset_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name	Name							download
-DatasetRecordClasses.DatasetRecordClass.study_access	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	study_access					1	record-internal
+DatasetRecordClasses.DatasetRecordClass.study_access	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	study_access					1	results	record	download
 ## card_questions is removed from here so it does not show up in the All Studies table by default. Sites that want it should add it to their own individuals.txt file.
 ## DatasetRecordClasses.DatasetRecordClass.card_questions	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	card_questions					1	results		
 DatasetRecordClasses.DatasetRecordClass.analyze	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	analyze					1	results		
