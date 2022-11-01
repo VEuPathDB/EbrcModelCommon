@@ -10,7 +10,7 @@ DatasetRecordClasses.DatasetRecordClass.GeneTypeCounts	topic_3308_synonym	Data c
 DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData							record	download
 DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases							record	download
-DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21	results	record	download
+DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21		record-internal	
 DatasetRecordClasses.DatasetRecordClass.DatasetAlias	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DatasetAlias					22			download
 DatasetRecordClasses.DatasetRecordClass.Contacts	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Contacts					22	results	record	download
 DatasetRecordClasses.DatasetRecordClass.StudyCharacteristicTable	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	StudyCharacteristicTable					18	results	record	download
