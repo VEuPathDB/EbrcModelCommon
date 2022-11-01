@@ -1515,7 +1515,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>if test -f @@dataDir@@/${name}.eda.txt ; then unlink @@dataDir@@/${name}.eda.txt ; fi</unpack>
       <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.owl @@dataDir@@/${name}.owl</unpack>
       <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.eda.txt @@dataDir@@/${name}.eda.txt</unpack>
-      <pluginArgs>--inFile  @@dataDir@@/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile  @@dataDir@@/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -5677,7 +5677,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
     </datasetLoader>
   </datasetClass>
 
