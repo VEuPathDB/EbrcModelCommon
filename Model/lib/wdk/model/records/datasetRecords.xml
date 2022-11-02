@@ -810,6 +810,28 @@ OR if the linkName and or URL require access to other attributes....also how to 
             </textAttribute>
         </table>
 
+      <table name="AssociatedDatasets"
+             displayName="Associated Datasets"
+             queryRef="DatasetTables.AssociatedDatasets">
+        <columnAttribute name="pmid" displayName="Pubmed ID"/>
+        <columnAttribute name="associated_dataset_id" internal="true"/>
+        <columnAttribute name="project" internal="true"/>
+        <columnAttribute name="webapp_name" internal="true"/>
+        <columnAttribute name="display_name" internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+        <linkAttribute displayName="Dataset" name="associated dataset" 
+                       internal="false">
+             <displayText>
+                <![CDATA[
+                $$project$$: $$display_name$$
+                ]]>
+             </displayText>
+             <url>
+                <![CDATA[ http://$$project$$.org/$$webapp_name$$/app/record/dataset/$$associated_dataset_id$$ ]]>
+               </url>
+            </linkAttribute>
+
+      </table>
 
       </recordClass>
     </recordClassSet>
@@ -2580,6 +2602,27 @@ and graph_descrip.dataset = dnt.name) g
        </sql>
       </sqlQuery>
 -->
+
+      <sqlQuery name="AssociatedDatasets"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="pmid"/>
+            <column name="associated_dataset_id"/>
+            <column name="project"/>
+            <column name="webapp_name"/>
+            <column name="display_name"/>
+            <column name="url"/>
+            <sql>
+            <![CDATA[
+             select local_dataset_id as dataset_id, pubmed_id as pmid,
+                     associated_dataset_id, project, webapp_name, display_name,
+                     project || '.org/' || webapp_name || '/app/record/dataset/' || associated_dataset_id
+                     as url
+             from ApidbTuning.AssociatedDataset
+             order by local_dataset_id
+            ]]>
+            </sql>
+      </sqlQuery>
+
     </querySet>
 
     <querySet name="DatasetReleaseNotesTables" queryType="table"
