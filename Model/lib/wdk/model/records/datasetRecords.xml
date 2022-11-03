@@ -138,7 +138,7 @@
          <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
        </attributeQueryRef>
 
@@ -162,7 +162,7 @@
          <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
@@ -916,7 +916,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id" columnType="string"/>
         <column name="eda_study_id" columnType="string"/>
         <sql>
@@ -964,7 +964,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       </sqlQuery>
 
-      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
         <column name="dataset_sha1_digest" columnType="string"/>
         <column name="dataset_display_name" columnType="string"/>
         <column name="dataset_id" columnType="string"/>
