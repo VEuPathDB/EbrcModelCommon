@@ -138,7 +138,7 @@
          <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
          <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
        </attributeQueryRef>
 
@@ -162,7 +162,7 @@
          <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
        </attributeQueryRef>
 
-       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB">
+       <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
          <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
@@ -811,14 +811,26 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </table>
 
       <table name="AssociatedDatasets"
-             displayName="Associated Datasets"
+             displayName="Data Sets"
              queryRef="DatasetTables.AssociatedDatasets">
-        <columnAttribute name="pmid" displayName="Pubmed ID"/>
+        <columnAttribute name="pmid" internal="true"/>
         <columnAttribute name="associated_dataset_id" internal="true"/>
         <columnAttribute name="project" internal="true"/>
         <columnAttribute name="webapp_name" internal="true"/>
         <columnAttribute name="display_name" internal="true"/>
-        <columnAttribute name="url" internal="true"/>
+
+        <linkAttribute displayName="PubMed ID" name="pubmed link"
+                       internal="false">
+             <displayText>
+                <![CDATA[
+                $$pmid$$
+                ]]>
+             </displayText>
+             <url>
+                <![CDATA[ https://pubmed.ncbi.nlm.nih.gov/$$pmid$$/ ]]>
+             </url>
+        </linkAttribute>
+
         <linkAttribute displayName="Dataset" name="associated dataset" 
                        internal="false">
              <displayText>
@@ -828,8 +840,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
              </displayText>
              <url>
                 <![CDATA[ http://$$project$$.org/$$webapp_name$$/app/record/dataset/$$associated_dataset_id$$ ]]>
-               </url>
-            </linkAttribute>
+             </url>
+        </linkAttribute>
 
       </table>
 
@@ -916,7 +928,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </sql>
       </sqlQuery>
 
-      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
+      <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
         <column name="dataset_id" columnType="string"/>
         <column name="eda_study_id" columnType="string"/>
         <sql>
@@ -964,7 +976,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       </sqlQuery>
 
-      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
+      <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
         <column name="dataset_sha1_digest" columnType="string"/>
         <column name="dataset_display_name" columnType="string"/>
         <column name="dataset_id" columnType="string"/>
@@ -2610,13 +2622,10 @@ and graph_descrip.dataset = dnt.name) g
             <column name="project"/>
             <column name="webapp_name"/>
             <column name="display_name"/>
-            <column name="url"/>
             <sql>
             <![CDATA[
              select local_dataset_id as dataset_id, pubmed_id as pmid,
-                     associated_dataset_id, project, webapp_name, display_name,
-                     project || '.org/' || webapp_name || '/app/record/dataset/' || associated_dataset_id
-                     as url
+                     associated_dataset_id, project, webapp_name, display_name
              from ApidbTuning.AssociatedDataset
              order by local_dataset_id
             ]]>
