@@ -91,6 +91,7 @@ my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
      select dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
      from DatasetPresenter dpres, DatasetPublication dpub
      where dpres.dataset_presenter_id = dpub.dataset_presenter_id
+       and dpub.pmid is not null
      order by pmid, dataset_presenter_id
 SQL
 
