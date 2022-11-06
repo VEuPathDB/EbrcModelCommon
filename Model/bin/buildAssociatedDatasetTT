@@ -57,7 +57,7 @@ my %projects = (
     'fung'         => 'FungiDB',
     'vect'         => 'VectorBase',
     'clin'         => 'ClinEpiDB',
-    'mbio'         => 'MicrobiomeDB',
+#   'mbio'         => 'MicrobiomeDB',
 );
 
 my %webapps = (
@@ -88,17 +88,19 @@ SQL
 
 # get local datasets and PubMed IDs
 my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
-     select dataset_presenter_id, pmid
-     from DatasetPublication
-     order by dataset_presenter_id
+     select dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
+     from DatasetPresenter dpres, DatasetPublication dpub
+     where dpres.dataset_presenter_id = dpub.dataset_presenter_id
+       and dpub.pmid is not null
+     order by pmid, dataset_presenter_id
 SQL
 
 $stmt->execute();
 
-my (@localDatasetId, @localPmid);
+my (@localDatasetId, @localPmid, @displayName);
 my $localDatasets = 0;
 
-while ( ($localDatasetId[$localDatasets], $localPmid[$localDatasets])
+while ( ($localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
 	= $stmt->fetchrow_array()) {
   $localDatasets++
 }
@@ -109,7 +111,6 @@ print "fetched $localDatasets local datasets\n";
 my $localProject = substr $instance, 0, 4;
 
 my $host;
-
 if ($instance =~ /^rm/ || $instance =~ /-/) {
   $host = "qa";
 } else {
@@ -117,6 +118,26 @@ if ($instance =~ /^rm/ || $instance =~ /-/) {
 }
 
 my $insertCount = 0;
+
+# associations within the local project
+if ($webapps{$localProject}) {
+
+  print "checking for associations within current project.\n";
+  for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
+    for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
+      if ($iLocal != $iAssociated
+	  and $localPmid[$iLocal] == $localPmid[$iAssociated]) {
+	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
+                                $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
+	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
+	   $insertCount++;
+	 }
+    }
+  }
+}
+
+print "inserted $insertCount intramural records.\n";
+
 
 # get dataset records from all other projects
 foreach my $projectKey (keys %projects) {
