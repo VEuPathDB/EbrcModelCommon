@@ -811,7 +811,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </table>
 
       <table name="AssociatedDatasets"
-             displayName="Data Sets"
+             displayName="Associated Data Sets"
              queryRef="DatasetTables.AssociatedDatasets">
         <columnAttribute name="pmid" internal="true"/>
         <columnAttribute name="associated_dataset_id" internal="true"/>
