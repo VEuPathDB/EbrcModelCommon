@@ -126,7 +126,8 @@ if ($webapps{$localProject}) {
   for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
     for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
       if ($iLocal != $iAssociated
-	  and $localPmid[$iLocal] == $localPmid[$iAssociated]) {
+	  and $localPmid[$iLocal] eq $localPmid[$iAssociated]
+          and $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) {
 	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
                                 $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
 	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
