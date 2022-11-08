@@ -126,7 +126,8 @@ if ($webapps{$localProject}) {
   for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
     for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
       if ($iLocal != $iAssociated
-	  and $localPmid[$iLocal] == $localPmid[$iAssociated]) {
+	  and $localPmid[$iLocal] eq $localPmid[$iAssociated]
+          and $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) {
 	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
                                 $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
 	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
@@ -142,6 +143,8 @@ print "inserted $insertCount intramural records.\n";
 # get dataset records from all other projects
 foreach my $projectKey (keys %projects) {
    next if ($projectKey eq $localProject);
+
+   next if ($projectKey eq "clin" and substr($localProject, 0, 3) eq "eda-");
 
 
    my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
