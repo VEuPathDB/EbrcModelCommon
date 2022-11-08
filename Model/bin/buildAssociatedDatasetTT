@@ -144,6 +144,8 @@ print "inserted $insertCount intramural records.\n";
 foreach my $projectKey (keys %projects) {
    next if ($projectKey eq $localProject);
 
+   next if ($projectKey eq "clin" and $localProjectb eq "eda-");
+
 
    my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
 
