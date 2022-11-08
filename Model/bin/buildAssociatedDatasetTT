@@ -126,7 +126,8 @@ if ($webapps{$localProject}) {
   for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
     for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
       if ($iLocal != $iAssociated
-	  and $localPmid[$iLocal] == $localPmid[$iAssociated]) {
+	  and $localPmid[$iLocal] eq $localPmid[$iAssociated]
+          and $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) {
 	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
                                 $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
 	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
@@ -138,42 +139,40 @@ if ($webapps{$localProject}) {
 
 print "inserted $insertCount intramural records.\n";
 
-
 # get dataset records from all other projects
 foreach my $projectKey (keys %projects) {
-   next if ($projectKey eq $localProject);
 
+  next if ($projectKey eq $localProject);
 
-   my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
+  next if ($projectKey eq "clin" and substr($localProject, 0, 3) eq "eda");
 
-   # print "Web service request url:\n$url\n";
-   my $datasetsJson = getData($url);
+  my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
 
-   # print Dumper $datasetsJson->{records}[0];
+  # print "Web service request url:\n$url\n";
+  my $datasetsJson = getData($url);
 
-   foreach my $record (@{$datasetsJson->{records}}) {
+  # print Dumper $datasetsJson->{records}[0];
 
-     my $displayName = $record->{displayName};
-     # print Dumper $record;
+  foreach my $record (@{$datasetsJson->{records}}) {
 
-     foreach my $pubrec (@{$record->{tables}->{Publications}}) {
+    my $displayName = $record->{displayName};
+    # print Dumper $record;
 
-       # print "dataset: " . $pubrec->{dataset_id} . "; pmid: " . $pubrec->{pmid} . "\n";
+    foreach my $pubrec (@{$record->{tables}->{Publications}}) {
 
-       for (my $i=0; $i<$localDatasets; $i++) {
-	 if ($pubrec->{pmid} eq $localPmid[$i]) {
-	   $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
-                                $projects{$projectKey}, $webapps{$projectKey}, $displayName)
-	     or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
-	   $insertCount++;
+      # print "dataset: " . $pubrec->{dataset_id} . "; pmid: " . $pubrec->{pmid} . "\n";
 
-	 }
-       }
-
-     }
-
-   }
-   $dbh->commit();
+      for (my $i=0; $i<$localDatasets; $i++) {
+	if ($pubrec->{pmid} eq $localPmid[$i]) {
+	  $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
+			       $projects{$projectKey}, $webapps{$projectKey}, $displayName)
+	    or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
+	  $insertCount++;
+	}
+      }
+    }
+  }
+  $dbh->commit();
 }
 
 print "inserted $insertCount records.\n";
