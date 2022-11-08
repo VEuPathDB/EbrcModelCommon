@@ -331,7 +331,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        <!-- <wsColumn name="fields_matched" width="500"/> -->
     </processQuery>
 
-<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB"
+<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
              processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
              doNotTest="true">
         <paramRef ref="sharedParams.ds_gene_ids"/>
