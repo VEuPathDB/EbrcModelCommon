@@ -16,6 +16,7 @@
 
 <!-- TrichDB -->
   <subtrackSet project="TrichDB" name="all_gene" suffixes="_span;_gene">
+    <track>tvagG32022</track>
     <track>tvagG3</track>
     <track>tfoeK</track>
     <track>hmel2922-C604-10x</track>
@@ -23,6 +24,7 @@
   </subtrackSet>
 
   <url project="TrichDB" type="synteny">
+    <org organism="Trichomonas vaginalis G3 2022" abbrev="tvagG32022"/>
     <org organism="Trichomonas vaginalis G3" abbrev="tvagG3" />
     <org organism="Tritrichomonas foetus strain K" abbrev="tfoeK" />
     <org organism="Histomonas meleagridis 2922-C6/04-10x" abbrev="hmel2922-C604-10x" />
