@@ -624,6 +624,7 @@
     <track>mcir1006PhL</track>
     <track>pblaNRRL1555</track>
     <track>rdelRA99-880</track>
+    <track>rmicmicATCC52814</track>
   </subtrackSet>
 
   <subtrackSet name="Herpotrichiellaceae" project="FungiDB" suffixes="_span;_gene">
@@ -701,6 +702,7 @@
     <track>ttheATCC42464</track>
     <track>cgloCBS148.51</track>
     <track>pansSmat</track>
+    <track>pcomTmat</track>
     <track>smack-hell</track>
     <track>mpoaATCC64411</track>
     <track>gtriR3-111a-1</track>
@@ -717,6 +719,7 @@
     <track>ssch1099-18</track>
     <track>sbra5110</track>
     <track>cgraM1-001</track>
+    <track>schaIBT40293</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Fusarium" project="FungiDB" suffixes="_span;_gene">
@@ -840,6 +843,7 @@
     <track>mphaMS6</track>
     <track>cgeo1.58</track>
     <track>vgalCBS43764</track>
+    <track>pnodSN15</track>
     <track>aaltSRC1lrK2f</track>
   </subtrackSet>
 
@@ -992,6 +996,7 @@
     <org abbrev="mcir1006PhL" organism="Mucor circinelloides 1006PhL"/>
     <org abbrev="pblaNRRL1555" organism="Phycomyces blakesleeanus NRRL 1555(-)"/>
     <org abbrev="rdelRA99-880" organism="Rhizopus delemar RA 99-880"/>
+    <org abbrev="rmicmicATCC52814" organism="Rhizopus microsporus var. microsporus ATCC 52814"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Zygomycetes"/>
@@ -1122,6 +1127,7 @@
     <org abbrev="ttheATCC42464" organism="Thermothelomyces thermophilus ATCC 42464"/>
     <org abbrev="cgloCBS148.51" organism="Chaetomium globosum CBS 148.51"/>
     <org abbrev="pansSmat" organism="Podospora anserina S mat+"/>
+    <org abbrev="pcomTmat" organism="Podospora comata strain T mat+"/>
     <org abbrev="smack-hell" organism="Sordaria macrospora k-hell"/>
     <org abbrev="mpoaATCC64411" organism="Magnaporthiopsis poae ATCC 64411"/>
     <org abbrev="gtriR3-111a-1" organism="Gaeumannomyces tritici R3-111a-1"/>
@@ -1138,6 +1144,7 @@
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
     <org abbrev="cgraM1-001" organism="Colletotrichum graminicola M1.001"/>
+    <org abbrev="schaIBT40293" organism="Stachybotrys chartarum IBT 40293"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Sordariomycetes"/>
@@ -1319,6 +1326,7 @@
     <org abbrev="mphaMS6" organism="Macrophomina phaseolina MS6"/>
     <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
+    <org abbrev="pnodSN15" organism="Parastagonospora nodorum SN15"/>
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
