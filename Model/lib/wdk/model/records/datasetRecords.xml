@@ -431,7 +431,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" sortable="false"/>
             <columnAttribute name="Samp_count"  displayName="Samples" sortable="false"/>
             <columnAttribute name="AdditionalData"  displayName="Additional Data" sortable="false"/>
-           <!-- <columnAttribute name="Age"  displayName="Age" sortable="false"/> -->
+            <columnAttribute name="Age"  displayName="Age" sortable="false"/>
             <columnAttribute name="WHO"  displayName="WHO indicator subdomain" sortable="false"/>
             <columnAttribute name="ProjectName"  displayName="Project Name" sortable="false"/>
         </table>
