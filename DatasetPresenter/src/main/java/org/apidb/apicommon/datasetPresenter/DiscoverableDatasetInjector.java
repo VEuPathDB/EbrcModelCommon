@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.apidb.apicommon.datasetPresenter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,8 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
@@ -68,7 +64,7 @@ public class DiscoverableDatasetInjector extends DatasetInjector {
 
     ConfigurationBuilder configBuilder = new ConfigurationBuilder();
     configBuilder.filterInputsBy(filterBuilder).addUrls(urls).setScanners(
-        new SubTypesScanner(), new ResourcesScanner());
+        Scanners.SubTypes, Scanners.Resources);
 
     Reflections reflections = new Reflections(configBuilder);
     Set<Class<? extends DatasetInjector>> classes = reflections.getSubTypesOf(DatasetInjector.class);
