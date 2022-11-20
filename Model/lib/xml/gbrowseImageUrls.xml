@@ -424,6 +424,7 @@
     <track>nfowATCC30894</track>
     <track>nfowTy</track>
     <track>ngruNEG-M</track>
+    <track>nlovATCC30569</track>
   </subtrackSet>
 
   <url project="AmoebaDB" type="synteny">
@@ -433,6 +434,7 @@
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
     <org organism="Naegleria fowleri strain Ty"  abbrev="nfowTy" />
     <org organism="Naegleria gruberi strain NEG-M"  abbrev="ngruNEG-M" />
+    <org organism="Naegleria lovaniensis strain ATCC 30569"  abbrev="nlovATCC30569"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="NfAc_gene" />
