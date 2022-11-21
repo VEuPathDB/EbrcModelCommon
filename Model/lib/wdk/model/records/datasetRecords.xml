@@ -178,6 +178,7 @@
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="is_public" internal="true"/>
+         <columnAttribute name="is_prerelease" type="number"/>
          <columnAttribute name="study_access" displayName="Data accessibility"
            help="Some studies require that the user requests approval to access certain functionality 
 (they will be prompted when attempting the action): 
@@ -1009,6 +1010,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
          <column name="dataset_id" columnType="string"/>
          <column name="is_public" columnType="string"/>
+         <column name="is_prerelease" columnType="string"/>
          <column name="project_availability" columnType="string"/>
          <column name="study_access" columnType="string"/>
          <column name="policy_url" columnType="string"/>
@@ -1024,7 +1026,8 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
             <sql includeProjects="ClinEpiDB">
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
+decode(study_access, 'prerelease', 1, 0) as is_prerelease
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
@@ -1047,6 +1050,7 @@ and project_id = '@PROJECT_ID@'
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
+               , '0' as is_prerelease
                , null as policy_url
                , 'TODO_CARD_HEADLINE' as card_headline
                , '[]' as card_points
@@ -1065,7 +1069,8 @@ and project_id = '@PROJECT_ID@'
 
             <sql includeProjects="MicrobiomeDB">
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
+decode(study_access, 'prerelease', 1, 0) as is_prerelease
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
@@ -1088,6 +1093,7 @@ and project_id = '@PROJECT_ID@'
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
+               , '0' as is_prerelease
                , null as policy_url
                , 'TODO_CARD_HEADLINE' as card_headline
                , '[]' as card_points
