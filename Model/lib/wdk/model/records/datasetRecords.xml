@@ -1027,7 +1027,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <sql includeProjects="ClinEpiDB">
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
-decode(study_access, 'prerelease', 1, 0) as is_prerelease
+decode(study_access, 'prerelease', '1', '0') as is_prerelease
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
@@ -1070,7 +1070,7 @@ and project_id = '@PROJECT_ID@'
             <sql includeProjects="MicrobiomeDB">
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
-decode(study_access, 'prerelease', 1, 0) as is_prerelease
+decode(study_access, 'prerelease', '1', '0') as is_prerelease
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
