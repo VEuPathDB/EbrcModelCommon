@@ -136,6 +136,7 @@ rnaSeqExperimentNoTranscripts	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqA
 rnaSeqSampleNoTranscripts	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
 rnaSeqSplicedLeaderAndPolyASitesExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
 rnaSeqSplicedLeaderAndPolyASitesSample	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
+Cellxgene	http://purl.obolibrary.org/obo/OBI_0002631	single-cell RNA sequencing assay	transcript_expression	scRNA-Seq
 rtpcrProfiles	http://purl.obolibrary.org/obo/OBI_0001361	RTPCR	transcript_expression	rtpcr
 smallNcRnaExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	smallNcRna
 smallNcRnaSamples	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	smallNcRna
