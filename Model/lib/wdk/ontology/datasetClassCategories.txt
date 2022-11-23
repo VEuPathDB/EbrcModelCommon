@@ -103,8 +103,8 @@ proteinMicroarrayProfiles	http://edamontology.org/topic_0804	Immunoproteins, gen
 genericProfiles	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	putative_function	immune_response
 copyNumberVariationExperiment	http://edamontology.org/topic_3175	Structural Variation	resequencing	copyNumberVariation
 copyNumberVariationSamples	http://edamontology.org/topic_3175	Structural Variation	resequencing	copyNumberVariation
-originsOfReplicationExperiment	http://edamontology.org/topic_3175	Structural Variation	resequencing	originsOfReplication
-originsOfReplicationSamples	http://edamontology.org/topic_3175	Structural Variation	resequencing	originsOfReplication
+originsOfReplicationExperiment	http://edamontology.org/topic_0080	Sequence Analysis	resequencing	originsOfReplication
+originsOfReplicationSamples	http://edamontology.org/topic_0080	Sequence Analysis	resequencing	originsOfReplication
 SNPs_GFF	http://edamontology.org/topic_0199	Genetic Variation	SNP	
 taxonomy	http://edamontology.org/topic_0637	Taxonomy	sres	
 sequenceOntology	http://edamontology.org/topic_0089	Ontology and Terminology	sres	
