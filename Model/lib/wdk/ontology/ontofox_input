@@ -216,6 +216,7 @@ http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
 http://purl.obolibrary.org/obo/OBI_0001204 #SNP Microarray
 http://purl.obolibrary.org/obo/OBI_0001985 #DNA Microarray
 http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+http://purl.obolibrary.org/obo/OBI_0002631 #scRNA-Seq
 http://purl.obolibrary.org/obo/SO_0000345 # EST
 http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
 http://purl.obolibrary.org/obo/OBI_0000716 #CHIP Seq
@@ -238,6 +239,8 @@ http://purl.obolibrary.org/obo/OBI_0002029 # SAGE
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
+http://purl.obolibrary.org/obo/OBI_0002631 # scRNA-seq
+subClassOf http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
 http://purl.obolibrary.org/obo/SO_0000345 # EST
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR

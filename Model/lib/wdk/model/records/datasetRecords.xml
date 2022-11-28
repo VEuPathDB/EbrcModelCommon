@@ -1149,9 +1149,9 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 
        <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB">
         <column name="dataset_id" columnType="string"/>
-        <column name="total" columnType="number" sortingColumn="total_number" />
-        <column name="approved" columnType="number" sortingColumn="approved_number" />
-        <column name="percent_approved" columnType="number" sortingColumn="percent_approved_number" />
+        <column name="total"  sortingColumn="total_number" />
+        <column name="approved" sortingColumn="approved_number" />
+        <column name="percent_approved"  sortingColumn="percent_approved_number" />
         <column name="total_number" columnType="number"/>
         <column name="approved_number" columnType="number"/>
         <column name="percent_approved_number" columnType="number"/>
@@ -1160,18 +1160,18 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
           <![CDATA[
 select dataset_id, 
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 0
-         WHEN total_number is null THEN 0.5
+         WHEN dp.value in ('public','prerelease') THEN 0.5
+         WHEN total_number is null THEN 0.1
          ELSE total_number
        END as total_number,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 0
-         WHEN approved_number is null THEN 0.5
+         WHEN dp.value in ('public','prerelease') THEN 0.5
+         WHEN approved_number is null THEN 0.1
          ELSE approved_number
        END as approved_number,
        CASE
-         WHEN dp.value in ('public','prerelease') THEN 0
-         WHEN percent_approved_number is null THEN 0.5
+         WHEN dp.value in ('public','prerelease') THEN 0.5
+         WHEN percent_approved_number is null THEN 0.1
          ELSE percent_approved_number
        END as percent_approved_number,
        CASE
