@@ -163,7 +163,7 @@ foreach my $projectKey (keys %projects) {
       # print "dataset: " . $pubrec->{dataset_id} . "; pmid: " . $pubrec->{pmid} . "\n";
 
       for (my $i=0; $i<$localDatasets; $i++) {
-	if ($pubrec->{pmid} eq $localPmid[$i]) {
+	if ($pubrec->{pmid} eq $localPmid[$i] and $localDatasetId[$i] ne $pubrec->{dataset_id}) {
 	  $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
 			       $projects{$projectKey}, $webapps{$projectKey}, $displayName)
 	    or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
