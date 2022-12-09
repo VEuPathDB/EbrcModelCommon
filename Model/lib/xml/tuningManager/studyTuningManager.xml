@@ -52,7 +52,7 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-        create table &prefixOntologyRelation&1 nologging as
+        create table &prefixOntologyRelation&1 as
         select ed.name as hierarchy_dataset_name,
                edr.external_database_release_id as hierarchy_dataset_release_id,
                child.ontology_term_id as child_ontology_term_id,
@@ -99,7 +99,7 @@
     <internalDependency name="OntologyRelation"/>
     <sql>
       <![CDATA[
-        create table &prefixOntologyAncestor&1 nologging as
+        create table &prefixOntologyAncestor&1 as
         select hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
                parent_ontology_term_id as ancestor_ontology_term_id
         from &prefixOntologyRelation
@@ -128,7 +128,7 @@
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
-        create table &prefixDatasetTerm&1 nologging as
+        create table &prefixDatasetTerm&1 as
         select distinct ed.name as hierarchy_dataset_name, ot.ontology_term_id,
                         ot.source_id, syn.ontology_synonym as name,
                         syn.definition, cast(null as varchar(10)) as display_order, cast(null as varchar(10)) as variable
@@ -332,7 +332,7 @@
     <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
-        create table &prefixPANIO&1 nologging as
+        create table &prefixPANIO&1 as
         select distinct io.*
         from (
         select i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
@@ -397,7 +397,7 @@
     <externalDependency name="study.Study"/>
     <sql>
       <![CDATA[
-        create table &prefixHierarchyMap&1 nologging as
+        create table &prefixHierarchyMap&1 as
         select datasets.dataset_name,
                nvl(dynamic_mapping.hierarchy, hardwired_hierarchy) as hierarchy_dataset_name
         from (select name as dataset_name,
@@ -444,7 +444,7 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
- create table &prefixPANExtDbRls&1 nologging as
+ create table &prefixPANExtDbRls&1 as
 select distinct protocol_app_node_id as pan_id, external_database_release_id, name as dataset_name
 from (
 SELECT
@@ -510,7 +510,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <ancillaryTable name="PANUpstream"/>
     <sql>
       <![CDATA[
-        create table &prefixPANUpstream&1 nologging as
+        create table &prefixPANUpstream&1 as
         select *
         from (  select connect_by_root output_pan_id as pan_id, input_pan_id as input_pan_id, protocol_app_id
                 from &prefixPanio
@@ -565,7 +565,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
-        create table &prefixInferredParams&1 nologging as
+        create table &prefixInferredParams&1 as
         with param_term
              as (select pp.protocol_param_id, ot.ontology_term_id, ot.source_id,
                  -- use row_number() to get only the oldest of terms that share a name
@@ -653,7 +653,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
-        create table &prefixValueCaps&1 nologging as
+        create table &prefixValueCaps&1 as
         select qualifier_id, lower_value, commonest_capitalization
         from (select qualifier_id,
                      cast(value as varchar2(3100)) as commonest_capitalization,
@@ -680,7 +680,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
-        create table &prefixInferredChars&1 nologging as
+        create table &prefixInferredChars&1 as
         select -- distinct -- should be unneeded and can use too much temp space
                 sample_pan.protocol_app_node_id as pan_id,
                         sample_ot.name as pan_type,
@@ -836,7 +836,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
 
     <sql>
       <![CDATA[
-create table &prefixSampleProcess&1 nologging as
+create table &prefixSampleProcess&1 as
 SELECT
   p1.name
 , p1.protocol_app_node_id
@@ -899,7 +899,7 @@ ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
     <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
-        create table &prefixPANParamValues&1 nologging as
+        create table &prefixPANParamValues&1 as
 select
   p.name as protocol
 , pp.name as protocol_param
@@ -940,7 +940,7 @@ ORDER BY protocol_app_node_name
     <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
-        create table &prefixDefaultChars&1 nologging as
+        create table &prefixDefaultChars&1 as
         -- regular query for most datasets
         select ed.name as dataset_name
         , ds.type as dataset_type
@@ -1072,7 +1072,7 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        create table &prefixDatasetLeafTerm&1 nologging as
+        create table &prefixDatasetLeafTerm&1 as
           select dataset_name, unit_id, property_id
           from &prefixInferredParams
         union
@@ -1186,7 +1186,7 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        create table &prefixMetadata&1 nologging as
+        create table &prefixMetadata&1 as
         select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
                m.pan_id, m.pan_name, m.pan_isa_type,
                m.category, m.property, m.property_id, mt.property_source_id,
@@ -1281,7 +1281,7 @@ UNION ALL
     <internalDependency name="PropertyType"/>
     <sql>
       <![CDATA[
-        create table &prefixOntology&1 nologging as
+        create table &prefixOntology&1 as
         with DatasetOntologyTerm
              -- a term (leaf or ancestor) of a dataset
              as (  -- ontology terms used as properties (things with values)
@@ -1435,7 +1435,7 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixPropertyType&1 NOLOGGING AS
+        CREATE TABLE &prefixPropertyType&1 AS
         WITH pan_metadata
              AS (  SELECT property, value, property_id
                    FROM &prefixInferredParams
@@ -1514,7 +1514,6 @@ create table &prefixComComObsIO&1 (
   CONSTRAINT &prefixcomcomobsio_pk&1 PRIMARY KEY (community_id,community_observation_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as community_id, output_pan_id as community_observation_id
   from &prefixPANIO 
@@ -1546,7 +1545,6 @@ create table &prefixComHouseIO&1 (
   CONSTRAINT &prefixcomhouseio_pk&1 PRIMARY KEY (community_id,household_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as community_id, output_pan_id as household_id
   from &prefixPANIO 
@@ -1578,7 +1576,6 @@ create table &prefixComPartIO&1 (
   CONSTRAINT &prefixcompartio_pk&1 PRIMARY KEY (community_id,participant_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct ch.community_id, hp.participant_id
   from &prefixComHouseIO ch,  &prefixHousePartIO hp
@@ -1613,7 +1610,6 @@ create table &prefixComObsIO&1 (
   CONSTRAINT &prefixcomobsio_pk&1 PRIMARY KEY (community_id,observation_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct cp.community_id, po.observation_id
   from &prefixComPartIO cp,  &prefixPartObsIO po 
@@ -1643,7 +1639,6 @@ create table &prefixComSampleIO&1 (
   CONSTRAINT &prefixcomsampleio_pk&1 PRIMARY KEY (community_id,sample_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct co.community_id, os.sample_id
   from &prefixComObsIO co,  &prefixObsSampleIO os 
@@ -1677,8 +1672,7 @@ create table &prefixCommunityMD&1 (
   CONSTRAINT &prefixcomunmd_pk&1 PRIMARY KEY (ontology_term_name,community_id,string_value) 
   )
   ORGANIZATION index
-  nologging
-  as 
+  as
 select distinct m.property_source_id as ontology_term_name, 
  m.pan_id as community_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m
@@ -1711,8 +1705,7 @@ create table &prefixCommunityObsMD&1 (
   CONSTRAINT &prefixcomunobsmd_pk&1 PRIMARY KEY (ontology_term_name,community_observation_id,string_value) 
   )
   ORGANIZATION index
-  nologging
-  as 
+  as
 select distinct m.property_source_id as ontology_term_name, 
  m.pan_id as community_observation_id, m.string_value, m.number_value, m.date_value
  from &prefixMetaData m
@@ -1745,8 +1738,7 @@ create table &prefixHouseholdMD&1 (
   CONSTRAINT &prefixHhmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,household_observation_id,string_value) 
   )
   ORGANIZATION index
-  nologging
-  as 
+  as
 with iopo as (
 select distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
 from &prefixPANIO hp, &prefixPANIO po 
@@ -1814,7 +1806,6 @@ create table &prefixParticipantMD&1 (
   CONSTRAINT &prefixPpartmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
   )
   ORGANIZATION index
-  nologging
   as select * from (
   select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
  from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
@@ -1844,7 +1835,6 @@ create table &prefixHousePartIO&1 (
   CONSTRAINT &prefixhousepartio_pk&1 PRIMARY KEY (household_id,participant_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as household_id, output_pan_id as participant_id
   from &prefixPANIO 
@@ -1875,7 +1865,6 @@ create table &prefixHouseObsIO&1 (
   CONSTRAINT &prefixhouseobsio_pk&1 PRIMARY KEY (household_id,observation_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select hp.household_id, po.observation_id
   from &prefixPartObsIO po, &prefixHousePartIO hp
@@ -1904,7 +1893,6 @@ create table &prefixPartObsIO&1 (
   CONSTRAINT &prefixpartobsio_pk&1 PRIMARY KEY (participant_id,observation_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as participant_id, output_pan_id as observation_id
   from &prefixPANIO 
@@ -1934,7 +1922,6 @@ create table &prefixObsSampleIO&1 (
   CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sample_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as observation_id, output_pan_id as sample_id
   from &prefixPANIO 
@@ -1966,7 +1953,6 @@ create table &prefixHouseSampleIO&1 (
   CONSTRAINT &prefixhouseSampleio_pk&1 PRIMARY KEY (household_id,sample_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select hp.household_id, os.sample_id
   from &prefixPartObsIO po, &prefixHousePartIO hp, &prefixObsSampleIO os
@@ -1997,7 +1983,6 @@ create table &prefixPartSampleIO&1 (
   CONSTRAINT &prefixPartSampleio_pk&1 PRIMARY KEY (participant_id,sample_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select po.participant_id, os.sample_id
   from &prefixPartObsIO po, &prefixObsSampleIO os
@@ -2026,7 +2011,6 @@ create table &prefixObsObsIO&1 (
   CONSTRAINT &prefixobsobs_pk&1 PRIMARY KEY (observation_id,sub_observation_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as observation_id, output_pan_id as sub_observation_id
   from &prefixPANIO 
@@ -2056,7 +2040,6 @@ create table &prefixHouseEntoIO&1 (
   CONSTRAINT &prefixhouseentoio_pk&1 PRIMARY KEY (household_id,entomology_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as household_id, output_pan_id as entomology_id
   from &prefixPANIO 
@@ -2086,7 +2069,6 @@ create table &prefixEntoInsSplIO&1 (
   CONSTRAINT &prefixentoinssplio_pk&1 PRIMARY KEY (entomology_id,insect_sample_id) 
   )
   ORGANIZATION index
-  nologging
   as
   select distinct input_pan_id as entomology_id, output_pan_id as insect_sample_id
   from &prefixPANIO 
@@ -2129,7 +2111,6 @@ create table &prefixObservationMD&1 (
   CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id,sub_observation_id,sample_id,string_value) 
   )
   ORGANIZATION index
-  nologging
   as
 with obsont as (
 select distinct o.ontology_term_source_id
@@ -2205,7 +2186,6 @@ create table &prefixSampleMD&1 (
   CONSTRAINT &prefixSmplmd_pk&1 PRIMARY KEY (ontology_term_name,sample_id,observation_id,participant_id,string_value) 
   )
   ORGANIZATION index
-  nologging
   as
   select ontology_term_name, sample_id, observation_id, participant_id, household_id, string_value, number_value, date_value
   from &prefixObservationMD
@@ -2241,7 +2221,6 @@ create table &prefixEntomologyMD&1 (
   CONSTRAINT &prefixEntmd_pk&1 PRIMARY KEY (ontology_term_name,entomology_id,household_id,insect_sample_id,string_value) 
   )
   ORGANIZATION index
-  nologging
   as
    select distinct m.property_source_id as ontology_term_name, m.pan_id as entomology_id, io.household_id,  m.pan_id as insect_sample_id, 
    m.string_value, m.number_value, m.date_value
@@ -2272,7 +2251,7 @@ UNION  -- NOTE: the following pulls in insect sample data
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
-        create table RecordCount&1 nologging as
+        create table RecordCount&1 as
         with coredata as (
         select inv.algorithm_invocation_id, inv.comment_string, o.ontology_term_id,o.name,count(*) as record_count
         from study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv

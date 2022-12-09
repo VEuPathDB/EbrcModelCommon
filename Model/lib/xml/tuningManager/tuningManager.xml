@@ -3,7 +3,6 @@
 
   <import file="studyTuningManager.xml"/>
 
-
   <!-- EDA table -->	
   <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
     <comment>EDA Study ID, Dataset presenter ID (hash)
@@ -24,9 +23,6 @@ LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
     </sql>
   </tuningTable>
 
-
-
-
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for sequences
     </comment>
@@ -36,7 +32,7 @@ LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
     <externalDependency name="sres.Taxon"/>
     <sql>
       <![CDATA[
-create table ExternalSequenceTaxonRank&1 nologging as
+create table ExternalSequenceTaxonRank&1 as
 with organism_rank
      as (select tn1.taxon_id as organism, tn2.name as parent_organism, 
                 tn2.taxon_id as parent_organism_id, r.rank
@@ -102,7 +98,7 @@ order by organism, species, genus
     <externalDependency name="study.Study"/>
     <sql>
       <![CDATA[
-       CREATE TABLE TaxonAbundance&1 NOLOGGING AS
+       CREATE TABLE TaxonAbundance&1 AS
        WITH abundance as (
          select la.protocol_app_node_id,
          'Kingdom' as category,
@@ -210,7 +206,7 @@ order by organism, species, genus
     <externalDependency name="apidb.Organism"/>
     <sql>
       <![CDATA[
-        create table &prefixProjectTaxon&1 nologging as
+        create table &prefixProjectTaxon&1 as
         with
           local_taxon /* a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism */
           as (  select distinct tn.name as taxon,
@@ -346,7 +342,6 @@ order by organism, species, genus
     </sql>
   </tuningTable>
 
-
   <tuningTable name="SequencePieceClosure" prefixEnabled="true">
     <comment>Extends dots.SequencePiece to handle multiple levels. Used in
          sequence-record queries and in other tuning tables, including
@@ -355,7 +350,7 @@ order by organism, species, genus
     <externalDependency name="dots.SequencePiece"/>
     <sql>
       <![CDATA[
-        create table &prefixSequencePieceClosure&1 nologging as
+        create table &prefixSequencePieceClosure&1 as
         select sp.sequence_piece_id,
                sp.virtual_na_sequence_id,
                sp.piece_na_sequence_id, 
@@ -401,7 +396,6 @@ order by organism, species, genus
     </sql>
   </tuningTable>
 
-
   <tuningTable name="GenomicSeqAttributes" prefixEnabled="true">
     <comment>Each row represents one genomic sequence for which a WDK sequence
          record can be instantiated. Used widely in the workflow, the model,
@@ -422,7 +416,7 @@ order by organism, species, genus
     <externalDependency name="sres.TaxonName"/>
     <sql>
       <![CDATA[
-CREATE TABLE &prefixGenomicSeqAttributes&1 NOLOGGING AS
+CREATE TABLE &prefixGenomicSeqAttributes&1 AS
 SELECT -- formerly NO PARALLEL hint, but Oracle has fixed this, we think
        cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar2(20)) as project_id,
        SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
@@ -512,9 +506,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     </sql>
   </tuningTable>
 
-
-
-
   <tuningTable name="DatasetPresenter" alwaysUpdate="true">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <internalDependency name="GenomicSeqAttributes"/>
@@ -530,12 +521,10 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 
-
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
     <internalDependency name="GenomicSeqAttributes"/>
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
-
 
   <tuningTable name="DatasetDetail" alwaysUpdate="true">
     <comment> Stores text associated with each dataset. Used by dataset queries.
@@ -543,7 +532,7 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <internalDependency name="DatasetPresenter"/>
     <sql>
       <![CDATA[
-      create table DatasetDetail&1 nologging
+      create table DatasetDetail&1
       as
             select dataset_presenter_id, 
       name||' '||category||' '||usage||' '|| 
@@ -606,7 +595,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
 
   </tuningTable>
 
-
   <tuningTable name="ExternalDbDatasetPresenter">
     <comment>
       A materialization of the oft-computed join of sres.externalDatabaseRelease,
@@ -617,7 +605,7 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-        CREATE TABLE ExternalDbDatasetPresenter&1 NOLOGGING AS
+        CREATE TABLE ExternalDbDatasetPresenter&1 AS
         SELECT ed.external_database_id, ed.name AS external_database_name,
                edr.external_database_release_id, SUBSTR(edr.version, 1, 40) AS external_database_version,
                dsp.dataset_presenter_id, dsp.name AS dataset_presenter_name,
@@ -658,7 +646,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
       ]]>
     </sql>
   </tuningTable>
-
 
   <tuningTable name="TaxonRelativeAbundance">
     <comment>for the sample record taxon relative abundance table
@@ -701,6 +688,4 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
       ]]>
     </sql>
   </tuningTable>
-
-
 </tuningConfig>
