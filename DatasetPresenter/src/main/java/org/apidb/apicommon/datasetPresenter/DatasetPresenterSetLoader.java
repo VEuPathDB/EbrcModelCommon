@@ -18,7 +18,6 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 import org.gusdb.fgputil.CliUtil;
 import org.gusdb.fgputil.FormatUtil;
-import org.gusdb.fgputil.db.platform.SupportedPlatform;
 
 public class DatasetPresenterSetLoader {
 
@@ -34,7 +33,8 @@ public class DatasetPresenterSetLoader {
   private String defaultInjectorsFileName;
 
   private String suffix;
-  private String login;
+  private String username;
+  private String schema;
   private DatasetPresenterSet dps = null;
 
   public DatasetPresenterSetLoader(String propFileName,
@@ -110,15 +110,16 @@ public class DatasetPresenterSetLoader {
 
   Connection initDbConnection() {
     if (dbConnection == null) {
-      String dsn = "jdbc:oracle:oci:@" + instance;
-      login = config.getUsername();
+      String dbname = instance.split(";")[0].split("=")[1];
+      String host = instance.split(";")[1].split("=")[1];
+      String dsn = "jdbc:postgresql://" + host + "/" + dbname;
+      username = config.getUsername();
+      schema = config.getSchema();
       String password = config.getPassword();
+
       try {
-        SupportedPlatform.ORACLE.register(); // registers driver for Oracle
-        dbConnection = DriverManager.getConnection(dsn, login, password);
-      } catch (ClassNotFoundException e) {
-        throw new UserException("Cannot find database driver.  Please add " +
-            "the driver JAR to your classpath.", e);
+        dbConnection = DriverManager.getConnection(dsn, username, password);
+        dbConnection.createStatement().execute("SET search_path TO "+ schema);
       } catch (SQLException e) {
         throw new UserException("Can't connect to instance " + instance +
             " with login info found in config file " + propFileName, e);
@@ -251,7 +252,7 @@ public class DatasetPresenterSetLoader {
 
   void schemaInstall() {
     System.err.println("Installing DatasetPresenter schema into instance "
-        + instance + " schema " + login + " using suffix " + suffix);
+        + instance + " schema " + schema + " using suffix " + suffix);
     manageSchema(false);
     System.err.println("Install complete");
   }
@@ -273,8 +274,8 @@ public class DatasetPresenterSetLoader {
       if (process.exitValue() != 0)
         throw new UserException(
             "Failed running command to create DatasetPresenter schema: "
-                + System.lineSeparator() + "presenterCreateSchema " + instance
-                + " " + suffix + " " + propFileName + " " + mode);
+                + System.lineSeparator() + "presenterCreateSchema '" + instance
+                + "' " + suffix + " " + propFileName + " " + mode);
       process.destroy();
     } catch (IOException | InterruptedException ex) {
       throw new UnexpectedException(ex);
@@ -301,7 +302,7 @@ public class DatasetPresenterSetLoader {
 
         datasetPresenter.setDefaultDatasetInjector(defaultDatasetInjectorClasses);
 
-	String datasetPresenterId = datasetPresenter.getId();
+	    String datasetPresenterId = datasetPresenter.getId();
         String datasetFullDigest = datasetPresenter.getFullDigest();
 
         loadDatasetPresenter(datasetPresenterId, datasetFullDigest, datasetPresenter, presenterStmt);
@@ -386,7 +387,7 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getPresenterStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetPresenter" + suffix;
+    String table = config.getSchema() + ".DatasetPresenter" + suffix;
     String sql = "INSERT INTO " + table +
         " (dataset_presenter_id, dataset_sha1_digest, name, dataset_name_pattern, " +
         "display_name, short_display_name, short_attribution, summary, " +
@@ -418,11 +419,11 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenter.getType());
 
     String subtype = datasetPresenter.getSubtype() == null ? "" : datasetPresenter.getSubtype();
-    boolean isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null ? false : datasetPresenter.getIsSpeciesScope();
+    int isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null || datasetPresenter.getIsSpeciesScope() ? 0 : 1;
     String projectId = datasetPresenter.getProjectId() == null ? "" : datasetPresenter.getProjectId();
 
     stmt.setString(i++, subtype);
-    stmt.setBoolean(i++, isSpeciesScope);
+    stmt.setInt(i++, isSpeciesScope);
 
     Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
 
@@ -440,20 +441,20 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getContactStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetContact" + suffix;
+    String table = config.getSchema() + ".DatasetContact" + suffix;
     String sql = "INSERT INTO "
         + table
         + " (dataset_contact_id, dataset_presenter_id, is_primary_contact, name, email, affiliation, address, city, state, zip, country)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
   PreparedStatement getInjectorPropertiesStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetProperty" + suffix;
+    String table = config.getSchema() + ".DatasetProperty" + suffix;
     String sql = "INSERT INTO "
         + table
         + " (dataset_property_id, dataset_presenter_id, property, value)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -481,17 +482,17 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getPublicationStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetPublication" + suffix;
+    String table = config.getSchema() + ".DatasetPublication" + suffix;
     String sql = "INSERT INTO " + table
         + " (dataset_publication_id, dataset_presenter_id, pmid, citation)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
   PreparedStatement getPubmedQuery() {
     PreparedStatement query;
     String sql = "select max(citation) as citation "
-                 + "from " + config.getUsername() + ".datasetPublication "
+                 + "from " + config.getSchema() + ".datasetPublication "
                  + " where pmid = ?";
 
     try {
@@ -509,7 +510,7 @@ public class DatasetPresenterSetLoader {
 
     try {
 	// try to get it from an existing DatasetPublication record
-        // System.out.println("looking in " + config.getUsername() + " schema in database for pubmed ID " + publication.getPubmedId());
+        // System.out.println("looking in " + config.getSchema() + " schema in database for pubmed ID " + publication.getPubmedId());
         pubmedQuery.setString(1, publication.getPubmedId());
         ResultSet rs = pubmedQuery.executeQuery();
         rs.next();
@@ -539,10 +540,10 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getNameTaxonStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetNameTaxon" + suffix;
+    String table = config.getSchema() + ".DatasetNameTaxon" + suffix;
     String sql = "INSERT INTO " + table
         + " (dataset_taxon_id, dataset_presenter_id, name, taxon_id)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -555,11 +556,11 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getReferenceStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetModelRef" + suffix;
+    String table = config.getSchema() + ".DatasetModelRef" + suffix;
     String sql = "INSERT INTO "
         + table
         + " (dataset_model_ref_id, dataset_presenter_id, record_type, target_type, target_name)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -578,11 +579,11 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getHistoryStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetHistory" + suffix;
+    String table = config.getSchema() + ".DatasetHistory" + suffix;
     String sql = "INSERT INTO "
         + table
         + " (dataset_history_id, dataset_presenter_id, build_number, genome_source, genome_version, annotation_source, annotation_version, functional_annotation_source, functional_annotation_version, note)"
-        + " VALUES (" + table + "_sq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -600,10 +601,10 @@ public class DatasetPresenterSetLoader {
   }
 
   PreparedStatement getLinkStmt() throws SQLException {
-    String table = config.getUsername() + ".DatasetHyperLink" + suffix;
+    String table = config.getSchema() + ".DatasetHyperLink" + suffix;
     String sql = "INSERT INTO " + table
-        + " (dataset_link_id, dataset_presenter_id, text, description, url, isPublication)" + " VALUES ("
-        + table + "_sq.nextval, ?, ?, ?, ?, ?)";
+        + " (dataset_link_id, dataset_presenter_id, text, description, url, isPublication)" + " VALUES (nextval('"
+        + table + "_sq'), ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 

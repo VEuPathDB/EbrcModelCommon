@@ -38,21 +38,23 @@ $|=1;
 my $sql;
 if ($PROJECT_HOME =~ /\/eupa/ ){
   $sql = <<SQL;
-    select project_id, lower(project_id) as lower_project_id
-      from (select distinct project_id from GenomicSeqAttributes)
+    SELECT project_id, lower(project_id) as lower_project_id
+      FROM (SELECT DISTINCT project_id FROM GenomicSeqAttributes) t1
 SQL
 } elsif ($PROJECT_HOME =~ /\/uni/ || $PROJECT_HOME =~ /\/rm30362/ ){
   $sql = <<SQL;
-    select project_id, lower(project_id) as lower_project_id
-      from (select distinct project_id from GenomicSeqAttributes)
-    union
-    select 'UniDB' AS project_id, 'unidb' as lower_project_id from dual
+    SELECT project_id, lower(project_id) as lower_project_id
+      FROM (SELECT DISTINCT project_id from GenomicSeqAttributes) t1
+    UNION
+    SELECT 'UniDB' AS project_id, 'unidb' as lower_project_id
 SQL
 } else {
   $sql = <<SQL;
-    select project_id, lower(project_id) as lower_project_id
-      from (select distinct pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
-    where ed.row_project_id = pi.project_id)
+    SELECT project_id, lower(project_id) as lower_project_id
+      FROM (
+        SELECT DISTINCT pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
+        WHERE ed.row_project_id = pi.project_id
+      ) t1
 SQL
 }
 my $projectQuery = $dbh->prepare($sql);
