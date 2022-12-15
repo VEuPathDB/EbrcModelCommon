@@ -26,18 +26,19 @@ sub getDbLoginInfo {
   $schema = "ApidbTuning"
     if (! $schema);
 
-  return ($instance, $schema, $props->{password});
+  return ($instance, $schema, $props->{username}, $props->{password});
 }
+
 
 sub getDbHandle {
   my ($instance, $schema, $propfile) = @_;
 
-  my ($instance, $schema, $password) = getDbLoginInfo($instance, $schema, $propfile);
+  my ($instance, $schema, $username, $password) = getDbLoginInfo($instance, $schema, $propfile);
 
-  my $dsn = "dbi:Oracle:" . $instance;
+  my $dsn = "dbi:Pg:" . $instance;
   my $dbh = DBI->connect(
                 $dsn,
-                $schema,
+                $username,
                 $password,
                 { PrintError => 1, RaiseError => 0}
                 ) or die "Can't connect to the database: $DBI::errstr\n";
@@ -46,7 +47,10 @@ sub getDbHandle {
   $dbh->{RaiseError} = 1;
   $dbh->{AutoCommit} = 0;
 
+  $dbh->do("SET search_path TO $schema") or die ("This doesn't quite work");
+
   return $dbh;
 }
+
 
 1;
