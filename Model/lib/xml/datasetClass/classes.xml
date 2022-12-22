@@ -4699,7 +4699,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <graphTemplateFile name="organismSpecificMisc.xml"/>
       
 
-      <datasetLoader datasetName="${organismAbbrev}_genome_${name}_RSRC" version="${version}" 
+      <datasetLoader datasetName="${organismAbbrev}_gene_name_${name}_RSRC" version="${version}" 
 		plugin="ApiCommonData::Load::Plugin::InsertGeneNamesFromTabFile"
                 type="gene_annotation"
 		scope="organism"
