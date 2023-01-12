@@ -2792,7 +2792,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" </unpack>
+      <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" --assignedBy ${name}</unpack>
       <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
   </datasetClass>
