@@ -48,6 +48,7 @@ sub getDbHandle {
   $dbh->{AutoCommit} = 0;
 
   $dbh->do("SET search_path TO $schema") or die ("This doesn't quite work");
+  $dbh->commit();
 
   return $dbh;
 }
