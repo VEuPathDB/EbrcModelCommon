@@ -68,7 +68,7 @@ sub createTables {
       create table $schema.DatasetContact$suffix (
         dataset_contact_id           numeric(12),
         dataset_presenter_id         varchar(15),
-        is_primary_contact           varchar(20),
+        is_primary_contact           boolean,
         name                         varchar(255),
         email                        varchar(255),
         affiliation                  varchar(255),
