@@ -96,14 +96,23 @@
     <sql>
       <![CDATA[
         CREATE TABLE &prefixOntologyAncestor&1 AS
-        SELECT hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
-               parent_ontology_term_id as ancestor_ontology_term_id
-        FROM &prefixOntologyRelation
-        START WITH (hierarchy_dataset_name, child_ontology_term_id)
-                   in (select hierarchy_dataset_name, child_ontology_term_id
-                       from &prefixOntologyRelation)
-        CONNECT BY child_ontology_term_id = prior parent_ontology_term_id
-                   and hierarchy_dataset_name = prior hierarchy_dataset_name
+        WITH RECURSIVE cte AS (
+            SELECT hierarchy_dataset_name, child_ontology_term_id as ontology_term_id,
+                    parent_ontology_term_id as ancestor_ontology_term_id
+            FROM &prefixOntologyRelation
+            WHERE (hierarchy_dataset_name, child_ontology_term_id) IN (
+                SELECT hierarchy_dataset_name, child_ontology_term_id
+                FROM &prefixOntologyRelation
+            )
+            UNION
+            SELECT p.hierarchy_dataset_name, cte.ontology_term_id,
+                p.parent_ontology_term_id as ancestor_ontology_term_id
+            FROM &prefixOntologyRelation p, cte
+            WHERE p.child_ontology_term_id = cte.ancestor_ontology_term_id
+                AND p.hierarchy_dataset_name = cte.hierarchy_dataset_name
+        )
+        SELECT hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id
+        FROM cte
       ]]>
     </sql>
     <sql>
@@ -1060,17 +1069,16 @@
                    null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
         FROM (
           SELECT property_source_id,
-                     cast (substr(xmlagg(xmlelement(e, string_value,'|').extract('//text()') order by string_value).GetClobVal(), 1, 3990) as varchar2(4000))
-                       as distinct_values
+                 cast (substr(string_agg(string_value, '|' order by string_value), 1, 3990) as varchar(4000)) as distinct_values
           FROM (
             SELECT distinct m.property_source_id, m.string_value
-                FROM &prefixmetadata m,
-                     &prefixpropertytype pt
+                FROM &prefixMetadata m,
+                     &prefixPropertytype pt
                 WHERE m.string_value is not null
                   AND m.property_source_id = pt.property_source_id
                   AND pt.type = 'string'
                   --and pt.distinct_values < 80
-            )
+          ) t
         GROUP BY property_source_id
         ) s,
         &prefixpropertytype pt
@@ -1085,8 +1093,8 @@
                 cast(avg(m.number_value) as varchar(100)) as average,
                 cast(percentile_disc(.75) within group (order by m.number_value) as varchar(100)) as upper_quartile,
                 cast(percentile_disc(.25) within group (order by m.number_value) as varchar(100)) as lower_quartile
-          FROM &prefixmetadata m,
-            &prefixpropertytype pt
+          FROM &prefixMetadata m,
+            &prefixPropertytype pt
           WHERE m.number_value is not null
             AND m.property_source_id = pt.property_source_id
             AND pt.type = 'number'
@@ -1103,8 +1111,8 @@
                   cast(to_char(max(m.date_value),'YYYY-MM-DD') AS varchar(100)) as max,
                   cast(to_char(percentile_disc(.75) within group (order by m.date_value),'YYYY-MM-DD') as varchar(100)) as upper_quartile,
                   cast(to_char(percentile_disc(.25) within group (order by m.date_value),'YYYY-MM-DD') as varchar(100)) as lower_quartile
-              FROM &prefixmetadata m,
-                &prefixpropertytype pt
+              FROM &prefixMetadata m,
+                &prefixPropertytype pt
               WHERE m.date_value is not null
                 AND m.property_source_id = pt.property_source_id
                 AND pt.type = 'date'
@@ -1243,44 +1251,36 @@
     <sql>
       <![CDATA[
         CREATE TABLE &prefixOntology&1 AS
-        WITH DatasetOntologyTerm
-             -- a term (leaf or ancestor) of a dataset
-             AS (  -- ontology terms used as properties (things with values)
-                   SELECT dataset_name, property_id as ontology_term_id, unit_id
-                   FROM &prefixDatasetLeafTerm
-                 UNION
-                   -- ontology terms with descendants used as properties
-                   SELECT leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
-                          cast(null as number) as unit_id
-                   FROM &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, &prefixOntologyAncestor ancestor
-                   WHERE leaf.property_id = ancestor.ontology_term_id
-                     AND leaf.dataset_name = hmap.dataset_name
-                     AND hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
-             DatasetOntologyVars
-             AS (
-                   SELECT ontology_term_id,string_agg(distinct name, ', ') as variable_name from
-                   (
-                     SELECT ontology_term_id, regexp_replace(substr(variable, instr(variable, ',', 1, lvl) + 1, instr(variable, ',', 1, lvl + 1) - instr(variable, ',', 1, lvl) - 1),'\w+::','') name
-                     FROM
-                      ( select ',' || variable || ',' as variable, ontology_term_id from &prefixDatasetTerm ),
-                      ( select level as lvl from dual connect by level <= 100 )
-                     WHERE lvl <= length(variable) - length(replace(variable, ',')) - 1
-                     ) 
-                     GROUP BY ontology_term_id
-              ),
-             DatasetInfo
-             -- columns that are functions of dataset
-             as (SELECT dataset_name, max(dataset_type) as dataset_type,
-                        max(dataset_subtype) as dataset_subtype, max(organism) as organism
-                 FROM (  SELECT dataset_name, dataset_type, dataset_subtype, organism
-                         FROM &prefixInferredChars
-                       UNION
-                         SELECT dataset_name, dataset_type, dataset_subtype, organism
-                         FROM &prefixInferredParams
-                       UNION
-                         SELECT dataset_name, dataset_type, dataset_subtype, organism
-                         FROM &prefixDefaultChars)
-                 GROUP BY dataset_name)
+        WITH
+          DatasetOntologyTerm AS (
+            -- a term (leaf or ancestor) of a dataset
+            -- ontology terms used as properties (things with values)
+            SELECT dataset_name, property_id as ontology_term_id, unit_id
+            FROM &prefixDatasetLeafTerm
+            UNION
+             -- ontology terms with descendants used as properties
+            SELECT leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
+                   cast(null as numeric) as unit_id
+            FROM &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, &prefixOntologyAncestor ancestor
+            WHERE leaf.property_id = ancestor.ontology_term_id
+              AND leaf.dataset_name = hmap.dataset_name
+              AND hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name
+          ),
+          DatasetInfo AS (
+            -- columns that are functions of dataset
+            SELECT dataset_name, max(dataset_type) as dataset_type,
+                   max(dataset_subtype) as dataset_subtype, max(organism) as organism
+            FROM ( SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixInferredChars
+                   UNION
+                   SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixInferredParams
+                   UNION
+                   SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixDefaultChars
+             ) t
+            GROUP BY dataset_name
+          )
         SELECT coalesce(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
           ot.source_id as ontology_term_source_id,
           term_synonym.definition as description,
@@ -1293,38 +1293,32 @@
              end) as display_name,
           term_synonym.display_order,
           term_synonym.variable,
-          otv.variable_name,
+          cast(null as varchar(10)) as variable_name,
           parent.parent_ontology_term_name, parent.parent_ontology_term_id,
           parent.parent_ontology_term_source_id, unit_term.name as units,
-          cast(pt.type as varchar2(20)) as type,
+          cast(pt.type as varchar(20)) as type,
           case
            when pt.filter = 'range' then 1
            else 0
           end as is_range,
           cast(1 as numeric(1)) as precision,
           di.organism, dot.dataset_name, di.dataset_type, di.dataset_subtype
-        FROM DatasetOntologyTerm dot, DatasetOntologyVars otv, sres.OntologyTerm ot, &prefixHierarchyMap hmap,
-             &prefixDatasetTerm term_synonym, &prefixPropertyType pt,
-             sres.OntologyTerm unit_term, DatasetInfo di,
-             (SELECT orel.hierarchy_dataset_name, orel.child_ontology_term_id,
-                     orel.parent_ontology_term_id, orel.parent_ontology_term_source_id,
-                     coalesce(dt.name, ot.name) as parent_ontology_term_name
-              FROM &prefixOntologyRelation orel, sres.OntologyTerm ot, &prefixDatasetTerm dt
-              WHERE orel.parent_ontology_term_id = ot.ontology_term_id
-                AND orel.parent_ontology_term_id = dt.ontology_term_id(+)
-                AND orel.hierarchy_dataset_name = dt.hierarchy_dataset_name(+)
-             ) parent
-        WHERE dot.ontology_term_id = ot.ontology_term_id
-          AND dot.ontology_term_id = otv.ontology_term_id(+)
-          AND dot.ontology_term_id = term_synonym.ontology_term_id(+)
-          AND hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name(+)
-          AND dot.ontology_term_id = parent.child_ontology_term_id(+)
-          AND hmap.hierarchy_dataset_name = parent.hierarchy_dataset_name(+)
-          AND dot.unit_id = unit_term.ontology_term_id(+)
-          AND dot.ontology_term_id = pt.property_id(+)
-          AND dot.dataset_name = hmap.dataset_name
-          AND dot.dataset_name = di.dataset_name
-          AND dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+        FROM DatasetOntologyTerm dot
+          INNER JOIN sres.OntologyTerm ot ON dot.ontology_term_id = ot.ontology_term_id
+          INNER JOIN &prefixHierarchyMap hmap ON dot.dataset_name = hmap.dataset_name
+          INNER JOIN DatasetInfo di ON dot.dataset_name = di.dataset_name
+          LEFT JOIN &prefixDatasetTerm term_synonym ON dot.ontology_term_id = term_synonym.ontology_term_id AND hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name
+          LEFT JOIN &prefixPropertyType pt ON dot.ontology_term_id = pt.property_id
+          LEFT JOIN sres.OntologyTerm unit_term ON dot.unit_id = unit_term.ontology_term_id
+          LEFT JOIN (
+            SELECT orel.hierarchy_dataset_name, orel.child_ontology_term_id,
+                   orel.parent_ontology_term_id, orel.parent_ontology_term_source_id,
+                   coalesce(dt.name, ot.name) as parent_ontology_term_name
+            FROM &prefixOntologyRelation orel
+              INNER JOIN sres.OntologyTerm ot ON orel.parent_ontology_term_id = ot.ontology_term_id
+              LEFT JOIN &prefixDatasetTerm dt ON orel.parent_ontology_term_id = dt.ontology_term_id AND orel.hierarchy_dataset_name = dt.hierarchy_dataset_name
+          ) parent ON dot.ontology_term_id = parent.child_ontology_term_id AND hmap.hierarchy_dataset_name = parent.hierarchy_dataset_name
+        WHERE dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
       ]]>
     </sql>
     <sql>
@@ -1367,7 +1361,7 @@
         UPDATE &prefixOntology&1
         SET display_name = 'Organism'
         WHERE lower(ontology_term_name) = 'parasite organism'
-          AND lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+          AND lower(substr(current_database(), 1, 4)) = 'fung'
       ]]>
     </sql>
   </tuningTable>
@@ -1626,11 +1620,18 @@
          m.pan_id as community_id, m.string_value, m.number_value, m.date_value
         FROM &prefixMetaData m
         WHERE m.property_source_id in (
-          SELECT distinct o.ontology_term_source_id
-          FROM &prefixOntology o
-              CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-              START WITH o.ontology_term_source_id in ('EUPATH_0035127')
+          WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('EUPATH_0035127')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, &prefixOntology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
           )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
           AND m.pan_id not in (SELECT DISTINCT community_observation_id FROM &prefixComComObsIO)
       ]]>
     </sql>
@@ -1664,11 +1665,18 @@
           m.pan_id as community_observation_id, m.string_value, m.number_value, m.date_value
         FROM &prefixMetaData m
         WHERE m.property_source_id in (
-          SELECT distinct o.ontology_term_source_id
-          FROM &prefixOntology o
-             CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-             START WITH o.ontology_term_source_id in ('EUPATH_0035127')
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            WHERE ontology_term_source_id in ('EUPATH_0035127')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
           )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
           AND m.pan_id in (SELECT DISTINCT community_observation_id FROM &prefixComComObsIO)
       ]]>
     </sql>
@@ -1698,40 +1706,48 @@
           date_value
           )
         AS
-        WITH iopo AS (
-          select distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
-          from &prefixPANIO hp, &prefixPANIO po
-          where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000096'
-          and hp.output_pan_id = po.input_pan_id
-          and po.input_pan_type_source_id = 'EUPATH_0000096' and po.output_pan_type_source_id = 'EUPATH_0000738'
+        with iopo AS (
+          SELECT distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
+          FROM &prefixPANIO hp, &prefixPANIO po
+          WHERE hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'EUPATH_0000096'
+            AND hp.output_pan_id = po.input_pan_id
+            AND po.input_pan_type_source_id = 'EUPATH_0000096' AND po.output_pan_type_source_id = 'EUPATH_0000738'
         ),
         ioho AS (
-          select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
-          from &prefixPANIO hp
-          where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000738'
+          SELECT distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
+          FROM &prefixPANIO hp
+          WHERE hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'EUPATH_0000738'
         ),
         iohh as (
           select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
           from &prefixPANIO hp
-          where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'PCO_0000024'
+          where hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'PCO_0000024'
         ),
         hhold as (
-          select * from (
-           select distinct m.property_source_id as ontology_term_name,
-           CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id
-           WHEN iohh.household_id is not null THEN iohh.household_id ELSE m.pan_id END as household_id,
-           m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
-           from &prefixMetaData m, iopo, ioho, iohh
-           where m.property_source_id in (
-           select distinct o.ontology_term_source_id
-           from &prefixOntology o
-               CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-               START WITH o.ontology_term_source_id in ('PCO_0000024')
-             )
-           and m.pan_id = iopo.observation_id(+)
-           and m.pan_id = ioho.observation_id(+)
-           and m.pan_id = iohh.observation_id(+)
-        ))
+          SELECT * from (
+           SELECT DISTINCT m.property_source_id as ontology_term_name,
+             CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id
+             WHEN iohh.household_id is not null THEN iohh.household_id ELSE m.pan_id END as household_id,
+             m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
+           FROM &prefixMetaData m
+            LEFT JOIN iopo ON m.pan_id = iopo.observation_id
+            LEFT JOIN ioho ON m.pan_id = ioho.observation_id
+            LEFT JOIN iohh ON m.pan_id = iohh.observation_id
+           WHERE m.property_source_id in (
+            WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('PCO_0000024')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, ontology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+            )
+            SELECT DISTINCT ontology_term_source_id
+            FROM cte
+           )
+          ) t
+        )
         SELECT * FROM (
           SELECT * FROM hhold
           UNION
@@ -1740,7 +1756,7 @@
           FROM &prefixMetaData m, (select distinct household_observation_id, household_id from hhold) hh
           WHERE m.property_source_id = 'EUPATH_0000579'
             AND m.pan_id = hh.household_observation_id
-        )
+        ) t
         ORDER BY ontology_term_name
       ]]>
     </sql>
@@ -1773,14 +1789,22 @@
         AS
         SELECT * FROM (
           SELECT DISTINCT m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
-          FROM &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
+          FROM &prefixMetaData m
+           LEFT JOIN (SELECT input_pan_id, output_pan_id FROM &prefixPANIO WHERE input_pan_type_source_id = 'PCO_0000024') io
+            ON m.pan_id = io.output_pan_id
           WHERE m.property_source_id in (
-            SELECT distinct o.ontology_term_source_id
-            FROM &prefixOntology o
-             CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-             START WITH o.ontology_term_source_id in ('EUPATH_0000096')
+            WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('EUPATH_0000096')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, ontology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
             )
-            AND m.pan_id = io.output_pan_id(+)
+            SELECT DISTINCT ontology_term_source_id
+            FROM cte
+          )
         ) t
         ORDER BY ontology_term_name,participant_id
       ]]>
@@ -2062,36 +2086,53 @@
           )
         AS
         WITH obsont AS (
-          SELECT distinct o.ontology_term_source_id
-          FROM &prefixOntology o
-               CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-               START WITH o.ontology_term_source_id in ('EUPATH_0000738','EUPATH_0000609') /* NOTE: 'EUPATH_0000609' bring in sample vars attached directly to observations like for PRISM */
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            /* NOTE: 'EUPATH_0000609' bring in sample vars attached directly to observations like for PRISM */
+            WHERE ontology_term_source_id in ('EUPATH_0000738','EUPATH_0000609')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+          )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
         )
-        SELECT distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sub_observation_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
-        FROM &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
+        SELECT DISTINCT m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sub_observation_id,
+               m.pan_id as sample_id, coalesce(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m
+          INNER JOIN &prefixPartObsIO ioo ON m.pan_id = ioo.observation_id
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
         WHERE m.property_source_id in ( SELECT ontology_term_source_id FROM obsont )
-         AND m.pan_id = ioo.observation_id
-         AND ioo.participant_id = ioh.participant_id(+)
         UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations
         SELECT distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
                 coalesce(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
-        FROM &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
+        FROM &prefixMetaData m, &prefixObsObsIO iosub, &prefixPartObsIO ioo
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
         WHERE m.property_source_id in (SELECT ontology_term_source_id from obsont)
           and m.pan_id = iosub.sub_observation_id
           and iosub.observation_id = ioo.observation_id
-          and ioo.participant_id = ioh.participant_id(+)
         UNION --NOTE: next block pulls in sample information
-        select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
-        from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
-        where m.property_source_id in (
-          select distinct o.ontology_term_source_id
-          from &prefixOntology o
-             CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-             START WITH o.ontology_term_source_id in ('EUPATH_0000609')
+        SELECT DISTINCT m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id,
+               m.pan_id as sample_id, coalesce(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
+        WHERE m.property_source_id in (
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            WHERE ontology_term_source_id in ('EUPATH_0000609')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
           )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
           AND m.pan_id = spec.sample_id
           AND ioo.observation_id = spec.observation_id
-          AND ioo.participant_id = ioh.participant_id(+)
       ]]>
     </sql>
     <sql>

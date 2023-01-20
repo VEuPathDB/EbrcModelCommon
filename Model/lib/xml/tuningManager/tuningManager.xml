@@ -33,22 +33,33 @@
     <sql>
       <![CDATA[
         CREATE TABLE ExternalSequenceTaxonRank&1 AS
-        WITH organism_rank
-             as (SELECT tn1.taxon_id as organism, tn2.name as parent_organism,
-                        tn2.taxon_id as parent_organism_id, r.rank
-                 FROM sres.TaxonName tn1, sres.TaxonName tn2,
-                      (select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
-                       from sres.taxon
-                       start with taxon_id in (  SELECT taxon_id FROM DOTS.EXTERNALNASEQUENCE
-                                                 UNION
-                                                 SELECT taxon_id FROM apidb.TaxonString)
-                       connect by prior parent_id = taxon_id) r
-                 WHERE r.input = tn1.taxon_id
-                   and r.taxon_id = tn2.taxon_id
-                   and tn1.name_class = 'scientific name'
-                   and tn2.name_class = 'scientific name'
-                   and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
-                )
+        WITH organism_rank AS (
+          SELECT tn1.taxon_id as organism, tn2.name as parent_organism,
+                 tn2.taxon_id as parent_organism_id, r.rank
+          FROM sres.TaxonName tn1, sres.TaxonName tn2,
+                (
+                  WITH RECURSIVE cte AS (
+                    SELECT taxon_id as input, taxon_id, rank, parent_id
+                    FROM sres.taxon
+                    WHERE taxon_id IN (
+                        SELECT taxon_id FROM dots.externalaasequence
+                        UNION
+                        SELECT taxon_id FROM apidb.taxonstring
+                    )
+                    UNION
+                    SELECT cte.input, t.taxon_id, t.rank, t.parent_id
+                    FROM sres.taxon t, cte
+                    WHERE cte.parent_id = t.taxon_id
+                  )
+                  SELECT input, taxon_id, rank
+                  FROM cte
+                ) r
+          WHERE r.input = tn1.taxon_id
+           and r.taxon_id = tn2.taxon_id
+           and tn1.name_class = 'scientific name'
+           and tn2.name_class = 'scientific name'
+           and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
+        )
         SELECT organisms.organism,
                coalesce(superkingdom.parent_organism, 'N/A') as superkingdom,
                superkingdom.parent_organism_id as superkingdom_id,
@@ -66,7 +77,7 @@
                genus.parent_organism_id as genus_id,
                coalesce(species.parent_organism, 'N/A') as species,
                species.parent_organism_id as species_id
-        FROM (SELECT DISTINCT organism FROM organism_rank) organisms,
+        FROM (SELECT DISTINCT organism FROM organism_rank) organisms
              LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'phylum') phylum ON  organisms.organism = phylum.organism
              LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'genus') genus ON  organisms.organism = genus.organism
              LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'species') species ON  organisms.organism = species.organism
@@ -527,7 +538,8 @@
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
 
-  <tuningTable name="DatasetDetail" alwaysUpdate="true">
+<!--  <tuningTable name="DatasetDetail" alwaysUpdate="true">-->
+  <tuningTable name="DatasetDetail">
     <comment> Stores text associated with each dataset. Used by dataset queries.
       </comment>
     <internalDependency name="DatasetPresenter"/>
@@ -535,10 +547,10 @@
       <![CDATA[
         CREATE TABLE DatasetDetail&1 AS
         SELECT dataset_presenter_id,
-          name||' '||category||' '||usage||' '||
-          caveat||' '||acknowledgement||' '||type||' '||subtype
-          ||' '| |summary||' '||description||' '||contact||' '||
-          institution||' '||pubmed_id||' '||citation as search_string
+          name || ' ' || category || ' ' || usage || ' ' ||
+          caveat || ' ' || acknowledgement || ' ' || type || ' ' || subtype
+          ||' ' || summary || ' ' || description || ' ' || contact || ' ' ||
+          institution || ' ' || pubmed_id || ' ' || citation as search_string
         FROM (
           SELECT
             sub.dataset_presenter_id as dataset_presenter_id,
@@ -576,8 +588,8 @@
             FROM DatasetPresenter dp, DatasetContact dc,
                  DatasetPublication dpub
             WHERE dp.dataset_presenter_id = dc.dataset_presenter_id
-              AND   dp.dataset_presenter_id = dpub.dataset_presenter_id
-              AND   dc.is_primary_contact = 1
+              AND dp.dataset_presenter_id = dpub.dataset_presenter_id
+              AND dc.is_primary_contact = true
             GROUP by dp.dataset_presenter_id, dp.display_name,dp.display_category,
                      dp.usage,dp.caveat,dp.acknowledgement,dp.type,dp.subtype,dc.name,
                      dc.affiliation
@@ -586,13 +598,12 @@
         ) t
       ]]>
     </sql>
-    <sql>
-      <![CDATA[
-          CREATE INDEX DATASET_DETAIL_IDX&1 ON DATASETDETAIL&1 (search_string)
-          INDEXTYPE IS CTXSYS.CONTEXT
-      ]]>
-    </sql>
-
+<!--    <sql>-->
+<!--      <![CDATA[-->
+<!--          CREATE INDEX DATASET_DETAIL_IDX&1 ON DATASETDETAIL&1 (search_string)-->
+<!--          INDEXTYPE IS CTXSYS.CONTEXT-->
+<!--      ]]>-->
+<!--    </sql>-->
   </tuningTable>
 
   <tuningTable name="ExternalDbDatasetPresenter">
@@ -686,8 +697,8 @@
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &taxRelAbund_pk&1
-          ON &TaxonRelativeAbundance&1 (name, lineage)
+        CREATE INDEX taxRelAbund_pk&1
+          ON TaxonRelativeAbundance&1 (name, lineage)
         TABLESPACE indx
       ]]>
     </sql>
