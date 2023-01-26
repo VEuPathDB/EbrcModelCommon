@@ -645,6 +645,7 @@
     <track>ccarCBS160.54</track>
     <track>cimmCBS83496</track>
     <track>cpsaCBS110553</track>
+    <track>cyegCBS114405</track>
   </subtrackSet>
 
   <subtrackSet name="Cyphellophoraceae" project="FungiDB" suffixes="_span;_gene">
@@ -698,6 +699,7 @@
     <track>atheHMRAF39</track>
     <track>aeucCBS122712</track>
     <track>atanNIH1004</track>
+    <track>auvaCBS121591</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -758,6 +760,7 @@
     <track>cgatEJB2</track>
     <track>cgatNT10</track>
     <track>cgatVGIIR265</track>
+    <track>cdepCBS7841</track>
     <track>kbesCBS10118</track>
     <track>kdejCBS10117</track>
     <track>khevCBS569</track>
@@ -788,6 +791,7 @@
 
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>bgraTritici96224</track>
+    <track>bgrasp.triticaleTHUN12</track>
     <track>bcinB05-10</track>
     <track>sscl1980UF-70</track>
     <track>pdes20631-21</track>
@@ -884,6 +888,7 @@
     <track>bperEI222</track>
     <track>eafrCBS136260</track>
     <track>epasEp9510</track>
+    <track>ecreUAMH3008</track>
   </subtrackSet>
 
   <subtrackSet name="Sordariomycetes_Microascaceae" project="FungiDB" suffixes="_span;_gene">
@@ -1035,6 +1040,7 @@
     <org abbrev="ccarCBS160.54" organism="Cladophialophora carrionii CBS 160.54"/>
     <org abbrev="cimmCBS83496" organism="Cladophialophora immunda strain CBS 83496"/>
     <org abbrev="cpsaCBS110553" organism="Cladophialophora psammophila CBS 110553"/>
+    <org abbrev="cyegCBS114405" organism="Cladophialophora yegresii CBS 114405"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Herpotrichiellaceae"/>
@@ -1119,6 +1125,7 @@
     <org abbrev="atheHMRAF39" organism="Aspergillus thermomutatus strain HMR AF 39"/>
     <org abbrev="aeucCBS122712" organism="Aspergillus eucalypticola CBS 122712"/>
     <org abbrev="atanNIH1004" organism="Aspergillus tanneri NIH1004"/>
+    <org abbrev="auvaCBS121591" organism="Aspergillus uvarum CBS 121591"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Aspergillaceae"/>
@@ -1193,6 +1200,7 @@
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
     <org abbrev="cgatVGIIR265" organism="Cryptococcus gattii VGII R265"/>
+    <org abbrev="cdepCBS7841" organism="Cryptococcus depauperatus CBS 7841"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
@@ -1248,6 +1256,7 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
+    <org abbrev = "bgrasp.triticaleTHUN12" organism="Blumeria graminis f. sp. triticale THUN-12"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
     <org abbrev="pdes20631-21" organism="Pseudogymnoascus destructans 20631-21"/>
@@ -1386,6 +1395,7 @@
     <org abbrev = "bperEI222" organism="Blastomyces percursus strain EI222"/>
     <org abbrev = "eafrCBS136260" organism="Emergomyces africanus CBS 136260"/>
     <org abbrev = "epasEp9510" organism="Emergomyces pasteurianus Ep9510"/>
+    <org abbrev = "ecreUAMH3008" organism="Emmonsia crescens UAMH 3008"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Ajellomycetaceae"/>
