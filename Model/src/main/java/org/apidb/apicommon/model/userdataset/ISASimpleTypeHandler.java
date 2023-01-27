@@ -81,10 +81,13 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
 
   @Override
   public String[] getUninstallInAppDbCommand(Long userDatasetId, String projectId) {
+    final String imageTag = Optional.ofNullable(System.getenv("ISA_IMAGE_TAG"))
+        .filter(tagEnv -> !tagEnv.isBlank())
+        .orElse("latest");
     String[] cmd = {"singularity", "run",
         "--bind", constructGusConfigBinding(),
         "--bind", constructOracleHomeBinding(),
-        "docker://veupathdb/dataset-installer-isasimple:latest",
+        "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
         "deleteStudy.pl",
         userDatasetId.toString()};
     return cmd;
