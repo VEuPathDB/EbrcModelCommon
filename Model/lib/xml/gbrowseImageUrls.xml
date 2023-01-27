@@ -2333,6 +2333,8 @@
   <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
     <track>dandqqDerAnde1</track>
     <track>dsilDsil-2018</track>
+    <track>hasiHyas2018</track>
+    <track>hlonHaeL2018</track>
     <track>iperIper2018</track>
     <track>iscaWikel</track>
     <track>iscaISE6</track>
@@ -2464,6 +2466,8 @@
   <url project="VectorBase" type="synteny">
     <org organism="Dermacentor andersoni qqDerAnde1" abbrev="dandqqDerAnde1" />
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
+    <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
+    <org organism="Haemaphysalis longicornis HaeL-2018" abbrev="hlonHaeL2018" />
     <org organism="Ixodes persulcatus Iper-2018" abbrev="iperIper2018" />
     <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
