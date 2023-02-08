@@ -142,119 +142,107 @@
                     multiPick="false" >
       <help>A Gene List dataset you have imported into your workspace, and that is installed in @PROJECT_ID@ </help>
     </flatVocabParam>
-    
+    <flatVocabParam name="dataset_name"
+                 queryRef="datasetVQ.extDbNames"
+                 prompt="Data set INTERNAL name"
+                 multiPick="true">
+      <help>
+        The comma delimited list of data set names
+      </help>
+    </flatVocabParam>
 
-        <flatVocabParam name="dataset_name"
-                     queryRef="datasetVQ.extDbNames"
-                     prompt="Data set INTERNAL name"
-                     multiPick="true">
-                     <help>
-                     The comma delimited list of data set names
-                     </help>    
-        </flatVocabParam>
+    <flatVocabParam name="taxon"
+                 queryRef="datasetVQ.taxon"
+                 prompt="Taxa associated with datsets"
+                 quote="false"
+                 multiPick="false">
+                 <help>
+                 </help>
+    </flatVocabParam>
 
-
-
-        <flatVocabParam name="taxon"
-                     queryRef="datasetVQ.taxon"
-                     prompt="Taxa associated with datsets"
-                     quote="false"
-                     multiPick="false">
-                     <help>
-                     </help>    
-        </flatVocabParam>
-
-
-
-
-
-
-        <flatVocabParam name="dataset_id"
-                     queryRef="datasetVQ.ids"
-                     prompt="Dataset ID input set"
-                     multiPick="true">
-            <help><![CDATA[Enter a comma-separated list of ids]]></help>
-        </flatVocabParam>
+    <flatVocabParam name="dataset_id"
+                 queryRef="datasetVQ.ids"
+                 prompt="Dataset ID input set"
+                 multiPick="true">
+        <help><![CDATA[Enter a comma-separated list of ids]]></help>
+    </flatVocabParam>
   </paramSet>
 
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!--  Vocab queries-->  
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
- <querySet name="datasetVQ" queryType="vocab" isCacheable="true">
+  <querySet name="datasetVQ" queryType="vocab" isCacheable="true">
 
-   <sqlQuery name="taxon">
-            <column name="internal"/>
-            <column name="term"/>
-            <sql>
-         <![CDATA[
-select distinct organism_name as term, oa.COMPONENT_TAXON_ID as internal
-from apidbtuning.organismattributes oa
-, apidbtuning.datasetnametaxon dnt
-where dnt.taxon_id = oa.COMPONENT_TAXON_ID
-union
-select 'any', -1 from dual
-         ]]>
-            </sql>
-   </sqlQuery>
-
-
-<sqlQuery name="geneListUserDataset" isCacheable="false">
-  <paramRef ref="InternalParams.user_id"/> 
-      <column name="internal" />
-      <column name="term" />
-      <sql>                                                                                                                     
-select  term, internal from ( 
-
-  select 0 as term1, 0 as internal1, 'Choose a Gene List, if you have any' as internal, 'Choose a Gene List, if you have any' as term, 'Choose a Gene List, if you have any' as display, 1 as num from dual 
-  
-  UNION
-                                                                                           
-  select distinct a.user_dataset_id as term1, a.user_dataset_id as internal1, name as internal, name as term, name as display, 3 as num                                                                                                                        
-  from ApiDbUserDatasets.installedUserDataset i, ApiDbUserDatasets.UserDatasetAccessControl a, ApiDbUserDatasets.UD_GeneId g     
-  where a.user_id =  '1926010'  ----- should also update user_id in ApiCommonModel/Model/lib/wdk/model/stepAnalysisParams.xml   
-  and a.user_dataset_id = i.user_dataset_id
-  and g.user_dataset_id = i.user_dataset_id                                                                                     
-  and (i.is_invalid is null or i.is_invalid = 0)                                                                                  
-                                          
-    
-  ) order by num, display
-
+    <sqlQuery name="taxon">
+      <column name="internal"/>
+      <column name="term"/>
+      <sql>
+       <![CDATA[
+          SELECT distinct organism_name as term, oa.COMPONENT_TAXON_ID as internal
+          FROM apidbtuning.organismattributes oa
+          , apidbtuning.datasetnametaxon dnt
+          WHERE dnt.taxon_id = oa.COMPONENT_TAXON_ID
+          UNION
+          SELECT 'any', -1
+        ]]>
       </sql>
-</sqlQuery>
+    </sqlQuery>
 
+    <sqlQuery name="geneListUserDataset" isCacheable="false">
+      <paramRef ref="InternalParams.user_id"/>
+        <column name="internal" />
+        <column name="term" />
+        <sql>
+          SELECT  term, internal from (
+            SELECT 0 as term1, 0 as internal1,
+                  'Choose a Gene List, if you have any' as internal,
+                  'Choose a Gene List, if you have any' as term,
+                  'Choose a Gene List, if you have any' as display,
+                  1 as num
+          UNION
+            SELECT distinct a.user_dataset_id as term1, a.user_dataset_id as internal1
+                  , name as internal, name as term, name as display, 3 as num
+            FROM ApiDbUserDatasets.installedUserDataset i, ApiDbUserDatasets.UserDatasetAccessControl a, ApiDbUserDatasets.UD_GeneId g
+            WHERE a.user_id =  '1926010'  ----- should also update user_id in ApiCommonModel/Model/lib/wdk/model/stepAnalysisParams.xml
+              AND a.user_dataset_id = i.user_dataset_id
+              AND g.user_dataset_id = i.user_dataset_id
+              AND (i.is_invalid is null or i.is_invalid = 0)
+          ) t
+          ORDER BY num, display
+        </sql>
+    </sqlQuery>
 
+    <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
+      <column name="internal"/>
+      <column name="term"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT name as term, name as internal FROM apidb.datasource
+        ]]>
+      </sql>
+    </sqlQuery>
 
-   
-   <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
-            <column name="internal"/>
-            <column name="term"/>
-            <sql>
-         <![CDATA[
-                  select distinct name as term, name as internal from apidb.datasource
-         ]]>
-            </sql>
-   </sqlQuery>
+    <processQuery name="extDbNames" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
+      <wsColumn name="internal" width="200"/>
+      <wsColumn name="term" width="200"/>
+    </processQuery>
 
-   <processQuery name="extDbNames" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-            <wsColumn name="internal" width="200"/>
-            <wsColumn name="term" width="200"/>
-   </processQuery>
+    <sqlQuery name="ids" excludeProjects="EuPathDB">
+      <column name="internal"/>
+      <column name="term"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dataset_presenter_id as term, dataset_presenter_id as internal
+          FROM APIDBTUNING.datasetnametaxon
+        ]]>
+      </sql>
+    </sqlQuery>
 
-   <sqlQuery name="ids" excludeProjects="EuPathDB">
-             <column name="internal"/>
-             <column name="term"/>
-            <sql>
-         <![CDATA[
-                  select distinct dataset_presenter_id as term, dataset_presenter_id as internal from APIDBTUNING.datasetnametaxon
-         ]]>
-            </sql>
-   </sqlQuery>
-
-   <processQuery name="ids" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-            <wsColumn name="term" width="200"/>
-            <wsColumn name="internal" width="200"/>
-   </processQuery>
+    <processQuery name="ids" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
+      <wsColumn name="term" width="200"/>
+      <wsColumn name="internal" width="200"/>
+    </processQuery>
   </querySet>    
 
 </wdkModel>
