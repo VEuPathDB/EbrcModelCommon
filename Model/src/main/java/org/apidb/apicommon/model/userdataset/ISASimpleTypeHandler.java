@@ -55,7 +55,7 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
           .orElse("latest");
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
-          "--bind", constructGusConfigBinding(),
+          "--bind", constructGusConfigBinding(projectId),
           "--bind", constructOracleHomeBinding(),
           "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
           "loadStudy.bash",
@@ -85,7 +85,7 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
         .filter(tagEnv -> !tagEnv.isBlank())
         .orElse("latest");
     String[] cmd = {"singularity", "run",
-        "--bind", constructGusConfigBinding(),
+        "--bind", constructGusConfigBinding(projectId),
         "--bind", constructOracleHomeBinding(),
         "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
         "deleteStudy.pl",
@@ -93,9 +93,9 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
     return cmd;
   }
 
-  private String constructGusConfigBinding() {
+  private String constructGusConfigBinding(String projectId) {
     return String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
-        System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
+        System.getenv("GUS_HOME"), projectId);
   }
 
   private String constructOracleHomeBinding() {
