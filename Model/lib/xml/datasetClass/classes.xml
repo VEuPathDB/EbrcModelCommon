@@ -5673,6 +5673,30 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!-- same as WebDisplayOntologyClinEpi but with a sourceFile designation, which does not have to match the name -->
+  <datasetClass class="WebDisplayOntologyEDA" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="sourceFile"></prop>
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@gusHome@@/${sourceFile} @@dataDir@@/${name}.owl</unpack>
+
+      <pluginArgs>--inFile @@gusHome@@/${sourceFile} --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <!-- dataset class for loading sample metadata -->
   
   <datasetClass class="SnpMetaData" category="" datasetFileHint="">
