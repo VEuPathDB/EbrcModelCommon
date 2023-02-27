@@ -161,7 +161,7 @@
          <columnAttribute name="annotation_version" displayName="Annotation Version"/>
          <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
        </attributeQueryRef>
-
+<!--
        <attributeQueryRef ref="DatasetAttributes.DatasetDigest" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
          <columnAttribute name="dataset_sha1_digest" internal="true"/>
          <columnAttribute name="dataset_display_name" internal="true"/>
@@ -174,7 +174,7 @@
               </url>
          </linkAttribute>
        </attributeQueryRef>
-
+-->
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="is_public" internal="true"/>
@@ -205,6 +205,14 @@ while in protected and private studies there will be human intervention in the d
            </displayText>
            <url>
              @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/new
+           </url>
+         </linkAttribute>
+         <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
+           <displayText>
+             <![CDATA[ <i class="fa fa-download"></i> ]]>
+           </displayText>
+           <url>
+             @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/new/download
            </url>
          </linkAttribute>
        </attributeQueryRef>
