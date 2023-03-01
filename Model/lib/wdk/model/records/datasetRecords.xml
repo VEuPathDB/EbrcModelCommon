@@ -897,7 +897,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         select count(*) from ApidbTuning.DatasetPresenter
       </testRowCountSql>
 
-      <testRowCountSql includeProjects="ClinEpiDB">
+      <testRowCountSql includeProjects="ClinEpiDB,MicrobiomeDB">
         select count(*) from (
           SELECT dataset_presenter_id 
           FROM apidbtuning.datasetpresenter
@@ -909,13 +909,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
           WHERE i.user_dataset_id = d.user_dataset_id
         )
       </testRowCountSql>
-
-      <testRowCountSql includeProjects="MicrobiomeDB">
-          SELECT dataset_presenter_id 
-          FROM apidbtuning.datasetpresenter
-          WHERE project_id = '@PROJECT_ID@'
-      </testRowCountSql>
-
 
       <sqlQuery name="genecounts" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id"/>
@@ -989,7 +982,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <column name="dataset_sha1_digest" columnType="string"/>
         <column name="dataset_display_name" columnType="string"/>
         <column name="dataset_id" columnType="string"/>
-          <sql includeProjects="ClinEpiDB">
+          <sql includeProjects="ClinEpiDB,MicrobiomeDB">
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
@@ -1004,7 +997,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
           WHERE i.user_dataset_id = d.user_dataset_id
                 ]]>
         </sql>
-          <sql includeProjects="MicrobiomeDB,VectorBase">
+          <sql includeProjects="VectorBase">
             <![CDATA[
                        select dsp.dataset_sha1_digest
                          , dsp.dataset_presenter_id as dataset_id
@@ -1032,50 +1025,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="request_email_body" columnType="string"/>
          <column name="request_needs_approval" columnType="string"/>
 
-            <sql includeProjects="ClinEpiDB">
-            <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
-decode(study_access, 'prerelease', '1', '0') as is_prerelease
-from apidbtuning.datasetpresenter pres, (
-select * from (
-select dataset_presenter_id, property, value
-from apidbtuning.datasetproperty
-where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
-and trim(value) is not null
--- TEMPLATE_ANCHOR injectDatasetQuestions
-
--- TEMPLATE_ANCHOR injectProjectAvailability
-)
-pivot
-(
-   max(value)
-   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
-)) dp
-where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
-and project_id = '@PROJECT_ID@'
-                    UNION
-          SELECT d.dataset_stable_id
-               , null as project_availability
-               , 'NA' as is_public
-               , 'NA' as study_access
-               , '0' as is_prerelease
-               , null as policy_url
-               , 'TODO_CARD_HEADLINE' as card_headline
-               , '[]' as card_points
-               , '[]' as card_questions
-               , null as request_protection_level
-               , null as request_access_fields
-               , null as request_email
-               , null as request_email_bcc
-               , null as request_email_body
-               , null as request_needs_approval
-          FROM apidbuserdatasets.installeduserdataset i, 
-               apidbuserdatasets.datasetattributes d
-          WHERE i.user_dataset_id = d.user_dataset_id
-            ]]>
-            </sql>
-
-            <sql includeProjects="MicrobiomeDB">
+            <sql>
             <![CDATA[
 select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
 decode(study_access, 'prerelease', '1', '0') as is_prerelease
@@ -1722,7 +1672,7 @@ select  dsp.dataset_presenter_id as dataset_id,
         <column name="institution" columnType="string"/>
         <column name="email" columnType="string"/>
         <column name="short_attribution" columnType="string"/>
-            <sql includeProjects="ClinEpiDB">
+            <sql includeProjects="ClinEpiDB,MicrobiomeDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
@@ -1748,7 +1698,7 @@ select  dsp.dataset_presenter_id as dataset_id,
  ]]>
             </sql>
 
-            <sql excludeProjects="ClinEpiDB">
+            <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
