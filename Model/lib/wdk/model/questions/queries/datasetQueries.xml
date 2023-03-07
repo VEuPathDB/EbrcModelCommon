@@ -36,17 +36,23 @@
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
                  apidbuserdatasets.userdatasetowner o,
-                 apidbuserdatasets.datasetattributes d
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
             WHERE i.user_dataset_id = d.user_dataset_id
             and i.user_dataset_id = o.user_dataset_id
+            and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
              and o.USER_ID = $$user_id$$
             UNION
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
                  apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
             WHERE i.user_dataset_id = d.user_dataset_id
              and i.user_dataset_id = s.user_dataset_id
+             and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
              and s.recipient_user_id = $$user_id$$
           ]]>
        </sql>
@@ -57,6 +63,29 @@
             from apidbTuning.DatasetPresenter
             where (category is null OR category != 'Link outs')
             and project_id = '@PROJECT_ID@'
+            UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i, 
+                 apidbuserdatasets.userdatasetowner o,
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
+            WHERE i.user_dataset_id = d.user_dataset_id
+            and i.user_dataset_id = o.user_dataset_id
+            and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
+             and o.USER_ID = $$user_id$$
+            UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i, 
+                 apidbuserdatasets.userdatasetsharedwith s,
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
+            WHERE i.user_dataset_id = d.user_dataset_id
+             and i.user_dataset_id = s.user_dataset_id
+             and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
+             and s.recipient_user_id = $$user_id$$
+
           ]]>
        </sql>
 
