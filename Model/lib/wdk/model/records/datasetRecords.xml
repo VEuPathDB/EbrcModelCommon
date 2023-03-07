@@ -1661,6 +1661,14 @@ select  dsp.dataset_presenter_id as dataset_id,
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp
+            UNION
+          SELECT d.dataset_stable_id
+               , null as caveat
+               , null as acknowledgement
+               , null as release_policy
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
             ]]>
          </sql>
       </sqlQuery>
