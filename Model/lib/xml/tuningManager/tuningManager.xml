@@ -363,6 +363,13 @@ order by organism, species, genus
     </sql>
     <sql>
       <![CDATA[
+        update &prefixProjectTaxon&1
+        set taxon = replace(taxon, '''', '')
+        where taxon like '%''%'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create unique index data_load_prjct_err&1 on &prefixProjectTaxon&1 (taxon)
       ]]>
     </sql>
