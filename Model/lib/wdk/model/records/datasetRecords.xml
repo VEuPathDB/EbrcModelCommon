@@ -1655,7 +1655,7 @@ select  dsp.dataset_presenter_id as dataset_id,
          <column name="caveat"/>
          <column name="acknowledgement"/>
          <column name="release_policy"/>
-         <sql>
+         <sql excludeProjects="EuPathDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                     dsp.caveat, dsp.acknowledgement,
@@ -1669,6 +1669,14 @@ select  dsp.dataset_presenter_id as dataset_id,
           FROM apidbuserdatasets.installeduserdataset i, 
                apidbuserdatasets.datasetattributes d
           WHERE i.user_dataset_id = d.user_dataset_id
+            ]]>
+         </sql>
+         <sql includeProjects="EuPathDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                    dsp.caveat, dsp.acknowledgement,
+                   dsp.release_policy
+            from apidbTuning.DatasetPresenter dsp
             ]]>
          </sql>
       </sqlQuery>
