@@ -1543,11 +1543,16 @@ with allpubs as (
                       left join apidbtuning.datasethyperlink dh
                         on dp.dataset_presenter_id = dh.dataset_presenter_id
                         and dh.isPublication = 'Y'
-                    )
+                    ),
+       lastVerDS as (
+                      select dataset_presenter_id, max(version) as version
+                      from apidb.datasource ds, apidbTuning.DatasetPresenter dsp
+                      where ds.name (+) = dsp.name
+                      group by dataset_presenter_id  )
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
                    --dsp.display_name, 
-                   ds.version,
+                   lastVerDS.version,
                    dsp.short_display_name, dsp.description,
                    nvl(dsp.summary, dsp.description) as summary,
                    dsp.protocol, dsp.usage, 
@@ -1557,7 +1562,7 @@ with allpubs as (
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
                    pubs.pmids,
                    pubs.pmids_download
-            from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
+            from apidbTuning.DatasetPresenter dsp, lastVerDS,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
                        , listagg( pmid, ', ') within group (order by pmid) as pmids_download
@@ -1580,7 +1585,7 @@ with allpubs as (
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
-              and ds.name (+) = dsp.name
+              and lastVerDS.dataset_presenter_id = dsp.dataset_presenter_id
               and NOT dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
     UNION ALL
         select dsp.dataset_presenter_id as dataset_id,
