@@ -639,7 +639,21 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
             <columnAttribute name="genome_source" displayName="Genome Source"/>
-            <columnAttribute name="genome_version" displayName="Genome Version"/>
+            <columnAttribute name="genome_version" displayName="Genome Version" internal="true"/>
+            <columnAttribute name="assembly_url" internal="true"/>
+            <linkAttribute name="genome_link" inReportMaker="false" internal="false"
+                           displayName="Genome Version">
+                 <displayText>
+                    <![CDATA[
+                    $$genome_version$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                          $$assembly_url$$
+                    ]]>
+                 </url>
+            </linkAttribute>
             <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
             <columnAttribute name="annotation_version" displayName="Structural Annotation Version"/>
             <columnAttribute name="functional_annotation_source" displayName="Functional Annotation Source"/>
@@ -1969,6 +1983,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="functional_annotation_version"/>
             <column name="note"/>
             <column name="isin_apollo"/>
+            <column name="assembly_url"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
             <![CDATA[
             select dh.dataset_presenter_id as dataset_id, 
@@ -1982,7 +1997,11 @@ from apidbtuning.datasetnametaxon dsnt
                     dh.functional_annotation_source, dh.functional_annotation_version,dh.note
                     ,CASE WHEN (aid.apolloid IS NOT NULL)
                         THEN 'Apollo'
-                        ELSE 'N/A' END AS isin_apollo
+                        ELSE 'N/A' END AS isin_apollo,
+                    CASE WHEN dh.genome_version LIKE 'G%'
+                      THEN 'https://www.ncbi.nlm.nih.gov/data-hub/genome/' || dh.genome_version
+                      ELSE null
+                    END AS assembly_url
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
                    , apidbtuning.datasetnametaxon dnt
                    , apidbtuning.organismattributes tn
