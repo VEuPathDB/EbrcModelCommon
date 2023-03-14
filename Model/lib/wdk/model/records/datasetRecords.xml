@@ -2000,7 +2000,7 @@ from apidbtuning.datasetnametaxon dsnt
                         ELSE 'N/A' END AS isin_apollo,
                     CASE WHEN dh.genome_version LIKE 'G%'
                       THEN 'https://www.ncbi.nlm.nih.gov/data-hub/genome/' || dh.genome_version
-                      ELSE null
+                      ELSE 'javascript:void(0);'
                     END AS assembly_url
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
                    , apidbtuning.datasetnametaxon dnt
