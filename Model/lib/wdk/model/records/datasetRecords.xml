@@ -1848,7 +1848,7 @@ from apidbtuning.datasetnametaxon dsnt
  , apidbtuning.organismattributes tn
  where dsnt.taxon_id = tn.component_taxon_id (+)
    and dsnt.dataset_presenter_id = dsp.dataset_presenter_id
-   and tn.project_id = dsp.project_id
+   and dsp.project_id = tn.project_id(+) 
  )
  group by dataset_id
             ]]>
