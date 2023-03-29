@@ -429,7 +429,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="disease" displayName="Disease" sortable="false"/>
             <columnAttribute name="sex" displayName="Sex" sortable="false"/>
 	    <columnAttribute name="Sample_Type" displayName="Sample Type" sortable="false"/>
-            <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/>
+<!--           <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/> -->
             <columnAttribute name="Study_Type"  displayName="Investigation Type" sortable="false"/>
             <columnAttribute name="Study_Design"  displayName="Study Design" sortable="false"/>
 	    <columnAttribute name="Country"  displayName="Country" sortable="false"/>
