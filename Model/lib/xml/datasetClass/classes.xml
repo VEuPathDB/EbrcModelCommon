@@ -5659,6 +5659,31 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+  <!-- temporary.  change this to repositoryOntologyTerms once moved to production dir -->
+  <datasetClass class="tempPopbioOntologyTerms" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eupathCuratedOntologies.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/${name}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
+
   <datasetClass class="WebDisplayOntologyClinEpi" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -6280,33 +6305,64 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="ISATabPopBio" category="" datasetFileHint="">
+
+
+  <datasetClass class="EDAMegaStudy" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
-    <prop name="studyType"></prop> <!-- fromChado, litCuration, ... -->
-    <prop name="studyName"></prop> <!-- VBP0000123 -->
-    <prop name="version"></prop>   <!-- 1, 2 ? -->
-    <graphTemplateFile name="popbioRoot.xml"/>
+    <prop name="studyStableId"></prop> <!-- VBP0000123 -->
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
 
     <datasetLoader
-        datasetName="ISATab_${studyType}_${studyName}_RSRC"
+        datasetName="EDAMegaStudy_${studyStableId}_RSRC"
         version="${version}"
-        plugin="ApiCommonData::Load::Plugin::InsertInvestigations"
+        plugin="ApiCommonData::Load::Plugin::LoadNothing"
         scope="global">
 
-      <manualGet fileOrDir="common/empty">
-          <dir name="final">
-          </dir>
+
+      <manualGet fileOrDir="${projectName}/popbio/${studyStableId}/${version}/final">
+        <dir name="final">
+        </dir>
       </manualGet>
 
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${studyType}/${studyName}/${version}/final @@dataDir@@/final</unpack>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final" />
-
-      <pluginArgs>--metaDataRoot @@dataDir@@ --investigationBaseName i_investigation.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --skipDatasetLookup</pluginArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
   </datasetClass>
+
+
+  <datasetClass class="ISATabPopBio" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="studyName"></prop> <!-- VBP0000123 -->
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+    <prop name="speciesReconciliationOntologySpec"></prop>
+    <prop name="speciesReconciliationFallbackSpecies"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
+
+    <datasetLoader
+        datasetName="ISATab_${studyName}_RSRC"
+        version="${version}"
+        plugin="ApiCommonData::Load::Plugin::LoadNothing"
+        scope="global">
+
+
+      <manualGet fileOrDir="${projectName}/popbio/${studyName}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
 
   <datasetClass class="ExternalResourceUrl" category="" datasetFileHint="">
     <purpose></purpose>
