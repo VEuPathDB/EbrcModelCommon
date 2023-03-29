@@ -1478,16 +1478,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="population_biology"
               scope="global"
             >
-      <manualGet fileOrDir="${projectName}/common/MicrobiomeStudyEda/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <unpack>mkdir -pv @@dataDir@@/results </unpack>
-      <unpack>mv @@dataDir@@/final/*tsv @@dataDir@@/results/ </unpack>
-      <unpack>rmdir -v @@dataDir@@/final </unpack>
-      <unpack>mkdir -pv @@dataDir@@/ISA/${sampleDetailsDir} </unpack>
-      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.txt @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
-      <unpack>cp -v @@gusHome@@/metadata/ApiCommonMetadataRepository/ISA/${sampleDetailsDir}/${name}.xml @@dataDir@@/ISA/${sampleDetailsDir}/ </unpack>
+    <manualGet fileOrDir="common/empty"/>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/common/MicrobiomeStudyEda/${name}/${version}/final @@dataDir@@/</unpack>
+      <unpack>if test -e @@dataDir@@/final/owlOverride.csv ; then getEntityAttributesFromOwl.pl -x @@dataDir@@/final/owlOverride.csv > @@dataDir@@/owlAttributes.txt; fi</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -1513,8 +1506,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>if test -f @@dataDir@@/${name}.owl ; then unlink @@dataDir@@/${name}.owl ; fi</unpack>
       <unpack>if test -f @@dataDir@@/${name}.eda.txt ; then unlink @@dataDir@@/${name}.eda.txt ; fi</unpack>
       <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.owl @@dataDir@@/${name}.owl</unpack>
-      <unpack>ln -sv @@gusHome@@/ontology/Microbiome/${name}.eda.txt @@dataDir@@/${name}.eda.txt</unpack>
-      <pluginArgs>--inFile  @@dataDir@@/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <unpack>getEntityAttributesFromOwl.pl @@gusHome@@/ontology/Microbiome/${name}.owl &gt; @@dataDir@@/${name}.eda.txt</unpack>
+      <pluginArgs>--inFile  @@dataDir@@/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2791,7 +2784,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" </unpack>
+      <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" --assignedBy ${name}</unpack>
       <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -3436,13 +3429,17 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="alphaFold" category="" datasetFileHint="">
     <purpose>Load AlphaFold</purpose>
     <prop name="version">&version;</prop>
+    <prop name="projectName">&projectName;</prop>
+    
+    <graphTemplateFile name="project.xml"/>
+
     <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
       plugin="ApiCommonData::Load::Plugin::InsertAlphaFold"
       scope="global"
       type="function">
-      <wgetArgs url="http://ftp.ebi.ac.uk/pub/databases/alphafold/accession_ids.txt">--tries=5</wgetArgs>
-      <getAndUnpackOutput file="@@dataDir@@/accession_ids.txt"/>
-      <pluginArgs>--inputFile @@dataDir@@/accession_ids.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <wgetArgs url="http://ftp.ebi.ac.uk/pub/databases/alphafold/accession_ids.csv">--tries=5</wgetArgs>
+      <getAndUnpackOutput file="@@dataDir@@/accession_ids.csv"/>
+      <pluginArgs>--inputFile @@dataDir@@/accession_ids.csv --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4047,14 +4044,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
                    >
-
-    <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-    </manualGet>
-
+      <wgetArgs url="http://purl.obolibrary.org/obo/eupath.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath.owl </wgetArgs>
       <unpack>deleteOntologyRelsAndSynsFromExtDBName.pl --externalDatabaseName 'OntologyTerm_EuPath_RSRC' --gusConfigFile @@gusHome@@/config/gus.config</unpack>
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
+      <pluginArgs>--inFile @@dataDir@@/eupath.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec 'OntologyTerm_EuPath_RSRC|dontcare' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --isPreferred ${isPreferred}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4699,7 +4691,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <graphTemplateFile name="organismSpecificMisc.xml"/>
       
 
-      <datasetLoader datasetName="${organismAbbrev}_genome_${name}_RSRC" version="${version}" 
+      <datasetLoader datasetName="${organismAbbrev}_gene_name_${name}_RSRC" version="${version}" 
 		plugin="ApiCommonData::Load::Plugin::InsertGeneNamesFromTabFile"
                 type="gene_annotation"
 		scope="organism"
@@ -5702,7 +5694,31 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <!-- same as WebDisplayOntologyClinEpi but with a sourceFile designation, which does not have to match the name -->
+  <datasetClass class="WebDisplayOntologyEDA" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="sourceFile"></prop>
+    <graphTemplateFile name="microbiomeRootEda.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@gusHome@@/${sourceFile} @@dataDir@@/${name}.owl</unpack>
+
+      <pluginArgs>--inFile @@gusHome@@/${sourceFile} --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%' --loadAnnotationProperties 1 </pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -6440,6 +6456,67 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <pluginArgs>--projectName "${projectName}" --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
   </datasetLoader>
   </datasetClass>  
+
+  <datasetClass class="dnaSeqExperimentFromAccession" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isPaired"></prop>
+    <prop name="ploidy"></prop>
+    <prop name="fromBAM"></prop>
+    <prop name="isLocal"></prop>
+    <prop name="taxonId"></prop>
+    <graphTemplateFile name="dnaseq.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_dnaseqExperiment_${name}_RSRC" version="${version}"
+          plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="isolates"
+              subType="Dna_Seq"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/accessions.tsv">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput file="@@dataDir@@/accessions.tsv"/>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+  <datasetClass class="dnaSeqExperimentFromLocal" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="isPaired"></prop>
+    <prop name="ploidy"></prop>
+    <prop name="fromBAM"></prop>
+    <prop name="isLocal"></prop>
+    <prop name="taxonId"></prop>
+    <graphTemplateFile name="dnaseq.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_dnaseqExperiment_${name}_RSRC" version="${version}"
+          plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="isolates"
+              subType="Dna_Seq"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput file="@@dataDir@@/final"/>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
 
 </datasetClasses>
 

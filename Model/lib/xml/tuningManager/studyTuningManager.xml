@@ -736,7 +736,7 @@ ORDER BY external_database_release_id, protocol_app_node_id
                 -- temporary may need adjusting for RNASeq
                    and (pan.type_id is not null
                         or attribute_term.source_id
-                           in ('EUPATH_0000454', -- average mapping coverage
+                           in ('GENEPIO_0000092', -- average mapping coverage
                                'EUPATH_0000455'  -- proportion mapped reads
                               )
                        )

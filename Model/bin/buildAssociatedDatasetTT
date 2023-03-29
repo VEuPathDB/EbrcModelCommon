@@ -1,0 +1,217 @@
+#!/usr/bin/perl
+
+use strict;
+
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use DBI;
+use Getopt::Long qw(GetOptions);
+use Data::Dumper;
+use EbrcModelCommon::Model::tmUtils;
+use LWP::Simple;
+use JSON;
+
+my ($help, $propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug);
+
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
+           "debug!" => \$debug,
+           "help|h" => \$help,
+          );
+
+usage() if ($help);
+
+die "required parameter missing" unless ($propfile && $instance && $suffix);
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+# create table
+$dbh->do(<<SQL) or die "creating table";
+   create table AssociatedDataset$suffix (
+      local_dataset_id      varchar2(15),
+      pubmed_id             varchar2(60),
+      associated_dataset_id varchar2(15),
+      project               varchar2(20),
+      webapp_name           varchar2(20),
+      display_name          varchar2(200)
+   ) nologging
+SQL
+
+my %projects = (
+#   'abbreviation' => 'project',
+    'ameb'         => 'AmoebaDB',
+    'cryp'         => 'CryptoDB',
+    'giar'         => 'GiardiaDB',
+    'host'         => 'HostDB',
+    'micr'         => 'MicrosporidiaDB',
+    'piro'         => 'PiroplasmaDB',
+    'plas'         => 'PlasmoDB',
+    'toxo'         => 'ToxoDB',
+    'tvag'         => 'TrichDB',
+    'tryp'         => 'TriTrypDB',
+    'fung'         => 'FungiDB',
+    'vect'         => 'VectorBase',
+    'clin'         => 'ClinEpiDB',
+#   'mbio'         => 'MicrobiomeDB',
+);
+
+my %webapps = (
+#   'abbreviation' => 'webapp',
+    'ameb'         => 'amoeba',
+    'cryp'         => 'cryptodb',
+    'giar'         => 'giardiadb',
+    'host'         => 'hostdb',
+    'micr'         => 'micro',
+    'piro'         => 'piro',
+    'plas'         => 'plasmo',
+    'toxo'         => 'toxo',
+    'tvag'         => 'trichdb',
+    'tryp'         => 'tritrypdb',
+    'fung'         => 'fungidb',
+    'vect'         => 'vectorbase',
+    'clin'         => 'ce',
+    'mbio'         => 'mbio',
+);
+
+
+# prepare insert
+my $insertStmt = $dbh->prepare(<<SQL);
+   insert into AssociatedDataset$suffix
+   (local_dataset_id, pubmed_id, associated_dataset_id, project, webapp_name, display_name)
+   values (?, ?, ?, ?, ?, ?)
+SQL
+
+# get local datasets and PubMed IDs
+my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
+     select dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
+     from DatasetPresenter dpres, DatasetPublication dpub
+     where dpres.dataset_presenter_id = dpub.dataset_presenter_id
+       and dpub.pmid is not null
+     order by pmid, dataset_presenter_id
+SQL
+
+$stmt->execute();
+
+my (@localDatasetId, @localPmid, @displayName);
+my $localDatasets = 0;
+
+while ( ($localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
+	= $stmt->fetchrow_array()) {
+  $localDatasets++
+}
+$stmt->finish();
+print "fetched $localDatasets local datasets\n";
+
+# use instance name to orient ourselves
+my $localProject = substr $instance, 0, 4;
+
+my $host;
+if ($instance =~ /^rm/ || $instance =~ /-/) {
+  $host = "qa";
+} else {
+  $host = "www";
+}
+
+my $insertCount = 0;
+
+# associations within the local project
+if ($webapps{$localProject}) {
+
+  print "checking for associations within current project.\n";
+  for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
+    for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
+      if ($iLocal != $iAssociated
+	  and $localPmid[$iLocal] eq $localPmid[$iAssociated]
+          and $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) {
+	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
+                                $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
+	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
+	   $insertCount++;
+	 }
+    }
+  }
+}
+
+print "inserted $insertCount intramural records.\n";
+
+# get dataset records from all other projects
+foreach my $projectKey (keys %projects) {
+
+  next if ($projectKey eq $localProject);
+
+  next if ($projectKey eq "clin" and substr($localProject, 0, 3) eq "eda");
+
+  my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
+
+  # print "Web service request url:\n$url\n";
+  my $datasetsJson = getData($url);
+
+  # print Dumper $datasetsJson->{records}[0];
+
+  foreach my $record (@{$datasetsJson->{records}}) {
+
+    my $displayName = $record->{displayName};
+    # print Dumper $record;
+
+    foreach my $pubrec (@{$record->{tables}->{Publications}}) {
+
+      # print "dataset: " . $pubrec->{dataset_id} . "; pmid: " . $pubrec->{pmid} . "\n";
+
+      for (my $i=0; $i<$localDatasets; $i++) {
+	if ($pubrec->{pmid} eq $localPmid[$i] and $localDatasetId[$i] ne $pubrec->{dataset_id}) {
+	  $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
+			       $projects{$projectKey}, $webapps{$projectKey}, $displayName)
+	    or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
+	  $insertCount++;
+	}
+      }
+    }
+  }
+  $dbh->commit();
+}
+
+print "inserted $insertCount records.\n";
+
+# create index
+$dbh->do(<<SQL) or die "creating index";
+   create index ldsix$suffix
+      on AssociatedDataset$suffix (local_dataset_id, pubmed_id)
+SQL
+
+$dbh->disconnect();
+
+sub usage {
+  my $e = shift;
+  if($e) {
+    print STDERR $e . "\n";
+  }
+  print STDERR "
+Build a table of associations between datasets in the current instance and in other projects using shared PubMed IDs
+
+usage:  buildAssociatedDatasetsTT -propfile prop_file -instance instance -schema schema -suffix suffix  [-debug] [-help]
+";
+  exit;
+}
+
+sub getData {
+  my ($url) = @_;
+
+
+  my $json = get $url;
+  die "Couldn't get $url" unless defined $json;
+
+  if ($json =~ /\*\*\*\*\*\*\* ERROR \*\*\*\*\*\*\*/) {
+    print "error in response at URL $url\n";
+    die "error in JSON";
+  }
+
+  return decode_json ($json);
+}
+
+1;
+

@@ -15,11 +15,38 @@
     <sql>
       <![CDATA[
 create table StudyIdDatasetId&1 as
-SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID
+SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID,
+       dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
 FROM EDA.STUDY s
 LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
 LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
 LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+-- This is TEMPORARY (used for alpha MapVEU Application)
+UNION
+select case 
+  when d.dataset_presenter_id = 'DS_58e5ff7fe0' then 'IRbase15189545' 
+  when d.dataset_presenter_id = 'DS_cdc2959b28' then '2014-PMI-IR-surveillance' 
+  when d.dataset_presenter_id = 'DS_5d903d8e3e' then '2017-messenger-ir' 
+  when d.dataset_presenter_id = 'DS_357669c17d' then '2016-Mzilahowa-IR-fun' 
+  when d.dataset_presenter_id = 'DS_ce978da76d' then '2017-tawe-botswana' 
+  when d.dataset_presenter_id = 'DS_64ea3f9fb2' then '2018-camara-ivoire' 
+  when d.dataset_presenter_id = 'DS_db15b5599b' then '2016-flies-virus'   
+  when d.dataset_presenter_id = 'DS_463e7346e3' then '2019-sare-sach' 
+  when d.dataset_presenter_id = 'DS_4b8cb8bb2e' then 'VBP_MEGA'   
+  else 'NA' end as study_stable_id,
+d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
+from apidbtuning.datasetpresenter d
+where d.dataset_presenter_id in (
+'DS_58e5ff7fe0',
+'DS_cdc2959b28',
+'DS_5d903d8e3e',
+'DS_357669c17d',
+'DS_ce978da76d',
+'DS_64ea3f9fb2',
+'DS_db15b5599b',
+'DS_463e7346e3',
+'DS_4b8cb8bb2e'
+)
       ]]>
     </sql>
   </tuningTable>
@@ -243,7 +270,102 @@ order by organism, species, genus
           select * from mononym
         union
           select * from full_name
+        union
+          select 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/rp', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/su03', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/su4', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB' from dual
+        union
+          select 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB' from dual
+        union
+          select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from dual
+        union
+          select 'soil_flagellate_and31', 'TriTrypDB' from dual
+        union
+          select 'kinetoplastid_flagellate_lfs2', 'TriTrypDB' from dual
+        union
+          select 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB' from dual
         order by 2, 1
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixProjectTaxon&1
+        set taxon = replace(taxon, '''', '')
+        where taxon like '%''%'
       ]]>
     </sql>
     <sql>
@@ -393,7 +515,7 @@ WHERE sequence.taxon_id = tn.taxon_id(+)
   AND (sequence.taxon_id = '&filterValue' or nvl('&filterValue', 0) = 0)
   AND sequence.taxon_id = taxon.taxon_id
   AND sequence.sequence_ontology_id = so.ontology_term_id
-  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
+  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle', 'kinetoplast')
   AND sequence.na_sequence_id = genbank.na_sequence_id(+)
   AND sequence.external_database_release_id = db.external_database_release_id(+)
   AND sequence.na_sequence_id = virtualization.piece_na_sequence_id(+)
@@ -441,6 +563,14 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <ancillaryTable name="DatasetHistory"/>
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
+
+<!--
+  <tuningTable name="AssociatedDataset" alwaysUpdate="true">
+    <comment>datasets shared with other projects</comment>
+    <internalDependency name="DatasetPresenter"/>
+    <program commandLine="buildAssociatedDatasetTT"/>
+  </tuningTable>
+-->
 
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
