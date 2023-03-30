@@ -576,6 +576,7 @@
     <track>sparCBS223-65</track>
     <track>sdicVS20</track>
     <track>aastAPO3</track>
+    <track>aeutMF1</track>
     <track>ainvNJM9701</track>
   </subtrackSet>
 
@@ -603,6 +604,7 @@
     <track>cglaCBS138</track>
     <track>cglaCBS1382020</track>
     <track>cglaBG2</track>
+    <track>cglaDSY562</track>
     <track>chaeB11899</track>
     <track>cmetBP57</track>
     <track>cparCDC317</track>
@@ -622,6 +624,7 @@
     <track>scerS288c</track>
     <track>sparCBS432</track>
     <track>klacNRRLY-1140</track>
+    <track>kmarDMKU31042</track>
     <track>tcifCBS4856</track>
     <track>ylipCLIB122</track>
     <track>ylipCLIB89W29</track>
@@ -748,6 +751,7 @@
     <track>foxyFOSC3a</track>
     <track>fproET1</track>
     <track>fproNRRL62905</track>
+    <track>fsolFSSC5MPISDFRAT0091</track>
     <track>fvan77134</track>
     <track>fver7600</track>
   </subtrackSet>
@@ -954,6 +958,7 @@
     <org abbrev="sparCBS223-65" organism="Saprolegnia parasitica CBS 223.65"/>
     <org abbrev="sdicVS20" organism="Saprolegnia diclina VS20"/>
     <org abbrev="aastAPO3" organism="Aphanomyces astaci strain APO3"/>
+    <org abbrev="aeutMF1" organism="Aphanomyces euteiches MF1"/>
     <org abbrev="ainvNJM9701" organism="Aphanomyces invadans NJM9701"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -976,6 +981,7 @@
     <org abbrev="cglaCBS138" organism="Candida glabrata CBS 138"/>
     <org abbrev="cglaCBS1382020" organism="Candida glabrata CBS138 2020"/>
     <org abbrev="cglaBG2" organism="Candida glabrata BG2"/>
+    <org abbrev="cglaDSY562" organism="Candida glabrata DSY562"/>
     <org abbrev="chaeB11899" organism="Candida haemulonis B11899"/>
     <org abbrev="cmetBP57" organism="Candida metapsilosis BP57"/>
     <org abbrev="cparCDC317" organism="Candida parapsilosis CDC317"/>
@@ -995,6 +1001,7 @@
     <org abbrev="scerS288c" organism="Saccharomyces cerevisiae S288C"/>
     <org abbrev="sparCBS432" organism="Saccharomyces paradoxus CBS432"/>
     <org abbrev="klacNRRLY-1140" organism="Kluyveromyces lactis NRRL Y-1140"/>
+    <org abbrev="kmarDMKU31042" organism="Kluyveromyces marxianus DMKU3-1042"/>
     <org abbrev="tcifCBS4856" organism="Trichomonascus ciferrii CBS 4856"/>
     <org abbrev="ylipCLIB122" organism="Yarrowia lipolytica CLIB122"/>
     <org abbrev="ylipCLIB89W29" organism="Yarrowia lipolytica CLIB89 (W29)"/>
@@ -1182,6 +1189,7 @@
     <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum NRRL 32931"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
     <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
+    <org abbrev="fsolFSSC5MPISDFRAT0091" organism="Fusarium solani FSSC 5 MPI-SDFR-AT-0091"/>
     <org abbrev="fvan77134" organism="Fusarium vanettenii 77-13-4"/>
     <org abbrev="fver7600" organism="Fusarium verticillioides 7600"/>
     <track name="Gene"/>
