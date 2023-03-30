@@ -761,6 +761,7 @@
     <track>cneoB-3501A</track>
     <track>cneoH99</track>
     <track>cneoKN99</track>
+    <track>cneoVNII</track>
     <track>ccf.gattiiMF34</track>
     <track>cgatWM276</track>
     <track>cgatCA1873</track>
@@ -787,6 +788,8 @@
     <track>ccinokay7-130</track>
     <track>ccin326</track>
     <track>postPC15</track>
+    <track>postPC9</track>
+    <track>rmelRicmel1</track>
   </subtrackSet>
 
   <subtrackSet name="Blastocladiomycetes" project="FungiDB" suffixes="_span;_gene">
@@ -801,6 +804,7 @@
     <track>bgraTritici96224</track>
     <track>bgrasp.triticaleTHUN12</track>
     <track>bcinB05-10</track>
+    <track>mfruCPMC6</track>
     <track>sscl1980UF-70</track>
     <track>pdes20631-21</track>
   </subtrackSet>
@@ -848,6 +852,7 @@
     <track>pjirSE8</track>
     <track>pmacP2C</track>
     <track>pcanCanA</track>
+    <track>pcarB80</track>
     <track>pjirRU7</track>
     <track>poryCS1</track>
     <track>pwak2A</track>
@@ -1204,6 +1209,7 @@
     <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
     <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
     <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
+    <org abbrev="cneoVNII" organism="Cryptococcus neoformans strain:VNII"/>
     <org abbrev="ccf.gattiiMF34" organism="Cryptococcus cf. gattii MF34"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
     <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
@@ -1238,6 +1244,8 @@
     <org abbrev="ccinokay7-130" organism="Coprinopsis cinerea okayama7#130"/>
     <org abbrev="ccin326" organism="Coprinopsis cinerea #326"/>
     <org abbrev="postPC15" organism="Pleurotus ostreatus PC15"/>
+    <org abbrev="postPC9" organism="Pleurotus ostreatus PC9"/>
+    <org abbrev="rmelRicmel1" organism="Rickenella mellea Ricmel1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Agaricomycetes"/>
@@ -1269,6 +1277,7 @@
     <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
     <org abbrev = "bgrasp.triticaleTHUN12" organism="Blumeria graminis f. sp. triticale THUN-12"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
+    <org abbrev="mfruCPMC6" organism="Monilinia fructicola CPMC6"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
     <org abbrev="pdes20631-21" organism="Pseudogymnoascus destructans 20631-21"/>
     <track name="Gene"/>
@@ -1334,6 +1343,7 @@
     <org abbrev="pjirSE8" organism="Pneumocystis jirovecii SE8"/>
     <org abbrev="pmacP2C" organism="Pneumocystis sp. macacae isolate P2C"/>
     <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
+    <org abbrev="pcarB80" organism="Pneumocystis carinii B80"/>
     <org abbrev="pjirRU7" organism="Pneumocystis jirovecii RU7"/>
     <org abbrev="poryCS1" organism="Pneumocystis oryctolagi CS1"/>
     <org abbrev="pwak2A" organism="Pneumocystis wakefieldiae 2A"/>
