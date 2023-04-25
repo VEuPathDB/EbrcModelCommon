@@ -2316,6 +2316,39 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="rnaSeqExperimentNextflow" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="hasPairedEnds">Data is paired end false|true</prop>
+    <prop name="isStrandSpecific">Data is strand false|true</prop>
+    <prop name="isCds">Count against CDS only false|true</prop>
+
+    <graphTemplateFile name="hisat.xml"/>
+    <qaNotes>To begin with QA, check if symbolic links of analysisConfig.xml and a FASTQ file for each sample are created under @@dataDir@@/final. Next, go to @@websiteFilesDir@@/${projectName}/@@version@@/real/webServices/${projectName}/release-CURRENT/${organismAbbrev}/bigwig/${organismAbbrev}_${name}_rnaSeq_RSRC, get normalized bigwig files, and visualize the rnaSeq alignment coverages by GBrowse track. Lastly, query the tables: ApiDB.ProfileElement, ApiDB.Profile, ApiDB.ProfileElementName and ApiDB.ProfileSet, to check if the reasonable number of intensity profiles are loaded. In the case of time series rnaSeq, also check the tables: RAD.AnalysisInput, RAD.AnalysisResultImp, RAD.Anaalysis, RAD.LogicalGroupLink and RAD.LogicalGroup to find out if the the reasonalble number of differentially expressed genes are loaded.</qaNotes>
+   <!-- Inquiry: Always follow naming convention -->
+    <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqNextflow_RSRC" version="${version}"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="transcript_expression"
+              subType="rnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml and a FASTQ file for each sample in the experiment. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment. The name of FASTQ file must be consistent with "sampleName" defined in "rnaSeqSample". To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
 
   <datasetClass class="ebiRnaSeqExperiment" category="" datasetFileHint="">
     <purpose></purpose>
@@ -6458,6 +6491,42 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <getAndUnpackOutput file="@@dataDir@@/final"/>
 
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+  <!-- New dataset class for the long read RNA Seq -->
+  <datasetClass class="LongReadRnaSeqExperimentNextflow" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="sequencePlatform"></prop>
+
+    <graphTemplateFile name="hisat.xml"/>
+    <qaNotes>
+        To be added once after testing 
+    </qaNotes> 
+    <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqNextflow_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="longRead_transcript_expression"
+              subType="longReadrnaseq"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal>
+	To be added after testing
+	</descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/longReadrnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
   </datasetClass>
