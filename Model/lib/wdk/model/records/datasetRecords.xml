@@ -228,7 +228,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
          <columnAttribute name="Sample_Type" displayName="Sample type"/>
-         <columnAttribute name="Participant_Type" displayName="Population included"/>
+         <!-- columnAttribute name="Participant_Type" displayName="Population included"/ -->
          <columnAttribute name="Study_Type" displayName="Investigation type"/>
          <columnAttribute name="Study_Design" displayName="Study design"/>
          <columnAttribute name="Country" displayName="Country"/>
@@ -429,7 +429,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="disease" displayName="Disease" sortable="false"/>
             <columnAttribute name="sex" displayName="Sex" sortable="false"/>
 	    <columnAttribute name="Sample_Type" displayName="Sample Type" sortable="false"/>
-            <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/>
+<!--           <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/> -->
             <columnAttribute name="Study_Type"  displayName="Investigation Type" sortable="false"/>
             <columnAttribute name="Study_Design"  displayName="Study Design" sortable="false"/>
 	    <columnAttribute name="Country"  displayName="Country" sortable="false"/>
@@ -639,7 +639,21 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="release_date" displayName="Release Date"/>
             <columnAttribute name="release_number" displayName="Release"/>
             <columnAttribute name="genome_source" displayName="Genome Source"/>
-            <columnAttribute name="genome_version" displayName="Genome Version"/>
+            <columnAttribute name="genome_version" displayName="Genome Version" internal="true"/>
+            <columnAttribute name="assembly_url" internal="true"/>
+            <linkAttribute name="genome_link" inReportMaker="false" internal="false"
+                           displayName="Genome Version">
+                 <displayText>
+                    <![CDATA[
+                    $$genome_version$$
+                    ]]>
+                 </displayText>
+                 <url>
+                    <![CDATA[
+                          $$assembly_url$$
+                    ]]>
+                 </url>
+            </linkAttribute>
             <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
             <columnAttribute name="annotation_version" displayName="Structural Annotation Version"/>
             <columnAttribute name="functional_annotation_source" displayName="Functional Annotation Source"/>
@@ -1543,11 +1557,16 @@ with allpubs as (
                       left join apidbtuning.datasethyperlink dh
                         on dp.dataset_presenter_id = dh.dataset_presenter_id
                         and dh.isPublication = 'Y'
-                    )
+                    ),
+       lastVerDS as (
+                      select dataset_presenter_id, max(version) as version
+                      from apidb.datasource ds, apidbTuning.DatasetPresenter dsp
+                      where ds.name (+) = dsp.name
+                      group by dataset_presenter_id  )
             select dsp.dataset_presenter_id as dataset_id,
                    dsp.name as dataset_name, dsp.dataset_name_pattern,
                    --dsp.display_name, 
-                   ds.version,
+                   lastVerDS.version,
                    dsp.short_display_name, dsp.description,
                    nvl(dsp.summary, dsp.description) as summary,
                    dsp.protocol, dsp.usage, 
@@ -1557,7 +1576,7 @@ with allpubs as (
                    nvl(history.eupath_release, introduced.eupath_release) as eupath_release,
                    pubs.pmids,
                    pubs.pmids_download
-            from apidbTuning.DatasetPresenter dsp, apidb.datasource ds,
+            from apidbTuning.DatasetPresenter dsp, lastVerDS,
                  (select dataset_presenter_id
                        , dbms_xmlgen.convert(rtrim(xmlagg(xmlelement(e, publink, ', ').extract('//text()') order by publink).getclobval(), ', '), 1) as pmids
                        , listagg( pmid, ', ') within group (order by pmid) as pmids_download
@@ -1580,7 +1599,7 @@ with allpubs as (
             where dsp.dataset_presenter_id = history.dataset_presenter_id(+)
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
-              and ds.name (+) = dsp.name
+              and lastVerDS.dataset_presenter_id = dsp.dataset_presenter_id
               and NOT dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
     UNION ALL
         select dsp.dataset_presenter_id as dataset_id,
@@ -1655,7 +1674,23 @@ select  dsp.dataset_presenter_id as dataset_id,
          <column name="caveat"/>
          <column name="acknowledgement"/>
          <column name="release_policy"/>
-         <sql>
+         <sql excludeProjects="EuPathDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                    dsp.caveat, dsp.acknowledgement,
+                   dsp.release_policy
+            from apidbTuning.DatasetPresenter dsp
+            UNION
+          SELECT d.dataset_stable_id
+               , null as caveat
+               , null as acknowledgement
+               , null as release_policy
+          FROM apidbuserdatasets.installeduserdataset i, 
+               apidbuserdatasets.datasetattributes d
+          WHERE i.user_dataset_id = d.user_dataset_id
+            ]]>
+         </sql>
+         <sql includeProjects="EuPathDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                     dsp.caveat, dsp.acknowledgement,
@@ -1781,7 +1816,7 @@ select  dsp.dataset_presenter_id as dataset_id,
         <column name="dataset_id"/>
        <column name="organism_prefix"/>
  
-            <sql>
+            <sql excludeProjects="EuPathDB">
             <![CDATA[
 select dataset_id,
   regexp_replace(
@@ -1794,6 +1829,26 @@ select distinct dsnt.dataset_presenter_id as dataset_id
 from apidbtuning.datasetnametaxon dsnt
  , apidbtuning.organismattributes tn
  where dsnt.taxon_id = tn.component_taxon_id (+)
+ )
+ group by dataset_id
+            ]]>
+            </sql>
+            <sql includeProjects="EuPathDB">
+            <![CDATA[
+select dataset_id,
+  regexp_replace(
+    utl_i18n.unescape_reference(to_char( dbms_lob.substr(xmlagg(xmlelement(e,org,'<br>').extract('//text()')  order by org).getclobval() , 4000, 1)) ) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+from (
+select distinct dsnt.dataset_presenter_id as dataset_id
+ , case when tn.organism_name is null then null
+        else '<i>' || substr(tn.organism_name, 0, instr(tn.organism_name, ' ', 1, 2) -1) || '</i>' || substr(tn.organism_name, instr(tn.organism_name, ' ', 1, 2))
+         end as org
+from apidbtuning.datasetnametaxon dsnt
+ , apidbtuning.datasetPresenter dsp
+ , apidbtuning.organismattributes tn
+ where dsnt.taxon_id = tn.component_taxon_id (+)
+   and dsnt.dataset_presenter_id = dsp.dataset_presenter_id
+   and dsp.project_id = tn.project_id(+) 
  )
  group by dataset_id
             ]]>
@@ -1948,6 +2003,7 @@ from apidbtuning.datasetnametaxon dsnt
             <column name="functional_annotation_version"/>
             <column name="note"/>
             <column name="isin_apollo"/>
+            <column name="assembly_url"/>
             <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
             <![CDATA[
             select dh.dataset_presenter_id as dataset_id, 
@@ -1961,7 +2017,11 @@ from apidbtuning.datasetnametaxon dsnt
                     dh.functional_annotation_source, dh.functional_annotation_version,dh.note
                     ,CASE WHEN (aid.apolloid IS NOT NULL)
                         THEN 'Apollo'
-                        ELSE 'N/A' END AS isin_apollo
+                        ELSE 'N/A' END AS isin_apollo,
+                    CASE WHEN dh.genome_version LIKE 'G%'
+                      THEN 'https://www.ncbi.nlm.nih.gov/data-hub/genome/' || dh.genome_version
+                      ELSE 'javascript:void(0);'
+                    END AS assembly_url
              from ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
                    , apidbtuning.datasetnametaxon dnt
                    , apidbtuning.organismattributes tn

@@ -9,9 +9,9 @@
     <comment>EDA Study ID, Dataset presenter ID (hash)
     </comment>
     <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="SRes.ExternalDatabase"/>
-    <externalDependency name="SRes.ExternalDatabaseRelease"/>
-    <externalDependency name="EDA.Study"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="eda.Study"/>
     <sql>
       <![CDATA[
 create table StudyIdDatasetId&1 as
@@ -363,6 +363,13 @@ order by organism, species, genus
     </sql>
     <sql>
       <![CDATA[
+        update &prefixProjectTaxon&1
+        set taxon = replace(taxon, '''', '')
+        where taxon like '%''%'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         create unique index data_load_prjct_err&1 on &prefixProjectTaxon&1 (taxon)
       ]]>
     </sql>
@@ -508,7 +515,7 @@ WHERE sequence.taxon_id = tn.taxon_id(+)
   AND (sequence.taxon_id = '&filterValue' or nvl('&filterValue', 0) = 0)
   AND sequence.taxon_id = taxon.taxon_id
   AND sequence.sequence_ontology_id = so.ontology_term_id
-  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
+  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle', 'kinetoplast')
   AND sequence.na_sequence_id = genbank.na_sequence_id(+)
   AND sequence.external_database_release_id = db.external_database_release_id(+)
   AND sequence.na_sequence_id = virtualization.piece_na_sequence_id(+)
