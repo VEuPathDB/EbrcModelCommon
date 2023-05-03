@@ -1546,6 +1546,23 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="BUSCO" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 49)</prop>
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_BUSCO_RSRC" version="dontcare"
+                   plugin="ApiCommonData::Load::Plugin::InsertBUSCO"
+                   scope="organism"
+                   type=""
+                   >
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/build_${buildNumber}/busco/${organismAbbrev}/BUSCO_SCORES/">--cut-dirs 6 --no-host-directories  --recursive --no-parent --ftp-user @ebiFtpUser@ --ftp-@ebiFtpPassword@</wgetArgs>
+      <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --organismAbbrev ${organismAbbrev}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="lineageTaxonLinkingTable" category="" datasetFileHint="">
     <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
