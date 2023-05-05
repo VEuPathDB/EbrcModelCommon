@@ -6535,5 +6535,29 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
+  <datasetClass class="stableIdsEvents" category="" datasetFileHint="">
+    <purpose>copy stable id ids_events.tab file from EBI ftp site to apiSiteFile</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 63)</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_stableIdsEvents_RSRC"
+              version="${buildNumber}"
+              scope="organism"
+              type=""
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal></descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 </datasetClasses>
 
