@@ -5674,6 +5674,28 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="updateTempPopbioOntologyTerms" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="updateOntologies.xml"/>
+
+    <datasetLoader datasetName="OntologyTerm_UPDATE_${name}_RSRC" version="dontcare"
+                   plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--inFile @@gusHome@@/ontology/${name}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
 
   <datasetClass class="WebDisplayOntologyClinEpi" category="" datasetFileHint="">
@@ -6320,6 +6342,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--inputDir @@dataDir@@/final/ --configFile @@dataDir@@/final/insert_study_results.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%" --studyName "%DATASET_NAME%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+
+  <datasetClass class="EDAMegaStudy_WDK" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="vbId"/>
+    <prop name="projectName"/>
+    <prop name="version"/>
+
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="EDAMegaStudy_${vbId}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::LoadNothing"
+           scope="global"
+           type="population_biology"
+           subType="mapveu"
+           >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
 
 
