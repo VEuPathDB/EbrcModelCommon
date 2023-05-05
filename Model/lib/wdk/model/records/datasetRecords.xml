@@ -228,7 +228,7 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="disease" displayName="Disease"/>
          <columnAttribute name="sex" displayName="Sex"/>
          <columnAttribute name="Sample_Type" displayName="Sample type"/>
-         <columnAttribute name="Participant_Type" displayName="Population included"/>
+         <!-- columnAttribute name="Participant_Type" displayName="Population included"/ -->
          <columnAttribute name="Study_Type" displayName="Investigation type"/>
          <columnAttribute name="Study_Design" displayName="Study design"/>
          <columnAttribute name="Country" displayName="Country"/>

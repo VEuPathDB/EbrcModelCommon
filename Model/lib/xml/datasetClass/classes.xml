@@ -1546,6 +1546,24 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="BUSCO" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 49)</prop>
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_BUSCO_RSRC" version="dontcare"
+                   plugin="ApiCommonData::Load::Plugin::InsertBUSCO"
+                   scope="organism"
+                   type=""
+                   organismAbbrev="${organismAbbrev}"
+                   >
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/build_${buildNumber}/busco/${organismAbbrev}/BUSCO_SCORES/">--cut-dirs 6 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
+      <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --organismAbbrev ${organismAbbrev}</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="lineageTaxonLinkingTable" category="" datasetFileHint="">
     <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
@@ -3628,6 +3646,45 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
 
       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${groupName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs> 
+<!--
+      <pluginArgs>::metaDataRoot @@dataDir@@ ::investigationBaseName investigation.xml ::extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' ::isSimpleConfiguration 1 ::ontologyMappingFile @@dataDir@@/final/ontologyMapping.xml ::ontologyMappingOverrideFileBaseName ontologyMappingOverride.xml ::valueMappingFile @@dataDir@@/final/valueMap.txt ::dateObfuscationFile @@dataDir@@/final/dateObfuscation.txt</pluginArgs>
+-->
+    </datasetLoader>
+
+  </datasetClass>
+
+  <datasetClass class="ISASimpleNF" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
+    <prop name="groupName"></prop>
+    <prop name="studyName"></prop>
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+    <prop name="nameForFilenames"></prop>
+
+    <graphTemplateFile name="clinepiRoot.xml"/>
+
+    <datasetLoader datasetName="ISASimple_${subProjectName}_${groupName}_${studyName}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${groupName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
+
+      <unpack>
+        <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
+          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+      </unpack>
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
 
@@ -6564,6 +6621,26 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
+  </datasetClass>
+
+  <datasetClass class="stableIdsEvents" category="" datasetFileHint="">
+    <purpose>copy stable id ids_events.tab file from EBI ftp site to apiSiteFile</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 63)</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_stableIdsEvents_RSRC"
+              version="${buildNumber}"
+              scope="organism"
+              type=""
+              organismAbbrev="${organismAbbrev}">
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk//upload/EBI/build${buildNumber}/stable_id_events/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
+      <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
   </datasetClass>
 
 </datasetClasses>

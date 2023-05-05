@@ -111,7 +111,7 @@ print "fetched $localDatasets local datasets\n";
 my $localProject = substr $instance, 0, 4;
 
 my $host;
-if ($instance =~ /^rm/ || $instance =~ /-/) {
+if ($instance =~ /^rm/ || $instance =~ /-/ || $instance =~ /063/) {
   $host = "qa";
 } else {
   $host = "www";
