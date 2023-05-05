@@ -1560,7 +1560,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    organismAbbrev="${organismAbbrev}"
                    >
       <wgetArgs url="ftp://ftp-private.ebi.ac.uk:/EBIout/build_${buildNumber}/busco/${organismAbbrev}/BUSCO_SCORES/">--cut-dirs 6 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
-      <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --organismAbbrev ${organismAbbrev}</pluginArgs>
+      <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --orgAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
