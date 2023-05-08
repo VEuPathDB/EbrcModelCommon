@@ -114,11 +114,11 @@ system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresent
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
 
-my $contactsXmlFile = "contacts.xml";
+my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
 if ($is_eda){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
+  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml $contactsXmlPath");
 } else {
   system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
 }
