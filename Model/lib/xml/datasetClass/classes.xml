@@ -4954,20 +4954,20 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="core"
-		   scope="dontcare" > 
+                   version="TODAY"
+                   plugin="GUS::Supported::Plugin::LoadFastaSequences"
+                   type="proteome"
+                   subType="core"
+                   scope="dontcare" >
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
-
-      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
+      
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
+      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
+      
       <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta</unpack>
 
       <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
@@ -5006,7 +5006,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs>
 
       <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
 
@@ -5028,6 +5028,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+  <datasetClass class="orthomclCoreFromEbi" category="OrthoMCL" datasetFileHint="">
+    <purpose>Download and load the proteins, gene names, EC numbers and product descriptions from an Ebi data dump. These proteins will be used in the proteome collection for OrthoMCL. Files will be pro
+cessed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
+    <prop name="projectName">Vectorbase, for example.</prop>
+    <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
+    <prop name="ebiVersion">matches ebi ftp directory name</prop>
+    <prop name="orthomclAbbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986.</prop>
+    <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery.</prop>
+    <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database.</prop>
+    <prop name="ebi2gusTag">99, for example</prop>
+    <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
+    <prop name="organismName">The name of this organism, which will be used on the site. If you are replacing a core organism, you should use the same name but append text like (genome build 49). Use %20 (or underscore) for space characters</prop>
+
+    <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
+
+    <datasetLoader datasetName="${orthomclAbbrev}_orthomclProteome_RSRC"
+                      version="${ebiVersion}"
+                         plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                            type="orthomclEbi"
+                               subType="core"
+                                  scope="dontcare" >
+      <manualGet fileOrDir="common/empty">
+        <descriptionOfFinal></descriptionOfFinal>
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
 
   <datasetClass class="orthomclPeripheralFromEbi" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, gene names, EC numbers and product descriptions from an Ebi data dump. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
@@ -5202,34 +5233,33 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="ncbiTaxonId">The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
     <prop name="ncbiTaxonIdIsAtSpeciesLevel">true if this organism does not have an ncbi tax id, and we are using the species level tax id instead</prop>
     <prop name="project"> The EuPathDB project, e.g. PlasmoDB.</prop>
-    <prop name="webSubDir"> The lower case sub-directory of the EuPathDB project, e.g. micro. Used for webservices call.</prop>
-    <prop name="version">build number for the EuPathDB project</prop>
     <prop name="organismName">The nanme of this organism, as required by the GenesByTaxon search</prop>
     <prop name="abbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    
+    <prop name="build">Build number. Used in wget call.</prop>
+    <prop name="proteomeName">Organism name for wget call.</prop>
+   
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC" 
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   scope="dontcare"
-		   type="proteome"
-		   subType="core"
-		   version="${version}">
+		      plugin="GUS::Supported::Plugin::LoadFastaSequences"
+		         scope="dontcare"
+			    type="proteome"
+			       subType="core"
+			          version="${version}">
 
       <externalDbIdUrl><![CDATA[http://www.${project}.org/gene/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
-      <wgetArgs url="https://${project}.org/${webSubDir}/service/answer/report">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.xml --post-data '{ "answerSpec": { "questionName": "GeneQuestions.GenesByGeneType", "parameters": {"organism": "${organismName}", "geneType": "protein coding", "includePseudogenes": "No"} }, "formatting": { "format" : "xml", "formatConfig":{ "attributes": ["primary_key","organism","gene_product","protein_sequence"], "attachmentType":"plain"} }}' --header="Content-Type: application/json"</wgetArgs>
+      
+      <wgetArgs url="https://${project}.org/common/downloads/Current_Release/${proteomeName}/fasta/data/${project}-${build}_${proteomeName}_AnnotatedProteins.fasta">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/eupathProteins.fasta</wgetArgs>
 
       <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
 
-      <unpack>orthomclUnpackEupathProteins @@dataDir@@/eupathProteins.xml @@dataDir@@/eupathProteins.fasta</unpack>
-
       <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/eupathProteins.fasta --outputFile @@dataDir@@/exemplars.fasta --geneIdRegex 'gene=(\S+)' --proteinIdRegex '^>(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>orthomclMakeEupathAliasesFile ${abbrev} @@dataDir@@/eupathProteins.xml @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
+      <unpack>orthomclMakeCompliantEuPathFasta --input @@dataDir@@/exemplars.fasta --output @@dataDir@@/${abbrev}Proteome.fasta --abbrev ${abbrev}</unpack>
+      
+      <unpack>orthomclMakeUpdatedEuPathAliasesFile --input @@dataDir@@/${abbrev}Proteome.fasta --output @@dataDir@@/aliases.tab --abbrev ${abbrev}</unpack>
 
       <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
@@ -5438,8 +5468,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               datasetName="${abbrev}_Uniprot_ECAssociations_RSRC"
               version="TODAY"
               scope="dontcare">
-  
-     <wgetArgs url="https://www.uniprot.org/uniprot/?query=taxonomy%3a${ncbiTaxonId}&amp;format=tab&amp;columns=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -5459,8 +5489,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://www.uniprot.org/uniprot/?query=taxonomy%3a${ncbiTaxonId}&amp;format=tab&amp;columns=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
-     
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
       <pluginArgs>--ECMappingFile @@dataDir@@/ecAssoc.tab --evidenceCode "Uniprot" --aaSeqLocusTagMappingSql "select aa_sequence_id from dots.externalaasequence where secondary_identifier = ?"</pluginArgs>
@@ -5474,6 +5504,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="project"> The EuPathDB project, e.g. PlasmoDB.</prop>
     <prop name="webSubDir"> The lower case sub-directory of the EuPathDB project, e.g. micro. Used for webservices call.</prop>
     <prop name="organismName">The organism name as required by EuPath organism parameter.  Use %20 for space characters</prop>
+    <prop name="ecName">The Organism name url string to be used in the webServices call.</prop>
 
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
@@ -5482,7 +5513,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="dontcare">
   
-     <wgetArgs url="https://${project}.org/${webSubDir}/webservices/GeneQuestions/GenesByTaxon.xml?organism=${organismName}&amp;o-fields=ec_numbers"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
+     <wgetArgs url="https://${project}.org/${webSubDir}/service/record-types/transcript/searches/GenesByTaxon/reports/xml?organism=%5B%22${ecName}%22%5D&amp;reportConfig=%7B%22attributes%22%3A%5B%22ec_numbers%22%5D%2C%22includeHeader%22%3Afalse%2C%22attachmentType%22%3A%22plain%22%2C%22applyFilter%22%3Afalse%7D"> --output-document=@@dataDir@@/ecAssocFromEuPathDB.xml --content-disposition </wgetArgs>
 
      <unpack>orthomclUnpackEupathDB_EC_XML @@dataDir@@/ecAssocFromEuPathDB.xml @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
      
