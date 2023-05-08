@@ -136,7 +136,7 @@ public class DatasetPresenterSet {
         } else if (overriddenIntD != null) {
           if (!overriddenIntD.containsNameFromDb(datasetName)) System.err.println("WARN:  " + partialErrMsg + " but the overridden InternalDataset is not found in this instance"); 
         } else {
-          throw new UserException(partialErrMsg + " but no DatasetPresenter or InternalDataset has that name" );
+            System.err.println("WARN:  " + partialErrMsg + " but no DatasetPresenter or InternalDataset has that name" ); 
         }
       }
     }        
