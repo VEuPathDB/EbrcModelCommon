@@ -117,11 +117,8 @@ system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
 my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
-if ($is_eda){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml $contactsXmlPath");
-} else {
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
-}
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml $contactsXmlPath");
+
 if($report) {
   $suffix = 1234;
 }
