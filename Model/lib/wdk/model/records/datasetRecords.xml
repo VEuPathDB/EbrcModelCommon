@@ -1233,8 +1233,10 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                      FROM eda.entitytype et
                         , eda.entitytypegraph etg
                         , apidbtuning.studyiddatasetid sd
+                        , apidbtuning.datasetpresenter dp
                      WHERE et.entity_type_id = etg.entity_type_id
                      AND etg.study_stable_id = sd.study_stable_id
+                     AND sd.dataset_id = dp.dataset_presenter_id
                      ),
                      all_counts AS
                      (SELECT  dataset_id
