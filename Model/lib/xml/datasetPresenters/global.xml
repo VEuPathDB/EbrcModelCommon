@@ -1215,10 +1215,13 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 
 
 <!-- GUS4 new stuff -->
+<!-- 
 <internalDataset name="OntologyTerm_EuPath_RSRC"/>
 <internalDataset name="Ontology_gaz_RSRC"/>
 <internalDataset name="Ontology_icemr_RSRC"/>
 <internalDataset name="Ontology_ptmt_RSRC"/>
+
+
 <internalDataset name="OBO_Ontology_eco_RSRC"/>
 <internalDataset name="OBO_Ontology_efo_RSRC"/>
 <internalDataset name="OBO_Ontology_envo_RSRC"/>
@@ -1238,24 +1241,34 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 <internalDataset name="OBO_Ontology_bto_RSRC"/>
 <internalDataset name="OBO_Ontology_ncbitaxon_RSRC"/>
 
+
 <internalDataset name="Ontology_Relationship_Types_RSRC"/>
 <internalDataset name="Ontology_Synonyms_genbankIsolates_RSRC"/>
+-->
+
 
 <internalDataset name="DumpMissingGenbankIsolateMappers_RSRC"/>
 <internalDataset name="ISA_RSRC"/>
 <internalDataset name="ISASimple_RSRC"/>
+
+<!--
 <internalDataset name="Ontology_eupathUserDefined_RSRC"/>
+
 <internalDataset name="OBO_Ontology_INTERNAL_OBI_RSRC"/>
 <internalDataset name="OBO_Ontology_INTERNAL_pato_RSRC"/>
 <internalDataset name="OBO_Ontology_INTERNAL_fao_RSRC"/>
 <internalDataset name="OBO_Ontology_INTERNAL_efo_RSRC"/>
 <internalDataset name="OBO_Ontology_INTERNAL_ncit_RSRC"/>
+
+
 <internalDataset name="OntologyTerm_INTERNAL_EuPath_RSRC"/>
 <internalDataset name="Ontology_INTERNAL_icemr_RSRC"/>
 <internalDataset name="OntologyTerm_eupath_isa_RSRC"/> 
 <internalDataset name="OntologyTerm_INTERNAL_eupath_isa_RSRC"/>
 <internalDataset name="OntologyTerm_protein_array_RSRC"/> 
 <internalDataset name="OntologyTerm_INTERNAL_protein_array_RSRC"/> 
+-->
+
 
 <internalDataset name="(.*)_dbxref_ApiLoc_RSRC" datasetNamePattern="%_dbxref_ApiLoc_RSRC"/>
 
@@ -1275,7 +1288,9 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 
 <!--<internalDataset name="alphaFold_RSRC"/>-->
 
-  <!-- for ClinEpi -->
-  <internalDataset name="OntologyTerms" datasetNamePattern="Ontology%"/>  
+
+<internalDataset name="OntologyTerms" datasetNamePattern="Ontology%"/>  
+<internalDataset name="OBO_Ontology" datasetNamePattern="OBO_Ontology%"/>  
+
   
 </datasetPresenters>
