@@ -564,13 +564,13 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 
-<!--
+
   <tuningTable name="AssociatedDataset" alwaysUpdate="true">
     <comment>datasets shared with other projects</comment>
     <internalDependency name="DatasetPresenter"/>
     <program commandLine="buildAssociatedDatasetTT"/>
   </tuningTable>
--->
+
 
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
