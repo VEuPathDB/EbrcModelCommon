@@ -1292,5 +1292,6 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 <internalDataset name="OntologyTerms" datasetNamePattern="Ontology%"/>  
 <internalDataset name="OBO_Ontology" datasetNamePattern="OBO_Ontology%"/>  
 
-  
+
+<internalDataset name="_ids_events_stableIdsEvents_RSRC" datasetNamePattern="%_ids_events_stableIdsEvents_RSRC"/>
 </datasetPresenters>
