@@ -482,7 +482,7 @@ public abstract class DatasetInjector {
       setPropValue("shortAttribution",
           "(" + contactName.substring(lastSpace + 1) + ")");
     } else {
-      setPropValue("shortAttribution", "(" + shortAttribution + ")");
+      setPropValue("shortAttribution", "(" + shortAttribution.replaceAll("\\r?\\n", "") + ")");
     }
   }
 
