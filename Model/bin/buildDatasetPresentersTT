@@ -108,20 +108,17 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
 
-my $contactsXmlFile = "contacts.xml";
+my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
-if ($is_eda){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
-} else {
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
-}
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+
 if($report) {
   $suffix = 1234;
 }
