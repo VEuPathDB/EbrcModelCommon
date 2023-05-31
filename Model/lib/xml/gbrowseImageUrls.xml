@@ -65,6 +65,7 @@
     <track>preiCDC</track>
     <track>pmalUG01</track>
     <track>povaGH01</track>
+    <track>povaCR01</track>
   </subtrackSet>
 
   <subtrackSet project="PlasmoDB" name="human_genomic" suffixes="_span">
@@ -99,6 +100,7 @@
     <track>pbraBolivianI</track>
     <track>pmalUG01</track>
     <track>povaGH01</track>
+    <track>povaCR01</track>
   </subtrackSet>
   
   <subtrackSet project="PlasmoDB" name="rodent_gene" suffixes="_span;_gene">
@@ -237,6 +239,7 @@
     <org organism="Plasmodium brasilianum strain Bolivian I" abbrev="pbraBolivianI" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
+    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
@@ -277,6 +280,7 @@
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
+    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
