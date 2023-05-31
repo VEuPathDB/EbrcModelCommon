@@ -106,6 +106,7 @@
   <subtrackSet project="PlasmoDB" name="rodent_gene" suffixes="_span;_gene">
     <track>pberANKA</track>
     <track>pyoeyoelii17X</track>
+    <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
     <track>pvinvinckeivinckei</track>
@@ -120,6 +121,7 @@
   <subtrackSet project="PlasmoDB" name="rodent_genomic" suffixes="_span">
     <track>pberANKA</track>
     <track>pyoeyoelii17X</track>
+    <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
     <track>pvinvinckeivinckei</track>
@@ -298,6 +300,7 @@
     <org organism="Plasmodium berghei ANKA" abbrev="pberANKA" />
     <org organism="Plasmodium yoelii yoelii 17X" abbrev="pyoeyoelii17X" />
     <org organism="Plasmodium yoelii yoelii 17XNL" abbrev="pyoeyoelii17XNL" />
+    <org organism="Plasmodium yoelii yoelii 17XNL 2023" abbrev="pyoeyoelii17XNL2023" />
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
@@ -321,6 +324,7 @@
     <org organism="Plasmodium berghei ANKA" abbrev="pberANKA" />
     <org organism="Plasmodium yoelii yoelii 17X" abbrev="pyoeyoelii17X" />
     <org organism="Plasmodium yoelii yoelii 17XNL" abbrev="pyoeyoelii17XNL" />
+    <org organism="Plasmodium yoelii yoelii 17XNL 2023" abbrev="pyoeyoelii17XNL2023" />
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
