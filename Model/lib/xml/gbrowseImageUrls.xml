@@ -688,6 +688,7 @@
     <track>aflaNRRL3357</track>
     <track>aflaNRRL3357_2020</track>
     <track>ahetCBS117.55</track>
+    <track>ahomCBS101889</track>
     <track>alIFO4308</track>
     <track>anidFGSCA4</track>
     <track>anigCBS513-88</track>
@@ -741,6 +742,7 @@
     <track>ssch1099-18</track>
     <track>sbra5110</track>
     <track>cgraM1-001</track>
+    <track>chigIMI349063</track>
     <track>vdahJR2</track>
     <track>schaIBT40293</track>
   </subtrackSet>
@@ -779,6 +781,7 @@
     <track>cgatNT10</track>
     <track>cgatVGIIR265</track>
     <track>cdepCBS7841</track>
+    <track>cdepCBS7855</track>
     <track>kbesCBS10118</track>
     <track>kdejCBS10117</track>
     <track>khevCBS569</track>
@@ -1123,6 +1126,7 @@
     <org abbrev="aflaNRRL3357" organism="Aspergillus flavus NRRL3357"/>
     <org abbrev="aflaNRRL3357_2020" organism="Aspergillus flavus NRRL3357 2020"/>
     <org abbrev="ahetCBS117.55" organism="Aspergillus heteromorphus CBS 117.55"/>
+    <org abbrev="ahomCBS101889" organism="Aspergillus homomorphus CBS 101889"/>
     <org abbrev="anidFGSCA4" organism="Aspergillus nidulans FGSC A4"/>
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
@@ -1180,6 +1184,7 @@
     <org abbrev="ssch1099-18" organism="Sporothrix schenckii 1099-18"/>
     <org abbrev="sbra5110" organism="Sporothrix brasiliensis 5110"/>
     <org abbrev="cgraM1-001" organism="Colletotrichum graminicola M1.001"/>
+    <org abbrev="chigIMI349063" organism="Colletotrichum higginsianum IMI 349063"/>
     <org abbrev="vdahJR2" organism="Verticillium dahliae JR2"/>
     <org abbrev="schaIBT40293" organism="Stachybotrys chartarum IBT 40293"/>
     <track name="Gene"/>
@@ -1228,6 +1233,7 @@
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
     <org abbrev="cgatVGIIR265" organism="Cryptococcus gattii VGII R265"/>
     <org abbrev="cdepCBS7841" organism="Cryptococcus depauperatus CBS 7841"/>
+    <org abbrev="cdepCBS7855" organism="Cryptococcus depauperatus CBS 7855"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
     <org abbrev="kdejCBS10117" organism="Kwoniella dejecticola CBS 10117"/>
     <org abbrev="khevCBS569" organism="Kwoniella heveanensis CBS 569"/>
