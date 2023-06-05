@@ -798,10 +798,12 @@
 
   <subtrackSet name="Agaricomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>pchrRP-78</track>
+    <track>ltigALCF2SS17</track>
     <track>ccinokay7-130</track>
     <track>ccin326</track>
     <track>postPC15</track>
     <track>postPC9</track>
+    <track>scomH48</track>
     <track>rmelRicmel1</track>
   </subtrackSet>
 
@@ -846,6 +848,7 @@
     <track>pbraPb18</track>
     <track>plutPb01</track>
     <track>mcanCBS113480</track>
+    <track>ngypCBS118893</track>
     <track>tmenTIMM2789</track>
     <track>trubCBS118892</track>
     <track>ttonCBS112818</track>
@@ -867,6 +870,7 @@
     <track>pcanCanA</track>
     <track>pcarB80</track>
     <track>pjirRU7</track>
+    <track>pmurB123</track>
     <track>poryCS1</track>
     <track>pwak2A</track>
   </subtrackSet>
@@ -1259,10 +1263,12 @@
 
   <url project="FungiDB" type="synteny">
     <org abbrev="pchrRP-78" organism="Phanerochaete chrysosporium RP-78"/>
+    <org abbrev="ltigALCF2SS17" organism="Lentinus tigrinus ALCF2SS1-7"/>
     <org abbrev="ccinokay7-130" organism="Coprinopsis cinerea okayama7#130"/>
     <org abbrev="ccin326" organism="Coprinopsis cinerea #326"/>
     <org abbrev="postPC15" organism="Pleurotus ostreatus PC15"/>
     <org abbrev="postPC9" organism="Pleurotus ostreatus PC9"/>
+    <org abbrev="scomH48" organism="Schizophyllum commune H4-8"/>
     <org abbrev="rmelRicmel1" organism="Rickenella mellea Ricmel1"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
@@ -1333,6 +1339,7 @@
     <org abbrev="pbraPb18" organism="Paracoccidioides brasiliensis Pb18"/>
     <org abbrev="plutPb01" organism="Paracoccidioides lutzii Pb01"/>
     <org abbrev="mcanCBS113480" organism="Microsporum canis CBS 113480"/>
+    <org abbrev="ngypCBS118893" organism="Nannizzia gypsea CBS 118893"/>
     <org abbrev="tmenTIMM2789" organism="Trichophyton mentagrophytes TIMM 2789"/>
     <org abbrev="trubCBS118892" organism="Trichophyton rubrum CBS 118892"/>
     <org abbrev="ttonCBS112818" organism="Trichophyton tonsurans CBS 112818"/>
@@ -1363,6 +1370,7 @@
     <org abbrev="pcanCanA" organism="Pneumocystis canis CanA"/>
     <org abbrev="pcarB80" organism="Pneumocystis carinii B80"/>
     <org abbrev="pjirRU7" organism="Pneumocystis jirovecii RU7"/>
+    <org abbrev="pmurB123" organism="Pneumocystis murina B123"/>
     <org abbrev="poryCS1" organism="Pneumocystis oryctolagi CS1"/>
     <org abbrev="pwak2A" organism="Pneumocystis wakefieldiae 2A"/>
     <track name="Gene"/>
