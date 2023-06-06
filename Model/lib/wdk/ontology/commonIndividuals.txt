@@ -8,6 +8,7 @@ DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	topic_3308_synonym	Data co
 DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.GeneTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	GeneTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts							record	download
+DatasetRecordClasses.DatasetRecordClass.Busco	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	Busco							record	download
 DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData							record	download
 DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases							record	download
 DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21		record-internal	
