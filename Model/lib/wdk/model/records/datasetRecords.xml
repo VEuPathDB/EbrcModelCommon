@@ -785,6 +785,24 @@ OR if the linkName and or URL require access to other attributes....also how to 
         </table>
 
 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Busco -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <table name="Busco" includeProjects="PiroplasmaDB"
+             displayName="BUSCO"
+             queryRef="DatasetTables.Busco">
+        <!-- columnAttribute name="organism_id" internal="true"/ -->
+        <columnAttribute name="sequence_type" displayName="SequenceType"/>
+        <columnAttribute name="c_score" displayName="Complete BUSCOs (C)"/>
+        <columnAttribute name="s_score" displayName="Complete and single-copy BUSCOs (S)"/>
+        <columnAttribute name="d_score" displayName="Complete and duplicated BUSCOs (D) "/>
+        <columnAttribute name="f_score" displayName="Fragmented BUSCOs (F)"/>
+        <columnAttribute name="m_score" displayName="Missing BUSCOs (M)"/>
+      </table>
+
+
+
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Other data associated with genomes -->
@@ -870,10 +888,6 @@ OR if the linkName and or URL require access to other attributes....also how to 
 
       </recordClass>
     </recordClassSet>
-
-
-
-
 
 
 
@@ -2657,6 +2671,36 @@ and graph_descrip.dataset = dnt.name) g
             ]]>
             </sql>
       </sqlQuery>
+
+
+      <sqlQuery name="Busco" includeProjects="PiroplasmaDB">
+        <column name="dataset_id"/>
+        <column name="sequence_type"/>
+        <column name="c_score"/>
+        <column name="s_score"/>
+        <column name="d_score"/>
+        <column name="f_score"/>
+        <column name="m_score"/>
+        <sql>
+          select dsp.dataset_presenter_id as dataset_id
+                , sequence_type
+                , c_score
+                , s_score
+                , d_score
+                , f_score
+                , m_score
+	  from apidbtuning.organismattributes oa
+                , apidb.organism o
+                , apidb.busco b
+                , apidbtuning.datasetpresenter dsp
+                , apidbtuning.datasetnametaxon dnt
+          where b.organism_id(+) = o.organism_id
+          and o.taxon_id = oa.component_taxon_id
+          and oa.component_taxon_id = dnt.taxon_id
+          and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+        </sql>
+      </sqlQuery>
+
 
     </querySet>
 
