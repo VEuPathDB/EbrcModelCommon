@@ -818,6 +818,7 @@
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>bgraTritici96224</track>
     <track>bgrasp.triticaleTHUN12</track>
+    <track>bgrasphordeiiRACE1</track>
     <track>bcinB05-10</track>
     <track>mfruCPMC6</track>
     <track>sscl1980UF-70</track>
@@ -849,6 +850,7 @@
     <track>plutPb01</track>
     <track>mcanCBS113480</track>
     <track>ngypCBS118893</track>
+    <track>tequCBS127.97</track>
     <track>tmenTIMM2789</track>
     <track>trubCBS118892</track>
     <track>ttonCBS112818</track>
@@ -859,6 +861,7 @@
     <track>umay521</track>
     <track>sreiSRZ2</track>
     <track>mgloCBS7966</track>
+    <track>mpacCBS1879</track>
     <track>mresKCTC27527</track>
     <track>mresCBS7877</track>
     <track>msymATCC42132</track>
@@ -1300,6 +1303,7 @@
   <url project="FungiDB" type="synteny">
     <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
     <org abbrev = "bgrasp.triticaleTHUN12" organism="Blumeria graminis f. sp. triticale THUN-12"/>
+    <org abbrev = "bgrasphordeiiRACE1" organism="Blumeria hordei strain RACE1"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="mfruCPMC6" organism="Monilinia fructicola CPMC6"/>
     <org abbrev="sscl1980UF-70" organism="Sclerotinia sclerotiorum 1980 UF-70"/>
@@ -1340,6 +1344,7 @@
     <org abbrev="plutPb01" organism="Paracoccidioides lutzii Pb01"/>
     <org abbrev="mcanCBS113480" organism="Microsporum canis CBS 113480"/>
     <org abbrev="ngypCBS118893" organism="Nannizzia gypsea CBS 118893"/>
+    <org abbrev="tequCBS127.97" organism="Trichophyton equinum CBS 127.97"/>
     <org abbrev="tmenTIMM2789" organism="Trichophyton mentagrophytes TIMM 2789"/>
     <org abbrev="trubCBS118892" organism="Trichophyton rubrum CBS 118892"/>
     <org abbrev="ttonCBS112818" organism="Trichophyton tonsurans CBS 112818"/>
@@ -1354,6 +1359,7 @@
     <org abbrev="umay521" organism="Ustilago maydis 521"/>
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
+    <org abbrev="mpacCBS1879" organism="Malassezia pachydermatis CBS 1879"/>
     <org abbrev="mresKCTC27527" organism="Malassezia restricta KCTC 27527"/>
     <org abbrev="mresCBS7877" organism="Malassezia restricta CBS 7877"/>
     <org abbrev="msymATCC42132" organism="Malassezia sympodialis ATCC 42132"/>
