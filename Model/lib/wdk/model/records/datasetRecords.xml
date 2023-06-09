@@ -2682,22 +2682,23 @@ and graph_descrip.dataset = dnt.name) g
         <column name="f_score"/>
         <column name="m_score"/>
         <sql>
-          select dsp.dataset_presenter_id as dataset_id
-                , sequence_type
-                , c_score
-                , s_score
-                , d_score
-                , f_score
-                , m_score
-	  from apidbtuning.organismattributes oa
-                , apidb.organism o
-                , apidb.busco b
+            SELECT dsp.dataset_presenter_id as dataset_id,
+                sequence_type,
+                round(c_score /(c_score + f_score + m_score) * 100, 1) || '%' AS c_score,
+                round(s_score /(c_score + f_score + m_score) * 100, 1) || '%'AS s_score,
+                round(d_score /(c_score + f_score + m_score) * 100, 1) || '%'AS d_score,
+                round(f_score /(c_score + f_score + m_score) * 100, 1) || '%'AS f_score,
+                round(m_score /(c_score + f_score + m_score) * 100, 1) || '%'AS m_score
+            FROM
+                apidbtuning.organismattributes oa,
+                apidb.organism                 o,
+                apidb.busco                    b
                 , apidbtuning.datasetpresenter dsp
                 , apidbtuning.datasetnametaxon dnt
-          where b.organism_id(+) = o.organism_id
-          and o.taxon_id = oa.component_taxon_id
-          and oa.component_taxon_id = dnt.taxon_id
-          and dnt.dataset_presenter_id = dsp.dataset_presenter_id
+            WHERE b.organism_id = o.organism_id
+              AND o.taxon_id = oa.component_taxon_id
+              AND oa.component_taxon_id = dnt.taxon_id
+              AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
         </sql>
       </sqlQuery>
 
