@@ -3,7 +3,6 @@
 
   <import file="studyTuningManager.xml"/>
 
-
   <!-- EDA table -->	
   <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
     <comment>EDA Study ID, Dataset presenter ID (hash)
@@ -18,9 +17,11 @@ create table StudyIdDatasetId&1 as
 SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID,
        dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
 FROM EDA.STUDY s
-LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
-LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
-LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+LEFT JOIN sres.ExternalDatabaseRelease e
+   ON s.external_database_release_id = e.external_database_release_id 
+LEFT JOIN sres.ExternalDatabase e2
+   ON e.external_database_id = e2.external_database_id
+LEFT JOIN DatasetPresenter dp on e2.name=dp.name
 -- This is TEMPORARY (used for alpha MapVEU Application)
 UNION
 select case 
@@ -35,7 +36,7 @@ select case
   when d.dataset_presenter_id = 'DS_4b8cb8bb2e' then 'VBP_MEGA'   
   else 'NA' end as study_stable_id,
 d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
-from apidbtuning.datasetpresenter d
+from DatasetPresenter d
 where d.dataset_presenter_id in (
 'DS_58e5ff7fe0',
 'DS_cdc2959b28',
@@ -50,8 +51,6 @@ where d.dataset_presenter_id in (
       ]]>
     </sql>
   </tuningTable>
-
-
 
 
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
@@ -70,7 +69,8 @@ with organism_rank
          from sres.TaxonName tn1, sres.TaxonName tn2,
               (select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
                from sres.taxon
-               start with taxon_id in (  select taxon_id from DOTS.EXTERNALNASEQUENCE
+               start with taxon_id in (  select taxon_id
+                                         from dots.ExternalNaSequence
                                        union
                                          select taxon_id from apidb.TaxonString)
                connect by prior parent_id = taxon_id) r
@@ -118,6 +118,7 @@ order by organism, species, genus
        ]]>
     </sql>
   </tuningTable>
+
 
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>lineage abundances</comment>
@@ -228,6 +229,7 @@ order by organism, species, genus
       ]]>
     </sql>
   </tuningTable>
+
 
   <tuningTable name="ProjectTaxon" prefixEnabled="true">
     <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
@@ -547,8 +549,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
   </tuningTable>
 
 
-
-
   <tuningTable name="DatasetPresenter" alwaysUpdate="true">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <internalDependency name="GenomicSeqAttributes"/>
@@ -564,13 +564,13 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 
-
+<!--
   <tuningTable name="AssociatedDataset" alwaysUpdate="true">
     <comment>datasets shared with other projects</comment>
     <internalDependency name="DatasetPresenter"/>
     <program commandLine="buildAssociatedDatasetTT"/>
   </tuningTable>
-
+-->
 
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
@@ -645,7 +645,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
           INDEXTYPE IS CTXSYS.CONTEXT
       ]]>
     </sql>
-
   </tuningTable>
 
 
@@ -736,13 +735,12 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
              results.LineageAbundance la,
              results.LineageTaxon lt,
              sres.Taxon st,
-             apidbtuning.SampleProcess sp
+             SampleProcess sp
          WHERE la.lineage = lt.lineage (+)
           AND lt.taxon_id = st.taxon_id (+)
           AND la.protocol_app_node_id = sp.output_pan_id
       ]]>
     </sql>
   </tuningTable>
-
 
 </tuningConfig>
