@@ -112,9 +112,8 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-unless ($PROJECT_HOME =~ /\/eda/ ){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
-}
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");     ## NOT NEEDED?
