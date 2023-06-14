@@ -689,7 +689,12 @@ ORDER BY external_database_release_id, protocol_app_node_id
                    --   pan.protocol_app_node_id as ancestor_pan_id,
                         nvl(mt.name, 'assay') as ancestor_pan_type,
                         mt.ontology_term_id as ancestor_pan_type_id,
-                        attribute_term.name as property, -- if not a material type it has to be an assay
+                       CASE 
+                         WHEN attribute_term.source_id = 'EUPATH_0000455'
+                           -- this term should be replaced by OBI_0003056
+                         THEN 'Average mapping coverage'
+                         ELSE attribute_term.name
+                        END AS property, -- if not a material type it has to be an assay
                         attribute_term.ontology_term_id as property_id,
                         attribute_term.source_id as property_source_id,
                         nvl(value_term.name, caps.commonest_capitalization) as value,
