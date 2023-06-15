@@ -3,55 +3,40 @@
 
   <import file="studyTuningManager.xml"/>
 
-
   <!-- EDA table -->	
   <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
     <comment>EDA Study ID, Dataset presenter ID (hash)
     </comment>
     <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="SRes.ExternalDatabase"/>
-    <externalDependency name="SRes.ExternalDatabaseRelease"/>
-    <externalDependency name="EDA.Study"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="eda.Study"/>
     <sql>
       <![CDATA[
 create table StudyIdDatasetId&1 as
 SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID,
        dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
 FROM EDA.STUDY s
-LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID 
-LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
-LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+LEFT JOIN sres.ExternalDatabaseRelease e
+   ON s.external_database_release_id = e.external_database_release_id 
+LEFT JOIN sres.ExternalDatabase e2
+   ON e.external_database_id = e2.external_database_id
+LEFT JOIN DatasetPresenter dp on e2.name=dp.name
 -- This is TEMPORARY (used for alpha MapVEU Application)
 UNION
 select case 
-  when d.dataset_presenter_id = 'DS_58e5ff7fe0' then 'IRbase15189545' 
-  when d.dataset_presenter_id = 'DS_cdc2959b28' then '2014-PMI-IR-surveillance' 
-  when d.dataset_presenter_id = 'DS_5d903d8e3e' then '2017-messenger-ir' 
-  when d.dataset_presenter_id = 'DS_357669c17d' then '2016-Mzilahowa-IR-fun' 
-  when d.dataset_presenter_id = 'DS_ce978da76d' then '2017-tawe-botswana' 
-  when d.dataset_presenter_id = 'DS_64ea3f9fb2' then '2018-camara-ivoire' 
-  when d.dataset_presenter_id = 'DS_db15b5599b' then '2016-flies-virus'   
-  when d.dataset_presenter_id = 'DS_463e7346e3' then '2019-sare-sach' 
-  when d.dataset_presenter_id = 'DS_4b8cb8bb2e' then 'VBP_MEGA'   
+  when d.dataset_presenter_id = 'DS_480c976ef9' then 'VBP_MEGA'
+  when d.dataset_presenter_id = 'DS_e18287e335' then 'ISATab_VBP0000838_RSRC'
   else 'NA' end as study_stable_id,
 d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
-from apidbtuning.datasetpresenter d
+from DatasetPresenter d
 where d.dataset_presenter_id in (
-'DS_58e5ff7fe0',
-'DS_cdc2959b28',
-'DS_5d903d8e3e',
-'DS_357669c17d',
-'DS_ce978da76d',
-'DS_64ea3f9fb2',
-'DS_db15b5599b',
-'DS_463e7346e3',
-'DS_4b8cb8bb2e'
+'DS_480c976ef9',
+'DS_e18287e335'
 )
       ]]>
     </sql>
   </tuningTable>
-
-
 
 
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
@@ -70,7 +55,8 @@ with organism_rank
          from sres.TaxonName tn1, sres.TaxonName tn2,
               (select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
                from sres.taxon
-               start with taxon_id in (  select taxon_id from DOTS.EXTERNALNASEQUENCE
+               start with taxon_id in (  select taxon_id
+                                         from dots.ExternalNaSequence
                                        union
                                          select taxon_id from apidb.TaxonString)
                connect by prior parent_id = taxon_id) r
@@ -118,6 +104,7 @@ order by organism, species, genus
        ]]>
     </sql>
   </tuningTable>
+
 
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>lineage abundances</comment>
@@ -228,6 +215,7 @@ order by organism, species, genus
       ]]>
     </sql>
   </tuningTable>
+
 
   <tuningTable name="ProjectTaxon" prefixEnabled="true">
     <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
@@ -515,7 +503,7 @@ WHERE sequence.taxon_id = tn.taxon_id(+)
   AND (sequence.taxon_id = '&filterValue' or nvl('&filterValue', 0) = 0)
   AND sequence.taxon_id = taxon.taxon_id
   AND sequence.sequence_ontology_id = so.ontology_term_id
-  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
+  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle', 'kinetoplast')
   AND sequence.na_sequence_id = genbank.na_sequence_id(+)
   AND sequence.external_database_release_id = db.external_database_release_id(+)
   AND sequence.na_sequence_id = virtualization.piece_na_sequence_id(+)
@@ -545,8 +533,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
       ]]>
     </sql>
   </tuningTable>
-
-
 
 
   <tuningTable name="DatasetPresenter" alwaysUpdate="true">
@@ -645,7 +631,6 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
           INDEXTYPE IS CTXSYS.CONTEXT
       ]]>
     </sql>
-
   </tuningTable>
 
 
@@ -736,13 +721,12 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
              results.LineageAbundance la,
              results.LineageTaxon lt,
              sres.Taxon st,
-             apidbtuning.SampleProcess sp
+             SampleProcess sp
          WHERE la.lineage = lt.lineage (+)
           AND lt.taxon_id = st.taxon_id (+)
           AND la.protocol_app_node_id = sp.output_pan_id
       ]]>
     </sql>
   </tuningTable>
-
 
 </tuningConfig>

@@ -8,6 +8,7 @@ DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	topic_3308_synonym	Data co
 DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.GeneTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	GeneTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts							record	download
+DatasetRecordClasses.DatasetRecordClass.Busco	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	Busco							record	download
 DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData							record	download
 DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases							record	download
 DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21		record-internal	
@@ -82,6 +83,7 @@ DatasetRecordClasses.DatasetRecordClass.Country	topic_0219_synonym	Curation and 
 DatasetRecordClasses.DatasetRecordClass.Years	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	Years					13	results	record-internal	download
 DatasetRecordClasses.DatasetRecordClass.AdditionalData	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	AdditionalData					14	results	record-internal	download
 DatasetRecordClasses.DatasetRecordClass.WHO	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	WHO					15	results	record-internal	download
-DatasetRecordClasses.DatasetRecordClass.ProjectName	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	ProjectName					16	results	record-internal	download
-DatasetRecordClasses.DatasetRecordClass.eda_study_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eda_study_id					17		record-internal	download
+DatasetRecordClasses.DatasetRecordClass.Age	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	Age					16	results	record-internal	download
+DatasetRecordClasses.DatasetRecordClass.ProjectName	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	ProjectName					17	results	record-internal	download
+DatasetRecordClasses.DatasetRecordClass.eda_study_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eda_study_id					18		record-internal	download
 

@@ -64,8 +64,8 @@ mkdir "$TEMPDIR/dsp";
 mkdir "$TEMPDIR/etc";
 
 
-my $presentersProjectBase ="ApiCommonPresenters";
-my $modelProjectBase ="ApiCommonModel";
+my $presentersProjectBase;
+my $modelProjectBase;
 
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
@@ -79,13 +79,17 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
     $presentersProjectBase = "MicrobiomePresenters";
     $modelProjectBase = "MicrobiomeModel";
     $is_eda++;
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
     $modelProjectBase = "ClinEpiModel";
     $is_eda++;
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
+  } else {
+    $presentersProjectBase ="ApiCommonPresenters";
+    $modelProjectBase ="ApiCommonModel";
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   }
-
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
 
 
   unless(-e $projectXmlPath) {
@@ -108,20 +112,18 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
-system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
-system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");     ## NOT NEEDED?
+system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath"); ## NOT NEEDED?
 
-my $contactsXmlFile = "contacts.xml";
+my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
-if ($is_eda){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
-} else {
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
-}
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+
 if($report) {
   $suffix = 1234;
 }
