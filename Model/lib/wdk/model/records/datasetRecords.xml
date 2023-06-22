@@ -799,6 +799,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <columnAttribute name="d_score" displayName="Complete and duplicated BUSCOs (D) "/>
         <columnAttribute name="f_score" displayName="Fragmented BUSCOs (F)"/>
         <columnAttribute name="m_score" displayName="Missing BUSCOs (M)"/>
+        <columnAttribute name="lineage_dataset" displayName="Lineage Dataset"/>
       </table>
 
 
@@ -2681,6 +2682,7 @@ and graph_descrip.dataset = dnt.name) g
         <column name="d_score"/>
         <column name="f_score"/>
         <column name="m_score"/>
+        <column name="lineage_dataset"/>
         <sql>
             SELECT dsp.dataset_presenter_id as dataset_id,
                 sequence_type,
@@ -2688,7 +2690,8 @@ and graph_descrip.dataset = dnt.name) g
                 to_char(s_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS s_score,
                 to_char(d_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS d_score,
                 to_char(f_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS f_score,
-                to_char(m_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS m_score
+                to_char(m_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS m_score,
+                lineage_dataset
             FROM
                 apidbtuning.organismattributes oa,
                 apidb.organism                 o,
