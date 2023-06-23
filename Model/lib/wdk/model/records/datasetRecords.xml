@@ -2665,7 +2665,7 @@ and graph_descrip.dataset = dnt.name) g
             <column name="display_name"/>
             <sql>
             <![CDATA[
-             select local_dataset_id as dataset_id, pubmed_id as pmid,
+             select distinct local_dataset_id as dataset_id, pubmed_id as pmid,
                      associated_dataset_id, project, webapp_name, display_name
              from ApidbTuning.AssociatedDataset
              order by local_dataset_id
