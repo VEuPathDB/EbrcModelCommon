@@ -102,12 +102,9 @@ $stmt->execute();
 my (@projectId, @localDatasetId, @localPmid, @displayName);
 my $localDatasets = 0;
 
-my $hash = {};
-
 while ( ($projectId[$localDatasets], $localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
 	= $stmt->fetchrow_array()) {
-  $localDatasets++;
-  $hash->{ $projectId[$localDatasets] }->{ $localDatasetId[$localDatasets] }->{ $localPmid[$localDatasets] }->{ $displayName[$localDatasets] };
+  $localDatasets++
 }
 $stmt->finish();
 print "fetched $localDatasets local datasets\n";
