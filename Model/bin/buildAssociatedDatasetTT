@@ -34,6 +34,7 @@ my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $prop
 $dbh->do(<<SQL) or die "creating table";
    create table AssociatedDataset$suffix (
       local_dataset_id      varchar2(15),
+      local_project         varchar2(20),
       pubmed_id             varchar2(60),
       associated_dataset_id varchar2(15),
       project               varchar2(20),
@@ -76,19 +77,20 @@ my %webapps = (
     'vect'         => 'vectorbase',
     'clin'         => 'ce',
     'mbio'         => 'mbio',
+    'eda-'          => {'clin', 1, 'mbio', 1, 'vect', 1},
 );
 
 
 # prepare insert
 my $insertStmt = $dbh->prepare(<<SQL);
    insert into AssociatedDataset$suffix
-   (local_dataset_id, pubmed_id, associated_dataset_id, project, webapp_name, display_name)
-   values (?, ?, ?, ?, ?, ?)
+   (local_dataset_id, pubmed_id, associated_dataset_id, project, webapp_name, display_name, local_project)
+   values (?, ?, ?, ?, ?, ?, ?)
 SQL
 
 # get local datasets and PubMed IDs
 my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
-     select dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
+     select dpres.project_id, dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
      from DatasetPresenter dpres, DatasetPublication dpub
      where dpres.dataset_presenter_id = dpub.dataset_presenter_id
        and dpub.pmid is not null
@@ -97,12 +99,15 @@ SQL
 
 $stmt->execute();
 
-my (@localDatasetId, @localPmid, @displayName);
+my (@projectId, @localDatasetId, @localPmid, @displayName);
 my $localDatasets = 0;
 
-while ( ($localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
+my $hash = {};
+
+while ( ($projectId[$localDatasets], $localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
 	= $stmt->fetchrow_array()) {
-  $localDatasets++
+  $localDatasets++;
+  $hash->{ $projectId[$localDatasets] }->{ $localDatasetId[$localDatasets] }->{ $localPmid[$localDatasets] }->{ $displayName[$localDatasets] };
 }
 $stmt->finish();
 print "fetched $localDatasets local datasets\n";
@@ -119,32 +124,41 @@ if ($instance =~ /^rm/ || $instance =~ /-/) {
 
 my $insertCount = 0;
 
-# associations within the local project
-if ($webapps{$localProject}) {
+my $webappProjects = $webapps{$instanceProject};
 
-  print "checking for associations within current project.\n";
-  for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
-    for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
-      if ($iLocal != $iAssociated
-	  and $localPmid[$iLocal] eq $localPmid[$iAssociated]
-          and $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) {
-	   $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
-                                $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated])
-	     or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
-	   $insertCount++;
-	 }
+unless(ref($webappProjects) eq 'HASH'){ # multiple projects in one instance (EDA)
+  $webappProjects = { $webappProjects, 1 }; # single project instance
+}
+
+foreach my $localProject (keys %$webappProjects){
+  # associations within the local project
+  if ($webapps{$localProject}) {
+  
+    printf("checking for associations within project %s\n", $projects{$localProject});
+    for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
+      next unless ( $projects{$localProject} eq $projectId[$iLocal] );
+      for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
+        next unless (($iLocal != $iAssociated) && # not self
+          ($projectId[$iLocal] eq $projectId[$iAssociated]) && # same project
+          ($localPmid[$iLocal] eq $localPmid[$iAssociated]) && # same pubmed id
+          ($localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) # impossible, but safe
+        );
+
+        $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
+          $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated], $projectId[$iLocal])
+          or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
+        $insertCount++;
+      }
     }
   }
 }
-
-print "inserted $insertCount intramural records.\n";
-
+  
+  print "inserted $insertCount intramural records.\n";
+  
 # get dataset records from all other projects
 foreach my $projectKey (keys %projects) {
 
-  next if ($projectKey eq $localProject);
-
-  next if ($projectKey eq "clin" and substr($localProject, 0, 3) eq "eda");
+  next if $webappProjects->{$projectKey};
 
   my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
 
@@ -165,7 +179,7 @@ foreach my $projectKey (keys %projects) {
       for (my $i=0; $i<$localDatasets; $i++) {
 	if ($pubrec->{pmid} eq $localPmid[$i] and $localDatasetId[$i] ne $pubrec->{dataset_id}) {
 	  $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
-			       $projects{$projectKey}, $webapps{$projectKey}, $displayName)
+			       $projects{$projectKey}, $webapps{$projectKey}, $displayName, $projectId[$i])
 	    or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
 	  $insertCount++;
 	}
@@ -174,6 +188,8 @@ foreach my $projectKey (keys %projects) {
   }
   $dbh->commit();
 }
+END:
+$dbh->commit();
 
 print "inserted $insertCount records.\n";
 
