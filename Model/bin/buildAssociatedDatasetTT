@@ -58,7 +58,7 @@ my %projects = (
     'fung'         => 'FungiDB',
     'vect'         => 'VectorBase',
     'clin'         => 'ClinEpiDB',
-#   'mbio'         => 'MicrobiomeDB',
+    'mbio'         => 'MicrobiomeDB',
 );
 
 my %webapps = (
@@ -113,7 +113,7 @@ $stmt->finish();
 print "fetched $localDatasets local datasets\n";
 
 # use instance name to orient ourselves
-my $localProject = substr $instance, 0, 4;
+my $instanceProject = substr $instance, 0, 4;
 
 my $host;
 if ($instance =~ /^rm/ || $instance =~ /-/) {
@@ -186,9 +186,7 @@ foreach my $projectKey (keys %projects) {
       }
     }
   }
-  $dbh->commit();
 }
-END:
 $dbh->commit();
 
 print "inserted $insertCount records.\n";
