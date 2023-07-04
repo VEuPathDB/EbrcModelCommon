@@ -2703,6 +2703,7 @@ and graph_descrip.dataset = dnt.name) g
               AND o.taxon_id = oa.component_taxon_id
               AND oa.component_taxon_id = dnt.taxon_id
               AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
+              AND dsp.type='genome'
         </sql>
       </sqlQuery>
 
