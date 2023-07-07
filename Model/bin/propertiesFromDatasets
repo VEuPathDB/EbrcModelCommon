@@ -28,6 +28,7 @@ my $categoryNamesFilePath = "$PROJECT_HOME/EbrcModelCommon/Model/lib/wdk/ontolog
 my @datasets = `find . -name "*.xml" | grep -v Deprecated`;
 foreach my $datasetFile (@datasets) {
   next if($datasetFile =~ /UniDB/);
+  next if(($project eq 'MicrobiomeDatasets' || $project eq 'ClinEpiDatasets') && $datasetFile =~ /global/);
 
   chomp $datasetFile;
   my $propFileName = $datasetFile;
