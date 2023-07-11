@@ -675,7 +675,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- References -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="References"
+        <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
                displayName="Explore this Data Set within this Website"
                queryRef="DatasetTables.References">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -2265,7 +2265,7 @@ ORDER by start_date desc
       </sqlQuery>
 
 
-      <sqlQuery name="References"  isCacheable='false'>
+      <sqlQuery name="References"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB">
             <column name="dataset_id"/>
             <column name="dataset_name"/>
             <column name="text"/>
