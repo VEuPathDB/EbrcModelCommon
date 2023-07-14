@@ -259,6 +259,8 @@ order by organism, species, genus
         union
           select * from full_name
         union
+          select 'hypocrea', 'FungiDB' from dual
+        union
           select 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB' from dual
         union
           select 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB' from dual
