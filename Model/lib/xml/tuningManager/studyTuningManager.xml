@@ -218,7 +218,7 @@
     <externalDependency name="results.GeneSimilarity"/>
     <externalDependency name="results.LineageAbundance"/>
     <externalDependency name="results.NaFeatureDiffResult"/>
-    <externalDependency name="results.NAFeatureExpression"/>
+    <externalDependency name="results.NaFeatureExpression"/>
     <externalDependency name="results.NaFeatureHostResponse"/>
     <externalDependency name="results.ReporterDiffResult"/>
     <externalDependency name="results.ReporterExpression"/>
@@ -2273,7 +2273,7 @@ UNION  -- NOTE: the following pulls in insect sample data
     <comment>generates the counts for each type_id for each study in study.protocolappnode.
     </comment>
     <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="Study.ProtocolAppNode"/>
+    <externalDependency name="study.ProtocolAppNode"/>
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
