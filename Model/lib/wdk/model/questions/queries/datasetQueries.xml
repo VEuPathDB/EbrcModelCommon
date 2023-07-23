@@ -359,6 +359,8 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
        <paramRef ref="sharedParams.text_expression"/>
        <paramRef ref="sharedParams.document_type" default="dataset"/>
        <paramRef ref="sharedParams.text_fields"/>
+       <!-- NOTE: organism param will break in mbio/clinepi/ortho if ever added! -->
+       <paramRef ref="organismParams.text_search_organism" selectMode="all"/>
        <!-- the parameter below caches the results for 30 minutes -->
        <paramRef ref="sharedParams.timestamp" interval="1800" />
        <wsColumn name="dataset_id" width="50"/>
