@@ -3043,7 +3043,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               organismAbbrev="${organismAbbrev}">
   
-     <wgetArgs url="legacy.uniprot.org/uniprot/?query=taxonomy%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tab&amp;columns=id,genes,organism,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="rest.uniprot.org/uniprotkb/search?query=organism_id:${speciesNcbiTaxonId}&force=yes&format=tsv&fields=accession,gene_names,organism_name,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>printOrgSpecificGeneToEC --infile @@dataDir@@/ecAssocFromUniprot.tab --outfile @@dataDir@@/${organismAbbrev}LocTagToEC.tab --orgAbbrev ${organismAbbrev}</unpack>     
 
