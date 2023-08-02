@@ -2265,7 +2265,7 @@ ORDER by start_date desc
       </sqlQuery>
 
 
-      <sqlQuery name="References"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <sqlQuery name="References"  isCacheable='false'>
             <column name="dataset_id"/>
             <column name="dataset_name"/>
             <column name="text"/>
@@ -2327,20 +2327,76 @@ ORDER by start_date desc
 	    ]]>
             </sql>
 
-	    <sql includeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+	    <sql includeProjects="EuPathDB">
             <![CDATA[
-                    select dsp.dataset_presenter_id as dataset_id
-                          , dsp.name as dataset_name
-                          , '' as text
-                          , '' as url
-                          , '' as description
-                          , ref.record_type
-                          , ref.target_type
-                          , replace (ref.target_name, ':', '') as target_name
-                          , 'question' as link_type
-                    from ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
-                    where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                    order by ref.record_type, ref.target_name
+               with projectQuestionLinks as (
+select dsp.dataset_presenter_id as dataset_id
+                        , dsp.name as dataset_name
+                        , '' as text
+                        , '' as url
+                        , '' as description
+                        , ref.record_type
+                        , ref.target_type
+                        , replace (ref.target_name, ':', '') as target_name
+                        , 'question' as link_type
+                    from ApidbTuning.datasetmodelref ref
+                    left join ApidbTuning.DatasetPresenter dsp
+                        on dsp.dataset_presenter_id = ref.dataset_presenter_id
+                    where NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
+                    order by dsp.name
+                        , ref.target_type
+                        , ref.record_type
+                        , ref.target_name
+),
+mygih as (
+ select DATASET_PRESENTER_ID,DESCRIPTION, substr(text, 1, instr(text,' ',-1)-1 ) as text, URL
+   from   apidbtuning.GenomicsInternalHyperlink
+)
+                -- these links should be opened in component sites
+                select gih.dataset_presenter_id as dataset_id
+                        , '' as dataset_name
+                        , text
+                        , 'https://' || dsp.project_id || '.org' || gih.url  as url
+                        , gih.description
+                        , '' as record_type
+                        , '' as target_type
+                        , '' as target_name
+                        , 'genomicsInternal' as link_type
+                from apidbtuning.GenomicsInternalHyperlink gih, apidbtuning.datasetpresenter dsp
+                where gih.dataset_presenter_id = dsp.dataset_presenter_id
+                  and url not like '%app/record/organism/%'
+                  and url not like '%app/search/transcript/%'
+                union
+                -- these links can be opened in portal
+                select mygih.dataset_presenter_id as dataset_id
+                        , '' as dataset_name
+                        , text || ' VEuPathDB' as text
+                        , url
+                        , mygih.description
+                        , '' as record_type
+                        , '' as target_type
+                        , '' as target_name
+                        , 'genomicsInternal' as link_type
+                from mygih, apidbtuning.datasetpresenter dsp
+                where mygih.dataset_presenter_id = dsp.dataset_presenter_id
+                  and (url like '%app/search/transcript/%'  or  url like '%app/record/dataset/%') 
+                union
+                select dsp.dataset_presenter_id as dataset_id
+                       , '' as dataset_name
+                       , 'View this Data Set in MapVEu' as text
+                       , '/popbio-map/web/?projectID=' || p.value as url
+                       , 'View this Data Set in MapVEu' as description
+                       , '' as record_type
+                       , '' as target_type
+                       , '' as target_name
+                       , 'genomicsInternal' as link_type
+                from apidbtuning.datasetpresenter dsp, apidbtuning.datasetproperty p
+                where dsp.name like 'PopBio_Study%' and dsp.dataset_presenter_id = p.dataset_presenter_id
+                      and p.property = 'vbId'
+                union
+                select * from projectQuestionLinks
+                order by text
+
             ]]>
             </sql>
       </sqlQuery>
