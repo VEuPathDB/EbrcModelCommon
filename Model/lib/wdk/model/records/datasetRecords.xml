@@ -2265,7 +2265,7 @@ ORDER by start_date desc
       </sqlQuery>
 
 
-      <sqlQuery name="References"  isCacheable='false'>
+      <sqlQuery name="References"  isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB">
             <column name="dataset_id"/>
             <column name="dataset_name"/>
             <column name="text"/>
@@ -2275,7 +2275,7 @@ ORDER by start_date desc
             <column name="target_type"/>
             <column name="target_name"/>
             <column name="link_type"/>
-            <sql excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+            <sql excludeProjects="EuPathDB">
             <![CDATA[
 		with projectQuestionLinks as (
 		    select dsp.dataset_presenter_id as dataset_id
