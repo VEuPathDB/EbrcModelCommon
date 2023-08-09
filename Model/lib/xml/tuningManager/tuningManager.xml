@@ -248,7 +248,8 @@ order by organism, species, genus
           as (select distinct lower(lt.first_word) as taxon, lt.project_id
               from local_taxon lt, sres.TaxonName tn
               where lt.first_word = tn.name
-                -- and tn.name_class = 'scientific name'),
+                -- and tn.name_class = 'scientific name'
+             ),
           full_name -- the full name of a local taxon whose first name is not a taxon
           as (select distinct lower(lt.taxon) as taxon, lt.project_id
               from local_taxon lt, sres.TaxonName tn
