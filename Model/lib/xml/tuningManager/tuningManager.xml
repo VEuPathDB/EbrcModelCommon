@@ -227,16 +227,16 @@ order by organism, species, genus
       <![CDATA[
         create table &prefixProjectTaxon&1 nologging as
         with
-          local_taxon /* a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism */
+          local_taxon -- a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism
           as (  select distinct tn.name as taxon,
                        substr((tn.name), 1, instr(tn.name||' ', ' ') - 1) as first_word,
                        pi.name as project_id
                 from dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
                 where ens.taxon_id = tn.taxon_id
-                  and tn.name_class = 'scientific name' 
+                  -- and tn.name_class = 'scientific name' 
                   and ens.row_project_id = pi.project_id
-              /* get names from apidb.Organism.family_name_for_files
-                 (may not be necessary) */
+              -- get names from apidb.Organism.family_name_for_files
+              -- (may not be necessary)
               union
                 select family_name_for_files as taxon,
                        substr((family_name_for_files), 1, instr(family_name_for_files||' ', ' ') - 1) as first_word,
@@ -244,16 +244,17 @@ order by organism, species, genus
                 from apidb.Organism
                 where family_name_for_files in (select name from sres.TaxonName)
                 ),
-          mononym /* a taxon name that's the first word of a local taxon */
+          mononym -- a taxon name that's the first word of a local taxon
           as (select distinct lower(lt.first_word) as taxon, lt.project_id
               from local_taxon lt, sres.TaxonName tn
               where lt.first_word = tn.name
-                and tn.name_class = 'scientific name'),
-          full_name /* the full name of a local taxon whose first name is not a taxon */
+                -- and tn.name_class = 'scientific name'
+             ),
+          full_name -- the full name of a local taxon whose first name is not a taxon
           as (select distinct lower(lt.taxon) as taxon, lt.project_id
               from local_taxon lt, sres.TaxonName tn
               where lt.taxon = tn.name
-                and tn.name_class = 'scientific name'
+                -- and tn.name_class = 'scientific name'
                 and lower(lt.first_word) not in (select taxon from mononym))
           select * from mononym
         union
