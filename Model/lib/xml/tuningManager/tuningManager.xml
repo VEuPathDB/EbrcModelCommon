@@ -233,7 +233,8 @@ order by organism, species, genus
                        pi.name as project_id
                 from dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
                 where ens.taxon_id = tn.taxon_id
-                  -- and tn.name_class = 'scientific name' 
+                  and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
+                       or tn.name_class = 'scientific name')
                   and ens.row_project_id = pi.project_id
               -- get names from apidb.Organism.family_name_for_files
               -- (may not be necessary)
