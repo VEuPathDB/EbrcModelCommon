@@ -1084,6 +1084,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
   <internalDataset name="(.*)_dbxref_GeneDB_synonym_RSRC" datasetNamePattern="%_dbxref_GeneDB_synonym_RSRC"/>
   <internalDataset name="(.*)_dbxref_Sanger_synonym_RSRC" datasetNamePattern="%_dbxref_Sanger_synonym_RSRC"/>
   <internalDataset name="(.*)_dbxref_Apollo_synonym_RSRC" datasetNamePattern="%_dbxref_Apollo_synonym_RSRC"/>
+  <internalDataset name="(.*)_dbxref_VEuPathDB_synonym_RSRC" datasetNamePattern="%_dbxref_VEuPathDB_synonym_RSRC"/>
   
   <internalDataset name="(.*)_genome_Sanger_RSRC" datasetNamePattern="%_genome_Sanger_RSRC"/>
   <internalDataset name="(.*)_genome_GeneDB_RSRC" datasetNamePattern="%_genome_GeneDB_RSRC"/>
