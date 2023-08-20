@@ -1053,16 +1053,17 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="request_email_bcc" columnType="string"/>
          <column name="request_email_body" columnType="string"/>
          <column name="request_needs_approval" columnType="string"/>
-
+         <column name="request_email_body_manager" columnType="string"/>
+         <column name="request_email_body_requester" columnType="string"/>
             <sql>
             <![CDATA[
-select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval,
+select pres.dataset_presenter_id as dataset_id,dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access,dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval, request_email_body_manager, request_email_body_requester,
 decode(study_access, 'prerelease', '1', '0') as is_prerelease
 from apidbtuning.datasetpresenter pres, (
 select * from (
 select dataset_presenter_id, property, value
 from apidbtuning.datasetproperty
-where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval')
+where  property in ('studyCategories','projectAvailability','isPublic','studyAccess','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBcc', 'requestEmailBody','requestNeedsApproval','requestEmailBodyRequester','requestEmailBodyManager')
 and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
@@ -1071,7 +1072,7 @@ and trim(value) is not null
 pivot
 (
    max(value)
-   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval )
+   for property in ('projectAvailability' as project_availability,'isPublic' as is_public,'studyAccess' as study_access,'policyUrl' as policy_url,'cardHeadline' as card_headline,'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval, 'requestEmailBodyManager' as request_email_body_manager, 'requestEmailBodyRequester' as request_email_body_requester )
 )) dp
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
 and project_id = '@PROJECT_ID@'
@@ -1091,6 +1092,8 @@ and project_id = '@PROJECT_ID@'
                , null as request_email_bcc
                , null as request_email_body
                , null as request_needs_approval
+               , null as request_email_body_requester
+               , null as request_email_body_manager
           FROM apidbuserdatasets.installeduserdataset i, 
                apidbuserdatasets.datasetattributes d
           WHERE i.user_dataset_id = d.user_dataset_id
