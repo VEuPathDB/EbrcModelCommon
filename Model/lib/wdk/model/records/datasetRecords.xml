@@ -1063,28 +1063,93 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="custom_download_ack" columnType="string"/>
             <sql>
             <![CDATA[
-SELECT  pres.dataset_presenter_id as dataset_id, dp.project_availability, dp.is_public, initcap(dp.study_access) as study_access, days_for_approval, dp.policy_url, dp.card_headline, dp.card_points, card_questions, request_protection_level, request_access_fields, request_email, request_email_bcc, request_email_body, request_needs_approval, request_email_body_manager, request_email_body_requester, custom_download_tab, custom_download_ack, decode(study_access, 'prerelease', '1', '0') as is_prerelease
-FROM apidbtuning.datasetpresenter pres, 
-(
+SELECT   pres.dataset_presenter_id as dataset_id, 
+         project_availability, 
+         is_public, 
+         initcap(dp.study_access) as study_access, 
+         days_for_approval, 
+         policy_url, 
+         card_headline, 
+         card_points, 
+         card_questions, 
+         request_protection_level, 
+         request_access_fields, 
+         request_email, 
+         bcc.request_email_bcc, 
+         request_email_body, 
+         request_needs_approval, 
+         request_email_body_manager, 
+         request_email_body_requester, 
+         custom_download_tab, 
+         custom_download_ack, 
+         decode(study_access, 'prerelease', '1', '0') as is_prerelease
+FROM   -- pres, bcc, dp
+  apidbtuning.datasetpresenter pres, 
+  (
+  SELECT dataset_id,
+         LISTAGG(email, ',') WITHIN GROUP (ORDER BY email)  "REQUEST_EMAIL_BCC"
+    FROM useraccounts.accounts@ACCT_DBLINK@ acc, 
+         studyaccess.providers@ACCT_DBLINK@ pr
+   where pr.user_id = acc.user_id
+     and is_manager = 1
+   GROUP BY dataset_id
+   ORDER BY dataset_id
+  ) bcc,
+  (
   select * from (
     select dataset_presenter_id, property, value
       from apidbtuning.datasetproperty
-      where property in ('studyCategories', 'projectAvailability', 'isPublic', 'studyAccess', 'daysForApproval', 'policyUrl', 'cardHeadline', 'cardPoints', 'cardQuestions', 'requestProtectionLevel', 'requestAccessFields', 'requestEmail', 'requestEmailBcc', 'requestEmailBody', 'requestNeedsApproval', 'requestEmailBodyRequester', 'requestEmailBodyManager', 'customDownoadTab', 'customDownloadAck')
+      where property in ('studyCategories', 
+                         'projectAvailability', 
+                         'isPublic', 
+                         'studyAccess', 
+                         'daysForApproval', 
+                         'policyUrl', 
+                         'cardHeadline', 
+                         'cardPoints', 
+                         'cardQuestions', 
+                         'requestProtectionLevel', 
+                         'requestAccessFields', 
+                         'requestEmail', 
+                         'requestEmailBody', 
+                         'requestNeedsApproval', 
+                         'requestEmailBodyRequester', 
+                         'requestEmailBodyManager', 
+                         'customDownoadTab', 
+                         'customDownloadAck')
         and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
 -- TEMPLATE_ANCHOR injectProjectAvailability
-  )
-  pivot
-  (
-   max(value)
-   for property in ('projectAvailability' as project_availability, 'isPublic' as is_public, 'studyAccess' as study_access, 'daysForApproval' as days_for_approval, 'policyUrl' as policy_url, 'cardHeadline' as card_headline, 'cardPoints' as card_points, 'cardQuestions' as card_questions, 'requestProtectionLevel' as request_protection_level, 'requestAccessFields' as request_access_fields, 'requestEmail' as request_email, 'requestEmailBcc' as request_email_bcc, 'requestEmailBody' as request_email_body, 'requestNeedsApproval' as request_needs_approval, 'requestEmailBodyManager' as request_email_body_manager, 'requestEmailBodyRequester' as request_email_body_requester, 'customDownoadTab' as custom_download_tab, 'customDownloadAck' as custom_download_ack )
-  )
-) dp
+    )
+    pivot
+    (
+     max(value)
+     for property in ('projectAvailability' as project_availability, 
+                    'isPublic' as is_public, 
+                    'studyAccess' as study_access, 
+                    'daysForApproval' as days_for_approval, 
+                    'policyUrl' as policy_url, 
+                    'cardHeadline' as card_headline, 
+                    'cardPoints' as card_points, 
+                    'cardQuestions' as card_questions, 
+                    'requestProtectionLevel' as request_protection_level, 
+                    'requestAccessFields' as request_access_fields, 
+                    'requestEmail' as request_email, 
+                    'requestEmailBody' as request_email_body, 
+                    'requestNeedsApproval' as request_needs_approval, 
+                    'requestEmailBodyManager' as request_email_body_manager, 
+                    'requestEmailBodyRequester' as request_email_body_requester, 
+                    'customDownoadTab' as custom_download_tab, 
+                    'customDownloadAck' as custom_download_ack )
+    )
+  ) dp
 WHERE pres.dataset_presenter_id = dp.dataset_presenter_id(+)
+  and  pres.dataset_presenter_id = bcc.dataset_id 
   AND project_id = '@PROJECT_ID@'
-                    UNION
-          SELECT d.dataset_stable_id
+UNION
+-- installed user datasets       
+SELECT d.dataset_stable_id
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
