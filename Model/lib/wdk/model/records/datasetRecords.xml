@@ -1063,6 +1063,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
          <column name="custom_download_ack" columnType="string"/>
             <sql>
             <![CDATA[
+select dts.*,bcc.request_email_bcc
+from
+(
 SELECT   pres.dataset_presenter_id as dataset_id, 
          project_availability, 
          is_public, 
@@ -1075,7 +1078,6 @@ SELECT   pres.dataset_presenter_id as dataset_id,
          request_protection_level, 
          request_access_fields, 
          request_email, 
-         bcc.request_email_bcc, 
          request_email_body, 
          request_needs_approval, 
          request_email_body_manager, 
@@ -1085,16 +1087,6 @@ SELECT   pres.dataset_presenter_id as dataset_id,
          decode(study_access, 'prerelease', '1', '0') as is_prerelease
 FROM   -- pres, bcc, dp
   apidbtuning.datasetpresenter pres, 
-  (
-  SELECT dataset_id,
-         LISTAGG(email, ',') WITHIN GROUP (ORDER BY email)  "REQUEST_EMAIL_BCC"
-    FROM useraccounts.accounts@ACCT_DBLINK@ acc, 
-         studyaccess.providers@ACCT_DBLINK@ pr
-   where pr.user_id = acc.user_id
-     and is_manager = 1
-   GROUP BY dataset_id
-   ORDER BY dataset_id
-  ) bcc,
   (
   select * from (
     select dataset_presenter_id, property, value
@@ -1145,8 +1137,20 @@ FROM   -- pres, bcc, dp
     )
   ) dp
 WHERE pres.dataset_presenter_id = dp.dataset_presenter_id(+)
-  and  pres.dataset_presenter_id = bcc.dataset_id 
   AND project_id = '@PROJECT_ID@'
+) dts
+LEFT OUTER JOIN
+(
+  SELECT dataset_id,
+         LISTAGG(email, ',') WITHIN GROUP (ORDER BY email)  "REQUEST_EMAIL_BCC"
+    FROM useraccounts.accounts@ACCT_DBLINK@ acc, 
+         studyaccess.providers@ACCT_DBLINK@ pr
+   where pr.user_id = acc.user_id
+     and is_manager = 1
+   GROUP BY dataset_id
+   ORDER BY dataset_id
+) bcc
+ON dts.dataset_id = bcc.dataset_id 
 UNION
 -- installed user datasets       
 SELECT d.dataset_stable_id
