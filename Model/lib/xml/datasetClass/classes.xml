@@ -3526,6 +3526,22 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
+
+  <datasetClass class="gadm" category="" datasetFileHint="">
+    <purpose></purpose>
+  <datasetLoader datasetName="gadm_RSRC" version="410"
+                 plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                 scope="global"
+                 type="sres"
+                 >
+    <wgetArgs url="https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip">--accept=@@dataDir@@/gadm_410-gpkg.zip</wgetArgs>
+    <unpack>unzip -d @@dataDir@@ @@dataDir@@/gadm_410-gpkg.zip</unpack>
+    <unpack>loadGadm.bash @@dataDir@@ gadm @@gadmPort@@ @@dataDir@@/gadm_410.gpkg</unpack>
+    <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+
+
   <datasetClass class="updatePDBTaxon" category="" datasetFileHint="">
     <purpose></purpose>
   <datasetLoader datasetName="updatePDBTaxon_RSRC" version="TODAY"
@@ -5794,7 +5810,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inFile @@gusHome@@/ontology/${name}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <pluginArgs>--inFile @@gusHome@@/ontology/popbio/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
