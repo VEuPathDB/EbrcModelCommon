@@ -196,6 +196,8 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="request_email_bcc" internal="true"/>
          <columnAttribute name="request_email_body" internal="true"/>
          <columnAttribute name="request_needs_approval" internal="true"/>
+         <columnAttribute name="request_email_body_manager" internal="true"/>
+         <columnAttribute name="request_email_body_requester" internal="true"/>
          <columnAttribute name="custom_download_tab"/>
          <columnAttribute name="custom_download_ack"/>
          <linkAttribute name="analyze" displayName="Explore &amp; analyze" sortable="false" includeProjects="ClinEpiDB">
