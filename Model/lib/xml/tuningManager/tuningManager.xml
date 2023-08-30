@@ -27,6 +27,7 @@ UNION
 select case 
   when d.dataset_presenter_id = 'DS_480c976ef9' then 'VBP_MEGA'
   when d.dataset_presenter_id = 'DS_e18287e335' then '2023-maine-ricinus'
+  when d.dataset_presenter_id = 'DS_2b98dd44ab' then '2010-Neafsey-M-S-Bamako'
   else 'NA' end as study_stable_id,
 d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
 from DatasetPresenter d
