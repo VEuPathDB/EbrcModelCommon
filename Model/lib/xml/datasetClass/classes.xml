@@ -3590,6 +3590,23 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="ontologyRelationshipTypesForProject" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>   
+    <prop name="projectName">&projectName;</prop>   
+  <datasetLoader datasetName="${projectName}_Ontology_Relationship_Types_RSRC" version="${version}"
+              plugin="GUS::Supported::Plugin::InsertOntologyRelationshipType"
+              scope="global"
+              type="sres"
+              >
+    <manualGet fileOrDir="common/ontology/Mged/${version}/final/MgedOntologyRelationshipTypes.tab">
+        <dir name="final">
+        </dir>
+      </manualGet>
+    <pluginArgs>--inputFile @@dataDir@@/MgedOntologyRelationshipTypes.tab  --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+
 
 
   <datasetClass class="ISA" category="" datasetFileHint="">
@@ -3734,7 +3751,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>
         <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
-          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+          mergeAnnotationProperties -f @@dataDir@@/owlAttributes.txt @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
       </unpack>
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
@@ -4057,6 +4074,33 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="eupathCuratedOntologies.xml"/>
 
     <datasetLoader datasetName="Ontology_${name}_RSRC" version="${version}"
+                   plugin="GUS::Supported::Plugin::InsertOntologyFromTabDelim"
+                   scope="global"
+                   type="sres"
+                   >
+
+      <manualGet fileOrDir="common/ontology/${name}TabDelim/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/terms.txt"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/relationships.txt"/>
+
+      <pluginArgs>--termFile @@dataDir@@/final/terms.txt --relFile @@dataDir@@/final/relationships.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="ontologyFromTabDelimForProject" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="name">&name;</prop>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+
+    <graphTemplateFile name="eupathCuratedOntologies.xml"/>
+
+    <datasetLoader datasetName="${projectName}_Ontology_${name}_RSRC" version="${version}"
                    plugin="GUS::Supported::Plugin::InsertOntologyFromTabDelim"
                    scope="global"
                    type="sres"
@@ -5868,7 +5912,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="sourceFile"></prop>
     <graphTemplateFile name="microbiomeRootEda.xml"/>
 
-    <datasetLoader datasetName="OntologyTerm_${name}_RSRC" version="dontcare"
+    <datasetLoader datasetName="${name}" version="dontcare"
                    plugin="GUS::Supported::Plugin::InsertOntologyTermsAndRelationships"
                    scope="global"
                    type="sres"
@@ -6528,6 +6572,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
 
       <manualGet fileOrDir="${projectName}/popbio/${studyStableId}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+  <datasetClass class="EDAMegaStudyMicrobiome" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="studyStableId"></prop> <!-- VBP0000123 -->
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
+
+    <datasetLoader
+        datasetName="EDAMegaStudy_${studyStableId}_RSRC"
+        version="${version}"
+        plugin="ApiCommonData::Load::Plugin::LoadNothing"
+        scope="global">
+
+
+      <manualGet fileOrDir="${projectName}/common/MicrobiomeStudyEda/${studyStableId}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
