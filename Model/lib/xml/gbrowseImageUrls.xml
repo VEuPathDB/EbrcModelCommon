@@ -665,6 +665,10 @@
     <track>cyegCBS114405</track>
   </subtrackSet>
 
+  <subtrackSet name="Chaetothyriales" project="FungiDB" suffixes="_span;_gene">
+    <track>cspCBS132003</track>
+  </subtrackSet>
+
   <subtrackSet name="Cyphellophoraceae" project="FungiDB" suffixes="_span;_gene">
     <track>ceurCBS101466</track>
   </subtrackSet>
@@ -1088,7 +1092,20 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Herpotrichiellaceae"/>
+      <subtrack set="Chaetothyriales"/>
       <subtrack set="Cyphellophoraceae"/>
+      <subtrack set="Trichocomaceae"/>
+      <subtrack set="Chaetothyriales"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="cspCBS132003" organism="Chaetothyriales sp. CBS 132003"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Chaetothyriales"/>
+      <subtrack set="Cyphellophoraceae"/>
+      <subtrack set="Herpotrichiellaceae"/>
       <subtrack set="Trichocomaceae"/>
     </track>
   </url>
@@ -1099,8 +1116,8 @@
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Cyphellophoraceae"/>
       <subtrack set="Herpotrichiellaceae"/>
-      <subtrack set="Onygenales"/>
       <subtrack set="Trichocomaceae"/>
+      <subtrack set="Chaetothyriales"/>
     </track>
   </url>
 
@@ -1443,6 +1460,7 @@
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Trichocomaceae"/>
       <subtrack set="Aspergillaceae"/>
+      <subtrack set="Chaetothyriales"/>
     </track>
   </url>
 
