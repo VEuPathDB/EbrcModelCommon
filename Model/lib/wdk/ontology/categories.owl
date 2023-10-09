@@ -1053,6 +1053,13 @@
         <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
     </owl:Class>
 
+    <!-- http://purl.obolibrary.org/obo/OBI_0002575 -->
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0002575">
+        <rdfs:label>isoform sequencing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/OBI_0001271"/>
+        <obo:IAO_0000412 rdf:resource="http://purl.obolibrary.org/obo/obi.owl"/>
+    </owl:Class>
+
     <!-- http://purl.obolibrary.org/obo/OBI_0001361 -->
 
     <owl:Class rdf:about="http://purl.obolibrary.org/obo/OBI_0001361">
