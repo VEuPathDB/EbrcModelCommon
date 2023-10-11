@@ -3534,6 +3534,21 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                  scope="global"
                  type="sres"
                  >
+    <wgetArgs url="https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip">--accept=@@dataDir@@/gadm_410-gpkg.zip --continue --connect-timeout=120</wgetArgs>
+    <unpack>unzip -d @@dataDir@@ @@dataDir@@/gadm_410-gpkg.zip</unpack>
+    <unpack>loadGadm.bash @@dataDir@@ gadm @@gadmPort@@ @@dataDir@@/gadm_410.gpkg</unpack>
+    <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="gadmForProject" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>   
+  <datasetLoader datasetName="${projectName}_gadm_RSRC" version="410"
+                 plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                 scope="global"
+                 type="sres"
+                 >
     <wgetArgs url="https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip">--accept=@@dataDir@@/gadm_410-gpkg.zip</wgetArgs>
     <unpack>unzip -d @@dataDir@@ @@dataDir@@/gadm_410-gpkg.zip</unpack>
     <unpack>loadGadm.bash @@dataDir@@ gadm @@gadmPort@@ @@dataDir@@/gadm_410.gpkg</unpack>
