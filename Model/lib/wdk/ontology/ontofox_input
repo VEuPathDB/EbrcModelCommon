@@ -241,6 +241,8 @@ http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0002631 # scRNA-seq
 subClassOf http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
+http://purl.obolibrary.org/obo/OBI_0002575 # isoform sequencing
+subClassOf http://purl.obolibrary.org/obo/OBI_0001271 #RNASeq
 http://purl.obolibrary.org/obo/SO_0000345 # EST
 subClassOf http://edamontology.org/topic_3308 #Transcriptomics
 http://purl.obolibrary.org/obo/OBI_0001361 # RT PCR
