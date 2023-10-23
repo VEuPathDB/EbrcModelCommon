@@ -83,7 +83,7 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
     system("cp $PROJECT_HOME/MicrobiomePresenters/Model/lib/xml/datasetPresenters/MicrobiomeDB.xml $projectXmlPath");
     system("cp $PROJECT_HOME/ClinEpiPresenters/Model/lib/xml/datasetPresenters/ClinEpiDB.xml $projectXmlPath");
     system("cp $PROJECT_HOME/ApiCommonPresenters/Model/lib/xml/datasetPresenters/VectorBase.xml $projectXmlPath");
-
+    $is_eda =1;
   } elsif ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
     $modelProjectBase = "MicrobiomeModel";
@@ -126,7 +126,7 @@ system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$global
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
 
-  if ($lowerProject =~/eda/) {
+  if ($is_eda) {
     system("cp MicrobiomeModel/Model/config/datasetReferences.tab $refPath");
     system("cp MicrobiomeModel/Model/config/datasetLinks.xml $linksPath");
   } else {
