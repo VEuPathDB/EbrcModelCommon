@@ -126,13 +126,9 @@ system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$global
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
 
-  if ($is_eda) {
-    system("cp MicrobiomeModel/Model/config/datasetReferences.tab $refPath");
-    system("cp MicrobiomeModel/Model/config/datasetLinks.xml $linksPath");
-  } else {
-    system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
-    system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
-}
+system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
+system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
+
 my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
