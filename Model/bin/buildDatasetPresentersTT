@@ -36,7 +36,11 @@ $|=1;
 
 
 my $sql;
-if ($PROJECT_HOME =~ /\/eupa/ ){
+if ($PROJECT_HOME =~ /\/eda/ ){
+  $sql = <<SQL;
+    select 'EDA' as project_id, lower('EDA') as lower_project_id from dual
+SQL
+} elsif ($PROJECT_HOME =~ /\/eupa/ ){
   $sql = <<SQL;
     select project_id, lower(project_id) as lower_project_id
       from (select distinct project_id from GenomicSeqAttributes)
@@ -75,7 +79,12 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   my $projectXmlFile = "${project}.xml";
   my $projectXmlPath = "$TEMPDIR/dsp/$projectXmlFile";
 
-  if ($lowerProject =~/microbiome/) {
+  if ($lowerProject =~/eda/) {
+    system("cp $PROJECT_HOME/MicrobiomePresenters/Model/lib/xml/datasetPresenters/MicrobiomeDB.xml $projectXmlPath");
+    system("cp $PROJECT_HOME/ClinEpiPresenters/Model/lib/xml/datasetPresenters/ClinEpiDB.xml $projectXmlPath");
+    system("cp $PROJECT_HOME/ApiCommonPresenters/Model/lib/xml/datasetPresenters/VectorBase.xml $projectXmlPath");
+
+  } elsif ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
     $modelProjectBase = "MicrobiomeModel";
     $is_eda++;
@@ -116,8 +125,8 @@ system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$global
 
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
-system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");     ## NOT NEEDED?
-system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath"); ## NOT NEEDED?
+#system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");     ## NOT NEEDED?
+#system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath"); ## NOT NEEDED?
 
 my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
