@@ -794,7 +794,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <!-- Busco -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-      <table name="Busco" includeProjects="PiroplasmaDB"
+      <table name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB"
              displayName="BUSCO"
              queryRef="DatasetTables.Busco">
         <!-- columnAttribute name="organism_id" internal="true"/ -->
@@ -2831,7 +2831,7 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-      <sqlQuery name="Busco" includeProjects="PiroplasmaDB">
+      <sqlQuery name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id"/>
         <column name="sequence_type"/>
         <column name="c_score"/>
