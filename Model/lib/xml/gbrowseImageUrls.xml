@@ -2374,6 +2374,7 @@
     <track>amarAmarGA1</track>
     <track>aminMINIMUS1</track>
     <track>amouAmouCM1</track>
+    <track>anilAnilCM1</track>
     <track>aquaSANGWE</track>
     <track>asinChina</track>
     <track>asinSINENSIS</track>
@@ -2408,6 +2409,7 @@
     <track>aalbC6-36</track>
     <track>cquiJHB</track>
     <track>cquiJohannesburg</track>
+    <track>scyaScyaPA1</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Ceratopogonidae" suffixes="_span;_gene">
@@ -2416,6 +2418,7 @@
 
   <subtrackSet project="VectorBase" name="Gastropoda" suffixes="_span;_gene">
     <track>bglaBB02</track>
+    <track>bglaXG47</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Hemiptera" suffixes="_span;_gene">
@@ -2476,6 +2479,7 @@
     <org organism="Anopheles marshallii AmarGA1" abbrev="amarAmarGA1" />
     <org organism="Anopheles minimus MINIMUS1" abbrev="aminMINIMUS1" />
     <org organism="Anopheles moucheti AmouCM1" abbrev="amouAmouCM1" />
+    <org organism="Anopheles nili AnilCM1" abbrev="anilAnilCM1" />
     <org organism="Anopheles quadriannulatus SANGWE" abbrev="aquaSANGWE" />
     <org organism="Anopheles sinensis China" abbrev="asinChina" />
     <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
@@ -2519,6 +2523,7 @@
     <org organism="Aedes albopictus C6/36 cell line" abbrev="aalbC6-36" />
     <org organism="Culex quinquefasciatus JHB 2020" abbrev="cquiJHB" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
+    <org organism="Sabethes cyaneus ScyaPA1" abbrev="scyaScyaPA1" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
       <subtrack set="Ceratopogonidae" />
@@ -2536,6 +2541,7 @@
   <!-- TODO:  add at least one more synteny track for this organism -->
   <url project="VectorBase" type="synteny">
     <org organism="Biomphalaria glabrata BB02" abbrev="bglaBB02" />
+    <org organism="Biomphalaria glabrata XG47" abbrev="bglaXG47" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Gastropoda" />
       <!-- TODO
