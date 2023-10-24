@@ -36,7 +36,7 @@ $|=1;
 
 
 my $sql;
-if ($PROJECT_HOME =~ /\/eda/ ){
+if ($instance =~ /\/eda/ ){
   $sql = <<SQL;
     select 'EDA' as project_id, lower('EDA') as lower_project_id from dual
 SQL
