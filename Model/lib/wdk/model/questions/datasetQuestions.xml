@@ -32,7 +32,7 @@
     </question>
 
 
-    <question name="MapStudiesForToolbar"
+    <question name="MapStudiesForToolbar"  includeProjects="VectorBase,ClinEpiDB"
       displayName="Studies to show in toolbar"
       shortDisplayName="Map Studies"
       fullAnswer="true"
