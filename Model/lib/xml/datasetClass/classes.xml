@@ -6498,6 +6498,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!-- The bedgraph file for this class needs a non-zero value for the 4th column -->
   <datasetClass class="createGffBigWig" category="" datasetFileHint=""> 
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
