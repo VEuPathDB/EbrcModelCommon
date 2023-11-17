@@ -2383,6 +2383,50 @@
     <track>asteSDA-500</track>
   </subtrackSet>
 
+
+  <subtrackSet project="VectorBase" name="Anophelinae_isRef" suffixes="_span;_gene">
+    <track>aalbSTECLA2020</track>
+    <track>aaquAaquGF1</track>
+    <track>aaraDongola</track>
+    <track>aatrEBRO</track>
+    <track>achrACHKN1017</track>
+    <track>acolNgousso</track>
+    <track>acruidAnoCruzAS_RS32_06</track>
+    <track>aculA-37</track>
+    <track>adarAdarGF1</track>
+    <track>adirWRAIR2</track>
+    <track>aepiEpiroticus2</track>
+    <track>afarFAR1</track>
+    <track>afunFUMOZ</track>
+    <track>agamPEST</track>
+    <track>amacmaculatus3</track>
+    <track>amacidAnoMacuDA375_x</track>
+    <track>amarAmarGA1</track>
+    <track>amelCM1001059_A</track>
+    <track>amerMAF</track>
+    <track>aminMINIMUS1</track>
+    <track>amouAmouCM1</track>
+    <track>anilAnilCM1</track>
+    <track>aquaSANGWE</track>
+    <track>asinSINENSIS</track>
+    <track>asteSDA-500</track
+  </subtrackSet>
+
+
+  <subtrackSet project="VectorBase" name="Anophelinae_notRef" suffixes="_span;_gene">
+    <track>aalbSTECLA</track>
+    <track>aaraDONGOLA2021</track>
+    <track>acolAcolN3</track>
+    <track>acolMOPTI</track>
+    <track>adarCoari</track>
+    <track>afunAfunGA1</track>
+    <track>amerMAF2021</track>
+    <track>asinChina</track>
+    <track>asteIndian</track>
+    <track>asteIndian2020</track>
+  </subtrackSet>
+
+
   <subtrackSet project="VectorBase" name="Brachycera" suffixes="_span;_gene">
     <track>dmeliso-1</track>
     <track>gausTTRI</track>
@@ -2487,7 +2531,7 @@
     <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Anophelinae" />
+      <subtrack set="Anophelinae_ref" />
     </track>
   </url>
 
