@@ -2531,7 +2531,7 @@
     <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Anophelinae_ref" />
+      <subtrack set="Anophelinae_isRef" />
     </track>
   </url>
 
