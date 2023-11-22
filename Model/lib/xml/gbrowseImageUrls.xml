@@ -2344,8 +2344,7 @@
 
 
 <!-- VectorBase starts here -->
-
-  <subtrackSet project="VectorBase" name="Anophelinae" suffixes="_span;_gene">
+  <!--subtrackSet project="VectorBase" name="Anophelinae" suffixes="_span;_gene">
     <track>aalbSTECLA</track>
     <track>aalbSTECLA2020</track>
     <track>aaraDongola</track>
@@ -2381,48 +2380,36 @@
     <track>asteIndian</track>
     <track>asteIndian2020</track>
     <track>asteSDA-500</track>
-  </subtrackSet>
+  </subtrackSet -->
 
 
-  <subtrackSet project="VectorBase" name="Anophelinae_isRef" suffixes="_span;_gene">
+  <!-- top Anophelinae ref tracks -->
+  <subtrackSet project="VectorBase" name="Anophelinae_ref" suffixes="_span;_gene">
     <track>aalbSTECLA2020</track>
-    <track>aaquAaquGF1</track>
-    <track>aaraDongola</track>
-    <track>aatrEBRO</track>
-    <track>achrACHKN1017</track>
-    <track>acolNgousso</track>
-    <track>acruidAnoCruzAS_RS32_06</track>
-    <track>aculA-37</track>
-    <track>adarAdarGF1</track>
-    <track>adirWRAIR2</track>
-    <track>aepiEpiroticus2</track>
-    <track>afarFAR1</track>
-    <track>afunFUMOZ</track>
+    <track>acolAcolN3</track>
     <track>agamPEST</track>
-    <track>amacmaculatus3</track>
-    <track>amacidAnoMacuDA375_x</track>
-    <track>amarAmarGA1</track>
-    <track>amelCM1001059_A</track>
-    <track>amerMAF</track>
-    <track>aminMINIMUS1</track>
-    <track>amouAmouCM1</track>
-    <track>anilAnilCM1</track>
-    <track>aquaSANGWE</track>
-    <track>asinSINENSIS</track>
-    <track>asteSDA-500</track>
+    <track>asteIndian2020</track>
+    <track>dmeliso-1</track>
   </subtrackSet>
 
+  <!-- Nearctic & Neotropical regions -->
+  <subtrackSet project="VectorBase" name="Nearctic" suffixes="_span;_gene">
+    <track>dmeliso-1</track>
+    <track>agamPEST</track>
+    <track>aalbSTECLA2020</track>
+  </subtrackSet>
 
-  <subtrackSet project="VectorBase" name="Anophelinae_notRef" suffixes="_span;_gene">
-    <track>aalbSTECLA</track>
-    <track>aaraDONGOLA2021</track>
+  <!-- Afrotropical region,  Indo-oriental regions, Arabian peninsula regions -->
+  <subtrackSet project="VectorBase" name="Afrotropical" suffixes="_span;_gene">
+    <track>dmeliso-1</track>
+    <track>agamPEST</track>
     <track>acolAcolN3</track>
-    <track>acolMOPTI</track>
-    <track>adarCoari</track>
-    <track>afunAfunGA1</track>
-    <track>amerMAF2021</track>
-    <track>asinChina</track>
-    <track>asteIndian</track>
+  </subtrackSet>
+
+  <!-- Palearctic region, Indo-oriental, Oriental region, Australasian -->
+  <subtrackSet project="VectorBase" name="Palearctic" suffixes="_span;_gene">
+    <track>dmeliso-1</track>
+    <track>agamPEST</track>
     <track>asteIndian2020</track>
   </subtrackSet>
 
@@ -2494,46 +2481,67 @@
     <track>phumUSDA</track>
   </subtrackSet>
 
+ 
   <url project="VectorBase" type="synteny">
-    <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
-    <org organism="Anopheles albimanus STECLA 2020" abbrev="aalbSTECLA2020" />
-    <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
-    <org organism="Anopheles arabiensis DONGOLA 2021" abbrev="aaraDONGOLA2021" />
     <org organism="Anopheles aquasalis AaquGF1" abbrev="aaquAaquGF1" />
-    <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
+    <org organism="Anopheles cruzii idAnoCruzAS_RS32_06" abbrev="acruidAnoCruzAS_RS32_06" />
+    <org organism="Anopheles darlingi Coari" abbrev="adarCoari" />
+    <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
+    <org organism="Anopheles darlingi AdarGF1" abbrev="adarAdarGF1" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Nearctic" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles arabiensis DONGOLA 2021" abbrev="aaraDONGOLA2021" />
+    <org organism="Anopheles arabiensis Dongola" abbrev="aaraDongola" />
     <org organism="Anopheles christyi ACHKN1017" abbrev="achrACHKN1017" />
+    <org organism="Anopheles coluzzii Mali-NIH" abbrev="acolMali-NIH" />
     <org organism="Anopheles coluzzii MOPTI" abbrev="acolMOPTI"/>
     <org organism="Anopheles coluzzii Ngousso" abbrev="acolNgousso" />
-    <org organism="Anopheles coluzzii AcolN3" abbrev="acolAcolN3" />
-    <org organism="Anopheles cruzii idAnoCruzAS_RS32_06" abbrev="acruidAnoCruzAS_RS32_06" />
     <org organism="Anopheles culicifacies A-37" abbrev="aculA-37" />
-    <org organism="Anopheles darlingi Coari" abbrev="adarCoari" />
-    <org organism="Anopheles darlingi AdarGF1" abbrev="adarAdarGF1" />
+    <org organism="Anopheles funestus FUMOZ" abbrev="afunFUMOZ" />
+    <org organism="Anopheles funestus AfunGA1" abbrev="afunAfunGA1" />
+    <org organism="Anopheles melas CM1001059_A" abbrev="amelCM1001059_A" />
+    <org organism="Anopheles quadriannulatus SANGWE" abbrev="aquaSANGWE" />
+    <org organism="Anopheles moucheti AmouCM1" abbrev="amouAmouCM1" />
+    <org organism="Anopheles nili AnilCM1" abbrev="anilAnilCM1" />
+    <org organism="Anopheles maculipalpis idAnoMacuDA-375_x" abbrev="amacidAnoMacuDA375_x" />
+    <org organism="Anopheles marshallii AmarGA1" abbrev="amarAmarGA1" />
+    <org organism="Anopheles merus MAF" abbrev="amerMAF" />
+    <org organism="Anopheles merus MAF 2021" abbrev="amerMAF2021" />
+   <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Afrotropical" />
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
     <org organism="Anopheles dirus WRAIR2" abbrev="adirWRAIR2" />
     <org organism="Anopheles epiroticus Epiroticus2" abbrev="aepiEpiroticus2" />
     <org organism="Anopheles farauti FAR1" abbrev="afarFAR1" />
-    <org organism="Anopheles funestus FUMOZ" abbrev="afunFUMOZ" />
-    <org organism="Anopheles funestus AfunGA1" abbrev="afunAfunGA1" />
-    <org organism="Anopheles gambiae PEST" abbrev="agamPEST" />
     <org organism="Anopheles maculatus maculatus3" abbrev="amacmaculatus3" />
-    <org organism="Anopheles maculipalpis idAnoMacuDA-375_x" abbrev="amacidAnoMacuDA375_x" />
-    <org organism="Anopheles melas CM1001059_A" abbrev="amelCM1001059_A" />
-    <org organism="Anopheles merus MAF" abbrev="amerMAF" />
-    <org organism="Anopheles merus MAF 2021" abbrev="amerMAF2021" />
-    <org organism="Anopheles marshallii AmarGA1" abbrev="amarAmarGA1" />
     <org organism="Anopheles minimus MINIMUS1" abbrev="aminMINIMUS1" />
-    <org organism="Anopheles moucheti AmouCM1" abbrev="amouAmouCM1" />
-    <org organism="Anopheles nili AnilCM1" abbrev="anilAnilCM1" />
-    <org organism="Anopheles quadriannulatus SANGWE" abbrev="aquaSANGWE" />
     <org organism="Anopheles sinensis China" abbrev="asinChina" />
     <org organism="Anopheles sinensis SINENSIS" abbrev="asinSINENSIS" />
     <org organism="Anopheles stephensi Indian" abbrev="asteIndian" />
-    <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
     <org organism="Anopheles stephensi SDA-500" abbrev="asteSDA-500" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="Anophelinae_isRef" />
+      <subtrack set="Palearctic" />
     </track>
   </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Anopheles albimanus STECLA 2020" abbrev="aalbSTECLA2020" />
+    <org organism="Anopheles coluzzii AcolN3" abbrev="acolAcolN3" />
+    <org organism="Anopheles gambiae PEST" abbrev="agamPEST" />
+    <org organism="Anopheles stephensi UCISS2018" abbrev="asteIndian2020" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Anophelinae_ref" />
+    </track>
+  </url>
+
 
   <url project="VectorBase" type="synteny">
     <org organism="Drosophila melanogaster iso-1" abbrev="dmeliso-1" />
@@ -2642,16 +2650,5 @@
       -->
     </track>
   </url>
-
-  <url project="VectorBase" type="synteny">
-    <org organism="Anopheles coluzzii Mali-NIH" abbrev="acolMali-NIH" />
-    <track name="Synteny" abbrevFirst="true">
-      <subtrack name="acolMali-NIH_span" />
-      <subtrack name="acolMali-NIH_gene" />
-      <subtrack name="acolNgousso_span" />
-      <subtrack name="acolNgousso_gene" />
-    </track>
-  </url>
-
 
 </gbrowseImageUrls>
