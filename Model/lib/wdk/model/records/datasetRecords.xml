@@ -2843,11 +2843,11 @@ and graph_descrip.dataset = dnt.name) g
         <sql>
             SELECT dsp.dataset_presenter_id as dataset_id,
                 sequence_type,
-                to_char(c_score /(c_score + f_score + m_score) * 100, '90.9') || '%' AS c_score,
-                to_char(s_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS s_score,
-                to_char(d_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS d_score,
-                to_char(f_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS f_score,
-                to_char(m_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS m_score,
+                to_char(c_score /(c_score + f_score + m_score) * 100, '990.9') || '%' AS c_score,
+                to_char(s_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS s_score,
+                to_char(d_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS d_score,
+                to_char(f_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS f_score,
+                to_char(m_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS m_score,
                 lineage_dataset
             FROM
                 apidbtuning.organismattributes oa,
