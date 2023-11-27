@@ -416,7 +416,7 @@
     <externalDependency name="sres.Taxon"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixGenomicSeqAttributes&1 AS
+        CREATE TABLE GenomicSeqAttributes&1 AS
         SELECT
                '&ORG_ABBREV' as org_abbrev,
                '&PROJECT_ID' as project_id,
