@@ -31,6 +31,21 @@
      <propertyList name="forSitemap"/>
     </question>
 
+
+    <question name="MapStudiesForToolbar"  includeProjects="VectorBase,ClinEpiDB"
+      displayName="Studies to show in toolbar"
+      shortDisplayName="Map Studies"
+      fullAnswer="true"
+      queryRef="DatasetIds.MapStudiesForToolbar"
+      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="eupath_release desc,category asc,primary_key asc" />
+      <description>
+         Find all data sets.
+      </description>
+    </question>
+
+
     <question name="Studies"
       displayName="Study summaries"
       shortDisplayName="Studies"
@@ -162,7 +177,7 @@
 
     <question name="DatasetsByCategoryAndOrganism"
       displayName="Data Sets by Category and organism"
-      excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+      excludeProjects="MicrobiomeDB,ClinEpiDB"
       shortDisplayName="Category"
       fullAnswer="true"
       queryRef="DatasetIds.ByCategoryAndOrganism"
@@ -183,7 +198,7 @@
       fullAnswer="true"
       queryRef="DatasetIds.ByUserId"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      includeProjects="ClinEpiDB,AllClinEpiDB"
+      includeProjects="ClinEpiDB"
       noSummaryOnSingleRecord="true">
       <attributesList summary="study_id, restriction_level" />
       <description>
@@ -200,7 +215,7 @@
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <question name="DatasetsByText"
-        excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+        excludeProjects="MicrobiomeDB,ClinEpiDB"
         displayName="Text (keyword)"
         shortDisplayName="Text"
         queryRef="DatasetIds.DatasetsByText"
@@ -244,7 +259,7 @@
       queryRef="DatasetIds.ByGeneList"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
-      excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
       <description>
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
@@ -266,7 +281,7 @@
 
   </questionSet>
 
-  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
+  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
 
     <question name="Datasets"
       displayName="All Legacy Datasets"

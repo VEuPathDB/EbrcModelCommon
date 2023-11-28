@@ -11,7 +11,7 @@
     <sqlQuery name="AllDatasets">
       <paramRef ref="InternalParams.user_id"/>
       <column name="dataset_id"/>
-      <sql excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
             SELECT dataset_presenter_id as dataset_id
             FROM apidbTuning.DatasetPresenter
@@ -19,28 +19,40 @@
           ]]>
       </sql>
 
-      <sql includeProjects="ClinEpiDB,AllClinEpiDB">
+      <sql includeProjects="ClinEpiDB">
         <![CDATA[
             SELECT dataset_presenter_id as dataset_id
             FROM apidbTuning.DatasetPresenter
             WHERE (category is null OR category != 'Link outs')
               AND  project_id = '@PROJECT_ID@'
-              --and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+              and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+            UNION
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
+            and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
             UNION
             SELECT d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
                  apidbuserdatasets.userdatasetowner o,
-                 apidbuserdatasets.datasetattributes d
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
             WHERE i.user_dataset_id = d.user_dataset_id
             and i.user_dataset_id = o.user_dataset_id
+            and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
              and o.USER_ID = $$user_id$$
             UNION
             select d.dataset_stable_id
             FROM apidbuserdatasets.installeduserdataset i, 
                  apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
             WHERE i.user_dataset_id = d.user_dataset_id
              AND i.user_dataset_id = s.user_dataset_id
+             and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
              AND s.recipient_user_id = $$user_id$$
           ]]>
       </sql>
@@ -51,6 +63,28 @@
           FROM apidbTuning.DatasetPresenter
           WHERE (category is null OR category != 'Link outs')
             AND project_id = '@PROJECT_ID@'
+          UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i,
+                 apidbuserdatasets.userdatasetowner o,
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
+            WHERE i.user_dataset_id = d.user_dataset_id
+            and i.user_dataset_id = o.user_dataset_id
+            and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
+             and o.USER_ID = $$user_id$$
+            UNION
+            select d.dataset_stable_id
+            FROM apidbuserdatasets.installeduserdataset i,
+                 apidbuserdatasets.userdatasetsharedwith s,
+                 apidbuserdatasets.datasetattributes d,
+                 apidbuserdatasets.USERDATASETPROJECT p
+            WHERE i.user_dataset_id = d.user_dataset_id
+             and i.user_dataset_id = s.user_dataset_id
+             and i.user_dataset_id = p.user_dataset_id
+             and p.project = '@PROJECT_ID@'
+             and s.recipient_user_id = $$user_id$$
         ]]>
       </sql>
 
@@ -76,6 +110,27 @@
             AND dprop.property = 'isPublic' and dprop.value = 'true'
             AND dpres.project_id = '@PROJECT_ID@'
         ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="MapStudiesForToolbar">
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'isPublic'
+            and dprop.value = 'true'
+            and dpres.project_id = '@PROJECT_ID@'
+            intersect
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'templateInjectorClassName'
+            and dprop.value = 'PopBioEDA'
+            and dpres.project_id = '@PROJECT_ID@'
+          ]]>
       </sql>
     </sqlQuery>
 
@@ -272,7 +327,7 @@
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="ByCategoryAndOrganism" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB">
+    <sqlQuery name="ByCategoryAndOrganism" excludeProjects="MicrobiomeDB,ClinEpiDB">
 
       <paramRef ref="datasetParams.dataset_category"/>
       <paramRef ref="datasetParams.organism"/>
@@ -292,7 +347,7 @@
     </sqlQuery>
 
 
-    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB,AllClinEpiDB">
+    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
       <testParamValues>
         <paramValue name="user_id">48</paramValue>
       </testParamValues>
@@ -322,11 +377,13 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
                   processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
       <paramRef ref="sharedParams.text_expression"/>
       <paramRef ref="sharedParams.document_type" default="dataset"/>
       <paramRef ref="sharedParams.text_fields"/>
+      <!-- NOTE: organism param will break in mbio/clinepi/ortho if ever added! -->
+      <paramRef ref="organismParams.text_search_organism" selectMode="all"/>
       <!-- the parameter below caches the results for 30 minutes -->
       <paramRef ref="sharedParams.timestamp" interval="1800"/>
       <wsColumn name="dataset_id" width="50"/>
@@ -334,7 +391,7 @@
       <!-- <wsColumn name="fields_matched" width="500"/> -->
     </processQuery>
 
-    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB"
+    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
                   processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
                   doNotTest="true">
       <paramRef ref="sharedParams.ds_gene_ids"/>
@@ -360,7 +417,7 @@
 
 
   <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false"
-            excludeProjects="MicrobiomeDB,ClinEpiDB,AllClinEpiDB,EuPathDB">
+            excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
 
     <sqlQuery name="AllDatasets">
       <column name="dataset_presenter_id"/>

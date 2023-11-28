@@ -103,8 +103,8 @@ proteinMicroarrayProfiles	http://edamontology.org/topic_0804	Immunoproteins, gen
 genericProfiles	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	putative_function	immune_response
 copyNumberVariationExperiment	http://edamontology.org/topic_3175	Structural Variation	resequencing	copyNumberVariation
 copyNumberVariationSamples	http://edamontology.org/topic_3175	Structural Variation	resequencing	copyNumberVariation
-originsOfReplicationExperiment	http://edamontology.org/topic_3175	Structural Variation	resequencing	originsOfReplication
-originsOfReplicationSamples	http://edamontology.org/topic_3175	Structural Variation	resequencing	originsOfReplication
+originsOfReplicationExperiment	http://edamontology.org/topic_0080	Sequence Analysis	resequencing	originsOfReplication
+originsOfReplicationSamples	http://edamontology.org/topic_0080	Sequence Analysis	resequencing	originsOfReplication
 SNPs_GFF	http://edamontology.org/topic_0199	Genetic Variation	SNP	
 taxonomy	http://edamontology.org/topic_0637	Taxonomy	sres	
 sequenceOntology	http://edamontology.org/topic_0089	Ontology and Terminology	sres	
@@ -136,6 +136,8 @@ rnaSeqExperimentNoTranscripts	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqA
 rnaSeqSampleNoTranscripts	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
 rnaSeqSplicedLeaderAndPolyASitesExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
 rnaSeqSplicedLeaderAndPolyASitesSample	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
+LongReadRnaSeqExperimentNextflow	http://purl.obolibrary.org/obo/OBI_0002575	RNASeqAssay	transcript_expression	LongReadRNASeq
+Cellxgene	http://purl.obolibrary.org/obo/OBI_0002631	single-cell RNA sequencing assay	transcript_expression	scRNA-Seq
 rtpcrProfiles	http://purl.obolibrary.org/obo/OBI_0001361	RTPCR	transcript_expression	rtpcr
 smallNcRnaExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	smallNcRna
 smallNcRnaSamples	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	smallNcRna

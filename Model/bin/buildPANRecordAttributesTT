@@ -104,13 +104,18 @@ SQL
                  rtrim(string_agg(text,',' ORDER BY text),',') as value
           FROM (SELECT pan_id, '\"' || property_source_id || '\"=> ''' || string_agg(value,' | ' order by value)  || '''' as text
                 FROM pmd
-                WHERE type != 'number'
+                WHERE type = 'string'
                 GROUP BY pan_id, property_source_id, type
                 union
                 SELECT pan_id, '\"' || property_source_id || '\"=> ''' || avg(replace(value, ',', '')::NUMERIC)  || '''' as text
                 FROM pmd
                 WHERE type = 'number'
                 GROUP BY pan_id, property_source_id, type
+                UNION
+                select pan_id, '\"' || property_source_id || '\"=> ''' || max(replace(value, ',', '')::NUMERIC)  || '''' as text
+                from pmd
+                where type = 'date'
+                group by pan_id, property_source_id, type
           ) t
           GROUP BY pan_id
          ) meta,

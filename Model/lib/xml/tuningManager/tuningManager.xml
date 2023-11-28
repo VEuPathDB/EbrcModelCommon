@@ -8,17 +8,30 @@
     <comment>EDA Study ID, Dataset presenter ID (hash)
     </comment>
     <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="SRes.ExternalDatabase"/>
-    <externalDependency name="SRes.ExternalDatabaseRelease"/>
-    <externalDependency name="EDA.Study"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="eda.Study"/>
     <sql>
       <![CDATA[
         CREATE TABLE StudyIdDatasetId&1 AS
-        SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID
+        SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID, dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
         FROM EDA.STUDY s
           LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID
           LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
-          LEFT JOIN apidbtuning.datasetpresenter dp on e2.name=dp.name
+          LEFT JOIN DatasetPresenter dp on e2.name=dp.name
+        -- This is TEMPORARY (used for alpha MapVEU Application)
+        UNION
+        select case
+            when d.dataset_presenter_id = 'DS_480c976ef9' then 'VBP_MEGA'
+            when d.dataset_presenter_id = 'DS_e18287e335' then '2023-maine-ricinus'
+            when d.dataset_presenter_id = 'DS_2b98dd44ab' then '2010-Neafsey-M-S-Bamako'
+          else 'NA' end as study_stable_id,
+          d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
+        from DatasetPresenter d
+        where d.dataset_presenter_id in (
+          'DS_480c976ef9',
+          'DS_e18287e335'
+        )
       ]]>
     </sql>
   </tuningTable>
@@ -211,16 +224,17 @@
       <![CDATA[
         CREATE TABLE &prefixProjectTaxon&1 AS
         WITH
-            local_taxon /* a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism */
+            local_taxon -- a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism
                 AS (  SELECT distinct tn.name as taxon,
                           substr((tn.name), 1, position(' ' IN tn.name||' ') - 1) as first_word,
                           pi.name as project_id
                       FROM dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
                       WHERE ens.taxon_id = tn.taxon_id
-                              and tn.name_class = 'scientific name'
+                              and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
+                                    OR tn.name_class = 'scientific name')
                               and ens.row_project_id = pi.project_id
-                          /* get names from apidb.Organism.family_name_for_files
-                             (may not be necessary) */
+                          -- get names from apidb.Organism.family_name_for_files
+                          --   (may not be necessary)
                       UNION
                       SELECT family_name_for_files as taxon,
                           substr((family_name_for_files), 1, position(' ' IN family_name_for_files||' ') - 1) as first_word,
@@ -228,20 +242,23 @@
                       FROM apidb.Organism
                       WHERE family_name_for_files in (select name from sres.TaxonName)
             ),
-            mononym /* a taxon name that's the first word of a local taxon */
+            mononym -- a taxon name that's the first word of a local taxon
                 AS (SELECT distinct lower(lt.first_word) as taxon, lt.project_id
                     FROM local_taxon lt, sres.TaxonName tn
                     WHERE lt.first_word = tn.name
-                            and tn.name_class = 'scientific name'),
-            full_name /* the full name of a local taxon whose first name is not a taxon */
+                          -- and tn.name_class = 'scientific name'
+                    ),
+            full_name -- the full name of a local taxon whose first name is not a taxon
                 AS (SELECT distinct lower(lt.taxon) as taxon, lt.project_id
                     FROM local_taxon lt, sres.TaxonName tn
                     WHERE lt.taxon = tn.name
-                            and tn.name_class = 'scientific name'
+                            -- and tn.name_class = 'scientific name'
                             and lower(lt.first_word) not in (select taxon from mononym))
         SELECT * FROM mononym
         UNION
         SELECT * FROM full_name
+        UNION
+        SELECT 'hypocrea', 'FungiDB'
         UNION
         SELECT 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB'
         UNION
@@ -331,6 +348,13 @@
         UNION
         SELECT 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB'
         ORDER BY 2, 1
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixProjectTaxon&1
+        set taxon = replace(taxon, '''', '')
+        where taxon like '%''%'
       ]]>
     </sql>
     <sql>
@@ -520,14 +544,18 @@
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 
-<!--  <tuningTable name="EupathBuildDates" alwaysUpdate="true">-->
-  <tuningTable name="EupathBuildDates">
+  <tuningTable name="AssociatedDataset" alwaysUpdate="true">
+    <comment>datasets shared with other projects</comment>
+    <internalDependency name="DatasetPresenter"/>
+    <program commandLine="buildAssociatedDatasetTT"/>
+  </tuningTable>
+
+  <tuningTable name="EupathBuildDates" alwaysUpdate="true">
     <internalDependency name="GenomicSeqAttributes"/>
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
 
-<!--  <tuningTable name="DatasetDetail" alwaysUpdate="true">-->
-  <tuningTable name="DatasetDetail">
+  <tuningTable name="DatasetDetail" alwaysUpdate="true">
     <comment> Stores text associated with each dataset. Used by dataset queries.
       </comment>
     <internalDependency name="DatasetPresenter"/>

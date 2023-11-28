@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,11 +50,14 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
       metaObject.put("description", meta.getDescription());
       metaObject.put("summary", meta.getSummary());
       Files.write(metaJsonTmpFile, metaObject.toString().getBytes(StandardCharsets.UTF_8));
+      final String imageTag = Optional.ofNullable(System.getenv("ISA_IMAGE_TAG"))
+          .filter(tagEnv -> !tagEnv.isBlank())
+          .orElse("latest");
       String[] cmd = {"singularity", "run",
           "--bind", workingDir + ":/work",
-          "--bind", constructGusConfigBinding(),
+          "--bind", constructGusConfigBinding(projectId),
           "--bind", constructOracleHomeBinding(),
-          "docker://veupathdb/dataset-installer-isasimple:latest",
+          "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
           "loadStudy.bash",
           datasetTmpFile.toString(),
           userDataset.getUserDatasetId().toString(),
@@ -77,18 +81,21 @@ public class ISASimpleTypeHandler extends UserDatasetTypeHandler {
 
   @Override
   public String[] getUninstallInAppDbCommand(Long userDatasetId, String projectId) {
+    final String imageTag = Optional.ofNullable(System.getenv("ISA_IMAGE_TAG"))
+        .filter(tagEnv -> !tagEnv.isBlank())
+        .orElse("latest");
     String[] cmd = {"singularity", "run",
-        "--bind", constructGusConfigBinding(),
+        "--bind", constructGusConfigBinding(projectId),
         "--bind", constructOracleHomeBinding(),
-        "docker://veupathdb/dataset-installer-isasimple:latest",
+        "docker://veupathdb/dataset-installer-isasimple:" + imageTag,
         "deleteStudy.pl",
         userDatasetId.toString()};
     return cmd;
   }
 
-  private String constructGusConfigBinding() {
+  private String constructGusConfigBinding(String projectId) {
     return String.format("%s/config/%s/gus.config:/gusApp/gus_home/config/gus.config",
-        System.getenv("GUS_HOME"), System.getenv("PROJECT_ID"));
+        System.getenv("GUS_HOME"), projectId);
   }
 
   private String constructOracleHomeBinding() {

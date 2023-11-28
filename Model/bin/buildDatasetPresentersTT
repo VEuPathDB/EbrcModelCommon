@@ -36,7 +36,11 @@ $|=1;
 
 
 my $sql;
-if ($PROJECT_HOME =~ /\/eupa/ ){
+if ($instance =~ /\/eda/ ){
+  $sql = <<SQL;
+    select 'EDA' as project_id, lower('EDA') as lower_project_id from dual
+SQL
+} elsif ($PROJECT_HOME =~ /\/eupa/ ){
   $sql = <<SQL;
     SELECT project_id, lower(project_id) as lower_project_id
       FROM (SELECT DISTINCT project_id FROM GenomicSeqAttributes) t1
@@ -66,8 +70,8 @@ mkdir "$TEMPDIR/dsp";
 mkdir "$TEMPDIR/etc";
 
 
-my $presentersProjectBase ="ApiCommonPresenters";
-my $modelProjectBase ="ApiCommonModel";
+my $presentersProjectBase;
+my $modelProjectBase;
 
 $projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
@@ -77,17 +81,27 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
   my $projectXmlFile = "${project}.xml";
   my $projectXmlPath = "$TEMPDIR/dsp/$projectXmlFile";
 
-  if ($lowerProject =~/microbiome/) {
+  if ($lowerProject =~/eda/) {
+    system("cp $PROJECT_HOME/MicrobiomePresenters/Model/lib/xml/datasetPresenters/MicrobiomeDB.xml $projectXmlPath");
+    system("cp $PROJECT_HOME/ClinEpiPresenters/Model/lib/xml/datasetPresenters/ClinEpiDB.xml $projectXmlPath");
+    system("cp $PROJECT_HOME/ApiCommonPresenters/Model/lib/xml/datasetPresenters/VectorBase.xml $projectXmlPath");
+    $modelProjectBase = "MicrobiomeModel";
+    $is_eda =1;
+  } elsif ($lowerProject =~/microbiome/) {
     $presentersProjectBase = "MicrobiomePresenters";
     $modelProjectBase = "MicrobiomeModel";
     $is_eda++;
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   } elsif ($lowerProject =~/clinepidb/) {
     $presentersProjectBase = "ClinEpiPresenters";
     $modelProjectBase = "ClinEpiModel";
     $is_eda++;
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
+  } else {
+    $presentersProjectBase ="ApiCommonPresenters";
+    $modelProjectBase ="ApiCommonModel";
+    system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   }
-
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
 
 
   unless(-e $projectXmlPath) {
@@ -110,20 +124,19 @@ my $refPath = "$TEMPDIR/etc/$refFile";
 my $linksFile = "datasetLinks.xml";
 my $linksPath = "$TEMPDIR/etc/$linksFile";
 
-system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/$globalXmlFile $globalXmlPath");
+
 
 system("cp $PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/$dtdFile $dtdPath");
+
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$refFile $refPath");
 system("cp $PROJECT_HOME/$modelProjectBase/Model/config/$linksFile $linksPath");
 
-my $contactsXmlFile = "contacts.xml";
+my $contactsXmlFile = "allContacts.xml";
 my $contactsXmlPath = "$TEMPDIR/etc/$contactsXmlFile";
 
-if ($is_eda){
-  system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/edaContacts.xml $contactsXmlPath");
-} else {
-  system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
-}
+system("cp $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/$contactsXmlFile $contactsXmlPath");
+
 if($report) {
   $suffix = 1234;
 }

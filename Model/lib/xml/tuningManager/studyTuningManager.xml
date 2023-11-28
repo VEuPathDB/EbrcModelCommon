@@ -221,7 +221,7 @@
     <externalDependency name="results.GeneSimilarity"/>
     <externalDependency name="results.LineageAbundance"/>
     <externalDependency name="results.NaFeatureDiffResult"/>
-    <externalDependency name="results.NAFeatureExpression"/>
+    <externalDependency name="results.NaFeatureExpression"/>
     <externalDependency name="results.NaFeatureHostResponse"/>
     <externalDependency name="results.ReporterDiffResult"/>
     <externalDependency name="results.ReporterExpression"/>
@@ -689,7 +689,12 @@
           --pan.protocol_app_node_id as ancestor_pan_id,
           coalesce(mt.name, 'assay') as ancestor_pan_type,
           mt.ontology_term_id as ancestor_pan_type_id,
-          attribute_term.name as property, -- if not a material type it has to be an assay
+          CASE
+            WHEN attribute_term.source_id = 'EUPATH_0000455'
+             -- this term should be replaced by OBI_0003056
+            THEN 'Average mapping coverage'
+            ELSE attribute_term.name
+          END AS property, -- if not a material type it has to be an assay
           attribute_term.ontology_term_id as property_id,
           attribute_term.source_id as property_source_id,
           coalesce(value_term.name, caps.commonest_capitalization) as value,
@@ -733,7 +738,7 @@
          -- temporary may need adjusting for RNASeq
          AND (pan.type_id is not null
               OR attribute_term.source_id
-                 IN ('EUPATH_0000454', -- average mapping coverage
+                 IN ('GENEPIO_0000092', -- average mapping coverage
                      'EUPATH_0000455'  -- proportion mapped reads
                     )
              )
@@ -2248,7 +2253,7 @@
     <comment>generates the counts for each type_id for each study in study.protocolappnode.
     </comment>
     <internalDependency name="DatasetPresenter"/>
-    <externalDependency name="Study.ProtocolAppNode"/>
+    <externalDependency name="study.ProtocolAppNode"/>
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
