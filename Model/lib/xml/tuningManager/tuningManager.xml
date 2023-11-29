@@ -369,7 +369,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="SequencePieceClosure" target="orgDB">
+  <tuningTable name="SequencePieceClosure" prefixEnabled="true">
     <comment>Extends dots.SequencePiece to handle multiple levels. Used in
          sequence-record queries and in other tuning tables, including
          GenomicSeqAttributes, and SimilaritySpanLocation
@@ -377,9 +377,8 @@
     <externalDependency name="dots.SequencePiece"/>
     <sql>
       <![CDATA[
-        CREATE TABLE SequencePieceClosure&1 AS
-        SELECT '&ORG_ABBREV' as org_abbrev,
-            sp.sequence_piece_id,
+        CREATE TABLE &prefixSequencePieceClosure&1 AS
+        SELECT sp.sequence_piece_id,
             sp.virtual_na_sequence_id,
             sp.piece_na_sequence_id,
             sp.sequence_order,
@@ -392,6 +391,7 @@
             1 AS edge_level
         FROM dots.SequencePiece sp, dots.NaSequence ns
         WHERE sp.piece_na_sequence_id = ns.na_sequence_id
+              AND (ns.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
       ]]>
     </sql>
     <sql>
@@ -399,7 +399,7 @@
         /* known issue: this should be run not just once, but iteratively
            until it doesn't create new records.  Currently (7/2008),
            SequencePieces aren't nested even once. */
-        INSERT INTO SequencePieceClosure&1
+        INSERT INTO &prefixSequencePieceClosure&1
                     (edge_level, virtual_na_sequence_id, piece_na_sequence_id,
                      distance_from_left, strand_orientation, modification_date, 
                      start_position, end_position, sequence_order, sequence_piece_id)
@@ -415,7 +415,7 @@
                higher.end_position - lower.distance_from_left, 
                higher.sequence_order,
                nextval('dots.sequencepiece_sq')
-        FROM SequencePieceClosure&1 higher, SequencePieceClosure&1 lower
+        FROM &prefixSequencePieceClosure&1 higher, &prefixSequencePieceClosure&1 lower
         WHERE higher.piece_na_sequence_id = lower.virtual_na_sequence_id
          AND higher.start_position >= lower.start_position + lower.distance_from_left
          AND higher.end_position <= lower.end_position + lower.distance_from_left
@@ -423,13 +423,15 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="GenomicSeqAttributes" target="orgDB">
+  <tuningTable name="GenomicSeqAttributes" prefixEnabled="true">
     <comment>Each row represents one genomic sequence for which a WDK sequence
          record can be instantiated. Used widely in the workflow, the model,
          and GBrowse, as well as in the creation of a dozen or so other tuning
          tables.
     </comment>
+    <internalDependency name="ProjectTaxon"/>
     <internalDependency name="SequencePieceClosure"/>
+    <externalDependency name="apidb.Synteny"/>
     <externalDependency name="apidb.Organism"/>
     <externalDependency name="dots.DbRefNaSequence"/>
     <externalDependency name="dots.ExternalNaSequence"/>
@@ -438,12 +440,12 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <externalDependency name="sres.OntologyTerm"/>
     <externalDependency name="sres.Taxon"/>
+    <externalDependency name="sres.TaxonName"/>
     <sql>
       <![CDATA[
         CREATE TABLE &prefixGenomicSeqAttributes&1 AS
         SELECT
-               '&ORG_ABBREV' as org_abbrev,
-               '&PROJECT_ID' as project_id,
+               cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar(20)) as project_id,
                SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
                sequence.c_count, sequence.g_count, sequence.t_count,
                (sequence.length
@@ -452,18 +454,20 @@
                sequence.length,
                to_char((sequence.a_count + sequence.t_count) / sequence.length * 100, '99.99')
                  AS at_percent,
+               SUBSTR(tn.name, 1, 100) AS organism,
                taxon.ncbi_tax_id,
-               SUBSTR(sequence.description, 1, 400) AS sequence_description,
---               CASE WHEN sequence.description IS NULL  THEN SUBSTR(tn.name, 1, 100)
---                    ELSE SUBSTR(sequence.description, 1, 400)
---                    END AS sequence_description,
+               taxon.taxon_id,
+               CASE WHEN sequence.description IS NULL  THEN SUBSTR(tn.name, 1, 100)
+                    ELSE SUBSTR(sequence.description, 1, 400)
+                    END AS sequence_description,
                SUBSTR(genbank.genbank_accession, 1, 20) AS genbank_accession,
                SUBSTR(db.database_version, 1, 30) AS database_version, db.database_name,
                SUBSTR(sequence.chromosome, 1, 20) AS chromosome,
-               sequence.external_database_release_id, 
-               sequence.chromosome_order_num, so.source_id as so_id, 
+               sequence.external_database_release_id, sequence.sequence_ontology_id,
+               sequence.chromosome_order_num, so.source_id as so_id, so.name as sequence_type,
                coalesce(virtualization.is_top_level, 1) as is_top_level,
-               organism.genome_source
+               sequence.na_sequence_id, organism.genome_source,
+               organism.name_for_filenames, coalesce(msa.has_msa, 0) as has_msa
         FROM sres.Taxon LEFT JOIN apidb.Organism ON taxon.taxon_id = organism.taxon_id,
              sres.OntologyTerm so,
              ( SELECT na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
@@ -495,20 +499,23 @@
              (SELECT distinct piece_na_sequence_id, 0 as is_top_level
               FROM &prefixSequencePieceClosure
              ) virtualization ON  sequence.na_sequence_id = virtualization.piece_na_sequence_id
+             LEFT JOIN
+             (SELECT a_na_sequence_id as na_sequence_id, 1 as has_msa
+              FROM apidb.Synteny syn
+              GROUP BY a_na_sequence_id
+             ) msa ON sequence.na_sequence_id = msa.na_sequence_id
+             LEFT JOIN
+             (SELECT taxon_id, max(name) as name
+              FROM sres.TaxonName
+              WHERE name_class = 'scientific name'
+              GROUP BY taxon_id
+             ) tn ON sequence.taxon_id = tn.taxon_id
         WHERE
           sequence.taxon_id = taxon.taxon_id
           AND sequence.sequence_ontology_id = so.ontology_term_id
-          AND so.source_id IN
-            ('SO:0000449', --random_sequence
-	    'SO:0000149',  --contig
-	    'SO:0000148',  --supercontig
-	    'SO:0000340',  --chromosome
-	    'SO:0000819',  --mitochondrial_chromosome
-	    'SO:0000740',  --plastid_sequence
-	    'SO:0000791',  --cloned_genomic
-	    'SO:0001259',  --apicoplast_chromosome
-	    'SO:0000742')  --maxicirle
-        ORDER BY source_id
+          AND (sequence.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
+          AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
+        ORDER BY organism, source_id
       ]]>
     </sql>
     <sql>
@@ -523,7 +530,12 @@
     </sql>
     <sql>
       <![CDATA[
-        create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (ncbi_tax_id, source_id)
+        create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_sequence_id)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_id, source_id)
       ]]>
     </sql>
   </tuningTable>
