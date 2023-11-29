@@ -369,7 +369,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="SequencePieceClosure" target="orgDB" prefixeEnabled="true">
+  <tuningTable name="SequencePieceClosure" target="orgDB">
     <comment>Extends dots.SequencePiece to handle multiple levels. Used in
          sequence-record queries and in other tuning tables, including
          GenomicSeqAttributes, and SimilaritySpanLocation
@@ -377,7 +377,7 @@
     <externalDependency name="dots.SequencePiece"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixSequencePieceClosure&1 AS
+        CREATE TABLE SequencePieceClosure&1 AS
         SELECT '&ORG_ABBREV' as org_abbrev,
             sp.sequence_piece_id,
             sp.virtual_na_sequence_id,
@@ -399,7 +399,7 @@
         /* known issue: this should be run not just once, but iteratively
            until it doesn't create new records.  Currently (7/2008),
            SequencePieces aren't nested even once. */
-        INSERT INTO &prefixSequencePieceClosure&1
+        INSERT INTO SequencePieceClosure&1
                     (edge_level, virtual_na_sequence_id, piece_na_sequence_id,
                      distance_from_left, strand_orientation, modification_date, 
                      start_position, end_position, sequence_order, sequence_piece_id)
@@ -423,7 +423,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="GenomicSeqAttributes" target="orgDB" prefixeEnabled="true">
+  <tuningTable name="GenomicSeqAttributes" target="orgDB">
     <comment>Each row represents one genomic sequence for which a WDK sequence
          record can be instantiated. Used widely in the workflow, the model,
          and GBrowse, as well as in the creation of a dozen or so other tuning
@@ -440,7 +440,7 @@
     <externalDependency name="sres.Taxon"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixGenomicSeqAttributes&1 AS
+        CREATE TABLE GenomicSeqAttributes&1 AS
         SELECT
                '&ORG_ABBREV' as org_abbrev,
                '&PROJECT_ID' as project_id,
