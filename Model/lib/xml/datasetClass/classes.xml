@@ -6043,10 +6043,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>ln -s @@manualDeliveryDir@@/common/metabolites/chEBI/${version}/final/ @@dataDir@@/final</unpack>
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
-      <getAndUnpackOutput file="@@dataDir@@/final/create_tables.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/disable_constraints.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/enable_constraints.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/import_all_star.par"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/chemical_data.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/comments.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/compound_origins.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/compounds.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/database_accession.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/names.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/references.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/relation.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/structures.sql"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
 
     </datasetLoader>
