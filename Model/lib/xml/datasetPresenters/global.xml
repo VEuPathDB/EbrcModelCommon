@@ -1295,6 +1295,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 
 
 <internalDataset name="_ids_events_stableIdsEvents_RSRC" datasetNamePattern="%_ids_events_stableIdsEvents_RSRC"/>
+<internalDataset name="_ids_events_stableIdsEventsIndividual_RSRC" datasetNamePattern="%_ids_events_stableIdsEventsIndividual_RSRC"/>
 
 <!-- bld 66 -->
 <internalDataset name="(.*)_BUSCO_RSRC" datasetNamePattern="%_BUSCO_RSRC"/>
