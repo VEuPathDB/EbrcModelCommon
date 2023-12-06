@@ -6482,9 +6482,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="EcNumberGenus" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
-
-    <graphTemplateFile name="project.xml"/>
 
     <datasetLoader datasetName="EcNumberGenus_RSRC" version="${version}"
 		   plugin="ApiCommonData::Load::Plugin::InsertEcNumberGenus"
