@@ -6882,7 +6882,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
  </datasetClass>
 
   <datasetClass class="stableIdsEvents" category="" datasetFileHint="">
-    <purpose>copy stable id ids_events.tab file from EBI ftp site to apiSiteFile</purpose>
+    <purpose>copy stable id ids_events.tab file from EBI ftp site universal directory to apiSiteFile</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="buildNumber">which build number (eg 63)</prop>
@@ -6897,6 +6897,26 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type=""
               organismAbbrev="${organismAbbrev}">
       <wgetArgs url="ftp://ftp-private.ebi.ac.uk//upload/EBI/build${buildNumber}/stable_id_events/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
+      <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="stableIdsEventsIndividual" category="" datasetFileHint="">
+    <purpose>copy stable id ids_events.tab file from EBI ftp site individual directory to apiSiteFile</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 63)</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_stableIdsEventsIndividual_RSRC"
+              version="${buildNumber}"
+              scope="organism"
+              type=""
+              organismAbbrev="${organismAbbrev}">
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk//EBIout/build${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
       <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
