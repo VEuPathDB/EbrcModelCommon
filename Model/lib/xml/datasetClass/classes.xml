@@ -5765,9 +5765,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="format"/>
     <prop name="source"/>
-    <prop name="projectName">&projectName;</prop>
 
-    <graphTemplateFile name="project.xml"/>
+    <graphTemplateFile name="pathways.xml"/>
 
     <datasetLoader datasetName="Pathways_${source}_RSRC" version="${version}"
            plugin="ApiCommonData::Load::Plugin::InsertPathways"
@@ -5784,11 +5783,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="ReactionsXRefs" category ="" datasetFileHint="">
     <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
     <prop name="version">&version;</prop>
     <prop name="source"/>
 
-    <graphTemplateFile name="project.xml"/>
+    <graphTemplateFile name="pathways.xml"/>
 
     <datasetLoader datasetName="ReactionsXRefs_${source}_RSRC" version="${version}"
         plugin="ApiCommonData::Load::Plugin::InsertReactionXRefs"
