@@ -1306,48 +1306,85 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <!-- Category: IEDB epitopes -->
 
-  <!--  get the epitope sequences. 
+  <!--  get all the epitope sequences. Note this is only called from the GenomicsGlobal workflow
+        and loads all epitope sequences
+  -->
+  <datasetClass class="all-epitope_sequences_IEDB" category="" datasetFileHint="">
+    <purpose></purpose>
+
+    <datasetLoader datasetName="all_epitopes_IEDB_RSRC"
+                   version="TODAY"
+                   plugin="GUS::Supported::Plugin::LoadFastaSequences"
+                   scope="global"
+                   type="epitope"
+                   >
+
+      <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
+
+      <unpack>mkdir -p @@dataDir@@/xml</unpack>
+      <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
+      <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
+
+      <!-- Sanitize xml files and get them ready for processing
+          1. remove illegal characters from the text content so we can successfully parse the xml files
+          2. remove xmlns from references to make it easier to traverse the document with simple xpath expressions.
+       -->
+      <unpack><![CDATA[ find . -type f -name '*.xml' | xargs sed -i -E "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -E "s/<References(.*)>/<References>/g" ]]></unpack>
+
+      <!-- Process all xml files in the input directory and generate a fasta file containing
+           unique epitopes from all organisms unfiltered
+      -->
+      <unpack>iedbMakeFastaFileFromXml --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/IEDBExport.fasta </unpack>
+
+      <unpack>rm -rf @@dataDir@@/xml</unpack>
+
+      <getAndUnpackOutput file="@@dataDir@@/IEDBExport.fasta"/>
+
+      <!-- sourceId|name|ncbiTaxId|accession -->
+      <pluginArgs><![CDATA[--seqFileDir @@dataDir@@/fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <!--  get the epitope sequences and process into a fasta file. Do not load the sequences though.
+        the mapping step will use this fasta file and only load the mappings into the org-specific database..
         (this class does not map epitopes. see epitopesFromReferenceStrain)
         ONLY INCLUDE IF A REFERENCE STRAIN
  -->
   <datasetClass class="referenceStrain-epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
 
     <graphTemplateFile name="epitopes.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_epitope_IEDB_RSRC"
-              version="${version}"
-	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
-              scope="species"
-              type="epitope"
-              organismAbbrev="${organismAbbrev}">
+                   version="TODAY"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   scope="species"
+                   type="epitope"
+                   organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-      </manualGet>
+      <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
 
-      <!-- validate that IEDB knows about this taxon id.  this unpack just greps IEDB's taxon list -->
-      <unpack><![CDATA[unzip -p @@manualDeliveryDir@@/common/epitope/IEDB/${version}/fromProvider/OrganismList.zip | grep "<TaxId>${speciesNcbiTaxonId}<"]]></unpack>
+      <unpack>mkdir -p @@dataDir@@/xml</unpack>
+      <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
+      <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
 
-      <unpack>iedbMakeTabFileFromXml --input_dir @@manualDeliveryDir@@/common/epitope/IEDB/%DATASET_VERSION%/final/iedb_export_fixed --outputfile @@dataDir@@/oneOrganism.txt --NCBITaxId ${speciesNcbiTaxonId} --organismListFile @@manualDeliveryDir@@/common/epitope/IEDB/%DATASET_VERSION%/fromProvider/OrganismList.xml</unpack>
+      <!-- Sanitize xml files and get them ready for processing
+          1. remove all illegal characters from the text content so we can successfully parse the xml files
+          2. remove xmlns from references to make it easier to search for tags using perl libxml.
+       -->
+      <unpack><![CDATA[ find . -type f -name '*.xml' | xargs sed -i -E "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -E "s/<References(.*)>/<References>/g" ]]></unpack>
 
-      <unpack>mkdir -p @@dataDir@@/fasta</unpack>
+      <!-- Process all xml files in the input directory and generate a fasta file containing
+           unique epitopes from all organisms unfiltered
+      -->
+      <unpack>iedbMakeFastaFileFromXml --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/IEDBExport.fasta </unpack>
 
-      <!-- not clear why we need this step.  should modify iedbMakeTabFileFromXml
-           to produce the simplified tab file, since oneOrganism.txt is never
-           consumed besides right here -->
-      <unpack>iedbSimplifyTabFile --inputFile @@dataDir@@/oneOrganism.txt --outputFile @@dataDir@@/oneOrganismSimplified.txt </unpack>
+      <unpack>rm -rf @@dataDir@@/xml</unpack>
 
-      <unpack>generateEpitopeFastaFile --inputFile @@dataDir@@/oneOrganismSimplified.txt --outputFile @@dataDir@@/fasta/IEDBExport.fsa </unpack>
+      <getAndUnpackOutput file="@@dataDir@@/IEDBExport.fasta"/>
 
-      <getAndUnpackOutput file="@@dataDir@@/oneOrganismSimplified.txt"/>
-
-      <!-- sourceId|name|ncbiTaxId|accession -->
-      <pluginArgs><![CDATA[--seqFileDir @@dataDir@@/fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100 --regexDesc ">(.+)" ]]></pluginArgs>
+      <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
