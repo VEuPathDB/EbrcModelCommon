@@ -1459,7 +1459,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ComComObsIO" prefixEnabled="true">
+  <tuningTable name="ComComObsIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for community to community observation relation
     </comment>
@@ -1488,7 +1488,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ComHouseIO" prefixEnabled="true">
+  <tuningTable name="ComHouseIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for comunity to community observation relation
     </comment>
@@ -1518,7 +1518,7 @@
   </tuningTable>
 
   <!-- note that there may be direct com to part outputs as not requirement that all participants have a house as per washB -->
-  <tuningTable name="ComPartIO" prefixEnabled="true">
+  <tuningTable name="ComPartIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for comunity to participant relation
     </comment>
@@ -1550,7 +1550,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ComObsIO" prefixEnabled="true">
+  <tuningTable name="ComObsIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for comunity to observation relation
     </comment>
@@ -1577,7 +1577,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ComSampleIO" prefixEnabled="true">
+  <tuningTable name="ComSampleIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for comunity to sample relation
     </comment>
@@ -1604,7 +1604,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="CommunityMD" prefixEnabled="true">
+  <tuningTable name="CommunityMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for community metadata in community filter
     </comment>
@@ -1649,7 +1649,7 @@
     </sql>
   </tuningTable>
   
-  <tuningTable name="CommunityObsMD" prefixEnabled="true">
+  <tuningTable name="CommunityObsMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for community observation metadata in community filter
     </comment>
@@ -1694,7 +1694,7 @@
     </sql>
   </tuningTable>
   
-  <tuningTable name="HouseholdMD" prefixEnabled="true">
+  <tuningTable name="HouseholdMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for household filter in household record
     </comment>
@@ -1774,7 +1774,7 @@
     </sql>
   </tuningTable>
   
-  <tuningTable name="ParticipantMD" prefixEnabled="true">
+  <tuningTable name="ParticipantMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for participant filter in participant record
     </comment>
@@ -1823,7 +1823,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="HousePartIO" prefixEnabled="true">
+  <tuningTable name="HousePartIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for household to participant relation
     </comment>
@@ -1850,7 +1850,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="HouseObsIO" prefixEnabled="true">
+  <tuningTable name="HouseObsIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for household to observation relation
     </comment>
@@ -1877,7 +1877,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="PartObsIO" prefixEnabled="true">
+  <tuningTable name="PartObsIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for participant to observation relation
     </comment>
@@ -1901,7 +1901,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ObsSampleIO" prefixEnabled="true">
+  <tuningTable name="ObsSampleIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for Observation to Sample relation
     </comment>
@@ -1928,7 +1928,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="HouseSampleIO" prefixEnabled="true">
+  <tuningTable name="HouseSampleIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for household to observation relation
     </comment>
@@ -1957,7 +1957,7 @@
     </sql>
   </tuningTable>
   
-  <tuningTable name="PartSampleIO" prefixEnabled="true">
+  <tuningTable name="PartSampleIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for participant to sample relation
     </comment>
@@ -1984,7 +1984,7 @@
     </sql>
   </tuningTable>
   
-  <tuningTable name="ObsObsIO" prefixEnabled="true">
+  <tuningTable name="ObsObsIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for Observation to sub observation relation
     </comment>
@@ -2011,7 +2011,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="HouseEntoIO" prefixEnabled="true">
+  <tuningTable name="HouseEntoIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for household to Entomology relation
     </comment>
@@ -2038,7 +2038,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="EntoInsSplIO" prefixEnabled="true">
+  <tuningTable name="EntoInsSplIO" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for Entomology to insect sample relation
     </comment>
@@ -2066,7 +2066,7 @@
   </tuningTable>
 
   <!-- NOTE: this will NOT work for studies where sub observations have samples -->
-  <tuningTable name="ObservationMD" prefixEnabled="true">
+  <tuningTable name="ObservationMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for observation filter 
     </comment>
@@ -2202,7 +2202,7 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="EntomologyMD" prefixEnabled="true">
+  <tuningTable name="EntomologyMD" prefixEnabled="true" target="remove">
     <comment>
       Metadata table specific for observation filter 
     </comment>
