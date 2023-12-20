@@ -3560,6 +3560,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="temporaryTaxon" category="" datasetFileHint="">
+    <purpose></purpose>
+    <datasetLoader datasetName="temporaryTaxon_RSRC" version="TODAY"
+                   plugin="GUS::Supported::Plugin::LoadTemporaryTaxon"
+                   scope="global"
+                   type="sres"
+    >
+      <unpack>$currDir=`pwd`; cd @@dataDir@@ ; git clone git@github.com:VEuPathDB/ApiCommonDatasets.git ; cd $currDir</unpack>
+      <unpack>extractTemporaryTaxaFromDatasets --inputDir @@dataDir@@/ApiCommonDatasets/Datasets/lib/xml --outputFile @@dataDir@@/organismsWithTempIds.txt</unpack>
+      <pluginArgs>--inputFile @@dataDir@@/organismsWithTempIds.txt </pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
   <datasetClass class="gadm" category="" datasetFileHint="">
     <purpose></purpose>
