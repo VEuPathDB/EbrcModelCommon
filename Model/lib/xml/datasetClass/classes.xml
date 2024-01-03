@@ -3568,6 +3568,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
     >
+      <manualGet fileOrDir="common/empty"/>
       <unpack>extractTemporaryTaxaFromDatasets --inputDir @@gusHome@@/lib/xml/datasetLoaders --outputFile @@dataDir@@/organismsWithTempIds.txt</unpack>
       <pluginArgs>--inputFile @@dataDir@@/organismsWithTempIds.txt </pluginArgs>
     </datasetLoader>
