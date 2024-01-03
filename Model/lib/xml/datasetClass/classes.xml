@@ -1375,7 +1375,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
        -->
       <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
       <!-- Process all xml files in the input directory and generate a fasta file containing
-      -->>
+           unique epitopes from all organisms unfiltered
+      -->
       <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
@@ -3567,8 +3568,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
     >
-      <unpack>$currDir=`pwd`; cd @@dataDir@@ ; git clone git@github.com:VEuPathDB/ApiCommonDatasets.git ; cd $currDir</unpack>
-      <unpack>extractTemporaryTaxaFromDatasets --inputDir @@dataDir@@/ApiCommonDatasets/Datasets/lib/xml --outputFile @@dataDir@@/organismsWithTempIds.txt</unpack>
+      <unpack>extractTemporaryTaxaFromDatasets --inputDir @@gusHome@@/lib/xml/datasetLoaders --outputFile @@dataDir@@/organismsWithTempIds.txt</unpack>
       <pluginArgs>--inputFile @@dataDir@@/organismsWithTempIds.txt </pluginArgs>
     </datasetLoader>
   </datasetClass>
