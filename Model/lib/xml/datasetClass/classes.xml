@@ -5806,9 +5806,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-
-  
   <datasetClass class="Pathways" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
@@ -5826,6 +5823,30 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
+      <pluginArgs>--pathwaysFileDir @@dataDir@@/final --format ${format} --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="Pathways_BioCyc" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="format"/>
+    <prop name="source"/>
+
+    <graphTemplateFile name="pathways.xml"/>
+
+    <datasetLoader datasetName="Pathways_BioCyc_${source}_RSRC" version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::InsertPathways"
+                   scope="global"
+                   type="pathway"
+    >
+      <manualGet fileOrDir="common/pathways/${source}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>convertBiopaxFilesToRDF.pl --input_dir @@dataDir@@/final</unpack>
+
       <pluginArgs>--pathwaysFileDir @@dataDir@@/final --format ${format} --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
