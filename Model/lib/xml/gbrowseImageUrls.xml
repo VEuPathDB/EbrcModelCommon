@@ -950,6 +950,21 @@
     <track>sapiIHEM14462</track>
   </subtrackSet>
 
+  <subtrackSet name="Xylariales" project="FungiDB" suffixes="_span;_gene">
+    <track>xarbCBS124340</track>
+  </subtrackSet>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="xarbCBS124340" organism="Xylaria arbuscula CBS 124340"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Xylariales"/>
+      <subtrack set="Sordariomycetes_Microascaceae"/>
+      <subtrack set="Sordariomycetes"/>
+      <subtrack set="Sordariomycetes_Fusarium"/>
+    </track>
+  </url>
+
   <url project="FungiDB" type="synteny">
     <org abbrev="lproJHH5317" organism="Lomentospora prolificans JHH-5317"/>
     <org abbrev="sapiIHEM14462" organism="Scedosporium apiospermum IHEM 14462"/>
@@ -958,6 +973,7 @@
       <subtrack set="Sordariomycetes_Microascaceae"/>
       <subtrack set="Sordariomycetes"/>
       <subtrack set="Sordariomycetes_Fusarium"/>
+      <subtrack set="Xylariales"/>
     </track>
   </url>
 
