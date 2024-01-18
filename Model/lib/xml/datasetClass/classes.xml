@@ -4027,6 +4027,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    type="sres"
                    >
       <wgetArgs url="http://purl.obolibrary.org/obo/${name}.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/${name}.owl </wgetArgs>
+      <unpack>parseOwlFileToDBFile.pl --owlFile @@dataDir@@/${name}.owl</unpack>
       <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -4106,6 +4107,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               >
 
       <wgetArgs url="http://www.ebi.ac.uk/efo/efo.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/efo.owl </wgetArgs>
+      <unpack>parseOwlFileToDBFile.pl --owlFile @@dataDir@@/efo.owl</unpack>
       <pluginArgs>--inFile @@dataDir@@/efo.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
   </datasetLoader>
 
@@ -5906,6 +5908,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
+
 
       <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
