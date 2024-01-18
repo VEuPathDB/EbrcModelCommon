@@ -906,6 +906,7 @@
     <track>lmacJN3</track>
     <track>pnodSN15</track>
     <track>aaltSRC1lrK2f</track>
+    <track>cclayc1106</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -1464,6 +1465,7 @@
     <org abbrev="lmacJN3" organism="Plenodomus lingam JN3"/>
     <org abbrev="pnodSN15" organism="Parastagonospora nodorum SN15"/>
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
+    <org abbrev="cclayc1106" organism="Curvularia clavata yc1106"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
