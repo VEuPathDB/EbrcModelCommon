@@ -4032,40 +4032,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--This dataset class is created for IDO only. We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology. -->
-  <datasetClass class="oboOntologyDummy" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="name">&name;</prop>
-    <prop name="url"/>
-
-    <graphTemplateFile name="oboOntologies.xml"/>
-
-    <datasetLoader datasetName="OBO_Ontology_${name}_RSRC" version="dontcare"
-                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="global"
-                   type="sres"
-                   >
-    <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-    </manualGet>
-    
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
   <datasetClass class="OBO_Ontology_fma" category="" datasetFileHint="">
     <purpose></purpose>
 
