@@ -829,6 +829,10 @@
     <track>aflaCBSH-5679</track>
   </subtrackSet>
 
+  <subtrackSet name="Pezizomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>pompCBS100304</track>
+  </subtrackSet>
+
   <subtrackSet name="Leotiomycetes" project="FungiDB" suffixes="_span;_gene">
     <track>bgraTritici96224</track>
     <track>bgrasp.triticaleTHUN12</track>
@@ -1330,8 +1334,19 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Orbiliomycetes"/>
+      <subtrack set="Pezizomycetes"/>
       <subtrack set="Leotiomycetes"/>
       <subtrack set="Sordariomycetes"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev = "pompCBS100304" organism="Pyronema omphalodes CBS100304"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Pezizomycetes"/>
+      <subtrack set="Orbiliomycetes"/>
+      <subtrack set="Leotiomycetes"/>
     </track>
   </url>
 
@@ -1346,6 +1361,7 @@
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Leotiomycetes"/>
+      <subtrack set="Pezizomycetes"/>
       <subtrack set="Sordariomycetes"/>
     </track>
   </url>
