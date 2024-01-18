@@ -1329,7 +1329,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
           1. remove illegal characters from the text content so we can successfully parse the xml files
           2. remove xmlns from references to make it easier to traverse the document with simple xpath expressions.
        -->
-      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
+      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
 
       <!-- Process all xml files in the input directory and generate a fasta file containing
            unique epitopes from all organisms unfiltered
