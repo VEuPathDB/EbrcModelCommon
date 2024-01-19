@@ -679,6 +679,7 @@
   </subtrackSet>
 
   <subtrackSet name="Penicillium_gene" project="FungiDB" suffixes="_span;_gene">
+    <track>pdigPd1</track>
     <track>prubWisconsin54-1255</track>
   </subtrackSet>
 
@@ -1174,6 +1175,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="pdigPd1" organism="Penicillium digitatum Pd1"/>
     <org abbrev="prubWisconsin54-1255" organism="Penicillium rubens Wisconsin 54-1255"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
