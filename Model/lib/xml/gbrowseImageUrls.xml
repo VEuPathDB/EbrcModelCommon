@@ -930,6 +930,10 @@
     <track>tstiATCC10500</track>
   </subtrackSet>
 
+  <subtrackSet name="Thermoascaceae" project="FungiDB" suffixes="_span;_gene">
+    <track>pvarCBS101075</track>
+  </subtrackSet>
+
   <subtrackSet name="Ajellomycetaceae" project="FungiDB" suffixes="_span;_gene">
     <track>hcapNAm1</track>
     <track>hcapG184AR</track>
@@ -1504,6 +1508,18 @@
     <org abbrev="tstiATCC10500" organism="Talaromyces stipitatus ATCC 10500"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Trichocomaceae"/>
+      <subtrack set="Aspergillaceae"/>
+      <subtrack set="Chaetothyriales"/>
+      <subtrack set="Thermoascaceae"/>
+    </track>
+  </url>
+
+  <url project="FungiDB" type="synteny">
+    <org abbrev="pvarCBS101075" organism="Paecilomyces variotii CBS 101075"/>
+    <track name="Gene"/>
+    <track abbrevFirst="true" name="Synteny">
+      <subtrack set="Thermoascaceae"/>
       <subtrack set="Trichocomaceae"/>
       <subtrack set="Aspergillaceae"/>
       <subtrack set="Chaetothyriales"/>
