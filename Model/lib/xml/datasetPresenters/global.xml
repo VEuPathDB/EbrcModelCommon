@@ -1299,4 +1299,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 
 <!-- bld 66 -->
 <internalDataset name="(.*)_BUSCO_RSRC" datasetNamePattern="%_BUSCO_RSRC"/>
+
+<!-- bld 67 -->
+<internalDataset name="_previousStableIds_NAFeature_aliases_RSRC" datasetNamePattern="%_previousStableIds_NAFeature_aliases_RSRC"/>
 </datasetPresenters>
