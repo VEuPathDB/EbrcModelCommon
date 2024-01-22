@@ -418,7 +418,10 @@
 
 <!-- AmoebaDB -->
 
-  <subtrackSet project="AmoebaDB" name="all_gene" suffixes="_span;_gene">
+  <subtrackSet project="AmoebaDB" name="Amoebozoa_gene" suffixes="_span;_gene">
+    <track>acasNeff</track>
+    <track>ddisAX4</track>
+    <track>dpurQSDP1</track>
     <track>ehisHM1IMSS</track>
     <track>ehisHM1IMSS-A</track>
     <track>ehisHM1IMSS-B</track>
@@ -428,11 +431,10 @@
     <track>edisSAW760</track>
     <track>emosLaredo</track>
     <track>einvIP1</track>
+    <track>mbalATCC30984</track>
   </subtrackSet>
 
-  <subtrackSet project="AmoebaDB" name="NfAc_gene" suffixes="_span;_gene">
-    <track>acasNeff</track>
-    <track>mbalATCC30984</track>
+  <subtrackSet project="AmoebaDB" name="Heterolobosea_gene" suffixes="_span;_gene">
     <track>nfowATCC30863</track>
     <track>nfowATCC30894</track>
     <track>nfowTy</track>
@@ -441,8 +443,6 @@
   </subtrackSet>
 
   <url project="AmoebaDB" type="synteny">
-    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
-    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
     <org organism="Naegleria fowleri strain Ty"  abbrev="nfowTy" />
@@ -450,12 +450,15 @@
     <org organism="Naegleria lovaniensis strain ATCC 30569"  abbrev="nlovATCC30569"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="NfAc_gene" />
-      <subtrack set="all_gene" />
+      <subtrack set="Heterolobosea_gene" />
+      <subtrack set="Amoebozoa_gene" />
     </track>
   </url>
 
   <url project="AmoebaDB" type="synteny">
+    <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
+    <org organism="Dictyostelium discoideum AX4" abbrev="ddisAX4" />
+    <org organism="Dictyostelium purpureum QSDP1" abbrev="dpurQSDP1" />
     <org organism="Entamoeba dispar SAW760" abbrev="edisSAW760" />
     <org organism="Entamoeba histolytica HM-1:IMSS" abbrev="ehisHM1IMSS" />
     <org organism="Entamoeba histolytica HM-1:IMSS-A" abbrev="ehisHM1IMSS-A" />
@@ -465,10 +468,11 @@
     <org organism="Entamoeba invadens IP1" abbrev="einvIP1" />
     <org organism="Entamoeba nuttalli P19" abbrev="enutP19" />
     <org organism="Entamoeba moshkovskii Laredo" abbrev="emosLaredo" />
+    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
-      <subtrack set="all_gene" />
-      <subtrack set="NfAc_gene" />
+      <subtrack set="Amoebozoa_gene" />
+      <subtrack set="Heterolobosea_gene" />
     </track>
   </url>
 
