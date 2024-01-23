@@ -797,6 +797,9 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <table name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB"
              displayName="BUSCO"
              queryRef="DatasetTables.Busco">
+        <description><![CDATA[<i>
+Based on evolutionarily informed expectations of gene content of near-universal single-copy orthologs, BUSCO metric complements technical metrics like N50. For a comprehensive user guide, including result interpretation, the latest citation, and additional information, please refer to the following link: <a href="https://busco.ezlab.org">https://busco.ezlab.org</a>. The current version employed by VEuPathDB is v5.4.7. In "genome" mode, BUSCO utilized the MetaEuk gene predictor, while the official protein set of each genome was employed for BUSCO runs in "proteins" mode.
+</i>]]></description>
         <!-- columnAttribute name="organism_id" internal="true"/ -->
         <columnAttribute name="sequence_type" displayName="SequenceType"/>
         <columnAttribute name="c_score" displayName="Complete BUSCOs (C)"/>
