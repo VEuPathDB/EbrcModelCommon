@@ -2552,7 +2552,7 @@
  
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles aquasalis AaquGF1" abbrev="aaquAaquGF1" />
-    <org organism="Anopheles cruzii idAnoCruzAS_RS32_06" abbrev="acruidAnoCruzAS_RS32_06" />
+    <org organism="Anopheles cruzii AcruBR1" abbrev="acruidAnoCruzAS_RS32_06" />
     <org organism="Anopheles darlingi Coari" abbrev="adarCoari" />
     <org organism="Anopheles albimanus STECLA" abbrev="aalbSTECLA" />
     <org organism="Anopheles darlingi AdarGF1" abbrev="adarAdarGF1" />
@@ -2576,7 +2576,7 @@
     <org organism="Anopheles quadriannulatus SANGWE" abbrev="aquaSANGWE" />
     <org organism="Anopheles moucheti AmouCM1" abbrev="amouAmouCM1" />
     <org organism="Anopheles nili AnilCM1" abbrev="anilAnilCM1" />
-    <org organism="Anopheles maculipalpis idAnoMacuDA-375_x" abbrev="amacidAnoMacuDA375_x" />
+    <org organism="Anopheles maculipalpis AmacGA1" abbrev="amacidAnoMacuDA375_x" />
     <org organism="Anopheles marshallii AmarGA1" abbrev="amarAmarGA1" />
     <org organism="Anopheles merus MAF" abbrev="amerMAF" />
     <org organism="Anopheles merus MAF 2021" abbrev="amerMAF2021" />
@@ -2693,7 +2693,7 @@
   </url>
 
   <url project="VectorBase" type="synteny">
-    <org organism="Dermacentor andersoni qqDerAnde1" abbrev="dandqqDerAnde1" />
+    <org organism="Dermacentor andersoni qqDerAnde1.2" abbrev="dandqqDerAnde1" />
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
     <org organism="Haemaphysalis longicornis HaeL-2018" abbrev="hlonHaeL2018" />
