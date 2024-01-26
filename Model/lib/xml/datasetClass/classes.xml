@@ -6624,6 +6624,28 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="ISASimpleGenomics_WDK" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="studyName"/> <!-- example:  leegambian -->
+    <prop name="projectName"/>
+    <prop name="version"/>
+
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="ISASimple_EDA_${studyName}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::LoadNothing"
+           scope="global"
+           type="population_biology"
+           subType="eda"
+           >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="ISATabPopBio_WDK" category="" datasetFileHint="">
     <purpose></purpose>
