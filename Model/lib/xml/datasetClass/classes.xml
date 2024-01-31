@@ -2091,7 +2091,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
-    <prop name="hasPairedEnds"/>
 
     <graphTemplateFile name="genomicArrayStudies.xml"/>
 
@@ -6255,7 +6254,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
-    <prop name="hasPairedEnds"/>
 
     <graphTemplateFile name="genomicArrayStudies.xml"/>
 
