@@ -1208,7 +1208,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
         </dir>
       </manualGet>
 
-      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@workflowDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
 
       <unpack>createPropFile --file @@dataDir@@/dbestProp --propList "dbestLogin:@@dbestLogin@@,dbestPswd:@@dbestPswd@@"</unpack>
 
@@ -1766,7 +1766,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
+      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -1877,7 +1877,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
+      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
