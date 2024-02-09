@@ -130,7 +130,7 @@
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
-            and dprop.value = 'PopBioEDA'
+            and dprop.value = 'GenomicsEDAStudy'
             and dpres.project_id = '@PROJECT_ID@'
           ]]>
        </sql>
