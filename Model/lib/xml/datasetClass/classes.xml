@@ -3573,6 +3573,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="taxonomyPatch" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="ncbiTaxonId"/>
+    <prop name="parentNcbiTaxonId"/>
+    <prop name="rank"/>
+    <prop name="name"/>
+    <prop name="geneticCodeId"/>
+    <prop name="mitochondrialGeneticCodeId"/>
+    <prop name="mode"/>
+
+    <graphTemplateFile name="taxonomyGlobal.xml"/>
+
+    <datasetLoader datasetName="taxonomyPatch_${ncbiTaxonId}" version="TODAY"
+                   plugin="GUS::Supported::Plugin::InsertTaxonAndTaxonName"
+                   scope="global"
+                   type="sres"
+    >
+      <manualGet fileOrDir="common/empty"/>
+      <pluginArgs>
+        --ncbiTaxId ${ncbiTaxonId}
+        --parentNcbiTaxId ${parentNcbiTaxonId}
+        --rank ${rank}
+        --name ${name}
+        --geneticCodeId ${geneticCodeId}
+        --mitochondrialGeneticCodeId ${mitochondrialGeneticCodeId}
+        --mode ${mode}
+      </pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
   <datasetClass class="gadm" category="" datasetFileHint="">
     <purpose></purpose>
   <datasetLoader datasetName="gadm_RSRC" version="410"
