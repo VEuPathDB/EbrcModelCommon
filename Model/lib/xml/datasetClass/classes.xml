@@ -3366,7 +3366,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC' --soGusConfig @@dataDir@@/../../../../../${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3393,7 +3393,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@dataDir@@/../../../../../${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
