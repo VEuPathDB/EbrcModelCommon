@@ -3591,15 +3591,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    type="sres"
     >
       <manualGet fileOrDir="common/empty"/>
-      <pluginArgs>
-        --ncbiTaxId ${ncbiTaxonId}
-        --parentNcbiTaxId ${parentNcbiTaxonId}
-        --rank ${rank}
-        --name ${name}
-        --geneticCodeId ${geneticCodeId}
-        --mitochondrialGeneticCodeId ${mitochondrialGeneticCodeId}
-        --mode ${mode}
-      </pluginArgs>
+      <pluginArgs>--ncbiTaxId "${ncbiTaxonId}" --parentNcbiTaxId "${parentNcbiTaxonId}" --rank "${rank}" --name "${name}" --geneticCodeId "${geneticCodeId}" --mitochondrialGeneticCodeId "${mitochondrialGeneticCodeId}" --mode ${mode}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
