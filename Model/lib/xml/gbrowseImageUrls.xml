@@ -420,8 +420,6 @@
 
   <subtrackSet project="AmoebaDB" name="Amoebozoa_gene" suffixes="_span;_gene">
     <track>acasNeff</track>
-    <track>ddisAX4</track>
-    <track>dpurQSDP1</track>
     <track>ehisHM1IMSS</track>
     <track>ehisHM1IMSS-A</track>
     <track>ehisHM1IMSS-B</track>
@@ -442,6 +440,19 @@
     <track>nlovATCC30569</track>
   </subtrackSet>
 
+  <subtrackSet project="AmoebaDB" name="Dictyostelium_gene" suffixes="_span;_gene">
+    <track>ddisAX4</track>
+    <track>dpurQSDP1</track>
+  </subtrackSet>
+
+  <url project="AmoebaDB" type="synteny">
+    <org organism="Dictyostelium discoideum AX4" abbrev="ddisAX4" />
+    <org organism="Dictyostelium purpureum QSDP1" abbrev="dpurQSDP1" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Dictyostelium_gene" />
+    </track>
+  </url>
+
   <url project="AmoebaDB" type="synteny">
     <org organism="Naegleria fowleri ATCC 30863"  abbrev="nfowATCC30863" />
     <org organism="Naegleria fowleri strain ATCC 30894"  abbrev="nfowATCC30894" />
@@ -457,8 +468,6 @@
 
   <url project="AmoebaDB" type="synteny">
     <org organism="Acanthamoeba castellanii str. Neff"  abbrev="acasNeff" />
-    <org organism="Dictyostelium discoideum AX4" abbrev="ddisAX4" />
-    <org organism="Dictyostelium purpureum QSDP1" abbrev="dpurQSDP1" />
     <org organism="Entamoeba dispar SAW760" abbrev="edisSAW760" />
     <org organism="Entamoeba histolytica HM-1:IMSS" abbrev="ehisHM1IMSS" />
     <org organism="Entamoeba histolytica HM-1:IMSS-A" abbrev="ehisHM1IMSS-A" />
