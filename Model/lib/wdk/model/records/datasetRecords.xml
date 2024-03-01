@@ -2269,13 +2269,13 @@ FROM
          SELECT *
          FROM (
              SELECT user_id, key, value
-             FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ where key in ('first_name', 'last_name')
+             FROM useraccounts.account_properties@ACCT_DBLINK@ where key in ('first_name', 'last_name')
         ))
    GROUP BY user_id
  ) t1,
 (
   SELECT user_id, value
-   FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@
+   FROM useraccounts.account_properties@ACCT_DBLINK@
   WHERE key in ('organization')
 ) t2,
 (
