@@ -1208,7 +1208,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
         </dir>
       </manualGet>
 
-      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
 
       <unpack>createPropFile --file @@dataDir@@/dbestProp --propList "dbestLogin:@@dbestLogin@@,dbestPswd:@@dbestPswd@@"</unpack>
 
@@ -1766,7 +1766,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
+      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -1877,7 +1877,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@dataDir@@/../${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
+      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -2780,6 +2780,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="soTermName"/>
     <prop name="sourceIdRegex">&sourceIdRegex;</prop>
     <prop name="secondaryIdRegex"/>
+    <prop name="sourceIdField"></prop>
+    <prop name="sourceIdJoiningRegex"></prop>
+    <prop name="spanLengthCutoff"></prop>
+    <prop name="includeMultipleSpans"></prop>
+
 
     <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
 
@@ -2795,7 +2800,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2839,7 +2844,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3366,7 +3371,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC' --soGusConfig @@dataDir@@/../../../../../${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3393,7 +3398,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@dataDir@@/../../../../../${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
