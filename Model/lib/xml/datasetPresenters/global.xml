@@ -1072,6 +1072,57 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <templateInjector className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
   </datasetPresenter>
 
+<!-- bld 67 -->
+  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC"
+                    projectName="PlasmoDB">
+    <displayName><![CDATA[Dual transcriptomes of malaria-infected Gambian children]]></displayName>
+    <shortDisplayName>Pfal Gambian children Studyq</shortDisplayName>
+    <shortAttribution>Lee et al.</shortAttribution>
+    <summary><![CDATA[
+      Dual transcriptomic analysis of human and Plasmodium from blood of 46 Gambian children diagnosed with malaria.
+       ]]></summary>
+    <description><![CDATA[Plasmodium portion of a dual RNA-Seq on whole blood, collected prior to treatment, from 46 Gambian children with <i>P. falciparum</i> uncomplicated malaria (n = 21) and severe malaria (n = 25). These children were recruited from a region with relatively low malaria transmission and consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia.
+                <br><br>
+                 These data are aligned to the Pf3D7 genome while the samples were sourced from individuals infected with naturally occurring parasites. 
+Thus quantification based on alignment to the 3D7 genome should be interpreted with caution for polymorphic genes. 
+
+<br><br>
+The data presented in the publication was adjusted for variation in leukocyte subpopulation proportions and parasite developmental stage, 
+therefore direct comparison with the data presented in PlasmoDB and HostDB is not possible.
+<br><br>
+HostDB houses the host portion of this data in the data set: 
+		<a href="https://hostdb.org/hostdb/app/record/dataset/DS_32b4753324" target="_blank">Transcriptomes of 46 malaria-infected Gambian children</a>.  
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="46"></history>
+    <primaryContactId>aubrey.cunnington</primaryContactId>
+    <contactId>hyun.jae.lee</contactId>
+    <link>
+      <text>NCBI Bioproject</text>
+      <url>https://www.ncbi.nlm.nih.gov/bioproject/PRJEB24613</url>
+    </link>
+    <pubmedId>29950443</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["PlasmoDB","HostDB"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@plasmodb.org</prop>
+     <prop name="requestEmailBcc">help@clinepidb.org</prop>
+    </templateInjector>
+  </datasetPresenter>
 
 
 
