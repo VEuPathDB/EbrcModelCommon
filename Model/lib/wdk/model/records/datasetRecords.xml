@@ -869,7 +869,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         <columnAttribute name="webapp_name" internal="true"/>
         <columnAttribute name="display_name" internal="true"/>
 
-        <linkAttribute displayName="PubMed ID" name="pubmed link"
+        <linkAttribute displayName="PubMed ID" name="pubmed_link"
                        internal="false">
              <displayText>
                 <![CDATA[
