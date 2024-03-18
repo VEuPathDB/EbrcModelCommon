@@ -115,7 +115,7 @@
     </sqlQuery>
 
 
-    <sqlQuery name="MapStudiesForToolbar">
+    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
         <column name="dataset_id"/>
         <sql includeProjects="VectorBase">
           <![CDATA[
