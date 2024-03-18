@@ -910,16 +910,17 @@
   </subtrackSet>
 
   <subtrackSet name="Dothideomycetes" project="FungiDB" suffixes="_span;_gene">
+    <track>mphaMS6</track>
+    <track>cgeo1.58</track>
+    <track>pfijCIRAD86</track>
     <track>ztriIPO323</track>
     <track>ztriST99CH3D1</track>
     <track>hwerEXF-2000</track>
-    <track>mphaMS6</track>
-    <track>cgeo1.58</track>
-    <track>vgalCBS43764</track>
     <track>lmacJN3</track>
     <track>pnodSN15</track>
     <track>aaltSRC1lrK2f</track>
     <track>cclayc1106</track>
+    <track>vgalCBS43764</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -1475,16 +1476,17 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="mphaMS6" organism="Macrophomina phaseolina MS6"/>
+    <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
+    <org abbrev="pfijCIRAD86" organism="Pseudocercospora fijiensis CIRAD86"/>
     <org abbrev="ztriIPO323" organism="Zymoseptoria tritici IPO323"/>
     <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="hwerEXF-2000" organism="Hortaea werneckii EXF-2000"/>
-    <org abbrev="mphaMS6" organism="Macrophomina phaseolina MS6"/>
-    <org abbrev="cgeo1.58" organism="Cenococcum geophilum 1.58"/>
-    <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <org abbrev="lmacJN3" organism="Plenodomus lingam JN3"/>
     <org abbrev="pnodSN15" organism="Parastagonospora nodorum SN15"/>
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
     <org abbrev="cclayc1106" organism="Curvularia clavata yc1106"/>
+    <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
