@@ -923,18 +923,18 @@
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
+    <track>blacSF5</track>
+    <track>haraEmoy2</track>
     <track>peffR13</track>
-    <track>pinfT30-4</track>
+    <track>pcac10300</track>
     <track>pcapLT1534</track>
-    <track>pcinCBS144-22</track>
     <track>pcinGKB4</track>
+    <track>pinfT30-4</track>
     <track>ppalsbr112.9</track>
     <track>pparINRA-310</track>
     <track>pramPr-102</track>
     <track>pram14567</track>
     <track>psojP6497</track>
-    <track>haraEmoy2</track>
-    <track>blacSF5</track>
   </subtrackSet>
 
   <subtrackSet name="Trichocomaceae" project="FungiDB" suffixes="_span;_gene">
@@ -1498,18 +1498,18 @@
   </url>
 
   <url project="FungiDB" type="synteny">
+    <org abbrev="blacSF5" organism="Bremia lactucae strain SF5"/>
+    <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
     <org abbrev="peffR13" organism="Peronospora effusa R13"/>
-    <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
+    <org abbrev="pcac10300" organism="Phytophthora cactorum 10300"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
-    <org abbrev="pcinCBS144-22" organism="Phytophthora cinnamomi var. cinnamomi CBS 144.22"/>
     <org abbrev="pcinGKB4" organism="Phytophthora cinnamomi GKB4"/>
+    <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="ppalsbr112.9" organism="Phytophthora palmivora var. palmivora strain sbr112.9"/>
     <org abbrev="pparINRA-310" organism="Phytophthora parasitica INRA-310"/>
     <org abbrev="pramPr-102" organism="Phytophthora ramorum strain Pr102"/>
     <org abbrev="pram14567" organism="Phytophthora ramorum 14567"/>
     <org abbrev="psojP6497" organism="Phytophthora sojae strain P6497"/>
-    <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
-    <org abbrev="blacSF5" organism="Bremia lactucae strain SF5"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Peronosporales"/>
