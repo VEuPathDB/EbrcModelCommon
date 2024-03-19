@@ -1350,18 +1350,14 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         (this class does not map epitopes. see epitopesFromReferenceStrain)
         ONLY INCLUDE IF A REFERENCE STRAIN
  -->
-  <datasetClass class="referenceStrain-epitope_sequences_IEDB" category="" datasetFileHint="">
+  <datasetClass class="component-epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-
-    <graphTemplateFile name="epitopes.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_epitope_IEDB_RSRC"
                    version="TODAY"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="species"
-                   type="epitope"
-                   organismAbbrev="${organismAbbrev}">
+                   scope="component"
+                   type="epitope">
 
       <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
 
@@ -1381,7 +1377,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
 
-      <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
+      <!-- TODO:  add unpack to convert fasta file to tab + protein fasta -->
+
+      <getAndUnpackOutput file="@@dataDir@@/iedb_protein.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
       <pluginArgs></pluginArgs>
     </datasetLoader>
