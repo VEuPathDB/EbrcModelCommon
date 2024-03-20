@@ -1125,7 +1125,7 @@ HostDB houses the host portion of this data in the data set:
   </datasetPresenter>
 
 
-  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="FungiDB"
+  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="@PROJECT_ID@"
     datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
     <displayName><![CDATA[PHI-base]]></displayName>
     <shortDisplayName></shortDisplayName>
