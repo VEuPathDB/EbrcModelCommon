@@ -1125,6 +1125,26 @@ HostDB houses the host portion of this data in the data set:
   </datasetPresenter>
 
 
+  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="FungiDB"
+    datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
+    <displayName><![CDATA[PHI-base]]></displayName>
+    <shortDisplayName></shortDisplayName>
+    <summary><![CDATA[
+      PHI-base
+      ]]></summary>
+    <description><![CDATA[
+      ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <primaryContactId>phibase</primaryContactId>
+    <link>
+      <text>PHI-base</text>
+      <url><![CDATA[http://www.phi-base.org/]]></url>
+    </link>
+  </datasetPresenter>
+
 
   <internalDataset name="(.*)_AlterSplicingGeneIDs_NAFeature_aliases_RSRC" datasetNamePattern="%_AlterSplicingGeneIDs_NAFeature_aliases_RSRC"/>
   
