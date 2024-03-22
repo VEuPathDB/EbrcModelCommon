@@ -1379,6 +1379,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <!-- TODO:  add unpack to convert fasta file to tab + protein fasta -->
 
+      <unpack>iedbMakeTabAndFasta.pl --inputPepFasta @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab --peptideProtein @@dataDir@@/iedb_protein.fasta --workDir @@dataDir@@/work</unpack>
+
       <getAndUnpackOutput file="@@dataDir@@/iedb_protein.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
