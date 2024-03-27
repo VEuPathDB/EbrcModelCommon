@@ -2554,6 +2554,7 @@
   <subtrackSet project="VectorBase" name="Phlebotominae" suffixes="_span;_gene">
     <track>llonM1</track>
     <track>llonJacobina</track>
+    <track>pargIndia</track>
     <track>ppapM1</track>
     <track>ppapIsrael</track>
   </subtrackSet>
@@ -2699,6 +2700,7 @@
   <url project="VectorBase" type="synteny">
     <org organism="Lutzomyia longipalpis M1" abbrev="llonM1" />
     <org organism="Lutzomyia longipalpis Jacobina" abbrev="llonJacobina" />
+    <org organism="Phlebotomus argentipes India" abbrev="pargIndia" />
     <org organism="Phlebotomus papatasi M1" abbrev="ppapM1" />
     <org organism="Phlebotomus papatasi Israel" abbrev="ppapIsrael" />
     <track name="Synteny" abbrevFirst="true">
