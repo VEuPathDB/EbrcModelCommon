@@ -2505,6 +2505,7 @@
     <track>gpalIAEA</track>
     <track>gpapIAEA</track>
     <track>mdomaabys</track>
+    <track>mdomaabys2023</track>
     <track>scalUSDA</track>
   </subtrackSet>
 
@@ -2639,6 +2640,7 @@
     <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
     <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
     <org organism="Musca domestica aabys" abbrev="mdomaabys" />
+    <org organism="Musca domestica aabys 2023" abbrev="mdomaabys2023" />
     <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Brachycera" />
