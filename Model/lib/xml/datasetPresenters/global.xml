@@ -1210,7 +1210,7 @@ HostDB houses the host portion of this data in the data set:
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
+  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
                     projectName="VectorBase">
     <displayName><![CDATA[VectorBase Popset Sequences]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
@@ -1220,7 +1220,7 @@ HostDB houses the host portion of this data in the data set:
        ]]></summary>
     <description><![CDATA[Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to taxa represented in VectorBase.<br><br>
       
-    VB taxon 1 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
+    VB taxon 1 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/41819" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/41819</a> <br>
 
     VB taxon 2 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
 
@@ -1247,19 +1247,34 @@ HostDB houses the host portion of this data in the data set:
       <th>Link</th>
     </tr>
     <tr>
-      <td>Haemoproteidae</td>
-      <td>1639121</td>
-      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a></td>
+      <td>Ceratopogonidae</td>
+      <td>41819</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/41819" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/41819</a></td>
     </tr>
     <tr>
-      <td>Hepatocystis</td>
-      <td>77566</td>
-      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a></td>
+      <td>Drosophilidae</td>
+      <td>7214</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7214" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7214</a></td>
     </tr>
     <tr>
-      <td>Plasmodium</td>
-      <td>5820</td>
-      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a></td>
+      <td>Culicidae</td>
+      <td>7157</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7157" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7157</a></td>
+    </tr>
+    <tr>
+      <td>Planorbidae</td>
+      <td>6524</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/6524" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/6524</a></td>
+    </tr>
+    <tr>
+      <td>Cimicidae</td>
+      <td>30078</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/30078" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/30078</a></td>
+    </tr>
+    <tr>
+      <td>Glossinidae</td>
+      <td>73928</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7392" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7392</a></td>
     </tr>
     </table>
 
