@@ -1126,8 +1126,8 @@ HostDB houses the host portion of this data in the data set:
 
   <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
                     projectName="PlasmoDB">
-    <displayName><![CDATA[PlasmoDB popsets]]></displayName>
-    <shortDisplayName>PlasmoDB Popset sequences</shortDisplayName>
+    <displayName><![CDATA[PlasmoDB Popset Sequences]]></displayName>
+    <shortDisplayName>PlasmoDB Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
     <summary><![CDATA[
       Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to the following taxa which are represented in PlasmoDB:<br><br>
@@ -1174,9 +1174,9 @@ HostDB houses the host portion of this data in the data set:
 
   <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
                     projectName="VectorBase">
-    <displayName><![CDATA[VectorBase popsets]]></displayName>
-    <shortDisplayName>VectorBase popsets</shortDisplayName>
-    <shortAttribution>NCBI popset database</shortAttribution>
+    <displayName><![CDATA[VectorBase Popset Sequences]]></displayName>
+    <shortDisplayName>VectorBase Popset</shortDisplayName>
+    <shortAttribution>NCBI Popset DB</shortAttribution>
     <summary><![CDATA[
       Popset sequences from the NCBI popset database
        ]]></summary>
@@ -1195,13 +1195,12 @@ HostDB houses the host portion of this data in the data set:
     <acknowledgement></acknowledgement>
     <releasePolicy></releasePolicy>
     <history buildNumber="68"></history>
-    <primaryContactId>aubrey.cunnington</primaryContactId>
-    <contactId>hyun.jae.lee</contactId>
+    <primaryContactId>eupathdb</primaryContactId>
     <link>
       <text>NCBI popset</text>
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
-    <pubmedId>29950443</pubmedId>
+    <pubmedId>26615191</pubmedId>
     <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["VectorBase"]</prop>
@@ -1216,7 +1215,7 @@ HostDB houses the host portion of this data in the data set:
        ]]></prop>
        <prop name="cardQuestions">{
     }</prop>
-     <prop name="requestEmail">help@plasmodb.org</prop>
+     <prop name="requestEmail">help@vectorbase.org</prop>
      <prop name="requestEmailBcc">help@clinepidb.org</prop>
     </templateInjector>
   </datasetPresenter>
