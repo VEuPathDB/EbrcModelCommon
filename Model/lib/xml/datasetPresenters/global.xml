@@ -1127,25 +1127,32 @@ HostDB houses the host portion of this data in the data set:
   <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
                     projectName="PlasmoDB">
     <displayName><![CDATA[PlasmoDB popsets]]></displayName>
-    <shortDisplayName>PlasmoDB popsets</shortDisplayName>
-    <shortAttribution>NCBI popset database</shortAttribution>
+    <shortDisplayName>PlasmoDB Popset sequences</shortDisplayName>
+    <shortAttribution>NCBI Popset DB</shortAttribution>
     <summary><![CDATA[
-      Popset sequences from the NCBI popset database
+      Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to the following taxa which are represented in PlasmoDB:<br><br>
+      
+      VB taxon 1 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
+      VB taxon 2 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
+      VB taxon 3 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
+
+      <br><br>
+      
+      The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
        ]]></summary>
-    <description><![CDATA[<a href="https://www.ncbi.nlm.nih.gov/popset/">NCBI popset</a>  
+    <description><![CDATA[<a href="https://www.ncbi.nlm.nih.gov/popset/">NCBI Popset</a>  
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
     <acknowledgement></acknowledgement>
     <releasePolicy></releasePolicy>
     <history buildNumber="68"></history>
-    <primaryContactId>aubrey.cunnington</primaryContactId>
-    <contactId>hyun.jae.lee</contactId>
+    <primaryContactId>eupathdb</primaryContactId>
     <link>
-      <text>NCBI popset</text>
+      <text>NCBI Popset database</text>
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
-    <pubmedId>29950443</pubmedId>
+    <pubmedId>26615191</pubmedId>
     <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["PlasmoDB"]</prop>
@@ -1164,6 +1171,7 @@ HostDB houses the host portion of this data in the data set:
      <prop name="requestEmailBcc">help@clinepidb.org</prop>
     </templateInjector>
   </datasetPresenter>
+
   <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
                     projectName="VectorBase">
     <displayName><![CDATA[VectorBase popsets]]></displayName>
@@ -1172,7 +1180,15 @@ HostDB houses the host portion of this data in the data set:
     <summary><![CDATA[
       Popset sequences from the NCBI popset database
        ]]></summary>
-    <description><![CDATA[<a href="https://www.ncbi.nlm.nih.gov/popset/">NCBI popset</a>  
+    <description><![CDATA[Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to the following taxa which are represented in VectorBase:<br><br>
+      
+      Haemoproteidae &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a> <br>
+      Hepatocystis &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a> <br>
+      Plasmodium &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a> <br>
+
+      <br><br>
+      
+      The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
