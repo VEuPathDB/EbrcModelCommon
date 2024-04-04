@@ -1182,13 +1182,50 @@ HostDB houses the host portion of this data in the data set:
        ]]></summary>
     <description><![CDATA[Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to the following taxa which are represented in VectorBase:<br><br>
       
-      Haemoproteidae &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a> <br>
-      Hepatocystis &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a> <br>
-      Plasmodium &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a> <br>
-
-      <br><br>
+    Haemoproteidae &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a> <br>
+    Hepatocystis &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a> <br>
+    Plasmodium &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a> <br>
       
-      The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
+
+    <style>
+    #PlasmoPopset table, #PlasmoPopset td, #PlasmoPopset th, #PlasmoPopset tr {
+    text-align : center;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid black;
+    }
+    #PlasmoPopset {
+    margin-left : 5 em;
+    }
+    </style> 
+    <table id="PlasmoPopset"> 
+    <tr>
+      <th>Taxon</th>
+      <th>NCBI Taxon ID</th>
+      <th>Link</th>
+    </tr>
+    <tr>
+      <td>Haemoproteidae</td>
+      <td>1639121</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a></td>
+    </tr>
+    <tr>
+      <td>Hepatocystis</td>
+      <td>77566</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a></td>
+    </tr>
+    <tr>
+      <td>Plasmodium</td>
+      <td>5820</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a></td>
+    </tr>
+    </table>
+
+    <br><br>
+      
+    The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
