@@ -3885,7 +3885,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="edaStudies.xml"/>
 
-    <datasetLoader datasetName="ISASimplePopset_${projectName}_${studyName}_RSRC" version="${version}"
+    <datasetLoader datasetName="ISASimple_${subProjectName}_${projectName}_${studyName}_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="global"
               >
