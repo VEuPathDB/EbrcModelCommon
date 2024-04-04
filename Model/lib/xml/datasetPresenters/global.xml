@@ -1124,6 +1124,86 @@ HostDB houses the host portion of this data in the data set:
     </templateInjector>
   </datasetPresenter>
 
+  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
+                    projectName="PlasmoDB">
+    <displayName><![CDATA[PlasmoDB popsets]]></displayName>
+    <shortDisplayName>PlasmoDB popsets</shortDisplayName>
+    <shortAttribution>NCBI popset database</shortAttribution>
+    <summary><![CDATA[
+      Popset sequences from the NCBI popset database
+       ]]></summary>
+    <description><![CDATA[<a href="https://www.ncbi.nlm.nih.gov/popset/">NCBI popset</a>  
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="68"></history>
+    <primaryContactId>aubrey.cunnington</primaryContactId>
+    <contactId>hyun.jae.lee</contactId>
+    <link>
+      <text>NCBI popset</text>
+      <url>https://www.ncbi.nlm.nih.gov/popset</url>
+    </link>
+    <pubmedId>29950443</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["PlasmoDB"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@plasmodb.org</prop>
+     <prop name="requestEmailBcc">help@clinepidb.org</prop>
+    </templateInjector>
+  </datasetPresenter>
+  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
+                    projectName="VectorBase">
+    <displayName><![CDATA[VectorBase popsets]]></displayName>
+    <shortDisplayName>VectorBase popsets</shortDisplayName>
+    <shortAttribution>NCBI popset database</shortAttribution>
+    <summary><![CDATA[
+      Popset sequences from the NCBI popset database
+       ]]></summary>
+    <description><![CDATA[<a href="https://www.ncbi.nlm.nih.gov/popset/">NCBI popset</a>  
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="68"></history>
+    <primaryContactId>aubrey.cunnington</primaryContactId>
+    <contactId>hyun.jae.lee</contactId>
+    <link>
+      <text>NCBI popset</text>
+      <url>https://www.ncbi.nlm.nih.gov/popset</url>
+    </link>
+    <pubmedId>29950443</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["VectorBase"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@plasmodb.org</prop>
+     <prop name="requestEmailBcc">help@clinepidb.org</prop>
+    </templateInjector>
+  </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="@PROJECT_ID@"
     datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
