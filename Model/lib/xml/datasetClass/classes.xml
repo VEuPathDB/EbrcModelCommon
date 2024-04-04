@@ -3877,6 +3877,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="ISASimplePopset" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
     <prop name="studyName"></prop>
     <prop name="version"></prop>
     <prop name="webDisplayOntologyName"></prop>
@@ -3884,7 +3885,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="edaStudies.xml"/>
 
-    <datasetLoader datasetName="ISASimple_${studyName}_RSRC" version="${version}"
+    <datasetLoader datasetName="ISASimplePopset_${projectName}_${studyName}_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="global"
               >
@@ -3894,7 +3895,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
       <unpack>
         <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
           mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
