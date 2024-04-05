@@ -1210,7 +1210,7 @@ HostDB houses the host portion of this data in the data set:
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
+  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
                     projectName="VectorBase">
     <displayName><![CDATA[VectorBase Popset Sequences]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
