@@ -1367,11 +1367,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
       <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
 
-      <!-- Sanitize xml files and get them ready for processing
-          1. remove all illegal characters from the text content so we can successfully parse the xml files
-          2. remove xmlns from references to make it easier to search for tags using perl libxml.
-       -->
       <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
+      
       <!-- Process all xml files in the input directory and generate a fasta file containing
            unique epitopes from all organisms unfiltered
       -->
@@ -1382,9 +1379,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <!-- TODO:  add unpack to convert fasta file to tab + protein fasta -->
       <!-- Is the above part that download the iedp.zip file needed here since it is alerady done in previous step can't the peptide fasta output file just be fed in to make the tap file and download the proteins -->
 
-      <unpack>iedbMakeTabAndFasta.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab --peptideProtein @@dataDir@@/iedb_protein.fasta --workDir @@dataDir@@/work</unpack>
+      <unpack>iedbMakeTabAndFasta.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab --peptideProtein @@dataDir@@/epitopesGenpept.fasta --workDir @@dataDir@@/work</unpack>
 
-      <getAndUnpackOutput file="@@dataDir@@/iedb_protein.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/epitopesGenpept.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
       <pluginArgs></pluginArgs>
