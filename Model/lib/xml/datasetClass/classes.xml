@@ -6964,38 +6964,5 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-<!-- datasset class for epitope mapping -->
-
-   <datasetClass class="EpitopeMappingNextflow" category="" datasetFileHint="">
-     <purpose></purpose>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-
-    <graphTemplateFile name="project.xml"/>
-    
-       <datasetLoader datasetName="${organismAbbrev}_${name}_nextflowEpitopeMapping" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="organism"
-              type="IEDB_Epitope_Mapping"
-              subType="Epitopes"
-              organismAbbrev="${organismAbbrev}">
-
-      <manualGet fileOrDir="common/empty">
-        <descriptionOfFinal>
-        This class is for the IEDB epitope mapping. The data in the delivery site is the epitope peptide fasta file generated from the IEDB database which use to generated the tab file and downloading of the peptide epitope source proteins for the exact match searches. The output is a text consisting of exact peptide, protein and taxon match result alongside the blast outputs.  
-        </descriptionOfFinal>
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/longReadrnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
-      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-
-    </datasetLoader>
-
-   </datasetClass>
 
 </datasetClasses>
