@@ -1126,21 +1126,14 @@ HostDB houses the host portion of this data in the data set:
 
   <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
                     projectName="PlasmoDB">
-    <displayName><![CDATA[PlasmoDB Popset Sequences]]></displayName>
+    <displayName><![CDATA[NCBI Popset data for PlasmoDB organisms]]></displayName>
     <shortDisplayName>PlasmoDB Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
     <summary><![CDATA[
-      Sequences from the NCBI Popset database for organisms represented in PlasmoDB.
+      Sequences and associated metadata from the NCBI Popset database for organisms represented in PlasmoDB.
        ]]></summary>
     <description><![CDATA[ 
-      Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to taxa represented in PlasmoDB.<br><br>
-
-      Haemoproteidae &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a> <br>
-
-      Hepatocystis &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a> <br>
-
-      Plasmodium &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a> <br>
-
+      The <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> is a collection of related gene, or partial gene, DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank. VEuPathDB downloads sequences and associated metadata from the NCBI Popset database that are attributed to taxa represented in PlasmoDB.<br><br>
 
     <style>
     #PlasmoPopset table, #PlasmoPopset td, #PlasmoPopset th, #PlasmoPopset tr {
@@ -1176,9 +1169,7 @@ HostDB houses the host portion of this data in the data set:
       <td>5820</td>
       <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a></td>
     </tr>
-    </table>
-    <br><br>
-      The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
+    </table>    
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
@@ -1206,26 +1197,19 @@ HostDB houses the host portion of this data in the data set:
        <prop name="cardQuestions">{
     }</prop>
      <prop name="requestEmail">help@plasmodb.org</prop>
-     <prop name="requestEmailBcc">help@clinepidb.org</prop>
     </templateInjector>
   </datasetPresenter>
 
   <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
                     projectName="VectorBase">
-    <displayName><![CDATA[VectorBase Popset Sequences]]></displayName>
+    <displayName><![CDATA[NCBI Popset data for VectorBase organisms]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
     <summary><![CDATA[
-      Sequences from the NCBI Popset database for organisms represented in VectorBase.
+      Sequences and associated metadata from the NCBI Popset database for organisms represented in VectorBase.
        ]]></summary>
-    <description><![CDATA[Sequences from the <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> that are attributed to taxa represented in VectorBase.<br><br>
-      
-    VB taxon 1 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/41819" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/41819</a> <br>
-
-    VB taxon 2 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
-
-    VB taxon 3 &ndash; <a href="https://www.ncbi.nlm.nih.gov/taxonomy/xxx" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/xxx</a> <br>
-      
+    <description><![CDATA[
+      The <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> is a collection of related gene, or partial gene, DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank. VEuPathDB downloads sequences and associated metadata from the NCBI Popset database that are attributed to taxa represented in VectorBase.<br><br> 
 
     <style>
     #VBPopset table, #VBPopset td, #VBPopset th, #VBPopset tr {
@@ -1276,11 +1260,42 @@ HostDB houses the host portion of this data in the data set:
       <td>73928</td>
       <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7392" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7392</a></td>
     </tr>
+    <tr>
+      <td>Ixodidae</td>
+      <td>6939</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/6939" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/6939</a></td>
+    </tr>
+    <tr>
+      <td>Trombiculidae</td>
+      <td>92251</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/92251" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/92251</a></td>
+    </tr>
+    <tr>
+      <td>Psychodidae</td>
+      <td>7197</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7197" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7197</a></td>
+    </tr>
+    <tr>
+      <td>Muscidae</td>
+      <td>7366</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7366" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7366</a></td>
+    </tr>
+    <tr>
+      <td>Pediculidae</td>
+      <td>121221</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/121221" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/121221</a></td>
+    </tr>
+    <tr>
+      <td>Reduviidae</td>
+      <td>27479</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/27479" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/27479</a></td>
+    </tr>
+    <tr>
+      <td>Sarcoptidae</td>
+      <td>52281</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/52281" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/52281</a></td>
+    </tr>
     </table>
-
-    <br><br>
-      
-    The PopSet database is a collection of related DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank.
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
@@ -1308,7 +1323,6 @@ HostDB houses the host portion of this data in the data set:
        <prop name="cardQuestions">{
     }</prop>
      <prop name="requestEmail">help@vectorbase.org</prop>
-     <prop name="requestEmailBcc">help@clinepidb.org</prop>
     </templateInjector>
   </datasetPresenter>
 
