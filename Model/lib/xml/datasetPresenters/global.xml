@@ -1075,23 +1075,27 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 <!-- bld 67 -->
   <datasetPresenter name="ISASimple_EDA_leegambian_RSRC"
                     projectName="PlasmoDB">
-    <displayName><![CDATA[Dual transcriptomes of malaria-infected Gambian children]]></displayName>
-    <shortDisplayName>Pfal Gambian children Studyq</shortDisplayName>
+    <displayName><![CDATA[Study variables for Dual transcriptomes of malaria-infected Gambian children]]></displayName>
+    <shortDisplayName>Study variables Gambian children</shortDisplayName>
     <shortAttribution>Lee et al.</shortAttribution>
     <summary><![CDATA[
-      Dual transcriptomic analysis of human and Plasmodium from blood of 46 Gambian children diagnosed with malaria.
+      Clinical and WGCNA analysis variables for the dual transcriptomic (human and parasite) analysis of blood of 46 Gambian children diagnosed with severe or uncomplicated malaria.
        ]]></summary>
-    <description><![CDATA[Plasmodium portion of a dual RNA-Seq on whole blood, collected prior to treatment, from 46 Gambian children with <i>P. falciparum</i> uncomplicated malaria (n = 21) and severe malaria (n = 25). These children were recruited from a region with relatively low malaria transmission and consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia.
-                <br><br>
-                 These data are aligned to the Pf3D7 genome while the samples were sourced from individuals infected with naturally occurring parasites. 
-Thus quantification based on alignment to the 3D7 genome should be interpreted with caution for polymorphic genes. 
+    <description><![CDATA[
+      Children with uncomplicated (n=21) or severe malaria (n=25) were recruited from a region with relatively low malaria transmission. Consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia. Clinical data was collected from each participant and included: age, ethnicity, Malaria disease (uncomplicated vs severe), sex, First Blantyre coma score, blood counts and immune profile. Blood samples were also assayed by RNA-sequence analysis. 
+      <br><br>
+      
+      The publicly avaialable RNA Seq data was used in a WGCNA analysis to reveal modules of co-expressed genes for human host (h_P1* - h_P14*) and <i>Plasmodium</i> parasite (p_P1* - p_P2*). 
 
+<!-- 
 <br><br>
-The data presented in the publication was adjusted for variation in leukocyte subpopulation proportions and parasite developmental stage, 
-therefore direct comparison with the data presented in PlasmoDB and HostDB is not possible.
-<br><br>
-HostDB houses the host portion of this data in the data set: 
-		<a href="https://hostdb.org/hostdb/app/record/dataset/DS_32b4753324" target="_blank">Transcriptomes of 46 malaria-infected Gambian children</a>.  
+      Plasmodium portion of a dual RNA-Seq on whole blood, collected prior to treatment, from 46 Gambian children with <i>P. falciparum</i> uncomplicated malaria (n = 21) and severe malaria (n = 25). These children 
+      <br><br>
+      These data are aligned to the Pf3D7 genome while the samples were sourced from individuals infected with naturally occurring parasites. Thus quantification based on alignment to the 3D7 genome should be interpreted with caution for polymorphic genes. 
+      <br><br>
+      The data presented in the publication was adjusted for variation in leukocyte subpopulation proportions and parasite developmental stage, therefore direct comparison with the data presented in PlasmoDB and HostDB is not possible.
+      <br><br>
+      HostDB houses the host portion of this data in the data set: <a href="https://hostdb.org/hostdb/app/record/dataset/DS_32b4753324" target="_blank">Transcriptomes of 46 malaria-infected Gambian children</a>.  -->
        ]]></description>
     <protocol></protocol>
     <caveat></caveat>
