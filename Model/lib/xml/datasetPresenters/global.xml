@@ -1082,10 +1082,10 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       Clinical and WGCNA analysis variables for the dual transcriptomic (human and parasite) analysis of blood of 46 Gambian children diagnosed with severe or uncomplicated malaria.
        ]]></summary>
     <description><![CDATA[
-      Children with uncomplicated (n=21) or severe malaria (n=25) were recruited from a region with relatively low malaria transmission. Consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia. Clinical data was collected from each participant and included: age, ethnicity, Malaria disease (uncomplicated vs severe), sex, First Blantyre coma score, blood counts and immune profile. Blood samples were also assayed by RNA-sequence analysis. 
+      Children with uncomplicated (n=21) or severe malaria (n=25) were recruited from a region with relatively low malaria transmission. Consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia. Clinical data was collected from each participant such as: age, ethnicity, Malaria disease (uncomplicated vs severe), sex, First Blantyre coma score, blood counts, parasitemia and immune profile. Blood samples were also assayed by RNA-sequence analysis. 
       <br><br>
       
-      The publicly avaialable RNA Seq data was used in a WGCNA analysis to reveal modules of co-expressed genes for human host (h_P1* - h_P14*) and <i>Plasmodium</i> parasite (p_P1* - p_P2*). 
+      The publicly avaialable RNA-Seq data was used in a WGCNA analysis to reveal modules of co-expressed genes for human host (h_P1* - h_P14*) and <i>Plasmodium</i> parasite (p_P1* - p_P2*). 
 
 <!-- 
 <br><br>
