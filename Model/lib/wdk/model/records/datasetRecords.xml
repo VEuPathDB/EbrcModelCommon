@@ -2187,7 +2187,7 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,EuPathDB">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="release_date"/>
