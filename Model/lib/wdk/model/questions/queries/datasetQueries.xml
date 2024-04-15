@@ -33,27 +33,9 @@
             and  project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
             UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i, 
-                 apidbuserdatasets.userdatasetowner o,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-            and i.user_dataset_id = o.user_dataset_id
-            and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and o.USER_ID = $$user_id$$
-            UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i, 
-                 apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-             and i.user_dataset_id = s.user_dataset_id
-             and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and s.recipient_user_id = $$user_id$$
+            select CONCAT('EDAUD_', a.user_dataset_id)
+            from vdi_control_dev_n.availableuserdatasets a
+            where a.user_id = $$user_id$$ AND a.project_id = '@PROJECT_ID@'
           ]]>
        </sql>
 
@@ -75,16 +57,9 @@
              and p.project = '@PROJECT_ID@'
              and o.USER_ID = $$user_id$$
             UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i, 
-                 apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-             and i.user_dataset_id = s.user_dataset_id
-             and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and s.recipient_user_id = $$user_id$$
+            select CONCAT('EDAUD_', a.user_dataset_id)
+            from vdi_control_dev_n.availableuserdatasets a
+            where a.user_id = $$user_id$$ AND a.project_id = '@PROJECT_ID@'
 
           ]]>
        </sql>
