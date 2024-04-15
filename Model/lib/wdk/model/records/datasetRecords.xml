@@ -455,7 +455,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
 	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- clinepi versioning download files table -->
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase"
+        <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,EuPathDB"
                displayName="Data Versions"
                queryRef="DatasetTables.DownloadVersion">
             <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -794,9 +794,12 @@ OR if the linkName and or URL require access to other attributes....also how to 
       <!-- Busco -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-      <table name="Busco" includeProjects="PiroplasmaDB"
+      <table name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB"
              displayName="BUSCO"
              queryRef="DatasetTables.Busco">
+        <description><![CDATA[<i>
+Based on evolutionarily informed expectations of gene content of near-universal single-copy orthologs, BUSCO metric complements technical metrics like N50. For a comprehensive user guide, including result interpretation, the latest citation, and additional information, please refer to the following link: <a href="https://busco.ezlab.org">https://busco.ezlab.org</a>. The current version employed by VEuPathDB is v5.4.7. In "genome" mode, BUSCO utilized the MetaEuk gene predictor, while the official protein set of each genome was employed for BUSCO runs in "proteins" mode.
+</i>]]></description>
         <!-- columnAttribute name="organism_id" internal="true"/ -->
         <columnAttribute name="sequence_type" displayName="SequenceType"/>
         <columnAttribute name="c_score" displayName="Complete BUSCOs (C)"/>
@@ -866,7 +869,7 @@ OR if the linkName and or URL require access to other attributes....also how to 
         <columnAttribute name="webapp_name" internal="true"/>
         <columnAttribute name="display_name" internal="true"/>
 
-        <linkAttribute displayName="PubMed ID" name="pubmed link"
+        <linkAttribute displayName="PubMed ID" name="pubmed_link"
                        internal="false">
              <displayText>
                 <![CDATA[
@@ -2184,7 +2187,7 @@ from apidbtuning.datasetnametaxon dsnt
       </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,EuPathDB">
             <column name="dataset_name"/>
             <column name="dataset_id"/>
             <column name="release_date"/>
@@ -2266,13 +2269,13 @@ FROM
          SELECT *
          FROM (
              SELECT user_id, key, value
-             FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@ where key in ('first_name', 'last_name')
+             FROM useraccounts.account_properties@ACCT_DBLINK@ where key in ('first_name', 'last_name')
         ))
    GROUP BY user_id
  ) t1,
 (
   SELECT user_id, value
-   FROM @ACCT_SCHEMA@account_properties@ACCT_DBLINK@
+   FROM useraccounts.account_properties@ACCT_DBLINK@
   WHERE key in ('organization')
 ) t2,
 (
@@ -2831,7 +2834,7 @@ and graph_descrip.dataset = dnt.name) g
       </sqlQuery>
 
 
-      <sqlQuery name="Busco" includeProjects="PiroplasmaDB">
+      <sqlQuery name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id"/>
         <column name="sequence_type"/>
         <column name="c_score"/>
@@ -2843,11 +2846,11 @@ and graph_descrip.dataset = dnt.name) g
         <sql>
             SELECT dsp.dataset_presenter_id as dataset_id,
                 sequence_type,
-                to_char(c_score /(c_score + f_score + m_score) * 100, '90.9') || '%' AS c_score,
-                to_char(s_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS s_score,
-                to_char(d_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS d_score,
-                to_char(f_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS f_score,
-                to_char(m_score /(c_score + f_score + m_score) * 100, '90.9') || '%'AS m_score,
+                to_char(c_score /(c_score + f_score + m_score) * 100, '990.9') || '%' AS c_score,
+                to_char(s_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS s_score,
+                to_char(d_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS d_score,
+                to_char(f_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS f_score,
+                to_char(m_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS m_score,
                 lineage_dataset
             FROM
                 apidbtuning.organismattributes oa,

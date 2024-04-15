@@ -1072,7 +1072,283 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <templateInjector className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
   </datasetPresenter>
 
+<!-- bld 67 -->
+  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC"
+                    projectName="PlasmoDB">
+    <displayName><![CDATA[Study variables for Dual transcriptomes of malaria-infected Gambian children]]></displayName>
+    <shortDisplayName>Study variables Gambian children</shortDisplayName>
+    <shortAttribution>Lee et al.</shortAttribution>
+    <summary><![CDATA[
+      Clinical and WGCNA analysis variables for the dual transcriptomic (human and parasite) analysis of blood of 46 Gambian children diagnosed with severe or uncomplicated malaria.
+       ]]></summary>
+    <description><![CDATA[
+      Children with uncomplicated (n=21) or severe malaria (n=25) were recruited from a region with relatively low malaria transmission. Consistent with this epidemiology, the severe malaria group contained children with cerebral malaria, hyperlactatemia, or a combination thereof, but no cases of severe anemia. Clinical data was collected from each participant such as: age, ethnicity, Malaria disease (uncomplicated vs severe), sex, First Blantyre coma score, blood counts, parasitemia and immune profile. Blood samples were also assayed by RNA-sequence analysis. 
+      <br><br>
+      
+      The publicly avaialable RNA-Seq data was used in a WGCNA analysis to reveal modules of co-expressed genes for human host (h_P1* - h_P14*) and <i>Plasmodium</i> parasite (p_P1* - p_P2*). 
 
+<!-- 
+<br><br>
+      Plasmodium portion of a dual RNA-Seq on whole blood, collected prior to treatment, from 46 Gambian children with <i>P. falciparum</i> uncomplicated malaria (n = 21) and severe malaria (n = 25). These children 
+      <br><br>
+      These data are aligned to the Pf3D7 genome while the samples were sourced from individuals infected with naturally occurring parasites. Thus quantification based on alignment to the 3D7 genome should be interpreted with caution for polymorphic genes. 
+      <br><br>
+      The data presented in the publication was adjusted for variation in leukocyte subpopulation proportions and parasite developmental stage, therefore direct comparison with the data presented in PlasmoDB and HostDB is not possible.
+      <br><br>
+      HostDB houses the host portion of this data in the data set: <a href="https://hostdb.org/hostdb/app/record/dataset/DS_32b4753324" target="_blank">Transcriptomes of 46 malaria-infected Gambian children</a>.  -->
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="68"></history>
+    <primaryContactId>aubrey.cunnington</primaryContactId>
+    <contactId>hyun.jae.lee</contactId>
+    <link>
+      <text>NCBI Bioproject</text>
+      <url>https://www.ncbi.nlm.nih.gov/bioproject/PRJEB24613</url>
+    </link>
+    <pubmedId>29950443</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["PlasmoDB","HostDB"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@plasmodb.org</prop>
+     <prop name="requestEmailBcc">help@clinepidb.org</prop>
+    </templateInjector>
+  </datasetPresenter>
+
+  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
+                    projectName="PlasmoDB">
+    <displayName><![CDATA[NCBI Popset data for PlasmoDB organisms]]></displayName>
+    <shortDisplayName>PlasmoDB Popset</shortDisplayName>
+    <shortAttribution>NCBI Popset DB</shortAttribution>
+    <summary><![CDATA[
+      Sequences and associated metadata from the NCBI Popset database for organisms represented in PlasmoDB.
+       ]]></summary>
+    <description><![CDATA[ 
+      The <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> is a collection of related gene, or partial gene, DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank. VEuPathDB downloads sequences and associated metadata from the NCBI Popset database that are attributed to taxa represented in PlasmoDB.<br><br>
+
+    <style>
+    #PlasmoPopset table, #PlasmoPopset td, #PlasmoPopset th, #PlasmoPopset tr {
+    text-align : center;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid black;
+    }
+    #PlasmoPopset {
+    margin-left : 5 em;
+    }
+    </style> 
+    <table id="PlasmoPopset"> 
+    <tr>
+      <th>Taxon</th>
+      <th>NCBI Taxon ID</th>
+      <th>Link</th>
+    </tr>
+    <tr>
+      <td>Haemoproteidae</td>
+      <td>1639121</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/1639121" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/1639121</a></td>
+    </tr>
+    <tr>
+      <td>Hepatocystis</td>
+      <td>77566</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/77566" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/77566</a></td>
+    </tr>
+    <tr>
+      <td>Plasmodium</td>
+      <td>5820</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/5820" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/5820</a></td>
+    </tr>
+    </table>    
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="68"></history>
+    <primaryContactId>eupathdb</primaryContactId>
+    <link>
+      <text>NCBI Popset database</text>
+      <url>https://www.ncbi.nlm.nih.gov/popset</url>
+    </link>
+    <pubmedId>26615191</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["PlasmoDB"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@plasmodb.org</prop>
+    </templateInjector>
+  </datasetPresenter>
+
+  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
+                    projectName="VectorBase">
+    <displayName><![CDATA[NCBI Popset data for VectorBase organisms]]></displayName>
+    <shortDisplayName>VectorBase Popset</shortDisplayName>
+    <shortAttribution>NCBI Popset DB</shortAttribution>
+    <summary><![CDATA[
+      Sequences and associated metadata from the NCBI Popset database for organisms represented in VectorBase.
+       ]]></summary>
+    <description><![CDATA[
+      The <a href="https://www.ncbi.nlm.nih.gov/popset" target="_blank">NCBI Popset database</a> is a collection of related gene, or partial gene, DNA sequences derived from population, phylogenetic, mutation and ecosystem studies that have been submitted to GenBank. VEuPathDB downloads sequences and associated metadata from the NCBI Popset database that are attributed to taxa represented in VectorBase.<br><br> 
+
+    <style>
+    #VBPopset table, #VBPopset td, #VBPopset th, #VBPopset tr {
+    text-align : center;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid black;
+    }
+    #VBPopset {
+    margin-left : 5 em;
+    }
+    </style> 
+    <table id="VBPopset"> 
+    <tr>
+      <th>Taxon</th>
+      <th>NCBI Taxon ID</th>
+      <th>Link</th>
+    </tr>
+    <tr>
+      <td>Ceratopogonidae</td>
+      <td>41819</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/41819" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/41819</a></td>
+    </tr>
+    <tr>
+      <td>Drosophilidae</td>
+      <td>7214</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7214" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7214</a></td>
+    </tr>
+    <tr>
+      <td>Culicidae</td>
+      <td>7157</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7157" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7157</a></td>
+    </tr>
+    <tr>
+      <td>Planorbidae</td>
+      <td>6524</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/6524" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/6524</a></td>
+    </tr>
+    <tr>
+      <td>Cimicidae</td>
+      <td>30078</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/30078" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/30078</a></td>
+    </tr>
+    <tr>
+      <td>Glossinidae</td>
+      <td>73928</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7392" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7392</a></td>
+    </tr>
+    <tr>
+      <td>Ixodidae</td>
+      <td>6939</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/6939" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/6939</a></td>
+    </tr>
+    <tr>
+      <td>Trombiculidae</td>
+      <td>92251</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/92251" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/92251</a></td>
+    </tr>
+    <tr>
+      <td>Psychodidae</td>
+      <td>7197</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7197" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7197</a></td>
+    </tr>
+    <tr>
+      <td>Muscidae</td>
+      <td>7366</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/7366" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/7366</a></td>
+    </tr>
+    <tr>
+      <td>Pediculidae</td>
+      <td>121221</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/121221" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/121221</a></td>
+    </tr>
+    <tr>
+      <td>Reduviidae</td>
+      <td>27479</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/27479" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/27479</a></td>
+    </tr>
+    <tr>
+      <td>Sarcoptidae</td>
+      <td>52281</td>
+      <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/52281" target="_blank">https://www.ncbi.nlm.nih.gov/taxonomy/52281</a></td>
+    </tr>
+    </table>
+       ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <history buildNumber="68"></history>
+    <primaryContactId>eupathdb</primaryContactId>
+    <link>
+      <text>NCBI popset</text>
+      <url>https://www.ncbi.nlm.nih.gov/popset</url>
+    </link>
+    <pubmedId>26615191</pubmedId>
+    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+       <prop name="studyCategories">["NA"]</prop>
+       <prop name="projectAvailability">["VectorBase"]</prop>
+       <prop name="studyAccess">public</prop>
+       <prop name="isPublic">true</prop>
+       <prop name="policyUrl"></prop>
+       <prop name="cardHeadline">TODO</prop>
+       <prop name="cardPoints"><![CDATA[
+       [
+       TODO
+       ]
+       ]]></prop>
+       <prop name="cardQuestions">{
+    }</prop>
+     <prop name="requestEmail">help@vectorbase.org</prop>
+    </templateInjector>
+  </datasetPresenter>
+
+  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="@PROJECT_ID@"
+    datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
+    <displayName><![CDATA[PHI-base]]></displayName>
+    <shortDisplayName></shortDisplayName>
+    <summary><![CDATA[
+      PHI-base
+      ]]></summary>
+    <description><![CDATA[
+      ]]></description>
+    <protocol></protocol>
+    <caveat></caveat>
+    <acknowledgement></acknowledgement>
+    <releasePolicy></releasePolicy>
+    <primaryContactId>phibase</primaryContactId>
+    <link>
+      <text>PHI-base</text>
+      <url><![CDATA[http://www.phi-base.org/]]></url>
+    </link>
+  </datasetPresenter>
 
 
   <internalDataset name="(.*)_AlterSplicingGeneIDs_NAFeature_aliases_RSRC" datasetNamePattern="%_AlterSplicingGeneIDs_NAFeature_aliases_RSRC"/>
@@ -1295,4 +1571,11 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 
 
 <internalDataset name="_ids_events_stableIdsEvents_RSRC" datasetNamePattern="%_ids_events_stableIdsEvents_RSRC"/>
+<internalDataset name="_ids_events_stableIdsEventsIndividual_RSRC" datasetNamePattern="%_ids_events_stableIdsEventsIndividual_RSRC"/>
+
+<!-- bld 66 -->
+<internalDataset name="(.*)_BUSCO_RSRC" datasetNamePattern="%_BUSCO_RSRC"/>
+
+<!-- bld 67 -->
+<internalDataset name="_previousStableIds_NAFeature_aliases_RSRC" datasetNamePattern="%_previousStableIds_NAFeature_aliases_RSRC"/>
 </datasetPresenters>

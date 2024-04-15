@@ -77,6 +77,58 @@
        </sql>
     </sqlQuery>
 
+
+    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
+        <column name="dataset_id"/>
+        <sql includeProjects="VectorBase">
+          <![CDATA[
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'isPublic'
+            and dprop.value = 'true'
+            and dpres.project_id = '@PROJECT_ID@'
+            intersect
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'templateInjectorClassName'
+            and dprop.value = 'GenomicsEDAStudy'
+            and dpres.project_id = '@PROJECT_ID@'
+          ]]>
+       </sql>
+
+
+       <sql includeProjects="EuPathDB,UniDB">
+          <![CDATA[
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'isPublic'
+            and dprop.value = 'true'
+            --and dpres.project_id = '@PROJECT_ID@'
+            intersect
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'templateInjectorClassName'
+            and dprop.value = 'GenomicsEDAStudy'
+            --and dpres.project_id = '@PROJECT_ID@'
+            -- we need this condition currently because no geolocation studies show up (the new plasmo dataset)
+            and dpres.dataset_presenter_id = 'DS_480c976ef9'
+          ]]>
+       </sql>
+
+
+
+
+    </sqlQuery>
+
+
+
+
+
+
     <sqlQuery name="ByReferenceName">
         <testParamValues>
             <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>

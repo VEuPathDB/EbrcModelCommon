@@ -105,12 +105,17 @@ SQL
                  dbms_xmlgen.convert(rtrim(xmlagg(XMLELEMENT(e,text,',').EXTRACT('//text()') ORDER BY text).GetClobVal(),','), 1) as value
           from (select pan_id, '\"' || property_source_id || '\"=> ''' || listagg(value,' | ') within group (order by value)  || '''' as text
                 from (pmd) 
-                where type != 'number'                
+                where type = 'string'
                 group by pan_id, property_source_id, type
                 UNION
                 select pan_id, '\"' || property_source_id || '\"=> ''' || avg(replace(value, ',', ''))  || '''' as text
                 from (pmd) 
-                where type = 'number'                
+                where type = 'number'
+                group by pan_id, property_source_id, type
+                UNION
+                select pan_id, '\"' || property_source_id || '\"=> ''' || max(replace(value, ',', ''))  || '''' as text
+                from (pmd) 
+                where type = 'date'
                 group by pan_id, property_source_id, type
           )
           group by pan_id
