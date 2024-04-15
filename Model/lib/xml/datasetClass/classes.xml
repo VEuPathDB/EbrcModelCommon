@@ -4407,6 +4407,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>
 
+
+  <!--
   <datasetClass class="NRDB" category="" datasetFileHint="">
     <purpose></purpose>
   <datasetLoader datasetName="NRDB_RSRC" version="TODAY"
@@ -4418,7 +4420,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <unpack>gunzip @@dataDir@@/nr.gz </unpack>
     <unpack>shortenDefLine --inputFile @@dataDir@@/nr --outputFile @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack>
     <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/nrdb-short-defline.fsa]]></unpack>
-    <unpack>rm @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack> 
+    <unpack>rm @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack>
     <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa | perl -e '$flag=0; while(<>){if ($_ =~ />/){if ($_ =~ /sp\|/){$flag=1;}else{$flag=0;}} if ($flag == 1){ print;}}'> @@dataDir@@/nrdb-short-defline-sp.fsa]]></unpack>
     <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline-sp.fsa"/>
     <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline.fsa"/>
@@ -4426,6 +4428,25 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
   </datasetClass>
+-->
+
+  <datasetClass class="NRDB" category="" datasetFileHint="">
+    <purpose></purpose>
+  <datasetLoader datasetName="NRDB_RSRC" version="TODAY"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              type="external_sequences"
+              >
+    <manualGet fileOrDir="common/empty">
+      <dir name="final">
+      </dir>
+    </manualGet>
+    <unpack>ln -s @@manualDeliveryDir@@/global/nrdb/CURRENT/final/nr.gz @@dataDir@@/</unpack>
+
+   <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+  </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="blatAlignmentQuality" category="" datasetFileHint="">
     <purpose></purpose>
