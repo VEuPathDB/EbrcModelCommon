@@ -1379,9 +1379,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <!-- TODO:  add unpack to convert fasta file to tab + protein fasta -->
       <!-- Is the above part that download the iedp.zip file needed here since it is alerady done in previous step can't the peptide fasta output file just be fed in to make the tap file and download the proteins -->
 
-      <unpack>iedbMakeTabAndFasta.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab --peptideProtein @@dataDir@@/epitopesGenpept.fasta --workDir @@dataDir@@/work</unpack>
+      <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab  --workDir @@dataDir@@/work</unpack>
 
-      <getAndUnpackOutput file="@@dataDir@@/epitopesGenpept.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
       <pluginArgs></pluginArgs>
