@@ -1625,8 +1625,8 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                , null as dataset_name_pattern
                , null as version
                , d.name as short_display_name
-               , to_clob(d.description) as description
-               , to_clob(d.description) as summary
+               , to_clob(m.description) as description
+               , to_clob(m.description) as summary
                , null as protocol
                , null as usage
                , null as type
