@@ -1156,7 +1156,7 @@ LEFT OUTER JOIN
 ON dts.dataset_id = bcc.dataset_id 
 UNION
 -- installed user datasets       
-SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
+SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
