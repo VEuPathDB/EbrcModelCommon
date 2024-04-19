@@ -1620,7 +1620,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
                     UNION
-          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
+          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as dataset_name
                , null as dataset_name_pattern
                , null as version
@@ -1635,7 +1635,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                , null as eupath_release
                , null as pmids
                , null as pmids_download
-            from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            from @VDI_CONTROL_SCHEMA@.dataset_meta d
             ]]>
          </sql>
 
