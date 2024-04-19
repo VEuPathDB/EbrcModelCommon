@@ -1027,7 +1027,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                     UNION
                   select DISTINCT
                     null as dataset_sha1_digest,
-                    CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id,
+                    CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id,
                     d.name as dataset_display_name
                   from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
                 ]]>
@@ -1156,7 +1156,7 @@ LEFT OUTER JOIN
 ON dts.dataset_id = bcc.dataset_id 
 UNION
 -- installed user datasets       
-SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
@@ -1209,7 +1209,7 @@ pivot
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                     UNION
           select
-            DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id,
+            DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id,
             null as study_categories,
           from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
@@ -1283,7 +1283,7 @@ ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
 where mystudies.dataset_id = dp.dataset_presenter_id
   and dp.property= 'studyAccess'
                     UNION
-          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+          SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
                  , null
                  , null
                  , null
@@ -1449,7 +1449,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                         and dsp.dataset_presenter_id = variable_counts.dataset_id (+)
 
                     UNION
-          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+          SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
                , null
                , null
                , null
@@ -1481,7 +1481,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id, dsp.display_name from apidbtuning.datasetpresenter dsp
                     UNION
-            select DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id, d.name as display_name
+            select DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id, d.name as display_name
                 from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
@@ -1620,7 +1620,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
                     UNION ALL
-          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
                , null as dataset_name
                , null as dataset_name_pattern
                , null as version
@@ -1773,7 +1773,7 @@ select  dsp.dataset_presenter_id as dataset_id,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp
             UNION
-            SELECT CONCAT('EDAUD_', d.dataset_id)
+            SELECT CONCAT('EDAUD_', d.user_dataset_id)
                , null as caveat
                , null as acknowledgement
                , null as release_policy
@@ -1812,7 +1812,7 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
-          SELECT CONCAT('EDAUD_', d.dataset_id)
+          SELECT CONCAT('EDAUD_', d.user_dataset_id)
                , null as contact
                , null as institution
                , null as email
@@ -1976,7 +1976,7 @@ from apidbtuning.datasetnametaxon dsnt
                          dataset_presenter_id as old_dataset_id
                   from apidbTuning.DatasetPresenter
                     UNION
-            select CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id, CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+            select CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id, CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
                 from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
         </sql>
