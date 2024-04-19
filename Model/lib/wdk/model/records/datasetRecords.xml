@@ -1619,7 +1619,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
               and dsp.build_number_introduced = introduced.build_number(+)
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
-                    UNION
+                    UNION ALL
           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as dataset_name
                , null as dataset_name_pattern
