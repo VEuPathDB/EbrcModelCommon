@@ -940,8 +940,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM apidbtuning.datasetpresenter
           WHERE project_id = '@PROJECT_ID@'
           UNION
-          SELECT a.user_dataset_id
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets a
+          SELECT DISTINCT d.user_dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         );
       </testRowCountSql>
 
@@ -1025,11 +1025,11 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                        from ApidbTuning.DatasetPresenter dsp
                        where dsp.project_id = '@PROJECT_ID@'
                     UNION
-                  select
+                  select DISTINCT
                     null as dataset_sha1_digest,
-                    CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id,
-                    m.name as dataset_display_name
-                  from @VDI_CONTROL_SCHEMA@.dataset_meta m
+                    CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id,
+                    d.name as dataset_display_name
+                  from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
                 ]]>
         </sql>
           <sql includeProjects="VectorBase">
@@ -1156,7 +1156,7 @@ LEFT OUTER JOIN
 ON dts.dataset_id = bcc.dataset_id 
 UNION
 -- installed user datasets       
-SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as project_availability
                , 'NA' as is_public
                , 'NA' as study_access
@@ -1176,7 +1176,7 @@ SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as request_email_body_manager
                , null as custom_download_tab
                , null as custom_download_ack
-          from @VDI_CONTROL_SCHEMA@.dataset d
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
             </sql>
       </sqlQuery>
@@ -1209,9 +1209,9 @@ pivot
 where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                     UNION
           select
-            CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id,
+            DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id,
             null as study_categories,
-          from @VDI_CONTROL_SCHEMA@.dataset_meta m
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
             </sql>
       </sqlQuery>
@@ -1283,14 +1283,14 @@ ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
 where mystudies.dataset_id = dp.dataset_presenter_id
   and dp.property= 'studyAccess'
                     UNION
-          SELECT CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id
+          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                  , null
                  , null
                  , null
                  , null
                  , null
                  , null
-          from @VDI_CONTROL_SCHEMA@.dataset_meta m
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
       ]]>
         </sql>
       </sqlQuery>
@@ -1449,7 +1449,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                         and dsp.dataset_presenter_id = variable_counts.dataset_id (+)
 
                     UNION
-          SELECT CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id
+          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null
                , null
                , null
@@ -1467,7 +1467,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                , null
                , null
                , null
-          from @VDI_CONTROL_SCHEMA@.dataset_meta m
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
           ]]>
         </sql>
       </sqlQuery>
@@ -1481,8 +1481,8 @@ where mystudies.dataset_id = dp.dataset_presenter_id
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id, dsp.display_name from apidbtuning.datasetpresenter dsp
                     UNION
-            select CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id, m.name as display_name
-                from @VDI_CONTROL_SCHEMA@.dataset_meta m
+            select DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id, d.name as display_name
+                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
 
@@ -1620,13 +1620,13 @@ where mystudies.dataset_id = dp.dataset_presenter_id
               and dsp.dataset_presenter_id = pubs.dataset_presenter_id(+)
 	      and ds.name (+) = dsp.name
                     UNION ALL
-          SELECT CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id
+          SELECT DISTINCT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
                , null as dataset_name
                , null as dataset_name_pattern
                , null as version
-               , m.name as short_display_name
-               , to_clob(m.description) as description
-               , to_clob(m.description) as summary
+               , d.name as short_display_name
+               , to_clob(d.description) as description
+               , to_clob(d.description) as summary
                , null as protocol
                , null as usage
                , null as type
@@ -1635,7 +1635,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                , null as eupath_release
                , null as pmids
                , null as pmids_download
-            from @VDI_CONTROL_SCHEMA@.dataset_meta m
+            from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
 
@@ -1773,11 +1773,11 @@ select  dsp.dataset_presenter_id as dataset_id,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp
             UNION
-            SELECT CONCAT('EDAUD_', m.dataset_id)
+            SELECT CONCAT('EDAUD_', d.dataset_id)
                , null as caveat
                , null as acknowledgement
                , null as release_policy
-                from @VDI_CONTROL_SCHEMA@.dataset_meta m
+                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
          <sql includeProjects="EuPathDB">
@@ -1812,12 +1812,12 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
-          SELECT CONCAT('EDAUD_', m.dataset_id)
+          SELECT CONCAT('EDAUD_', d.dataset_id)
                , null as contact
                , null as institution
                , null as email
                , null as short_attribution
-            from @VDI_CONTROL_SCHEMA@.dataset_meta m
+            from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
  ]]>
             </sql>
 
@@ -1976,8 +1976,8 @@ from apidbtuning.datasetnametaxon dsnt
                          dataset_presenter_id as old_dataset_id
                   from apidbTuning.DatasetPresenter
                     UNION
-            select CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id, CONCAT('EDAUD_', m.dataset_id) as dataset_stable_id
-                from @VDI_CONTROL_SCHEMA@.dataset_meta m
+            select CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id, CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
         </sql>
       </sqlQuery>
