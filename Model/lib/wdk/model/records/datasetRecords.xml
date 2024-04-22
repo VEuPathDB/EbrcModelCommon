@@ -156,6 +156,10 @@
          <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
        </attributeQueryRef>
 
+       <attributeQueryRef ref="DatasetAttributes.GenomicsStudyAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <columnAttribute name="is_public" displayName="Is public"/>
+       </attributeQueryRef>
+
         <attributeQueryRef ref="DatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="genome_version" displayName="Genome Version"/>
          <columnAttribute name="annotation_version" displayName="Annotation Version"/>
@@ -1516,6 +1520,35 @@ where mystudies.dataset_id = dp.dataset_presenter_id
           ]]>
         </sql>
       </sqlQuery>
+
+      <sqlQuery name="GenomicsStudyAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <column name="dataset_id"/>
+        <column name="is_public"/>
+
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+          <![CDATA[
+          select dsp.dataset_presenter_id as dataset_id
+              , dp.is_public
+          from apidbtuning.datasetpresenter dsp,
+          (
+            select * from (
+              select dataset_presenter_id, property, value
+                from apidbtuning.datasetproperty
+                where property in ('isPublic')
+                  and trim(value) is not null
+            )
+            pivot
+            (
+              max(value)
+              for property in ('isPublic' as is_public)
+            )
+          ) dp
+          
+          where dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
+          ]]>
+        </sql>
+      </sqlQuery>
+
 
       <sqlQuery name="LatestVersion" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id"/>
