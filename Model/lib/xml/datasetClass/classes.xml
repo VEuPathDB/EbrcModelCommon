@@ -1353,7 +1353,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="component-epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
 
-    <prop name="name"/>
 
     <datasetLoader datasetName="component_epitope_IEDB_RSRC"
                    version="TODAY"
