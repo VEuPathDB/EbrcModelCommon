@@ -3930,6 +3930,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
+      <unpack>
+        <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
+          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+      </unpack>
 
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
