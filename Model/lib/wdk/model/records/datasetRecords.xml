@@ -1214,7 +1214,7 @@ where pres.dataset_presenter_id = dp.dataset_presenter_id(+)
                     UNION
           select
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id,
-            null as study_categories,
+            null as study_categories
           from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
             </sql>
