@@ -16,6 +16,10 @@
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
             where category is null OR category != 'Link outs'
+            MINUS
+            select dataset_presenter_id as dataset_id
+              from apidbtuning.datasetproperty 
+             where property='isPublic' and value='false'
           ]]>
        </sql> 
 
