@@ -70,6 +70,7 @@
     <prop name="organismFullName">&organismFullName;</prop>
     <prop name="organismNameForFiles">The name of this organism for use in file and directory names, for example on the download site.  It should not include white space or other characters that are not file friendly.</prop>
     <prop name="ncbiTaxonId">&ncbiTaxonId;  The scientific name for this entry in the NCBI Taxonomy must match the organismFullName property.</prop>
+    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
     <prop name="isReferenceStrain">[true|false] If true then this organism is the reference strain for its species.  Exactly one organism per species must set this value to 'true', and all others must set it to 'false'.  FIX: NEED TO ADD VALIDATION FOR THIS TO InsertOrganism PLUGIN.  The reference strain for a species has the responsibility for loading species-wide datasets, for example ESTs.  Dataset classes that are intended to be used only by reference strains are typically named with the prefix 'referenceStrain-', for example 'referenceStrain-dbEST'.  Be sure to include these datasets in reference strains, and omit them from other organisms.</prop>
     <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
     <prop name="isFamilyRepresentative">[true|false] If true this organism acts as a representative for its taxonomic family.  Some dataset classes are designed to be included only for these representatives.  For example, isolates might be loaded only at the family level. </prop>
