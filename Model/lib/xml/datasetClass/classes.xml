@@ -1357,16 +1357,17 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <datasetLoader datasetName="component_epitope_IEDB_RSRC"
                    version="TODAY"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="component"
+                   scope="global"
                    type="epitope">
 
       <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
 
       <unpack>mkdir -p @@dataDir@@/xml</unpack>
-      <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
+      <unpack>unzip -d @@dataDir@@/xml -o @@dataDir@@/iedb_export.zip</unpack>
       <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
 
-      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
+      <!-- <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack> -->
+      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
       
       <!-- Process all xml files in the input directory and generate a fasta file containing
            unique epitopes from all organisms unfiltered
