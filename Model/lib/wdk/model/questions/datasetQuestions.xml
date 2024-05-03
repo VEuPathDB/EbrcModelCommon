@@ -32,7 +32,7 @@
     </question>
 
 
-    <question name="MapStudiesForToolbar"  includeProjects="EuPathDB,UniDB,VectorBase"
+    <question name="MapStudiesForToolbar"  includeProjects="EuPathDB,UniDB,VectorBase,PlasmoDB"
       displayName="Studies to show in toolbar"
       shortDisplayName="Map Studies"
       fullAnswer="true"
