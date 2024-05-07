@@ -82,7 +82,7 @@
     </sqlQuery>
 
 
-    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase,PlasmoDB">
+    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
         <column name="dataset_id"/>
         <sql excludeProjects="EuPathDB,UniDB">
           <![CDATA[
