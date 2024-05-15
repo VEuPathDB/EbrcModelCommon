@@ -66,7 +66,7 @@
 <!-- ======================================= DATA SETS =========================================================== -->
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
-   <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset">
+   <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset" useBasket="false" >
            <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
      <testParamValues >
