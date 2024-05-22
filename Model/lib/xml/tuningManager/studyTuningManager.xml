@@ -751,6 +751,13 @@ ORDER BY external_database_release_id, protocol_app_node_id
 --                 order by organism, type, subtype, pan_name
       ]]>
     </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixinfchar_ix&1
+               on &prefixInferredChars&1 (pan_id, property_id)
+               tablespace indx
+      ]]>
+    </sql>
 
 <!--
     <sql>
@@ -889,6 +896,13 @@ WHERE
   and io.protocol_app_id = pa.protocol_app_id
   and pa.protocol_id = p.protocol_id
 ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixsampproc_ix&1
+             on &prefixSampleProcess&1 (name, output_pan_id)
+             tablespace indx
       ]]>
     </sql>
   </tuningTable>
