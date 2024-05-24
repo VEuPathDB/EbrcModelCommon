@@ -3782,6 +3782,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="studyName"></prop>
     <prop name="version"></prop>
     <prop name="webDisplayOntologyName"></prop>
+    <prop name="webDisplayOntologyFile"></prop>
     <prop name="nameForFilenames"></prop>
 
     <graphTemplateFile name="edaStudies.xml"/>
@@ -3796,7 +3797,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final/ @@dataDir@@/final</unpack>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
 
       <unpack>
         <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
@@ -3882,6 +3883,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version"></prop>
     <prop name="webDisplayOntologyName"></prop>
     <prop name="webDisplayOntologyFile"></prop>
+    <prop name="nextflowEntry"></prop>
+    <prop name="nameForFilenames"></prop>
 
     <graphTemplateFile name="edaStudies.xml"/>
 
