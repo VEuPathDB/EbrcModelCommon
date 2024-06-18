@@ -127,6 +127,7 @@ chipChipSample	http://purl.obolibrary.org/obo/OBI_0001248	chipchip	transcript_ex
 chipSeqExperiment	http://purl.obolibrary.org/obo/OBI_0000716	chipseq	transcript_expression	chipseq
 chipSeqSample	http://purl.obolibrary.org/obo/OBI_0000716	chipseq	transcript_expression	chipseq
 example			transcript_expression	FILL
+ISATabPopBio_WDK	http://purl.obolibrary.org/obo/OBI_0002913	arthropod specimen collection process	population_biology	
 PopBio_Study	http://purl.obolibrary.org/obo/OBI_0002913	arthropod specimen collection process	population_biology	
 ebiRnaSeqExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
 rnaSeqExperiment	http://purl.obolibrary.org/obo/OBI_0001271	RNASeqAssay	transcript_expression	rnaseq
