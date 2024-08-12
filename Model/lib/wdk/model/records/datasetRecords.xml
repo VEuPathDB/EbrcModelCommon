@@ -1114,7 +1114,7 @@ FROM   -- pres, bcc, dp
                          'requestNeedsApproval', 
                          'requestEmailBodyRequester', 
                          'requestEmailBodyManager', 
-                         'customDownoadTab', 
+                         'customDownloadTab', 
                          'customDownloadAck')
         and trim(value) is not null
 -- TEMPLATE_ANCHOR injectDatasetQuestions
@@ -1139,7 +1139,7 @@ FROM   -- pres, bcc, dp
                     'requestNeedsApproval' as request_needs_approval, 
                     'requestEmailBodyManager' as request_email_body_manager, 
                     'requestEmailBodyRequester' as request_email_body_requester, 
-                    'customDownoadTab' as custom_download_tab, 
+                    'customDownloadTab' as custom_download_tab, 
                     'customDownloadAck' as custom_download_ack )
     )
   ) dp
