@@ -5,10 +5,15 @@ use strict;
 my $CONF_FILE_BASENAME = "tracks.conf";
 my $CONF_FILE_BASENAME_AA = "tracks_aa.conf";
 
+my $ALLPROPS_FILE_BASENAME = "datasetAndPresenterProps.conf";
+
 my $PROP_FILE_PATH = "$ENV{GUS_HOME}/lib/prop/datasetProperties/*.prop";
 
 my $TRACKS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$CONF_FILE_BASENAME";
 my $TRACKS_CONF_FOR_INJECTION_AA = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$CONF_FILE_BASENAME_AA";
+
+my $ALLPROPS_CONF_FOR_INJECTION = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/$ALLPROPS_FILE_BASENAME";
+
 
 my $CUSTOM_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse";
 my $GENERATED_TRACKS_BASE_DIRECTORY = "$ENV{PROJECT_HOME}/ApiCommonModel/Model/lib/jbrowse/auto_generated";
@@ -27,11 +32,13 @@ foreach my $file (@files) {
 
       my $orgCustomTracksConf = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
       my $orgCustomTracksConfAa = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME_AA";
+      my $orgCustomAllPropsConf = "$CUSTOM_TRACKS_BASE_DIRECTORY/$organismAbbrev/$ALLPROPS_FILE_BASENAME";
 
       my $orgGeneratedTracksDir = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/aa";
 
       my $orgGeneratedTracksConf = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/$CONF_FILE_BASENAME";
       my $orgGeneratedTracksConfAa = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/aa/$CONF_FILE_BASENAME";
+      my $orgGeneratedAllPropsConf = "$GENERATED_TRACKS_BASE_DIRECTORY/$organismAbbrev/$ALLPROPS_FILE_BASENAME";
 
       my $orgGusHomeDirectoryAA = "$GUS_HOME_BASE/$organismAbbrev/aa";
       my $orgGusHomeDirectory = "$GUS_HOME_BASE/$organismAbbrev";
@@ -57,6 +64,18 @@ foreach my $file (@files) {
 
         if(-e $orgCustomTracksConf) {
           system("cat $orgCustomTracksConf >> $orgGeneratedTracksConf") == 0 or die "cat failed: $?";
+        }
+      }
+
+      # generated prop file doesn't exist OR INJECTED props IS NEWER  OR custom file exists and is newer
+      if(! -e $orgGeneratedAllPropsConf || 
+         (stat $ALLPROPS_CONF_FOR_INJECTION)[9] > (stat $orgGeneratedAllPropsConf)[9] || 
+         (-e $orgCustomAllPropsConf && (stat $orgCustomAllPropsConf)[9] > (stat $orgGeneratedAllPropsConf)[9])) {
+
+        system("cp $ALLPROPS_CONF_FOR_INJECTION $orgGeneratedAllPropsConf") == 0 or die "cp failed: $?";
+
+        if(-e $orgCustomAllPropsConf) {
+          system("cat $orgCustomAllPropsConf >> $orgGeneratedAllPropsConf") == 0 or die "cat failed: $?";
         }
       }
 
