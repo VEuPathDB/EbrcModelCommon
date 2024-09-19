@@ -1070,10 +1070,84 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          <column name="custom_download_ack" columnType="string"/>
             <sql>
             <![CDATA[
+<<<<<<< HEAD
     WITH properties AS (
         SELECT dataset_presenter_id, property, value FROM apidbtuning.datasetproperty
         -- TEMPLATE_ANCHOR injectDatasetQuestions
         -- TEMPLATE_ANCHOR injectProjectAvailability
+=======
+select dts.*,bcc.request_email_bcc
+from
+(
+SELECT   pres.dataset_presenter_id as dataset_id, 
+         project_availability, 
+         is_public, 
+         initcap(dp.study_access) as study_access, 
+         days_for_approval, 
+         policy_url, 
+         card_headline, 
+         card_points, 
+         card_questions, 
+         request_protection_level, 
+         request_access_fields, 
+         request_email, 
+         request_email_body, 
+         request_needs_approval, 
+         request_email_body_manager, 
+         request_email_body_requester, 
+         custom_download_tab, 
+         custom_download_ack, 
+         decode(study_access, 'prerelease', '1', '0') as is_prerelease
+FROM   -- pres, bcc, dp
+  apidbtuning.datasetpresenter pres, 
+  (
+  select * from (
+    select dataset_presenter_id, property, value
+      from apidbtuning.datasetproperty
+      where property in ('studyCategories', 
+                         'projectAvailability', 
+                         'isPublic', 
+                         'studyAccess', 
+                         'daysForApproval', 
+                         'policyUrl', 
+                         'cardHeadline', 
+                         'cardPoints', 
+                         'cardQuestions', 
+                         'requestProtectionLevel', 
+                         'requestAccessFields', 
+                         'requestEmail', 
+                         'requestEmailBody', 
+                         'requestNeedsApproval', 
+                         'requestEmailBodyRequester', 
+                         'requestEmailBodyManager', 
+                         'customDownloadTab', 
+                         'customDownloadAck')
+        and trim(value) is not null
+-- TEMPLATE_ANCHOR injectDatasetQuestions
+
+-- TEMPLATE_ANCHOR injectProjectAvailability
+    )
+    pivot
+    (
+     max(value)
+     for property in ('projectAvailability' as project_availability, 
+                    'isPublic' as is_public, 
+                    'studyAccess' as study_access, 
+                    'daysForApproval' as days_for_approval, 
+                    'policyUrl' as policy_url, 
+                    'cardHeadline' as card_headline, 
+                    'cardPoints' as card_points, 
+                    'cardQuestions' as card_questions, 
+                    'requestProtectionLevel' as request_protection_level, 
+                    'requestAccessFields' as request_access_fields, 
+                    'requestEmail' as request_email, 
+                    'requestEmailBody' as request_email_body, 
+                    'requestNeedsApproval' as request_needs_approval, 
+                    'requestEmailBodyManager' as request_email_body_manager, 
+                    'requestEmailBodyRequester' as request_email_body_requester, 
+                    'customDownloadTab' as custom_download_tab, 
+                    'customDownloadAck' as custom_download_ack )
+>>>>>>> master
     )
     select dts.*, bcc.request_email_bcc
     from (
