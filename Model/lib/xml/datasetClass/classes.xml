@@ -2425,7 +2425,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               subType="rnaseq"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="ebiftp/EBIout/${ebiVersion}/rnaseq/new/${projectName}/${organismAbbrev}/${name}/">
+      <manualGet fileOrDir="common/empty">
         <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment.  To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
         <dir name="final">
         </dir>
@@ -2462,7 +2462,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               organismAbbrev="${organismAbbrev}">
 
       <!--uses same analysis config as the full load so no need to fetch-->
-      <manualGet fileOrDir="ebiftp/EBIout/${ebiVersion}/rnaseq/update/${projectName}/${organismAbbrev}/${name}/">
+      <manualGet fileOrDir="common/empty">
       </manualGet>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
