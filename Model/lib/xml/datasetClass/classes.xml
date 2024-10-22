@@ -2800,7 +2800,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2844,7 +2844,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3371,7 +3371,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3398,7 +3398,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
