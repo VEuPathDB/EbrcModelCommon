@@ -3013,6 +3013,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="interpro2GO" category="" datasetFileHint="">
+    <purpose>Retrieve InterproID to GO mappings from EBI</purpose>
+    <prop name="version">&version;</prop>
+    <datasetLoader datasetName="interpro2GO_RSRC" version="${version}"
+                 plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                 scope="global"
+                 >
+      <wgetArgs url="http://www.geneontology.org/external2go/interpro2go">--output-document=@@dataDir@@/interpro2go</wgetArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+</datasetClass>
+
   <datasetClass class="EnzymeCommissionAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
