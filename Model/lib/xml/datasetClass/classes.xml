@@ -3549,18 +3549,16 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="PDBProteinSequences" category="" datasetFileHint="">
     <purpose></purpose>
     <datasetLoader datasetName="PDBProteinSequences_RSRC" version="TODAY"
-      plugin="GUS::Supported::Plugin::LoadFastaSequences"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="global"
               type="external_sequences"
               >
-    <wgetArgs url="ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
-    <unpack>gunzip @@dataDir@@/pdb_seqres.txt.gz</unpack>
-    <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile  @@dataDir@@/pdb.fsa.tmp</unpack>
-    <unpack><![CDATA[cat @@dataDir@@/pdb.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/pdb.fsa]]></unpack>
-    <unpack>rm @@dataDir@@/pdb.fsa.tmp</unpack>
-    <unpack>xdformat -p @@dataDir@@/pdb.fsa</unpack>
-    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
-    <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --sequenceFile  @@dataDir@@/pdb.fsa --SOTermName 'polypeptide' --SOExtDbRlsSpec 'SO_RSRC|%' --noSequence --regexSourceId  '>(\w+)\s+mol:protein' --regexDesc 'length:\d+\s+(.+)$' --tableName "DoTS::ExternalAASequence"</pluginArgs>
+    <wgetArgs url="https://files.rcsb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb.fsa.gz</wgetArgs>
+    <wgetArgs url="https://files.rcsb.org/pub/pdb/derived_data/index/source.idx">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx</wgetArgs>
+    <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
+    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa.gz"/>
+    <getAndUnpackOutput file="@@dataDir@@/source.idx.processed"/>
+    <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>   
   </datasetLoader>
   </datasetClass>
 
