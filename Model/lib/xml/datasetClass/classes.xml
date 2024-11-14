@@ -152,8 +152,10 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+
+    <!-- NOTE:  We set the version here to include ebiVersion (build number) because for ebi the version includes the annotation -->
     <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
-              version="${genomeVersion}"
+              version="${genomeVersion}_${ebiVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               type="genome"
               scope="organism"
@@ -1238,7 +1240,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
     <prop name="libraryName">Not required.Name given to the library.</prop>
     <prop name="libraryDesc">Not required.Brief description of the library e.g. P. falciparum 3D7 parasites were cultured either in a candle jar (XPFn, XPF2n) or in the mixed gas consisting of 3% oxygen, 5% carbon dioxide and 92% nitrogen using blood type A erythrocytes and frozen human plasma.</prop>
     <prop name="contactName">Not required.Name of person who provided or created the library or who can answer questions about the library</prop>
-    <prop name="contactAddress1">Not required.Address to use to contact above name. Often this is the institution or laboratory name. e.g. Seattle Biomedical Research Institute</prop>    
+
     <prop name="contactAddress2">Not required.Additional space for address. Often the street and city, etc. e.g. 307 Westlake Avenue N., Suite 500 Seattle, WA 98109-5219  </prop>
 
     <graphTemplateFile name="ESTs.xml"/>
@@ -1256,6 +1258,7 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
         <descriptionOfFinal>The final directory should contain the single data file named ests.fasta.</descriptionOfFinal>
         <example dir="referenceStrain-ESTsFromFasta"></example>
       </manualGet>
+
       <pluginArgs>--sourceIdRegex "${sourceIdRegex}" --fastaFile @@dataDir@@/ests.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVer %DATASET_VERSION%  --SOTermName '${soTerm}' --SOExtDbRlsSpec 'SO_RSRC|%' --ncbiTaxId ${ncbiTaxonId} --libraryVector '${libraryVector}' --putativeFullLength ${isPutativeFullLength} --libraryStage '${libraryStage}' --libraryName '${libraryName}' --libraryDesc "${libraryDesc}" --contactName "${contactName}" --contactAddress1 "${contactAddress1}" --contactAddress2 "${contactAddress2}" </pluginArgs>
     </datasetLoader>
   </datasetClass>
