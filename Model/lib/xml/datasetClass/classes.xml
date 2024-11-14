@@ -88,7 +88,7 @@
     <prop name="isHugeGenome">[true|false] If true then skip making orfs and skip generating download files for orfs</prop>
 
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
-
+    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
     <prop name="isNotEbiGenome">For any genome which is not coming from mysql dump from EBI.</prop>
     <graphTemplateFile name="project.xml"/>
 
@@ -210,7 +210,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -267,7 +267,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -297,7 +297,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --validationLog @@dataDir@@/final/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --validationLog @@dataDir@@/final/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -333,7 +333,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -363,7 +363,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -393,7 +393,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -470,7 +470,7 @@
         <example dir="GeneDB_GFF_primary_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -496,7 +496,7 @@
         <example dir="GeneDB_GFF_secondary_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/validation.log --bioperlTreeOutput @@dataDir@@/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_${soTerm}_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/validation.log --bioperlTreeOutput @@dataDir@@/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_${soTerm}_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -523,7 +523,7 @@
         <example dir="GeneDB_GFF_organelle_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
   
@@ -553,7 +553,7 @@
       </manualGet>
  
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -582,7 +582,7 @@
         <example dir="NoPreprocess_secondary_genome_features"></example>
     </manualGet>
 
-    <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_secondary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+    <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_secondary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -611,7 +611,7 @@
         <example dir="NoPreprocess_organelle_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
   
@@ -769,7 +769,7 @@
         <example dir="fasta_primary_genome_sequence.1"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --SOExtDbRlsSpec 'SO_RSRC|%' --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --SOExtDbRlsSpec 'SO_RSRC|%' --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -799,7 +799,7 @@
         <example dir="fasta_organelle_genome_sequence"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/genome.fasta --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/genome.fasta --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -827,7 +827,7 @@
         <example dir="fasta_secondary_genome_sequence"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -1026,6 +1026,34 @@
       </manualGet>
 
       <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --seqExtDbName ${organismAbbrev}_primary_genome_RSRC --seqExtDbRlsVer ${genomeVersion} --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final --inputFileExtension "embl" --fileFormat embl --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --naSequenceSubclass ExternalNASequence --seqIdColumn source_id  --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --notOfficialAnnotation</pluginArgs>  
+    </datasetLoader>
+  </datasetClass>
+
+
+<!-- copy GFF to the webServices dir for JBrowse track -->
+  <datasetClass class="miscGFFToWebService" category="" datasetFileHint="">
+    <purpose>copy GFF to webServices dir for JBrowse track</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="copyGFFOnly"/>
+
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_miscGFFToWebService_RSRC"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+      scope="organism"
+      type="feature"
+      version="${version}"
+      organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2803,7 +2831,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2847,7 +2875,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2879,7 +2907,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
       <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" --assignedBy ${name}</unpack>
-      <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev} --soGusConfigFile @@workflowRootDataDir@@/${projectName}_gus.config</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev} --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3015,6 +3043,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --inputFile @@dataDir@@/associations.gas --goExtDbRlsName "GO_RSRC" --goEvidenceCodeExtDbRlsName "GO_evidence_codes_RSRC" --seqIdSql "SELECT g.source_id, taf.aa_sequence_id FROM dots.genefeature g, dots.transcript t, dots.translatedAAFeature taf WHERE g.na_feature_id = t.parent_id AND t.na_feature_id = taf.na_feature_id UNION all select t.source_id, taf.aa_sequence_id from dots.transcript t, dots.translatedAAFeature taf where t.na_feature_id = taf.na_feature_id UNION all SELECT taf.source_id, taf.aa_sequence_id FROM dots.translatedAAFeature taf order by SOURCE_ID" --targetTable "DoTS::TranslatedAASequence" --lineOfEvidence "${name}" --inputIdColumn id --tolerateMissingSeqs --skipBadGOTerms @@dataDir@@/badGOTerms.log</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+  <datasetClass class="interpro2GO" category="" datasetFileHint="">
+    <purpose>Retrieve InterproID to GO mappings from EBI</purpose>
+    <prop name="version">&version;</prop>
+    <datasetLoader datasetName="interpro2GO_RSRC" version="${version}"
+                 plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                 scope="global"
+                 >
+      <wgetArgs url="http://www.geneontology.org/external2go/interpro2go">--output-document=@@dataDir@@/interpro2go</wgetArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+</datasetClass>
 
   <datasetClass class="EnzymeCommissionAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
@@ -3374,7 +3414,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3401,7 +3441,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3540,18 +3580,21 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="PDBProteinSequences" category="" datasetFileHint="">
     <purpose></purpose>
     <datasetLoader datasetName="PDBProteinSequences_RSRC" version="TODAY"
-      plugin="GUS::Supported::Plugin::LoadFastaSequences"
+      plugin="ApiCommonData::Load::Plugin::InsertProteinDataBankFromFile"
               scope="global"
               type="external_sequences"
               >
-    <wgetArgs url="ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
+    <wgetArgs url="https://files.rcsb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
     <unpack>gunzip @@dataDir@@/pdb_seqres.txt.gz</unpack>
     <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile  @@dataDir@@/pdb.fsa.tmp</unpack>
     <unpack><![CDATA[cat @@dataDir@@/pdb.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/pdb.fsa]]></unpack>
     <unpack>rm @@dataDir@@/pdb.fsa.tmp</unpack>
-    <unpack>xdformat -p @@dataDir@@/pdb.fsa</unpack>
+    <unpack>wget https://files.rcsb.org/pub/pdb/derived_data/index/source.idx --tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx </unpack>
+    <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
+    <unpack>update_pdb_with_taxon.pl --pdb_file @@dataDir@@/pdb.fsa --id_file @@dataDir@@/source.idx.processed --outputFile  @@dataDir@@/proteinDataBank.tab</unpack>
     <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
-    <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --sequenceFile  @@dataDir@@/pdb.fsa --SOTermName 'polypeptide' --SOExtDbRlsSpec 'SO_RSRC|%' --noSequence --regexSourceId  '>(\w+)\s+mol:protein' --regexDesc 'length:\d+\s+(.+)$' --tableName "DoTS::ExternalAASequence"</pluginArgs>
+    <getAndUnpackOutput file="@@dataDir@@/proteinDataBank.tab"/>
+    <pluginArgs>--inputFile  @@dataDir@@/proteinDataBank.tab --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
   </datasetClass>
 
@@ -4399,18 +4442,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="external_sequences"
               >
-
-    <manualGet fileOrDir="common/domain/iprscanData/${version}/iprscan">
+    <manualGet fileOrDir="common/domain/iprscanData/${version}">
         <dir name="final">
         </dir>
-      </manualGet>
-
-    <unpack>fixSuperfamily @@dataDir@@/iprscan/data/</unpack>
-    <pluginArgs>--inPath @@dataDir@@/iprscan/data/</pluginArgs>
+    </manualGet>
+    <pluginArgs>--inPath @@dataDir@@/${version}</pluginArgs>
   </datasetLoader>
   </datasetClass>
-
-
 
   <datasetClass class="NRDB" category="" datasetFileHint="">
     <purpose></purpose>
