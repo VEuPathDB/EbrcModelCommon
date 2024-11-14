@@ -1028,6 +1028,34 @@
   </datasetClass>
 
 
+<!-- copy GFF to the webServices dir for JBrowse track -->
+  <datasetClass class="miscGFFToWebService" category="" datasetFileHint="">
+    <purpose>copy GFF to webServices dir for JBrowse track</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="copyGFFOnly"/>
+
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_miscGFFToWebService_RSRC"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+      scope="organism"
+      type="feature"
+      version="${version}"
+      organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
   <!-- Category: genomeFeature -->
   <!-- NOTE: THIS CLASS IS NOT TO BE USED FOR GENES -->
