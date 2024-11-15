@@ -153,9 +153,9 @@
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
 
-    <!-- NOTE:  We set the version here to include ebiVersion (build number) because for ebi the version includes the annotation -->
+    <!-- NOTE:  Moving forward we need to set the version here to include ebiVersion (build number) because for ebi the version includes the annotation -->
     <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
-              version="${genomeVersion}_${ebiVersion}"
+              version="${genomeVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               type="genome"
               scope="organism"
