@@ -4442,7 +4442,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="external_sequences"
               >
-    <manualGet fileOrDir="common/domain/iprscanData/${version}">
+    <manualGet fileOrDir="common/domain/iprscanData/${version}/insertInterpro-config.xml">
         <dir name="final">
         </dir>
     </manualGet>
