@@ -3589,10 +3589,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile  @@dataDir@@/pdb.fsa.tmp</unpack>
     <unpack><![CDATA[cat @@dataDir@@/pdb.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/pdb.fsa]]></unpack>
     <unpack>rm @@dataDir@@/pdb.fsa.tmp</unpack>
-    <unpack>gzip @@dataDir@@/pdb.fsa</unpack>
     <unpack>wget https://files.rcsb.org/pub/pdb/derived_data/index/source.idx --tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx </unpack>
     <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
     <unpack>update_pdb_with_taxon.pl --pdb_file @@dataDir@@/pdb.fsa --id_file @@dataDir@@/source.idx.processed --output_file @@dataDir@@/proteinDataBank.tab</unpack>
+    <unpack>gzip @@dataDir@@/pdb.fsa</unpack>
     <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
     <getAndUnpackOutput file="@@dataDir@@/proteinDataBank.tab"/>
     <pluginArgs>--inputFile  @@dataDir@@/proteinDataBank.tab --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
