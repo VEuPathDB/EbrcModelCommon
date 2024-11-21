@@ -1797,7 +1797,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
+      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -1908,7 +1908,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
+      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
