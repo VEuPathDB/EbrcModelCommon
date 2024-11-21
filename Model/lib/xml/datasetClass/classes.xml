@@ -1837,7 +1837,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
 
       <!-- need to use the gene2entrez file to get map of NCBI ids -->
-      <unpack>uniprotIdMap2DbRefsFile @@dataDir@@/idmapping_selected.tab.gz @@dataDir@@/../${organismAbbrev}_dbxref_gene2Entrez_RSRC/gene2entrez.tab > @@dataDir@@/gene2uniprot.tab</unpack>
+      <unpack>uniprotIdMap2DbRefsFile @@dataDir@@/idmapping_selected.tab.gz @@dataDir@@/../${organismAbbrev}_dbxref_gene2Entrez_RSRC/gene2entrez.tab @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2uniprot.tab</unpack>
 
       <pluginArgs>--DbRefMappingFile @@dataDir@@/gene2uniprot.tab --extDbName %DATASET_NAME% --extDbReleaseNumber %DATASET_VERSION% --columnSpec "primary_identifier,secondary_identifier,remark" --tableName "DbRefNAFeature"  --viewName GeneFeature --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}'  --organismAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
