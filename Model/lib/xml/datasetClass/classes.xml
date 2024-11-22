@@ -1341,11 +1341,12 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <!--  get all the epitope sequences. Note this is only called from the GenomicsGlobal workflow
         and loads all epitope sequences
   -->
-  <datasetClass class="all_epitope_sequences_IEDB" category="" datasetFileHint="">
+  <datasetClass class="epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="version">&version;</prop> <!-- this is important for the CACHE -->
 
-    <datasetLoader datasetName="all_epitopes_IEDB_RSRC"
-                   version="TODAY"
+    <datasetLoader datasetName="epitopes_IEDB_RSRC"
+                   version="$version"
                    plugin="GUS::Supported::Plugin::LoadFastaSequences"
                    scope="global"
                    type="epitope"
@@ -1369,69 +1370,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
-
+      <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
+      <unpack>gzip @@dataDir@@/iedb.tab</unpack> <!-- this is the one we send to cluster so i want it to be compressed -->
+      <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
 
       <!-- sourceId|name|ncbiTaxId|accession -->
-      <pluginArgs><![CDATA[--seqFileDir @@dataDir@@ --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-  <!--  get the epitope sequences and process into a fasta file. Do not load the sequences though.
-        the mapping step will use this fasta file and only load the mappings into the org-specific database..
-        (this class does not map epitopes. see epitopesFromReferenceStrain)
-        ONLY INCLUDE IF A REFERENCE STRAIN
- -->
-  <datasetClass class="component-epitope_sequences_IEDB" category="" datasetFileHint="">
-    <purpose></purpose>
-
-
-    <datasetLoader datasetName="component_epitope_IEDB_RSRC"
-                   version="TODAY"
-                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="global"
-                   type="epitope">
-
-      <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
-
-      <unpack>mkdir -p @@dataDir@@/xml</unpack>
-      <unpack>unzip -d @@dataDir@@/xml -o @@dataDir@@/iedb_export.zip</unpack>
-      <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
-
-      <!-- <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack> -->
-      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
-      
-      <!-- Process all xml files in the input directory and generate a fasta file containing
-           unique epitopes from all organisms unfiltered
-      -->
-      <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
-
-      <unpack>rm -rf @@dataDir@@/xml</unpack>
-
-      <!-- TODO:  add unpack to convert fasta file to tab + protein fasta -->
-      <!-- Is the above part that download the iedp.zip file needed here since it is alerady done in previous step can't the peptide fasta output file just be fed in to make the tap file and download the proteins -->
-
-      <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab  --correctedFasta @@dataDir@@/temp.fasta</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
-
-      <pluginArgs></pluginArgs>
+      <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
 
-  <!-- This class gets its data from Epitopes loaded by the
-       reference strain.  It finds all of them in the database and maps them to
-       our genome.  The reference strain DOES need to include an instance
-       of this class so that its transcripts get mapped to its genome  -->
 
-  <datasetClass class="epitopesFromReferenceStrain" category="epitope" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
-
-    <graphTemplateFile name="mapEpitopes.xml"/>
-
-  </datasetClass>
 
   <datasetClass class="rRNAReference" category="" datasetFileHint="">
     <purpose>Assign OTUs to experimental rRNA sequences</purpose>
