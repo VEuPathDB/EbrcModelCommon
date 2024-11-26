@@ -20,7 +20,7 @@ public class GenomicsEDAStudy extends DatasetInjector {
         String presenterId = getPropValue("presenterId");
         String cardQuestions = "UNION select '" + presenterId + "' as dataset_presenter_id, 'cardQuestions' as property, '{ ";
         //cardQuestions = cardQuestions + getCardQuestionString();
-        cardQuestions = cardQuestions + " }' as value from dual";
+        cardQuestions = cardQuestions + " }' as value";
         //System.err.println("cardQuestionsSql=" + cardQuestions);
         setPropValue("cardQuestionsSql",cardQuestions);
         injectTemplate("injectDatasetQuestions");
@@ -30,7 +30,7 @@ public class GenomicsEDAStudy extends DatasetInjector {
         String presenterId = getPropValue("presenterId");
         String projectAvailabilityProp = getPropValue("projectAvailability");
 
-        String projectAvailability = "UNION select '" + presenterId + "' as dataset_presenter_id, 'projectAvailability' as property, '" + projectAvailabilityProp + "' as value from dual";
+        String projectAvailability = "UNION select '" + presenterId + "' as dataset_presenter_id, 'projectAvailability' as property, '" + projectAvailabilityProp + "' as value";
         setPropValue("projectAvailabilitySql",projectAvailability);
         injectTemplate("injectProjectAvailability");
     }
