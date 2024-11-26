@@ -1343,10 +1343,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   -->
   <datasetClass class="epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
-    <prop name="version">&version;</prop> <!-- this is important for the CACHE -->
 
     <datasetLoader datasetName="epitopes_IEDB_RSRC"
-                   version="$version"
+                   version="TODAY"
                    plugin="GUS::Supported::Plugin::LoadFastaSequences"
                    scope="global"
                    type="epitope"
@@ -1371,9 +1370,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
       <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
-      <unpack>gzip @@dataDir@@/iedb.tab</unpack> <!-- this is the one we send to cluster so i want it to be compressed -->
+
       <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
-      <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
       <!-- sourceId|name|ncbiTaxId|accession -->
       <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
@@ -3542,8 +3541,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <unpack>wget https://files.rcsb.org/pub/pdb/derived_data/index/source.idx --tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx </unpack>
     <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
     <unpack>update_pdb_with_taxon.pl --pdb_file @@dataDir@@/pdb.fsa --id_file @@dataDir@@/source.idx.processed --output_file @@dataDir@@/proteinDataBank.tab</unpack>
-    <unpack>gzip @@dataDir@@/pdb.fsa</unpack>
-    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
+    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>
     <getAndUnpackOutput file="@@dataDir@@/proteinDataBank.tab"/>
     <pluginArgs>--inputFile  @@dataDir@@/proteinDataBank.tab --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
