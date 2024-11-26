@@ -70,6 +70,7 @@
     <prop name="organismFullName">&organismFullName;</prop>
     <prop name="organismNameForFiles">The name of this organism for use in file and directory names, for example on the download site.  It should not include white space or other characters that are not file friendly.</prop>
     <prop name="ncbiTaxonId">&ncbiTaxonId;  The scientific name for this entry in the NCBI Taxonomy must match the organismFullName property.</prop>
+    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
     <prop name="isReferenceStrain">[true|false] If true then this organism is the reference strain for its species.  Exactly one organism per species must set this value to 'true', and all others must set it to 'false'.  FIX: NEED TO ADD VALIDATION FOR THIS TO InsertOrganism PLUGIN.  The reference strain for a species has the responsibility for loading species-wide datasets, for example ESTs.  Dataset classes that are intended to be used only by reference strains are typically named with the prefix 'referenceStrain-', for example 'referenceStrain-dbEST'.  Be sure to include these datasets in reference strains, and omit them from other organisms.</prop>
     <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
     <prop name="isFamilyRepresentative">[true|false] If true this organism acts as a representative for its taxonomic family.  Some dataset classes are designed to be included only for these representatives.  For example, isolates might be loaded only at the family level. </prop>
@@ -1340,10 +1341,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <!--  get all the epitope sequences. Note this is only called from the GenomicsGlobal workflow
         and loads all epitope sequences
   -->
-  <datasetClass class="all_epitope_sequences_IEDB" category="" datasetFileHint="">
+  <datasetClass class="epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
 
-    <datasetLoader datasetName="all_epitopes_IEDB_RSRC"
+    <datasetLoader datasetName="epitopes_IEDB_RSRC"
                    version="TODAY"
                    plugin="GUS::Supported::Plugin::LoadFastaSequences"
                    scope="global"
@@ -1368,69 +1369,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
+      <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
 
       <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
       <!-- sourceId|name|ncbiTaxId|accession -->
-      <pluginArgs><![CDATA[--seqFileDir @@dataDir@@ --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-  <!--  get the epitope sequences and process into a fasta file. Do not load the sequences though.
-        the mapping step will use this fasta file and only load the mappings into the org-specific database..
-        (this class does not map epitopes. see epitopesFromReferenceStrain)
-        ONLY INCLUDE IF A REFERENCE STRAIN
- -->
-  <datasetClass class="referenceStrain-epitope_sequences_IEDB" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-
-    <graphTemplateFile name="epitopes.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_epitope_IEDB_RSRC"
-                   version="TODAY"
-                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="species"
-                   type="epitope"
-                   organismAbbrev="${organismAbbrev}">
-
-      <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
-
-      <unpack>mkdir -p @@dataDir@@/xml</unpack>
-      <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
-      <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
-
-      <!-- Sanitize xml files and get them ready for processing
-          1. remove all illegal characters from the text content so we can successfully parse the xml files
-          2. remove xmlns from references to make it easier to search for tags using perl libxml.
-       -->
-      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs -p 2 sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
-      <!-- Process all xml files in the input directory and generate a fasta file containing
-           unique epitopes from all organisms unfiltered
-      -->
-      <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
-
-      <unpack>rm -rf @@dataDir@@/xml</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
-
-      <pluginArgs></pluginArgs>
+      <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
 
-  <!-- This class gets its data from Epitopes loaded by the
-       reference strain.  It finds all of them in the database and maps them to
-       our genome.  The reference strain DOES need to include an instance
-       of this class so that its transcripts get mapped to its genome  -->
 
-  <datasetClass class="epitopesFromReferenceStrain" category="epitope" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
-
-    <graphTemplateFile name="mapEpitopes.xml"/>
-
-  </datasetClass>
 
   <datasetClass class="rRNAReference" category="" datasetFileHint="">
     <purpose>Assign OTUs to experimental rRNA sequences</purpose>
@@ -3591,8 +3541,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <unpack>wget https://files.rcsb.org/pub/pdb/derived_data/index/source.idx --tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx </unpack>
     <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
     <unpack>update_pdb_with_taxon.pl --pdb_file @@dataDir@@/pdb.fsa --id_file @@dataDir@@/source.idx.processed --output_file @@dataDir@@/proteinDataBank.tab</unpack>
-    <unpack>gzip @@dataDir@@/pdb.fsa</unpack>
-    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
+    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>
     <getAndUnpackOutput file="@@dataDir@@/proteinDataBank.tab"/>
     <pluginArgs>--inputFile  @@dataDir@@/proteinDataBank.tab --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
@@ -7001,5 +6950,5 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-</datasetClasses>
 
+</datasetClasses>
