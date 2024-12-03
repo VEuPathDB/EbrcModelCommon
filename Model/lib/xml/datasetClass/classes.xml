@@ -6571,6 +6571,30 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!-- directly copy BigWig file to webservice dir -->
+  <datasetClass class="BigWigToWebService" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+
+    <graphTemplateFile name="gsnap.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type=""
+              scope="organism"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="StudyResultsLiteral" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
@@ -6950,5 +6974,24 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="stableIdsEventsIndividual" category="" datasetFileHint="">
+    <purpose>copy stable id ids_events.tab file from EBI ftp site individual directory to apiSiteFile</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="buildNumber">which build number (eg 63)</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_stableIdsEventsIndividual_RSRC"
+              version="${buildNumber}"
+              scope="organism"
+              type=""
+              organismAbbrev="${organismAbbrev}">
+      <wgetArgs url="ftp://ftp-private.ebi.ac.uk//EBIout/build_${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
+      <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 </datasetClasses>
