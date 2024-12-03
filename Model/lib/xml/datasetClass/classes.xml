@@ -1329,7 +1329,7 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
        of this class so that its transcripts get mapped to its genome</purpose>
     <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
 
-    <graphTemplateFile name="mapTranscriptsToGenome.xml"/>
+    <graphTemplateFile name="mapWithBlat.xml"/>
     <qaNotes>Run Query: select tn.name, count(*) from dots.blatalignment b, dots.nasequence ns,sres.taxonname tn, dots.est e where e.na_sequence_id = b.query_na_sequence_id and b.target_na_sequence_id = ns.na_sequence_id and b.target_taxon_id = tn.taxon_id and tn.name_class = 'scientific name' and b.is_best_alignment = 1 group by tn.name;
     Compare the number for the organism(s) of interest to the numbers obtained using the query:select d.name, dr.version, count(*)  from dots.est e, dots.nasequence ns, sres.externaldatabase d, SRES.externaldatabaserelease dr
 where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id = dr.external_database_release_id and dr.external_database_id = d.external_database_id group by d.name,dr.version order by d.name</qaNotes>
@@ -2767,7 +2767,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="includeMultipleSpans"></prop>
 
 
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+    <graphTemplateFile name="mapWithBlat.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_clonedInsertEnds_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
@@ -2811,7 +2811,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="soTermName"/>
     <prop name="sourceIdRegex">&sourceIdRegex;</prop>
 
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+    <graphTemplateFile name="mapWithBlat.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_transcript_sequences_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
