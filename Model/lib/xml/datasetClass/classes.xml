@@ -1369,13 +1369,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
 
       <unpack>rm -rf @@dataDir@@/xml</unpack>
-      <unpack>processIedbPeptide.pl --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --correctedFasta @@dataDir@@/iedb_unique_epitopes_all_organisms_corrected.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
+      <unpack>processIedbPeptide.pl --mergedNcbi @@dataDir@@/../taxonomy_RSRC/merged.dmp --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --correctedFasta @@dataDir@@/iedb_unique_epitopes_all_organisms_corrected.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
 
       <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
-      <!-- sourceId|name|ncbiTaxId|accession -->
-      <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">(.+)" ]]></pluginArgs>
+      <!-- >sourceId name|ncbiTaxId|accession -->
+      <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms_corrected.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">\d+ [^|]*\|([^|]*)" --regexSourceId ">(\d+) " --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">\d+ ([^|]*)" --regexSecondaryId ">\d+ [^|]*\|[^|]*\|([^|]*)" ]]></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
