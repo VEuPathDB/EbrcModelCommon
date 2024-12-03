@@ -16,6 +16,10 @@
             SELECT dataset_presenter_id as dataset_id
             FROM apidbTuning.DatasetPresenter
             WHERE category is null OR category != 'Link outs'
+            EXCEPT
+            SELECT dataset_presenter_id as dataset_id
+              FROM apidbtuning.datasetproperty
+             WHERE property='isPublic' and value='false'
           ]]>
       </sql>
 
@@ -32,59 +36,15 @@
             where (category is null OR category != 'Link outs')
             and  project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
-            UNION
-            SELECT d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i, 
-                 apidbuserdatasets.userdatasetowner o,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-            and i.user_dataset_id = o.user_dataset_id
-            and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and o.USER_ID = $$user_id$$
-            UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i, 
-                 apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-             AND i.user_dataset_id = s.user_dataset_id
-             and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             AND s.recipient_user_id = $$user_id$$
           ]]>
       </sql>
 
       <sql includeProjects="MicrobiomeDB">
         <![CDATA[
-          SELECT dataset_presenter_id as dataset_id
-          FROM apidbTuning.DatasetPresenter
-          WHERE (category is null OR category != 'Link outs')
-            AND project_id = '@PROJECT_ID@'
-          UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i,
-                 apidbuserdatasets.userdatasetowner o,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-            and i.user_dataset_id = o.user_dataset_id
-            and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and o.USER_ID = $$user_id$$
-            UNION
-            select d.dataset_stable_id
-            FROM apidbuserdatasets.installeduserdataset i,
-                 apidbuserdatasets.userdatasetsharedwith s,
-                 apidbuserdatasets.datasetattributes d,
-                 apidbuserdatasets.USERDATASETPROJECT p
-            WHERE i.user_dataset_id = d.user_dataset_id
-             and i.user_dataset_id = s.user_dataset_id
-             and i.user_dataset_id = p.user_dataset_id
-             and p.project = '@PROJECT_ID@'
-             and s.recipient_user_id = $$user_id$$
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and project_id = '@PROJECT_ID@'
         ]]>
       </sql>
 
@@ -113,25 +73,47 @@
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="MapStudiesForToolbar">
+
+    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
       <column name="dataset_id"/>
-      <sql>
+        <sql excludeProjects="EuPathDB,UniDB">
         <![CDATA[
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic'
-            and dprop.value = 'true'
+            -- and dprop.value = 'true'
             and dpres.project_id = '@PROJECT_ID@'
             intersect
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
-            and dprop.value = 'PopBioEDA'
+            and dprop.value = 'GenomicsEDAStudy'
             and dpres.project_id = '@PROJECT_ID@'
           ]]>
       </sql>
+
+
+       <sql includeProjects="EuPathDB,UniDB">
+          <![CDATA[
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'isPublic'
+            -- and dprop.value = 'true'
+            --and dpres.project_id = '@PROJECT_ID@'
+            intersect
+            select dpres.dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            and dprop.property = 'templateInjectorClassName'
+            and dprop.value = 'GenomicsEDAStudy'
+            --and dpres.project_id = '@PROJECT_ID@'
+            -- we need this condition currently because no geolocation studies show up (the new plasmo dataset)
+            and dpres.dataset_presenter_id = 'DS_480c976ef9'
+          ]]>
+       </sql>
     </sqlQuery>
 
     <sqlQuery name="ByReferenceName">

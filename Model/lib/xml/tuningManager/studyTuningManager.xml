@@ -749,6 +749,13 @@
     </sql>
     <sql>
       <![CDATA[
+        create index &prefixinfchar_ix&1
+               on &prefixInferredChars&1 (pan_id, property_id)
+               tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
         UPDATE &prefixInferredChars&1 ic
         SET property
             = (SELECT dt.name
@@ -862,6 +869,13 @@
           LEFT JOIN sres.ontologyterm ot2 ON p2.type_id = ot2.ontology_term_id
           LEFT JOIN sres.ontologyterm ot3 ON p3.type_id = ot3.ontology_term_id
         ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixsampproc_ix&1
+             on &prefixSampleProcess&1 (name, output_pan_id)
+             tablespace indx
       ]]>
     </sql>
   </tuningTable>

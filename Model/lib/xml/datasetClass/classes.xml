@@ -3844,6 +3844,41 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
 
   </datasetClass>
+  <datasetClass class="ISASimpleTransitional" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
+    <prop name="studyName"></prop>
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+    <prop name="webDisplayOntologyFile"></prop>
+    <prop name="nameForFilenames"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
+
+    <datasetLoader datasetName="ISASimple_${subProjectName}_${studyName}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
+
+      <unpack>
+        <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
+          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+      </unpack>
+
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
   <datasetClass class="ISASimpleNF" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -3909,6 +3944,74 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
 
   </datasetClass>
+  <datasetClass class="ISASimplePopset" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
+    <prop name="studyName"></prop>
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+    <prop name="webDisplayOntologyFile"></prop>
+    <prop name="nextflowEntry"></prop>
+    <prop name="nameForFilenames"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
+
+    <datasetLoader datasetName="ISASimple_${subProjectName}_${projectName}_${studyName}_RSRC" version="${version}"
+              plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="global"
+              >
+
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
+      <unpack>
+        <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
+          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+      </unpack>
+      <getAndUnpackOutput dir="@@dataDir@@/final" />
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+  <datasetClass class="ISATabEDA" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="subProjectName"></prop>
+    <prop name="studyName"></prop>
+    <prop name="version"></prop>
+    <prop name="webDisplayOntologyName"></prop>
+    <prop name="webDisplayOntologyFile"></prop>
+    <prop name="speciesReconciliationOntologySpec"></prop>
+    <prop name="speciesReconciliationFallbackSpecies"></prop>
+
+    <graphTemplateFile name="edaStudies.xml"/>
+
+    <datasetLoader
+        datasetName="ISATab_${subProjectName}_${studyName}_RSRC"
+        version="${version}"
+        plugin="ApiCommonData::Load::Plugin::LoadNothing"
+        scope="global">
+
+
+      <manualGet fileOrDir="${projectName}/popbio/${studyName}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>
+        <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
+          mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
+      </unpack>
+
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
 
   <datasetClass class="ClinEpiStudyCharacteristics" category="" datasetFileHint="">
   <!-- not currently used (moved to ClinEpiWorkflow template) but left here in case it might be used later -->
@@ -6697,6 +6800,28 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="ISASimpleGenomics_WDK" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="studyName"/> <!-- example:  leegambian -->
+    <prop name="projectName"/>
+    <prop name="version"/>
+
+    <graphTemplateFile name="project.xml"/>
+
+    <datasetLoader datasetName="ISASimple_EDA_${studyName}_RSRC" version="${version}"
+           plugin="ApiCommonData::Load::Plugin::LoadNothing"
+           scope="global"
+           type="population_biology"
+           subType="eda"
+           >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
 
   <datasetClass class="ISATabPopBio_WDK" category="" datasetFileHint="">
     <purpose></purpose>
@@ -6955,7 +7080,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
  </datasetClass>
 
   <datasetClass class="stableIdsEvents" category="" datasetFileHint="">
-    <purpose>copy stable id ids_events.tab file from EBI ftp site to apiSiteFile</purpose>
+    <purpose>copy stable id ids_events.tab file from EBI ftp site universal directory to apiSiteFile</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="buildNumber">which build number (eg 63)</prop>
