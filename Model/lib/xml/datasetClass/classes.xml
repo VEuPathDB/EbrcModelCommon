@@ -3579,11 +3579,12 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="parentNcbiTaxonId"/>
     <prop name="rank"/>
     <prop name="name"/>
+    <prop name="nameClass"/>
     <prop name="geneticCodeId"/>
     <prop name="mitochondrialGeneticCodeId"/>
     <prop name="mode"/>
 
-    <graphTemplateFile name="taxonomyGlobal.xml"/>
+    <graphTemplateFile name="taxonomyPatches.xml"/>
 
     <datasetLoader datasetName="taxonomyPatch_${ncbiTaxonId}" version="TODAY"
                    plugin="GUS::Supported::Plugin::InsertTaxonAndTaxonName"
@@ -3591,7 +3592,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    type="sres"
     >
       <manualGet fileOrDir="common/empty"/>
-      <pluginArgs>--ncbiTaxId "${ncbiTaxonId}" --parentNcbiTaxId "${parentNcbiTaxonId}" --rank "${rank}" --name "${name}" --geneticCodeId "${geneticCodeId}" --mitochondrialGeneticCodeId "${mitochondrialGeneticCodeId}" --mode ${mode}</pluginArgs>
+      <pluginArgs>--ncbiTaxId "${ncbiTaxonId}" --parentNcbiTaxId "${parentNcbiTaxonId}" --rank "${rank}" --name "${name}" --nameClass "${nameClass}" --geneticCodeId "${geneticCodeId}" --mitochondrialGeneticCodeId "${mitochondrialGeneticCodeId}" --mode ${mode}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
