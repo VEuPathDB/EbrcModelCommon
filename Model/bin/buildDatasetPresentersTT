@@ -38,7 +38,7 @@ $|=1;
 my $sql;
 if ($instance =~ /\/eda/ ){
   $sql = <<SQL;
-    select 'EDA' as project_id, lower('EDA') as lower_project_id from dual
+    select 'EDA' as project_id, lower('EDA') as lower_project_id
 SQL
 } elsif ($PROJECT_HOME =~ /\/eupa/ ){
   $sql = <<SQL;
@@ -141,7 +141,7 @@ if($report) {
   $suffix = 1234;
 }
 
-my $command = "presenterWriteToDb -presentersDir $TEMPDIR/dsp -contactsXmlFile $contactsXmlPath -tuningPropsXmlFile $propfile -instance $instance -suffix $suffix -defaultInjectorClassesFile $refPath -defaultHyperLinksFile $linksPath";
+my $command = "presenterWriteToDb -presentersDir $TEMPDIR/dsp -contactsXmlFile $contactsXmlPath -tuningPropsXmlFile $propfile -instance '$instance' -suffix $suffix -defaultInjectorClassesFile $refPath -defaultHyperLinksFile $linksPath";
 
 if($report) {
   $command = $command . " -report";
