@@ -127,20 +127,21 @@
       <!--  Text Attributes  ++++++++-->
       <!-- =================================================================== -->
 
-
+<!-- TODO add back
       <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
       </attributeQueryRef>
-
+-->
       <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
         <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
       </attributeQueryRef>
 
+<!-- TODO Add back
       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
         <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
       </attributeQueryRef>
-
+-->
       <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
                          help= "Datasets are assigned to categories based on the biological attributes of the data." />
@@ -305,11 +306,15 @@
       </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
-      <attributesList summary="organism_prefix,version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
+      <!-- TODO:  add back "organism_prefix" to summary here -->
+      <attributesList summary="version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
                       excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"/>
 
-      <attributesList summary="organism_prefix,project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
+      <!-- TODO:  add back "organism_prefix" to summary here -->
+      <attributesList summary="project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
                       includeProjects="EuPathDB"/>
+
+
 
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
@@ -360,7 +365,7 @@
       <!-- =================================================================== -->
       <!-- Example Graphs ++++++++-->
       <!-- =================================================================== -->
-
+<!-- TODO add back
       <table name="ExampleGraphs"
              excludeProjects="EuPathDB,ClinEpiDB,MicrobiomeDB"
              displayName="Example Graphs"
@@ -388,15 +393,12 @@
         <columnAttribute internal="true" displayName="dataset_name" name="dataset_name"/>
         <columnAttribute internal="true" displayName="dataset_id" name="dataset_id"/>
         <columnAttribute internal="true" displayName="is_graph_custom" name="is_graph_custom"/>
-        <!--     <columnAttribute displayName="Summary" name="summary"/>
-             <columnAttribute displayName="Attribution" name="short_attribution"/>
-        -->
         <columnAttribute displayName="Assay Type" name="assay_type"/>
         <columnAttribute internal="true"  displayName="Template" name="template"/>
         <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
         <propertyList name="excludeFromDumper"><value>true</value></propertyList>
       </table>
-
+-->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Contacts -->
@@ -505,6 +507,8 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Publications (display name for ClinEpiDB) -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+<!-- TODO add back
       <table name="Publications"
              displayName="Selected Publications" includeProjects="ClinEpiDB"
              queryRef="DatasetTables.Publications">
@@ -528,7 +532,7 @@
           </url>
         </linkAttribute>
       </table>
-
+-->
 
 
 
@@ -825,6 +829,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Resources and Databases for genomes -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!-- TODO add back
       <table name="ExternalDatabases"
              excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB"
              displayName="External Databases Associated to Genome Annotation"
@@ -841,7 +846,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           </text>
         </textAttribute>
       </table>
-
+-->
       <table name="AssociatedDatasets"
              displayName="Associated Data Sets"
              queryRef="DatasetTables.AssociatedDatasets">
@@ -1598,23 +1603,24 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               FROM apidbTuning.EupathBuildDates
               WHERE project = '@PROJECT_ID@'
             ) introduced ON dsp.build_number_introduced = introduced.build_number::numeric
-          UNION ALL
-          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
-               , null as dataset_name
-               , null as dataset_name_pattern
-               , null as version
-               , d.name as short_display_name
-               , d.description::text as description
-               , d.description::text as summary
-               , null as protocol
-               , null as usage
-               , null as type
-               , null as is_species_scope
-               , null as build_number_introduced
-               , null as eupath_release
-               , null as pmids
-               , null as pmids_download
-            FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
+          -- TODO:  add this back
+          -- UNION ALL
+          -- SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_stable_id
+          --     , null as dataset_name
+          --     , null as dataset_name_pattern
+          --     , null as version
+          --     , d.name as short_display_name
+          --     , d.description::text as description
+          --     , d.description::text as summary
+          --     , null as protocol
+          --     , null as usage
+          --     , null as type
+          --     , null as is_species_scope
+          --     , null as build_number_introduced
+          --     , null as eupath_release
+          --     , null as pmids
+          --     , null as pmids_download
+          --  FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
         ]]>
       </sql>
 
@@ -1754,12 +1760,13 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp
-            UNION
-            SELECT CONCAT('EDAUD_', d.user_dataset_id)
-               , null as caveat
-               , null as acknowledgement
-               , null as release_policy
-                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            -- TODO:  add this back
+            --UNION
+            -- SELECT CONCAT('EDAUD_', d.user_dataset_id)
+            --   , null as caveat
+            --   , null as acknowledgement
+            --   , null as release_policy
+            --    from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
          <sql includeProjects="EuPathDB">

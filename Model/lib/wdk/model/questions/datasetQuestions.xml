@@ -183,7 +183,8 @@
       queryRef="DatasetIds.ByCategoryAndOrganism"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList summary="organism_prefix,newcategory,pmids,summary,contact" 
+      <!-- TODO Add back "organism prefix" here -->
+      <attributesList summary="newcategory,pmids,summary,contact" 
                       sorting="contact asc"
        />
       <description>
