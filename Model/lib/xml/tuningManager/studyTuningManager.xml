@@ -2263,6 +2263,7 @@
     </sql>
   </tuningTable>
 
+<!-- CHECK AND FIX - regexp_substr issue
   <tuningTable name="RecordCount" prefixEnabled="false">
     <comment>generates the counts for each type_id for each study in study.protocolappnode.
     </comment>
@@ -2316,4 +2317,5 @@
       ]]>
     </sql>
   </tuningTable>
+-->
 </tuningConfig>
