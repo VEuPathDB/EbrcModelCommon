@@ -104,6 +104,7 @@
     </sql>
   </tuningTable>
 
+<!-- CHECK AND FIX - regexp_count issue
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>lineage abundances</comment>
     <externalDependency name="results.LineageAbundance"/>
@@ -213,6 +214,7 @@
       ]]>
     </sql>
   </tuningTable>
+-->
 
   <tuningTable name="ProjectTaxon" prefixEnabled="true">
     <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
