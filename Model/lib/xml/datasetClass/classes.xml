@@ -2413,9 +2413,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>ebiRNASeqSeqRegionNameMapping.pl --samples_directory @@dataDir@@/final --organism_abbrev ${organismAbbrev} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
-      <getAndUnpackOutput dir="@@dataDir@@/final" />
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <unpack>mv @@dataDir@@/final @@dataDir@@/results</unpack>
+      <unpack>ebiRNASeqSeqRegionNameMapping.pl --samples_directory @@dataDir@@/results --organism_abbrev ${organismAbbrev} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <getAndUnpackOutput dir="@@dataDir@@/results" />
+      <getAndUnpackOutput file="@@dataDir@@/results/analysisConfig.xml"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
