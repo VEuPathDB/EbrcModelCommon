@@ -2391,12 +2391,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
+<!--
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
+-->
 
 
-
-    <graphTemplateFile name="ebiRNASeq.xml"/>
+    <graphTemplateFile name="rnaseq.xml"/>
     <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_RSRC" version="${version}"
@@ -2406,15 +2407,16 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               subType="rnaseq"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="common/empty">
-        <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment.  To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
+
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final" />
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <unpack>mv @@dataDir@@/final @@dataDir@@/results</unpack>
+      <unpack>ebiRNASeqSeqRegionNameMapping.pl --samples_directory @@dataDir@@/results --organism_abbrev ${organismAbbrev} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <getAndUnpackOutput dir="@@dataDir@@/results" />
+      <getAndUnpackOutput file="@@dataDir@@/results/analysisConfig.xml"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
