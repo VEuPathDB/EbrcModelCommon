@@ -1722,8 +1722,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             LEFT JOIN apidb.datasource ds ON dsp.name = ds.name
             LEFT JOIN relinfo r ON dsp.dataset_presenter_id = r.dataset_presenter_id
             LEFT JOIN (
-              SELECT dataset_presenter_id,
-                , string_agg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ' ORDER BY pmbid) as pmids
+              SELECT dataset_presenter_id
+                , string_agg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ' ORDER BY pmid) as pmids
                 , string_agg(pmid, ', ' ORDER BY pmid) as pmids_download
               FROM ApidbTuning.DatasetPublication
               GROUP BY dataset_presenter_id
@@ -1734,17 +1734,17 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               FROM (
                 SELECT dh.dataset_presenter_id, dh.build_number
                   , to_char(ebd.release_date,'YYYY-MON-DD') as release_date
-                  , ebd.release_number, ebd.project,
+                  , ebd.release_number, ebd.project
                   , row_number() over (PARTITION BY dh.dataset_presenter_id ORDER BY ebd.release_number desc) rn
                 FROM apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
-                WHERE dh.build_number = ebd.build_number
+                WHERE CAST(dh.build_number AS VARCHAR(10)) = ebd.build_number
               ) t
               WHERE rn = 1
             ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
             LEFT JOIN (
               SELECT build_number, release_number || ', ' || release_date as eupath_release, project
               FROM apidbTuning.EupathBuildDates
-            ) introduced ON dsp.build_number_introduced = introduced.build_number AND r.project = introduced.project
+            ) introduced ON CAST(dsp.build_number_introduced AS VARCHAR(10))= introduced.build_number AND r.project = introduced.project
         ]]>
       </sql>
     </sqlQuery>
