@@ -1239,7 +1239,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
         </dir>
       </manualGet>
 
-      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@workflowRootDataDir@@/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
 
       <unpack>createPropFile --file @@dataDir@@/dbestProp --propList "dbestLogin:@@dbestLogin@@,dbestPswd:@@dbestPswd@@"</unpack>
 
@@ -3514,10 +3514,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="alphaFold" category="" datasetFileHint="">
     <purpose>Load AlphaFold</purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
     
-    <graphTemplateFile name="project.xml"/>
-
     <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
       plugin="ApiCommonData::Load::Plugin::InsertAlphaFold"
       scope="global"
@@ -6906,16 +6903,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-
-
-
   <datasetClass class="ExternalResourceUrl" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
     <prop name="name">&name;</prop>
-
-    <graphTemplateFile name="project.xml"/>
 
     <datasetLoader datasetName="ExternalResourceUrl_${name}_RSRC" version="${version}"
            plugin="ApiCommonData::Load::Plugin::InsertExternalResourceUrl"
