@@ -3109,7 +3109,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--file @@dataDir@@/comments.txt  --organismAbbrev ${organismAbbrev}</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/comments.txt  --organismAbbrev ${organismAbbrev} --datasetVersion ${version}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
