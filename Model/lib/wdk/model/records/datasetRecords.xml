@@ -1445,8 +1445,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                       else dsp.display_name
                  end as display_name
           FROM apidbtuning.datasetpresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -1478,7 +1478,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               , dp.is_public
             FROM
               apidbtuning.datasetpresenter dsp
-            WHERE dsp.project_id = '@PROJECT_ID@'
               LEFT JOIN (
                 SELECT dataset_presenter_id
                   , MAX(isPublic) is_public
@@ -1493,6 +1492,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   ) pivot
                   GROUP BY dataset_presenter_id
               ) dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
+            WHERE dsp.project_id = '@PROJECT_ID@'
           ]]>
         </sql>
       </sqlQuery>
