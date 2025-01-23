@@ -1445,6 +1445,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                       else dsp.display_name
                  end as display_name
           FROM apidbtuning.datasetpresenter dsp
+          WHERE dsp.project_id = '@PROJECT_ID@'
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
         ]]>
       </sql>
@@ -1477,6 +1478,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               , dp.is_public
             FROM
               apidbtuning.datasetpresenter dsp
+            WHERE dsp.project_id = '@PROJECT_ID@'
               LEFT JOIN (
                 SELECT dataset_presenter_id
                   , MAX(isPublic) is_public
@@ -1527,6 +1529,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             , av.functional_annotation_version
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN all_versions_filtered av ON dsp.dataset_presenter_id = av.dataset_presenter_id
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -1760,6 +1763,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp
+            where dsp.project_id = '@PROJECT_ID@'
             -- TODO:  add this back
             --UNION
             -- SELECT CONCAT('EDAUD_', d.user_dataset_id)
@@ -1775,6 +1779,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   dsp.caveat, dsp.acknowledgement,
                  dsp.release_policy
           FROM apidbTuning.DatasetPresenter dsp
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -1801,6 +1806,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             LEFT JOIN ApidbTuning.DatasetContact dsc ON
               dsp.dataset_presenter_id = dsc.dataset_presenter_id
               AND dsc.is_primary_contact = true
+              AND dsp.project_id = '@PROJECT_ID@'
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id)
                , null as contact
@@ -1855,6 +1861,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             ELSE 'N/A' END AS in_apollo
           FROM apidbtuning.datasetPresenter dsp
             LEFT JOIN apollo_dataset ad ON dsp.dataset_presenter_id = ad.dataset_presenter_id
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -1875,6 +1882,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM apidbTuning.DatasetPresenter dsp
             LEFT JOIN apidb.Datasource ds ON dsp.name = ds.name
             LEFT JOIN projprop dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
+          WHERE dsp.project_id = '@PROJECT_ID@'
           -- UNION
           -- SELECT d.dataset_stable_id, p.project as project_id
           -- FROM apidbuserdatasets.installeduserdataset i,
@@ -1886,7 +1894,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       </sql>
     </sqlQuery>
 
-
+<!-- TO FIX -->
     <sqlQuery name="Organisms"  isCacheable="false">
       <column name="dataset_id"/>
       <column name="organism_prefix"/>
@@ -1918,6 +1926,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             SELECT dataset_presenter_id as dataset_id,
                    dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter
+            WHERE dsp.project_id = '@PROJECT_ID@'
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
                    oa.source_id as old_dataset_id
@@ -1927,6 +1936,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             WHERE dsp.type = 'genome'
               AND dsp.dataset_presenter_id = dnt.dataset_presenter_id
               AND oa.component_taxon_id = dnt.taxon_id
+              AND dsp.project_id = '@PROJECT_ID@'
        -- To be FIXED if and when ebi datasets are loaded 
        -- UNION
        --   SELECT dataset_presenter_id as dataset_id,
