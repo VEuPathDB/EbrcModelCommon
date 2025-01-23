@@ -1927,12 +1927,13 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             WHERE dsp.type = 'genome'
               AND dsp.dataset_presenter_id = dnt.dataset_presenter_id
               AND oa.component_taxon_id = dnt.taxon_id
-          UNION
-            SELECT dataset_presenter_id as dataset_id,
-                'DS_' ||
-                lower(substr(ENCODE(DIGEST(replace(name, '_ebi_', '_'), 'SHA1'),'hex'), 0, 10))
-                as old_dataset_id
-            FROM apidbtuning.datasetpresenter where name like '%_ebi_%'
+       -- To be FIXED if and when ebi datasets are loaded 
+       -- UNION
+       --   SELECT dataset_presenter_id as dataset_id,
+       --       'DS_' ||
+       --       lower(substr(ENCODE(DIGEST(replace(name, '_ebi_', '_'), 'SHA1'),'hex'), 0, 10))
+       --       as old_dataset_id
+       --   FROM apidbtuning.datasetpresenter where name like '%_ebi_%'
         ]]>
       </sql>
 
