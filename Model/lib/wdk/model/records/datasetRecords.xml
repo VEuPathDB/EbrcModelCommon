@@ -127,12 +127,12 @@
       <!--  Text Attributes  ++++++++-->
       <!-- =================================================================== -->
 
-<!-- TODO add back
+
       <attributeQueryRef ref="DatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
       </attributeQueryRef>
--->
+
       <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
         <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
       </attributeQueryRef>
@@ -1894,7 +1894,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       </sql>
     </sqlQuery>
 
-<!-- TO FIX -->
+
     <sqlQuery name="Organisms"  isCacheable="false">
       <column name="dataset_id"/>
       <column name="organism_prefix"/>
@@ -1907,8 +1907,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM (
             SELECT DISTINCT dsnt.dataset_presenter_id as dataset_id
               , CASE when tn.organism_name is null then null
-                ELSE '<i>' || substr(tn.organism_name, 1, nullif(regexp_instr(tn.organism_name, ' ', 1, 2) -1, -1)) || '</i>' || substr(tn.organism_name, regexp_instr(tn.organism_name, ' ', 1, 2))
-              END as org
+                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>' 
+                END as org
             FROM apidbtuning.datasetnametaxon dsnt
               LEFT JOIN apidbtuning.organismattributes tn ON dsnt.taxon_id = tn.component_taxon_id
           ) t
