@@ -23,12 +23,13 @@ my $publicationPubmedUrl = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?"
 
 my ($id, $content);
 
-
 sub setPubmedID {
   my ($pubmed_id) = @_;
   return unless $pubmed_id;
-	$id = $pubmed_id;
+  $id = $pubmed_id;
   my $raw_content = LWP::Simple::get ($ncbiEutilsUrl . $pubmed_id);
+  return -1 unless $raw_content;    # if HTTP failed
+
   # Some versions of LWP::Simple (5.827) use $resp->decoded_content , others (1.41) 
   # use $resp->content . Encode accordingly.
   $content = (utf8::is_utf8($raw_content)) ? encode('UTF-8', $raw_content) : $raw_content;  
@@ -47,13 +48,10 @@ sub fetchAuthorList {
 		#Some of them don't have this attribute.
 	    if (!$attrValue || $attrValue eq "Y") {
 			my $lastname = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "LastName");
-	        #my $initials = EbrcModelCommon::Model::XMLUtils::extractTagContent ($author, "Initials");
-	        #push @authors, "$lastname $initials";
-			return "$lastname et al.";
+			return $lastname? "$lastname et al." : "";
 	    }
 	}
-	
-	#return join (", ", @authors);
+        return "";
 }
 
 sub fetchAuthorListLong {
@@ -129,7 +127,7 @@ sub fetchPublication {
 	                . "-"
 	                . EbrcModelCommon::Model::XMLUtils::extractTagContent ($pages, "EndPage");
 	                                                                               
-	return "$pubName $pubDate;$pubVolume($pubIssue):$pubPages";
+	return $pubName? "$pubName $pubDate;$pubVolume($pubIssue):$pubPages" : "";
 }
                                                                                              
 1;
