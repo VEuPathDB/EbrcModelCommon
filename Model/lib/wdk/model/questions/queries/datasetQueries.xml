@@ -15,7 +15,8 @@
         <![CDATA[
             SELECT dataset_presenter_id as dataset_id
             FROM apidbTuning.DatasetPresenter
-            WHERE category is null OR category != 'Link outs'
+            WHERE (category is null OR category != 'Link outs')
+            AND project_id = '@PROJECT_ID@'
             EXCEPT
             SELECT dataset_presenter_id as dataset_id
               FROM apidbtuning.datasetproperty
@@ -56,6 +57,7 @@
         <![CDATA[
           SELECT dataset_presenter_id as dataset_id
           FROM apidbTuning.DatasetPresenter
+          WHERE project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -210,6 +212,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.target_name = $$question_name$$
             AND ref.target_type = 'question'
+            AND dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -231,6 +234,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.record_type = $$record_class$$
             AND ref.target_type IN ('table', 'attribute','profile_graph')
+            AND dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
 
@@ -253,6 +257,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.record_type = $$record_class$$
             AND dsp.type = $$dataset_type$$
+            AND dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -278,6 +283,7 @@
             AND dsp.type = $$dataset_type$$
             AND (dsp.subtype = $$dataset_subtype$$
                OR dsp.display_category = $$dataset_subtype$$)
+            AND dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -296,7 +302,8 @@
         <![CDATA[
           SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetpresenter dsp
-          WHERE (category IS NULL and dsp.display_category = $$dataset_category$$)
+          WHERE dsp.project_id = '@PROJECT_ID@'
+          AND (category IS NULL and dsp.display_category = $$dataset_category$$)
             OR (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
             OR (coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
                 and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
@@ -324,6 +331,7 @@
             AND dnt.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
+            AND dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>

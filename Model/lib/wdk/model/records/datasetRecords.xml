@@ -992,6 +992,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           SELECT dsp.dataset_presenter_id as dataset_id,
             coalesce(dsp.display_category, dsp.category) as newcategory
           FROM ApidbTuning.DatasetPresenter dsp
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
 
@@ -1447,6 +1448,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
           WHERE dsp.project_id = '@PROJECT_ID@'
+          AND dsp.category != 'Link outs'
         ]]>
       </sql>
     </sqlQuery>
@@ -1463,6 +1465,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               , nullif(oa.genecount, 0) as genecount
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+          WHERE dsp.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
     </sqlQuery>
@@ -1831,6 +1834,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM ApidbTuning.DatasetPresenter dsp
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
           WHERE dsc.is_primary_contact = true
+          AND dsp.project_id = '@PROJECT_ID@'
           --           UNION
           -- SELECT d.dataset_stable_id
           --      , null as contact
