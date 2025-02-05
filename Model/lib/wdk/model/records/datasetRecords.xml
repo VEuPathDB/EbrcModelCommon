@@ -1930,7 +1930,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             SELECT dataset_presenter_id as dataset_id,
                    dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter
-            WHERE dsp.project_id = '@PROJECT_ID@'
+            WHERE project_id = '@PROJECT_ID@'
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
                    oa.source_id as old_dataset_id
