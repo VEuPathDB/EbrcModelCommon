@@ -2044,7 +2044,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         <![CDATA[
            SELECT dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
            FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
-           WHERE dh.build_number = bd.build_number
+           WHERE dh.build_number = bd.build_number::NUMERIC
              AND bd.project = '@PROJECT_ID@'
            ORDER BY bd.build_number
         ]]>
@@ -2751,7 +2751,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                 dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, dh.note
           FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,
               ApidbTuning.DatasetPresenter dp
-          WHERE dh.build_number = bd.build_number
+          WHERE dh.build_number = bd.build_number::NUMERIC 
             AND dh.dataset_presenter_id = dp.dataset_presenter_id
           ORDER BY dh.build_number
         ]]>
