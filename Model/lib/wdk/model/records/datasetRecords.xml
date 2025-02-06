@@ -280,6 +280,12 @@
         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="DatasetAttributes.OwnerVisibility" excludeProjects="MicrobiomeDB,ClinEpiDB">
+         <columnAttribute name="owner" displayName="Owner" />
+         <columnAttribute name="community" displayName="Community"/>
+       </attributeQueryRef>
+
+
       <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB">
         <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
         <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
@@ -1755,6 +1761,26 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       </sql>
     </sqlQuery>
 
+     <sqlQuery name="OwnerVisibility"  isCacheable="false">
+         <column name="dataset_id"/>
+         <column name="owner"/>
+         <column name="community"/>
+         <sql>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   null as owner,
+                   null as community
+            from apidbTuning.DatasetPresenter dsp
+            UNION
+            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+                   owner,
+                   is_public as community
+                from @VDI_CONTROL_SCHEMA@.dataset
+            ]]>
+         </sql>
+      </sqlQuery>
+
+
     <sqlQuery name="CavAckRP"  isCacheable="false">
       <column name="dataset_id"/>
       <column name="caveat"/>
@@ -1911,7 +1937,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM (
             SELECT DISTINCT dsnt.dataset_presenter_id as dataset_id
               , CASE when tn.organism_name is null then null
-                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>' 
+                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>'
                 END as org
             FROM apidbtuning.datasetnametaxon dsnt
               LEFT JOIN apidbtuning.organismattributes tn ON dsnt.taxon_id = tn.component_taxon_id
@@ -1941,7 +1967,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               AND dsp.dataset_presenter_id = dnt.dataset_presenter_id
               AND oa.component_taxon_id = dnt.taxon_id
               AND dsp.project_id = '@PROJECT_ID@'
-       -- To be FIXED if and when ebi datasets are loaded 
+       -- To be FIXED if and when ebi datasets are loaded
        -- UNION
        --   SELECT dataset_presenter_id as dataset_id,
        --       'DS_' ||
@@ -2751,7 +2777,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                 dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, dh.note
           FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,
               ApidbTuning.DatasetPresenter dp
-          WHERE dh.build_number = bd.build_number::NUMERIC 
+          WHERE dh.build_number = bd.build_number::NUMERIC
             AND dh.dataset_presenter_id = dp.dataset_presenter_id
           ORDER BY dh.build_number
         ]]>
