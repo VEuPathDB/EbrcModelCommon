@@ -283,6 +283,12 @@ while in protected and private studies there will be human intervention in the d
          <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
        </attributeQueryRef>
 
+      <attributeQueryRef ref="DatasetAttributes.OwnerVisibility" excludeProjects="MicrobiomeDB,ClinEpiDB">
+         <columnAttribute name="owner" displayName="Owner" />
+         <columnAttribute name="community" displayName="Community"/>
+       </attributeQueryRef>
+
+
        <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB">
          <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
          <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
@@ -1793,6 +1799,26 @@ select  dsp.dataset_presenter_id as dataset_id,
            ]]>
          </sql>
       </sqlQuery>
+
+     <sqlQuery name="OwnerVisibility"  isCacheable="false">
+         <column name="dataset_id"/>
+         <column name="owner"/>
+         <column name="community"/>
+         <sql>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   null as owner,
+                   null as community
+            from apidbTuning.DatasetPresenter dsp
+            UNION
+            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+                   owner,
+                   is_public as community
+                from @VDI_CONTROL_SCHEMA@.dataset 
+            ]]>
+         </sql>
+      </sqlQuery>
+
 
       <sqlQuery name="CavAckRP"  isCacheable="false">
          <column name="dataset_id"/>
