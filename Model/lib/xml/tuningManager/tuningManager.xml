@@ -210,7 +210,7 @@
       <![CDATA[
         CREATE UNIQUE INDEX TaxAbund_panId_Term&1
           ON TaxonAbundance&1 (protocol_app_node_id, category, term)
-          TABLESPACE INDX
+
       ]]>
     </sql>
   </tuningTable>
@@ -666,7 +666,7 @@
           on ExternalDbDatasetPresenter&1
             (external_database_release_id, external_database_id, external_database_name,
              dataset_presenter_id, dataset_presenter_name, dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -675,7 +675,7 @@
           on ExternalDbDatasetPresenter&1
             (dataset_presenter_id, external_database_id, external_database_release_id, 
              external_database_name, dataset_presenter_name, dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -685,7 +685,7 @@
             (dataset_presenter_name, dataset_presenter_id, external_database_id, 
              external_database_release_id, external_database_name, external_database_version, 
              dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -731,7 +731,7 @@
       <![CDATA[
         CREATE INDEX taxRelAbund_pk&1
           ON TaxonRelativeAbundance&1 (name, lineage)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>

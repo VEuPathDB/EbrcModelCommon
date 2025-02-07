@@ -186,13 +186,11 @@ sub createIndexes {
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}att_panid_ix$suffix
       on ${prefix}${record}s$suffix (pan_id, name)
-      tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}patt_name_ix$suffix
       on ${prefix}${record}s$suffix (name, pan_id)
-      tablespace indx
 SQL
 
 }

@@ -76,14 +76,14 @@
       <![CDATA[
         create index &prefixOrelIx&1
         on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id, parent_ontology_term_id)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixOrelUqIx&1
         on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -119,7 +119,7 @@
       <![CDATA[
         create unique index &prefixontac&1_uqix
                on &prefixOntologyAncestor&1 (hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -149,14 +149,14 @@
       <![CDATA[
         create unique index &prefixdt&1_uqix
                on &prefixDatasetTerm&1 (hierarchy_dataset_name, ontology_term_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixdt&1_1ix
                on &prefixDatasetTerm&1 (hierarchy_dataset_name, ontology_term_id, source_id, name)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -363,28 +363,28 @@
       <![CDATA[
         create index &prefixpainio2_iix&1 on &prefixPANIO&1
                (input_pan_id, output_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_oix&1 on &prefixPANIO&1
                (output_pan_id, input_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_otypeix&1 on &prefixPANIO&1
                (output_pan_type_source_id, input_pan_type_source_id, output_pan_id, input_pan_id, protocol_app_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_itypeix&1 on &prefixPANIO&1
                (input_pan_type_source_id, output_pan_type_source_id, input_pan_id, output_pan_id, protocol_app_id)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -430,7 +430,7 @@
       <![CDATA[
         create index &prefixhmap_ix0&1
         on &prefixHierarchyMap&1 (dataset_name, hierarchy_dataset_name)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -558,13 +558,13 @@
     <sql>
       <![CDATA[
         create index &prefixpanup_pix&1 on &prefixPANUpstream&1 (pan_id, input_pan_id, protocol_app_id)
-             tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpanup_iix&1 on &prefixPANUpstream&1 (input_pan_id, pan_id, protocol_app_id)
-             tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -675,7 +675,7 @@
       <![CDATA[
         create index &prefixvalcap_ix&1
                on &prefixValueCaps&1 (qualifier_id, lower_value, commonest_capitalization)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -751,7 +751,7 @@
       <![CDATA[
         create index &prefixinfchar_ix&1
                on &prefixInferredChars&1 (pan_id, property_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -821,7 +821,7 @@
     <sql>
       <![CDATA[
         create index &prefixpancharorg_ix&1 on &prefixInferredChars&1 (organism, dataset_type, dataset_subtype, dataset_name, pan_id, pan_name, property, value)
-             tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -875,7 +875,7 @@
       <![CDATA[
         create index &prefixsampproc_ix&1
              on &prefixSampleProcess&1 (name, output_pan_id)
-             tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1159,7 +1159,7 @@
       <![CDATA[
         create index &prefixpcat_ixone&1
         on &prefixPropertyCategory&1 (property_source_id, dataset_name, category)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1244,14 +1244,14 @@
       <![CDATA[
         create index &prefixmwn_ixone&1
           on &prefixMetadata&1 (property_source_id, pan_id, dataset_name, category, string_value, number_value, date_value)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixmwn_ixtwo&1
           on &prefixMetadata&1 (category, property_source_id, pan_id, string_value, number_value, date_value)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1365,14 +1365,14 @@
       <![CDATA[
         create index &prefixnmoidx1&1
           on &prefixOntology&1 (ontology_term_name, dataset_name, organism)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixnouqidx1&1
           on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name, dataset_type)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -1454,14 +1454,14 @@
       <![CDATA[
         CREATE UNIQUE INDEX proptypename_idx&1
           ON &prefixPropertyType&1 (property_id, property)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX proptypid_idx&1
           ON &prefixPropertyType&1 (property, property_id, type, filter)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
@@ -1497,7 +1497,7 @@
       <![CDATA[
         CREATE INDEX &prefixcomcomobsio_pk&1
           ON &prefixComComObsIO&1 (community_observation_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1526,7 +1526,7 @@
       <![CDATA[
         CREATE INDEX &prefixcomhouseio_idx&1
           ON &prefixComHouseIO&1 (household_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1559,7 +1559,7 @@
       <![CDATA[
         CREATE INDEX &prefixpartcomio&1
           ON &prefixComPartIO&1 (participant_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1586,7 +1586,7 @@
       <![CDATA[
         CREATE INDEX &prefixobscomio&1
           ON &prefixComObsIO&1 (observation_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1613,7 +1613,7 @@
       <![CDATA[
         CREATE INDEX &prefixsamplecomio&1
           ON &prefixComSampleIO&1 (sample_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1658,7 +1658,7 @@
       <![CDATA[
         CREATE INDEX &prefixcomunmd_pk&1
           ON &prefixCommunityMD&1 (ontology_term_name,community_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1703,7 +1703,7 @@
       <![CDATA[
         CREATE INDEX &prefixcomunobsmd_pk&1
           ON &prefixCommunityObsMD&1 (ontology_term_name,community_observation_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1783,7 +1783,7 @@
       <![CDATA[
         CREATE INDEX &prefixHhmd_pk&1
           ON &prefixHouseholdMD&1 (ontology_term_name,household_id,household_observation_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1832,7 +1832,7 @@
       <![CDATA[
         CREATE INDEX &prefixPpartmd_pk&1
           ON &prefixParticipantMD&1 (ontology_term_name,participant_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1859,7 +1859,7 @@
       <![CDATA[
         CREATE INDEX &prefixparthouseio&1
           ON &prefixHousePartIO&1 (participant_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1886,7 +1886,7 @@
       <![CDATA[
         CREATE INDEX &prefixobshouseio&1
           ON &prefixHouseObsIO&1 (observation_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1910,7 +1910,7 @@
       <![CDATA[
         CREATE INDEX &prefixobspartio&1
           ON &prefixPartObsIO&1 (observation_id,participant_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1937,7 +1937,7 @@
       <![CDATA[
         CREATE INDEX &prefixsampleobsio&1
           ON &prefixObsSampleIO&1 (sample_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1966,7 +1966,7 @@
       <![CDATA[
         CREATE INDEX &prefixsplhouseio&1
           ON &prefixHouseSampleIO&1 (sample_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1993,7 +1993,7 @@
       <![CDATA[
         CREATE INDEX &prefixsplPartio&1
           ON &prefixPartSampleIO&1 (sample_id,participant_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2020,7 +2020,7 @@
       <![CDATA[
         CREATE INDEX &prefixsubobsobsio&1
           ON &prefixObsObsIO&1 (sub_observation_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2047,7 +2047,7 @@
       <![CDATA[
         CREATE INDEX &prefixhouseentoio_idx&1
           ON &prefixHouseEntoIO&1 (entomology_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2074,7 +2074,7 @@
       <![CDATA[
         CREATE INDEX &prefixentoinssplio_idx&1
           ON &prefixEntoInsSplIO&1 (insect_sample_id,entomology_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2158,21 +2158,21 @@
       <![CDATA[
         CREATE INDEX &prefixObsmd_partid&1
           ON &prefixObservationMD&1 (participant_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixObsmd_obsid&1
           ON &prefixObservationMD&1 (observation_id, participant_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixObsmd_pk&1
           ON &prefixObservationMD&1 (ontology_term_name,observation_id,participant_id,sub_observation_id,sample_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2204,14 +2204,14 @@
       <![CDATA[
         CREATE INDEX &prefixSplmd_obsid&1
           ON &prefixSampleMD&1 (observation_id, sample_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixSplmd_pk&1
           ON &prefixSampleMD&1 (ontology_term_name,sample_id,observation_id,participant_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2251,14 +2251,14 @@
       <![CDATA[
         CREATE INDEX &prefixEntomd_houseid&1
           ON &prefixEntomologyMD&1 (household_id, entomology_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixEntomd_pk&1
           ON &prefixEntomologyMD&1 (ontology_term_name,entomology_id,household_id,insect_sample_id,string_value)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2313,7 +2313,7 @@
       <![CDATA[
         create index rcd_ct_ix&1
         on RecordCount&1 (dataset_presenter_id, record_type)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>

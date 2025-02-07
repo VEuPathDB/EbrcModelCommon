@@ -153,7 +153,7 @@ sub createTables {
 
   $sql = "create index dsntix_${suffix}
             on ${schema}.DatasetNameTaxon${suffix} (name, dataset_presenter_id)
-            tablespace indx";
+         ";
   runSql($dbh, $sql, 1);
 
   #######################################################
@@ -174,7 +174,7 @@ sub createTables {
 
   $sql = "create index dsmrix_${suffix}
             on ${schema}.DatasetModelRef${suffix} (dataset_presenter_id)
-            tablespace indx";
+          ";
   runSql($dbh, $sql, 1);
 
   #######################################################
