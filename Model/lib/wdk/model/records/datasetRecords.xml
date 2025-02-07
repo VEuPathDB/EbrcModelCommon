@@ -1536,10 +1536,10 @@ where mystudies.dataset_id = dp.dataset_presenter_id
               , nullif(oa.genecount, 0) as genecount
           from apidbtuning.datasetpresenter dsp
               left join apidbtuning.organismattributes oa
+                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
     UNION
   select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as megabase_pairs, null as genecount
     from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
           ]]>
         </sql>
       </sqlQuery>
@@ -1569,7 +1569,8 @@ where mystudies.dataset_id = dp.dataset_presenter_id
           
           where dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
     UNION
-  select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, is_public
+  select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+    case when is_public = 1 then 'yes' else 'no' end as is_public
     from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
           ]]>
         </sql>
@@ -1911,14 +1912,20 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
+--          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+--               , dc.name as contact
+--               , affiliation as institution
+--               , email
+--               , short_attribution
+--               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
+--	       where dc.is_primary = 1
+--	       and dc.dataset_id = d.user_dataset_id
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
-               , dc.name as contact
-               , affiliation as institution
-               , email
-               , short_attribution
-               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
-	       where dc.is_primary = 1
-	       and dc.dataset_id = d.user_dataset_id
+               , null as contact
+               , null as institution
+               , null as email
+               , null as short_attribution
+               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
  ]]>
             </sql>
 
@@ -1937,14 +1944,20 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
+--          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+--               , dc.name as contact
+--               , affiliation as institution
+--               , email
+--               , short_attribution
+--               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
+--	       where dc.is_primary = 1
+--	       and dc.dataset_id = d.user_dataset_id
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
-               , dc.name as contact
-               , affiliation as institution
-               , email
-               , short_attribution
-               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
-	       where dc.is_primary = 1
-	       and dc.dataset_id = d.user_dataset_id
+               , null as contact
+               , null as institution
+               , null as email
+               , null as short_attribution
+               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
  ]]>
             </sql>
 
