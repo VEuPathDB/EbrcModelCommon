@@ -401,7 +401,78 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 
 </processQuery>
 
-  </querySet>
+
+    <sqlQuery name="AllUserDatasets">
+        <paramRef ref="InternalParams.user_id"/>
+        <column name="dataset_id"/>
+        <sql>
+          <![CDATA[
+	      select user_dataset_id as dataset_id
+	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+	      where user_id = $$user_id$$
+	      and project_id = @PROJECT_ID@
+          ]]>
+       </sql> 
+    </sqlQuery>
+
+   <sqlQuery name="AllDatasetsAndUserDatasets">
+        <paramRef ref="InternalParams.user_id"/>
+        <column name="dataset_id"/>
+        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+          <![CDATA[
+            (select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where category is null OR category != 'Link outs'
+            MINUS
+            select dataset_presenter_id as dataset_id
+              from apidbtuning.datasetproperty 
+              where property='isPublic' and value='false')
+	   UNION
+	      select user_dataset_id as dataset_id
+	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+	      where user_id = $$user_id$$
+	      and project_id = @PROJECT_ID@
+          ]]>
+       </sql> 
+
+        <sql includeProjects="ClinEpiDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
+            and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+            UNION
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and  project_id = '@PROJECT_ID@'
+            and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
+	   UNION
+	      select user_dataset_id as dataset_id
+	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+	      where user_id = $$user_id$$
+	      and project_id = @PROJECT_ID@
+          ]]>
+       </sql>
+
+        <sql includeProjects="MicrobiomeDB">
+          <![CDATA[
+            select dataset_presenter_id as dataset_id
+            from apidbTuning.DatasetPresenter
+            where (category is null OR category != 'Link outs')
+            and project_id = '@PROJECT_ID@'
+	   UNION
+	      select user_dataset_id as dataset_id
+	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+	      where user_id = $$user_id$$
+	      and project_id = @PROJECT_ID@
+          ]]>
+       </sql>
+
+    </sqlQuery>
+
+</querySet>
 
 
   <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
