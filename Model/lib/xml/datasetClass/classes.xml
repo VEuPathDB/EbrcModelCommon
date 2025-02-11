@@ -91,6 +91,7 @@
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
     <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
     <prop name="isNotEbiGenome">For any genome which is not coming from mysql dump from EBI.</prop>
+    <prop name="isCore">Boolean. core or peripheral. Used by orthomcl workflow.</prop>
     <graphTemplateFile name="project.xml"/>
 
     <!-- This is ONLY HERE so the propsfromDatasets works;  No workflow graph calls this -->
@@ -5275,8 +5276,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-  <datasetClass class="orthomclUniprotReferenceProteomeForCore" category="OrthoMCL" datasetFileHint="">
+  <datasetClass class="orthomclCoreFromUniprot" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins from a Uniprot Reference Proteome, defined as having 1 protein sequence per gene. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
     <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
     <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
@@ -5284,84 +5284,58 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
     <prop name="organismName">The name of this organism, just used for log messages</prop>
     <prop name="kingdom">The kingdom that contains this organism (Bacteria, Archaea, or Eukaryota).</prop>
+    <prop name="version"> The version of the organism. </prop>
 
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="core"
-		   scope="dontcare" > 
+                   version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   type="proteome"
+                   subType="core"
+                   scope="dontcare" >
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
+      
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fa.gz </wgetArgs>
 
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
+      <unpack>if [ -e @@dataDir@@/uniprot.fa.gz ]; then gunzip -d @@dataDir@@/uniprot.fa.gz; fi</unpack>
+      
+      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fa @@dataDir@@/compliant.fa</unpack>
 
-      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fa --outputFile @@dataDir@@/exemplars.fa --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fa  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}.fasta</unpack>
 
-      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta</unpack>
+      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fa @@dataDir@@/exemplars.fa @@dataDir@@/aliases.tab</unpack>
 
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/${abbrev}.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "gene=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>      
 
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="orthomclCoreFromUniprotEC" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="abbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
+    <prop name="ncbiTaxonId">&speciesNcbiTaxonId;</prop>
 
-  <datasetClass class="orthomclUniprotReferenceProteomeForPeripheral" category="OrthoMCL" datasetFileHint="">
-    <purpose>Download and load the proteins from a Uniprot Reference Proteome, defined as having 1 protein sequence per gene. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
-    <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
-    <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery</prop>
-    <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
-    <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
-    <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The name of this organism, just used for log messages</prop>
-    <prop name="kingdom">The kingdom that contains this organism (Bacteria, Archaea, or Eukaryota).</prop>
+    <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
-    <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
+    <datasetLoader plugin="GUS::Community::Plugin::InsertECMapping"
+              datasetName="${abbrev}_Uniprot_ECAssociations_RSRC"
+              version="TODAY"
+              scope="dontcare">
 
-    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="peripheral"
-		   scope="dontcare" > 
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     
+     <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
-      <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
-
-      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
-
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta</unpack>
-
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
-      <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
-
+      <pluginArgs>--ECMappingFile @@dataDir@@/ecAssoc.tab --evidenceCode "Uniprot" --aaSeqLocusTagMappingSql "select aa_sequence_id from dots.externalaasequence where secondary_identifier = ?"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
 
   <datasetClass class="orthomclPeripheralFromEbi" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, gene names, EC numbers and product descriptions from an Ebi data dump. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
@@ -5447,49 +5421,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-
-
-  <datasetClass class="orthomclUniprotProteomeForCore" category="OrthoMCL" datasetFileHint="">
-    <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from Uniprot. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
-    <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
-    <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
-    <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
-    <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The name of this organism, just used for log messages</prop>
-
-
-    <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
-
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="core"
-		   scope="dontcare" > 
-
-      <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <wgetArgs url="http://www.uniprot.org/uniprot/?query=taxonomy:${ncbiTaxonId}&amp;format=fasta">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta </wgetArgs> 
-
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack> orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta  ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack>getUniprotGeneIdMap ${ncbiTaxonId} ${proteomeId} @@dataDir@@/proteinGeneMap '${organismName}'</unpack>
-
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/${abbrev}Proteome.fasta --proteinIdRegex='>\w+\|(\S+)' --proteinToGeneFile @@dataDir@@/proteinGeneMap --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/${abbrev}Proteome.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
-      <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
-
-    </datasetLoader>
-  </datasetClass>
-
-
   <datasetClass class="orthomclUniprotProteomeForPeripheral" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from Uniprot. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
     <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
@@ -5497,39 +5428,41 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
     <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The nanme of this organism, just used for log messages</prop>
+    <prop name="organismName">The name of this organism</prop>
+    <prop name="version">The version of this organism</prop>
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="peripheral"
-		   scope="dontcare" > 
+                   version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   type="proteome"
+                   subType="peripheral"
+                   scope="dontcare" >
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fa.gz </wgetArgs>
 
-      <wgetArgs url="http://www.uniprot.org/uniprot/?query=taxonomy:${ncbiTaxonId}&amp;format=fasta">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta </wgetArgs> 
+      <unpack>if [ -e @@dataDir@@/uniprot.fa.gz ]; then gunzip -d @@dataDir@@/uniprot.fa.gz; fi</unpack>
 
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fa @@dataDir@@/compliant.fa</unpack>
 
-      <unpack> orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta  ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fa --outputFile @@dataDir@@/exemplars.fa --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>getUniprotGeneIdMap ${ncbiTaxonId} ${proteomeId} @@dataDir@@/proteinGeneMap '${organismName}'</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fa  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}.fasta</unpack>
 
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/${abbrev}Proteome.fasta --proteinIdRegex '>\w+\|(\S+)' --proteinToGeneFile @@dataDir@@/proteinGeneMap --maxStopCodonPercent 20  --preferredSource sp </unpack>
+      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fa @@dataDir@@/exemplars.fa @@dataDir@@/aliases.tab</unpack>
 
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/${abbrev}Proteome.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/${abbrev}.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
+
+
 
   <datasetClass class="orthomclEuPathProteomeForCore" category="" datasetFileHint="">
     <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from one of the EuPathDB project download directories. Files will be processed to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id.</purpose>
@@ -5793,7 +5726,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://www.uniprot.org/uniprot/?query=taxonomy%3a${ncbiTaxonId}&amp;format=tab&amp;columns=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
