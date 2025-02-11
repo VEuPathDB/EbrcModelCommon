@@ -438,8 +438,8 @@
    <!-- renamed from PANExternalDatabaseRelease -->
   <tuningTable name="PANExtDbRls" prefixEnabled="true">
    <comment>ALL inputs and outputs</comment>
-    <externalDependency name="study.Study"/>
-    <externalDependency name="study.StudyLink"/>
+    <externalDependency name="study.NodeSet"/>
+    <externalDependency name="study.NodeNodeSet"/>
     <externalDependency name="study.ProtocolAppNode"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
@@ -453,14 +453,14 @@
           , s.external_database_release_id
           , d.name
           FROM
-            study.study s
-          , study.studylink sl
+            study.nodeSet s
+          , study.nodeNodeSet sl
           , sres.externaldatabaserelease r
           , sres.externaldatabase d
           WHERE
             s.external_database_release_id = r.external_database_release_id
             and r.external_database_id = d.external_database_id
-            and s.study_id = sl.study_id
+            and s.node_set_id = sl.node_set_id
             and s.external_database_release_id is not null
           UNION
           SELECT pan.protocol_app_node_id
