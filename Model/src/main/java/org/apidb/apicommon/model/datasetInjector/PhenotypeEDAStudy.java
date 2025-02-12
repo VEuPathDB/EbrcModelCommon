@@ -4,18 +4,36 @@ import org.apidb.apicommon.datasetPresenter.DatasetInjector;
 
 public class PhenotypeEDAStudy extends GenomicsEDAStudy {
 
-  @Override
-  public void injectTemplates() {
-      super.injectTemplates();
+    protected String getInternalQuestionName() {
+        return "GeneQuestions.GenesByPhenotypeEdaSubset_" + getDatasetName();
+    }
 
-  }
+    @Override
+    public void injectTemplates() {
+        String projectName = getPropValue("projectName");
+        setPropValue("includeProjects", projectName + ",UniDB");
 
-  @Override
-  public void addModelReferences() {
-      super.addModelReferences();
+        String datasetDisplayName = getPropValue("datasetDisplayName");
+        String trimmedDatasetDisplayName = datasetDisplayName.replaceAll("<[^>]*>", "");
+        setPropValue("datasetDisplayName", trimmedDatasetDisplayName);        
 
-      addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByPhenotypeEdaSubset_" + this.getDatasetName());
-  }
+        injectTemplate("phenotypeEdaQuestion");
+
+
+
+        setPropValue("questionName", getInternalQuestionName());
+        setPropValue("searchCategory", "searchCategory-phenotype-quantitative");
+        injectTemplate("internalGeneSearchCategory");
+    }
+
+
+
+    @Override
+    public void addModelReferences() {
+        super.addModelReferences();
+
+        addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByPhenotypeEdaSubset_" + this.getDatasetName());
+    }
 
 
 }
