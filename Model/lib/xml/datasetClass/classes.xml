@@ -5786,7 +5786,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="release">Release number which serves as the subdirectory in manual delivery where the clades file is found.</prop>
     
     <datasetLoader datasetName="orthomclClades_RSRC" 	
-	   plugin="ApiCommonData::Load::Plugin::InsertOrthomclTaxon"
+	   plugin="ApiCommonData::Load::Plugin::InsertOrthomclClade"
 		   scope="global"
 		   type="taxonomy"
 		   version="${release}">
