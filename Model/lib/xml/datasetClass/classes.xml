@@ -1032,7 +1032,7 @@
   </datasetClass>
 
 
-<!-- copy GFF to the webServices dir for JBrowse track -->
+<!-- replaced by manualDeliveryToWebService
   <datasetClass class="miscGFFToWebService" category="" datasetFileHint="">
     <purpose>copy GFF to webServices dir for JBrowse track</purpose>
     <prop name="projectName">&projectName;</prop>
@@ -1059,7 +1059,7 @@
     </datasetLoader>
   </datasetClass>
 
-
+-->
 
   <!-- Category: genomeFeature -->
   <!-- NOTE: THIS CLASS IS NOT TO BE USED FOR GENES -->
@@ -2453,7 +2453,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
-
+<!--replaced by manualDeliveryToWebService
  <datasetClass class="ebiVCFfile" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -2474,7 +2474,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
         <manualGet fileOrDir="common/empty">
            <dir name="final"/> 
-  <!--         <dir name="@@dataDir@@"/>  -->
         </manualGet>
  
        <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/  @@dataDir@@/final</unpack>
@@ -2482,12 +2481,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <getAndUnpackOutput dir="@@dataDir@@/final"/>
         <getAndUnpackOutput file="@@dataDir@@/final/${name}.vcf.gz"/>
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
 
 <datasetClass class="ebiGFF3file" category="" datasetFileHint="">
     <purpose></purpose>
@@ -2509,7 +2505,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
         <manualGet fileOrDir="common/empty">
            <dir name="final"/>
-  <!--         <dir name="@@dataDir@@"/>  -->
         </manualGet>
 
        <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/final</unpack>
@@ -2517,10 +2512,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <getAndUnpackOutput dir="@@dataDir@@/final"/>
         <getAndUnpackOutput file="@@dataDir@@/final/${name}.gff3.gz"/>
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
+-->
 
 
 
@@ -6607,7 +6602,34 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!-- directly copy BigWig file to webservice dir -->
+<!-- copy files from manual delivery dir to web services for JBrowse track -->
+  <datasetClass class="manualDeliveryToWebService" category="" datasetFileHint="">
+    <purpose>copy files to webServices dir for JBrowse track</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name=“fileType/>
+    <prop name="copyOnly"/>
+
+
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_manualDeliveryToWebService_RSRC"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+      scope="organism"
+      type="feature"
+      version="${version}"
+      organismAbbrev="${organismAbbrev}">
+        <manualGet fileOrDir="common/empty">
+           <dir name="final"/>
+        </manualGet>
+       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/final</unpack>
+      <pluginArgs></pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+<!--Replaced by manualDeliveryToWebService
   <datasetClass class="BigWigToWebService" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -6627,10 +6649,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
+-->
   <datasetClass class="StudyResultsLiteral" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
