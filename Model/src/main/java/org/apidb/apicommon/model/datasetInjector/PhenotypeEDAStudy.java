@@ -1,7 +1,5 @@
 package org.apidb.apicommon.model.datasetInjector;
 
-import org.apidb.apicommon.datasetPresenter.DatasetInjector;
-
 public class PhenotypeEDAStudy extends GenomicsEDAStudy {
 
     protected String getInternalQuestionName() {
@@ -19,14 +17,10 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
 
         injectTemplate("phenotypeEdaQuestion");
 
-
-
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-phenotype-quantitative");
         injectTemplate("internalGeneSearchCategory");
     }
-
-
 
     @Override
     public void addModelReferences() {
@@ -34,6 +28,5 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
 
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByPhenotypeEdaSubset_" + this.getDatasetName());
     }
-
 
 }
