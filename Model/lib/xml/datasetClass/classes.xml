@@ -6609,7 +6609,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
-    <prop name=“fileType/>
+    <prop name="fileType"/>
     <prop name="copyOnly"/>
 
 
