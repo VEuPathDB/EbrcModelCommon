@@ -466,7 +466,7 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = @PROJECT_ID@
+	      and project_id = '@PROJECT_ID@'
           ]]>
        </sql>
 
