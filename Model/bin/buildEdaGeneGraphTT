@@ -82,9 +82,9 @@ sub run{
             }
 
             # skip comments / header
-	    next if($ext_db_name =~ /^#/);
+	    next if($row[0] =~ /^#/);
 
-	    if ($ext_db_name) {
+	    if ($row[0]) {
 	      $insertRow->execute(@row);
 	    }
           }
