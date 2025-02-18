@@ -51,7 +51,7 @@ sub run{
 
   # parse Tab file
 
-  my $insertStatement = "INSERT INTO EdaGeneGraph$suffix(dataset_name, plot_name, plot_type, x_axix_entity_id, y_axis_entity_id, x_axis_variable_id, y_axis_variable_id, x_min, x_max, y_min, y_max) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+  my $insertStatement = "INSERT INTO EdaGeneGraph$suffix(dataset_name, plot_name, plot_type, x_axis_entity_id, y_axis_entity_id, x_axis_variable_id, y_axis_variable_id, x_min, x_max, y_min, y_max) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
   my $insertRow = $dbh->prepare($insertStatement);
   createEmptyTable($dbh,$suffix);
   if ($tabFileLocation =~ /\.xls$/ || $tabFileLocation =~ /\.xlsx$/) {
