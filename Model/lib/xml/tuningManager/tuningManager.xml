@@ -735,4 +735,12 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     </sql>
   </tuningTable>
 
+
+  <tuningTable name="EdaGeneGraph" alwaysUpdate="true">
+    <comment>EDA Graph Config for Gene pages
+      </comment>
+    <program commandLine="buildEdaGeneGraphTT"/>
+  </tuningTable>
+
+
 </tuningConfig>
