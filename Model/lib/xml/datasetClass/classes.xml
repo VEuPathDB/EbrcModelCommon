@@ -2453,7 +2453,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
-<!--replaced by manualDeliveryToWebService
  <datasetClass class="ebiVCFfile" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -2515,9 +2514,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
--->
-
-
 
  <datasetClass class="rnaSeqSample" category="" datasetFileHint="">
     <purpose></purpose>
@@ -6615,7 +6611,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_manualDeliveryToWebService_RSRC"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC"
       plugin="ApiCommonData::Load::Plugin::LoadNothing"
       scope="organism"
       type="feature"
@@ -6624,7 +6620,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <manualGet fileOrDir="common/empty">
            <dir name="final"/>
         </manualGet>
-       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/final</unpack>
+       <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
