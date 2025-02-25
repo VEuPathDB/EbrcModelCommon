@@ -2506,7 +2506,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
            <dir name="final"/>
         </manualGet>
 
-       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/final</unpack>
+       <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/</unpack>
 
         <getAndUnpackOutput dir="@@dataDir@@/final"/>
         <getAndUnpackOutput file="@@dataDir@@/final/${name}.gff3.gz"/>
