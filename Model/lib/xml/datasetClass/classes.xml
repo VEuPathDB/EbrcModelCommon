@@ -2510,7 +2510,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
            <dir name="final"/>
         </manualGet>
 
-       <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/</unpack>
+       <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/</unpack>
 
         <getAndUnpackOutput dir="@@dataDir@@/final"/>
         <getAndUnpackOutput file="@@dataDir@@/final/${name}.gff3.gz"/>
@@ -3963,7 +3963,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
+      <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
       <unpack>
         <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
           mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
@@ -6624,7 +6624,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <manualGet fileOrDir="common/empty">
            <dir name="final"/>
         </manualGet>
-       <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
+       <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
