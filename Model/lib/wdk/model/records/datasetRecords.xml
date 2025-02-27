@@ -1801,7 +1801,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null as version
                , d.name as short_display_name
                , d.description
-               , to_clob(d.summary) as summary
+               , d.summary
                , null as protocol
                , null as usage
                , null as type
