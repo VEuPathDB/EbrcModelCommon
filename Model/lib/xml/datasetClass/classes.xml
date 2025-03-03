@@ -2479,7 +2479,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
            <dir name="final"/> 
         </manualGet>
  
-       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/  @@dataDir@@/final</unpack>
+       <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/${name}.vcf.gz  @@dataDir@@/</unpack>
 
         <getAndUnpackOutput dir="@@dataDir@@/final"/>
         <getAndUnpackOutput file="@@dataDir@@/final/${name}.vcf.gz"/>
@@ -4833,7 +4833,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>doTranscriptExpression.pl --xml_file @@dataDir@@/final/analysisConfig.xml --main_directory @@dataDir@@/final --technology_type protein_expression</unpack>
+      <unpack>doStudyAssayResults.pl --xml_file @@dataDir@@/final/analysisConfig.xml --main_directory @@dataDir@@/final --technology_type protein_expression</unpack>
       <pluginArgs>--inputDir @@dataDir@@/final --configFile @@dataDir@@/final/insert_study_results_config.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%" --studyName "Mass Spec Profiles ${name}"</pluginArgs>
     </datasetLoader>
   </datasetClass>
