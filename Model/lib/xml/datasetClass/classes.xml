@@ -6624,7 +6624,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <manualGet fileOrDir="common/empty">
            <dir name="final"/>
         </manualGet>
-       <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
+       <unpack>copy_gff_dir_structure.pl @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
       <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
