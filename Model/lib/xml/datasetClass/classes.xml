@@ -1031,36 +1031,6 @@
     </datasetLoader>
   </datasetClass>
 
-
-<!-- replaced by manualDeliveryToWebService
-  <datasetClass class="miscGFFToWebService" category="" datasetFileHint="">
-    <purpose>copy GFF to webServices dir for JBrowse track</purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="copyGFFOnly"/>
-
-
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_miscGFFToWebService_RSRC"
-      plugin="ApiCommonData::Load::Plugin::LoadNothing"
-      scope="organism"
-      type="feature"
-      version="${version}"
-      organismAbbrev="${organismAbbrev}">
-
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <pluginArgs></pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
--->
-
   <!-- Category: genomeFeature -->
   <!-- NOTE: THIS CLASS IS NOT TO BE USED FOR GENES -->
   <datasetClass class="genomeFeatures_GFF2" category="" datasetFileHint="">
@@ -2481,8 +2451,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
  
        <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/${name}.vcf.gz  @@dataDir@@/</unpack>
 
-        <getAndUnpackOutput dir="@@dataDir@@/final"/>
-        <getAndUnpackOutput file="@@dataDir@@/final/${name}.vcf.gz"/>
+        <getAndUnpackOutput file="@@dataDir@@/${name}.vcf.gz"/>
 
       <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
@@ -2510,10 +2479,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
            <dir name="final"/>
         </manualGet>
 
-       <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/</unpack>
+       <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/${name}.gff3.gz  @@dataDir@@/</unpack>
 
-        <getAndUnpackOutput dir="@@dataDir@@/final"/>
-        <getAndUnpackOutput file="@@dataDir@@/final/${name}.gff3.gz"/>
+        <getAndUnpackOutput file="@@dataDir@@/${name}.gff3.gz"/>
 
       <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
@@ -4765,56 +4733,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-
-  <datasetClass class="GFF" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="genomeVersion"/>
-    <prop name="gffFormat"/>
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_GFF_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::InsertGFF3"
-              type="feature"
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/${organismAbbrev}_${name}.gff">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <pluginArgs>--file @@dataDir@@/${organismAbbrev}_${name}.gff  --gff3DbName  "%DATASET_NAME%" --gff3DbVer "%DATASET_VERSION%"  --gffFormat ${gffFormat} --seqExtDbName ${organismAbbrev}_primary_genome_RSRC --seqExtDbRlsVer ${genomeVersion}  --soExtDbSpec "SO_RSRC|%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-
-
-  <datasetClass class="GFF_topLevel" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="gffFormat"/>
-    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_GFF_topLevel_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::InsertGFF3"
-              type="feature"
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/${organismAbbrev}_${name}.gff">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <pluginArgs>--file @@dataDir@@/${organismAbbrev}_${name}.gff  --gff3DbName  "%DATASET_NAME%" --gff3DbVer "%DATASET_VERSION%"  --gffFormat ${gffFormat} --seqExtDbName ${organismAbbrev}_primary_genome_RSRC   --soExtDbSpec "SO_RSRC|%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
   <datasetClass class="massSpecFromProfiles" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -6610,7 +6528,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="fileType"/>
-    <prop name="copyOnly"/>
 
 
     <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
@@ -6629,30 +6546,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-<!--Replaced by manualDeliveryToWebService
-  <datasetClass class="BigWigToWebService" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-
-    <graphTemplateFile name="gsnap.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              type=""
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
--->
   <datasetClass class="StudyResultsLiteral" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
