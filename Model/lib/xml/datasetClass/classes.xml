@@ -1981,7 +1981,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="variableLengthReads"/>
     <prop name="numInsertions"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2014,7 +2014,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="isNimbleGenGeneArray"/>
     <prop name="providedMappingFileName"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2044,7 +2044,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_chipChipPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2084,7 +2084,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="usesAffymetrixGeneArray"/>
     <prop name="usesNimbleGenGeneArray"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayExpression_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2154,7 +2154,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="usesAffymetrixGeneArray"/>
     <prop name="usesNimbleGenGeneArray"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayExpression_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2191,7 +2191,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="peakFinderArgs"/>
     <prop name="loadPeakCalls"/>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_chipChipExper_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -6222,7 +6222,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_cghArrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -6256,7 +6256,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="cghArrayPlatformName"/>
     <prop name="cghArrayPlatformVersion"/>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_cghArrayExper_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
