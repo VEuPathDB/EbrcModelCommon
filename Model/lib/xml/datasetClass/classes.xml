@@ -6936,7 +6936,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               type=""
               organismAbbrev="${organismAbbrev}">
-      <unpack>cp @@manualDeliveryDir@@/ebiftp/EBIout/build_${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab @@dataDir@@/</unpack>
+      <manualGet fileOrDir="ebiftp/EBIout/build_${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab">
+      </manualGet>
       <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
