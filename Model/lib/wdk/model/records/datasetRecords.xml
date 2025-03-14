@@ -1025,7 +1025,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
                 ]]>
         </sql>
-         <sql includeProjects="EuPathDB,UniDB">
+         <sql includeProjects="UniDB">
            <![CDATA[
                        select dsp.dataset_presenter_id as dataset_id,
                               nvl(dsp.display_category, dsp.category) as newcategory
@@ -1037,7 +1037,13 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
                 ]]>
         </sql>
-
+         <sql includeProjects="EuPathDB">
+           <![CDATA[
+                       select dsp.dataset_presenter_id as dataset_id,
+                              nvl(dsp.display_category, dsp.category) as newcategory
+                         from ApidbTuning.DatasetPresenter dsp
+                ]]>
+        </sql>
       </sqlQuery>
 
       <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
@@ -1518,8 +1524,19 @@ where mystudies.dataset_id = dp.dataset_presenter_id
                 from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
-
-         <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+         <sql includeProjects="EuPathDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id
+                 , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
+                        when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'   
+                        else dsp.display_name
+                   end as display_name
+            from apidbtuning.datasetpresenter dsp
+                 left join apidbtuning.organismattributes oa
+                     on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+            ]]>
+         </sql>
+         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id
                  , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
@@ -1541,7 +1558,18 @@ where mystudies.dataset_id = dp.dataset_presenter_id
         <column name="megabase_pairs"/>
         <column name="genecount"/>
 
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <sql includeProjects="EuPathDB">
+          <![CDATA[
+          select dsp.dataset_presenter_id as dataset_id
+              , oa.megabps as megabase_pairs
+              , nullif(oa.genecount, 0) as genecount
+          from apidbtuning.datasetpresenter dsp
+              left join apidbtuning.organismattributes oa
+                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+          ]]>
+        </sql>
+
+        <sql excludeProjects="EuPathDB">
           <![CDATA[
           select dsp.dataset_presenter_id as dataset_id
               , oa.megabps as megabase_pairs
@@ -1560,7 +1588,30 @@ where mystudies.dataset_id = dp.dataset_presenter_id
         <column name="dataset_id"/>
         <column name="is_public"/>
 
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <sql includeProjects="EuPathDB">
+          <![CDATA[
+          select dsp.dataset_presenter_id as dataset_id
+              , dp.is_public
+          from apidbtuning.datasetpresenter dsp,
+          (
+            select * from (
+              select dataset_presenter_id, property, value
+                from apidbtuning.datasetproperty
+                where property in ('isPublic')
+                  and trim(value) is not null
+            )
+            pivot
+            (
+              max(value)
+              for property in ('isPublic' as is_public)
+            )
+          ) dp
+          
+          where dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
+          ]]>
+        </sql>
+
+        <sql excludeProjects="EuPathDB">
           <![CDATA[
           select dsp.dataset_presenter_id as dataset_id
               , dp.is_public
@@ -1594,8 +1645,35 @@ where mystudies.dataset_id = dp.dataset_presenter_id
         <column name="genome_version"/>
         <column name="annotation_version"/>
         <column name="functional_annotation_version"/>
-
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <sql includeProjects="EuPathDB">
+          <![CDATA[
+                   with all_versions as (
+                   select dh.dataset_presenter_id
+                       , bd.project
+                       , bd.release_number
+                       , dh.genome_version
+                       , dh.annotation_version
+                       , dh.functional_annotation_version
+                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.build_number desc) rn
+                     from ApidbTuning.DatasetHistory dh
+                       , ApidbTuning.EupathBuildDates bd 
+                     where dh.build_number = bd.build_number
+                       and bd.project = '@PROJECT_ID@'
+                     order by dh.dataset_presenter_id
+                       , bd.build_number desc
+                ) ,
+                all_versions_filtered as (
+                  select * from all_versions where rn = 1
+                )
+                select dsp.dataset_presenter_id as dataset_id
+                  , av.genome_version
+                  , av.annotation_version
+                  , av.functional_annotation_version
+                from all_versions_filtered av, apidbtuning.datasetpresenter dsp
+                where dsp.dataset_presenter_id = av.dataset_presenter_id (+)
+          ]]>
+        </sql>
+        <sql excludeProjects="EuPathDB">
           <![CDATA[
                    with all_versions as (
                    select dh.dataset_presenter_id
@@ -1857,7 +1935,17 @@ select  dsp.dataset_presenter_id as dataset_id,
          <column name="dataset_id"/>
          <column name="owner"/>
          <column name="community"/>
-         <sql>
+
+         <sql includeProjects="EuPathDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   null as owner,
+                   null as community
+            from apidbTuning.DatasetPresenter dsp
+            ]]>
+         </sql>
+
+         <sql excludeProjects="EuPathDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    null as owner,
@@ -1941,7 +2029,24 @@ select  dsp.dataset_presenter_id as dataset_id,
  ]]>
             </sql>
 
-            <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
+            <sql includeProjects="EuPathDB">
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   CASE WHEN  dsc.name is not null THEN dsc.name
+                        WHEN dsc.affiliation is not null THEN dsc.affiliation
+                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
+                   END as contact,
+                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                        ELSE   dsc.affiliation END as institution,
+                   dsc.email as email,
+                   nvl(dsp.short_attribution, dsc.name) as short_attribution
+            from ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
+            where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
+            and dsc.is_primary_contact = 1
+ ]]>
+            </sql>
+
+            <sql excludeProjects="EuPathDB,ClinEpiDB,MicrobiomeDB">
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
@@ -2001,7 +2106,7 @@ select  dsp.dataset_presenter_id as dataset_id,
             </sql>
       </sqlQuery>
 
-    <sqlQuery name="Projects"  isCacheable="false">
+    <sqlQuery name="Projects"  isCacheable="false" excludeProjects="EuPathDB">
         <column name="dataset_id" columnType="string"/>
         <column name="project_id" columnType="string"/>
             <sql>
@@ -2020,6 +2125,26 @@ select  dsp.dataset_presenter_id as dataset_id,
     UNION
   select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, project_id as project
     from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            ]]>
+            </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Projects"  isCacheable="false" includeProjects="EuPathDB">
+        <column name="dataset_id" columnType="string"/>
+        <column name="project_id" columnType="string"/>
+            <sql>
+            <![CDATA[
+               WITH projprop AS (
+                 SELECT dataset_presenter_id, value as project
+                 FROM apidbTuning.DatasetProperty
+                 WHERE property = 'projectName')
+               SELECT DISTINCT dsp.dataset_presenter_id as dataset_id, dsp.name,
+                      CASE WHEN (dp.project IS NOT NULL) THEN dp.project
+                           ELSE ' ' END  as project_id
+               FROM apidbTuning.DatasetPresenter dsp, apidb.Datasource ds,
+                    projprop dp
+               WHERE ds.name (+) = dsp.name
+               AND dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
             ]]>
             </sql>
     </sqlQuery>
@@ -2067,9 +2192,6 @@ from apidbtuning.datasetnametaxon dsnt
    and dsp.project_id = tn.project_id(+) 
  )
  group by dataset_id
-    UNION
-  select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as organism_prefix
-    from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
             </sql>
 
