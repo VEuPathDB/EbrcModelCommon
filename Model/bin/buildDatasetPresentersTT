@@ -58,7 +58,6 @@ SQL
       FROM (
         SELECT DISTINCT pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
         WHERE ed.row_project_id = pi.project_id
-        AND NOT pi.name = 'OrthoMCL'
       ) t1
 SQL
 }
