@@ -3549,7 +3549,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="taxonomyPatches.xml"/>
 
-    <datasetLoader datasetName="taxonomyPatch_${ncbiTaxonId}" version="TODAY"
+    <datasetLoader datasetName="taxonomyPatch_${ncbiTaxonId}_RSRC" version="TODAY"
                    plugin="GUS::Supported::Plugin::InsertTaxonAndTaxonName"
                    scope="global"
                    type="sres"
