@@ -735,4 +735,13 @@
       ]]>
     </sql>
   </tuningTable>
+
+
+  <tuningTable name="EdaGeneGraph" alwaysUpdate="true">
+    <comment>EDA Graph Config for Gene pages
+      </comment>
+    <program commandLine="buildEdaGeneGraphTT"/>
+  </tuningTable>
+
+
 </tuningConfig>
