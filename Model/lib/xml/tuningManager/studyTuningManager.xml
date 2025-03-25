@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
-
-
   <!-- TODO:  add filterValue here if/when Dataset specific run gets Samples;
               until then this query will return zero rows in clinepi context -->
   <tuningTable name="SampleId" prefixEnabled="true">
@@ -15,26 +13,26 @@
     <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
-          create table &prefixSampleId&1 as
-          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
-                 pi.name as project_id
-          from study.ProtocolAppNode pan, core.ProjectInfo pi
-          where pan.isa_type = 'Sample'
-            and pan.row_project_id = pi.project_id
-        union
-          select pan.protocol_app_node_id as pan_id, pan.name as pan_name,
-                 pi.name as project_id
-          from study.Study s, sres.ExternalDatabase d,
-               sres.ExternalDatabaseRelease r, study.ProtocolAppNode pan,
-               study.StudyLink sl, core.ProjectInfo pi
-          where s.external_database_release_id = r.external_database_release_id
-            and r.external_database_id = d.external_database_id
-            and s.study_id = sl.study_id
-            and pan.row_project_id = pi.project_id
-            and sl.protocol_app_node_id = pan.protocol_app_node_id
-            and d.name like '%isolates_genbank_RSRC'
+        CREATE TABLE &prefixSampleId&1 AS
+        SELECT pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+               pi.name as project_id
+        FROM study.ProtocolAppNode pan, core.ProjectInfo pi
+        WHERE pan.isa_type = 'Sample'
+          AND pan.row_project_id = pi.project_id
+        UNION
+        SELECT pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+               pi.name as project_id
+        FROM study.Study s, sres.ExternalDatabase d,
+             sres.ExternalDatabaseRelease r, study.ProtocolAppNode pan,
+             study.StudyLink sl, core.ProjectInfo pi
+        WHERE s.external_database_release_id = r.external_database_release_id
+          AND r.external_database_id = d.external_database_id
+          AND s.study_id = sl.study_id
+          AND pan.row_project_id = pi.project_id
+          AND sl.protocol_app_node_id = pan.protocol_app_node_id
+          AND d.name like '%isolates_genbank_RSRC'
         -- using column positions, rather than column names, in ORDER BY on union
-        order by 2, 1
+        ORDER BY 2, 1
       ]]>
     </sql>
   </tuningTable>
@@ -52,42 +50,40 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-        create table &prefixOntologyRelation&1 nologging as
-        select ed.name as hierarchy_dataset_name,
+        CREATE TABLE &prefixOntologyRelation&1 AS
+        SELECT ed.name as hierarchy_dataset_name,
                edr.external_database_release_id as hierarchy_dataset_release_id,
                child.ontology_term_id as child_ontology_term_id,
                child.source_id as child_ontology_term_source_id,
                parent.ontology_term_id as parent_ontology_term_id,
                parent.source_id as parent_ontology_term_source_id
-        from sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
+        FROM sres.OntologyRelationship orel, sres.OntologyTerm parent, sres.OntologyTerm child,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
-        where orel.subject_term_id = child.ontology_term_id
-          and orel.object_term_id = parent.ontology_term_id
-          and orel.subject_term_id != orel.object_term_id -- work around ICEMR bug
-          and orel.object_term_id
-              not in (select ontology_term_id from sres.OntologyTerm where lower(name) = 'thing')
-          and orel.external_database_release_id = edr.external_database_release_id
-          and (orel.predicate_term_id is null
+        WHERE orel.subject_term_id = child.ontology_term_id
+          AND orel.object_term_id = parent.ontology_term_id
+          AND orel.subject_term_id != orel.object_term_id -- work around ICEMR bug
+          AND orel.object_term_id
+              not in (SELECT ontology_term_id FROM sres.OntologyTerm WHERE lower(name) = 'thing')
+          AND orel.external_database_release_id = edr.external_database_release_id
+          AND (orel.predicate_term_id is null
                or orel.predicate_term_id
-                  in (select ontology_term_id from sres.OntologyTerm where source_id = 'subClassOf'))
-          and edr.external_database_id = ed.external_database_id
-          and ed.name
-              in (select hierarchy_dataset_name
-                  from &prefixHierarchyMap)
+                  in (SELECT ontology_term_id FROM sres.OntologyTerm WHERE source_id = 'subClassOf'))
+          AND edr.external_database_id = ed.external_database_id
+          AND ed.name in (SELECT hierarchy_dataset_name FROM &prefixHierarchyMap)
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixOrelIx&1
         on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id, parent_ontology_term_id)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixOrelUqIx&1
         on &prefixOntologyRelation&1 (hierarchy_dataset_name, child_ontology_term_id)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -99,22 +95,31 @@
     <internalDependency name="OntologyRelation"/>
     <sql>
       <![CDATA[
-        create table &prefixOntologyAncestor&1 nologging as
-        select hierarchy_dataset_name, connect_by_root child_ontology_term_id as ontology_term_id,
-               parent_ontology_term_id as ancestor_ontology_term_id
-        from &prefixOntologyRelation
-        start with (hierarchy_dataset_name, child_ontology_term_id)
-                   in (select hierarchy_dataset_name, child_ontology_term_id
-                       from &prefixOntologyRelation)
-        connect by child_ontology_term_id = prior parent_ontology_term_id
-                   and hierarchy_dataset_name = prior hierarchy_dataset_name
+        CREATE TABLE &prefixOntologyAncestor&1 AS
+        WITH RECURSIVE cte AS (
+            SELECT hierarchy_dataset_name, child_ontology_term_id as ontology_term_id,
+                    parent_ontology_term_id as ancestor_ontology_term_id
+            FROM &prefixOntologyRelation
+            WHERE (hierarchy_dataset_name, child_ontology_term_id) IN (
+                SELECT hierarchy_dataset_name, child_ontology_term_id
+                FROM &prefixOntologyRelation
+            )
+            UNION
+            SELECT p.hierarchy_dataset_name, cte.ontology_term_id,
+                p.parent_ontology_term_id as ancestor_ontology_term_id
+            FROM &prefixOntologyRelation p, cte
+            WHERE p.child_ontology_term_id = cte.ancestor_ontology_term_id
+                AND p.hierarchy_dataset_name = cte.hierarchy_dataset_name
+        )
+        SELECT hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id
+        FROM cte
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixontac&1_uqix
                on &prefixOntologyAncestor&1 (hierarchy_dataset_name, ontology_term_id, ancestor_ontology_term_id)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -128,32 +133,30 @@
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
-        create table &prefixDatasetTerm&1 nologging as
-        select distinct ed.name as hierarchy_dataset_name, ot.ontology_term_id,
+        CREATE TABLE &prefixDatasetTerm&1 AS
+        SELECT DISTINCT ed.name as hierarchy_dataset_name, ot.ontology_term_id,
                         ot.source_id, syn.ontology_synonym as name,
                         syn.definition, cast(null as varchar(10)) as display_order, cast(null as varchar(10)) as variable
-        from sres.OntologyTerm ot, sres.OntologySynonym syn,
+        FROM sres.OntologyTerm ot, sres.OntologySynonym syn,
              sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
-        where ot.ontology_term_id = syn.ontology_term_id
-          and syn.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
-          and ed.name
-              in (select hierarchy_dataset_name
-                  from &prefixHierarchyMap)
+        WHERE ot.ontology_term_id = syn.ontology_term_id
+          AND syn.external_database_release_id = edr.external_database_release_id
+          AND edr.external_database_id = ed.external_database_id
+          AND ed.name in (SELECT hierarchy_dataset_name FROM &prefixHierarchyMap)
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixdt&1_uqix
                on &prefixDatasetTerm&1 (hierarchy_dataset_name, ontology_term_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixdt&1_1ix
                on &prefixDatasetTerm&1 (hierarchy_dataset_name, ontology_term_id, source_id, name)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -169,19 +172,19 @@
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-        create table &prefixPanRecord&1 as
-        select distinct pan.protocol_app_node_id as pan_id, pan.name as pan_name,
+        CREATE TABLE &prefixPanRecord&1 AS
+        SELECT DISTINCT pan.protocol_app_node_id as pan_id, pan.name as pan_name,
                         pan.isa_type as pan_isa_type, ot.name as pan_type,
                         ot.source_id as pan_type_source_id,
                         ot.ontology_term_id as pan_type_id
-        from study.ProtocolAppNode pan, sres.OntologyTerm ot, study.StudyLink sl,
+        FROM study.ProtocolAppNode pan, sres.OntologyTerm ot, study.StudyLink sl,
              study.Study s, sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
-        where ot.ontology_term_id = pan.type_id
-          and pan.protocol_app_node_id = sl.protocol_app_node_id
-          and sl.study_id = s.study_id
-          and s.external_database_release_id = r.external_database_release_id
-          and r.external_database_id = d.external_database_id
-          and (ot.source_id
+        WHERE ot.ontology_term_id = pan.type_id
+          AND pan.protocol_app_node_id = sl.protocol_app_node_id
+          AND sl.study_id = s.study_id
+          AND s.external_database_release_id = r.external_database_release_id
+          AND r.external_database_id = d.external_database_id
+          AND (ot.source_id
                in ('EUPATH_0000738', --Observation/Event
                    'PCO_0000024', -- Household
                    'EUPATH_0000096', --Participant
@@ -192,8 +195,8 @@
                   )
                or pan.isa_type = 'Sample'
               )
-          and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-        order by pan.name
+          AND (d.name = '&filterValue' or coalesce('&filterValue', '0') = '0')
+        ORDER BY pan.name
       ]]>
     </sql>
   </tuningTable>
@@ -231,92 +234,92 @@
     <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
-    create table &prefixPANResults&1 as
-    select distinct r.*
-    from (
-      select protocol_app_node_id as pan_id, 'Results::NAFeatureDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.NAFeatureDiffResult)
-    union
-      select protocol_app_node_id, 'Results::ReporterIntensity' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.ReporterIntensity)
-    union
-      select protocol_app_node_id, 'Results::SegmentResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.SegmentResult)
-    union
-      select protocol_app_node_id, 'Results::CompoundMassSpec' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.CompoundMassSpec)
-    union
-      select protocol_app_node_id, 'Results::NaFeatureHostResponse' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.NaFeatureHostResponse)
-    union
-      select protocol_app_node_id, 'ApiDB::ChrCopyNumber' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from ApiDB.ChrCopyNumber)
-    union
-      select protocol_app_node_id, 'ApiDB::GeneCopyNumber' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from ApiDB.GeneCopyNumber)
-    union
-      select protocol_app_node_id, 'Results::NAFeatureExpression' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.NAFeatureExpression)
-    union
-      select protocol_app_node_id, 'Results::EditingEvent' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.EditingEvent)
-    union
-      select protocol_app_node_id, 'Results::FamilyDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.FamilyDiffResult)
-    union
-      select protocol_app_node_id, 'Results::FamilyExpression' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.FamilyExpression)
-    union
-      select protocol_app_node_id, 'Results::GeneDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.GeneDiffResult)
-    union
-      select protocol_app_node_id, 'Results::GeneExpression' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.GeneExpression)
-    union
-      select protocol_app_node_id, 'Results::GeneSimilarity' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.GeneSimilarity)
-    union
-      select protocol_app_node_id, 'Results::ReporterDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.ReporterDiffResult)
-    union
-      select protocol_app_node_id, 'Results::ReporterExpression' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.ReporterExpression)
-      union
-    select protocol_app_node_id, 'Results::RnaDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.RnaDiffResult)
-      union
-    select protocol_app_node_id, 'Results::RnaExpression' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.RnaExpression)
-      union
-    select protocol_app_node_id, 'Results::LineageAbundance' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.LineageAbundance)
-    union
-    select protocol_app_node_id, 'Results::SegmentDiffResult' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.SegmentDiffResult)
-    union
-      select protocol_app_node_id, 'Results::SeqVariation' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from Results.SeqVariation)
-    union
-      select protocol_app_node_id, 'ApiDB::SequenceVariation' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from study.ProtocolAppNode where name like '% (Sequence Variation)')
-    union
-      select protocol_app_node_id, 'ApiDB::MassSpecSummary' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.MASSSPECSUMMARY)
-    union
-      select protocol_app_node_id, 'ApiDB::IntronJunction' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.IntronJunction)
-    union
-      select protocol_app_node_id, 'ApiDB::RflpGenotype' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.RflpGenotype)
-    union
-      select protocol_app_node_id, 'ApiDB::RflpGenotypeNumber' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.RflpGenotypeNumber)
-    union
-      select protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
-      where protocol_app_node_id in (select protocol_app_node_id from apidb.crisprphenotype)
-    ) r, &prefixpanextdbrls panExtDbRls
-    where r.pan_id = panExtDbRls.pan_id
-      and (panExtDbRls.dataset_name = '&filterValue' or nvl('&filterValue', '0') = '0')
+        CREATE TABLE &prefixPANResults&1 AS
+        SELECT DISTINCT r.*
+        FROM (
+          SELECT protocol_app_node_id as pan_id, 'Results::NAFeatureDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NAFeatureDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterIntensity' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterIntensity)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SegmentResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SegmentResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::CompoundMassSpec' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.CompoundMassSpec)
+        UNION
+          SELECT protocol_app_node_id, 'Results::NaFeatureHostResponse' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NaFeatureHostResponse)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::ChrCopyNumber' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM ApiDB.ChrCopyNumber)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::GeneCopyNumber' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM ApiDB.GeneCopyNumber)
+        UNION
+          SELECT protocol_app_node_id, 'Results::NAFeatureExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NAFeatureExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::EditingEvent' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.EditingEvent)
+        UNION
+          SELECT protocol_app_node_id, 'Results::FamilyDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.FamilyDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::FamilyExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.FamilyExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneSimilarity' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneSimilarity)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::RnaDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.RnaDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::RnaExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.RnaExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::LineageAbundance' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.LineageAbundance)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SegmentDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SegmentDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SeqVariation' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SeqVariation)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::SequenceVariation' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM study.ProtocolAppNode WHERE name like '% (Sequence Variation)')
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::MassSpecSummary' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.MASSSPECSUMMARY)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::IntronJunction' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.IntronJunction)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::RflpGenotype' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.RflpGenotype)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::RflpGenotypeNumber' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.RflpGenotypeNumber)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.crisprphenotype)
+        ) r, &prefixpanextdbrls panExtDbRls
+        WHERE r.pan_id = panExtDbRls.pan_id
+          AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
       ]]>
     </sql>
   </tuningTable>
@@ -332,58 +335,56 @@
     <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
-        create table &prefixPANIO&1 nologging as
-        select distinct io.*
-        from (
-        select i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
-               o.protocol_app_node_id output_pan_id,
-               in_type.source_id as input_pan_type_source_id,
-               --in_type.name as input_pan_type,
-               in_type.ontology_term_id as input_pan_type_id,
-               out_type.source_id as output_pan_type_source_id,
-               --out_type.name as output_pan_type,
-               out_type.ontology_term_id as output_pan_type_id
-        from study.ProtocolApp pa, study.Input i, study.Output o,
-             study.ProtocolAppNode in_pan, study.ProtocolAppNode out_pan,
-             sres.OntologyTerm in_type,  sres.OntologyTerm out_type
-        where i.protocol_app_id = pa.protocol_app_id
-          and o.protocol_app_id = pa.protocol_app_id
-          and i.protocol_app_node_id = in_pan.protocol_app_node_id
-          and o.protocol_app_node_id = out_pan.protocol_app_node_id
-          and in_pan.type_id = in_type.ontology_term_id(+)
-          and out_pan.type_id = out_type.ontology_term_id(+)
-          ) io, &prefixpanextdbrls panExtDbRls
-      where io.input_pan_id = panExtDbRls.pan_id -- the input and outputs will have same dataset in prefix enabled mode only
-        and (panExtDbRls.dataset_name = '&filterValue' or nvl('&filterValue', '0') = '0')
-        order by io.input_pan_id, io.output_pan_id
+        CREATE TABLE &prefixPANIO&1 AS
+        SELECT DISTINCT io.*
+        FROM (
+          SELECT i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
+                 o.protocol_app_node_id output_pan_id,
+                 in_type.source_id as input_pan_type_source_id,
+                 --in_type.name as input_pan_type,
+                 in_type.ontology_term_id as input_pan_type_id,
+                 out_type.source_id as output_pan_type_source_id,
+                 --out_type.name as output_pan_type,
+                 out_type.ontology_term_id as output_pan_type_id
+          FROM study.ProtocolApp pa, study.Input i, study.Output o,
+               study.ProtocolAppNode in_pan LEFT JOIN sres.OntologyTerm in_type ON in_pan.type_id = in_type.ontology_term_id,
+               study.ProtocolAppNode out_pan LEFT JOIN sres.OntologyTerm out_type ON out_pan.type_id = out_type.ontology_term_id
+          WHERE i.protocol_app_id = pa.protocol_app_id
+            AND o.protocol_app_id = pa.protocol_app_id
+            AND i.protocol_app_node_id = in_pan.protocol_app_node_id
+            AND o.protocol_app_node_id = out_pan.protocol_app_node_id
+        ) io, &prefixpanextdbrls panExtDbRls
+        WHERE io.input_pan_id = panExtDbRls.pan_id -- the input and outputs will have same dataset in prefix enabled mode only
+          AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
+        ORDER BY io.input_pan_id, io.output_pan_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_iix&1 on &prefixPANIO&1
                (input_pan_id, output_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_oix&1 on &prefixPANIO&1
                (output_pan_id, input_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_otypeix&1 on &prefixPANIO&1
                (output_pan_type_source_id, input_pan_type_source_id, output_pan_id, input_pan_id, protocol_app_id)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpainio2_itypeix&1 on &prefixPANIO&1
                (input_pan_type_source_id, output_pan_type_source_id, input_pan_id, output_pan_id, protocol_app_id)
-               tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -397,39 +398,39 @@
     <externalDependency name="study.Study"/>
     <sql>
       <![CDATA[
-        create table &prefixHierarchyMap&1 nologging as
-        select datasets.dataset_name,
-               nvl(dynamic_mapping.hierarchy, hardwired_hierarchy) as hierarchy_dataset_name
-        from (select name as dataset_name,
-                     case
-                       when lower(name) like '%microarrayantibody%'
-                            and name not like '%Helb_RecentExposure%'
-                         then 'Ontology_icemr_RSRC'
-                       when lower(name) like 'otu%'
-                         then 'OntologyTerm_microbiome_RSRC'
-                       else 'OntologyTerm_eupath_isa_RSRC'
-                     end as hardwired_hierarchy
-              from sres.ExternalDatabase
-              where external_database_id
-                    in (select edr.external_database_id
-                        from sres.ExternalDatabaseRelease edr, study.Study s
-                        where s.external_database_release_id = edr.external_database_release_id)
-                and (name = '&filterValue' or nvl('&filterValue', '0') = '0')
-             ) datasets,
-             (select dsp.name as dataset_name, d.name as hierarchy
-              from DatasetPresenter dsp, DatasetProperty p, sres.ExternalDatabase d
-               where p.property = 'webDisplayOntologyName'
-                and dsp.dataset_presenter_id = p.dataset_presenter_id
-                and 'OntologyTerm_' || p.value || '_RSRC' = d.name
-             ) dynamic_mapping
-        where datasets.dataset_name = dynamic_mapping.dataset_name(+)
+        CREATE TABLE &prefixHierarchyMap&1 AS
+        SELECT datasets.dataset_name,
+               coalesce(dynamic_mapping.hierarchy, hardwired_hierarchy) as hierarchy_dataset_name
+        FROM
+          (SELECT name as dataset_name,
+                   case
+                     when lower(name) like '%microarrayantibody%'
+                          and name not like '%Helb_RecentExposure%'
+                       then 'Ontology_icemr_RSRC'
+                     when lower(name) like 'otu%'
+                       then 'OntologyTerm_microbiome_RSRC'
+                     else 'OntologyTerm_eupath_isa_RSRC'
+                   end as hardwired_hierarchy
+            FROM sres.ExternalDatabase
+            WHERE external_database_id
+                  in (SELECT edr.external_database_id
+                      FROM sres.ExternalDatabaseRelease edr, study.Study s
+                      WHERE s.external_database_release_id = edr.external_database_release_id)
+              AND (name = '&filterValue' or length('&filterValue') = 0)
+          ) datasets LEFT JOIN
+          (SELECT dsp.name as dataset_name, d.name as hierarchy
+            FROM DatasetPresenter dsp, DatasetProperty p, sres.ExternalDatabase d
+             WHERE p.property = 'webDisplayOntologyName'
+              AND dsp.dataset_presenter_id = p.dataset_presenter_id
+              AND 'OntologyTerm_' || p.value || '_RSRC' = d.name
+          ) dynamic_mapping ON datasets.dataset_name = dynamic_mapping.dataset_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixhmap_ix0&1
         on &prefixHierarchyMap&1 (dataset_name, hierarchy_dataset_name)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -437,44 +438,44 @@
    <!-- renamed from PANExternalDatabaseRelease -->
   <tuningTable name="PANExtDbRls" prefixEnabled="true">
    <comment>ALL inputs and outputs</comment>
-    <externalDependency name="study.Study"/>
-    <externalDependency name="study.StudyLink"/>
+    <externalDependency name="study.NodeSet"/>
+    <externalDependency name="study.NodeNodeSet"/>
     <externalDependency name="study.ProtocolAppNode"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
- create table &prefixPANExtDbRls&1 nologging as
-select distinct protocol_app_node_id as pan_id, external_database_release_id, name as dataset_name
-from (
-SELECT
-  sl.protocol_app_node_id
-, s.external_database_release_id
-, d.name
-FROM
-  study.study s
-, study.studylink sl
-, sres.externaldatabaserelease r
-, sres.externaldatabase d
-WHERE
-  s.external_database_release_id = r.external_database_release_id
-  and r.external_database_id = d.external_database_id
-  and s.study_id = sl.study_id
-  and s.external_database_release_id is not null
-UNION
-select pan.protocol_app_node_id
-, pan.external_database_release_id
-, d.name
-from study.protocolappnode pan
-, sres.externaldatabaserelease r
-, sres.externaldatabase d
-WHERE
-  pan.external_database_release_id = r.external_database_release_id
-  and r.external_database_id = d.external_database_id
-  and pan.external_database_release_id is not null
-)
-WHERE (name = '&filterValue' or nvl('&filterValue', '0') = '0')
-ORDER BY external_database_release_id, protocol_app_node_id
+        CREATE TABLE &prefixPANExtDbRls&1 AS
+        SELECT distinct protocol_app_node_id as pan_id, external_database_release_id, name as dataset_name
+        FROM (
+          SELECT
+            sl.protocol_app_node_id
+          , s.external_database_release_id
+          , d.name
+          FROM
+            study.nodeSet s
+          , study.nodeNodeSet sl
+          , sres.externaldatabaserelease r
+          , sres.externaldatabase d
+          WHERE
+            s.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and s.node_set_id = sl.node_set_id
+            and s.external_database_release_id is not null
+          UNION
+          SELECT pan.protocol_app_node_id
+          , pan.external_database_release_id
+          , d.name
+          FROM study.protocolappnode pan
+          , sres.externaldatabaserelease r
+          , sres.externaldatabase d
+          WHERE
+            pan.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and pan.external_database_release_id is not null
+        ) t
+        WHERE (name = '&filterValue' or length('&filterValue') = 0)
+        ORDER BY external_database_release_id, protocol_app_node_id
       ]]>
     </sql>
   </tuningTable>
@@ -510,72 +511,73 @@ ORDER BY external_database_release_id, protocol_app_node_id
     <ancillaryTable name="PANUpstream"/>
     <sql>
       <![CDATA[
-        create table &prefixPANUpstream&1 nologging as
-        select *
-        from (  select connect_by_root output_pan_id as pan_id, input_pan_id as input_pan_id, protocol_app_id
-                from &prefixPanio
-                start with output_pan_id
-                           in (  select pan_id
-                                 from &prefixPANResults
-                               union
-                                 select pan_id
-                                 from &prefixSampleId
-                                 where project_id not in ('ClinEpiDB')
-                               union
-                                 select protocol_app_node_id
-                                 from study.ProtocolAppNode
-                                 where isa_type in ('Phenotype','Genotype')
-                              )
-                connect by prior input_pan_id = output_pan_id
-              union
-                select si.pan_id, si.pan_id as input_node_id, o.protocol_app_id
-                from &prefixSampleId si, study.Output o
-                where si.pan_id = o.protocol_app_node_id(+)
-              union
-                select panr.pan_id, panr.pan_id as input_pan_id, o.protocol_app_id
-                from &prefixPANRecord panr, study.Output o
-                where panr.pan_type != 'specimen'
-                  and panr.pan_id = o.protocol_app_node_id(+)
-              union
-                select c.protocol_app_node_id, c.protocol_app_node_id, o.protocol_app_id
-                from study.Characteristic c, study.Output o
-                where c.protocol_app_node_id = o.protocol_app_node_id(+)
-             )
-        where pan_id
-              not in (select pan.protocol_app_node_id
-                      from study.ProtocolAppNode pan, sres.ExternalDatabase ed,
-                           sres.ExternalDatabaseRelease edr
-                      where pan.external_database_release_id = edr.external_database_release_id
-                        and edr.external_database_id = ed.external_database_id
-                        and ed.name like '%_isolates_genbank_RSRC')
-        order by pan_id, protocol_app_id
+        CREATE TABLE &prefixPANUpstream&1 AS
+        SELECT *
+        FROM (
+          WITH RECURSIVE cte AS (
+            SELECT output_pan_id, input_pan_id, protocol_app_id
+            FROM apidbtuning.panio
+            WHERE output_pan_id IN (
+                SELECT pan_id FROM apidbtuning.PANResults
+                UNION
+                SELECT pan_id FROM apidbtuning.SampleId WHERE project_id not in ('ClinEpiDB')
+                UNION
+                SELECT protocol_app_node_id FROM study.ProtocolAppNode WHERE isa_type in ('Phenotype','Genotype')
+              )
+            UNION
+            SELECT cte.output_pan_id, p.input_pan_id, p.protocol_app_id
+            FROM cte, apidbtuning.panio p
+            WHERE cte.input_pan_id = p.output_pan_id
+          )
+          SELECT output_pan_id as pan_id, input_pan_id, protocol_app_id
+          FROM cte
+          UNION
+            SELECT si.pan_id, si.pan_id as input_node_id, o.protocol_app_id
+            FROM &prefixSampleId si LEFT JOIN study.Output o
+              ON si.pan_id = o.protocol_app_node_id
+          UNION
+            SELECT panr.pan_id, panr.pan_id as input_pan_id, o.protocol_app_id
+            FROM &prefixPANRecord panr LEFT JOIN study.Output o
+              ON panr.pan_id = o.protocol_app_node_id
+            WHERE panr.pan_type != 'specimen'
+          UNION
+            SELECT c.protocol_app_node_id, c.protocol_app_node_id, o.protocol_app_id
+            FROM study.Characteristic c LEFT JOIN study.Output o
+              ON c.protocol_app_node_id = o.protocol_app_node_id
+        ) t
+        WHERE pan_id NOT IN (
+          SELECT pan.protocol_app_node_id
+          FROM study.ProtocolAppNode pan, sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
+          WHERE pan.external_database_release_id = edr.external_database_release_id
+            AND edr.external_database_id = ed.external_database_id
+            AND ed.name like '%_isolates_genbank_RSRC'
+        )
+        ORDER BY pan_id, protocol_app_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpanup_pix&1 on &prefixPANUpstream&1 (pan_id, input_pan_id, protocol_app_id)
-             tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpanup_iix&1 on &prefixPANUpstream&1 (input_pan_id, pan_id, protocol_app_id)
-             tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create table &prefixInferredParams&1 nologging as
-        with param_term
-             as (select pp.protocol_param_id, ot.ontology_term_id, ot.source_id,
-                 -- use row_number() to get only the oldest of terms that share a name
-                 row_number()
-                   over (partition by ot.name order by ot.ontology_term_id)
-                   as ranking
-                 from study.ProtocolParam pp, sres.OntologyTerm ot
-                 where ot.name = pp.name
-                )
-        select distinct node_inputs.pan_id, ot.name as pan_type,
+        CREATE TABLE &prefixInferredParams&1 AS
+        WITH param_term AS (
+          SELECT pp.protocol_param_id, ot.ontology_term_id, ot.source_id,
+             -- use row_number() to get only the oldest of terms that share a name
+            row_number() over (partition by ot.name order by ot.ontology_term_id) as ranking
+          FROM study.ProtocolParam pp, sres.OntologyTerm ot
+          WHERE ot.name = pp.name
+        )
+        SELECT distinct node_inputs.pan_id, ot.name as pan_type,
                ot.ontology_term_id as pan_type_id,
                pan.isa_type as pan_isa_type, ds.name as dataset_name,
                p.name as protocol, proto_type.name as protocol_type, p.protocol_type_id,
@@ -584,51 +586,65 @@ ORDER BY external_database_release_id, protocol_app_node_id
                param_term.source_id as property_source_id,
                pap.value, pap.protocol_app_param_id, ds.type as dataset_type, ds.subtype as dataset_subtype, tn.name as organism,
                pp.unit_type_id as unit_id,
-               nvl(mt.name, 'assay') as ancestor_pan_type,
+               coalesce(mt.name, 'assay') as ancestor_pan_type,
                mt.ontology_term_id as ancestor_pan_type_id
-        from &prefixPANUpstream&1 node_inputs, param_term, study.ProtocolAppParam pap, sres.ontologyterm ot,
-             study.ProtocolParam pp, study.Protocol p, study.StudyLink sl,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             apidb.Datasource ds, study.ProtocolAppNode pan, sres.TaxonName tn, sres.ontologyterm proto_type,
-             sres.OntologyTerm mt,
-             (  select s.study_id, i.external_database_release_id
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-              union
-                select s.study_id, s.external_database_release_id
-                from study.Study s) study_release
-        where node_inputs.protocol_app_id = pap.protocol_app_id
-          and pap.protocol_param_id = pp.protocol_param_id
-          and pp.protocol_id = p.protocol_id
-          and node_inputs.pan_id = sl.protocol_app_node_id
-          and sl.study_id = study_release.study_id
-          and study_release.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
-          and ed.name = ds.name
-          and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-          and node_inputs.pan_id = pan.protocol_app_node_id
-          and pan.type_id = ot.ontology_term_id (+)
-          and ds.taxon_id = tn.taxon_id(+)
-          and (tn.name_class = 'scientific name' or tn.name_class is null)
-          and p.name not like '%::%' -- avoid Perl class names
-          and p.name not like '%data transformation' -- avoid data transformation protocol parameters
-          and p.protocol_type_id = proto_type.ontology_term_id
-          and pp.protocol_param_id = param_term.protocol_param_id
-          and param_term.ranking = 1
-          and pan.type_id = mt.ontology_term_id(+)
-        order by organism, type, subtype, pan_name
+        FROM &prefixPANUpstream&1 node_inputs
+          INNER JOIN study.ProtocolAppParam pap ON node_inputs.protocol_app_id = pap.protocol_app_id
+          INNER JOIN study.ProtocolParam pp ON pap.protocol_param_id = pp.protocol_param_id
+          INNER JOIN study.Protocol p ON pp.protocol_id = p.protocol_id
+          INNER JOIN study.StudyLink sl ON node_inputs.pan_id = sl.protocol_app_node_id
+          INNER JOIN study.ProtocolAppNode pan ON node_inputs.pan_id = pan.protocol_app_node_id
+          INNER JOIN sres.ontologyterm proto_type ON p.protocol_type_id = proto_type.ontology_term_id
+          INNER JOIN param_term ON pp.protocol_param_id = param_term.protocol_param_id
+          INNER JOIN (
+            SELECT s.study_id, i.external_database_release_id
+            FROM study.Study s, study.Study i
+            WHERE s.investigation_id = i.study_id
+            UNION
+            SELECT s.study_id, s.external_database_release_id
+            FROM study.Study s
+          ) study_release ON sl.study_id = study_release.study_id
+          INNER JOIN sres.ExternalDatabaseRelease edr ON study_release.external_database_release_id = edr.external_database_release_id
+          INNER JOIN sres.ExternalDatabase ed ON edr.external_database_id = ed.external_database_id
+          INNER JOIN apidb.Datasource ds ON ed.name = ds.name
+          LEFT JOIN sres.ontologyterm ot ON pan.type_id = ot.ontology_term_id
+          LEFT JOIN sres.TaxonName tn ON ds.taxon_id = tn.taxon_id
+          LEFT JOIN sres.OntologyTerm mt ON pan.type_id = mt.ontology_term_id
+        WHERE
+          (ed.name = '&filterValue' or length('&filterValue') = 0)
+          AND (tn.name_class = 'scientific name' or tn.name_class is null)
+          AND p.name not like '%::%' -- avoid Perl class names
+          AND p.name not like '%data transformation' -- avoid data transformation protocol parameters
+          AND param_term.ranking = 1
+        ORDER BY organism, type, subtype, pan_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixInferredParams&1 ip
-        set property
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ip.property_id
-                 and hm.dataset_name = ip.dataset_name)
-        where property_id
+        UPDATE &prefixInferredParams&1 ip
+        SET property
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ip.property_id
+                 AND hm.dataset_name = ip.dataset_name)
+        WHERE property_id
+              in (SELECT dt.ontology_term_id
+                  FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    AND hm.dataset_name = ip.dataset_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        UPDATE &prefixInferredParams&1 ip
+        SET pan_type
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ip.pan_type_id
+                 AND hm.dataset_name = ip.dataset_name)
+        WHERE pan_type_id
               in (select dt.ontology_term_id
                   from &prefixHierarchyMap hm, &prefixDatasetTerm dt
                   where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
@@ -637,272 +653,229 @@ ORDER BY external_database_release_id, protocol_app_node_id
     </sql>
     <sql>
       <![CDATA[
-        update &prefixInferredParams&1 ip
-        set pan_type
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ip.pan_type_id
-                 and hm.dataset_name = ip.dataset_name)
-        where pan_type_id
-              in (select dt.ontology_term_id
-                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                    and hm.dataset_name = ip.dataset_name)
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create table &prefixValueCaps&1 nologging as
-        select qualifier_id, lower_value, commonest_capitalization
-        from (select qualifier_id,
-                     cast(value as varchar2(3100)) as commonest_capitalization,
-                     cast(lower(value) as varchar2(3100)) as lower_value,
+        CREATE TABLE &prefixValueCaps&1 AS
+        SELECT qualifier_id, lower_value, commonest_capitalization
+        FROM (SELECT qualifier_id,
+                     cast(value as varchar(3100)) as commonest_capitalization,
+                     cast(lower(value) as varchar(3100)) as lower_value,
                      dense_rank() over (partition by qualifier_id, lower(value) order by count(*) desc) as ranking
-              from study.Characteristic c, study.StudyLink sl, study.Study s,
+              FROM study.Characteristic c, study.StudyLink sl, study.Study s,
                    sres.ExternalDatabase d, sres.ExternalDatabaseRelease r
-              where c.protocol_app_node_id = sl.protocol_app_node_id
-                and sl.study_id = s.study_id
-                and s.external_database_release_id = r.external_database_release_id
-                and r.external_database_id = d.external_database_id
-                and (d.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-              group by qualifier_id, value
-             )
-        where ranking = 1
+              WHERE c.protocol_app_node_id = sl.protocol_app_node_id
+                AND sl.study_id = s.study_id
+                AND s.external_database_release_id = r.external_database_release_id
+                AND r.external_database_id = d.external_database_id
+                AND (d.name = '&filterValue' or length('&filterValue') = 0)
+              GROUP BY qualifier_id, value
+             ) t
+        WHERE ranking = 1
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixvalcap_ix&1
                on &prefixValueCaps&1 (qualifier_id, lower_value, commonest_capitalization)
-               tablespace indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create table &prefixInferredChars&1 nologging as
-        select -- distinct -- should be unneeded and can use too much temp space
-                sample_pan.protocol_app_node_id as pan_id,
-                        sample_ot.name as pan_type,
-                        sample_ot.ontology_term_id as pan_type_id,
-                        sample_pan.isa_type as pan_isa_type,
-                   --   pan.protocol_app_node_id as ancestor_pan_id,
-                        nvl(mt.name, 'assay') as ancestor_pan_type,
-                        mt.ontology_term_id as ancestor_pan_type_id,
-                       CASE 
-                         WHEN attribute_term.source_id = 'EUPATH_0000455'
-                           -- this term should be replaced by OBI_0003056
-                         THEN 'Average mapping coverage'
-                         ELSE attribute_term.name
-                        END AS property, -- if not a material type it has to be an assay
-                        attribute_term.ontology_term_id as property_id,
-                        attribute_term.source_id as property_source_id,
-                        nvl(value_term.name, caps.commonest_capitalization) as value,
-                        value_term.ontology_term_id as value_id, c.characteristic_id,
-                        ds.name as dataset_name, hm.hierarchy_dataset_name,
-                        sample_pan.name as pan_name, ds.type as dataset_type,
-                        ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
-                 from &prefixPANUpstream&1 node_inputs, study.ProtocolAppNode pan, &prefixValueCaps&1 caps,
-                      sres.OntologyTerm value_term, sres.OntologyTerm mt,
-                      sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-                      sres.OntologyTerm attribute_term, apidb.Datasource ds, sres.TaxonName tn,
-                      study.ProtocolAppNode sample_pan, sres.OntologyTerm sample_ot,
-                      &prefixHierarchyMap hm,
-                      (select min(characteristic_id) as characteristic_id,
-                              protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
-                       from study.Characteristic
-                       group by protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
-                      ) c,
-                      (select distinct sl.protocol_app_node_id, study_release.external_database_release_id
-                       from study.StudyLink sl,
-                            (  select s.study_id, i.external_database_release_id
-                               from study.Study s, study.Study i
-                               where s.investigation_id = i.study_id
-                             union
-                               select s.study_id, s.external_database_release_id
-                               from study.Study s) study_release
-                       where sl.study_id = study_release.study_id) pan_release
-                 where pan.protocol_app_node_id = c.protocol_app_node_id
-                   and pan.type_id = mt.ontology_term_id (+)
-                   and c.ontology_term_id = value_term.ontology_term_id(+)
-                   and c.qualifier_id = caps.qualifier_id(+)
-                   and lower(c.value) = caps.lower_value(+)
-                   and c.qualifier_id = attribute_term.ontology_term_id(+)
-                   and node_inputs.input_pan_id = pan.protocol_app_node_id
-                   and node_inputs.pan_id = pan_release.protocol_app_node_id
-                   and pan_release.external_database_release_id = edr.external_database_release_id
-                   and edr.external_database_id = ed.external_database_id
-                   and ed.name = ds.name
-                   and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-                   and node_inputs.pan_id = sample_pan.protocol_app_node_id
-                   and sample_pan.type_id = sample_ot.ontology_term_id (+)
-                   and ds.taxon_id = tn.taxon_id(+)
-                   and (tn.name_class = 'scientific name' or tn.name_class is null)
-                -- temporary may need adjusting for RNASeq
-                   and (pan.type_id is not null
-                        or attribute_term.source_id
-                           in ('GENEPIO_0000092', -- average mapping coverage
-                               'EUPATH_0000455'  -- proportion mapped reads
-                              )
-                       )
-                   and ds.name = hm.dataset_name
---                   and ds.name != 'ISASimple_RSRC'
---                   and ds.name != 'ISA_RSRC'
---                 order by organism, type, subtype, pan_name
+        CREATE TABLE &prefixInferredChars&1 AS
+        SELECT -- distinct -- should be unneeded and can use too much temp space
+          sample_pan.protocol_app_node_id as pan_id,
+          sample_ot.name as pan_type,
+          sample_ot.ontology_term_id as pan_type_id,
+          sample_pan.isa_type as pan_isa_type,
+          --pan.protocol_app_node_id as ancestor_pan_id,
+          coalesce(mt.name, 'assay') as ancestor_pan_type,
+          mt.ontology_term_id as ancestor_pan_type_id,
+          CASE
+            WHEN attribute_term.source_id = 'EUPATH_0000455'
+             -- this term should be replaced by OBI_0003056
+            THEN 'Average mapping coverage'
+            ELSE attribute_term.name
+          END AS property, -- if not a material type it has to be an assay
+          attribute_term.ontology_term_id as property_id,
+          attribute_term.source_id as property_source_id,
+          coalesce(value_term.name, caps.commonest_capitalization) as value,
+          value_term.ontology_term_id as value_id, c.characteristic_id,
+          ds.name as dataset_name, hm.hierarchy_dataset_name,
+          sample_pan.name as pan_name, ds.type as dataset_type,
+          ds.subtype as dataset_subtype, tn.name as organism, c.unit_id
+        FROM &prefixPANUpstream&1 node_inputs
+          INNER JOIN study.ProtocolAppNode pan ON node_inputs.input_pan_id = pan.protocol_app_node_id
+          INNER JOIN study.ProtocolAppNode sample_pan ON node_inputs.pan_id = sample_pan.protocol_app_node_id
+          INNER JOIN (
+            SELECT min(characteristic_id) as characteristic_id,
+                    protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
+             FROM study.Characteristic
+             GROUP BY protocol_app_node_id, ontology_term_id, qualifier_id, unit_id, value
+          ) c ON pan.protocol_app_node_id = c.protocol_app_node_id
+          INNER JOIN (
+            SELECT DISTINCT sl.protocol_app_node_id, study_release.external_database_release_id
+            FROM study.StudyLink sl,
+              (  SELECT s.study_id, i.external_database_release_id
+                 FROM study.Study s, study.Study i
+                 WHERE s.investigation_id = i.study_id
+                 UNION
+                 SELECT s.study_id, s.external_database_release_id
+                 FROM study.Study s) study_release
+            WHERE sl.study_id = study_release.study_id
+          ) pan_release ON node_inputs.pan_id = pan_release.protocol_app_node_id
+          INNER JOIN sres.ExternalDatabaseRelease edr ON pan_release.external_database_release_id = edr.external_database_release_id
+          INNER JOIN sres.ExternalDatabase ed ON edr.external_database_id = ed.external_database_id
+          INNER JOIN apidb.Datasource ds ON ed.name = ds.name
+          INNER JOIN &prefixHierarchyMap hm ON ds.name = hm.dataset_name
+          LEFT JOIN sres.TaxonName tn ON ds.taxon_id = tn.taxon_id
+          LEFT JOIN sres.OntologyTerm value_term ON c.ontology_term_id = value_term.ontology_term_id
+          LEFT JOIN sres.OntologyTerm attribute_term ON c.qualifier_id = attribute_term.ontology_term_id
+          LEFT JOIN sres.OntologyTerm mt ON pan.type_id = mt.ontology_term_id
+          LEFT JOIN sres.OntologyTerm sample_ot ON sample_pan.type_id = sample_ot.ontology_term_id
+          LEFT JOIN &prefixValueCaps&1 caps ON c.qualifier_id = caps.qualifier_id AND lower(c.value) = caps.lower_value
+        WHERE
+         (ed.name = '&filterValue' or length('&filterValue') = 0)
+         AND (tn.name_class = 'scientific name' or tn.name_class is null)
+         -- temporary may need adjusting for RNASeq
+         AND (pan.type_id is not null
+              OR attribute_term.source_id
+                 IN ('GENEPIO_0000092', -- average mapping coverage
+                     'EUPATH_0000455'  -- proportion mapped reads
+                    )
+             )
+         --AND ds.name != 'ISASimple_RSRC'
+         --AND ds.name != 'ISA_RSRC'
+       --ORDER BY organism, type, subtype, pan_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixinfchar_ix&1
                on &prefixInferredChars&1 (pan_id, property_id)
-               tablespace indx
-      ]]>
-    </sql>
 
-<!--
-    <sql>
-      <![CDATA[
-        create unique index &prefixpanchar_uqix&1
-             on &prefixInferredChars&1 (dataset_name, pan_id, property, property_source_id, value)
-             tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        create index &prefixpanchar_ix&1 on &prefixInferredChars&1 (dataset_name, dataset_type, dataset_subtype, pan_id, pan_name, property, value)
-             tablespace indx
-      ]]>
-    </sql>
--->
-
-    <sql>
-      <![CDATA[
-        update &prefixInferredChars&1 ic
-        set property
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ic.property_id
-                 and hm.dataset_name = ic.dataset_name)
-        where property_id
-              in (select dt.ontology_term_id
-                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                    and hm.dataset_name = ic.dataset_name)
+        UPDATE &prefixInferredChars&1 ic
+        SET property
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ic.property_id
+                 AND hm.dataset_name = ic.dataset_name)
+        WHERE property_id
+              in (SELECT dt.ontology_term_id
+                  FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    AND hm.dataset_name = ic.dataset_name)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixInferredChars&1 ic
-        set value
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ic.value_id
-                 and hm.dataset_name = ic.dataset_name)
-        where value_id
-              in (select dt.ontology_term_id
-                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                    and hm.dataset_name = ic.dataset_name)
+        UPDATE &prefixInferredChars&1 ic
+        SET value
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ic.value_id
+                 AND hm.dataset_name = ic.dataset_name)
+        WHERE value_id
+              in (SELECT dt.ontology_term_id
+                  FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    AND hm.dataset_name = ic.dataset_name)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixInferredChars&1 ic
-        set pan_type
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ic.pan_type_id
-                 and hm.dataset_name = ic.dataset_name)
-        where pan_type_id
-              in (select dt.ontology_term_id
-                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                    and hm.dataset_name = ic.dataset_name)
+        UPDATE &prefixInferredChars&1 ic
+        SET pan_type
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ic.pan_type_id
+                 AND hm.dataset_name = ic.dataset_name)
+        WHERE pan_type_id
+              in (SELECT dt.ontology_term_id
+                  FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    AND hm.dataset_name = ic.dataset_name)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixInferredChars&1 ic
-        set ancestor_pan_type
-            = (select dt.name
-               from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-               where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                 and dt.ontology_term_id = ic.ancestor_pan_type_id
-                 and hm.dataset_name = ic.dataset_name)
-        where ancestor_pan_type_id
-              in (select dt.ontology_term_id
-                  from &prefixHierarchyMap hm, &prefixDatasetTerm dt
-                  where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
-                    and hm.dataset_name = ic.dataset_name)
+        UPDATE &prefixInferredChars&1 ic
+        SET ancestor_pan_type
+            = (SELECT dt.name
+               FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+               WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                 AND dt.ontology_term_id = ic.ancestor_pan_type_id
+                 AND hm.dataset_name = ic.dataset_name)
+        WHERE ancestor_pan_type_id
+              in (SELECT dt.ontology_term_id
+                  FROM &prefixHierarchyMap hm, &prefixDatasetTerm dt
+                  WHERE hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
+                    AND hm.dataset_name = ic.dataset_name)
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpancharorg_ix&1 on &prefixInferredChars&1 (organism, dataset_type, dataset_subtype, dataset_name, pan_id, pan_name, property, value)
-             tablespace indx
+
       ]]>
     </sql>
-
     <sql>
       <![CDATA[
-create table &prefixSampleProcess&1 nologging as
-SELECT
-  p1.name
-, p1.protocol_app_node_id
-, p3.name as input_name
-, p3.protocol_app_node_id as input_pan_id
-, case
-    WHEN ot3.name LIKE 'data%'
-    THEN 'Data'
-    else p3.isa_type
-  end as input_isa_type
-, ot3.name as input_material_type
-, p.name AS protocol
-, p2.name AS output_name
-, p2.protocol_app_node_id AS output_pan_id
-, case
-    WHEN ot2.name LIKE 'data%'
-    THEN 'Data'
-    else p2.isa_type
-  end as output_isa_type
-, ot2.name AS output_material_type
-FROM
-  (SELECT
-    connect_by_root input_pan_id AS pan_id
-  , input_pan_id
-  , output_pan_id
-  , protocol_app_id
-  from
-    &prefixpanio
-    start with input_pan_id in (SELECT pan_id FROM &prefixSampleId)
-    CONNECT BY prior output_pan_id = input_pan_id
-  ) io
-, study.protocolappnode p1
-, study.protocolappnode p2
-, study.protocolappnode p3
-, sres.ontologyterm ot2
-, sres.ontologyterm ot3
-, study.protocol p
-, study.protocolapp pa
-WHERE
-  io.pan_id = p1.protocol_app_node_id
-  and io.output_pan_id = p2.protocol_app_node_id
-  and io.input_pan_id = p3.protocol_app_node_id
-  and p2.type_id = ot2.ontology_term_id (+)
-  and p3.type_id = ot3.ontology_term_id (+)
-  and io.protocol_app_id = pa.protocol_app_id
-  and pa.protocol_id = p.protocol_id
-ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
+        CREATE TABLE &prefixSampleProcess&1 AS
+        SELECT
+            p1.name
+          , p1.protocol_app_node_id
+          , p3.name as input_name
+          , p3.protocol_app_node_id as input_pan_id
+          , case
+              WHEN ot3.name LIKE 'data%'
+              THEN 'Data'
+              else p3.isa_type
+            end as input_isa_type
+          , ot3.name as input_material_type
+          , p.name AS protocol
+          , p2.name AS output_name
+          , p2.protocol_app_node_id AS output_pan_id
+          , case
+              WHEN ot2.name LIKE 'data%'
+              THEN 'Data'
+              else p2.isa_type
+            end as output_isa_type
+          , ot2.name AS output_material_type
+        FROM
+          (
+            WITH RECURSIVE cte AS(
+              SELECT input_pan_id AS pan_id, input_pan_id, output_pan_id, protocol_app_id
+              FROM &prefixpanio
+              WHERE input_pan_id IN (SELECT pan_id from &prefixSampleId)
+              UNION
+              SELECT cte.pan_id as pan_id, p.input_pan_id, p.output_pan_id, p.protocol_app_id
+              FROM cte, &prefixpanio p
+              WHERE cte.output_pan_id = p.input_pan_id
+            )
+            SELECT pan_id, input_pan_id, output_pan_id, protocol_app_id
+            FROM cte
+          ) io
+          INNER JOIN study.protocolappnode p1 ON io.pan_id = p1.protocol_app_node_id
+          INNER JOIN study.protocolappnode p2 ON io.output_pan_id = p2.protocol_app_node_id
+          INNER JOIN study.protocolappnode p3 ON io.input_pan_id = p3.protocol_app_node_id
+          INNER JOIN study.protocolapp pa ON io.protocol_app_id = pa.protocol_app_id
+          INNER JOIN study.protocol p ON pa.protocol_id = p.protocol_id
+          LEFT JOIN sres.ontologyterm ot2 ON p2.type_id = ot2.ontology_term_id
+          LEFT JOIN sres.ontologyterm ot3 ON p3.type_id = ot3.ontology_term_id
+        ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixsampproc_ix&1
              on &prefixSampleProcess&1 (name, output_pan_id)
-             tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -918,25 +891,25 @@ ORDER BY name, p1.protocol_app_node_id, input_pan_id, output_pan_id
     <externalDependency name="study.ProtocolAppNode"/>
     <sql>
       <![CDATA[
-        create table &prefixPANParamValues&1 nologging as
-select
-  p.name as protocol
-, pp.name as protocol_param
-, pap.value as protocol_param_value
-, pan.name as protocol_app_node_name
-, pan.protocol_app_node_id
-FROM
-  study.protocolappparam pap
-, study.protocolparam pp
-, study.protocol p
-, &prefixpanio io
-, study.protocolappnode pan
-WHERE
-  pp.protocol_param_id = pap.protocol_param_id
-  AND p.protocol_id = pp.protocol_id
-  AND io.protocol_app_id = pap.protocol_app_id
-  AND io.output_pan_id = pan.protocol_app_node_id
-ORDER BY protocol_app_node_name
+        create table &prefixPANParamValues&1 as
+        SELECT
+            p.name as protocol
+          , pp.name as protocol_param
+          , pap.value as protocol_param_value
+          , pan.name as protocol_app_node_name
+          , pan.protocol_app_node_id
+        FROM
+            study.protocolappparam pap
+          , study.protocolparam pp
+          , study.protocol p
+          , &prefixpanio io
+          , study.protocolappnode pan
+        WHERE
+          pp.protocol_param_id = pap.protocol_param_id
+          AND p.protocol_id = pp.protocol_id
+          AND io.protocol_app_id = pap.protocol_app_id
+          AND io.output_pan_id = pan.protocol_app_node_id
+        ORDER BY protocol_app_node_name
       ]]>
     </sql>
   </tuningTable>
@@ -959,23 +932,23 @@ ORDER BY protocol_app_node_name
     <externalDependency name="study.StudyLink"/>
     <sql>
       <![CDATA[
-        create table &prefixDefaultChars&1 nologging as
+        CREATE TABLE &prefixDefaultChars&1 AS
         -- regular query for most datasets
-        select ed.name as dataset_name
-        , ds.type as dataset_type
-        , CASE WHEN ds.type = 'genome'
-            THEN 'HTS_SNP'
-            ELSE ds.subtype
-            END as dataset_subtype
-        , tn.name as organism
-        , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan.name END AS pan_name
-        , pan.protocol_app_node_id as pan_id
-        , pan.isa_type as pan_isa_type
-        , nvl(ot.name, 'dataset') as property
-        , ot.source_id AS property_source_id
-        , ot.ontology_term_id AS property_id
-        , study_release.name as study_name
-        , CASE
+        SELECT ed.name as dataset_name
+          , ds.type as dataset_type
+          , CASE WHEN ds.type = 'genome'
+              THEN 'HTS_SNP'
+              ELSE ds.subtype
+              END as dataset_subtype
+          , tn.name as organism
+          , CASE WHEN ds.type = 'genome' THEN o.strain_abbrev ELSE pan.name END AS pan_name
+          , pan.protocol_app_node_id as pan_id
+          , pan.isa_type as pan_isa_type
+          , coalesce(ot.name, 'dataset') as property
+          , ot.source_id AS property_source_id
+          , ot.ontology_term_id AS property_id
+          , study_release.name as study_name
+          , CASE
             WHEN ds.type = 'genome'
               THEN tn.name || ' ' || dsp.display_name
             WHEN dsp.display_name IS NULL
@@ -985,89 +958,86 @@ ORDER BY protocol_app_node_name
                            '_', ' ')
             ELSE dsp.display_name
           END as value,
-          nvl(mt.name, 'assay') as ancestor_pan_type,
+          coalesce(mt.name, 'assay') as ancestor_pan_type,
           mt.ontology_term_id as ancestor_pan_type_id
-        from study.ProtocolAppNode pan, apidb.Datasource ds, study.StudyLink sl,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.TaxonName tn, apidbTuning.DatasetPresenter dsp, apidb.organism o,
-             sres.OntologyTerm mt,
-             (  select s.study_id, i.external_database_release_id, i.name
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-              union
-                select s.study_id, s.external_database_release_id, s.name
-                from study.Study s) study_release,
-             (select max(ontology_term_id) as ontology_term_id,
-                     max(source_id) as source_id, max(name) as name
-              from sres.OntologyTerm
-              where source_id = 'IAO_0000100' -- "data set"
-             ) ot
-        where pan.protocol_app_node_id in (select pan_id
-                                           from &prefixPANResults)
-          and pan.protocol_app_node_id = sl.protocol_app_node_id
-          and sl.study_id = study_release.study_id
-          and study_release.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
-          and ed.name = replace(ds.name, 'primary_genome_RSRC', 'NGS_SNPsAndVariations')
-          and ds.taxon_id = tn.taxon_id(+)
-          and ds.taxon_id = o.taxon_id(+)
+        FROM study.ProtocolAppNode pan
+          INNER JOIN study.StudyLink sl ON pan.protocol_app_node_id = sl.protocol_app_node_id
+          INNER JOIN (
+            SELECT s.study_id, i.external_database_release_id, i.name
+            FROM study.Study s, study.Study i
+            WHERE s.investigation_id = i.study_id
+            UNION
+            SELECT s.study_id, s.external_database_release_id, s.name
+            FROM study.Study s
+          ) study_release ON sl.study_id = study_release.study_id
+          INNER JOIN sres.ExternalDatabaseRelease edr ON study_release.external_database_release_id = edr.external_database_release_id
+          INNER JOIN sres.ExternalDatabase ed ON edr.external_database_id = ed.external_database_id
+          INNER JOIN apidb.Datasource ds ON ed.name = replace(ds.name, 'primary_genome_RSRC', 'NGS_SNPsAndVariations')
           --cnv datasets use hts_snp presenters
-          and replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name (+)
-          and (tn.name_class = 'scientific name' or tn.name_class is null)
-          and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-          and pan.type_id = mt.ontology_term_id(+)
-UNION ALL
+          LEFT JOIN apidbTuning.DatasetPresenter dsp ON replace(ds.name, 'copyNumberVariations', 'HTS_SNP') = dsp.name
+          LEFT JOIN sres.TaxonName tn ON ds.taxon_id = tn.taxon_id
+          LEFT JOIN apidb.organism o ON ds.taxon_id = o.taxon_id
+          LEFT JOIN sres.OntologyTerm mt ON pan.type_id = mt.ontology_term_id
+          CROSS JOIN (
+            SELECT max(ontology_term_id) as ontology_term_id,
+                   max(source_id) as source_id, max(name) as name
+            FROM sres.OntologyTerm
+            WHERE source_id = 'IAO_0000100' -- "data set"
+          ) ot
+        WHERE pan.protocol_app_node_id in (SELECT pan_id FROM &prefixPANResults)
+          AND (tn.name_class = 'scientific name' or tn.name_class is null)
+          AND (ed.name = '&filterValue' or length('&filterValue') = 0)
+        UNION ALL
         -- special query for reference strain
-        select ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
+        SELECT ed.name as dataset_name, 'SNP' as dataset_type, 'HTS_SNP' as dataset_subtype,
                tn.name as organism, o.strain_abbrev as pan_name, pan.protocol_app_node_id as pan_id,
                pan.isa_type as pan_isa_type,
                ot.name as property,
                ot.source_id as property_source_id,
                ot.ontology_term_id as property_id,
                study_release.name as study_name, tn.name as value,
-               nvl(mt.name, 'assay') as ancestor_pan_type,
+               coalesce(mt.name, 'assay') as ancestor_pan_type,
                mt.ontology_term_id as ancestor_pan_type_id
-        from study.ProtocolAppNode pan, study.StudyLink sl, sres.OntologyTerm ot,
-             sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
-             sres.TaxonName tn, apidb.Organism o, sres.OntologyTerm mt,
-             (  select s.study_id, i.external_database_release_id, i.name
-                from study.Study s, study.Study i
-                where s.investigation_id = i.study_id
-              union
-                select s.study_id, s.external_database_release_id, s.name
-                from study.Study s) study_release
-        where pan.protocol_app_node_id in (select pan_id
-                                           from &prefixPANResults)
-          and pan.protocol_app_node_id = sl.protocol_app_node_id
-          and sl.study_id = study_release.study_id
-          and study_release.external_database_release_id = edr.external_database_release_id
-          and edr.external_database_id = ed.external_database_id
-          and ed.name like '%_NGS_SNPsAndVariations'
-          and o.abbrev = replace(ed.name, '_NGS_SNPsAndVariations', '')
-          and o.taxon_id = tn.taxon_id(+)
-          and (tn.name_class = 'scientific name' or tn.name_class is null)
-          and (ed.name = '&filterValue' or nvl('&filterValue', '0') = '0')
-          and ot.source_id
+        FROM study.ProtocolAppNode pan
+          INNER JOIN study.StudyLink sl ON pan.protocol_app_node_id = sl.protocol_app_node_id
+          INNER JOIN (
+            SELECT s.study_id, i.external_database_release_id, i.name
+            FROM study.Study s, study.Study i
+            WHERE s.investigation_id = i.study_id
+            UNION
+            SELECT s.study_id, s.external_database_release_id, s.name
+            FROM study.Study s
+          ) study_release ON sl.study_id = study_release.study_id
+          INNER JOIN sres.ExternalDatabaseRelease edr ON study_release.external_database_release_id = edr.external_database_release_id
+          INNER JOIN sres.ExternalDatabase ed ON edr.external_database_id = ed.external_database_id
+          INNER JOIN apidb.Organism o ON o.abbrev = replace(ed.name, '_NGS_SNPsAndVariations', '')
+          LEFT JOIN sres.TaxonName tn ON o.taxon_id = tn.taxon_id
+          LEFT JOIN sres.OntologyTerm mt ON pan.type_id = mt.ontology_term_id
+          CROSS JOIN sres.OntologyTerm ot
+        WHERE pan.protocol_app_node_id in (SELECT pan_id FROM &prefixPANResults)
+          AND ed.name like '%_NGS_SNPsAndVariations'
+          AND (tn.name_class = 'scientific name' or tn.name_class is null)
+          AND (ed.name = '&filterValue' or length('&filterValue') = 0)
+          AND ot.source_id
               = case
                   -- is this a FungiDB instance?
-                  when lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+                  when lower(substr(current_database(), 1, 4)) = 'fung'
                     then 'NCIT_C14209' -- "Fungal organism"
                   else 'OPL_0000232' -- "parasite organism"
                 end
-          and pan.type_id = mt.ontology_term_id(+)
-        order by organism, dataset_name, pan_name
+        ORDER BY organism, dataset_name, pan_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixDefaultChars&1 dc
-        set property
+        UPDATE &prefixDefaultChars&1 dc
+        SET property
             = (select dt.name
                from &prefixHierarchyMap hm, &prefixDatasetTerm dt
                where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
                  and dt.ontology_term_id = dc.property_id
                  and hm.dataset_name = dc.dataset_name)
-        where property_id
+        WHERE property_id
               in (select dt.ontology_term_id
                   from &prefixHierarchyMap hm, &prefixDatasetTerm dt
                   where hm.hierarchy_dataset_name = dt.hierarchy_dataset_name
@@ -1076,9 +1046,9 @@ UNION ALL
     </sql>
     <sql>
       <![CDATA[
-        update &prefixDefaultChars&1 dc
-        set property_source_id = property
-        where property_source_id is null
+        UPDATE &prefixDefaultChars&1 dc
+        SET property_source_id = property
+        WHERE property_source_id is null
       ]]>
     </sql>
   </tuningTable>
@@ -1091,16 +1061,16 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        create table &prefixDatasetLeafTerm&1 nologging as
-          select dataset_name, unit_id, property_id
-          from &prefixInferredParams
-        union
-          select dataset_name, unit_id, property_id
-          from &prefixInferredChars
-        union
-          select dataset_name, null, property_id
-          from &prefixDefaultChars
-        order by dataset_name, property_id
+        CREATE TABLE &prefixDatasetLeafTerm&1 AS
+          SELECT dataset_name, unit_id, property_id
+          FROM &prefixInferredParams
+        UNION
+          SELECT dataset_name, unit_id, property_id
+          FROM &prefixInferredChars
+        UNION
+          SELECT dataset_name, null, property_id
+          FROM &prefixDefaultChars
+        ORDER BY dataset_name, property_id
       ]]>
     </sql>
   </tuningTable>
@@ -1113,64 +1083,62 @@ UNION ALL
     <internalDependency name="Metadata"/>
     <sql>
       <![CDATA[
-	create table &prefixMetadataSummary&1 as
- 	select s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
-               null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
- 	from (
-  	  select property_source_id,
-                 cast (substr(xmlagg(xmlelement(e, string_value,'|').extract('//text()') order by string_value).GetClobVal(), 1, 3990) as varchar2(4000))
-                   as distinct_values
-  	  from (
-		select distinct m.property_source_id, m.string_value    
-    		from &prefixmetadata m,
-         	     &prefixpropertytype pt
-    		where m.string_value is not null
-    		and m.property_source_id = pt.property_source_id
-    		and pt.type = 'string'
---    		and pt.distinct_values < 80
-  		)
-  	group by property_source_id
- 	) s,
- 	&prefixpropertytype pt
- 	where pt.property_source_id = s.property_source_id
-	union
- 	select n.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
-        	min, max, average, upper_quartile, lower_quartile
- 	from (
-   	  select m.property_source_id, 
-          	cast(min(m.number_value) as varchar2(100)) as min, 
-          	cast(max(m.number_value) as varchar2(100)) as max,
-          	cast(avg(m.number_value) as varchar2(100)) as average,
-          	cast(percentile_disc(.75) within group (order by m.number_value) as varchar2(100)) as upper_quartile,
-          	cast(percentile_disc(.25) within group (order by m.number_value) as varchar2(100)) as lower_quartile
-    	  from &prefixmetadata m,
-         	&prefixpropertytype pt
-    	  where m.number_value is not null
-    	  and m.property_source_id = pt.property_source_id
-    	  and pt.type = 'number'
-    	  group by m.property_source_id
-	) n,
- 	&prefixpropertytype pt
-	where pt.property_source_id = n.property_source_id  
-	union
-	select d.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
-        	min, max, null as average, upper_quartile, lower_quartile
- 	from (
-     	  select m.property_source_id, 
-              cast(to_char(min(m.date_value),'YYYY-MM-DD') AS varchar2(100)) as min,                                           
-              cast(to_char(max(m.date_value),'YYYY-MM-DD') AS varchar2(100)) as max,                                           
-              cast(to_char(percentile_disc(.75) within group (order by m.date_value),'YYYY-MM-DD') as varchar2(100)) as upper_quartile,
-              cast(to_char(percentile_disc(.25) within group (order by m.date_value),'YYYY-MM-DD') as varchar2(100)) as lower_quartile
-
-     	  from &prefixmetadata m,
-          	&prefixpropertytype pt
-     	  where m.date_value is not null
-     	  and m.property_source_id = pt.property_source_id
-     	  and pt.type = 'date'
-     	  group by m.property_source_id
- 	) d,
- 	&prefixpropertytype pt
- 	where pt.property_source_id = d.property_source_id
+        CREATE TABLE &prefixMetadataSummary&1 AS
+        SELECT s.property_source_id, s.distinct_values, pt.distinct_values as number_distinct_values,
+                   null as min, null as max, null as average, null as upper_quartile, null as lower_quartile
+        FROM (
+          SELECT property_source_id,
+                 cast (substr(string_agg(string_value, '|' order by string_value), 1, 3990) as varchar(4000)) as distinct_values
+          FROM (
+            SELECT distinct m.property_source_id, m.string_value
+                FROM &prefixMetadata m,
+                     &prefixPropertytype pt
+                WHERE m.string_value is not null
+                  AND m.property_source_id = pt.property_source_id
+                  AND pt.type = 'string'
+                  --and pt.distinct_values < 80
+          ) t
+        GROUP BY property_source_id
+        ) s,
+        &prefixpropertytype pt
+        WHERE pt.property_source_id = s.property_source_id
+        UNION
+        SELECT n.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+                min, max, average, upper_quartile, lower_quartile
+        FROM (
+          SELECT m.property_source_id,
+                cast(min(m.number_value) as varchar(100)) as min,
+                cast(max(m.number_value) as varchar(100)) as max,
+                cast(avg(m.number_value) as varchar(100)) as average,
+                cast(percentile_disc(.75) within group (order by m.number_value) as varchar(100)) as upper_quartile,
+                cast(percentile_disc(.25) within group (order by m.number_value) as varchar(100)) as lower_quartile
+          FROM &prefixMetadata m,
+            &prefixPropertytype pt
+          WHERE m.number_value is not null
+            AND m.property_source_id = pt.property_source_id
+            AND pt.type = 'number'
+          GROUP BY m.property_source_id
+        ) n,
+        &prefixpropertytype pt
+        WHERE pt.property_source_id = n.property_source_id
+        UNION
+        SELECT d.property_source_id, null as distinct_values, pt.distinct_values as number_distinct_values,
+                min, max, null as average, upper_quartile, lower_quartile
+        FROM (
+              SELECT m.property_source_id,
+                  cast(to_char(min(m.date_value),'YYYY-MM-DD') AS varchar(100)) as min,
+                  cast(to_char(max(m.date_value),'YYYY-MM-DD') AS varchar(100)) as max,
+                  cast(to_char(percentile_disc(.75) within group (order by m.date_value),'YYYY-MM-DD') as varchar(100)) as upper_quartile,
+                  cast(to_char(percentile_disc(.25) within group (order by m.date_value),'YYYY-MM-DD') as varchar(100)) as lower_quartile
+              FROM &prefixMetadata m,
+                &prefixPropertytype pt
+              WHERE m.date_value is not null
+                AND m.property_source_id = pt.property_source_id
+                AND pt.type = 'date'
+              GROUP BY m.property_source_id
+        ) d,
+        &prefixpropertytype pt
+        where pt.property_source_id = d.property_source_id
       ]]>
     </sql>
   </tuningTable>
@@ -1182,16 +1150,16 @@ UNION ALL
     <internalDependency name="Metadata"/>
     <sql>
       <![CDATA[
-	create table &prefixPropertyCategory&1 as
- 	select distinct property_source_id, dataset_name, category
- 	from &prefixMetadata
+        CREATE TABLE &prefixPropertyCategory&1 AS
+        SELECT DISTINCT property_source_id, dataset_name, category
+        FROM &prefixMetadata
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixpcat_ixone&1
         on &prefixPropertyCategory&1 (property_source_id, dataset_name, category)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1205,8 +1173,8 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        create table &prefixMetadata&1 nologging as
-        select m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
+        CREATE TABLE &prefixMetadata&1 AS
+        SELECT m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name,
                m.pan_id, m.pan_name, m.pan_isa_type,
                m.category, m.property, m.property_id, mt.property_source_id,
                substr(m.value, 1, 250) as string_value,
@@ -1216,30 +1184,30 @@ UNION ALL
                  then 1
                  else 0
                end as capitalization_flag,
-               case when mt.type = 'number'
-                      then apidb.parse_and_round_number(m.value)
-                    else cast(null as number)
+               case
+                when mt.type = 'number' then apidb.parse_and_round_number(m.value)
+                else cast(null as numeric)
                end as number_value,
-               case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as date) end as date_value
-        from &prefixPropertyType mt,
-             (  select dataset_type, dataset_subtype, organism, dataset_name,
+               case when mt.type = 'date' then apidb.parse_date(m.value) else cast(null as timestamp) end as date_value
+        FROM &prefixPropertyType mt,
+             (  SELECT dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name, pan_isa_type,
                        protocol as category, property, property_id, value
-                from &prefixInferredParams
-              union all
-                select dataset_type, dataset_subtype, organism, dataset_name,
+                FROM &prefixInferredParams
+              UNION ALL
+                SELECT dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name, pan_isa_type,
                        ancestor_pan_type as category, property, property_id, value
-                from &prefixInferredChars
-              union all
-                select dataset_type, dataset_subtype, organism, dataset_name,
+                FROM &prefixInferredChars
+              UNION ALL
+                SELECT dataset_type, dataset_subtype, organism, dataset_name,
                        pan_id, pan_name, pan_isa_type,
                        null as category, property, property_id, value
-                from &prefixDefaultChars
+                FROM &prefixDefaultChars
              ) m
-        where (m.property_id = mt.property_id
-               or (mt.property_id is null and m.property = mt.property))
-        -- order by organism, dataset_type, dataset_subtype, dataset_name, pan_name
+        WHERE (m.property_id = mt.property_id
+               OR (mt.property_id is null and m.property = mt.property))
+        -- ORDER BY organism, dataset_type, dataset_subtype, dataset_name, pan_name
       ]]>
     </sql>
     <sql>
@@ -1248,41 +1216,42 @@ UNION ALL
         (dataset_type, dataset_subtype, organism, dataset_name, pan_id,
          pan_name, pan_isa_type, category, property, property_id,
          property_source_id, string_value)
-        select *
-        from (with sample_term
-                   as (select max(ontology_term_id) as ontology_term_id,
-                              max(source_id) as source_id,
-                              max(name) as name
-                       from sres.OntologyTerm
-                       where source_id = 'NCIT_C42614')
-              select distinct m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name, m.pan_id,
-                     m.pan_name, m.pan_isa_type, m.category,
-                     nvl(st.name, 'Sample name') as property,
-                     st.ontology_term_id as property_id,
-                     st.source_id as property_source_id,
-                     replace(m.pan_name, ' (Sequence Variation)', '') as string_value
-              from &prefixMetadata&1 m, sample_term st
-              where dataset_name
-                    in ('cposSilveira_NGS_SNPsAndVariations',
-                        'cposSilveira_HTS_SNP_Whole_Population_Genome_SNP_RSRC')
-                and pan_name not like '%(DNA Sequencing)'
-                and dataset_type != 'genome'
-                and category is null
-             )
+        SELECT *
+        FROM (
+          WITH sample_term
+             AS (SELECT max(ontology_term_id) as ontology_term_id,
+                        max(source_id) as source_id,
+                        max(name) as name
+                 FROM sres.OntologyTerm
+                 WHERE source_id = 'NCIT_C42614')
+          SELECT DISTINCT m.dataset_type, m.dataset_subtype, m.organism, m.dataset_name, m.pan_id,
+                 m.pan_name, m.pan_isa_type, m.category,
+                 coalesce(st.name, 'Sample name') as property,
+                 st.ontology_term_id as property_id,
+                 st.source_id as property_source_id,
+                 replace(m.pan_name, ' (Sequence Variation)', '') as string_value
+          FROM &prefixMetadata&1 m, sample_term st
+          WHERE dataset_name
+                IN ('cposSilveira_NGS_SNPsAndVariations',
+                    'cposSilveira_HTS_SNP_Whole_Population_Genome_SNP_RSRC')
+            AND pan_name not like '%(DNA Sequencing)'
+            AND dataset_type != 'genome'
+            AND category is null
+        ) t
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixmwn_ixone&1
-        on &prefixMetadata&1 (property_source_id, pan_id, dataset_name, category, string_value, number_value, date_value)
-        tablespace indx
+          on &prefixMetadata&1 (property_source_id, pan_id, dataset_name, category, string_value, number_value, date_value)
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixmwn_ixtwo&1
-        on &prefixMetadata&1 (category, property_source_id, pan_id, string_value, number_value, date_value)
-        tablespace indx
+          on &prefixMetadata&1 (category, property_source_id, pan_id, string_value, number_value, date_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -1300,132 +1269,118 @@ UNION ALL
     <internalDependency name="PropertyType"/>
     <sql>
       <![CDATA[
-        create table &prefixOntology&1 nologging as
-        with DatasetOntologyTerm
-             -- a term (leaf or ancestor) of a dataset
-             as (  -- ontology terms used as properties (things with values)
-                   select dataset_name, property_id as ontology_term_id, unit_id
-                   from &prefixDatasetLeafTerm
-                 union
-                   -- ontology terms with descendants used as properties
-                   select leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
-                   cast(null as number) as unit_id
-                   from &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, &prefixOntologyAncestor ancestor
-                   where leaf.property_id = ancestor.ontology_term_id
-                     and leaf.dataset_name = hmap.dataset_name
-                     and hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name),
-             DatasetOntologyVars
-             as (
-                   select ontology_term_id,apidb.tab_to_string(set(cast(COLLECT(distinct name) AS apidb.varchartab)), ', ') as variable_name from
-                   (
-                     select ontology_term_id, regexp_replace(substr(variable, instr(variable, ',', 1, lvl) + 1, instr(variable, ',', 1, lvl + 1) - instr(variable, ',', 1, lvl) - 1),'\w+::','') name 
-                     from
-                      ( select ',' || variable || ',' as variable, ontology_term_id from &prefixDatasetTerm ),
-                      ( select level as lvl from dual connect by level <= 100 )
-                     where lvl <= length(variable) - length(replace(variable, ',')) - 1
-                     ) 
-                     group by ontology_term_id
-              ),
-             DatasetInfo
-             -- columns that are functions of dataset
-             as (select dataset_name, max(dataset_type) as dataset_type,
-                        max(dataset_subtype) as dataset_subtype, max(organism) as organism
-                 from (  select dataset_name, dataset_type, dataset_subtype, organism
-                         from &prefixInferredChars
-                       union
-                         select dataset_name, dataset_type, dataset_subtype, organism
-                         from &prefixInferredParams
-                       union
-                         select dataset_name, dataset_type, dataset_subtype, organism
-                         from &prefixDefaultChars)
-                 group by dataset_name)
-        select nvl(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
-               ot.source_id as ontology_term_source_id,
-               term_synonym.definition as description,
-               nvl(term_synonym.name,
-                   case ot.name
-                     when 'env_feature' then 'Habitat'
-                     when 'data set' then 'Data Set'
-                     when 'obsolete_average mapping coverage' then 'Average mapping coverage'
-                     else ot.name
-                   end) as display_name,
-               term_synonym.display_order,
-               term_synonym.variable,
-               otv.variable_name,
-               parent.parent_ontology_term_name, parent.parent_ontology_term_id,
-               parent.parent_ontology_term_source_id, unit_term.name as units,
-               cast(pt.type as varchar2(20)) as type,
-               case
-                 when pt.filter = 'range' then 1
-                 else 0
-               end as is_range,
-               cast(1 as number(1)) as precision,
-               di.organism, dot.dataset_name, di.dataset_type, di.dataset_subtype
-        from DatasetOntologyTerm dot, DatasetOntologyVars otv, sres.OntologyTerm ot, &prefixHierarchyMap hmap,
-             &prefixDatasetTerm term_synonym, &prefixPropertyType pt,
-             sres.OntologyTerm unit_term, DatasetInfo di,
-             (select orel.hierarchy_dataset_name, orel.child_ontology_term_id,
-                     orel.parent_ontology_term_id, orel.parent_ontology_term_source_id,
-                     nvl(dt.name, ot.name) as parent_ontology_term_name
-              from &prefixOntologyRelation orel, sres.OntologyTerm ot, &prefixDatasetTerm dt
-              where orel.parent_ontology_term_id = ot.ontology_term_id
-                and orel.parent_ontology_term_id = dt.ontology_term_id(+)
-                and orel.hierarchy_dataset_name = dt.hierarchy_dataset_name(+)
-             ) parent
-        where dot.ontology_term_id = ot.ontology_term_id
-          and dot.ontology_term_id = otv.ontology_term_id(+)
-          and dot.dataset_name = hmap.dataset_name
-          and dot.ontology_term_id = term_synonym.ontology_term_id(+)
-          and hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name(+)
-          and dot.ontology_term_id = parent.child_ontology_term_id(+)
-          and hmap.hierarchy_dataset_name = parent.hierarchy_dataset_name(+)
-          and dot.unit_id = unit_term.ontology_term_id(+)
-          and dot.dataset_name = di.dataset_name
-          and dot.ontology_term_id = pt.property_id(+)
-          and dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
+        CREATE TABLE &prefixOntology&1 AS
+        WITH
+          DatasetOntologyTerm AS (
+            -- a term (leaf or ancestor) of a dataset
+            -- ontology terms used as properties (things with values)
+            SELECT dataset_name, property_id as ontology_term_id, unit_id
+            FROM &prefixDatasetLeafTerm
+            UNION
+             -- ontology terms with descendants used as properties
+            SELECT leaf.dataset_name, ancestor.ancestor_ontology_term_id as ontology_term_id,
+                   cast(null as numeric) as unit_id
+            FROM &prefixDatasetLeafTerm leaf, &prefixHierarchyMap hmap, &prefixOntologyAncestor ancestor
+            WHERE leaf.property_id = ancestor.ontology_term_id
+              AND leaf.dataset_name = hmap.dataset_name
+              AND hmap.hierarchy_dataset_name = ancestor.hierarchy_dataset_name
+          ),
+          DatasetInfo AS (
+            -- columns that are functions of dataset
+            SELECT dataset_name, max(dataset_type) as dataset_type,
+                   max(dataset_subtype) as dataset_subtype, max(organism) as organism
+            FROM ( SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixInferredChars
+                   UNION
+                   SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixInferredParams
+                   UNION
+                   SELECT dataset_name, dataset_type, dataset_subtype, organism
+                   FROM &prefixDefaultChars
+             ) t
+            GROUP BY dataset_name
+          )
+        SELECT coalesce(term_synonym.name, ot.name) as ontology_term_name, dot.ontology_term_id,
+          ot.source_id as ontology_term_source_id,
+          term_synonym.definition as description,
+          coalesce(term_synonym.name,
+             case ot.name
+               when 'env_feature' then 'Habitat'
+               when 'data set' then 'Data Set'
+               when 'obsolete_average mapping coverage' then 'Average mapping coverage'
+               else ot.name
+             end) as display_name,
+          term_synonym.display_order,
+          term_synonym.variable,
+          cast(null as varchar(10)) as variable_name,
+          parent.parent_ontology_term_name, parent.parent_ontology_term_id,
+          parent.parent_ontology_term_source_id, unit_term.name as units,
+          cast(pt.type as varchar(20)) as type,
+          case
+           when pt.filter = 'range' then 1
+           else 0
+          end as is_range,
+          cast(1 as numeric(1)) as precision,
+          di.organism, dot.dataset_name, di.dataset_type, di.dataset_subtype
+        FROM DatasetOntologyTerm dot
+          INNER JOIN sres.OntologyTerm ot ON dot.ontology_term_id = ot.ontology_term_id
+          INNER JOIN &prefixHierarchyMap hmap ON dot.dataset_name = hmap.dataset_name
+          INNER JOIN DatasetInfo di ON dot.dataset_name = di.dataset_name
+          LEFT JOIN &prefixDatasetTerm term_synonym ON dot.ontology_term_id = term_synonym.ontology_term_id AND hmap.hierarchy_dataset_name = term_synonym.hierarchy_dataset_name
+          LEFT JOIN &prefixPropertyType pt ON dot.ontology_term_id = pt.property_id
+          LEFT JOIN sres.OntologyTerm unit_term ON dot.unit_id = unit_term.ontology_term_id
+          LEFT JOIN (
+            SELECT orel.hierarchy_dataset_name, orel.child_ontology_term_id,
+                   orel.parent_ontology_term_id, orel.parent_ontology_term_source_id,
+                   coalesce(dt.name, ot.name) as parent_ontology_term_name
+            FROM &prefixOntologyRelation orel
+              INNER JOIN sres.OntologyTerm ot ON orel.parent_ontology_term_id = ot.ontology_term_id
+              LEFT JOIN &prefixDatasetTerm dt ON orel.parent_ontology_term_id = dt.ontology_term_id AND orel.hierarchy_dataset_name = dt.hierarchy_dataset_name
+          ) parent ON dot.ontology_term_id = parent.child_ontology_term_id AND hmap.hierarchy_dataset_name = parent.hierarchy_dataset_name
+        WHERE dot.dataset_name not in ('ISASimple_RSRC', 'ISA_RSRC')
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixOntology&1 o
-        set type
-            = (select max(object.name) -- e.g. "multifilter"
-               from sres.OntologyRelationship orel,
+        UPDATE &prefixOntology&1 o
+        SET type
+            = (SELECT max(object.name) -- e.g. "multifilter"
+               FROM sres.OntologyRelationship orel,
                     sres.OntologyTerm predicate, sres.OntologyTerm object,
                     sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed,
                     &prefixHierarchyMap hmap
-               where o.ontology_term_id = orel.subject_term_id
-                 and orel.predicate_term_id = predicate.ontology_term_id
-                 and predicate.source_id = 'EUPATH_0000271' -- "termType"
-                 and orel.object_term_id = object.ontology_term_id
-                 and orel.external_database_release_id = edr.external_database_release_id
-                 and edr.external_database_id = ed.external_database_id
-                 and ed.name = hmap.hierarchy_dataset_name
-                 and hmap.dataset_name = o.dataset_name
+               WHERE o.ontology_term_id = orel.subject_term_id
+                 AND orel.predicate_term_id = predicate.ontology_term_id
+                 AND predicate.source_id = 'EUPATH_0000271' -- "termType"
+                 AND orel.object_term_id = object.ontology_term_id
+                 AND orel.external_database_release_id = edr.external_database_release_id
+                 AND edr.external_database_id = ed.external_database_id
+                 AND ed.name = hmap.hierarchy_dataset_name
+                 AND hmap.dataset_name = o.dataset_name
               )
-        where type is null
+        WHERE type IS NULL
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create index &prefixnmoidx1&1
-        on &prefixOntology&1 (ontology_term_name, dataset_name, organism)
-        tablespace indx
+          on &prefixOntology&1 (ontology_term_name, dataset_name, organism)
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         create unique index &prefixnouqidx1&1
-        on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name, dataset_type)
-        tablespace indx
+          on &prefixOntology&1 (ontology_term_name, ontology_term_source_id, dataset_name, dataset_type)
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        update &prefixOntology&1
-        set display_name = 'Organism'
-        where lower(ontology_term_name) = 'parasite organism'
-          and lower(substr(sys_context ('USERENV', 'SERVICE_NAME'), 1, 4)) = 'fung'
+        UPDATE &prefixOntology&1
+        SET display_name = 'Organism'
+        WHERE lower(ontology_term_name) = 'parasite organism'
+          AND lower(substr(current_database(), 1, 4)) = 'fung'
       ]]>
     </sql>
   </tuningTable>
@@ -1454,7 +1409,7 @@ UNION ALL
     <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        CREATE TABLE &prefixPropertyType&1 NOLOGGING AS
+        CREATE TABLE &prefixPropertyType&1 AS
         WITH pan_metadata
              AS (  SELECT property, value, property_id
                    FROM &prefixInferredParams
@@ -1491,22 +1446,22 @@ UNION ALL
                  ELSE 'membership'
                END AS filter,
                ta.distinct_values
-        FROM term_attributes ta, sres.OntologyTerm ot
-        WHERE ta.property_id = ot.ontology_term_id(+)
+        FROM term_attributes ta
+         LEFT JOIN sres.OntologyTerm ot ON ta.property_id = ot.ontology_term_id
        ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE UNIQUE INDEX proptypename_idx&1
           ON &prefixPropertyType&1 (property_id, property)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX proptypid_idx&1
           ON &prefixPropertyType&1 (property, property_id, type, filter)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
@@ -1520,32 +1475,29 @@ UNION ALL
 
   <tuningTable name="ComComObsIO" prefixEnabled="true">
     <comment>
-      Metadata table specific for comunity to community observation relation
+      Metadata table specific for community to community observation relation
     </comment>
 <!--
     <internalDependency name="PANIO"/>
 -->
     <sql>
       <![CDATA[
-create table &prefixComComObsIO&1 (
-  community_id,
-  community_observation_id,
-  CONSTRAINT &prefixcomcomobsio_pk&1 PRIMARY KEY (community_id,community_observation_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as community_id, output_pan_id as community_observation_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0035127'
-  and output_pan_type_source_id = 'EUPATH_0035127'
+        CREATE TABLE &prefixComComObsIO&1 (
+          community_id,
+          community_observation_id
+          )
+        AS
+        SELECT distinct input_pan_id as community_id, output_pan_id as community_observation_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0035127'
+          AND output_pan_type_source_id = 'EUPATH_0035127'
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &prefixcomcomobsio&1
+        CREATE INDEX &prefixcomcomobsio_pk&1
           ON &prefixComComObsIO&1 (community_observation_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1554,35 +1506,32 @@ create table &prefixComComObsIO&1 (
     <comment>
       Metadata table specific for comunity to community observation relation
     </comment>
-<!--
-    <internalDependency name="PANIO"/>
--->
+    <!--
+        <internalDependency name="PANIO"/>
+    -->
     <sql>
       <![CDATA[
-create table &prefixComHouseIO&1 (
-  community_id,
-  household_id,
-  CONSTRAINT &prefixcomhouseio_pk&1 PRIMARY KEY (community_id,household_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as community_id, output_pan_id as household_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0035127'
-  and output_pan_type_source_id = 'PCO_0000024'
+        CREATE TABLE &prefixComHouseIO&1 (
+          community_id,
+          household_id
+        )
+        AS
+        SELECT DISTINCT input_pan_id as community_id, output_pan_id as household_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0035127'
+          AND output_pan_type_source_id = 'PCO_0000024'
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &prefixcomhouseio&1
+        CREATE INDEX &prefixcomhouseio_idx&1
           ON &prefixComHouseIO&1 (household_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
 
-<!-- note that there may be direct com to part outputs as not requirement that all participants have a house as per washB -->
+  <!-- note that there may be direct com to part outputs as not requirement that all participants have a house as per washB -->
   <tuningTable name="ComPartIO" prefixEnabled="true">
     <comment>
       Metadata table specific for comunity to participant relation
@@ -1591,29 +1540,26 @@ create table &prefixComHouseIO&1 (
     <internalDependency name="HousePartIO"/>
     <sql>
       <![CDATA[
-create table &prefixComPartIO&1 (
-  community_id,
-  participant_id,
-  CONSTRAINT &prefixcompartio_pk&1 PRIMARY KEY (community_id,participant_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct ch.community_id, hp.participant_id
-  from &prefixComHouseIO ch,  &prefixHousePartIO hp
-  where ch.household_id = hp.household_id
-UNION
-  select distinct input_pan_id as community_id, output_pan_id as participant_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0035127'
-  and output_pan_type_source_id = 'EUPATH_0000096'
+        CREATE TABLE &prefixComPartIO&1 (
+          community_id,
+          participant_id
+          )
+        AS
+        SELECT DISTINCT ch.community_id, hp.participant_id
+        FROM &prefixComHouseIO ch,  &prefixHousePartIO hp
+        WHERE ch.household_id = hp.household_id
+        UNION
+        SELECT DISTINCT input_pan_id as community_id, output_pan_id as participant_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0035127'
+          AND output_pan_type_source_id = 'EUPATH_0000096'
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixpartcomio&1
           ON &prefixComPartIO&1 (participant_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1626,24 +1572,21 @@ UNION
     <internalDependency name="PartObsIO"/>
     <sql>
       <![CDATA[
-create table &prefixComObsIO&1 (
-  community_id,
-  observation_id,
-  CONSTRAINT &prefixcomobsio_pk&1 PRIMARY KEY (community_id,observation_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct cp.community_id, po.observation_id
-  from &prefixComPartIO cp,  &prefixPartObsIO po 
-  where cp.participant_id = po.participant_id
+        CREATE TABLE &prefixComObsIO&1 (
+          community_id,
+          observation_id
+          )
+        AS
+        SELECT distinct cp.community_id, po.observation_id
+        FROM &prefixComPartIO cp,  &prefixPartObsIO po
+        WHERE cp.participant_id = po.participant_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixobscomio&1
           ON &prefixComObsIO&1 (observation_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1656,24 +1599,21 @@ create table &prefixComObsIO&1 (
     <internalDependency name="ObsSampleIO"/>
     <sql>
       <![CDATA[
-create table &prefixComSampleIO&1 (
-  community_id,
-  sample_id,
-  CONSTRAINT &prefixcomsampleio_pk&1 PRIMARY KEY (community_id,sample_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct co.community_id, os.sample_id
-  from &prefixComObsIO co,  &prefixObsSampleIO os 
-  where co.observation_id = os.observation_id
+        CREATE TABLE &prefixComSampleIO&1 (
+          community_id,
+          sample_id
+          )
+        AS
+        SELECT distinct co.community_id, os.sample_id
+        FROM &prefixComObsIO co,  &prefixObsSampleIO os
+        WHERE co.observation_id = os.observation_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixsamplecomio&1
           ON &prefixComSampleIO&1 (sample_id,community_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1687,27 +1627,38 @@ create table &prefixComSampleIO&1 (
     <internalDependency name="ComComObsIO"/>
     <sql>
       <![CDATA[
-create table &prefixCommunityMD&1 (
-  ontology_term_name,
-  community_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixcomunmd_pk&1 PRIMARY KEY (ontology_term_name,community_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as 
-select distinct m.property_source_id as ontology_term_name, 
- m.pan_id as community_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0035127')   
-   )
- and m.pan_id not in (select distinct community_observation_id from &prefixComComObsIO)
+        CREATE TABLE &prefixCommunityMD&1 (
+          ontology_term_name,
+          community_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        SELECT distinct m.property_source_id as ontology_term_name,
+         m.pan_id as community_id, m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m
+        WHERE m.property_source_id in (
+          WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('EUPATH_0035127')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, &prefixOntology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+          )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
+          AND m.pan_id not in (SELECT DISTINCT community_observation_id FROM &prefixComComObsIO)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixcomunmd_pk&1
+          ON &prefixCommunityMD&1 (ontology_term_name,community_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -1721,27 +1672,38 @@ select distinct m.property_source_id as ontology_term_name,
     <internalDependency name="ComComObsIO"/>
     <sql>
       <![CDATA[
-create table &prefixCommunityObsMD&1 (
-  ontology_term_name,
-  community_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixcomunobsmd_pk&1 PRIMARY KEY (ontology_term_name,community_observation_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as 
-select distinct m.property_source_id as ontology_term_name, 
- m.pan_id as community_observation_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0035127')   
-   )
- and m.pan_id in (select distinct community_observation_id from &prefixComComObsIO)
+        CREATE TABLE &prefixCommunityObsMD&1 (
+          ontology_term_name,
+          community_observation_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        SELECT DISTINCT m.property_source_id as ontology_term_name,
+          m.pan_id as community_observation_id, m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m
+        WHERE m.property_source_id in (
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            WHERE ontology_term_source_id in ('EUPATH_0035127')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+          )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
+          AND m.pan_id in (SELECT DISTINCT community_observation_id FROM &prefixComComObsIO)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixcomunobsmd_pk&1
+          ON &prefixCommunityObsMD&1 (ontology_term_name,community_observation_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -1754,62 +1716,74 @@ select distinct m.property_source_id as ontology_term_name,
     <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
-create table &prefixHouseholdMD&1 (
-  ontology_term_name,
-  household_id,
-  household_observation_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixHhmd_pk&1 PRIMARY KEY (ontology_term_name,household_id,household_observation_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as 
-with iopo as (
-select distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
-from &prefixPANIO hp, &prefixPANIO po 
-where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000096'
-and hp.output_pan_id = po.input_pan_id
-and po.input_pan_type_source_id = 'EUPATH_0000096' and po.output_pan_type_source_id = 'EUPATH_0000738'
-),
-ioho as (
-select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
-from &prefixPANIO hp 
-where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'EUPATH_0000738'
-),
-iohh as (
-select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
-from &prefixPANIO hp 
-where hp.input_pan_type_source_id = 'PCO_0000024' and hp.output_pan_type_source_id = 'PCO_0000024'
-),
-hhold as (
-select * from (
- select distinct m.property_source_id as ontology_term_name, 
- CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id 
- WHEN iohh.household_id is not null THEN iohh.household_id ELSE m.pan_id END as household_id, 
- m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, iopo, ioho, iohh
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('PCO_0000024')   
-   )
- and m.pan_id = iopo.observation_id(+)
- and m.pan_id = ioho.observation_id(+)
- and m.pan_id = iohh.observation_id(+)
- ))
- select * from (
- select * from hhold
- union
- select distinct m.property_source_id as ontology_term_name, 
- hh.household_id, hh.household_observation_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, (select distinct household_observation_id, household_id from hhold) hh
- where m.property_source_id = 'EUPATH_0000579'
- and m.pan_id = hh.household_observation_id
- )
- order by ontology_term_name
+        CREATE TABLE &prefixHouseholdMD&1 (
+          ontology_term_name,
+          household_id,
+          household_observation_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        with iopo AS (
+          SELECT distinct hp.input_pan_id as household_id, po.output_pan_id as observation_id
+          FROM &prefixPANIO hp, &prefixPANIO po
+          WHERE hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'EUPATH_0000096'
+            AND hp.output_pan_id = po.input_pan_id
+            AND po.input_pan_type_source_id = 'EUPATH_0000096' AND po.output_pan_type_source_id = 'EUPATH_0000738'
+        ),
+        ioho AS (
+          SELECT distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
+          FROM &prefixPANIO hp
+          WHERE hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'EUPATH_0000738'
+        ),
+        iohh as (
+          select distinct hp.input_pan_id as household_id, hp.output_pan_id as observation_id
+          from &prefixPANIO hp
+          where hp.input_pan_type_source_id = 'PCO_0000024' AND hp.output_pan_type_source_id = 'PCO_0000024'
+        ),
+        hhold as (
+          SELECT * from (
+           SELECT DISTINCT m.property_source_id as ontology_term_name,
+             CASE WHEN ioho.household_id is not null THEN ioho.household_id WHEN iopo.household_id is not null THEN iopo.household_id
+             WHEN iohh.household_id is not null THEN iohh.household_id ELSE m.pan_id END as household_id,
+             m.pan_id as household_observation_id, m.string_value, m.number_value, m.date_value
+           FROM &prefixMetaData m
+            LEFT JOIN iopo ON m.pan_id = iopo.observation_id
+            LEFT JOIN ioho ON m.pan_id = ioho.observation_id
+            LEFT JOIN iohh ON m.pan_id = iohh.observation_id
+           WHERE m.property_source_id in (
+            WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('PCO_0000024')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, ontology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+            )
+            SELECT DISTINCT ontology_term_source_id
+            FROM cte
+           )
+          ) t
+        )
+        SELECT * FROM (
+          SELECT * FROM hhold
+          UNION
+          SELECT distinct m.property_source_id as ontology_term_name,
+                hh.household_id, hh.household_observation_id, m.string_value, m.number_value, m.date_value
+          FROM &prefixMetaData m, (select distinct household_observation_id, household_id from hhold) hh
+          WHERE m.property_source_id = 'EUPATH_0000579'
+            AND m.pan_id = hh.household_observation_id
+        ) t
+        ORDER BY ontology_term_name
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixHhmd_pk&1
+          ON &prefixHouseholdMD&1 (ontology_term_name,household_id,household_observation_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -1823,29 +1797,42 @@ select * from (
     <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
-create table &prefixParticipantMD&1 (
-  ontology_term_name,
-  participant_id,
-  household_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixPpartmd_pk&1 PRIMARY KEY (ontology_term_name,participant_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as select * from (
-  select distinct m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
- from &prefixMetaData m, (select input_pan_id, output_pan_id from &prefixPANIO where input_pan_type_source_id = 'PCO_0000024') io
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000096')   
-   )
- and m.pan_id = io.output_pan_id(+)
- )
- order by ontology_term_name,participant_id
+        CREATE TABLE &prefixParticipantMD&1 (
+          ontology_term_name,
+          participant_id,
+          household_id,
+          string_value,
+          number_value,
+          date_value
+        )
+        AS
+        SELECT * FROM (
+          SELECT DISTINCT m.property_source_id as ontology_term_name, m.pan_id as participant_id, io.input_pan_id as household_id, m.string_value, m.number_value, date_value
+          FROM &prefixMetaData m
+           LEFT JOIN (SELECT input_pan_id, output_pan_id FROM &prefixPANIO WHERE input_pan_type_source_id = 'PCO_0000024') io
+            ON m.pan_id = io.output_pan_id
+          WHERE m.property_source_id in (
+            WITH RECURSIVE cte AS (
+              SELECT ontology_term_source_id
+              FROM &prefixOntology
+              WHERE ontology_term_source_id in ('EUPATH_0000096')
+              UNION
+              SELECT o.ontology_term_source_id
+              FROM cte, ontology o
+              WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+            )
+            SELECT DISTINCT ontology_term_source_id
+            FROM cte
+          )
+        ) t
+        ORDER BY ontology_term_name,participant_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixPpartmd_pk&1
+          ON &prefixParticipantMD&1 (ontology_term_name,participant_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -1857,25 +1844,22 @@ create table &prefixParticipantMD&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixHousePartIO&1 (
-  household_id,
-  participant_id,
-  CONSTRAINT &prefixhousepartio_pk&1 PRIMARY KEY (household_id,participant_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as household_id, output_pan_id as participant_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'PCO_0000024'
-  and output_pan_type_source_id = 'EUPATH_0000096'
+        CREATE TABLE &prefixHousePartIO&1 (
+          household_id,
+          participant_id
+          )
+        AS
+        SELECT DISTINCT input_pan_id as household_id, output_pan_id as participant_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'PCO_0000024'
+          AND output_pan_type_source_id = 'EUPATH_0000096'
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixparthouseio&1
           ON &prefixHousePartIO&1 (participant_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1888,24 +1872,21 @@ create table &prefixHousePartIO&1 (
     <internalDependency name="PartObsIO"/>
     <sql>
       <![CDATA[
-create table &prefixHouseObsIO&1 (
-  household_id,
-  observation_id,
-  CONSTRAINT &prefixhouseobsio_pk&1 PRIMARY KEY (household_id,observation_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select hp.household_id, po.observation_id
-  from &prefixPartObsIO po, &prefixHousePartIO hp
-  where po.participant_id = hp.participant_id
+        CREATE TABLE &prefixHouseObsIO&1 (
+          household_id,
+          observation_id
+          )
+        AS
+        SELECT hp.household_id, po.observation_id
+        FROM &prefixPartObsIO po, &prefixHousePartIO hp
+        WHERE po.participant_id = hp.participant_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixobshouseio&1
           ON &prefixHouseObsIO&1 (observation_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1917,25 +1898,19 @@ create table &prefixHouseObsIO&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixPartObsIO&1 (
-  participant_id,
-  observation_id,
-  CONSTRAINT &prefixpartobsio_pk&1 PRIMARY KEY (participant_id,observation_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as participant_id, output_pan_id as observation_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0000096' 
-  and output_pan_type_source_id = 'EUPATH_0000738'
+        CREATE TABLE &prefixPartObsIO&1 ( participant_id, observation_id )
+        AS
+        SELECT DISTINCT input_pan_id as participant_id, output_pan_id as observation_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0000096'
+            AND output_pan_type_source_id = 'EUPATH_0000738'
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixobspartio&1
           ON &prefixPartObsIO&1 (observation_id,participant_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1947,25 +1922,22 @@ create table &prefixPartObsIO&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixObsSampleIO&1 (
-  observation_id,
-  sample_id,
-  CONSTRAINT &prefixobssampleio_pk&1 PRIMARY KEY (observation_id,sample_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as observation_id, output_pan_id as sample_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0000738' 
-  and output_pan_type_source_id = 'EUPATH_0000609'
+        CREATE TABLE &prefixobssampleio&1 (
+          observation_id,
+          sample_id
+        )
+        AS
+        SELECT distinct input_pan_id as observation_id, output_pan_id as sample_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0000738'
+          AND output_pan_type_source_id = 'EUPATH_0000609'
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixsampleobsio&1
           ON &prefixObsSampleIO&1 (sample_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -1979,25 +1951,22 @@ create table &prefixObsSampleIO&1 (
     <internalDependency name="ObsSampleIO"/>
     <sql>
       <![CDATA[
-create table &prefixHouseSampleIO&1 (
-  household_id,
-  sample_id,
-  CONSTRAINT &prefixhouseSampleio_pk&1 PRIMARY KEY (household_id,sample_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select hp.household_id, os.sample_id
-  from &prefixPartObsIO po, &prefixHousePartIO hp, &prefixObsSampleIO os
-  where po.participant_id = hp.participant_id
-  and po.observation_id = os.observation_id
+        CREATE TABLE &prefixHouseSampleIO&1 (
+          household_id,
+          sample_id
+        )
+        AS
+        SELECT hp.household_id, os.sample_id
+        FROM &prefixPartObsIO po, &prefixHousePartIO hp, &prefixObsSampleIO os
+        WHERE po.participant_id = hp.participant_id
+          AND po.observation_id = os.observation_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixsplhouseio&1
           ON &prefixHouseSampleIO&1 (sample_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2010,24 +1979,21 @@ create table &prefixHouseSampleIO&1 (
     <internalDependency name="ObsSampleIO"/>
     <sql>
       <![CDATA[
-create table &prefixPartSampleIO&1 (
-  participant_id,
-  sample_id,
-  CONSTRAINT &prefixPartSampleio_pk&1 PRIMARY KEY (participant_id,sample_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select po.participant_id, os.sample_id
-  from &prefixPartObsIO po, &prefixObsSampleIO os
-  where po.observation_id = os.observation_id
+        CREATE TABLE &prefixPartSampleIO&1 (
+          participant_id,
+          sample_id
+        )
+        AS
+        SELECT po.participant_id, os.sample_id
+        FROM &prefixPartObsIO po, &prefixObsSampleIO os
+        WHERE po.observation_id = os.observation_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixsplPartio&1
           ON &prefixPartSampleIO&1 (sample_id,participant_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2039,25 +2005,22 @@ create table &prefixPartSampleIO&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixObsObsIO&1 (
-  observation_id,
-  sub_observation_id,
-  CONSTRAINT &prefixobsobs_pk&1 PRIMARY KEY (observation_id,sub_observation_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as observation_id, output_pan_id as sub_observation_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0000738' 
-  and output_pan_type_source_id = 'EUPATH_0000738'
+        CREATE TABLE &prefixObsObsIO&1 (
+          observation_id,
+          sub_observation_id
+          )
+        AS
+        SELECT DISTINCT input_pan_id as observation_id, output_pan_id as sub_observation_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0000738'
+          AND output_pan_type_source_id = 'EUPATH_0000738'
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixsubobsobsio&1
           ON &prefixObsObsIO&1 (sub_observation_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2069,25 +2032,22 @@ create table &prefixObsObsIO&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixHouseEntoIO&1 (
-  household_id,
-  entomology_id,
-  CONSTRAINT &prefixhouseentoio_pk&1 PRIMARY KEY (household_id,entomology_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as household_id, output_pan_id as entomology_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'PCO_0000024' 
-  and output_pan_type_source_id = 'EUPATH_0000327'
+        CREATE TABLE &prefixHouseEntoIO&1 (
+          household_id,
+          entomology_id
+          )
+        AS
+        SELECT DISTINCT input_pan_id as household_id, output_pan_id as entomology_id
+        FROM &prefixpanio
+        WHERE input_pan_type_source_id = 'PCO_0000024'
+          AND output_pan_type_source_id = 'EUPATH_0000327'
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &prefixhouseentoio&1
+        CREATE INDEX &prefixhouseentoio_idx&1
           ON &prefixHouseEntoIO&1 (entomology_id,household_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
@@ -2099,30 +2059,27 @@ create table &prefixHouseEntoIO&1 (
     <internalDependency name="PANIO"/>
     <sql>
       <![CDATA[
-create table &prefixEntoInsSplIO&1 (
-  entomology_id,
-  insect_sample_id,
-  CONSTRAINT &prefixentoinssplio_pk&1 PRIMARY KEY (entomology_id,insect_sample_id) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select distinct input_pan_id as entomology_id, output_pan_id as insect_sample_id
-  from &prefixPANIO 
-  where input_pan_type_source_id = 'EUPATH_0000327' 
-  and output_pan_type_source_id = 'EUPATH_0025169'
+        CREATE TABLE &prefixEntoInsSplIO&1 (
+          entomology_id,
+          insect_sample_id
+          )
+        AS
+        SELECT distinct input_pan_id as entomology_id, output_pan_id as insect_sample_id
+        FROM &prefixPANIO
+        WHERE input_pan_type_source_id = 'EUPATH_0000327'
+          AND output_pan_type_source_id = 'EUPATH_0025169'
       ]]>
     </sql>
     <sql>
       <![CDATA[
-        CREATE INDEX &prefixentoinssplio&1
+        CREATE INDEX &prefixentoinssplio_idx&1
           ON &prefixEntoInsSplIO&1 (insect_sample_id,entomology_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
   </tuningTable>
 
-<!-- NOTE: this will NOT work for studies where sub observations have samples -->
+  <!-- NOTE: this will NOT work for studies where sub observations have samples -->
   <tuningTable name="ObservationMD" prefixEnabled="true">
     <comment>
       Metadata table specific for observation filter 
@@ -2135,72 +2092,87 @@ create table &prefixEntoInsSplIO&1 (
     <internalDependency name="Ontology"/>
     <sql>
       <![CDATA[
-create table &prefixObservationMD&1 (
-  ontology_term_name,
-  observation_id,
-  participant_id,
-  sub_observation_id,
-  sample_id,
-  household_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixObsmd_pk&1 PRIMARY KEY (ontology_term_name,observation_id,participant_id,sub_observation_id,sample_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-with obsont as (
-select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000738','EUPATH_0000609') /* NOTE: 'EUPATH_0000609' bring in sample vars attached directly to observations like for PRISM */
-)
- select distinct m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sub_observation_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixPartObsIO ioo, &prefixHousePartIO ioh
- where m.property_source_id in (
- select ontology_term_source_id
- from obsont  
-   )
- and m.pan_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+) 
-UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations 
- select distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
- nvl(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixObsObsIO iosub,  &prefixHousePartIO ioh, &prefixPartObsIO ioo
- where m.property_source_id in (
- select ontology_term_source_id
- from obsont  
-   )
- and m.pan_id = iosub.sub_observation_id
- and iosub.observation_id = ioo.observation_id
- and ioo.participant_id = ioh.participant_id(+)
-UNION --NOTE: next block pulls in sample information
-select distinct m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id, m.pan_id as sample_id, nvl(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo, &prefixHousePartIO ioh
- where m.property_source_id in (
- select distinct o.ontology_term_source_id
- from &prefixOntology o
-     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
-     START WITH o.ontology_term_source_id in ('EUPATH_0000609')   
-   )
- and m.pan_id = spec.sample_id
-      and ioo.observation_id = spec.observation_id
-      and ioo.participant_id = ioh.participant_id(+)     
+        CREATE TABLE &prefixObservationMD&1 (
+          ontology_term_name,
+          observation_id,
+          participant_id,
+          sub_observation_id,
+          sample_id,
+          household_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        WITH obsont AS (
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            /* NOTE: 'EUPATH_0000609' bring in sample vars attached directly to observations like for PRISM */
+            WHERE ontology_term_source_id in ('EUPATH_0000738','EUPATH_0000609')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+          )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
+        SELECT DISTINCT m.property_source_id as ontology_term_name, m.pan_id as observation_id, ioo.participant_id,  m.pan_id as sub_observation_id,
+               m.pan_id as sample_id, coalesce(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m
+          INNER JOIN &prefixPartObsIO ioo ON m.pan_id = ioo.observation_id
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
+        WHERE m.property_source_id in ( SELECT ontology_term_source_id FROM obsont )
+        UNION  -- NOTE: the following pulls in sub-observations for an observation but maintains as separate observations
+        SELECT distinct m.property_source_id as ontology_term_name, iosub.observation_id as observation_id, ioo.participant_id, m.pan_id as sub_observation_id, iosub.observation_id as sample_id,
+                coalesce(ioh.household_id,-1) as household_id, m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m, &prefixObsObsIO iosub, &prefixPartObsIO ioo
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
+        WHERE m.property_source_id in (SELECT ontology_term_source_id from obsont)
+          and m.pan_id = iosub.sub_observation_id
+          and iosub.observation_id = ioo.observation_id
+        UNION --NOTE: next block pulls in sample information
+        SELECT DISTINCT m.property_source_id as ontology_term_name, ioo.observation_id,ioo.participant_id, ioo.observation_id as sub_sample_id,
+               m.pan_id as sample_id, coalesce(ioh.household_id,-1) as household_id,  m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m, &prefixObsSampleIO spec, &prefixPartObsIO ioo
+          LEFT JOIN &prefixHousePartIO ioh ON ioo.participant_id = ioh.participant_id
+        WHERE m.property_source_id in (
+          WITH RECURSIVE cte AS (
+            SELECT ontology_term_source_id
+            FROM &prefixOntology
+            WHERE ontology_term_source_id in ('EUPATH_0000609')
+            UNION
+            SELECT o.ontology_term_source_id
+            FROM cte, ontology o
+            WHERE o.parent_ontology_term_source_id = cte.ontology_term_source_id
+          )
+          SELECT DISTINCT ontology_term_source_id
+          FROM cte
+        )
+          AND m.pan_id = spec.sample_id
+          AND ioo.observation_id = spec.observation_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixObsmd_partid&1
           ON &prefixObservationMD&1 (participant_id, observation_id)
-        TABLESPACE indx
+
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixObsmd_obsid&1
           ON &prefixObservationMD&1 (observation_id, participant_id)
-        TABLESPACE indx
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixObsmd_pk&1
+          ON &prefixObservationMD&1 (ontology_term_name,observation_id,participant_id,sub_observation_id,sample_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -2212,30 +2184,34 @@ select distinct m.property_source_id as ontology_term_name, ioo.observation_id,i
     <internalDependency name="ObservationMD"/>
     <sql>
       <![CDATA[
-create table &prefixSampleMD&1 (
-  ontology_term_name,
-  sample_id,
-  observation_id,
-  participant_id,
-  household_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixSmplmd_pk&1 PRIMARY KEY (ontology_term_name,sample_id,observation_id,participant_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-  select ontology_term_name, sample_id, observation_id, participant_id, household_id, string_value, number_value, date_value
-  from &prefixObservationMD
-  where sample_id != observation_id
+        CREATE TABLE &prefixSampleMD&1 (
+          ontology_term_name,
+          sample_id,
+          observation_id,
+          participant_id,
+          household_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        SELECT ontology_term_name, sample_id, observation_id, participant_id, household_id, string_value, number_value, date_value
+        FROM &prefixObservationMD
+        WHERE sample_id != observation_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixSplmd_obsid&1
           ON &prefixSampleMD&1 (observation_id, sample_id)
-        TABLESPACE indx
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixSplmd_pk&1
+          ON &prefixSampleMD&1 (ontology_term_name,sample_id,observation_id,participant_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
@@ -2249,40 +2225,45 @@ create table &prefixSampleMD&1 (
     <internalDependency name="Metadata"/>
     <sql>
       <![CDATA[
-create table &prefixEntomologyMD&1 (
-  ontology_term_name,
-  entomology_id,
-  household_id,
-  insect_sample_id,
-  string_value,
-  number_value,
-  date_value,
-  CONSTRAINT &prefixEntmd_pk&1 PRIMARY KEY (ontology_term_name,entomology_id,household_id,insect_sample_id,string_value) 
-  )
-  ORGANIZATION index
-  nologging
-  as
-   select distinct m.property_source_id as ontology_term_name, m.pan_id as entomology_id, io.household_id,  m.pan_id as insect_sample_id, 
-   m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixHouseEntoIO io
- where m.pan_id = io.entomology_id
-UNION  -- NOTE: the following pulls in insect sample data
-   select distinct m.property_source_id as ontology_term_name, eis.entomology_id, io.household_id,  m.pan_id as insect_sample_id, 
-   m.string_value, m.number_value, m.date_value
- from &prefixMetaData m, &prefixHouseEntoIO io, &prefixEntoInsSplIO eis
- where m.pan_id = Eis.Insect_Sample_Id
- and Eis.Entomology_Id = io.entomology_id
+        CREATE TABLE &prefixEntomologyMD&1 (
+          ontology_term_name,
+          entomology_id,
+          household_id,
+          insect_sample_id,
+          string_value,
+          number_value,
+          date_value
+          )
+        AS
+        SELECT DISTINCT m.property_source_id as ontology_term_name, m.pan_id as entomology_id, io.household_id,  m.pan_id as insect_sample_id,
+               m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m, &prefixHouseEntoIO io
+        WHERE m.pan_id = io.entomology_id
+        UNION  -- NOTE: the following pulls in insect sample data
+        SELECT distinct m.property_source_id as ontology_term_name, eis.entomology_id, io.household_id,  m.pan_id as insect_sample_id,
+              m.string_value, m.number_value, m.date_value
+        FROM &prefixMetaData m, &prefixHouseEntoIO io, &prefixEntoInsSplIO eis
+        WHERE m.pan_id = Eis.Insect_Sample_Id
+          AND Eis.Entomology_Id = io.entomology_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX &prefixEntomd_houseid&1
           ON &prefixEntomologyMD&1 (household_id, entomology_id)
-        TABLESPACE indx
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX &prefixEntomd_pk&1
+          ON &prefixEntomologyMD&1 (ontology_term_name,entomology_id,household_id,insect_sample_id,string_value)
+
       ]]>
     </sql>
   </tuningTable>
 
+<!-- CHECK AND FIX - regexp_substr issue
   <tuningTable name="RecordCount" prefixEnabled="false">
     <comment>generates the counts for each type_id for each study in study.protocolappnode.
     </comment>
@@ -2291,39 +2272,39 @@ UNION  -- NOTE: the following pulls in insect sample data
     <externalDependency name="sres.OntologyTerm"/>
     <sql>
       <![CDATA[
-        create table RecordCount&1 nologging as
-        with coredata as (
-        select inv.algorithm_invocation_id, inv.comment_string, o.ontology_term_id,o.name,count(*) as record_count
-        from study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv
-        where o.ontology_term_id = pan.type_id
-        and inv.algorithm_invocation_id = pan.row_alg_invocation_id
-        and pan.protocol_app_node_id not in (
-           select distinct panout.protocol_app_node_id
-           from study.input, study.output, study.protocolappnode panin, study.protocolappnode panout, sres.ontologyterm otin, sres.ontologyterm otout
-           where input.protocol_app_id = output.protocol_app_id
-           and input.protocol_app_node_id = panin.protocol_app_node_id
-           and panin.type_id = otin.ontology_term_id
-           and otin.name = 'Household'
-           and output.protocol_app_node_id = panout.protocol_app_node_id
-           and panout.type_id = otout.ontology_term_id
-           and otout.name = 'Household'
-           )
-        group by inv.algorithm_invocation_id,inv.comment_string, o.ontology_term_id,o.name
+        CREATE TABLE RecordCount&1 AS
+        WITH coredata AS (
+          SELECT inv.algorithm_invocation_id, inv.comment_string, o.ontology_term_id,o.name,count(*) as record_count
+          FROM study.protocolappnode pan, sres.ontologyterm o, core.algorithminvocation inv
+          WHERE o.ontology_term_id = pan.type_id
+            AND inv.algorithm_invocation_id = pan.row_alg_invocation_id
+            AND pan.protocol_app_node_id not in (
+               SELECT distinct panout.protocol_app_node_id
+               FROM study.input, study.output, study.protocolappnode panin, study.protocolappnode panout, sres.ontologyterm otin, sres.ontologyterm otout
+               WHERE input.protocol_app_id = output.protocol_app_id
+                 AND input.protocol_app_node_id = panin.protocol_app_node_id
+                 AND panin.type_id = otin.ontology_term_id
+                 AND otin.name = 'Household'
+                 AND output.protocol_app_node_id = panout.protocol_app_node_id
+                 AND panout.type_id = otout.ontology_term_id
+                 AND otout.name = 'Household'
+            )
+          GROUP BY inv.algorithm_invocation_id,inv.comment_string, o.ontology_term_id,o.name
         )
-        select dp.dataset_presenter_id, dp.name, dp.display_name, t.name as record_type, t.record_count
-        from apidbtuning.datasetpresenter dp,  coredata t
-        where dp.name = regexp_replace(regexp_substr(t.comment_string,'extDbRlsSpec\s+["'']\S+RSRC'),'extDbRlsSpec\s+["'']','')
+        SELECT dp.dataset_presenter_id, dp.name, dp.display_name, t.name as record_type, t.record_count
+        FROM datasetpresenter dp,  coredata t
+        WHERE dp.name = regexp_replace(regexp_substr(t.comment_string,'extDbRlsSpec\s+["'']\S+RSRC'),'extDbRlsSpec\s+["'']','')
       ]]>
     </sql>
     <sql>
       <![CDATA[
         INSERT INTO RecordCount&1
         SELECT tp.dataset_presenter_id,dp.name,dp.display_name, 'Variable' AS RECORD_TYPE, count(o.ONTOLOGY_SYNONYM_ID) AS RECORD_COUNT
-        FROM apidbtuning.DATASETProperty tp
-        LEFT JOIN apidbtuning.datasetpresenter dp ON tp.dataset_presenter_id=dp.dataset_presenter_id
-        LEFT JOIN sres.EXTERNALDATABASE e ON e.name= 'OntologyTerm_' || tp.value || '_RSRC'
-        LEFT JOIN sres.EXTERNALDATABASERELEASE rel ON e.EXTERNAL_DATABASE_ID = rel.EXTERNAL_DATABASE_ID 
-        LEFT JOIN sres.ONTOLOGYSYNONYM o ON rel.EXTERNAL_DATABASE_RELEASE_ID = o.EXTERNAL_DATABASE_RELEASE_ID 
+        FROM DATASETProperty tp
+          LEFT JOIN apidbtuning.datasetpresenter dp ON tp.dataset_presenter_id=dp.dataset_presenter_id
+          LEFT JOIN sres.EXTERNALDATABASE e ON e.name= 'OntologyTerm_' || tp.value || '_RSRC'
+          LEFT JOIN sres.EXTERNALDATABASERELEASE rel ON e.EXTERNAL_DATABASE_ID = rel.EXTERNAL_DATABASE_ID
+          LEFT JOIN sres.ONTOLOGYSYNONYM o ON rel.EXTERNAL_DATABASE_RELEASE_ID = o.EXTERNAL_DATABASE_RELEASE_ID
         WHERE tp.property='webDisplayOntologyName'
         GROUP BY tp.dataset_presenter_id,dp.name,dp.display_name
       ]]>
@@ -2332,9 +2313,9 @@ UNION  -- NOTE: the following pulls in insect sample data
       <![CDATA[
         create index rcd_ct_ix&1
         on RecordCount&1 (dataset_presenter_id, record_type)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
-
+-->
 </tuningConfig>

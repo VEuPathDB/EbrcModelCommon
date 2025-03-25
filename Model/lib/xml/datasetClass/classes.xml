@@ -89,8 +89,9 @@
     <prop name="isHugeGenome">[true|false] If true then skip making orfs and skip generating download files for orfs</prop>
 
     <prop name="maxIntronSize">An approximation of the maximum intron size.  Used by BLAT when mapping proteins or DNA to this organisms genome.</prop>
-
+    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
     <prop name="isNotEbiGenome">For any genome which is not coming from mysql dump from EBI.</prop>
+    <prop name="isCore">Boolean. core or peripheral. Used by orthomcl workflow.</prop>
     <graphTemplateFile name="project.xml"/>
 
     <!-- This is ONLY HERE so the propsfromDatasets works;  No workflow graph calls this -->
@@ -119,7 +120,6 @@
     <prop name="strainAbbrev">&strainAbbrev;</prop>
     <prop name="projectName">&projectName;</prop>
     <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
-    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
@@ -154,6 +154,8 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+
+    <!-- NOTE:  Moving forward we need to set the version here to include ebiVersion (build number) because for ebi the version includes the annotation -->
     <datasetLoader datasetName="${organismAbbrev}_primary_genome_RSRC"
               version="${genomeVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -210,7 +212,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ </pluginArgs>
+      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -267,7 +269,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ </pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -297,7 +299,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --validationLog @@dataDir@@/final/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ </pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gbf --fileFormat genbank --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --validationLog @@dataDir@@/final/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -333,7 +335,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %DATASET_NAME% --extDbRlsVer %DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out --validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -363,7 +365,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -393,7 +395,7 @@
         </dir>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.embl --fileFormat embl --soExtDbSpec "SO_RSRC|%" --organism ${ncbiTaxonId} --seqSoTerm ${soTerm} --bioperlTreeOutput @@dataDir@@/bioperlTree.out--validationLog @@dataDir@@/validation.log --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -470,7 +472,7 @@
         <example dir="GeneDB_GFF_primary_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -496,7 +498,7 @@
         <example dir="GeneDB_GFF_secondary_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/validation.log --bioperlTreeOutput @@dataDir@@/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_${soTerm}_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ </pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/validation.log --bioperlTreeOutput @@dataDir@@/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_${soTerm}_RSRC/final/chromosomeMap.txt --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -523,7 +525,7 @@
         <example dir="GeneDB_GFF_organelle_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ </pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/geneDBGFF2Gus.xml --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff"  --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId}  --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
   
@@ -553,7 +555,7 @@
       </manualGet>
  
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_primary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperltree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -582,7 +584,7 @@
         <example dir="NoPreprocess_secondary_genome_features"></example>
     </manualGet>
 
-    <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_secondary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+    <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --chromosomeMapFile @@dataDir@@/../${organismAbbrev}_secondary_genome_RSRC/final/chromosomeMap.txt --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -611,7 +613,7 @@
         <example dir="NoPreprocess_organelle_genome_features"></example>
       </manualGet>
 
-      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/</pluginArgs>
+      <pluginArgs>--extDbName %PARENT_DATASET_NAME% --extDbRlsVer %PARENT_DATASET_VERSION% --mapFile @@gusHome@@/lib/xml/isf/${mapFile} --inputFileOrDir @@dataDir@@/final/genome.gff --inputFileExtension "gff" --fileFormat gff3 --soExtDbSpec "SO_RSRC|%" --defaultOrganism ${ncbiTaxonId} --seqSoTerm '${soTerm}' --validationLog @@dataDir@@/final/validation.log --bioperlTreeOutput @@dataDir@@/final/bioperlTree.out --seqIdColumn source_id --naSequenceSubclass ExternalNASequence --postprocessingDirective SET_TRANSCRIPT_IDS --postprocessingDir @@dataDir@@/final/ --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
   
@@ -769,7 +771,7 @@
         <example dir="fasta_primary_genome_sequence.1"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --SOExtDbRlsSpec 'SO_RSRC|%' --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence"</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --SOExtDbRlsSpec 'SO_RSRC|%' --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -799,7 +801,7 @@
         <example dir="fasta_organelle_genome_sequence"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/genome.fasta --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/genome.fasta --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -827,7 +829,7 @@
         <example dir="fasta_secondary_genome_sequence"></example>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %PARENT_DATASET_NAME% --externalDatabaseVersion %PARENT_DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/final/genome.fasta --chromosomeMapFile @@dataDir@@/final/chromosomeMap.txt --soTermName ${soTerm} --regexSourceId "${sourceIdRegex}" --tableName "${table}" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -1029,8 +1031,6 @@
     </datasetLoader>
   </datasetClass>
 
-
-
   <!-- Category: genomeFeature -->
   <!-- NOTE: THIS CLASS IS NOT TO BE USED FOR GENES -->
   <datasetClass class="genomeFeatures_GFF2" category="" datasetFileHint="">
@@ -1210,7 +1210,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
         </dir>
       </manualGet>
 
-      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile</unpack>
+      <unpack>getSubTaxa --ncbiTaxId ${speciesNcbiTaxonId} --outputFile @@dataDir@@/taxonIdFile --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
 
       <unpack>createPropFile --file @@dataDir@@/dbestProp --propList "dbestLogin:@@dbestLogin@@,dbestPswd:@@dbestPswd@@"</unpack>
 
@@ -1240,7 +1240,7 @@ Compare to: The number of ESTs available by querying NCBI dbEST, http://www.ncbi
     <prop name="libraryName">Not required.Name given to the library.</prop>
     <prop name="libraryDesc">Not required.Brief description of the library e.g. P. falciparum 3D7 parasites were cultured either in a candle jar (XPFn, XPF2n) or in the mixed gas consisting of 3% oxygen, 5% carbon dioxide and 92% nitrogen using blood type A erythrocytes and frozen human plasma.</prop>
     <prop name="contactName">Not required.Name of person who provided or created the library or who can answer questions about the library</prop>
-    <prop name="contactAddress1">Not required.Address to use to contact above name. Often this is the institution or laboratory name. e.g. Seattle Biomedical Research Institute</prop>    
+
     <prop name="contactAddress2">Not required.Additional space for address. Often the street and city, etc. e.g. 307 Westlake Avenue N., Suite 500 Seattle, WA 98109-5219  </prop>
 
     <graphTemplateFile name="ESTs.xml"/>
@@ -1258,6 +1258,7 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
         <descriptionOfFinal>The final directory should contain the single data file named ests.fasta.</descriptionOfFinal>
         <example dir="referenceStrain-ESTsFromFasta"></example>
       </manualGet>
+
       <pluginArgs>--sourceIdRegex "${sourceIdRegex}" --fastaFile @@dataDir@@/ests.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVer %DATASET_VERSION%  --SOTermName '${soTerm}' --SOExtDbRlsSpec 'SO_RSRC|%' --ncbiTaxId ${ncbiTaxonId} --libraryVector '${libraryVector}' --putativeFullLength ${isPutativeFullLength} --libraryStage '${libraryStage}' --libraryName '${libraryName}' --libraryDesc "${libraryDesc}" --contactName "${contactName}" --contactAddress1 "${contactAddress1}" --contactAddress2 "${contactAddress2}" </pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -1299,7 +1300,7 @@ Compare to: the number of ESTs in the file corresponding to the specific dataset
        of this class so that its transcripts get mapped to its genome</purpose>
     <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
 
-    <graphTemplateFile name="mapTranscriptsToGenome.xml"/>
+    <graphTemplateFile name="mapWithBlat.xml"/>
     <qaNotes>Run Query: select tn.name, count(*) from dots.blatalignment b, dots.nasequence ns,sres.taxonname tn, dots.est e where e.na_sequence_id = b.query_na_sequence_id and b.target_na_sequence_id = ns.na_sequence_id and b.target_taxon_id = tn.taxon_id and tn.name_class = 'scientific name' and b.is_best_alignment = 1 group by tn.name;
     Compare the number for the organism(s) of interest to the numbers obtained using the query:select d.name, dr.version, count(*)  from dots.est e, dots.nasequence ns, sres.externaldatabase d, SRES.externaldatabaserelease dr
 where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id = dr.external_database_release_id and dr.external_database_id = d.external_database_id group by d.name,dr.version order by d.name</qaNotes>
@@ -1308,64 +1309,49 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <!-- Category: IEDB epitopes -->
 
-  <!--  get the epitope sequences. 
-        (this class does not map epitopes. see epitopesFromReferenceStrain)
-        ONLY INCLUDE IF A REFERENCE STRAIN
- -->
-  <datasetClass class="referenceStrain-epitope_sequences_IEDB" category="" datasetFileHint="">
+  <!--  get all the epitope sequences. Note this is only called from the GenomicsGlobal workflow
+        and loads all epitope sequences
+  -->
+  <datasetClass class="epitope_sequences_IEDB" category="" datasetFileHint="">
     <purpose></purpose>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="speciesNcbiTaxonId">&speciesNcbiTaxonId;</prop>
 
-    <graphTemplateFile name="epitopes.xml"/>
+    <datasetLoader datasetName="epitopes_IEDB_RSRC"
+                   version="TODAY"
+                   plugin="GUS::Supported::Plugin::LoadFastaSequences"
+                   scope="global"
+                   type="epitope"
+                   >
 
-    <datasetLoader datasetName="${organismAbbrev}_epitope_IEDB_RSRC"
-              version="${version}"
-	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
-              scope="species"
-              type="epitope"
-              organismAbbrev="${organismAbbrev}">
+      <wgetArgs url="https://www.iedb.org/downloader.php?file_name=doc/iedb_export.zip">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/iedb_export.zip</wgetArgs>
 
-      <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-      </manualGet>
+      <unpack>mkdir -p @@dataDir@@/xml</unpack>
+      <unpack>unzip -d @@dataDir@@/xml @@dataDir@@/iedb_export.zip</unpack>
+      <unpack>rm @@dataDir@@/iedb_export.zip</unpack>
 
-      <!-- validate that IEDB knows about this taxon id.  this unpack just greps IEDB's taxon list -->
-      <unpack><![CDATA[unzip -p @@manualDeliveryDir@@/common/epitope/IEDB/${version}/fromProvider/OrganismList.zip | grep "<TaxId>${speciesNcbiTaxonId}<"]]></unpack>
+      <!-- Sanitize xml files and get them ready for processing
+          1. remove illegal characters from the text content so we can successfully parse the xml files
+          2. remove xmlns from references to make it easier to traverse the document with simple xpath expressions.
+       -->
+      <unpack><![CDATA[find @@dataDir@@/xml -type f -name '*.xml' | xargs sed -i -E -e "s/[\x01-\x08]|\x0b|\x0c|[\x0E-\x1F]//g" -e "s/<References(.*)>/<References>/g"]]></unpack>
 
-      <unpack>iedbMakeTabFileFromXml --input_dir @@manualDeliveryDir@@/common/epitope/IEDB/%DATASET_VERSION%/final/iedb_export_fixed --outputfile @@dataDir@@/oneOrganism.txt --NCBITaxId ${speciesNcbiTaxonId} --organismListFile @@manualDeliveryDir@@/common/epitope/IEDB/%DATASET_VERSION%/fromProvider/OrganismList.xml</unpack>
+      <!-- Process all xml files in the input directory and generate a fasta file containing
+           unique epitopes from all organisms unfiltered
+      -->
+      <unpack>iedbMakeFastaFileFromXML --input_dir @@dataDir@@/xml --outputfile @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta</unpack>
 
-      <unpack>mkdir -p @@dataDir@@/fasta</unpack>
+      <unpack>rm -rf @@dataDir@@/xml</unpack>
+      <unpack>processIedbPeptide.pl --mergedNcbi @@dataDir@@/../taxonomy_RSRC/merged.dmp --inputPepFasta  @@dataDir@@/iedb_unique_epitopes_all_organisms.fasta --correctedFasta @@dataDir@@/iedb_unique_epitopes_all_organisms_corrected.fasta --peptideTab @@dataDir@@/iedb.tab</unpack>
 
-      <!-- not clear why we need this step.  should modify iedbMakeTabFileFromXml
-           to produce the simplified tab file, since oneOrganism.txt is never
-           consumed besides right here -->
-      <unpack>iedbSimplifyTabFile --inputFile @@dataDir@@/oneOrganism.txt --outputFile @@dataDir@@/oneOrganismSimplified.txt </unpack>
+      <getAndUnpackOutput file="@@dataDir@@/iedb_unique_epitopes_all_organisms.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/iedb.tab"/>
 
-      <unpack>generateEpitopeFastaFile --inputFile @@dataDir@@/oneOrganismSimplified.txt --outputFile @@dataDir@@/fasta/IEDBExport.fsa </unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/oneOrganismSimplified.txt"/>
-
-      <!-- sourceId|name|ncbiTaxId|accession -->
-      <pluginArgs><![CDATA[--seqFileDir @@dataDir@@/fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">[^|]*\|[^|]*\|([^|]*)" --regexSourceId ">(\d+)|" --tableName "DoTS::MotifAASequence" --logFrequency 100 --regexDesc ">(.+)" ]]></pluginArgs>
+      <!-- >sourceId name|ncbiTaxId|accession -->
+      <pluginArgs><![CDATA[--sequenceFile @@dataDir@@/iedb_unique_epitopes_all_organisms_corrected.fasta --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --soTermName "epitope" --SOExtDbRlsSpec 'SO_RSRC|%' --regexNcbiTaxId  ">\d+ [^|]*\|([^|]*)" --regexSourceId ">(\d+) " --tableName "DoTS::MotifAASequence" --logFrequency 100000 --regexDesc ">\d+ ([^|]*)" --regexSecondaryId ">\d+ [^|]*\|[^|]*\|([^|]*)" ]]></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
 
-  <!-- This class gets its data from Epitopes loaded by the
-       reference strain.  It finds all of them in the database and maps them to
-       our genome.  The reference strain DOES need to include an instance
-       of this class so that its transcripts get mapped to its genome  -->
 
-  <datasetClass class="epitopesFromReferenceStrain" category="epitope" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
-
-    <graphTemplateFile name="mapEpitopes.xml"/>
-
-  </datasetClass>
 
   <datasetClass class="rRNAReference" category="" datasetFileHint="">
     <purpose>Assign OTUs to experimental rRNA sequences</purpose>
@@ -1732,7 +1718,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
+      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -1772,7 +1758,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       </manualGet>
 
       <!-- need to use the gene2entrez file to get map of NCBI ids -->
-      <unpack>uniprotIdMap2DbRefsFile @@dataDir@@/idmapping_selected.tab.gz @@dataDir@@/../${organismAbbrev}_dbxref_gene2Entrez_RSRC/gene2entrez.tab > @@dataDir@@/gene2uniprot.tab</unpack>
+      <unpack>uniprotIdMap2DbRefsFile @@dataDir@@/idmapping_selected.tab.gz @@dataDir@@/../${organismAbbrev}_dbxref_gene2Entrez_RSRC/gene2entrez.tab @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2uniprot.tab</unpack>
 
       <pluginArgs>--DbRefMappingFile @@dataDir@@/gene2uniprot.tab --extDbName %DATASET_NAME% --extDbReleaseNumber %DATASET_VERSION% --columnSpec "primary_identifier,secondary_identifier,remark" --tableName "DbRefNAFeature"  --viewName GeneFeature --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}'  --organismAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
@@ -1843,7 +1829,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa > @@dataDir@@/gene2entrez.tab</unpack>
+      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
 
       <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
 
@@ -1995,7 +1981,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="variableLengthReads"/>
     <prop name="numInsertions"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2028,7 +2014,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="isNimbleGenGeneArray"/>
     <prop name="providedMappingFileName"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2058,7 +2044,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_chipChipPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2098,7 +2084,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="usesAffymetrixGeneArray"/>
     <prop name="usesNimbleGenGeneArray"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayExpression_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2168,7 +2154,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="usesAffymetrixGeneArray"/>
     <prop name="usesNimbleGenGeneArray"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_microarrayExpression_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2205,7 +2191,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="peakFinderArgs"/>
     <prop name="loadPeakCalls"/>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_chipChipExper_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -2307,8 +2293,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="hasPairedEnds">Data is paired end, [false|true]. Check with data provider.</prop>
     <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
     <prop name="alignWithCdsCoordinates">Use CDS model for alignment, [false|true]. Use false if not sure what to use.</prop>
-<!--    <prop name="doDegSeq">only want to set to true is data provider wants DEGSeq ran on dataset without replicates. Check with data provider.</prop> -->
-    <graphTemplateFile name="hisat.xml"/>
+    <prop name="fromSRA">Does samplesheet.csv use SRA IDs?</prop>
+
+
+    <graphTemplateFile name="rnaseq.xml"/>
+
     <qaNotes>To begin with QA, check if symbolic links of analysisConfig.xml and a FASTQ file for each sample are created under @@dataDir@@/final. Next, go to @@websiteFilesDir@@/${projectName}/@@version@@/real/webServices/${projectName}/release-CURRENT/${organismAbbrev}/bigwig/${organismAbbrev}_${name}_rnaSeq_RSRC, get normalized bigwig files, and visualize the rnaSeq alignment coverages by GBrowse track. Lastly, query the tables: ApiDB.ProfileElement, ApiDB.Profile, ApiDB.ProfileElementName and ApiDB.ProfileSet, to check if the reasonable number of intensity profiles are loaded. In the case of time series rnaSeq, also check the tables: RAD.AnalysisInput, RAD.AnalysisResultImp, RAD.Anaalysis, RAD.LogicalGroupLink and RAD.LogicalGroup to find out if the the reasonalble number of differentially expressed genes are loaded.</qaNotes>
    <!-- Inquiry: Always follow naming convention -->
     <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeq_RSRC" version="${version}"
@@ -2320,8 +2309,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <manualGet fileOrDir="common/empty">
         <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml and a FASTQ file for each sample in the experiment. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment. The name of FASTQ file must be consistent with "sampleName" defined in "rnaSeqSample". To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
-        <example dir="rnaSeqExperiment.1"></example>
-        <example dir="rnaSeqExperiment.paired-end"></example>
+        <example dir="rnaSeqExperiment.1.fastq.gz"></example>
+        <example dir="rnaSeqExperiment.2.fastq.gz"></example>
         <dir name="final">
         </dir>
       </manualGet>
@@ -2329,6 +2318,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
       <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/samplesheet.csv"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
@@ -2376,12 +2366,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="isStrandSpecific">Data is strand specific, [false|true]. Check with data provider.</prop>
+<!--
     <prop name="ebiOrganismName">matches ebi ftp directory name</prop>
     <prop name="ebiVersion">matches ebi ftp directory name</prop>
+-->
 
 
-
-    <graphTemplateFile name="ebiRNASeq.xml"/>
+    <graphTemplateFile name="rnaseq.xml"/>
     <qaNotes>TODO:  Similar to rnaSeqExperiment</qaNotes>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_ebi_rnaSeq_RSRC" version="${version}"
@@ -2391,15 +2382,16 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               subType="rnaseq"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="common/empty">
-        <descriptionOfFinal>The final/ dir must contain the following files: analysisConfig.xml. The analysisConfig.xml privides properties for creating expression profiles of all samples in the experiment.  To make analysisConfig.xml, please check the google doc: "Analysis Config Breakdown"</descriptionOfFinal>
+
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
-
-      <getAndUnpackOutput dir="@@dataDir@@/final" />
-      <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
+      <unpack>mv @@dataDir@@/final @@dataDir@@/results</unpack>
+      <unpack>ebiRNASeqSeqRegionNameMapping.pl --samples_directory @@dataDir@@/results --organism_abbrev ${organismAbbrev} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
+      <getAndUnpackOutput dir="@@dataDir@@/results" />
+      <getAndUnpackOutput file="@@dataDir@@/results/analysisConfig.xml"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -2435,7 +2427,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
-
  <datasetClass class="ebiVCFfile" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -2456,20 +2447,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
         <manualGet fileOrDir="common/empty">
            <dir name="final"/> 
-  <!--         <dir name="@@dataDir@@"/>  -->
         </manualGet>
  
-       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/  @@dataDir@@/final</unpack>
+       <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/VCFFiles/${name}/${version}/final/${name}.vcf.gz  @@dataDir@@/</unpack>
 
-        <getAndUnpackOutput dir="@@dataDir@@/final"/>
-        <getAndUnpackOutput file="@@dataDir@@/final/${name}.vcf.gz"/>
+        <getAndUnpackOutput file="@@dataDir@@/${name}.vcf.gz"/>
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
 
 <datasetClass class="ebiGFF3file" category="" datasetFileHint="">
     <purpose></purpose>
@@ -2491,20 +2477,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
         <manualGet fileOrDir="common/empty">
            <dir name="final"/>
-  <!--         <dir name="@@dataDir@@"/>  -->
         </manualGet>
 
-       <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/  @@dataDir@@/final</unpack>
+       <unpack>cp @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/GFF3Files/${name}/${version}/final/${name}.gff3.gz  @@dataDir@@/</unpack>
 
-        <getAndUnpackOutput dir="@@dataDir@@/final"/>
-        <getAndUnpackOutput file="@@dataDir@@/final/${name}.gff3.gz"/>
+        <getAndUnpackOutput file="@@dataDir@@/${name}.gff3.gz"/>
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+      <pluginArgs>dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
 
  <datasetClass class="rnaSeqSample" category="" datasetFileHint="">
     <purpose></purpose>
@@ -2746,8 +2727,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="soTermName"/>
     <prop name="sourceIdRegex">&sourceIdRegex;</prop>
     <prop name="secondaryIdRegex"/>
+    <prop name="sourceIdField"></prop>
+    <prop name="sourceIdJoiningRegex"></prop>
+    <prop name="spanLengthCutoff"></prop>
+    <prop name="includeMultipleSpans"></prop>
 
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <graphTemplateFile name="mapWithBlat.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_clonedInsertEnds_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
@@ -2761,7 +2747,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --regexSecondaryId "${secondaryIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2791,7 +2777,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="soTermName"/>
     <prop name="sourceIdRegex">&sourceIdRegex;</prop>
 
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+    <graphTemplateFile name="mapWithBlat.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_transcript_sequences_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
@@ -2805,7 +2791,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%'</pluginArgs>
+      <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId} --sequenceFile @@dataDir@@/seqs.fasta --soTermName ${soTermName} --regexSourceId "${sourceIdRegex}" --tableName "DoTS::ExternalNASequence" --SOExtDbRlsSpec 'SO_RSRC|%' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2837,7 +2823,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
       <unpack> processProductAddPreferred.pl --inputFile "@@dataDir@@/products.txt" --outputFile "@@dataDir@@/processed_products.txt" --assignedBy ${name}</unpack>
-      <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev}</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/processed_products.txt --organismAbbrev ${organismAbbrev} --soGusConfigFile @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -2974,6 +2960,18 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="interpro2GO" category="" datasetFileHint="">
+    <purpose>Retrieve InterproID to GO mappings from EBI</purpose>
+    <prop name="version">&version;</prop>
+    <datasetLoader datasetName="interpro2GO_RSRC" version="${version}"
+                 plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                 scope="global"
+                 >
+      <wgetArgs url="http://www.geneontology.org/external2go/interpro2go">--output-document=@@dataDir@@/interpro2go</wgetArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+</datasetClass>
+
   <datasetClass class="EnzymeCommissionAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -3075,7 +3073,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--file @@dataDir@@/comments.txt  --organismAbbrev ${organismAbbrev}</pluginArgs>
+      <pluginArgs>--file @@dataDir@@/comments.txt  --organismAbbrev ${organismAbbrev} --datasetVersion ${version}</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3332,7 +3330,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--soExtDbName 'SO_RSRC,Ontology_ptmt_RSRC' --soGusConfig @@workflowRootDataDir@@/${projectName}/${projectName}_gus.config --inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3348,7 +3346,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="massSpec.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_massSpec_${name}_RSRC" version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertMassSpecFeaturesAndSummaries"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="organism"
               type="protein_expression"
               organismAbbrev="${organismAbbrev}"
@@ -3358,8 +3356,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-
-      <pluginArgs>--inputDir @@dataDir@@/final --externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev} --fileNameRegex '${fileNameRegex}'</pluginArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -3481,10 +3478,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="alphaFold" category="" datasetFileHint="">
     <purpose>Load AlphaFold</purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
     
-    <graphTemplateFile name="project.xml"/>
-
     <datasetLoader datasetName="alphaFold_RSRC" version="${version}"
       plugin="ApiCommonData::Load::Plugin::InsertAlphaFold"
       scope="global"
@@ -3498,18 +3492,21 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="PDBProteinSequences" category="" datasetFileHint="">
     <purpose></purpose>
     <datasetLoader datasetName="PDBProteinSequences_RSRC" version="TODAY"
-      plugin="GUS::Supported::Plugin::LoadFastaSequences"
+      plugin="ApiCommonData::Load::Plugin::InsertProteinDataBankFromFile"
               scope="global"
               type="external_sequences"
               >
-    <wgetArgs url="ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
+    <wgetArgs url="https://files.rcsb.org/pub/pdb/derived_data/pdb_seqres.txt.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --output-document=@@dataDir@@/pdb_seqres.txt.gz</wgetArgs>
     <unpack>gunzip @@dataDir@@/pdb_seqres.txt.gz</unpack>
     <unpack>filterPdbFile --inputFile @@dataDir@@/pdb_seqres.txt --outputFile  @@dataDir@@/pdb.fsa.tmp</unpack>
     <unpack><![CDATA[cat @@dataDir@@/pdb.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/pdb.fsa]]></unpack>
     <unpack>rm @@dataDir@@/pdb.fsa.tmp</unpack>
-    <unpack>xdformat -p @@dataDir@@/pdb.fsa</unpack>
-    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>   
-    <pluginArgs>--externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --sequenceFile  @@dataDir@@/pdb.fsa --SOTermName 'polypeptide' --SOExtDbRlsSpec 'SO_RSRC|%' --noSequence --regexSourceId  '>(\w+)\s+mol:protein' --regexDesc 'length:\d+\s+(.+)$' --tableName "DoTS::ExternalAASequence"</pluginArgs>
+    <unpack>wget https://files.rcsb.org/pub/pdb/derived_data/index/source.idx --tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/source.idx </unpack>
+    <unpack>processSourceIdxFile --inFile @@dataDir@@/source.idx --outFile @@dataDir@@/source.idx.processed</unpack>
+    <unpack>update_pdb_with_taxon.pl --pdb_file @@dataDir@@/pdb.fsa --id_file @@dataDir@@/source.idx.processed --output_file @@dataDir@@/proteinDataBank.tab</unpack>
+    <getAndUnpackOutput file="@@dataDir@@/pdb.fsa"/>
+    <getAndUnpackOutput file="@@dataDir@@/proteinDataBank.tab"/>
+    <pluginArgs>--inputFile  @@dataDir@@/proteinDataBank.tab --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
   </datasetClass>
 
@@ -3524,6 +3521,42 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <unpack>$currDir=`pwd`; cd @@dataDir@@ ; tar -xzf taxdump.tar.gz ; rm -f taxdump.tar ; cd $currDir</unpack>
     <pluginArgs>--names @@dataDir@@/names.dmp --nodes @@dataDir@@/nodes.dmp --gencode @@dataDir@@/gencode.dmp --merged @@dataDir@@/merged.dmp --verbose</pluginArgs>
   </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="temporaryTaxon" category="" datasetFileHint="">
+    <purpose></purpose>
+    <datasetLoader datasetName="temporaryTaxon_RSRC" version="TODAY"
+                   plugin="GUS::Supported::Plugin::LoadTemporaryTaxon"
+                   scope="global"
+                   type="sres"
+    >
+      <manualGet fileOrDir="common/empty"/>
+      <unpack>extractTemporaryTaxaFromDatasets --inputDir @@gusHome@@/lib/xml/datasets --outputFile @@dataDir@@/organismsWithTempIds.txt</unpack>
+      <pluginArgs>--inputFile @@dataDir@@/organismsWithTempIds.txt </pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="taxonomyPatch" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="ncbiTaxonId"/>
+    <prop name="parentNcbiTaxonId"/>
+    <prop name="rank"/>
+    <prop name="name"/>
+    <prop name="nameClass"/>
+    <prop name="geneticCodeId"/>
+    <prop name="mitochondrialGeneticCodeId"/>
+    <prop name="mode"/>
+
+    <graphTemplateFile name="taxonomyPatches.xml"/>
+
+    <datasetLoader datasetName="taxonomyPatch_${ncbiTaxonId}_RSRC" version="TODAY"
+                   plugin="GUS::Supported::Plugin::InsertTaxonAndTaxonName"
+                   scope="global"
+                   type="sres"
+    >
+      <manualGet fileOrDir="common/empty"/>
+      <pluginArgs>--ncbiTaxId "${ncbiTaxonId}" --parentNcbiTaxId "${parentNcbiTaxonId}" --rank "${rank}" --name "${name}" --nameClass "${nameClass}" --geneticCodeId "${geneticCodeId}" --mitochondrialGeneticCodeId "${mitochondrialGeneticCodeId}" --mode ${mode}</pluginArgs>
+    </datasetLoader>
   </datasetClass>
 
 
@@ -3806,7 +3839,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs> 
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
   </datasetClass>
@@ -3898,14 +3931,14 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>cp -a @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
+      <unpack>cp -aL @@manualDeliveryDir@@/${projectName}/${subProjectName}/${studyName}/${version}/final @@dataDir@@/</unpack>
       <unpack>
         <!-- # merge owlAttributes, entities, ordinals into @@dataDir/annotationProperties.txt -->
           mergeAnnotationProperties @@dataDir@@/final/ @@dataDir@@/annotationProperties.txt
       </unpack>
       <getAndUnpackOutput dir="@@dataDir@@/final" />
 
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs> 
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
 
   </datasetClass>
@@ -4083,41 +4116,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    type="sres"
                    >
       <wgetArgs url="http://purl.obolibrary.org/obo/${name}.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/${name}.owl </wgetArgs>
+      <unpack>parseOwlFileToDBFile.pl --owlFile @@dataDir@@/${name}.owl</unpack>
       <pluginArgs>--inFile @@dataDir@@/${name}.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--This dataset class is created for IDO only. We don't need to load IDO. Only one term in IDO was used in the annotation and this term is available in the EuPath ontology. -->
-  <datasetClass class="oboOntologyDummy" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="name">&name;</prop>
-    <prop name="url"/>
-
-    <graphTemplateFile name="oboOntologies.xml"/>
-
-    <datasetLoader datasetName="OBO_Ontology_${name}_RSRC" version="dontcare"
-                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
-                   scope="global"
-                   type="sres"
-                   >
-    <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-    </manualGet>
-    
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -4162,6 +4162,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               >
 
       <wgetArgs url="http://www.ebi.ac.uk/efo/efo.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/efo.owl </wgetArgs>
+      <unpack>parseOwlFileToDBFile.pl --owlFile @@dataDir@@/efo.owl</unpack>
       <pluginArgs>--inFile @@dataDir@@/efo.owl --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
   </datasetLoader>
 
@@ -4457,14 +4458,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="external_sequences"
               >
-
-    <manualGet fileOrDir="common/domain/iprscanData/${version}/iprscan">
+    <manualGet fileOrDir="common/domain/iprscanData/${version}/insertInterpro-config.xml">
         <dir name="final">
         </dir>
-      </manualGet>
-
-    <unpack>fixSuperfamily @@dataDir@@/iprscan/data/</unpack>
-    <pluginArgs>--inPath @@dataDir@@/iprscan/data/</pluginArgs>
+    </manualGet>
+    <pluginArgs>--inPath @@dataDir@@/insertInterpro-config.xml</pluginArgs>
   </datasetLoader>
   </datasetClass>
 
@@ -4475,18 +4473,16 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="global"
               type="external_sequences"
               >
-    <wgetArgs url="ftp://ftp.ncbi.nih.gov/blast/db/FASTA/">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=3 --accept=nr.gz </wgetArgs>
-    <unpack>gunzip @@dataDir@@/nr.gz </unpack>
-    <unpack>shortenDefLine --inputFile @@dataDir@@/nr --outputFile @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack>
-    <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa.tmp | perl -e 'while(<>) { s/J|O/X/g if /^[^>]/; print;}' > @@dataDir@@/nrdb-short-defline.fsa]]></unpack>
-    <unpack>rm @@dataDir@@/nrdb-short-defline.fsa.tmp</unpack> 
-    <unpack><![CDATA[cat @@dataDir@@/nrdb-short-defline.fsa | perl -e '$flag=0; while(<>){if ($_ =~ />/){if ($_ =~ /sp\|/){$flag=1;}else{$flag=0;}} if ($flag == 1){ print;}}'> @@dataDir@@/nrdb-short-defline-sp.fsa]]></unpack>
-    <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline-sp.fsa"/>
-    <getAndUnpackOutput file="@@dataDir@@/nrdb-short-defline.fsa"/>
-    <getAndUnpackOutput file="@@dataDir@@/nr"/>
-    <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    <manualGet fileOrDir="common/empty">
+      <dir name="final">
+      </dir>
+    </manualGet>
+    <unpack>ln -s @@manualDeliveryDir@@/global/nrdb/CURRENT/final/nr.gz @@dataDir@@/</unpack>
+
+   <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
   </datasetLoader>
   </datasetClass>
+
 
   <datasetClass class="blatAlignmentQuality" category="" datasetFileHint="">
     <purpose></purpose>
@@ -4737,56 +4733,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-
-  <datasetClass class="GFF" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="genomeVersion"/>
-    <prop name="gffFormat"/>
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_GFF_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::InsertGFF3"
-              type="feature"
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/${organismAbbrev}_${name}.gff">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <pluginArgs>--file @@dataDir@@/${organismAbbrev}_${name}.gff  --gff3DbName  "%DATASET_NAME%" --gff3DbVer "%DATASET_VERSION%"  --gffFormat ${gffFormat} --seqExtDbName ${organismAbbrev}_primary_genome_RSRC --seqExtDbRlsVer ${genomeVersion}  --soExtDbSpec "SO_RSRC|%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-
-
-  <datasetClass class="GFF_topLevel" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="gffFormat"/>
-    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_${name}_GFF_topLevel_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::InsertGFF3"
-              type="feature"
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final/${organismAbbrev}_${name}.gff">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <pluginArgs>--file @@dataDir@@/${organismAbbrev}_${name}.gff  --gff3DbName  "%DATASET_NAME%" --gff3DbVer "%DATASET_VERSION%"  --gffFormat ${gffFormat} --seqExtDbName ${organismAbbrev}_primary_genome_RSRC   --soExtDbSpec "SO_RSRC|%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
   <datasetClass class="massSpecFromProfiles" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -4805,7 +4751,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <unpack>doTranscriptExpression.pl --xml_file @@dataDir@@/final/analysisConfig.xml --main_directory @@dataDir@@/final --technology_type protein_expression</unpack>
+      <unpack>doStudyAssayResults.pl --xml_file @@dataDir@@/final/analysisConfig.xml --main_directory @@dataDir@@/final --technology_type protein_expression</unpack>
       <pluginArgs>--inputDir @@dataDir@@/final --configFile @@dataDir@@/final/insert_study_results_config.txt --extDbSpec "%DATASET_NAME%|%DATASET_VERSION%" --studyName "Mass Spec Profiles ${name}"</pluginArgs>
     </datasetLoader>
   </datasetClass>
@@ -5243,8 +5189,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-  <datasetClass class="orthomclUniprotReferenceProteomeForCore" category="OrthoMCL" datasetFileHint="">
+  <datasetClass class="orthomclCoreFromUniprot" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins from a Uniprot Reference Proteome, defined as having 1 protein sequence per gene. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
     <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
     <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
@@ -5252,84 +5197,58 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
     <prop name="organismName">The name of this organism, just used for log messages</prop>
     <prop name="kingdom">The kingdom that contains this organism (Bacteria, Archaea, or Eukaryota).</prop>
+    <prop name="version"> The version of the organism. </prop>
 
     <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="core"
-		   scope="dontcare" > 
+                   version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   type="proteome"
+                   subType="core"
+                   scope="dontcare" >
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
+      
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fa.gz </wgetArgs>
 
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
+      <unpack>if [ -e @@dataDir@@/uniprot.fa.gz ]; then gunzip -d @@dataDir@@/uniprot.fa.gz; fi</unpack>
+      
+      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fa @@dataDir@@/compliant.fa</unpack>
 
-      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fa --outputFile @@dataDir@@/exemplars.fa --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fa  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}.fasta</unpack>
 
-      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta</unpack>
+      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fa @@dataDir@@/exemplars.fa @@dataDir@@/aliases.tab</unpack>
 
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/${abbrev}.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "gene=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>      
 
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="orthomclCoreFromUniprotEC" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="abbrev">The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
+    <prop name="ncbiTaxonId">&speciesNcbiTaxonId;</prop>
 
-  <datasetClass class="orthomclUniprotReferenceProteomeForPeripheral" category="OrthoMCL" datasetFileHint="">
-    <purpose>Download and load the proteins from a Uniprot Reference Proteome, defined as having 1 protein sequence per gene. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
-    <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
-    <prop name="orthomclClade">4-letter clade as defined in orthomclClades.txt located in manualDelivery</prop>
-    <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
-    <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
-    <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The name of this organism, just used for log messages</prop>
-    <prop name="kingdom">The kingdom that contains this organism (Bacteria, Archaea, or Eukaryota).</prop>
+    <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
 
-    <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
+    <datasetLoader plugin="GUS::Community::Plugin::InsertECMapping"
+              datasetName="${abbrev}_Uniprot_ECAssociations_RSRC"
+              version="TODAY"
+              scope="dontcare">
 
-    <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="peripheral"
-		   scope="dontcare" > 
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     
+     <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
-      <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/${kingdom}/${proteomeId}_${ncbiTaxonId}.fasta.gz">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta.gz </wgetArgs> 
-
-      <unpack>if [ -e @@dataDir@@/uniprot.fasta.gz ]; then gunzip -d @@dataDir@@/uniprot.fasta.gz; fi</unpack>
-
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta</unpack>
-
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/exemplars.fasta --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fasta  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}Proteome.fasta</unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/exemplars.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
-      <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
-
+      <pluginArgs>--ECMappingFile @@dataDir@@/ecAssoc.tab --evidenceCode "Uniprot" --aaSeqLocusTagMappingSql "select aa_sequence_id from dots.externalaasequence where secondary_identifier = ?"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
 
   <datasetClass class="orthomclPeripheralFromEbi" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, gene names, EC numbers and product descriptions from an Ebi data dump. These proteins will be used in the proteome collection for OrthoMCL. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
@@ -5415,49 +5334,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-
-
-  <datasetClass class="orthomclUniprotProteomeForCore" category="OrthoMCL" datasetFileHint="">
-    <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from Uniprot. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
-    <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
-    <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
-    <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
-    <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The name of this organism, just used for log messages</prop>
-
-
-    <graphTemplateFile name="orthomclGetCoreProteins.xml"/>
-
-    <datasetLoader datasetName="${abbrev}_orthomclProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="core"
-		   scope="dontcare" > 
-
-      <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <wgetArgs url="http://www.uniprot.org/uniprot/?query=taxonomy:${ncbiTaxonId}&amp;format=fasta">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta </wgetArgs> 
-
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack> orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta  ${abbrev} ${ncbiTaxonId}</unpack>
-
-      <unpack>getUniprotGeneIdMap ${ncbiTaxonId} ${proteomeId} @@dataDir@@/proteinGeneMap '${organismName}'</unpack>
-
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/${abbrev}Proteome.fasta --proteinIdRegex='>\w+\|(\S+)' --proteinToGeneFile @@dataDir@@/proteinGeneMap --maxStopCodonPercent 20  --preferredSource sp </unpack>
-
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/${abbrev}Proteome.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
-      <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
-
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
-
-    </datasetLoader>
-  </datasetClass>
-
-
   <datasetClass class="orthomclUniprotProteomeForPeripheral" category="OrthoMCL" datasetFileHint="">
     <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from Uniprot. Files will be processed to obtain the longest protein representative of each gene, to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id. </purpose>
     <prop name="abbrev"> The unique 4-letter abbreviation used by OrthoMCL for each organism, will be prepended with a pipe to the source_id, e.g. aaeo|NP_212986. </prop>
@@ -5465,39 +5341,41 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="ncbiTaxonId"> The ncbi_tax_id for the specific strain, obtained from the NCBI Taxonomy database. </prop>
     <prop name="proteomeId"> The uniprot proteome ID for this proteome. </prop>
     <prop name="oldAbbrevsList"> List of old orthomcl abbrevs if they differ from the current e.g. 3:pfa, 4:pfa. </prop>
-    <prop name="organismName">The nanme of this organism, just used for log messages</prop>
+    <prop name="organismName">The name of this organism</prop>
+    <prop name="version">The version of this organism</prop>
 
     <graphTemplateFile name="orthomclGetPeripheralProteins.xml"/>
 
     <datasetLoader datasetName="${abbrev}_orthomclPeripheralProteome_RSRC"
-		   version="TODAY"
-		   plugin="GUS::Supported::Plugin::LoadFastaSequences"
-		   type="proteome"
-		   subType="peripheral"
-		   scope="dontcare" > 
+                   version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   type="proteome"
+                   subType="peripheral"
+                   scope="dontcare" >
 
       <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
 
+      <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;format=fasta&amp;query=proteome%3A${proteomeId}">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fa.gz </wgetArgs>
 
-      <wgetArgs url="http://www.uniprot.org/uniprot/?query=taxonomy:${ncbiTaxonId}&amp;format=fasta">--tries=5 --mirror --no-parent --no-directories --no-host-directories --cut-dirs=4 --output-document=@@dataDir@@/uniprot.fasta </wgetArgs> 
+      <unpack>if [ -e @@dataDir@@/uniprot.fa.gz ]; then gunzip -d @@dataDir@@/uniprot.fa.gz; fi</unpack>
 
-      <unpack>orthomclValidateNcbiTaxonId ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fa @@dataDir@@/compliant.fa</unpack>
 
-      <unpack> orthomclMakeCompliantUniprotFasta @@dataDir@@/uniprot.fasta @@dataDir@@/compliant.fasta  ${abbrev} ${ncbiTaxonId}</unpack>
+      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fa --outputFile @@dataDir@@/exemplars.fa --proteinIdRegex '>(\S+)' --geneIdRegex 'gene=(\S+)' --maxStopCodonPercent 20  --preferredSource sp </unpack>
 
-      <unpack>getUniprotGeneIdMap ${ncbiTaxonId} ${proteomeId} @@dataDir@@/proteinGeneMap '${organismName}'</unpack>
+      <unpack>orgAbbrevSourceId --inputFile @@dataDir@@/exemplars.fa  --abbrev ${abbrev} --geneRegex 'gene=(\S+)' --outputFile @@dataDir@@/${abbrev}.fasta</unpack>
 
-      <unpack>findExemplarProteinsFromFasta --fastaFile @@dataDir@@/compliant.fasta --outputFile @@dataDir@@/${abbrev}Proteome.fasta --proteinIdRegex '>\w+\|(\S+)' --proteinToGeneFile @@dataDir@@/proteinGeneMap --maxStopCodonPercent 20  --preferredSource sp </unpack>
+      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fa @@dataDir@@/exemplars.fa @@dataDir@@/aliases.tab</unpack>
 
-      <unpack>orthomclMakeUniprotAliasesFile ${abbrev} @@dataDir@@/compliant.fasta @@dataDir@@/${abbrev}Proteome.fasta @@dataDir@@/aliases.tab</unpack>
-
-      <getAndUnpackOutput file="@@dataDir@@/${abbrev}Proteome.fasta"/>
+      <getAndUnpackOutput file="@@dataDir@@/${abbrev}.fasta"/>
       <getAndUnpackOutput file="@@dataDir@@/aliases.tab"/>
 
-      <pluginArgs> --externalDatabaseName %DATASET_NAME% --externalDatabaseVersion %DATASET_VERSION% --ncbiTaxId ${ncbiTaxonId}  --sequenceFile "@@dataDir@@/${abbrev}Proteome.fasta" --regexSourceId "^>[^|]+\|(\S+)" --regexSecondaryId "^>(\S+)" --regexName "geneName=(\S*)" --regexDesc "product=(.*)" --tableName "DoTS::ExternalAASequence"</pluginArgs>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
+
+
 
   <datasetClass class="orthomclEuPathProteomeForCore" category="" datasetFileHint="">
     <purpose>Download and load the proteins, to be used in the proteome collection for OrthoMCL, from one of the EuPathDB project download directories. Files will be processed to filter out proteins that are less than 10 aa long or that have more than 20 stop codons, and to append the orthomcl abbrev with pipe to the source_id.</purpose>
@@ -5761,7 +5639,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://www.uniprot.org/uniprot/?query=taxonomy%3a${ncbiTaxonId}&amp;format=tab&amp;columns=id,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -5821,7 +5699,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="release">Release number which serves as the subdirectory in manual delivery where the clades file is found.</prop>
     
     <datasetLoader datasetName="orthomclClades_RSRC" 	
-	   plugin="ApiCommonData::Load::Plugin::InsertOrthomclTaxon"
+	   plugin="ApiCommonData::Load::Plugin::InsertOrthomclClade"
 		   scope="global"
 		   type="taxonomy"
 		   version="${release}">
@@ -5862,17 +5740,13 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-
-
-  
   <datasetClass class="Pathways" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
     <prop name="format"/>
     <prop name="source"/>
-    <prop name="projectName">&projectName;</prop>
 
-    <graphTemplateFile name="project.xml"/>
+    <graphTemplateFile name="pathways.xml"/>
 
     <datasetLoader datasetName="Pathways_${source}_RSRC" version="${version}"
            plugin="ApiCommonData::Load::Plugin::InsertPathways"
@@ -5887,13 +5761,36 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="Pathways_BioCyc" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="version">&version;</prop>
+    <prop name="format"/>
+    <prop name="source"/>
+
+    <graphTemplateFile name="pathways.xml"/>
+
+    <datasetLoader datasetName="Pathways_BioCyc_${source}_RSRC" version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::InsertPathways"
+                   scope="global"
+                   type="pathway"
+    >
+      <manualGet fileOrDir="common/pathways/${source}/${version}/final/">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>convertBiopaxFilesToRDF.pl --input_dir @@dataDir@@/final</unpack>
+
+      <pluginArgs>--pathwaysFileDir @@dataDir@@/final --format ${format} --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%'</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="ReactionsXRefs" category ="" datasetFileHint="">
     <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
     <prop name="version">&version;</prop>
     <prop name="source"/>
 
-    <graphTemplateFile name="project.xml"/>
+    <graphTemplateFile name="pathways.xml"/>
 
     <datasetLoader datasetName="ReactionsXRefs_${source}_RSRC" version="${version}"
         plugin="ApiCommonData::Load::Plugin::InsertReactionXRefs"
@@ -5919,13 +5816,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
                    scope="global"
                    type="sres"
                    >
-
-      <manualGet fileOrDir="common/empty">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/eupath_merged.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
+      <wgetArgs url="http://purl.obolibrary.org/obo/eupath.owl">--tries=5 --no-directories --no-host-directories --accept=@@dataDir@@/eupath.owl </wgetArgs>
+      <pluginArgs>--inFile @@dataDir@@/eupath.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -5948,6 +5840,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
+
 
       <pluginArgs>--inFile @@gusHome@@/ontology/release/${version}/${name}.owl --owlReader ApiCommonData::Load::OwlReader --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --relTypeExtDbRlsSpec 'Ontology_Relationship_Types_RSRC|%'</pluginArgs>
     </datasetLoader>
@@ -6148,10 +6041,15 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <unpack>ln -s @@manualDeliveryDir@@/common/metabolites/chEBI/${version}/final/ @@dataDir@@/final</unpack>
 
       <getAndUnpackOutput dir="@@dataDir@@/final" />
-      <getAndUnpackOutput file="@@dataDir@@/final/create_tables.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/disable_constraints.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/enable_constraints.sql"/>
-      <getAndUnpackOutput file="@@dataDir@@/final/import_all_star.par"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/chemical_data.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/comments.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/compound_origins.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/compounds.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/database_accession.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/names.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/references.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/relation.sql"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/structures.sql"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
 
     </datasetLoader>
@@ -6324,7 +6222,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_cghArrayPlatform_${name}_RSRC" version="${version}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -6358,7 +6256,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="cghArrayPlatformName"/>
     <prop name="cghArrayPlatformVersion"/>
 
-    <graphTemplateFile name="genomicArrayStudies.xml"/>
+    <graphTemplateFile name="microarray.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_cghArrayExper_${experimentName}_RSRC" version="${experimentVersion}"
 	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -6584,9 +6482,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="EcNumberGenus" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
-
-    <graphTemplateFile name="project.xml"/>
 
     <datasetLoader datasetName="EcNumberGenus_RSRC" version="${version}"
 		   plugin="ApiCommonData::Load::Plugin::InsertEcNumberGenus"
@@ -6609,7 +6504,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
 
-    <graphTemplateFile name="gsnap.xml"/>
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
@@ -6625,27 +6520,29 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!-- directly copy BigWig file to webservice dir -->
-  <datasetClass class="BigWigToWebService" category="" datasetFileHint="">
-    <purpose></purpose>
+<!-- copy files from manual delivery dir to web services for JBrowse track -->
+  <datasetClass class="manualDeliveryToWebService" category="" datasetFileHint="">
+    <purpose>copy files to webServices dir for JBrowse track</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
+    <prop name="fileType"/>
 
-    <graphTemplateFile name="gsnap.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
-              plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              type=""
-              scope="organism"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC"
+      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+      scope="organism"
+      type="feature"
+      version="${version}"
+      organismAbbrev="${organismAbbrev}">
+        <manualGet fileOrDir="common/empty">
+           <dir name="final"/>
+        </manualGet>
+       <unpack>copy_gff_dir_structure.pl @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/${fileType}/${name}/${version}/final/  @@dataDir@@/</unpack>
+      <pluginArgs></pluginArgs>
     </datasetLoader>
   </datasetClass>
 
@@ -6854,16 +6751,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-
-
-
   <datasetClass class="ExternalResourceUrl" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <prop name="projectName">&projectName;</prop>
     <prop name="name">&name;</prop>
-
-    <graphTemplateFile name="project.xml"/>
 
     <datasetLoader datasetName="ExternalResourceUrl_${name}_RSRC" version="${version}"
            plugin="ApiCommonData::Load::Plugin::InsertExternalResourceUrl"
@@ -7031,7 +6922,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
  </datasetClass>
 
   <datasetClass class="stableIdsEvents" category="" datasetFileHint="">
-    <purpose>copy stable id ids_events.tab file from EBI ftp site universal directory to apiSiteFile</purpose>
+    <purpose>copy stable id ids_events.tab file to apiSiteFile</purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="buildNumber">which build number (eg 63)</prop>
@@ -7045,30 +6936,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               type=""
               organismAbbrev="${organismAbbrev}">
-      <wgetArgs url="ftp://ftp-private.ebi.ac.uk//upload/EBI/build${buildNumber}/stable_id_events/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
-      <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
-
-  <datasetClass class="stableIdsEventsIndividual" category="" datasetFileHint="">
-    <purpose>copy stable id ids_events.tab file from EBI ftp site individual directory to apiSiteFile</purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="buildNumber">which build number (eg 63)</prop>
-    <prop name="name">&name;</prop>
-
-    <graphTemplateFile name="organismSpecificMisc.xml"/>
-
-    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              datasetName="${organismAbbrev}_${name}_stableIdsEventsIndividual_RSRC"
-              version="${buildNumber}"
-              scope="organism"
-              type=""
-              organismAbbrev="${organismAbbrev}">
-      <wgetArgs url="ftp://ftp-private.ebi.ac.uk//EBIout/build_${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab">--cut-dirs 8 --no-host-directories  --recursive --no-parent --ftp-user @@ebiFtpUser@@ --ftp-password @@ebiFtpPassword@@</wgetArgs>
+      <manualGet fileOrDir="ebiftp/EBIout/build_${buildNumber}/metadata/${projectName}/${organismAbbrev}/${name}.tab">
+      </manualGet>
       <pluginArgs>-dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
 </datasetClasses>
-

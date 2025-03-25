@@ -61,7 +61,7 @@ sub run{
             union
               select mt.property_source_id as term, mt.type
               from ${prefix}InferredParams m, ${prefix}PropertyType mt, sres.ontologyterm ot  where m.pan_type_id = ot.ontology_term_id and mt.property_id = m.property_id and (ot.source_id = '$type' $orIsaSample)
-              )
+      ) t
 SQL
 
     $fieldsSh->execute();
@@ -92,37 +92,36 @@ SQL
 
 
     my $metaDataSql = "
-    with pmd as (
-                     select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from ${prefix}InferredChars m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
-                      union
-                      select m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
-                      from ${prefix}InferredParams m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+    WITH pmd AS (
+        SELECT m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
+      FROM ${prefix}InferredChars m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
+      UNION
+      SELECT m.pan_id, ot.property_source_id, replace(m.value, '''', '\\''') as value, ot.type
+      FROM ${prefix}InferredParams m, sres.ontologyterm t, ${prefix}PropertyType ot where m.pan_type_id = t.ontology_term_id and ot.property_id = m.property_id and (t.source_id = '$type' $orIsaSample)
     )
-    select pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
-    from (select pan_id,
---               listagg(value, ',') within group (order by value) as value
-                 dbms_xmlgen.convert(rtrim(xmlagg(XMLELEMENT(e,text,',').EXTRACT('//text()') ORDER BY text).GetClobVal(),','), 1) as value
-          from (select pan_id, '\"' || property_source_id || '\"=> ''' || listagg(value,' | ') within group (order by value)  || '''' as text
-                from (pmd) 
-                where type = 'string'
-                group by pan_id, property_source_id, type
+    SELECT pan.protocol_app_node_id, pan.name, pan.description, pan.type_id, ot.name as type, meta.value
+    FROM (SELECT pan_id,
+                 rtrim(string_agg(text,',' ORDER BY text),',') as value
+          FROM (SELECT pan_id, '\"' || property_source_id || '\"=> ''' || string_agg(value,' | ' order by value)  || '''' as text
+                FROM pmd
+                WHERE type = 'string'
+                GROUP BY pan_id, property_source_id, type
+                union
+                SELECT pan_id, '\"' || property_source_id || '\"=> ''' || avg(replace(value, ',', '')::NUMERIC)  || '''' as text
+                FROM pmd
+                WHERE type = 'number'
+                GROUP BY pan_id, property_source_id, type
                 UNION
-                select pan_id, '\"' || property_source_id || '\"=> ''' || avg(replace(value, ',', ''))  || '''' as text
-                from (pmd) 
-                where type = 'number'
-                group by pan_id, property_source_id, type
-                UNION
-                select pan_id, '\"' || property_source_id || '\"=> ''' || max(replace(value, ',', ''))  || '''' as text
-                from (pmd) 
+                select pan_id, '\"' || property_source_id || '\"=> ''' || max(replace(value, ',', '')::NUMERIC)  || '''' as text
+                from pmd
                 where type = 'date'
                 group by pan_id, property_source_id, type
-          )
-          group by pan_id
+          ) t
+          GROUP BY pan_id
          ) meta,
          study.ProtocolAppNode pan, sres.OntologyTerm ot
-    where meta.pan_id = pan.protocol_app_node_id
-      and pan.type_id = ot.ontology_term_id
+    WHERE meta.pan_id = pan.protocol_app_node_id
+      AND pan.type_id = ot.ontology_term_id
 ";
     print STDERR "metaDataSql-->>\n$metaDataSql\n<<-- end of metaDataSql\n"
         if $debug;
@@ -157,7 +156,7 @@ SQL
 sub createEmptyTable {
      my ($dbh, $suffix, $prefix, $filterValue, $fields, $record) = @_;
 
-     my %f = ("number" => "number", "string" => "varchar2(2000)", "date" => "date");
+     my %f = ("number" => "numeric", "string" => "varchar(2000)", "date" => "timestamp");
 
      my $fieldsString = join(",\n", map { $_->[0]." " . $f{$_->[1]} } @$fields);
      # prefix a comma if it isn't empty
@@ -166,13 +165,13 @@ sub createEmptyTable {
 
      my $sql = <<SQL;
      create table ${prefix}${record}s$suffix (
-       pan_id number(10),
-       name varchar2(200),
-       description varchar2(3000),
-       pan_type_id number(10),
-       pan_type  varchar2(400)
+       pan_id       numeric(10),
+       name         varchar(200),
+       description  varchar(3000),
+       pan_type_id  numeric(10),
+       pan_type     varchar(400)
        $fieldsString
-  ) nologging
+  )
 SQL
 
     $dbh->do($sql) or die "creating table";
@@ -187,13 +186,11 @@ sub createIndexes {
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}att_panid_ix$suffix
       on ${prefix}${record}s$suffix (pan_id, name)
-      tablespace indx
 SQL
 
     $dbh->do(<<SQL) or die "creating index";
       create index ${record}patt_name_ix$suffix
       on ${prefix}${record}s$suffix (name, pan_id)
-      tablespace indx
 SQL
 
 }

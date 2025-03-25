@@ -13,32 +13,28 @@
     <externalDependency name="eda.Study"/>
     <sql>
       <![CDATA[
-create table StudyIdDatasetId&1 as
-SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID,
-       dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
-FROM EDA.STUDY s
-LEFT JOIN sres.ExternalDatabaseRelease e
-   ON s.external_database_release_id = e.external_database_release_id 
-LEFT JOIN sres.ExternalDatabase e2
-   ON e.external_database_id = e2.external_database_id
-LEFT JOIN DatasetPresenter dp on e2.name=dp.name
--- This is TEMPORARY (used for alpha MapVEU Application)
-UNION
-select case 
-  when d.dataset_presenter_id = 'DS_480c976ef9' then 'VBP_MEGA'
-  when d.dataset_presenter_id = 'DS_e18287e335' then '2023-maine-ricinus'
-  when d.dataset_presenter_id = 'DS_2b98dd44ab' then '2010-Neafsey-M-S-Bamako'
-  else 'NA' end as study_stable_id,
-d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
-from DatasetPresenter d
-where d.dataset_presenter_id in (
-'DS_480c976ef9',
-'DS_e18287e335'
-)
+        CREATE TABLE StudyIdDatasetId&1 AS
+        SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID, dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
+        FROM EDA.STUDY s
+          LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID
+          LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
+          LEFT JOIN DatasetPresenter dp on e2.name=dp.name
+        -- This is TEMPORARY (used for alpha MapVEU Application)
+        UNION
+        select case
+            when d.dataset_presenter_id = 'DS_480c976ef9' then 'VBP_MEGA'
+            when d.dataset_presenter_id = 'DS_e18287e335' then '2023-maine-ricinus'
+            when d.dataset_presenter_id = 'DS_2b98dd44ab' then '2010-Neafsey-M-S-Bamako'
+          else 'NA' end as study_stable_id,
+          d.dataset_presenter_id as dataset_id, d.short_display_name as dataset_short_display_name
+        from DatasetPresenter d
+        where d.dataset_presenter_id in (
+          'DS_480c976ef9',
+          'DS_e18287e335'
+        )
       ]]>
     </sql>
   </tuningTable>
-
 
   <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
     <comment>Taxon ranks for sequences
@@ -49,64 +45,66 @@ where d.dataset_presenter_id in (
     <externalDependency name="sres.Taxon"/>
     <sql>
       <![CDATA[
-create table ExternalSequenceTaxonRank&1 nologging as
-with organism_rank
-     as (select tn1.taxon_id as organism, tn2.name as parent_organism, 
-                tn2.taxon_id as parent_organism_id, r.rank
-         from sres.TaxonName tn1, sres.TaxonName tn2,
-              (select CONNECT_BY_ROOT taxon_id as input, taxon_id, rank
-               from sres.taxon
-               start with taxon_id in (  select taxon_id
-                                         from dots.ExternalNaSequence
-                                       union
-                                         select taxon_id from apidb.TaxonString)
-               connect by prior parent_id = taxon_id) r
-         where r.input = tn1.taxon_id
+        CREATE TABLE ExternalSequenceTaxonRank&1 AS
+        WITH organism_rank AS (
+          SELECT tn1.taxon_id as organism, tn2.name as parent_organism,
+                 tn2.taxon_id as parent_organism_id, r.rank
+          FROM sres.TaxonName tn1, sres.TaxonName tn2,
+                (
+                  WITH RECURSIVE cte AS (
+                    SELECT taxon_id as input, taxon_id, rank, parent_id
+                    FROM sres.taxon
+                    WHERE taxon_id IN (
+                        SELECT taxon_id FROM dots.externalaasequence
+                        UNION
+                        SELECT taxon_id FROM apidb.taxonstring
+                    )
+                    UNION
+                    SELECT cte.input, t.taxon_id, t.rank, t.parent_id
+                    FROM sres.taxon t, cte
+                    WHERE cte.parent_id = t.taxon_id
+                  )
+                  SELECT input, taxon_id, rank
+                  FROM cte
+                ) r
+          WHERE r.input = tn1.taxon_id
            and r.taxon_id = tn2.taxon_id
            and tn1.name_class = 'scientific name'
            and tn2.name_class = 'scientific name'
            and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
         )
-select organisms.organism, 
-       nvl(superkingdom.parent_organism, 'N/A') as superkingdom,
-       superkingdom.parent_organism_id as superkingdom_id,
-       nvl(kingdom.parent_organism, 'N/A') as kingdom,
-       kingdom.parent_organism_id as kingdom_id,
-       nvl (phylum.parent_organism, 'N/A') as phylum,
-       phylum.parent_organism_id as phylum_id,
-       nvl (class.parent_organism, 'N/A') as class,
-       class.parent_organism_id as class_id,
-       nvl (family.parent_organism, 'N/A') as family,
-       family.parent_organism_id as family_id,
-       nvl (rank_order.parent_organism, 'N/A') as rank_order,
-       rank_order.parent_organism_id as rank_order_id,
-       nvl ( genus.parent_organism, 'N/A') as genus,
-       genus.parent_organism_id as genus_id,
-       nvl(species.parent_organism, 'N/A') as species,
-       species.parent_organism_id as species_id
-from (select distinct organism from organism_rank) organisms,
-     (select * from organism_rank where rank= 'phylum') phylum,
-     (select * from organism_rank where rank= 'genus') genus,
-     (select * from organism_rank where rank= 'species') species,
-     (select * from organism_rank where rank= 'kingdom') kingdom,
-     (select * from organism_rank where rank= 'superkingdom') superkingdom,
-     (select * from organism_rank where rank= 'class') class,
-     (select * from organism_rank where rank= 'family') family,
-     (select * from organism_rank where rank= 'order') rank_order
-where organisms.organism = phylum.organism (+)
-  and organisms.organism = genus.organism (+)
-  and organisms.organism = species.organism (+)
-  and organisms.organism = kingdom.organism (+)
-  and organisms.organism = class.organism (+)
-  and organisms.organism = rank_order.organism (+)
-  and organisms.organism = family.organism (+)
-  and organisms.organism = superkingdom.organism (+)
-order by organism, species, genus
+        SELECT organisms.organism,
+               coalesce(superkingdom.parent_organism, 'N/A') as superkingdom,
+               superkingdom.parent_organism_id as superkingdom_id,
+               coalesce(kingdom.parent_organism, 'N/A') as kingdom,
+               kingdom.parent_organism_id as kingdom_id,
+               coalesce (phylum.parent_organism, 'N/A') as phylum,
+               phylum.parent_organism_id as phylum_id,
+               coalesce (class.parent_organism, 'N/A') as class,
+               class.parent_organism_id as class_id,
+               coalesce (family.parent_organism, 'N/A') as family,
+               family.parent_organism_id as family_id,
+               coalesce (rank_order.parent_organism, 'N/A') as rank_order,
+               rank_order.parent_organism_id as rank_order_id,
+               coalesce ( genus.parent_organism, 'N/A') as genus,
+               genus.parent_organism_id as genus_id,
+               coalesce(species.parent_organism, 'N/A') as species,
+               species.parent_organism_id as species_id
+        FROM (SELECT DISTINCT organism FROM organism_rank) organisms
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'phylum') phylum ON  organisms.organism = phylum.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'genus') genus ON  organisms.organism = genus.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'species') species ON  organisms.organism = species.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'kingdom') kingdom ON  organisms.organism = kingdom.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'superkingdom') superkingdom ON  organisms.organism = superkingdom.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'class') class ON  organisms.organism = class.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'family') family ON  organisms.organism = family.organism
+             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'order') rank_order ON organisms.organism = rank_order.organism
+        ORDER BY organism, species, genus
        ]]>
     </sql>
   </tuningTable>
 
-
+<!-- CHECK AND FIX - regexp_count issue
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
     <comment>lineage abundances</comment>
     <externalDependency name="results.LineageAbundance"/>
@@ -117,7 +115,7 @@ order by organism, species, genus
     <externalDependency name="study.Study"/>
     <sql>
       <![CDATA[
-       CREATE TABLE TaxonAbundance&1 NOLOGGING AS
+       CREATE TABLE TaxonAbundance&1 AS
        WITH abundance as (
          select la.protocol_app_node_id,
          'Kingdom' as category,
@@ -182,41 +180,41 @@ order by organism, species, genus
          where REGEXP_COUNT(la.lineage, ';') = 6
        )
        SELECT  
-               abundance.protocol_app_node_id,
-               abundance.category,
-               abundance.taxon_level,
-               abundance.term,
-               sum(abundance.raw_count) as agg_count,
-               sum(abundance.relative_abundance) as value,
-               pan.name AS pan_name,
-               ed.name AS dataset_name
-        FROM
-             abundance,
-             study.ProtocolAppNode pan,
-             study.StudyLink sl,
-             study.Study ss,
-             sres.ExternalDatabaseRelease edr,
-             sres.ExternalDatabase ed
-        WHERE abundance.protocol_app_node_id = pan.protocol_app_node_id
-          AND pan.protocol_app_node_id = sl.protocol_app_node_id
-          AND sl.study_id = ss.study_id
-          AND ss.name not like 'OTU Profiles%'
-          AND ss.external_database_release_id = edr.external_database_release_id
-          AND edr.external_database_id = ed.external_database_id
-          AND ed.name like 'otu%_RSRC'
-        GROUP BY (abundance.protocol_app_node_id, abundance.category, abundance.taxon_level, abundance.term, pan.name, ed.name)
-        ORDER BY dataset_name, pan_name
+         abundance.protocol_app_node_id,
+         abundance.category,
+         abundance.taxon_level,
+         abundance.term,
+         sum(abundance.raw_count) as agg_count,
+         sum(abundance.relative_abundance) as value,
+         pan.name AS pan_name,
+         ed.name AS dataset_name
+       FROM
+         abundance,
+         study.ProtocolAppNode pan,
+         study.StudyLink sl,
+         study.Study ss,
+         sres.ExternalDatabaseRelease edr,
+         sres.ExternalDatabase ed
+       WHERE abundance.protocol_app_node_id = pan.protocol_app_node_id
+        AND pan.protocol_app_node_id = sl.protocol_app_node_id
+        AND sl.study_id = ss.study_id
+        AND ss.name not like 'OTU Profiles%'
+        AND ss.external_database_release_id = edr.external_database_release_id
+        AND edr.external_database_id = ed.external_database_id
+        AND ed.name like 'otu%_RSRC'
+       GROUP BY (abundance.protocol_app_node_id, abundance.category, abundance.taxon_level, abundance.term, pan.name, ed.name)
+       ORDER BY dataset_name, pan_name
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE UNIQUE INDEX TaxAbund_panId_Term&1
           ON TaxonAbundance&1 (protocol_app_node_id, category, term)
-          TABLESPACE INDX
+
       ]]>
     </sql>
   </tuningTable>
-
+-->
 
   <tuningTable name="ProjectTaxon" prefixEnabled="true">
     <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
@@ -226,132 +224,132 @@ order by organism, species, genus
     <externalDependency name="apidb.Organism"/>
     <sql>
       <![CDATA[
-        create table &prefixProjectTaxon&1 nologging as
-        with
-          local_taxon -- a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism
-          as (  select distinct tn.name as taxon,
-                       substr((tn.name), 1, instr(tn.name||' ', ' ') - 1) as first_word,
-                       pi.name as project_id
-                from dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
-                where ens.taxon_id = tn.taxon_id
-                  and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
-                       or tn.name_class = 'scientific name')
-                  and ens.row_project_id = pi.project_id
-              -- get names from apidb.Organism.family_name_for_files
-              -- (may not be necessary)
-              union
-                select family_name_for_files as taxon,
-                       substr((family_name_for_files), 1, instr(family_name_for_files||' ', ' ') - 1) as first_word,
-                       project_name as project_id
-                from apidb.Organism
-                where family_name_for_files in (select name from sres.TaxonName)
-                ),
-          mononym -- a taxon name that's the first word of a local taxon
-          as (select distinct lower(lt.first_word) as taxon, lt.project_id
-              from local_taxon lt, sres.TaxonName tn
-              where lt.first_word = tn.name
-                -- and tn.name_class = 'scientific name'
-             ),
-          full_name -- the full name of a local taxon whose first name is not a taxon
-          as (select distinct lower(lt.taxon) as taxon, lt.project_id
-              from local_taxon lt, sres.TaxonName tn
-              where lt.taxon = tn.name
-                -- and tn.name_class = 'scientific name'
-                and lower(lt.first_word) not in (select taxon from mononym))
-          select * from mononym
-        union
-          select * from full_name
-        union
-          select 'hypocrea', 'FungiDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/rp', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/su03', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/su4', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB' from dual
-        union
-          select 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB' from dual
-        union
-          select 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB' from dual
-        union
-          select 'soil_flagellate_and31', 'TriTrypDB' from dual
-        union
-          select 'kinetoplastid_flagellate_lfs2', 'TriTrypDB' from dual
-        union
-          select 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB' from dual
-        order by 2, 1
+        CREATE TABLE &prefixProjectTaxon&1 AS
+        WITH
+            local_taxon -- a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism
+                AS (  SELECT distinct tn.name as taxon,
+                          substr((tn.name), 1, position(' ' IN tn.name||' ') - 1) as first_word,
+                          pi.name as project_id
+                      FROM dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
+                      WHERE ens.taxon_id = tn.taxon_id
+                              and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
+                                    OR tn.name_class = 'scientific name')
+                              and ens.row_project_id = pi.project_id
+                          -- get names from apidb.Organism.family_name_for_files
+                          --   (may not be necessary)
+                      UNION
+                      SELECT family_name_for_files as taxon,
+                          substr((family_name_for_files), 1, position(' ' IN family_name_for_files||' ') - 1) as first_word,
+                          project_name as project_id
+                      FROM apidb.Organism
+                      WHERE family_name_for_files in (select name from sres.TaxonName)
+            ),
+            mononym -- a taxon name that's the first word of a local taxon
+                AS (SELECT distinct lower(lt.first_word) as taxon, lt.project_id
+                    FROM local_taxon lt, sres.TaxonName tn
+                    WHERE lt.first_word = tn.name
+                          -- and tn.name_class = 'scientific name'
+                    ),
+            full_name -- the full name of a local taxon whose first name is not a taxon
+                AS (SELECT distinct lower(lt.taxon) as taxon, lt.project_id
+                    FROM local_taxon lt, sres.TaxonName tn
+                    WHERE lt.taxon = tn.name
+                            -- and tn.name_class = 'scientific name'
+                            and lower(lt.first_word) not in (select taxon from mononym))
+        SELECT * FROM mononym
+        UNION
+        SELECT * FROM full_name
+        UNION
+        SELECT 'hypocrea', 'FungiDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/rp', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/su03', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/su4', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB'
+        UNION
+        SELECT 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB'
+        UNION
+        SELECT 'soil_flagellate_and31', 'TriTrypDB'
+        UNION
+        SELECT 'kinetoplastid_flagellate_lfs2', 'TriTrypDB'
+        UNION
+        SELECT 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB'
+        ORDER BY 2, 1
       ]]>
     </sql>
     <sql>
@@ -373,7 +371,6 @@ order by organism, species, genus
     </sql>
   </tuningTable>
 
-
   <tuningTable name="SequencePieceClosure" prefixEnabled="true">
     <comment>Extends dots.SequencePiece to handle multiple levels. Used in
          sequence-record queries and in other tuning tables, including
@@ -382,21 +379,21 @@ order by organism, species, genus
     <externalDependency name="dots.SequencePiece"/>
     <sql>
       <![CDATA[
-        create table &prefixSequencePieceClosure&1 nologging as
-        select sp.sequence_piece_id,
-               sp.virtual_na_sequence_id,
-               sp.piece_na_sequence_id, 
-               sp.sequence_order, 
-               sp.distance_from_left,
-               sp.uncertainty,
-               sp.strand_orientation,
-               sp.start_position,
-               sp.end_position, 
-               sp.modification_date,
-               1 as edge_level
-        from dots.SequencePiece sp, dots.NaSequence ns
-        where sp.piece_na_sequence_id = ns.na_sequence_id
-          and (ns.taxon_id = '&filterValue' or nvl('&filterValue', 0) = 0)
+        CREATE TABLE &prefixSequencePieceClosure&1 AS
+        SELECT sp.sequence_piece_id,
+            sp.virtual_na_sequence_id,
+            sp.piece_na_sequence_id,
+            sp.sequence_order,
+            sp.distance_from_left,
+            sp.uncertainty,
+            sp.strand_orientation,
+            sp.start_position,
+            sp.end_position,
+            sp.modification_date,
+            1 AS edge_level
+        FROM dots.SequencePiece sp, dots.NaSequence ns
+        WHERE sp.piece_na_sequence_id = ns.na_sequence_id
+              AND (ns.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
       ]]>
     </sql>
     <sql>
@@ -404,30 +401,29 @@ order by organism, species, genus
         /* known issue: this should be run not just once, but iteratively
            until it doesn't create new records.  Currently (7/2008),
            SequencePieces aren't nested even once. */
-        insert into &prefixSequencePieceClosure&1
+        INSERT INTO &prefixSequencePieceClosure&1
                     (edge_level, virtual_na_sequence_id, piece_na_sequence_id,
                      distance_from_left, strand_orientation, modification_date, 
                      start_position, end_position, sequence_order, sequence_piece_id)
-        select 2, higher.virtual_na_sequence_id, lower.piece_na_sequence_id,
+        SELECT 2, higher.virtual_na_sequence_id, lower.piece_na_sequence_id,
                higher.distance_from_left,
                case
-                 when nvl(higher.strand_orientation, '+') = nvl(lower.strand_orientation, '+')
+                 when coalesce(higher.strand_orientation, '+') = coalesce(lower.strand_orientation, '+')
                  then '+'
                  else '-'
                end as strand_orientation,
-               sysdate,
+               now(),
                higher.start_position - lower.distance_from_left, 
                higher.end_position - lower.distance_from_left, 
                higher.sequence_order,
-               dots.sequencepiece_sq.nextval
-        from &prefixSequencePieceClosure&1 higher, &prefixSequencePieceClosure&1 lower
-        where higher.piece_na_sequence_id = lower.virtual_na_sequence_id
-         and higher.start_position >= lower.start_position + lower.distance_from_left
-         and higher.end_position <= lower.end_position + lower.distance_from_left
+               nextval('dots.sequencepiece_sq')
+        FROM &prefixSequencePieceClosure&1 higher, &prefixSequencePieceClosure&1 lower
+        WHERE higher.piece_na_sequence_id = lower.virtual_na_sequence_id
+         AND higher.start_position >= lower.start_position + lower.distance_from_left
+         AND higher.end_position <= lower.end_position + lower.distance_from_left
       ]]>
     </sql>
   </tuningTable>
-
 
   <tuningTable name="GenomicSeqAttributes" prefixEnabled="true">
     <comment>Each row represents one genomic sequence for which a WDK sequence
@@ -449,98 +445,105 @@ order by organism, species, genus
     <externalDependency name="sres.TaxonName"/>
     <sql>
       <![CDATA[
-CREATE TABLE &prefixGenomicSeqAttributes&1 NOLOGGING AS
-SELECT -- formerly NO PARALLEL hint, but Oracle has fixed this, we think
-       cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar2(20)) as project_id,
-       SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
-       sequence.c_count, sequence.g_count, sequence.t_count,
-       (sequence.length
-        - (sequence.a_count + sequence.c_count + sequence.g_count + sequence.t_count))
-         AS other_count,
-       sequence.length,
-       to_char((sequence.a_count + sequence.t_count) / sequence.length * 100, '99.99')
-         AS at_percent,
-       SUBSTR(tn.name, 1, 100) AS organism,
-       taxon.ncbi_tax_id,
-       taxon.taxon_id,                 
-       CASE WHEN sequence.description IS NULL  THEN SUBSTR(tn.name, 1, 100)
-            ELSE SUBSTR(sequence.description, 1, 400)
-            END AS sequence_description,
-       SUBSTR(genbank.genbank_accession, 1, 20) AS genbank_accession,
-       SUBSTR(db.database_version, 1, 30) AS database_version, db.database_name,
-       SUBSTR(sequence.chromosome, 1, 20) AS chromosome,
-       sequence.external_database_release_id, sequence.sequence_ontology_id,
-       sequence.chromosome_order_num, so.source_id as so_id, so.name as sequence_type,
-       nvl(virtualization.is_top_level, 1) as is_top_level,
-       sequence.na_sequence_id, organism.genome_source,
-       organism.name_for_filenames, nvl(msa.has_msa, 0) as has_msa
-FROM sres.Taxon, sres.OntologyTerm so, apidb.Organism,
-     ( select na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
-              a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
-       from dots.ExternalNaSequence
-      union
-       select na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
-              a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
-       from dots.VirtualSequence) sequence,
-     (SELECT drns.na_sequence_id, max(dr.primary_identifier) AS genbank_accession
-      FROM dots.dbrefNaSequence drns, sres.DbRef dr,
-           sres.ExternalDatabaseRelease gb_edr, sres.ExternalDatabase gb_ed
-      WHERE drns.db_ref_id = dr.db_ref_id
-        AND dr.external_database_release_id
-            = gb_edr.external_database_release_id
-        AND gb_edr.external_database_id = gb_ed.external_database_id
-        AND gb_ed.name = 'GenBank'
-      GROUP BY drns.na_sequence_id) genbank,
-     (SELECT edr.external_database_release_id,
-             edr.version AS database_version, ed.name AS database_name
-      FROM sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
-      WHERE edr.external_database_id = ed.external_database_id) db,
-     (SELECT distinct piece_na_sequence_id, 0 as is_top_level
-      FROM &prefixSequencePieceClosure) virtualization,
-     (SELECT a_na_sequence_id as na_sequence_id, 1 as has_msa
-      FROM apidb.Synteny syn
-      GROUP BY a_na_sequence_id) msa,
-     (SELECT taxon_id, max(name) as name
-      FROM sres.TaxonName
-      WHERE name_class = 'scientific name'
-      GROUP BY taxon_id) tn
-WHERE sequence.taxon_id = tn.taxon_id(+)
-  AND (sequence.taxon_id = '&filterValue' or nvl('&filterValue', 0) = 0)
-  AND sequence.taxon_id = taxon.taxon_id
-  AND sequence.sequence_ontology_id = so.ontology_term_id
-  AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle', 'kinetoplast')
-  AND sequence.na_sequence_id = genbank.na_sequence_id(+)
-  AND sequence.external_database_release_id = db.external_database_release_id(+)
-  AND sequence.na_sequence_id = virtualization.piece_na_sequence_id(+)
-  AND taxon.taxon_id = organism.taxon_id(+)
-  AND sequence.na_sequence_id = msa.na_sequence_id(+)
-ORDER BY organism, source_id
+        CREATE TABLE &prefixGenomicSeqAttributes&1 AS
+        SELECT
+               cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar(20)) as project_id,
+               SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
+               sequence.c_count, sequence.g_count, sequence.t_count,
+               (sequence.length
+                - (sequence.a_count + sequence.c_count + sequence.g_count + sequence.t_count))
+                 AS other_count,
+               sequence.length,
+               to_char((sequence.a_count + sequence.t_count) / sequence.length * 100, '99.99')
+                 AS at_percent,
+               SUBSTR(tn.name, 1, 100) AS organism,
+               taxon.ncbi_tax_id,
+               taxon.taxon_id,
+               CASE WHEN sequence.description IS NULL  THEN SUBSTR(tn.name, 1, 100)
+                    ELSE SUBSTR(sequence.description, 1, 400)
+                    END AS sequence_description,
+               SUBSTR(genbank.genbank_accession, 1, 20) AS genbank_accession,
+               SUBSTR(db.database_version, 1, 30) AS database_version, db.database_name,
+               SUBSTR(sequence.chromosome, 1, 20) AS chromosome,
+               sequence.external_database_release_id, sequence.sequence_ontology_id,
+               sequence.chromosome_order_num, so.source_id as so_id, so.name as sequence_type,
+               coalesce(virtualization.is_top_level, 1) as is_top_level,
+               sequence.na_sequence_id, organism.genome_source,
+               organism.name_for_filenames, coalesce(msa.has_msa, 0) as has_msa
+        FROM sres.Taxon LEFT JOIN apidb.Organism ON taxon.taxon_id = organism.taxon_id,
+             sres.OntologyTerm so,
+             ( SELECT na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
+                      a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
+               FROM dots.ExternalNaSequence
+              UNION
+               SELECT na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
+                      a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
+               FROM dots.VirtualSequence
+             ) sequence
+             LEFT JOIN
+             (SELECT drns.na_sequence_id, max(dr.primary_identifier) AS genbank_accession
+              FROM dots.dbrefNaSequence drns, sres.DbRef dr,
+                   sres.ExternalDatabaseRelease gb_edr, sres.ExternalDatabase gb_ed
+              WHERE drns.db_ref_id = dr.db_ref_id
+                AND dr.external_database_release_id
+                    = gb_edr.external_database_release_id
+                AND gb_edr.external_database_id = gb_ed.external_database_id
+                AND gb_ed.name = 'GenBank'
+              GROUP BY drns.na_sequence_id
+             ) genbank ON sequence.na_sequence_id = genbank.na_sequence_id
+             LEFT JOIN
+             (SELECT edr.external_database_release_id,
+                     edr.version AS database_version, ed.name AS database_name
+              FROM sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
+              WHERE edr.external_database_id = ed.external_database_id
+             ) db ON sequence.external_database_release_id = db.external_database_release_id
+             LEFT JOIN
+             (SELECT distinct piece_na_sequence_id, 0 as is_top_level
+              FROM &prefixSequencePieceClosure
+             ) virtualization ON  sequence.na_sequence_id = virtualization.piece_na_sequence_id
+             LEFT JOIN
+             (SELECT a_na_sequence_id as na_sequence_id, 1 as has_msa
+              FROM apidb.Synteny syn
+              GROUP BY a_na_sequence_id
+             ) msa ON sequence.na_sequence_id = msa.na_sequence_id
+             LEFT JOIN
+             (SELECT taxon_id, max(name) as name
+              FROM sres.TaxonName
+              WHERE name_class = 'scientific name'
+              GROUP BY taxon_id
+             ) tn ON sequence.taxon_id = tn.taxon_id
+        WHERE
+          sequence.taxon_id = taxon.taxon_id
+          AND sequence.sequence_ontology_id = so.ontology_term_id
+          AND (sequence.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
+          AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
+        ORDER BY organism, source_id
       ]]>
     </sql>
     <sql>
       <![CDATA[
-create unique index pk_SeqAttr_&1 ON &prefixGenomicSeqAttributes&1 (lower(source_id), project_id)
+        create unique index pk_SeqAttr_&1 ON &prefixGenomicSeqAttributes&1 (lower(source_id), project_id)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-create unique index SeqAttr_source_id&1 ON &prefixGenomicSeqAttributes&1 (source_id)
+        create unique index SeqAttr_source_id&1 ON &prefixGenomicSeqAttributes&1 (source_id)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_sequence_id)
+        create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_sequence_id)
       ]]>
     </sql>
     <sql>
       <![CDATA[
-create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_id, source_id)
+        create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_id, source_id)
       ]]>
     </sql>
   </tuningTable>
 
-
-  <tuningTable name="DatasetPresenter" alwaysUpdate="true">
+<!--  <tuningTable name="DatasetPresenter" alwaysUpdate="true">-->
+  <tuningTable name="DatasetPresenter">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <internalDependency name="GenomicSeqAttributes"/>
     <externalDependency name="core.ProjectInfo"/>
@@ -555,21 +558,16 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 
-
-<!--
   <tuningTable name="AssociatedDataset" alwaysUpdate="true">
     <comment>datasets shared with other projects</comment>
     <internalDependency name="DatasetPresenter"/>
     <program commandLine="buildAssociatedDatasetTT"/>
   </tuningTable>
--->
-
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
     <internalDependency name="GenomicSeqAttributes"/>
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
-
 
   <tuningTable name="DatasetDetail" alwaysUpdate="true">
     <comment> Stores text associated with each dataset. Used by dataset queries.
@@ -577,68 +575,68 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <internalDependency name="DatasetPresenter"/>
     <sql>
       <![CDATA[
-      create table DatasetDetail&1 nologging
-      as
-            select dataset_presenter_id, 
-      name||' '||category||' '||usage||' '|| 
-      caveat||' '||acknowledgement||' '||type||' '||subtype
-      ||' '| |summary||' '||description||' '||contact||' '||
-      institution||' '||pubmed_id||' '||citation as search_string
-      from (
-      select
-      sub.dataset_presenter_id as dataset_presenter_id, 
-      sub.name as name, 
-      sub.category as category,
-      sub.usage as usage, 
-      sub.caveat as caveat,
-      sub.acknowledgement as acknowledgement, 
-      sub.type as type, 
-      sub.subtype as subtype,
-      sub.contact,
-      sub.institution,
-      sub.pubmed_id,
-      sub.citation,
-      dp.summary,
-      dp.description
-      from DatasetPresenter dp,
-      (
-      select distinct
-      dp.dataset_presenter_id as dataset_presenter_id, 
-      dp.display_name as name, 
-      dp.display_category as category,
-      dp.usage as usage, 
-      dp.caveat as caveat,
-      dp.acknowledgement as acknowledgement, 
-      dp.type as type, 
-      dp.subtype as subtype, 
-      dc.name as contact,
-      dc.affiliation as institution,
-      LISTAGG(dpub.pmid, ' ') WITHIN GROUP (ORDER BY dpub.pmid) as pubmed_id,
-      LISTAGG(CASE WHEN REGEXP_LIKE(dpub.citation, '[[:digit:]]{4};')
-                   THEN substr(citation, 1, regexp_instr(citation, '[[:digit:]]{4};' ) - 1)
-                   ELSE dpub.citation
-              END , '  ') WITHIN GROUP (ORDER BY dpub.citation) as citation
-      from DatasetPresenter dp, DatasetContact dc, 
-           DatasetPublication dpub  
-      where dp.dataset_presenter_id = dc.dataset_presenter_id
-      and   dp.dataset_presenter_id = dpub.dataset_presenter_id
-      and   dc.is_primary_contact = 1
-      group by dp.dataset_presenter_id, dp.display_name,dp.display_category,
-               dp.usage,dp.caveat,dp.acknowledgement,dp.type,dp.subtype,dc.name,
-               dc.affiliation
-      ) sub
-      
-      where dp.dataset_presenter_id = sub.dataset_presenter_id)
+        CREATE TABLE DatasetDetail&1 AS
+        SELECT dataset_presenter_id,
+          name || ' ' || category || ' ' || usage || ' ' ||
+          caveat || ' ' || acknowledgement || ' ' || type || ' ' || subtype
+          ||' ' || summary || ' ' || description || ' ' || contact || ' ' ||
+          institution || ' ' || pubmed_id || ' ' || citation as search_string
+        FROM (
+          SELECT
+            sub.dataset_presenter_id as dataset_presenter_id,
+            sub.name as name,
+            sub.category as category,
+            sub.usage as usage,
+            sub.caveat as caveat,
+            sub.acknowledgement as acknowledgement,
+            sub.type as type,
+            sub.subtype as subtype,
+            sub.contact,
+            sub.institution,
+            sub.pubmed_id,
+            sub.citation,
+            dp.summary,
+            dp.description
+          FROM DatasetPresenter dp,
+          (
+            SELECT DISTINCT
+              dp.dataset_presenter_id as dataset_presenter_id,
+              dp.display_name as name,
+              dp.display_category as category,
+              dp.usage as usage,
+              dp.caveat as caveat,
+              dp.acknowledgement as acknowledgement,
+              dp.type as type,
+              dp.subtype as subtype,
+              dc.name as contact,
+              dc.affiliation as institution,
+              string_agg(dpub.pmid, ' ' ORDER BY dpub.pmid) as pubmed_id,
+              -- CHECK AND FIX - regexp_like ISSUE
+              --string_agg(CASE WHEN REGEXP_LIKE(dpub.citation, '[[:digit:]]{4};')
+              --             THEN substr(citation, 1, regexp_instr(citation, '[[:digit:]]{4};' ) - 1)
+              --             ELSE dpub.citation
+              --        END , '  ' ORDER BY dpub.citation) as citation
+             string_agg(dpub.citation, ' '  ORDER BY dpub.citation) as citation
+            FROM DatasetPresenter dp, DatasetContact dc,
+                 DatasetPublication dpub
+            WHERE dp.dataset_presenter_id = dc.dataset_presenter_id
+              AND dp.dataset_presenter_id = dpub.dataset_presenter_id
+              AND dc.is_primary_contact = true
+            GROUP by dp.dataset_presenter_id, dp.display_name,dp.display_category,
+                     dp.usage,dp.caveat,dp.acknowledgement,dp.type,dp.subtype,dc.name,
+                     dc.affiliation
+          ) sub
+          WHERE dp.dataset_presenter_id = sub.dataset_presenter_id
+        ) t
       ]]>
     </sql>
-    <sql>
-      <![CDATA[
-          CREATE INDEX DATASET_DETAIL_IDX&1 ON DATASETDETAIL&1 (search_string)
-          INDEXTYPE IS CTXSYS.CONTEXT
-      ]]>
-    </sql>
+<!--    <sql>-->
+<!--      <![CDATA[-->
+<!--          CREATE INDEX DATASET_DETAIL_IDX&1 ON DATASETDETAIL&1 (search_string)-->
+<!--          INDEXTYPE IS CTXSYS.CONTEXT-->
+<!--      ]]>-->
+<!--    </sql>-->
   </tuningTable>
-
 
   <tuningTable name="ExternalDbDatasetPresenter">
     <comment>
@@ -650,7 +648,7 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
     <externalDependency name="sres.ExternalDatabaseRelease"/>
     <sql>
       <![CDATA[
-        CREATE TABLE ExternalDbDatasetPresenter&1 NOLOGGING AS
+        CREATE TABLE ExternalDbDatasetPresenter&1 AS
         SELECT ed.external_database_id, ed.name AS external_database_name,
                edr.external_database_release_id, SUBSTR(edr.version, 1, 40) AS external_database_version,
                dsp.dataset_presenter_id, dsp.name AS dataset_presenter_name,
@@ -668,7 +666,7 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
           on ExternalDbDatasetPresenter&1
             (external_database_release_id, external_database_id, external_database_name,
              dataset_presenter_id, dataset_presenter_name, dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -677,7 +675,7 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
           on ExternalDbDatasetPresenter&1
             (dataset_presenter_id, external_database_id, external_database_release_id, 
              external_database_name, dataset_presenter_name, dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
     <sql>
@@ -687,29 +685,26 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
             (dataset_presenter_name, dataset_presenter_id, external_database_id, 
              external_database_release_id, external_database_name, external_database_version, 
              dataset_presenter_display_name)
-        tablespace indx
+
       ]]>
     </sql>
   </tuningTable>
 
-
   <tuningTable name="TaxonRelativeAbundance">
     <comment>for the sample record taxon relative abundance table
      </comment>
+    <internalDependency name="InferredParams"/>
     <externalDependency name="results.LineageAbundance"/>
     <externalDependency name="results.LineageTaxon"/>
     <externalDependency name="sres.Taxon"/>
-    <internalDependency name="InferredParams"/>
     <sql>
       <![CDATA[
-        create table TaxonRelativeAbundance&1
+        CREATE TABLE TaxonRelativeAbundance&1
             (name, protocol_app_node_id, relative_abundance,
              absolute_abundance, ncbi_tax_id, lineage, kingdom, phylum, class,
-             rank_order, family, genus, species,
-             constraint taxRelAbund&1_pk primary key(name, lineage))
-             organization index
-        nologging
-        as SELECT
+             rank_order, family, genus, species
+             )
+        AS SELECT
            sp.name,
            la.protocol_app_node_id,
            la.relative_abundance,
@@ -724,13 +719,19 @@ create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_
            cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\6') as VARCHAR(100)) as genus,
            cast(regexp_replace(la.lineage, '^([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?([^;]+)?;?$', '\7') as VARCHAR(100)) as species
         FROM
-             results.LineageAbundance la,
-             results.LineageTaxon lt,
-             sres.Taxon st,
-             SampleProcess sp
-         WHERE la.lineage = lt.lineage (+)
-          AND lt.taxon_id = st.taxon_id (+)
-          AND la.protocol_app_node_id = sp.output_pan_id
+          apidbtuning.SampleProcess sp,
+          results.LineageAbundance la
+          LEFT JOIN results.LineageTaxon lt ON la.lineage = lt.lineage
+          LEFT JOIN sres.Taxon st ON lt.taxon_id = st.taxon_id
+        WHERE
+          la.protocol_app_node_id = sp.output_pan_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX taxRelAbund_pk&1
+          ON TaxonRelativeAbundance&1 (name, lineage)
+
       ]]>
     </sql>
   </tuningTable>

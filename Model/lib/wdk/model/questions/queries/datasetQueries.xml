@@ -9,27 +9,28 @@
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <sqlQuery name="AllDatasets">
-        <paramRef ref="InternalParams.user_id"/>
-        <column name="dataset_id"/>
-        <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
-          <![CDATA[
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter
-            where category is null OR category != 'Link outs'
-            MINUS
-            select dataset_presenter_id as dataset_id
-              from apidbtuning.datasetproperty 
-             where property='isPublic' and value='false'
+      <paramRef ref="InternalParams.user_id"/>
+      <column name="dataset_id"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+            SELECT dataset_presenter_id as dataset_id
+            FROM apidbTuning.DatasetPresenter
+            WHERE (category is null OR category != 'Link outs')
+            AND project_id = '@PROJECT_ID@'
+            EXCEPT
+            SELECT dataset_presenter_id as dataset_id
+              FROM apidbtuning.datasetproperty
+             WHERE property='isPublic' and value='false'
           ]]>
-       </sql> 
+      </sql>
 
-        <sql includeProjects="ClinEpiDB">
-          <![CDATA[
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter
-            where (category is null OR category != 'Link outs')
-            and  project_id = '@PROJECT_ID@'
-            and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+      <sql includeProjects="ClinEpiDB">
+        <![CDATA[
+            SELECT dataset_presenter_id as dataset_id
+            FROM apidbTuning.DatasetPresenter
+            WHERE (category is null OR category != 'Link outs')
+              AND  project_id = '@PROJECT_ID@'
+              and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
@@ -37,47 +38,48 @@
             and  project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
           ]]>
-       </sql>
+      </sql>
 
-        <sql includeProjects="MicrobiomeDB">
-          <![CDATA[
+      <sql includeProjects="MicrobiomeDB">
+        <![CDATA[
             select dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter
             where (category is null OR category != 'Link outs')
             and project_id = '@PROJECT_ID@'
-          ]]>
-       </sql>
+        ]]>
+      </sql>
 
     </sqlQuery>
 
     <sqlQuery excludeProjects="ClinEpiDB" name="SitemapDatasets">
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter
-          ]]>
-       </sql>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT dataset_presenter_id as dataset_id
+          FROM apidbTuning.DatasetPresenter
+          WHERE project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
     <sqlQuery includeProjects="ClinEpiDB" name="SitemapDatasets">
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-            select dpres.dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
-            where dpres.dataset_presenter_id = dprop.dataset_presenter_id
-            and dprop.property = 'isPublic' and dprop.value = 'true'
-            and dpres.project_id = '@PROJECT_ID@'
-          ]]>
-       </sql>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT dpres.dataset_presenter_id as dataset_id
+          FROM apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
+          WHERE dpres.dataset_presenter_id = dprop.dataset_presenter_id
+            AND dprop.property = 'isPublic' and dprop.value = 'true'
+            AND dpres.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
-        <column name="dataset_id"/>
+      <column name="dataset_id"/>
         <sql excludeProjects="EuPathDB,UniDB">
-          <![CDATA[
+        <![CDATA[
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
@@ -92,7 +94,7 @@
             and dprop.value = 'GenomicsEDAStudy'
             and dpres.project_id = '@PROJECT_ID@'
           ]]>
-       </sql>
+      </sql>
 
 
        <sql includeProjects="EuPathDB,UniDB">
@@ -114,292 +116,292 @@
             and dpres.dataset_presenter_id = 'DS_480c976ef9'
           ]]>
        </sql>
-
-
-
-
     </sqlQuery>
 
-
-
-
-
-
     <sqlQuery name="ByReferenceName">
-        <testParamValues>
-            <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>
-            <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-            <paramValue name="taxon">any</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>
+        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+        <paramValue name="taxon">any</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.reference_name"/>
-        <paramRef ref="datasetParams.record_class"/>
-        <paramRef ref="datasetParams.taxon"/>
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-select distinct ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
-                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-                   where ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID
-                   and ('any' = '$$taxon$$' or (dnt.taxon_id = 0 or dnt.taxon_id = $$taxon$$))
-                   and ref.target_name = $$reference_name$$
-                   and ref.record_type = $$record_class$$
-          ]]>
-       </sql>
+      <paramRef ref="datasetParams.reference_name"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <paramRef ref="datasetParams.taxon"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
+          WHERE ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID
+            AND ('any' = '$$taxon$$' or (dnt.taxon_id = 0 or dnt.taxon_id = $$taxon$$))
+            AND ref.target_name = $$reference_name$$
+            AND ref.record_type = $$record_class$$
+        ]]>
+      </sql>
     </sqlQuery>
 
     <sqlQuery name="ByReferenceNameNoTaxon">
-        <testParamValues>
-            <paramValue name="reference_name">Reference</paramValue>
-            <paramValue name="record_class">PopsetRecordClasses.PopsetRecordClass</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="reference_name">Reference</paramValue>
+        <paramValue name="record_class">PopsetRecordClasses.PopsetRecordClass</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.reference_name"/>
-        <paramRef ref="datasetParams.record_class"/>
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-          select distinct ref.dataset_presenter_id as dataset_id,
+      <paramRef ref="datasetParams.reference_name"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT ref.dataset_presenter_id as dataset_id,
                  ref.target_name, ref.record_type
-          from apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-          where ref.dataset_presenter_id = dnt.dataset_presenter_id
-          and ref.target_name = $$reference_name$$
-          and ref.record_type = $$record_class$$
-          ]]>
-       </sql>
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
+          WHERE ref.dataset_presenter_id = dnt.dataset_presenter_id
+            AND ref.target_name = $$reference_name$$
+            AND ref.record_type = $$record_class$$
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <sqlQuery name="ById">
-        <testParamValues>
-            <paramValue name="dataset_id">DS_20c45d8ed1</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="dataset_id">DS_20c45d8ed1</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.dataset_id"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.dataset_id"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[
-          select distinct dataset_presenter_id as dataset_id
-          from APIDBTUNING.datasetnametaxon
-          where dataset_presenter_id in ($$dataset_id$$)
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dataset_presenter_id as dataset_id
+          FROM APIDBTUNING.datasetnametaxon
+          WHERE dataset_presenter_id in ($$dataset_id$$)
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <sqlQuery name="ByExternalDatabaseNames">
-        <testParamValues>
-            <paramValue name="dataset_name">taxonomy_RSRC</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="dataset_name">taxonomy_RSRC</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.dataset_name"/>
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-          select distinct dataset_presenter_id as dataset_id
-          from APIDBTUNING.datasetnametaxon
-          where name IN ($$dataset_name$$)
-          ]]>
-       </sql>
+      <paramRef ref="datasetParams.dataset_name"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dataset_presenter_id as dataset_id
+          FROM APIDBTUNING.datasetnametaxon
+          WHERE name IN ($$dataset_name$$)
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <sqlQuery name="ByQuestionName">
-        <testParamValues>
-            <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.question_name"/>
-        <column name="dataset_id"/>
-        <sql>
-          <![CDATA[
-                   select dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
-                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                   and ref.target_name = $$question_name$$
-                   and ref.target_type = 'question'
-          ]]>
-       </sql>
+      <paramRef ref="datasetParams.question_name"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
+            AND ref.target_name = $$question_name$$
+            AND ref.target_type = 'question'
+            AND dsp.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <!-- JB:  Weird that profile_graph is included here -->
     <sqlQuery name="ByRecordClass">
-        <testParamValues>
-          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.record_class"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
-                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                   and ref.record_type = $$record_class$$
-                   and ref.target_type IN ('table', 'attribute','profile_graph')
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
+            AND ref.record_type = $$record_class$$
+            AND ref.target_type IN ('table', 'attribute','profile_graph')
+            AND dsp.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
 
     </sqlQuery>
 
     <sqlQuery name="ByType">
-        <testParamValues>
-          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-          <paramValue name="dataset_type">transcript_expression</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+        <paramValue name="dataset_type">transcript_expression</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.record_class"/>
-        <paramRef ref="datasetParams.dataset_type"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <paramRef ref="datasetParams.dataset_type"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
-                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                   and ref.record_type = $$record_class$$
-                   and dsp.type = $$dataset_type$$
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
+            AND ref.record_type = $$record_class$$
+            AND dsp.type = $$dataset_type$$
+            AND dsp.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
     <sqlQuery name="ByTypeAndSubtype">
-        <testParamValues>
-          <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-          <paramValue name="dataset_type">transcript_expression</paramValue>
-          <paramValue name="dataset_subtype">array</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+        <paramValue name="dataset_type">transcript_expression</paramValue>
+        <paramValue name="dataset_subtype">array</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.record_class"/>
-        <paramRef ref="datasetParams.dataset_type"/>
-        <paramRef ref="datasetParams.dataset_subtype"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <paramRef ref="datasetParams.dataset_type"/>
+      <paramRef ref="datasetParams.dataset_subtype"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
-                   where dsp.dataset_presenter_id = ref.dataset_presenter_id
-                   and ref.record_type = $$record_class$$
-                   and dsp.type = $$dataset_type$$
-                   and (dsp.subtype = $$dataset_subtype$$
-                       or dsp.display_category = $$dataset_subtype$$)
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
+          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
+            AND ref.record_type = $$record_class$$
+            AND dsp.type = $$dataset_type$$
+            AND (dsp.subtype = $$dataset_subtype$$
+               OR dsp.display_category = $$dataset_subtype$$)
+            AND dsp.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
     <sqlQuery name="ByCategoryAndSubtype">
-        <testParamValues>
-          <paramValue name="dataset_category">transcript_expression</paramValue>
-          <paramValue name="dataset_subtype">array</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="dataset_category">transcript_expression</paramValue>
+        <paramValue name="dataset_subtype">array</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.dataset_category"/>
-        <paramRef ref="datasetParams.dataset_subtype"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.dataset_category"/>
+      <paramRef ref="datasetParams.dataset_subtype"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[ 
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetpresenter dsp
-                   where  (category IS NULL and dsp.display_category = $$dataset_category$$)
-                   or (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
-                   or (nvl(dsp.display_category, dsp.category) = $$dataset_category$$
-                          and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$) )
-                   or (dsp.category = 'Immunology' 
-                       and lower(display_category) = lower($$dataset_subtype$$))
-                   or nvl(dsp.category, dsp.display_category) = $$dataset_category$$ 
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetpresenter dsp
+          WHERE dsp.project_id = '@PROJECT_ID@'
+          AND (category IS NULL and dsp.display_category = $$dataset_category$$)
+            OR (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
+            OR (coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
+                and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
+            )
+            OR (dsp.category = 'Immunology'
+             AND lower(display_category) = lower($$dataset_subtype$$)
+            )
+            OR coalesce(dsp.category, dsp.display_category) = $$dataset_category$$
+        ]]>
+      </sql>
     </sqlQuery>
 
     <sqlQuery name="ByCategoryAndOrganism" excludeProjects="MicrobiomeDB,ClinEpiDB">
 
-        <paramRef ref="datasetParams.dataset_category"/>
-        <paramRef ref="datasetParams.organism"/>
-        <column name="dataset_id"/>
+      <paramRef ref="datasetParams.dataset_category"/>
+      <paramRef ref="datasetParams.organism"/>
+      <column name="dataset_id"/>
 
-        <sql>
-          <![CDATA[
-                   select DISTINCT dsp.dataset_presenter_id as dataset_id
-                   from apidbtuning.datasetpresenter dsp, apidbtuning.datasetnametaxon dnt, sres.taxonname tn
-                   where nvl(dsp.display_category, dsp.category) = $$dataset_category$$
-                   and dsp.dataset_presenter_id = dnt.dataset_presenter_id
-                   and dnt.taxon_id = tn.taxon_id
-                   and tn.name_class =  'scientific name'
-                   and tn.name = $$organism$$
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          FROM apidbtuning.datasetpresenter dsp, apidbtuning.datasetnametaxon dnt, sres.taxonname tn
+          WHERE coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
+            AND dsp.dataset_presenter_id = dnt.dataset_presenter_id
+            AND dnt.taxon_id = tn.taxon_id
+            AND tn.name_class =  'scientific name'
+            AND tn.name = $$organism$$
+            AND dsp.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
 
 
     <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
-        <testParamValues>
-          <paramValue name="user_id">48</paramValue>
-        </testParamValues>
+      <testParamValues>
+        <paramValue name="user_id">48</paramValue>
+      </testParamValues>
 
-        <paramRef ref="datasetParams.user_id"/>
-        <column name="dataset_id"/>
-        <column name="study_id"/>
-        <column name="restriction_level"/>
-        <column name="approval_status"/>
+      <paramRef ref="datasetParams.user_id"/>
+      <column name="dataset_id"/>
+      <column name="study_id"/>
+      <column name="restriction_level"/>
+      <column name="approval_status"/>
 
-        <sql>
-          <![CDATA[
-SELECT d.dataset_presenter_id as dataset_id, d.dataset_presenter_id as study_id, CASE WHEN u.study_access is null THEN d.study_access ELSE u.study_access END as restriction_level
-FROM (select dataset_presenter_id, value as study_access
-from apidbtuning.datasetproperty
-where  property = 'studyAccess') d,
-(select v.dataset_presenter_id, r.name as study_access
- from studyaccess.end_users@ACCT_DBLINK@ v
-   INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r
-     ON v.restriction_level_id = r.restriction_level_id
- where user_id = $$user_id$$
- AND (approval_status_id < 1 or approval_status_id is NULL)
-) u
-WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT d.dataset_presenter_id as dataset_id, d.dataset_presenter_id as study_id, CASE WHEN u.study_access is null THEN d.study_access ELSE u.study_access END as restriction_level
+          FROM (
+              select dataset_presenter_id, value as study_access
+              from apidbtuning.datasetproperty
+              where  property = 'studyAccess'
+            ) d
+            LEFT JOIN (
+              select v.dataset_presenter_id, r.name as study_access
+              from studyaccess.end_users@ACCT_DBLINK@ v
+                INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r ON v.restriction_level_id = r.restriction_level_id
+              WHERE user_id = $$user_id$$
+                AND (approval_status_id < 1 or approval_status_id is NULL)
+            ) u ON d.dataset_presenter_id = u.dataset_presenter_id
+        ]]>
+      </sql>
     </sqlQuery>
 
     <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
-          processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
-       <paramRef ref="sharedParams.text_expression"/>
-       <paramRef ref="sharedParams.document_type" default="dataset"/>
-       <paramRef ref="sharedParams.text_fields"/>
-       <!-- NOTE: organism param will break in mbio/clinepi/ortho if ever added! -->
-       <paramRef ref="organismParams.text_search_organism" selectMode="all"/>
-       <!-- the parameter below caches the results for 30 minutes -->
-       <paramRef ref="sharedParams.timestamp" interval="1800" />
-       <wsColumn name="dataset_id" width="50"/>
-       <wsColumn name="max_score" width="10" columnType="float"/>
-       <!-- <wsColumn name="fields_matched" width="500"/> -->
+                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+      <paramRef ref="sharedParams.text_expression"/>
+      <paramRef ref="sharedParams.document_type" default="dataset"/>
+      <paramRef ref="sharedParams.text_fields"/>
+      <!-- NOTE: organism param will break in mbio/clinepi/ortho if ever added! -->
+      <paramRef ref="organismParams.text_search_organism" selectMode="all"/>
+      <!-- the parameter below caches the results for 30 minutes -->
+      <paramRef ref="sharedParams.timestamp" interval="1800"/>
+      <wsColumn name="dataset_id" width="50"/>
+      <wsColumn name="max_score" width="10" columnType="float"/>
+      <!-- <wsColumn name="fields_matched" width="500"/> -->
     </processQuery>
 
-<processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
-             processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
-             doNotTest="true">
-        <paramRef ref="sharedParams.ds_gene_ids"/>
-        <paramRef ref="datasetParams.datasetSelection"/>
-        <paramRef ref="datasetParams.enrichmentType"/>
-<!--        <paramRef ref="datasetParams.datasetCutoffType"/> -->
-<!--        <paramRef ref="datasetParams.datasetCutoff"/> -->
-        <paramRef ref="datasetParams.threshold"/>
-        <paramRef ref="datasetParams.orthologyFlag"/>
-	<wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
-	<wsColumn name="obser_ovelap" width="100" wsName="obser_ovelap"/>
-	<wsColumn name="exp_overlap" width="100" wsName="exp_overlap"/>
-	<wsColumn name="fold_enrichment" width="100" wsName="fold_enrichment"/>
-	<wsColumn name="percent_ul" width="100" wsName="percent_ul"/>
-	<wsColumn name="percent_ds" width="100" wsName="percent_ds"/>
-	<wsColumn name="p_value" width="100" wsName="p_value"/>
-	<!--<wsColumn name="percent_count" width="50" wsName="percent_count"/>  NOTE: need more general column name -->
-	<!--<wsColumn name="hit_count" width="50" wsName="hit_count"/> NOTE: need more general column name -->
+    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
+                  processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
+                  doNotTest="true">
+      <paramRef ref="sharedParams.ds_gene_ids"/>
+      <paramRef ref="datasetParams.datasetSelection"/>
+      <paramRef ref="datasetParams.enrichmentType"/>
+      <!--        <paramRef ref="datasetParams.datasetCutoffType"/> -->
+      <!--        <paramRef ref="datasetParams.datasetCutoff"/> -->
+      <paramRef ref="datasetParams.threshold"/>
+      <paramRef ref="datasetParams.orthologyFlag"/>
+      <wsColumn name="dataset_id" width="100" wsName="dataset_id"/>
+      <wsColumn name="obser_ovelap" width="100" wsName="obser_ovelap"/>
+      <wsColumn name="exp_overlap" width="100" wsName="exp_overlap"/>
+      <wsColumn name="fold_enrichment" width="100" wsName="fold_enrichment"/>
+      <wsColumn name="percent_ul" width="100" wsName="percent_ul"/>
+      <wsColumn name="percent_ds" width="100" wsName="percent_ds"/>
+      <wsColumn name="p_value" width="100" wsName="p_value"/>
+      <!--<wsColumn name="percent_count" width="50" wsName="percent_count"/>  NOTE: need more general column name -->
+      <!--<wsColumn name="hit_count" width="50" wsName="hit_count"/> NOTE: need more general column name -->
 
-</processQuery>
+    </processQuery>
 
 
     <sqlQuery name="AllUserDatasets">
@@ -475,30 +477,31 @@ WHERE d.dataset_presenter_id = u.dataset_presenter_id(+)
 </querySet>
 
 
-  <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+  <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false"
+            excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
 
     <sqlQuery name="AllDatasets">
       <column name="dataset_presenter_id"/>
       <column name="dataset_presenter_name"/>
       <column name="project_name"/>
-        <sql>
-          <![CDATA[
-                   select dataset_presenter_id, dataset_presenter_name, project_name from apidb.legacydataset where project_name = '@PROJECT_ID@'
-          ]]>
-       </sql>
+      <sql>
+        <![CDATA[
+          SELECT dataset_presenter_id, dataset_presenter_name, project_name
+          FROM apidb.legacydataset
+          WHERE project_name = '@PROJECT_ID@'
+        ]]>
+      </sql>
     </sqlQuery>
-
 
     <processQuery name="LegacyDatasetIds" includeProjects="EuPathDB"
                   processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin">
       <wsColumn name="dataset_presenter_id" width="50" wsName="dataset_presenter_id"/>
       <wsColumn name="dataset_presenter_name" width="50" wsName="dataset_presenter_name"/>
-      <wsColumn name="project_name" width="20" />
+      <wsColumn name="project_name" width="20"/>
     </processQuery>
 
 
   </querySet>
-
 
 
 </wdkModel>

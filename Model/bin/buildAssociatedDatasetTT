@@ -33,14 +33,14 @@ my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $prop
 # create table
 $dbh->do(<<SQL) or die "creating table";
    create table AssociatedDataset$suffix (
-      local_dataset_id      varchar2(15),
-      local_project         varchar2(20),
-      pubmed_id             varchar2(60),
-      associated_dataset_id varchar2(15),
-      project               varchar2(20),
-      webapp_name           varchar2(20),
-      display_name          varchar2(200)
-   ) nologging
+      local_dataset_id      varchar(15),
+      local_project         varchar(20),
+      pubmed_id             varchar(60),
+      associated_dataset_id varchar(15),
+      project               varchar(20),
+      webapp_name           varchar(20),
+      display_name          varchar(200)
+   )
 SQL
 
 my %projects = (

@@ -31,11 +31,15 @@ public class ConfigurationParser extends XmlParser {
     digester.addCallMethod("tuningProps/password",
         "setText", 0);
     
-    configureNode(digester, "tuningProps/schema",
+    configureNode(digester, "tuningProps/username",
         Text.class, "setUsername");
-    digester.addCallMethod("tuningProps/schema",
+    digester.addCallMethod("tuningProps/username",
         "setText", 0);
 
+    configureNode(digester, "tuningProps/schema",
+            Text.class, "setSchema");
+    digester.addCallMethod("tuningProps/schema",
+            "setText", 0);
     return digester;
   }
 
