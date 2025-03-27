@@ -101,26 +101,24 @@ sub createEmptyTable {
      my ($dbh, $suffix) = @_;
 
     $dbh->do(<<SQL) or die "creating table";
-     create table EdaGeneGraph$suffix (
-       dataset_name varchar(255),
-       plot_name    varchar(255),
-       plot_type    varchar(100),
-       x_axis_entity_id       varchar(255),
-       y_axis_entity_id       varchar(255),
-       x_axis_variable_id       varchar(255),
-       y_axis_variable_id       varchar(255),
-       x_min                    number(5),
-       x_max                    number(5),
-       y_min                    number(5),
-       y_max                    number(5)
-  ) nologging
+     CREATE TABLE EdaGeneGraph$suffix (
+       dataset_name             VARCHAR(255),
+       plot_name                VARCHAR(255),
+       plot_type                VARCHAR(100),
+       x_axis_entity_id         VARCHAR(255),
+       y_axis_entity_id         VARCHAR(255),
+       x_axis_variable_id       VARCHAR(255),
+       y_axis_variable_id       VARCHAR(255),
+       x_min                    NUMERIC,
+       x_max                    NUMERIC,
+       y_min                    NUMERIC,
+       y_max                    NUMERIC
+  )
 SQL
 $dbh->{PrintError} = 0;
 
     $dbh->do(<<SQL) or die "creating index";
-     create index egg_dsn_ix$suffix
-       on EdaGeneGraph$suffix (dataset_name)
-       tablespace indx
+     CREATE INDEX egg_dsn_ix$suffix ON EdaGeneGraph$suffix (dataset_name)
 SQL
 $dbh->{PrintError} = 0;
 }
