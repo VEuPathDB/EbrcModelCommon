@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tuningConfig>
+
+
+  <tuningTable name="SequenceAttributes">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="apidb.OrthomclTaxon"/>
+    <externalDependency name="dots.AaSequenceEnzymeClass"/>
+    <externalDependency name="dots.ExternalAaSequence"/>
+    <externalDependency name="sres.EnzymeClass"/>
+
+    <sql>
+      <!-- TODO:  urls and lenght are broken -->
+      <![CDATA[
+        create table SequenceAttributes&1 nologging as
+        SELECT
+            eas.secondary_identifier AS full_id,
+            eas.source_id,
+            eas.aa_sequence_id,
+            length(eas.sequence) as length,
+            eas.description AS product,
+            eas.taxon_id,
+
+            taxon.orthomcl_taxon_id,
+            taxon.taxon_group,
+            taxon.three_letter_abbrev AS taxon_abbreviation,
+            taxon.name AS organism_name,
+            taxon.core_peripheral,
+
+
+            OrthologGroup.group_id AS group_name,
+            OrthologGroup.ortholog_group_id,
+            OrthologGroup.number_of_members AS group_size,
+            OrthologGroup.number_of_core_members,
+            OrthologGroup.number_of_peripheral_members,
+            decode(OrthologGroup.is_residual, 1, 'Residual', 'Core') AS group_type,
+                   urls.source_url,
+            urls.source_text
+        FROM
+            dots.orthoaasequence eas,
+            apidb.OrthologGroup orthologgroup,
+            apidb.ORTHOLOGGROUPAASEQUENCE ogseq,
+            (
+            SELECT
+                three_letter_abbrev,
+                orthomcl_taxon_id,
+                name,
+                core_peripheral,
+                connect_by_root name AS taxon_group
+            FROM
+                apidb.OrthomclTaxon
+            WHERE
+                core_peripheral IN ('C', 'P')
+            START WITH
+                name IN ('Archaea', 'Bacteria', 'Alveolates', 'Amoebozoa', 'Euglenozoa',
+                                           'Fungi', 'Metazoa', 'Other Eukaryota', 'Viridiplantae')
+            CONNECT BY
+                parent_id = PRIOR orthomcl_taxon_id
+                 ) taxon,
+
+                 (
+            SELECT
+                eas.aa_sequence_id,
+                CASE
+                    WHEN ores.resource_name IN ('CryptoDB', 'PlasmoDB', 'PiroplasmaDB', 'MicrosporidiaDB', 'SchistoDB',
+                                  'FungiDB', 'TriTrypDB', 'VectorBase', 'AmoebaDB', 'ToxoDB', 'HostDB', 'TrichDB', 'GiardiaDB')
+                     THEN SUBSTR(ores.resource_url, 0, INSTR(ores.resource_url, '/downloads')) || 'record/gene/'
+                                  || eas.source_id
+                    WHEN ores.resource_name = 'Uniprot'
+                     THEN SUBSTR(ores.resource_url, 0, INSTR(ores.resource_url, '/proteomes')) || 'uniprot/'
+                          || eas.source_id
+                    ELSE ''
+                END AS source_url,
+                     CASE
+                    WHEN ores.resource_name IS NULL THEN ''
+                    ELSE eas.source_id || ' (' || ores.resource_name || ')'
+                END AS source_text
+            FROM
+                dots.ExternalAaSequence eas,
+                apidb.OrthomclTaxon ot,
+                apidb.orthomclresource ores
+            WHERE
+                NVL(SUBSTR(eas.secondary_identifier, 0, INSTR(eas.secondary_identifier, '|')-1), eas.secondary_identifier)
+                             = ot.three_letter_abbrev
+                    AND ot.orthomcl_taxon_id = ores.orthomcl_taxon_id) urls
+        WHERE
+            SUBSTR(eas.secondary_identifier, 0, INSTR(eas.secondary_identifier, '|')-1) = taxon.three_letter_abbrev(+)
+            AND eas.aa_sequence_id = ogseq.aa_sequence_id(+)
+            AND ogseq.GROUP_ID = orthologgroup.GROUP_ID (+)
+            AND eas.aa_sequence_id = urls.aa_sequence_id(+)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        alter table SequenceAttributes&1
+          add constraint SeqAttrs_pk&1 primary key (full_id)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create unique index SeqAttrs_idx&1 ON SequenceAttributes&1 (full_id, group_name, taxon_id, source_id)
+        tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create unique index SeqAttrs_gusIdx&1 ON SequenceAttributes&1 (ortholog_group_id, aa_sequence_id)
+        tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create unique index SeqAttrs_idx2&1 ON SequenceAttributes&1 (group_name, length desc, full_id, taxon_id)
+        tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create unique index SeqAttrs_idx3&1
+          on SequenceAttributes&1 (aa_sequence_id, group_name, ortholog_group_id, orthomcl_taxon_id, taxon_id)
+        tablespace indx
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create unique index SeqAttrs_idx4&1 ON SequenceAttributes&1 (source_id, full_id, group_name, taxon_id)
+        tablespace indx
+      ]]>
+    </sql>
+
+  </tuningTable>
+
+
+<!-- TODO:  if this is needed, need to redo the EC_NUMBER query -->
+  <tuningTable name="TypeAheadCounts">
+    <!-- internalDependency name="GeneAttributes"/ -->
+    <externalDependency name="dots.DbRefAaFeature"/>
+    <externalDependency name="sres.DbRef"/>
+    <externalDependency name="dots.AaFeature"/>
+    <externalDependency name="dots.TranslatedAaFeature"/>
+    <externalDependency name="dots.Transcript"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <externalDependency name="sres.EnzymeClass"/>
+    <externalDependency name="dots.AaSequenceEnzymeClass"/>
+    <externalDependency name="dots.GoAssociation"/>
+    <externalDependency name="dots.GoAssociationInstance"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="core.TableInfo"/>
+    <sql>
+      <![CDATA[
+CREATE TABLE TypeAheadCounts&1 NOLOGGING AS
+   (SELECT DISTINCT dr.primary_identifier as option_id,
+                   count(distinct aaf.aa_sequence_id) AS protein_count
+   FROM dots.DbRefAaFeature draf, sres.DbRef dr, dots.aafeature aaf,
+        sres.ExternalDatabaseRelease edr, sres.ExternalDatabase ed
+   WHERE draf.db_ref_id = dr.db_ref_id
+   AND dr.external_database_release_id
+       = edr.external_database_release_id
+   AND edr.external_database_id = ed.external_database_id
+   AND aaf.aa_feature_id = draf.aa_feature_id
+   GROUP BY dr.primary_identifier
+   )
+   UNION
+   (SELECT DISTINCT ec.ec_number AS option_id,
+          COUNT(DISTINCT asec.aa_sequence_id) AS protein_count
+   FROM sres.enzymeClass ec,
+        dots.aaSequenceEnzymeClass asec
+   WHERE  asec.enzyme_class_id = ec.enzyme_class_id
+   GROUP BY ec.ec_number)
+   UNION                
+   (SELECT DISTINCT gt.source_id AS option_id,
+           COUNT(DISTINCT aaf.aa_sequence_id) AS protein_count
+    FROM dots.AaFeature aaf,
+         dots.GoAssociation ga, sres.OntologyTerm gt,
+         dots.GoAssociationInstance gai,core.TableInfo ti
+    WHERE aaf.aa_sequence_id = ga.row_id
+    AND ga.table_id = ti.table_id
+    AND ti.name = 'ExternalAASequence'
+    AND ga.go_term_id = gt.ontology_term_id
+    AND ga.go_association_id = gai.go_association_id
+    GROUP BY gt.source_id)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
+tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="DomainAssignment">
+    <internalDependency name="SequenceAttributes"/>
+    <externalDependency name="apidb.interproresults"/>
+    <intermediateTable name="DomainIndex"/>
+    <sql>
+      <![CDATA[
+        create table DomainAssignment&1 nologging as
+        select sa.full_id, sa.group_name,
+               r.interpro_primary_id as accession,
+               r.interpro_desc as description,
+               cast (null as NUMBER) as domain_index,
+               sa.aa_sequence_id,
+               r.interpro_start_min as start_min,
+               r.interpro_end_min as end_max
+        from SequenceAttributes sa,  apidb.interproresults r
+        where sa.full_id = r.protein_source_id
+          and upper(r.interpro_db_name) = 'PFAM'
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index domain_accession_ix&1
+               on DomainAssignment&1 (accession, full_id, group_name)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create table domainIndex nologging as
+        select rownum as domain_index, accession
+        from (select distinct accession
+              from DomainAssignment&1
+              order by accession)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index domainIdxIdx on DomainIndex(accession, domain_index)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        update DomainAssignment&1 da
+        set domain_index = (select domain_index
+                            from DomainIndex
+                            where accession = da.accession)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index domain_ix_ix&1
+               on DomainAssignment&1 (domain_index, accession, full_id)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index domain_group_ix&1
+               on DomainAssignment&1 (group_name, accession, full_id)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index domain_seq_ix&1
+               on DomainAssignment&1 (aa_sequence_id, accession, full_id, group_name)
+      ]]>
+    </sql>
+
+  </tuningTable>
+
+  <tuningTable name="PhyleticPattern">
+<!-- This should be included BUT this table is not created until the plugin is run so it breaks the tm
+     OrthoMCLData/Load/plugin/perl/InsertOrthomclGroupTaxonMatrix.pm
+    <externalDependency name="ApiDB.OrthologGroupTaxon"/>
+    -->
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthomclTaxon"/>
+
+    <sql>
+      <![CDATA[
+CREATE TABLE PhyleticPattern&1 NOLOGGING AS
+    (SELECT actual.group_name,
+            actual.alveolata as alveolata_actual,
+	    total.alveolata as alveolata_total,
+	    round(100*actual.alveolata/total.alveolata,0) AS alveolata_percent,
+            actual.archaea as archaea_actual,
+	    total.archaea as archaea_total,
+	    round(100*actual.archaea/total.archaea,0) AS archaea_percent,
+            actual.amoeba as amoeba_actual,
+	    total.amoeba as amoeba_total,
+	    round(100*actual.amoeba/total.amoeba,0) AS amoeba_percent,
+            actual.bacteria as bacteria_actual,
+	    total.bacteria as bacteria_total,
+	    round(100*actual.bacteria/total.bacteria,0) AS bacteria_percent,
+            actual.fungi as fungi_actual,
+	    total.fungi as fungi_total,
+	    round(100*actual.fungi/total.fungi,0) AS fungi_percent,
+            actual.euglenozoa as euglenozoa_actual,
+	    total.euglenozoa as euglenozoa_total,
+	    round(100*actual.euglenozoa/total.euglenozoa,0) AS euglenozoa_percent,
+            actual.metazoa as metazoa_actual,
+	    total.metazoa as metazoa_total,
+	    round(100*actual.metazoa/total.metazoa,0) AS metazoa_percent,
+            actual.viridiplantae as viridiplantae_actual,
+	    total.viridiplantae as viridiplantae_total,
+	    round(100*actual.viridiplantae/total.viridiplantae,0) AS viridiplantae_percent,
+            actual.other_eukaryotes as other_eukaryotes_actual,
+	    total.other_eukaryotes as other_eukaryotes_total,
+	    round(100*actual.other_eukaryotes/total.other_eukaryotes,0) AS other_eukaryotes_percent,
+            actual.bacteria_firm as bacteria_firm_actual,
+	    total.bacteria_firm as bacteria_firm_total,
+            actual.bacteria_proa as bacteria_proa_actual,
+	    total.bacteria_proa as bacteria_proa_total,
+            actual.bacteria_prob as bacteria_prob_actual,
+	    total.bacteria_prob as bacteria_prob_total,
+            actual.bacteria_prod as bacteria_prod_actual,
+	    total.bacteria_prod as bacteria_prod_total,
+            actual.bacteria_proe as bacteria_proe_actual,
+	    total.bacteria_proe as bacteria_proe_total,
+            actual.bacteria_prog as bacteria_prog_actual,
+	    total.bacteria_prog as bacteria_prog_total,
+            actual.bacteria_obac as bacteria_obac_actual,
+	    total.bacteria_obac as bacteria_obac_total,
+            actual.archaea_arch as archaea_arch_actual,
+	    total.archaea_arch as archaea_arch_total,
+            actual.archaea_eury as archaea_eury_actual,
+	    total.archaea_eury as archaea_eury_total,
+            actual.archaea_cren as archaea_cren_actual,
+	    total.archaea_cren as archaea_cren_total,
+            actual.archaea_nano as archaea_nano_actual,
+	    total.archaea_nano as archaea_nano_total,
+            actual.archaea_kora as archaea_kora_actual,
+	    total.archaea_kora as archaea_kora_total,
+            oeuk_genera.html as oeuk_genera_html,
+            eugl_genera.html as eugl_genera_html,
+            amoe_genera.html as amoe_genera_html,
+            actual.alveolata_alve as alveolata_alve_actual,
+	    total.alveolata_alve as alveolata_alve_total,
+            actual.alveolata_cili as alveolata_cili_actual,
+	    total.alveolata_cili as alveolata_cili_total,
+            actual.alveolata_apic as alveolata_apic_actual,
+	    total.alveolata_apic as alveolata_apic_total,
+            actual.alveolata_cocc as alveolata_cocc_actual,
+	    total.alveolata_cocc as alveolata_cocc_total,
+            actual.alveolata_haem as alveolata_haem_actual,
+	    total.alveolata_haem as alveolata_haem_total,
+            actual.alveolata_piro as alveolata_piro_actual,
+	    total.alveolata_piro as alveolata_piro_total,
+            actual.viridiplantae_stre as viridiplantae_stre_actual,
+	    total.viridiplantae_stre as viridiplantae_stre_total,
+            actual.viridiplantae_chlo as viridiplantae_chlo_actual,
+	    total.viridiplantae_chlo as viridiplantae_chlo_total,
+            actual.viridiplantae_rhod as viridiplantae_rhod_actual,
+	    total.viridiplantae_rhod as viridiplantae_rhod_total,
+            actual.viridiplantae_cryp as viridiplantae_cryp_actual,
+	    total.viridiplantae_cryp as viridiplantae_cryp_total,
+            actual.fungi_fung as fungi_fung_actual,
+	    total.fungi_fung as fungi_fung_total,
+            actual.fungi_micr as fungi_micr_actual,
+	    total.fungi_micr as fungi_micr_total,
+            actual.fungi_basi as fungi_basi_actual,
+	    total.fungi_basi as fungi_basi_total,
+            actual.fungi_asco as fungi_asco_actual,
+	    total.fungi_asco as fungi_asco_total,
+            actual.fungi_muco as fungi_muco_actual,
+	    total.fungi_muco as fungi_muco_total,
+            actual.fungi_chyt as fungi_chyt_actual,
+	    total.fungi_chyt as fungi_chyt_total,
+            actual.metazoa_omet as metazoa_omet_actual,
+	    total.metazoa_omet as metazoa_omet_total,
+            actual.metazoa_nema as metazoa_nema_actual,
+	    total.metazoa_nema as metazoa_nema_total,
+            actual.metazoa_arth as metazoa_arth_actual,
+	    total.metazoa_arth as metazoa_arth_total,
+            actual.metazoa_chor as metazoa_chor_actual,
+	    total.metazoa_chor as metazoa_chor_total,
+            actual.metazoa_acti as metazoa_acti_actual,
+	    total.metazoa_acti as metazoa_acti_total,
+            actual.metazoa_aves as metazoa_aves_actual,
+	    total.metazoa_aves as metazoa_aves_total,
+            actual.metazoa_mamm as metazoa_mamm_actual,
+	    total.metazoa_mamm as metazoa_mamm_total,
+            actual.metazoa_tuni as metazoa_tuni_actual,
+	    total.metazoa_tuni as metazoa_tuni_total
+    FROM
+        (SELECT SUM(CASE clade WHEN 'alveolata' THEN num ELSE 0 END) as alveolata,
+                SUM(CASE clade WHEN 'archaea' THEN num ELSE 0 END) as archaea,
+                SUM(CASE clade WHEN 'amoeba' THEN num ELSE 0 END) as amoeba,
+                SUM(CASE clade WHEN 'bacteria' THEN num ELSE 0 END) as bacteria,
+                SUM(CASE clade WHEN 'fungi' THEN num ELSE 0 END) as fungi,
+                SUM(CASE clade WHEN 'euglenozoa' THEN num ELSE 0 END) as euglenozoa,
+                SUM(CASE clade WHEN 'metazoa' THEN num ELSE 0 END) as metazoa,
+                SUM(CASE clade WHEN 'viridiplantae' THEN num ELSE 0 END) as viridiplantae,
+                SUM(CASE clade WHEN 'other_eukaryotes' THEN num ELSE 0 END) as other_eukaryotes,
+		SUM(CASE clade WHEN 'FIRM' THEN num ELSE 0 END) as bacteria_firm,
+		SUM(CASE clade WHEN 'PROA' THEN num ELSE 0 END) as bacteria_proa,
+		SUM(CASE clade WHEN 'PROB' THEN num ELSE 0 END) as bacteria_prob,
+		SUM(CASE clade WHEN 'PROD' THEN num ELSE 0 END) as bacteria_prod,
+		SUM(CASE clade WHEN 'PROE' THEN num ELSE 0 END) as bacteria_proe,
+		SUM(CASE clade WHEN 'PROG' THEN num ELSE 0 END) as bacteria_prog,
+		SUM(CASE clade WHEN 'OBAC' THEN num ELSE 0 END) as bacteria_obac,
+		SUM(CASE clade WHEN 'ARCH' THEN num ELSE 0 END) as archaea_arch,
+		SUM(CASE clade WHEN 'EURY' THEN num ELSE 0 END) as archaea_eury,
+		SUM(CASE clade WHEN 'CREN' THEN num ELSE 0 END) as archaea_cren,
+		SUM(CASE clade WHEN 'NANO' THEN num ELSE 0 END) as archaea_nano,
+		SUM(CASE clade WHEN 'KORA' THEN num ELSE 0 END) as archaea_kora,
+		SUM(CASE clade WHEN 'ALVE' THEN num ELSE 0 END) as alveolata_alve,
+		SUM(CASE clade WHEN 'CILI' THEN num ELSE 0 END) as alveolata_cili,
+		SUM(CASE clade WHEN 'APIC' THEN num ELSE 0 END) as alveolata_apic,
+		SUM(CASE clade WHEN 'COCC' THEN num ELSE 0 END) as alveolata_cocc,
+		SUM(CASE clade WHEN 'HAEM' THEN num ELSE 0 END) as alveolata_haem,
+		SUM(CASE clade WHEN 'PIRO' THEN num ELSE 0 END) as alveolata_piro,
+		SUM(CASE clade WHEN 'STRE' THEN num ELSE 0 END) as viridiplantae_stre,
+		SUM(CASE clade WHEN 'CHLO' THEN num ELSE 0 END) as viridiplantae_chlo,
+		SUM(CASE clade WHEN 'RHOD' THEN num ELSE 0 END) as viridiplantae_rhod,
+		SUM(CASE clade WHEN 'CRYP' THEN num ELSE 0 END) as viridiplantae_cryp,
+		SUM(CASE clade WHEN 'FUNG' THEN num ELSE 0 END) as fungi_fung,
+		SUM(CASE clade WHEN 'MICR' THEN num ELSE 0 END) as fungi_micr,
+		SUM(CASE clade WHEN 'BASI' THEN num ELSE 0 END) as fungi_basi,
+		SUM(CASE clade WHEN 'ASCO' THEN num ELSE 0 END) as fungi_asco,
+		SUM(CASE clade WHEN 'MUCO' THEN num ELSE 0 END) as fungi_muco,
+		SUM(CASE clade WHEN 'CHYT' THEN num ELSE 0 END) as fungi_chyt,
+		SUM(CASE clade WHEN 'OMET' THEN num ELSE 0 END) as metazoa_omet,
+		SUM(CASE clade WHEN 'NEMA' THEN num ELSE 0 END) as metazoa_nema,
+		SUM(CASE clade WHEN 'ARTH' THEN num ELSE 0 END) as metazoa_arth,
+		SUM(CASE clade WHEN 'CHOR' THEN num ELSE 0 END) as metazoa_chor,
+		SUM(CASE clade WHEN 'ACTI' THEN num ELSE 0 END) as metazoa_acti,
+		SUM(CASE clade WHEN 'AVES' THEN num ELSE 0 END) as metazoa_aves,
+		SUM(CASE clade WHEN 'MAMM' THEN num ELSE 0 END) as metazoa_mamm,
+		SUM(CASE clade WHEN 'TUNI' THEN num ELSE 0 END) as metazoa_tuni
+         FROM (SELECT 'bacteria' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='BACT')
+               UNION
+               SELECT 'archaea' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='ARCH')
+               UNION
+               SELECT 'alveolata' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='ALVE')
+               UNION
+               SELECT 'amoeba' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='AMOE')
+               UNION
+               SELECT 'euglenozoa' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='EUGL')
+               UNION
+               SELECT 'viridiplantae' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='VIRI')
+               UNION
+               SELECT 'fungi' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='FUNG')
+               UNION
+               SELECT 'metazoa' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='META')
+               UNION
+               SELECT 'other_eukaryotes' AS clade, COUNT(*) AS num
+               FROM apidb.OrthomclTaxon
+               WHERE core_peripheral in ('C','P')
+               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                FROM apidb.OrthomclTaxon
+                                                WHERE three_letter_abbrev ='OEUK')
+	       UNION
+	       SELECT b.three_letter_abbrev AS clade,a.num
+	       FROM (SELECT parent_id, COUNT(orthomcl_taxon_id) AS num
+	             FROM apidb.OrthomclTaxon
+		     WHERE core_peripheral in ('C','P')
+		     GROUP BY parent_id) a,
+		     apidb.OrthomclTaxon b
+	       WHERE a.parent_id = b.orthomcl_taxon_id
+        )) total,
+        (SELECT name as group_name,
+                SUM(CASE three_letter_abbrev WHEN 'ALVE' THEN number_of_taxa ELSE 0 END) as alveolata,
+                SUM(CASE three_letter_abbrev WHEN 'ARCH' THEN number_of_taxa ELSE 0 END) as archaea,
+                SUM(CASE three_letter_abbrev WHEN 'AMOE' THEN number_of_taxa ELSE 0 END) as amoeba,
+                SUM(CASE three_letter_abbrev WHEN 'BACT' THEN number_of_taxa ELSE 0 END) as bacteria,
+                SUM(CASE three_letter_abbrev WHEN 'FUNG' THEN number_of_taxa ELSE 0 END) as fungi,
+                SUM(CASE three_letter_abbrev WHEN 'EUGL' THEN number_of_taxa ELSE 0 END) as euglenozoa,
+                SUM(CASE three_letter_abbrev WHEN 'META' THEN number_of_taxa ELSE 0 END) as metazoa,
+                SUM(CASE three_letter_abbrev WHEN 'VIRI' THEN number_of_taxa ELSE 0 END) as viridiplantae,
+                SUM(CASE three_letter_abbrev WHEN 'OEUK' THEN number_of_taxa ELSE 0 END) as other_eukaryotes,
+                SUM(CASE three_letter_abbrev WHEN 'FIRM' THEN number_of_taxa ELSE 0 END) as bacteria_firm,
+                SUM(CASE three_letter_abbrev WHEN 'PROA' THEN number_of_taxa ELSE 0 END) as bacteria_proa,
+                SUM(CASE three_letter_abbrev WHEN 'PROB' THEN number_of_taxa ELSE 0 END) as bacteria_prob,
+                SUM(CASE three_letter_abbrev WHEN 'PROD' THEN number_of_taxa ELSE 0 END) as bacteria_prod,
+                SUM(CASE three_letter_abbrev WHEN 'PROE' THEN number_of_taxa ELSE 0 END) as bacteria_proe,
+                SUM(CASE three_letter_abbrev WHEN 'PROG' THEN number_of_taxa ELSE 0 END) as bacteria_prog,
+                SUM(CASE three_letter_abbrev WHEN 'OBAC' THEN number_of_taxa ELSE 0 END) as bacteria_obac,
+                SUM(CASE three_letter_abbrev WHEN 'ARCH' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'EURY' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'CREN' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'NANO' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'KORA' THEN number_of_taxa ELSE 0 END) as archaea_arch,
+                SUM(CASE three_letter_abbrev WHEN 'EURY' THEN number_of_taxa ELSE 0 END) as archaea_eury,
+                SUM(CASE three_letter_abbrev WHEN 'CREN' THEN number_of_taxa ELSE 0 END) as archaea_cren,
+                SUM(CASE three_letter_abbrev WHEN 'NANO' THEN number_of_taxa ELSE 0 END) as archaea_nano,
+                SUM(CASE three_letter_abbrev WHEN 'KORA' THEN number_of_taxa ELSE 0 END) as archaea_kora,
+                SUM(CASE three_letter_abbrev WHEN 'ALVE' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'CILI' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'APIC' THEN number_of_taxa ELSE 0 END) as alveolata_alve,
+                SUM(CASE three_letter_abbrev WHEN 'CILI' THEN number_of_taxa ELSE 0 END) as alveolata_cili,
+                SUM(CASE three_letter_abbrev WHEN 'APIC' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'COCC' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'ACON' THEN number_of_taxa ELSE 0 END) as alveolata_apic,
+                SUM(CASE three_letter_abbrev WHEN 'COCC' THEN number_of_taxa ELSE 0 END) as alveolata_cocc,
+                SUM(CASE three_letter_abbrev WHEN 'HAEM' THEN number_of_taxa ELSE 0 END) as alveolata_haem,
+                SUM(CASE three_letter_abbrev WHEN 'PIRO' THEN number_of_taxa ELSE 0 END) as alveolata_piro,
+                SUM(CASE three_letter_abbrev WHEN 'STRE' THEN number_of_taxa ELSE 0 END) as viridiplantae_stre,
+                SUM(CASE three_letter_abbrev WHEN 'CHLO' THEN number_of_taxa ELSE 0 END) as viridiplantae_chlo,
+                SUM(CASE three_letter_abbrev WHEN 'RHOD' THEN number_of_taxa ELSE 0 END) as viridiplantae_rhod,
+                SUM(CASE three_letter_abbrev WHEN 'CRYP' THEN number_of_taxa ELSE 0 END) as viridiplantae_cryp,
+                SUM(CASE three_letter_abbrev WHEN 'FUNG' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'MICR' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'BASI' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'ASCO' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'MUCO' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'CHYT' THEN number_of_taxa ELSE 0 END) as fungi_fung,
+                SUM(CASE three_letter_abbrev WHEN 'MICR' THEN number_of_taxa ELSE 0 END) as fungi_micr,
+		SUM(CASE three_letter_abbrev WHEN 'BASI' THEN number_of_taxa ELSE 0 END) as fungi_basi,
+                SUM(CASE three_letter_abbrev WHEN 'ASCO' THEN number_of_taxa ELSE 0 END) as fungi_asco,
+                SUM(CASE three_letter_abbrev WHEN 'MUCO' THEN number_of_taxa ELSE 0 END) as fungi_muco,
+                SUM(CASE three_letter_abbrev WHEN 'CHYT' THEN number_of_taxa ELSE 0 END) as fungi_chyt,
+                SUM(CASE three_letter_abbrev WHEN 'OMET' THEN number_of_taxa ELSE 0 END) as metazoa_omet,
+                SUM(CASE three_letter_abbrev WHEN 'NEMA' THEN number_of_taxa ELSE 0 END) as metazoa_nema,
+                SUM(CASE three_letter_abbrev WHEN 'ARTH' THEN number_of_taxa ELSE 0 END) as metazoa_arth,
+                SUM(CASE three_letter_abbrev WHEN 'CHOR' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'ACTI' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'AVES' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'MAMM' THEN number_of_taxa ELSE 0 END) -
+		SUM(CASE three_letter_abbrev WHEN 'TUNI' THEN number_of_taxa ELSE 0 END) as metazoa_chor,
+                SUM(CASE three_letter_abbrev WHEN 'ACTI' THEN number_of_taxa ELSE 0 END) as metazoa_acti,
+                SUM(CASE three_letter_abbrev WHEN 'AVES' THEN number_of_taxa ELSE 0 END) as metazoa_aves,
+                SUM(CASE three_letter_abbrev WHEN 'MAMM' THEN number_of_taxa ELSE 0 END) as metazoa_mamm,
+                SUM(CASE three_letter_abbrev WHEN 'TUNI' THEN number_of_taxa ELSE 0 END) as metazoa_tuni
+         FROM (SELECT og.group_id AS name,agt.three_letter_abbrev,agt.number_of_taxa
+               FROM ApiDB.OrthologGroupTaxon agt, apidb.orthologgroup og
+               WHERE agt.group_id = og.group_id
+	             AND agt.three_letter_abbrev = UPPER(agt.three_letter_abbrev))
+         GROUP BY name) actual,
+	(SELECT name, listagg(prehtml, '<br>') within GROUP (ORDER by prehtml) AS html
+	 FROM (SELECT total.name, total.genera || ': <span style="float:right;">' || NVL(act.count,0) || ' / ' || total.count || '</span>' as prehtml
+	       FROM (SELECT og.group_id AS name, a.genera, count(a.three_letter_abbrev) AS count
+	             FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+		           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='AMOE')) a,
+                          ApiDb.OrthologGroupTaxon ogt,
+			  ApiDb.orthologgroup og
+		     WHERE a.three_letter_abbrev = ogt.three_letter_abbrev AND ogt.group_id = og.group_id
+		     GROUP by og.group_id,a.genera) act,
+		    (SELECT og.group_id AS name, genera, count(three_letter_abbrev) as count
+		     FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+                           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='AMOE')),
+                           apidb.orthologgroup og
+		     GROUP BY og.group_id,genera) total
+	       WHERE total.name = act.name (+)
+	             AND total.genera = act.genera (+))
+         GROUP BY name) amoe_genera,
+	(SELECT name, listagg(prehtml, '<br>') within GROUP (ORDER by prehtml) AS html
+	 FROM (SELECT total.name, total.genera || ': <span style="float:right;">' || NVL(act.count,0) || ' / ' || total.count || '</span>' as prehtml
+	       FROM (SELECT og.group_id AS name, a.genera, count(a.three_letter_abbrev) AS count
+	             FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+		           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='EUGL')) a,
+                          ApiDb.OrthologGroupTaxon ogt,
+			  ApiDb.orthologgroup og
+		     WHERE a.three_letter_abbrev = ogt.three_letter_abbrev AND ogt.group_id = og.group_id
+		     GROUP by og.group_id,a.genera) act,
+		    (SELECT og.group_id AS name, genera, count(three_letter_abbrev) as count
+		     FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+                           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='EUGL')),
+                           apidb.orthologgroup og
+		     GROUP BY og.group_id,genera) total
+	       WHERE total.name = act.name (+)
+	             AND total.genera = act.genera (+))
+         GROUP BY name) eugl_genera,
+	(SELECT name, listagg(prehtml, '<br>') within GROUP (ORDER by prehtml) AS html
+	 FROM (SELECT total.name, total.genera || ': <span style="float:right;">' || NVL(act.count,0) || ' / ' || total.count || '</span>' as prehtml
+	       FROM (SELECT og.group_id AS name, a.genera, count(a.three_letter_abbrev) AS count
+	             FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+		           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='OEUK')) a,
+                          ApiDb.OrthologGroupTaxon ogt,
+			  ApiDb.orthologgroup og
+		     WHERE a.three_letter_abbrev = ogt.three_letter_abbrev AND ogt.group_id = og.group_id
+		     GROUP by og.group_id,a.genera) act,
+		    (SELECT og.group_id AS name, genera, count(three_letter_abbrev) as count
+		     FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
+                           FROM apidb.OrthomclTaxon
+			   WHERE core_peripheral in ('C','P')
+			   CONNECT BY PRIOR orthomcl_taxon_id = parent_id
+			   START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
+                                                            FROM apidb.OrthomclTaxon
+							    WHERE three_letter_abbrev ='OEUK')),
+                           apidb.orthologgroup og
+		     GROUP BY og.group_id,genera) total
+	       WHERE total.name = act.name (+)
+	             AND total.genera = act.genera (+))
+         GROUP BY name) oeuk_genera
+    WHERE oeuk_genera.name = eugl_genera.name AND
+          eugl_genera.name = amoe_genera.name AND
+	  amoe_genera.name = actual.group_name)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+CREATE INDEX PhyleticPattern_idx&1 ON PhyleticPattern&1 (group_name)
+tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="GroupDomainAttribute">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <internalDependency name="DomainAssignment"/>
+    <sql>
+      <![CDATA[
+CREATE TABLE GroupDomainAttribute&1 NOLOGGING AS
+(
+SELECT og.group_id AS group_name, ag.descriptions
+FROM apidb.OrthologGroup og,
+     (SELECT group_name,
+             LISTAGG(accession ||' (' || num_proteins|| ')', ', ') WITHIN GROUP (ORDER BY rnk) AS descriptions
+      FROM (SELECT group_name, accession, num_proteins, rnk
+            FROM (SELECT group_name, accession, num_proteins,
+	                 rank() OVER (PARTITION BY group_name ORDER BY num_proteins DESC) rnk
+		  FROM (SELECT group_name, accession, count(distinct full_id) AS num_proteins
+		        FROM DomainAssignment
+			GROUP BY group_name,accession
+		        )
+		  )
+	    WHERE rnk <= 3
+	    )
+      GROUP BY group_name
+      ORDER BY 1
+      ) ag
+WHERE  og.group_id = ag.group_name(+)
+)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
+tablespace indx
+      ]]>
+    </sql>
+  </tuningTable>
+
+
+
+  <tuningTable name="SequenceEnzymeClass">
+    <externalDependency name="apidb.AASEQUENCEUNIPROT"/>
+    <externalDependency name="apidb.UNIPROTENZYMECLASS"/>
+    <externalDependency name="sres.enzymeclass"/>
+    <internalDependency name="SequenceAttributes"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE SequenceEnzymeClass&1 NOLOGGING AS
+        (
+        SELECT sa.full_id
+             , sa.group_name
+             , uec.UNIPROT_ACCESSION 
+             , ec.EC_NUMBER 
+             , ec.DESCRIPTION 
+             , ec.parent_id as ec_parent
+             , ec.ec_number_1
+             , ec.ec_number_2
+             , ec.ec_number_3
+             , ec.ec_number_4
+        FROM sequenceattributes sa
+           , apidb.AASEQUENCEUNIPROT au
+           , apidb.UNIPROTENZYMECLASS uec 
+           , sres.ENZYMECLASS ec
+        WHERE au.UNIPROT_ACCESSION = uec.UNIPROT_ACCESSION 
+        AND sa.aa_sequence_id = au.AA_SEQUENCE_ID 
+        AND uec.enzyme_class_id = ec.enzyme_class_id
+        )
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX SequenceEnzymeClass_idx1&1 ON SequenceEnzymeClass&1 (group_name, ec_number, description)
+        tablespace indx
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        CREATE INDEX SequenceEnzymeClass_idx2&1 ON SequenceEnzymeClass&1 (full_id, ec_number, description)
+        tablespace indx
+      ]]>
+    </sql>
+
+  </tuningTable>
+
+
+
+</tuningConfig>
