@@ -744,4 +744,118 @@
   </tuningTable>
 
 
+
+
+<!-- COPIED from studyTuningManager.xml -->
+
+   <!-- renamed from ProtocolAppNodeIO -->
+  <tuningTable name="PANIO" prefixEnabled="true">
+   <comment>ALL inputs and outputs</comment>
+    <internalDependency name="PANExtDbRls"/>
+    <externalDependency name="study.ProtocolApp"/>
+    <externalDependency name="study.Input"/>
+    <externalDependency name="study.Output"/>
+    <externalDependency name="sres.OntologyTerm"/>
+    <externalDependency name="study.ProtocolAppNode"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE &prefixPANIO&1 AS
+        SELECT DISTINCT io.*
+        FROM (
+          SELECT i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
+                 o.protocol_app_node_id output_pan_id,
+                 in_type.source_id as input_pan_type_source_id,
+                 --in_type.name as input_pan_type,
+                 in_type.ontology_term_id as input_pan_type_id,
+                 out_type.source_id as output_pan_type_source_id,
+                 --out_type.name as output_pan_type,
+                 out_type.ontology_term_id as output_pan_type_id
+          FROM study.ProtocolApp pa, study.Input i, study.Output o,
+               study.ProtocolAppNode in_pan LEFT JOIN sres.OntologyTerm in_type ON in_pan.type_id = in_type.ontology_term_id,
+               study.ProtocolAppNode out_pan LEFT JOIN sres.OntologyTerm out_type ON out_pan.type_id = out_type.ontology_term_id
+          WHERE i.protocol_app_id = pa.protocol_app_id
+            AND o.protocol_app_id = pa.protocol_app_id
+            AND i.protocol_app_node_id = in_pan.protocol_app_node_id
+            AND o.protocol_app_node_id = out_pan.protocol_app_node_id
+        ) io, &prefixpanextdbrls panExtDbRls
+        WHERE io.input_pan_id = panExtDbRls.pan_id -- the input and outputs will have same dataset in prefix enabled mode only
+          AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
+        ORDER BY io.input_pan_id, io.output_pan_id
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpainio2_iix&1 on &prefixPANIO&1
+               (input_pan_id, output_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpainio2_oix&1 on &prefixPANIO&1
+               (output_pan_id, input_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpainio2_otypeix&1 on &prefixPANIO&1
+               (output_pan_type_source_id, input_pan_type_source_id, output_pan_id, input_pan_id, protocol_app_id)
+
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create index &prefixpainio2_itypeix&1 on &prefixPANIO&1
+               (input_pan_type_source_id, output_pan_type_source_id, input_pan_id, output_pan_id, protocol_app_id)
+
+      ]]>
+    </sql>
+  </tuningTable>
+
+   <!-- renamed from PANExternalDatabaseRelease -->
+  <tuningTable name="PANExtDbRls" prefixEnabled="true">
+   <comment>ALL inputs and outputs</comment>
+    <externalDependency name="study.NodeSet"/>
+    <externalDependency name="study.NodeNodeSet"/>
+    <externalDependency name="study.ProtocolAppNode"/>
+    <externalDependency name="sres.ExternalDatabase"/>
+    <externalDependency name="sres.ExternalDatabaseRelease"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE &prefixPANExtDbRls&1 AS
+        SELECT distinct protocol_app_node_id as pan_id, external_database_release_id, name as dataset_name
+        FROM (
+          SELECT
+            sl.protocol_app_node_id
+          , s.external_database_release_id
+          , d.name
+          FROM
+            study.nodeSet s
+          , study.nodeNodeSet sl
+          , sres.externaldatabaserelease r
+          , sres.externaldatabase d
+          WHERE
+            s.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and s.node_set_id = sl.node_set_id
+            and s.external_database_release_id is not null
+          UNION
+          SELECT pan.protocol_app_node_id
+          , pan.external_database_release_id
+          , d.name
+          FROM study.protocolappnode pan
+          , sres.externaldatabaserelease r
+          , sres.externaldatabase d
+          WHERE
+            pan.external_database_release_id = r.external_database_release_id
+            and r.external_database_id = d.external_database_id
+            and pan.external_database_release_id is not null
+        ) t
+        WHERE (name = '&filterValue' or length('&filterValue') = 0)
+        ORDER BY external_database_release_id, protocol_app_node_id
+      ]]>
+    </sql>
+  </tuningTable>
+
 </tuningConfig>
