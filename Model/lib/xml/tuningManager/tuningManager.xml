@@ -690,6 +690,7 @@
     </sql>
   </tuningTable>
 
+<!-- COMMENT FOR NOW, as no InferredParam table; FIX later 
   <tuningTable name="TaxonRelativeAbundance">
     <comment>for the sample record taxon relative abundance table
      </comment>
@@ -735,7 +736,7 @@
       ]]>
     </sql>
   </tuningTable>
-
+-->
 
   <tuningTable name="EdaGeneGraph" alwaysUpdate="true">
     <comment>EDA Graph Config for Gene pages
