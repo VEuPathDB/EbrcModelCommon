@@ -179,6 +179,60 @@
 
 
 
+
+
+  <datasetClass class="genomicsProject" category="" datasetFileHint="">
+    <purpose>add one or more projects to a workflow</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="areBigGenomes"></prop>
+
+    <graphTemplateFile name="genomicsRoot.xml"/>
+    <datasetLoader datasetName="${projectName}_INTERNAL_RSRC"
+              version="CURRENT"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="genome"
+              scope="project">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+  <datasetClass class="orthomclAndProjectDependent" category="" datasetFileHint="">
+    <purpose>add steps downstream of project (requires all projects)  to a workflow</purpose>
+
+    <graphTemplateFile name="genomicsRoot.xml"/>
+    <datasetLoader datasetName="orthomclAndProjectDependent_INTERNAL_RSRC"
+              version="CURRENT"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="genome"
+              scope="project">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- chromosomeMap.txt file with 3 tab delimited columns, source_id,chromosome,chromosome_order_number, must be in final dir for chromosomes -->
   <datasetClass class="genbank_primary_genome" category="" datasetFileHint="">
     <purpose>Load the primary genome sequence and annotation for an organism, when the data is provided in a GenBank format file.  </purpose>
