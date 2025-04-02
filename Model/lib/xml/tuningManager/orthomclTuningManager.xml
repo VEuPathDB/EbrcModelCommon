@@ -210,7 +210,7 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
         select sa.full_id, sa.group_name,
                r.interpro_primary_id as accession,
                r.interpro_desc as description,
-               cast (null as NUMBER) as domain_index,
+               CAST (NULL as NUMERIC) as domain_index,
                sa.aa_sequence_id,
                r.interpro_start_min as start_min,
                r.interpro_end_min as end_max
@@ -686,7 +686,7 @@ CREATE TABLE GroupDomainAttribute&1 AS
 SELECT og.group_id AS group_name, ag.descriptions
 FROM apidb.OrthologGroup og,
      (SELECT group_name,
-             LISTAGG(accession ||' (' || num_proteins|| ')', ', ') WITHIN GROUP (ORDER BY rnk) AS descriptions
+             STRING_AGG(accession ||' (' || num_proteins|| ')', ', ')  AS descriptions
       FROM (SELECT group_name, accession, num_proteins, rnk
             FROM (SELECT group_name, accession, num_proteins,
 	                 rank() OVER (PARTITION BY group_name ORDER BY num_proteins DESC) rnk
