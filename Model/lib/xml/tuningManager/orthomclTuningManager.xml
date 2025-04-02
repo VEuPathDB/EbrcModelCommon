@@ -201,7 +201,6 @@ CREATE TABLE TypeAheadCounts&1 AS
     <sql>
       <![CDATA[
 CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
-tablespace indx
       ]]>
     </sql>
   </tuningTable>
@@ -678,7 +677,6 @@ CREATE TABLE PhyleticPattern&1 AS
     <sql>
       <![CDATA[
 CREATE INDEX PhyleticPattern_idx&1 ON PhyleticPattern&1 (group_name)
-tablespace indx
       ]]>
     </sql>
   </tuningTable>
@@ -714,7 +712,6 @@ WHERE  og.group_id = ag.group_name(+)
     <sql>
       <![CDATA[
 CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
-tablespace indx
       ]]>
     </sql>
   </tuningTable>
@@ -753,13 +750,11 @@ tablespace indx
     <sql>
       <![CDATA[
         CREATE INDEX SequenceEnzymeClass_idx1&1 ON SequenceEnzymeClass&1 (group_name, ec_number, description)
-        tablespace indx
       ]]>
     </sql>
     <sql>
       <![CDATA[
         CREATE INDEX SequenceEnzymeClass_idx2&1 ON SequenceEnzymeClass&1 (full_id, ec_number, description)
-        tablespace indx
       ]]>
     </sql>
 
