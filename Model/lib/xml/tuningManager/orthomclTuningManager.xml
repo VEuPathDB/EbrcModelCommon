@@ -230,7 +230,7 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
     <sql>
       <![CDATA[
         create table domainIndex as
-        select rownum as domain_index, accession
+        select row_number() OVER () as domain_index, accession
         from (select distinct accession
               from DomainAssignment&1
               order by accession)
