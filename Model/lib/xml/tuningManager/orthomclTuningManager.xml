@@ -14,7 +14,7 @@
     <sql>
       <!-- TODO:  urls and lenght are broken -->
       <![CDATA[
-        create table SequenceAttributes&1 nologging as
+        create table SequenceAttributes&1 as
         SELECT
             eas.secondary_identifier AS full_id,
             eas.source_id,
@@ -165,7 +165,7 @@
     <externalDependency name="core.TableInfo"/>
     <sql>
       <![CDATA[
-CREATE TABLE TypeAheadCounts&1 NOLOGGING AS
+CREATE TABLE TypeAheadCounts&1 AS
    (SELECT DISTINCT dr.primary_identifier as option_id,
                    count(distinct aaf.aa_sequence_id) AS protein_count
    FROM dots.DbRefAaFeature draf, sres.DbRef dr, dots.aafeature aaf,
@@ -212,7 +212,7 @@ tablespace indx
     <intermediateTable name="DomainIndex"/>
     <sql>
       <![CDATA[
-        create table DomainAssignment&1 nologging as
+        create table DomainAssignment&1 as
         select sa.full_id, sa.group_name,
                r.interpro_primary_id as accession,
                r.interpro_desc as description,
@@ -235,7 +235,7 @@ tablespace indx
 
     <sql>
       <![CDATA[
-        create table domainIndex nologging as
+        create table domainIndex as
         select rownum as domain_index, accession
         from (select distinct accession
               from DomainAssignment&1
@@ -291,7 +291,7 @@ tablespace indx
 
     <sql>
       <![CDATA[
-CREATE TABLE PhyleticPattern&1 NOLOGGING AS
+CREATE TABLE PhyleticPattern&1 AS
     (SELECT actual.group_name,
             actual.alveolata as alveolata_actual,
 	    total.alveolata as alveolata_total,
@@ -688,7 +688,7 @@ tablespace indx
     <internalDependency name="DomainAssignment"/>
     <sql>
       <![CDATA[
-CREATE TABLE GroupDomainAttribute&1 NOLOGGING AS
+CREATE TABLE GroupDomainAttribute&1 AS
 (
 SELECT og.group_id AS group_name, ag.descriptions
 FROM apidb.OrthologGroup og,
@@ -728,7 +728,7 @@ tablespace indx
     <internalDependency name="SequenceAttributes"/>
     <sql>
       <![CDATA[
-        CREATE TABLE SequenceEnzymeClass&1 NOLOGGING AS
+        CREATE TABLE SequenceEnzymeClass&1 AS
         (
         SELECT sa.full_id
              , sa.group_name
