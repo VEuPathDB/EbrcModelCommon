@@ -700,7 +700,7 @@ FROM apidb.OrthologGroup og,
       GROUP BY group_name
       ORDER BY 1
       ) ag
-WHERE  og.group_id = ag.group_name(+)
+WHERE  og.group_id = ag.group_name
 )
       ]]>
     </sql>
