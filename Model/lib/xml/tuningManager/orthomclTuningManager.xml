@@ -712,10 +712,10 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
   </tuningTable>
 
 
-<!-- COMMENT FOR NOW 
+
   <tuningTable name="SequenceEnzymeClass">
-    <externalDependency name="apidb.AASEQUENCEUNIPROT"/>
-    <externalDependency name="apidb.UNIPROTENZYMECLASS"/>
+    <externalDependency name="dots.AASequence"/>
+    <externalDependency name="dots.AASequenceEnzymeClass"/>
     <externalDependency name="sres.enzymeclass"/>
     <internalDependency name="SequenceAttributes"/>
     <sql>
@@ -724,21 +724,21 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
         (
         SELECT sa.full_id
              , sa.group_name
-             , uec.UNIPROT_ACCESSION 
-             , ec.EC_NUMBER 
-             , ec.DESCRIPTION 
+             -- , sec.uniprot_accession
+             , ec.ec_number
+             , ec.description
              , ec.parent_id as ec_parent
              , ec.ec_number_1
              , ec.ec_number_2
              , ec.ec_number_3
              , ec.ec_number_4
         FROM sequenceattributes sa
-           , apidb.AASEQUENCEUNIPROT au
-           , apidb.UNIPROTENZYMECLASS uec 
+           , dots.AASequence aa
+           , dots.AASequenceEnzymeClass sec
            , sres.ENZYMECLASS ec
-        WHERE au.UNIPROT_ACCESSION = uec.UNIPROT_ACCESSION 
-        AND sa.aa_sequence_id = au.AA_SEQUENCE_ID 
-        AND uec.enzyme_class_id = ec.enzyme_class_id
+        WHERE sa.aa_sequence_id = aa.aa_sequence_id
+        AND sec.enzyme_class_id = ec.enzyme_class_id
+        --AND aa.uniprot_accession = sec.uniprot_accession
         )
       ]]>
     </sql>
@@ -754,7 +754,6 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
     </sql>
 
   </tuningTable>
--->
 
 
 </tuningConfig>
