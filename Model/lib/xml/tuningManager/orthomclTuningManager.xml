@@ -338,9 +338,9 @@ CREATE TABLE PhyleticPattern&1 AS
 	    total.archaea_nano as archaea_nano_total,
             actual.archaea_kora as archaea_kora_actual,
 	    total.archaea_kora as archaea_kora_total,
-            oeuk_genera.html as oeuk_genera_html,
-            eugl_genera.html as eugl_genera_html,
-            amoe_genera.html as amoe_genera_html,
+            --oeuk_genera.html as oeuk_genera_html,
+            --eugl_genera.html as eugl_genera_html,
+            --amoe_genera.html as amoe_genera_html,
             actual.alveolata_alve as alveolata_alve_actual,
 	    total.alveolata_alve as alveolata_alve_total,
             actual.alveolata_cili as alveolata_cili_actual,
@@ -435,85 +435,176 @@ CREATE TABLE PhyleticPattern&1 AS
 		SUM(CASE clade WHEN 'AVES' THEN num ELSE 0 END) as metazoa_aves,
 		SUM(CASE clade WHEN 'MAMM' THEN num ELSE 0 END) as metazoa_mamm,
 		SUM(CASE clade WHEN 'TUNI' THEN num ELSE 0 END) as metazoa_tuni
-         FROM (SELECT 'bacteria' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='BACT')
-               UNION
+         FROM ( 
+               (WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'BACT'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
+               SELECT 'bacteria' AS clade, COUNT(*) AS num
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'ARCH'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'archaea' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='ARCH')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'ALVE'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'alveolata' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='ALVE')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'AMOE'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'amoeba' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='AMOE')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'EUGL'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'euglenozoa' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='EUGL')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'VIRI'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'viridiplantae' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='VIRI')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'FUNG'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'fungi' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='FUNG')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'META'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'metazoa' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='META')
-               UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+               ) UNION (
+               WITH RECURSIVE TaxonHierarchy AS (
+                   SELECT orthomcl_clade_id, parent_id
+                   FROM apidb.OrthomclClade
+                   WHERE orthomcl_clade_id IN (
+                       SELECT orthomcl_clade_id 
+                       FROM apidb.OrthomclClade
+                       WHERE three_letter_abbrev = 'OEUK'
+                   ) UNION ALL
+                   SELECT  child.orthomcl_clade_id,child.parent_id
+                   FROM apidb.OrthomclClade child
+                   JOIN TaxonHierarchy parent ON child.parent_id = parent.orthomcl_clade_id
+               ) 
                SELECT 'other_eukaryotes' AS clade, COUNT(*) AS num
-               FROM apidb.OrthomclTaxon
-               WHERE core_peripheral in ('C','P')
-               CONNECT BY PRIOR orthomcl_taxon_id = parent_id
-               START WITH orthomcl_taxon_id IN (SELECT orthomcl_taxon_id
-                                                FROM apidb.OrthomclTaxon
-                                                WHERE three_letter_abbrev ='OEUK')
-	       UNION
+               FROM TaxonHierarchy th
+               JOIN apidb.OrthomclClade c ON th.orthomcl_clade_id = c.orthomcl_clade_id
+               WHERE c.core_peripheral IN ('C', 'P')
+
+	       ) UNION (
 	       SELECT b.three_letter_abbrev AS clade,a.num
-	       FROM (SELECT parent_id, COUNT(orthomcl_taxon_id) AS num
-	             FROM apidb.OrthomclTaxon
-		     WHERE core_peripheral in ('C','P')
-		     GROUP BY parent_id) a,
-		     apidb.OrthomclTaxon b
-	       WHERE a.parent_id = b.orthomcl_taxon_id
+              FROM (SELECT parent_id, COUNT(orthomcl_clade_id) AS num
+                     FROM apidb.OrthomclClade
+                     WHERE core_peripheral in ('C','P')
+                     GROUP BY parent_id) a,
+                     apidb.OrthomclClade b
+               WHERE a.parent_id = b.orthomcl_clade_id
+               )
         )) total,
         (SELECT name as group_name,
                 SUM(CASE three_letter_abbrev WHEN 'ALVE' THEN number_of_taxa ELSE 0 END) as alveolata,
@@ -578,12 +669,16 @@ CREATE TABLE PhyleticPattern&1 AS
                 SUM(CASE three_letter_abbrev WHEN 'AVES' THEN number_of_taxa ELSE 0 END) as metazoa_aves,
                 SUM(CASE three_letter_abbrev WHEN 'MAMM' THEN number_of_taxa ELSE 0 END) as metazoa_mamm,
                 SUM(CASE three_letter_abbrev WHEN 'TUNI' THEN number_of_taxa ELSE 0 END) as metazoa_tuni
-         FROM (SELECT og.group_id AS name,agt.three_letter_abbrev,agt.number_of_taxa
+         FROM (SELECT og.group_id AS name,agt.three_letter_abbrev,agt.number_of_taxa::numeric
                FROM ApiDB.OrthologGroupTaxon agt, apidb.orthologgroup og
                WHERE agt.group_id = og.group_id
 	             AND agt.three_letter_abbrev = UPPER(agt.three_letter_abbrev))
-         GROUP BY name) actual,
-	(SELECT name, listagg(prehtml, '<br>') within GROUP (ORDER by prehtml) AS html
+         GROUP BY name) actual
+)
+      ]]>
+    </sql>
+
+<!--	(SELECT name, listagg(prehtml, '<br>') within GROUP (ORDER by prehtml) AS html
 	 FROM (SELECT total.name, total.genera || ': <span style="float:right;">' || NVL(act.count,0) || ' / ' || total.count || '</span>' as prehtml
 	       FROM (SELECT og.group_id AS name, a.genera, count(a.three_letter_abbrev) AS count
 	             FROM (SELECT NVL(SUBSTR(name, 0, INSTR(name, ' ')-1), name) AS genera, three_letter_abbrev
@@ -666,14 +761,13 @@ CREATE TABLE PhyleticPattern&1 AS
          GROUP BY name) oeuk_genera
     WHERE oeuk_genera.name = eugl_genera.name AND
           eugl_genera.name = amoe_genera.name AND
-	  amoe_genera.name = actual.group_name)
-      ]]>
-    </sql>
-    <sql>
+	  amoe_genera.name = actual.group_name
+)-->
+    <!-- sql>
       <![CDATA[
 CREATE INDEX PhyleticPattern_idx&1 ON PhyleticPattern&1 (group_name)
       ]]>
-    </sql>
+    </sql -->
   </tuningTable>
 
   <tuningTable name="GroupDomainAttribute">
