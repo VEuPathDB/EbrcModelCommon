@@ -859,4 +859,127 @@
     </sql>
   </tuningTable>
 
+  <tuningTable name="PANResults" prefixEnabled="true">
+    <comment>Table of protocol app node ids and the name of the result table where they are referenced
+    </comment>
+    <internalDependency name="PANExtDbRls"/>
+    <externalDependency name="apidb.ChrCopyNumber"/>
+    <externalDependency name="apidb.CrisprPhenotype"/>
+    <externalDependency name="apidb.GeneCopyNumber"/>
+    <externalDependency name="apidb.IntronJunction"/>
+    <externalDependency name="apidb.MassSpecSummary"/>
+    <externalDependency name="apidb.RflpGenotype"/>
+    <externalDependency name="apidb.RflpGenotypeNumber"/>
+    <externalDependency name="results.CompoundMassSpec"/>
+    <externalDependency name="results.EditingEvent"/>
+    <externalDependency name="results.FamilyDiffResult"/>
+    <externalDependency name="results.FamilyExpression"/>
+    <externalDependency name="results.GeneDiffResult"/>
+    <externalDependency name="results.GeneExpression"/>
+    <externalDependency name="results.GeneSimilarity"/>
+    <externalDependency name="results.LineageAbundance"/>
+    <externalDependency name="results.NaFeatureDiffResult"/>
+    <externalDependency name="results.NaFeatureExpression"/>
+    <externalDependency name="results.NaFeatureHostResponse"/>
+    <externalDependency name="results.ReporterDiffResult"/>
+    <externalDependency name="results.ReporterExpression"/>
+    <externalDependency name="results.ReporterIntensity"/>
+    <externalDependency name="results.RnaDiffResult"/>
+    <externalDependency name="results.RnaExpression"/>
+    <externalDependency name="results.SegmentDiffResult"/>
+    <externalDependency name="results.SegmentResult"/>
+    <externalDependency name="results.SeqVariation"/>
+    <externalDependency name="study.ProtocolAppNode"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE &prefixPANResults&1 AS
+        SELECT DISTINCT r.*
+        FROM (
+          SELECT protocol_app_node_id as pan_id, 'Results::NAFeatureDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NAFeatureDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterIntensity' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterIntensity)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SegmentResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SegmentResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::CompoundMassSpec' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.CompoundMassSpec)
+        UNION
+          SELECT protocol_app_node_id, 'Results::NaFeatureHostResponse' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NaFeatureHostResponse)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::ChrCopyNumber' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM ApiDB.ChrCopyNumber)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::GeneCopyNumber' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM ApiDB.GeneCopyNumber)
+        UNION
+          SELECT protocol_app_node_id, 'Results::NAFeatureExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.NAFeatureExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::EditingEvent' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.EditingEvent)
+        UNION
+          SELECT protocol_app_node_id, 'Results::FamilyDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.FamilyDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::FamilyExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.FamilyExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::GeneSimilarity' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.GeneSimilarity)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::ReporterExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.ReporterExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::RnaDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.RnaDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::RnaExpression' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.RnaExpression)
+        UNION
+          SELECT protocol_app_node_id, 'Results::LineageAbundance' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.LineageAbundance)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SegmentDiffResult' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SegmentDiffResult)
+        UNION
+          SELECT protocol_app_node_id, 'Results::SeqVariation' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM Results.SeqVariation)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::SequenceVariation' as result_table FROM study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM study.ProtocolAppNode WHERE name like '% (Sequence Variation)')
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::MassSpecSummary' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.MASSSPECSUMMARY)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::IntronJunction' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.IntronJunction)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::RflpGenotype' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.RflpGenotype)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::RflpGenotypeNumber' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.RflpGenotypeNumber)
+        UNION
+          SELECT protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
+          WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.crisprphenotype)
+        ) r, &prefixpanextdbrls panExtDbRls
+        WHERE r.pan_id = panExtDbRls.pan_id
+          AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
+      ]]>
+    </sql>
+  </tuningTable>
+
 </tuningConfig>
