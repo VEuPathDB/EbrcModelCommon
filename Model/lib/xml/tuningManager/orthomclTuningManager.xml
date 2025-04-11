@@ -814,8 +814,7 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
     <internalDependency name="SequenceAttributes"/>
     <sql>
       <![CDATA[
-        CREATE TABLE SequenceEnzymeClass&1 AS
-        (
+      CREATE TABLE SequenceEnzymeClass&1 AS (
         SELECT sa.full_id
              , sa.group_name
              -- , sec.uniprot_accession
@@ -831,9 +830,9 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
            , dots.AASequenceEnzymeClass sec
            , sres.ENZYMECLASS ec
         WHERE sa.aa_sequence_id = aa.aa_sequence_id
+        AND sec.aa_sequence_id  = aa.aa_sequence_id
         AND sec.enzyme_class_id = ec.enzyme_class_id
-        --AND aa.uniprot_accession = sec.uniprot_accession
-        )
+      )
       ]]>
     </sql>
     <sql>
