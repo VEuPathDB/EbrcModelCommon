@@ -16,7 +16,7 @@
       <![CDATA[
         create table SequenceAttributes&1 as
         SELECT
-            aas.secondary_identifier AS full_id,
+            aas.source_id AS full_id,
             aas.source_id,
             aas.aa_sequence_id,
             length(aas.sequence) as length,
