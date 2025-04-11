@@ -2159,9 +2159,9 @@ Based on evolutionarily informed expectations of gene content of near-universal 
        --       lower(substr(ENCODE(DIGEST(replace(name, '_ebi_', '_'), 'SHA1'),'hex'), 0, 10))
        --       as old_dataset_id
        --   FROM apidbtuning.datasetpresenter where name like '%_ebi_%'
-          UNION
-          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+      --    UNION
+      --    SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
+      --    FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
 
