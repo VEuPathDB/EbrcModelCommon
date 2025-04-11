@@ -809,7 +809,6 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
 
   <tuningTable name="SequenceEnzymeClass">
     <externalDependency name="dots.AASequence"/>
-    <externalDependency name="dots.AASequenceEnzymeClass"/>
     <externalDependency name="sres.enzymeclass"/>
     <internalDependency name="SequenceAttributes"/>
     <sql>
@@ -818,7 +817,6 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
         (
         SELECT sa.full_id
              , sa.group_name
-             -- , sec.uniprot_accession
              , ec.ec_number
              , ec.description
              , ec.parent_id as ec_parent
@@ -828,11 +826,9 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
              , ec.ec_number_4
         FROM sequenceattributes sa
            , dots.AASequence aa
-           , dots.AASequenceEnzymeClass sec
            , sres.ENZYMECLASS ec
         WHERE sa.aa_sequence_id = aa.aa_sequence_id
         AND sec.enzyme_class_id = ec.enzyme_class_id
-        --AND aa.uniprot_accession = sec.uniprot_accession
         )
       ]]>
     </sql>
