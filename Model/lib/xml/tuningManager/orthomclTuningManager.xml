@@ -94,10 +94,13 @@
             FROM dots.AaSequence aas,
                  apidb.organism ot,
                  apidb.orthomclresource ores
-            WHERE ot.taxon_id = ores.orthomcl_taxon_id) urls
+            WHERE ot.taxon_id = ores.orthomcl_taxon_id
+            AND ot.taxon_id = aas.taxon_id) urls
            WHERE aas.aa_sequence_id = ogseq.aa_sequence_id
            AND ogseq.group_id = o.group_id
            AND aas.aa_sequence_id = urls.aa_sequence_id
+           AND taxon.orthomcl_taxon_id = aas.taxon_id
+           AND aas.taxon_id in (select distinct(eas.taxon_id) from apidb.organism og, dots.aasequence eas where eas.taxon_id = og.taxon_id)
       ]]>
     </sql>
 
