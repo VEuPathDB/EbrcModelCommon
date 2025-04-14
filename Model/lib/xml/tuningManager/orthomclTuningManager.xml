@@ -94,11 +94,8 @@
             FROM dots.AaSequence aas,
                  apidb.organism ot,
                  apidb.orthomclresource ores
-            WHERE COALESCE (SUBSTR(aas.source_id, 0, strpos(aas.source_id, '|')), aas.source_id)
-                             = ot.orthomcl_abbrev
-                    AND ot.taxon_id = ores.orthomcl_taxon_id) urls
-        WHERE SUBSTR(aas.source_id, 0, strpos(aas.source_id, '|')) = taxon.orthomcl_abbrev
-           AND aas.aa_sequence_id = ogseq.aa_sequence_id
+            WHERE ot.taxon_id = ores.orthomcl_taxon_id) urls
+           aas.aa_sequence_id = ogseq.aa_sequence_id
            AND ogseq.group_id = o.group_id
            AND aas.aa_sequence_id = urls.aa_sequence_id
       ]]>
