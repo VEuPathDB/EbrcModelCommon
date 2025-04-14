@@ -95,7 +95,7 @@
                  apidb.organism ot,
                  apidb.orthomclresource ores
             WHERE ot.taxon_id = ores.orthomcl_taxon_id) urls
-           aas.aa_sequence_id = ogseq.aa_sequence_id
+           WHERE aas.aa_sequence_id = ogseq.aa_sequence_id
            AND ogseq.group_id = o.group_id
            AND aas.aa_sequence_id = urls.aa_sequence_id
       ]]>
