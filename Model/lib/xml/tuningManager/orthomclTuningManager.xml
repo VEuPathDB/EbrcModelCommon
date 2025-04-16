@@ -9,19 +9,19 @@
     <externalDependency name="apidb.OrthomclResource"/>
     <externalDependency name="apidb.Organism"/>
     <externalDependency name="dots.AaSequenceEnzymeClass"/>
-    <externalDependency name="dots.ExternalAaSequence"/>
+    <externalDependency name="dots.AaSequence"/>
 
     <sql>
       <!-- TODO:  urls and lenght are broken -->
       <![CDATA[
         create table SequenceAttributes&1 as
         SELECT
-            eas.secondary_identifier AS full_id,
-            eas.source_id,
-            eas.aa_sequence_id,
-            length(eas.sequence) as length,
-            eas.description AS product,
-            eas.taxon_id,
+            aas.source_id AS full_id,
+            aas.source_id,
+            aas.aa_sequence_id,
+            length(aas.sequence) as length,
+            aas.description AS product,
+            aas.taxon_id,
 
             taxon.orthomcl_taxon_id,
             taxon.taxon_group,
@@ -39,7 +39,7 @@
             urls.source_url,
             urls.source_text
         FROM
-            dots.externalAASequence eas,
+            dots.AASequence aas,
             apidb.orthologGroup o,
             apidb.orthologGroupAASequence ogseq,
             (
@@ -79,28 +79,28 @@
             ) taxon,
 
             (
-            SELECT eas.aa_sequence_id,
+            SELECT aas.aa_sequence_id,
                   CASE
                     WHEN ores.resource_name IN ('AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB','MicrosporidiaDB',
                                                 'PlasmoDB','PiroplasmaDB','ToxoDB','TrichDB','TriTrypDB','VectorBase')
                      THEN SUBSTR(ores.resource_url, 0, strpos(ores.resource_url, '/downloads')) || 'record/gene/'
-                                  || eas.source_id
+                                  || aas.source_id
                     WHEN ores.resource_name = 'Uniprot'
                      THEN SUBSTR(ores.resource_url, 0, strpos(ores.resource_url, '/proteomes') ) || 'uniprot/'
-                          || eas.source_id
+                          || aas.source_id
                     ELSE '' END AS source_url,
                   CASE WHEN ores.resource_name IS NULL THEN ''
-                          ELSE eas.source_id || ' (' || ores.resource_name || ')' END AS source_text
-            FROM dots.ExternalAaSequence eas,
+                          ELSE aas.source_id || ' (' || ores.resource_name || ')' END AS source_text
+            FROM dots.AaSequence aas,
                  apidb.organism ot,
                  apidb.orthomclresource ores
-            WHERE COALESCE (SUBSTR(eas.secondary_identifier, 0, strpos(eas.secondary_identifier, '|')), eas.secondary_identifier)
-                             = ot.orthomcl_abbrev
-                    AND ot.taxon_id = ores.orthomcl_taxon_id) urls
-        WHERE SUBSTR(eas.secondary_identifier, 0, strpos(eas.secondary_identifier, '|')) = taxon.orthomcl_abbrev
-           AND eas.aa_sequence_id = ogseq.aa_sequence_id
+            WHERE ot.taxon_id = ores.orthomcl_taxon_id
+            AND ot.taxon_id = aas.taxon_id) urls
+           WHERE aas.aa_sequence_id = ogseq.aa_sequence_id
            AND ogseq.group_id = o.group_id
-           AND eas.aa_sequence_id = urls.aa_sequence_id
+           AND aas.aa_sequence_id = urls.aa_sequence_id
+           AND taxon.orthomcl_taxon_id = aas.taxon_id
+           AND aas.taxon_id in (select distinct(eas.taxon_id) from apidb.organism og, dots.aasequence eas where eas.taxon_id = og.taxon_id)
       ]]>
     </sql>
 
@@ -814,8 +814,7 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
     <internalDependency name="SequenceAttributes"/>
     <sql>
       <![CDATA[
-        CREATE TABLE SequenceEnzymeClass&1 AS
-        (
+      CREATE TABLE SequenceEnzymeClass&1 AS (
         SELECT sa.full_id
              , sa.group_name
              -- , sec.uniprot_accession
@@ -831,9 +830,9 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
            , dots.AASequenceEnzymeClass sec
            , sres.ENZYMECLASS ec
         WHERE sa.aa_sequence_id = aa.aa_sequence_id
+        AND sec.aa_sequence_id  = aa.aa_sequence_id
         AND sec.enzyme_class_id = ec.enzyme_class_id
-        --AND aa.uniprot_accession = sec.uniprot_accession
-        )
+      )
       ]]>
     </sql>
     <sql>
