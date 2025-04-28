@@ -285,7 +285,7 @@ while in protected and private studies there will be human intervention in the d
 
       <attributeQueryRef ref="DatasetAttributes.OwnerVisibility" excludeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="owner" displayName="Owner" />
-         <columnAttribute name="community" displayName="Community"/>
+         <columnAttribute name="accessibility" displayName="Community"/>
        </attributeQueryRef>
 
 
@@ -429,7 +429,22 @@ OR if the linkName and or URL require access to other attributes....also how to 
             <columnAttribute name="affiliation" displayName="Affiliation"/>
         </table>
 
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- User Dataset Properties Table -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+        <table name="UserDatasetPropertiesTable" includeProjects="ClinEpiDB"
+               displayName="Study Properties"
+               queryRef="DatasetTables.UserDatasetProperties">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+<!--            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/> -->
+            <columnAttribute name="study_design" displayName="Study design" sortable="false"/>
+            <columnAttribute name="disease" displayName="Disease" sortable="false"/>
+            <columnAttribute name="country" displayName="Country" sortable="false"/>
+            <columnAttribute name="years" displayName="Years" sortable="false"/>
+            <columnAttribute name="ages" displayName="Ages" sortable="false"/>
+            <columnAttribute name="sample_type" displayName="Sample type" sortable="false"/>
+        </table>
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Study Characteristic -->
@@ -1082,6 +1097,19 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         </sql>
       </sqlQuery>
 
+     <sqlQuery name="UserDatasetAccessibility"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="accessibility" columnType="string"/>
+      <column name="days_for_approval"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT
+            CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+            d.accessibility, d.days_for_approval
+            FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+	
       <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
          <column name="dataset_id" columnType="string"/>
          <column name="is_public" columnType="string"/>
@@ -1333,8 +1361,6 @@ where mystudies.dataset_id = dp.dataset_presenter_id
       ]]>
         </sql>
       </sqlQuery>
-
-
 
 
       <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB">
@@ -1633,7 +1659,7 @@ where mystudies.dataset_id = dp.dataset_presenter_id
           where dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
     UNION
   select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-    case when is_public = 1 then 'yes' else 'no' end as is_public
+    case when accessibility != 'private' then 'yes' else 'no' end as is_public
     from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
           ]]>
         </sql>
@@ -1940,7 +1966,7 @@ select  dsp.dataset_presenter_id as dataset_id,
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    null as owner,
-                   null as community
+                   null as accessibility
             from apidbTuning.DatasetPresenter dsp
             ]]>
          </sql>
@@ -1949,12 +1975,12 @@ select  dsp.dataset_presenter_id as dataset_id,
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    null as owner,
-                   null as community
+                   null as accessibility
             from apidbTuning.DatasetPresenter dsp
             UNION
             SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
                    owner,
-                   is_public as community
+                   accessibility
                 from @VDI_CONTROL_SCHEMA@.dataset 
             ]]>
          </sql>
@@ -2012,20 +2038,14 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
---          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
---               , dc.name as contact
---               , affiliation as institution
---               , email
---               , short_attribution
---               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
---	       where dc.is_primary = 1
---	       and dc.dataset_id = d.user_dataset_id
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
-               , null as contact
-               , null as institution
-               , null as email
-               , null as short_attribution
-               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+               , dc.name as contact
+               , affiliation as institution
+               , email
+               , short_attribution
+               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
+	       where dc.is_primary = 1
+	       and dc.dataset_id = d.user_dataset_id
  ]]>
             </sql>
 
@@ -2061,20 +2081,14 @@ select  dsp.dataset_presenter_id as dataset_id,
             where dsp.dataset_presenter_id = dsc.dataset_presenter_id (+)
             and dsc.is_primary_contact = 1
                     UNION
---          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
---               , dc.name as contact
---               , affiliation as institution
---               , email
---               , short_attribution
---               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
---	       where dc.is_primary = 1
---	       and dc.dataset_id = d.user_dataset_id
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
-               , null as contact
-               , null as institution
-               , null as email
-               , null as short_attribution
-               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+               , dc.name as contact
+               , affiliation as institution
+               , email
+               , short_attribution
+               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
+	       where dc.is_primary = 1
+	       and dc.dataset_id = d.user_dataset_id
  ]]>
             </sql>
 
@@ -2170,8 +2184,25 @@ from apidbtuning.datasetnametaxon dsnt
  )
  group by dataset_id
     UNION
-  select CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as organism_prefix
-    from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+SELECT dataset_id,
+       REGEXP_REPLACE(
+         SUBSTR(
+           LISTAGG(org, '<br>') WITHIN GROUP (ORDER BY org), 1, 4000
+         ),
+         '<br>[A-Za-z\. <>&]+$', '<br>...'
+       ) AS organism_prefix
+FROM (
+       SELECT DISTINCT 'EDAUD_' || aud.user_dataset_id AS dataset_id,
+              CASE 
+                  WHEN oa.organism_name IS NULL THEN NULL
+                  ELSE REGEXP_REPLACE(oa.organism_name, '^(\w*)\s(\w*)\s(\.*)', '<I>\1 \2</I>') || '</i>'
+              END AS org
+       FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets aud
+       LEFT JOIN @VDI_CONTROL_SCHEMA@.dataset_organism dd ON aud.user_dataset_id = dd.dataset_id
+       LEFT JOIN apidbtuning.organismattributes oa ON dd.organism_abbrev = oa.internal_abbrev
+     ) t
+GROUP BY dataset_id;
+
             ]]>
             </sql>
             <sql includeProjects="EuPathDB">
@@ -2245,6 +2276,29 @@ from apidbtuning.datasetnametaxon dsnt
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <querySet name="DatasetTables" queryType="table"
               isCacheable='false'>
+
+     <sqlQuery name="UserDatasetProperties"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="study_design" columnType="string"/>
+      <column name="disease" columnType="string"/>
+      <column name="country" columnType="string"/>
+      <column name="years" columnType="string"/>
+      <column name="ages" columnType="string"/>
+      <column name="sample_type" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT
+            CONCAT('EDAUD_', dc.dataset_id) as dataset_id,
+            JSON_value(json, '$.studyDesign'  ) AS study_design,
+            JSON_value(json, '$.disease'  ) AS disease,
+            JSON_value(json, '$.country'  ) AS country,
+            JSON_value(json, '$.years'  ) AS years,
+            JSON_value(json, '$.ages'  ) AS ages,
+            JSON_value(json, '$.sample_type'  ) AS sample_type,
+            FROM @VDI_CONTROL_SCHEMA@.dataset_properties dp, @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
+	    where dp.dataset_id = aud.user_dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
 
       <sqlQuery name="RNASeqSamplesInternal"  isCacheable='false'>
             <column name="dataset_id"/>
