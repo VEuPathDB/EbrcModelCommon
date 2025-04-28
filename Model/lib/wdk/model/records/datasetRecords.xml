@@ -423,7 +423,22 @@
         <columnAttribute name="affiliation" displayName="Affiliation"/>
       </table>
 
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- User Dataset Properties Table -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+        <table name="UserDatasetPropertiesTable" includeProjects="ClinEpiDB"
+               displayName="Study Properties"
+               queryRef="DatasetTables.UserDatasetProperties">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+<!--            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/> -->
+            <columnAttribute name="study_design" displayName="Study design" sortable="false"/>
+            <columnAttribute name="disease" displayName="Disease" sortable="false"/>
+            <columnAttribute name="country" displayName="Country" sortable="false"/>
+            <columnAttribute name="years" displayName="Years" sortable="false"/>
+            <columnAttribute name="ages" displayName="Ages" sortable="false"/>
+            <columnAttribute name="sample_type" displayName="Sample type" sortable="false"/>
+        </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Study Characteristic -->
@@ -1009,8 +1024,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             null as newcategory
             FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
-
         ]]>
       </sql>
          <sql includeProjects="UniDB">
@@ -1024,7 +1037,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             null as newcategory
             FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
          <sql includeProjects="EuPathDB">
@@ -1053,8 +1065,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             d.name as dataset_display_name
             from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
-
         ]]>
       </sql>
       <sql includeProjects="MicrobiomeDB,VectorBase">
@@ -1070,7 +1080,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             d.name as dataset_display_name
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1084,23 +1093,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             d.accessibility, d.days_for_approval
             FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
-        ]]>
-      </sql>
-    </sqlQuery>
-	
-     <sqlQuery name="UserDatasetProperties"  isCacheable="false">
-      <column name="key" columnType="string"/>
-      <column name="value" columnType="string"/>
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT
-            CONCAT('EDAUD_', dc.dataset_id) as dataset_id,
-            key,
-	    value
-            FROM @VDI_CONTROL_SCHEMA@.dataset_property dp, @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
-	    where dp.dataset_id = aud.user_dataset_id
-	    and aud.accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1231,7 +1223,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   , null as custom_download_tab
                   , null as custom_download_ack
               FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	      	    where accessibility != 'private'
             ]]>
           </sql>
       </sqlQuery>
@@ -1262,7 +1253,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             null as study_categories
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1341,7 +1331,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  , null
                  , null
           from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
       ]]>
       </sql>
     </sqlQuery>
@@ -1499,7 +1488,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null
                , null
             from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1516,7 +1504,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
          <sql includeProjects="EuPathDB">
@@ -1545,7 +1532,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1577,7 +1563,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as megabase_pairs, null as genecount
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1633,9 +1618,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             WHERE dsp.project_id = '@PROJECT_ID@'
             UNION
             SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-              CASE WHEN is_public = 1 THEN 'yes' ELSE 'no' END as is_public
+              CASE WHEN accessibility != 'private' THEN 'yes' ELSE 'no' END as is_public
             FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
           ]]>
         </sql>
       </sqlQuery>
@@ -1703,7 +1687,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as genome_version, null as annotation_version, null as functional_annotation_version
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1797,7 +1780,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null as pmids
                , null as pmids_download
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
 
@@ -1939,7 +1921,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null as pmids
                , null as pmids_download
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -1962,12 +1943,12 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    null as owner,
-                   null as community
+                   null as accessibility
             from apidbTuning.DatasetPresenter dsp
             UNION
             SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
                     owner,
-                    is_public as community
+                    accessibility
                  from @VDI_CONTROL_SCHEMA@.dataset
             ]]>
          </sql>
@@ -1992,7 +1973,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null as acknowledgement
                , null as release_policy
             FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
             ]]>
          </sql>
          <sql includeProjects="EuPathDB">
@@ -2038,7 +2018,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
 	       where dc.is_primary = 1
 	       and dc.dataset_id = d.user_dataset_id
-	       and d.accessibility != 'private'
         ]]>
       </sql>
 
@@ -2083,7 +2062,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
 	       where dc.is_primary = 1
 	       and dc.dataset_id = d.user_dataset_id
-	       and d.accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -2109,7 +2087,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, 'N/A' as in_apollo
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -2134,7 +2111,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, project_id as project
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -2171,16 +2147,26 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM (
             SELECT DISTINCT dsnt.dataset_presenter_id as dataset_id
               , CASE when tn.organism_name is null then null
-                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>'
+                ELSE REGEXP_REPLACE(tn.organism_name,'^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>') || '</i>'
                 END as org
             FROM apidbtuning.datasetnametaxon dsnt
               LEFT JOIN apidbtuning.organismattributes tn ON dsnt.taxon_id = tn.component_taxon_id
           ) t
           GROUP BY dataset_id
           UNION
-          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as organism_prefix
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
+          SELECT dataset_id,
+            regexp_replace(
+              substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+          FROM (
+            SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+	    substr(string_agg(oa.organism_name,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+	    FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d,
+	    @VDI_CONTROL_SCHEMA@.dataset_organism do,
+	    apidbtuning.organismattributes oa
+	    where d.user_dataset_id = o.dataset_id
+	    and do.organism_abbrev = oa.internal_abbrev
+          ) t
+          GROUP BY dataset_id
         ]]>
       </sql>
 
@@ -2215,7 +2201,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
 
@@ -2227,7 +2212,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           UNION
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-	    where accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
@@ -2238,6 +2222,29 @@ Based on evolutionarily informed expectations of gene content of near-universal 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <querySet name="DatasetTables" queryType="table"
             isCacheable='false'>
+
+     <sqlQuery name="UserDatasetProperties"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="study_design" columnType="string"/>
+      <column name="disease" columnType="string"/>
+      <column name="country" columnType="string"/>
+      <column name="years" columnType="string"/>
+      <column name="ages" columnType="string"/>
+      <column name="sample_type" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT
+            CONCAT('EDAUD_', dc.dataset_id) as dataset_id,
+            json->>'studyDesign' AS study_design,
+            json->>'disease' AS disease,
+            json->>'country' AS country,
+            json->>'years' AS years,
+            json->>'ages' AS ages,
+            json->>'sample_type' AS sample_type,
+            FROM @VDI_CONTROL_SCHEMA@.dataset_properties dp, @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
+	    where dp.dataset_id = aud.user_dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
 
     <sqlQuery name="RNASeqSamplesInternal"  isCacheable='false'>
       <column name="dataset_id"/>
@@ -2415,7 +2422,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , affiliation
                from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
 	       where dc.dataset_id = d.user_dataset_id
-	       and d.accessibility != 'private'
         ]]>
       </sql>
     </sqlQuery>
