@@ -179,6 +179,11 @@
          </linkAttribute>
        </attributeQueryRef>
 -->
+       <attributeQueryRef ref="DatasetAttributes.UserDatasetAccessibility">
+         <columnAttribute name="accessibility" displayName="Accessibility"/>
+         <columnAttribute name="days_for_approval" displayName="Days for approval"/>
+       </attributeQueryRef>
+
        <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
          <columnAttribute name="project_availability" internal="true"/>
          <columnAttribute name="is_public" internal="true"/>
