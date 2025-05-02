@@ -3113,7 +3113,7 @@ and graph_descrip.dataset = dnt.name) g
             <![CDATA[
              select CONCAT('EDAUD_', user_dataset_id) as dataset_id,
                 identifier, display_name, version
-                from @VDI_CONTROL_SCHEMA@.dataset_dependencies
+                from @VDI_CONTROL_SCHEMA@.dataset_dependency
             ]]>
             </sql>
       </sqlQuery>
