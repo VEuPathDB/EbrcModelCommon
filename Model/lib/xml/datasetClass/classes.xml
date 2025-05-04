@@ -977,7 +977,7 @@
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
     <prop name="assembledLevel"/>
-    <graphTemplateFile name="organismSpecificOnTopLevelGenome.xml"/> 
+    <graphTemplateFile name="organismSpecificMisc.xml"/> 
     
     <datasetLoader datasetName="${organismAbbrev}_${assembledLevel}_AGP_Piece_RSRC"
               version="${version}"
