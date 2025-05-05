@@ -993,7 +993,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
     <sqlQuery name="NewCategory" isCacheable="false">
       <column name="newcategory" columnType="string"/>
       <column name="dataset_id" columnType="string"/>
-      <sql excludeProjects="EuPathDB,UniDB">
+      <sql excludeProjects="EuPathDB">
         <![CDATA[
           SELECT dsp.dataset_presenter_id as dataset_id,
               coalesce(dsp.display_category, dsp.category) as newcategory
@@ -1004,19 +1004,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           --   CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
           --   null as newcategory
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-        ]]>
-      </sql>
-         <sql includeProjects="UniDB">
-        <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id,
-            coalesce(dsp.display_category, dsp.category) as newcategory
-          FROM ApidbTuning.DatasetPresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
-          UNION
-          SELECT DISTINCT
-            CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-            null as newcategory
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
          <sql includeProjects="EuPathDB">
@@ -1675,7 +1662,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="eupath_release" sortingColumn="build_number_introduced" columnType="string"/>
       <column name="pmids" columnType="string"/>
       <column name="pmids_download" columnType="string"/>
-      <sql excludeProjects="EuPathDB,UniDB">
+      <sql excludeProjects="EuPathDB">
         <![CDATA[
           WITH allpubs AS (
             SELECT dp.dataset_presenter_id
@@ -1822,73 +1809,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  '' as pmids_download
           FROM apidbTuning.DatasetPresenter dsp
           WHERE dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
-        ]]>
-      </sql>
-
-      <sql includeProjects="UniDB">
-        <![CDATA[
-          WITH relinfo AS (
-            SELECT dsp.dataset_presenter_id,  prop.value as project, dsp.name
-            FROM APIDBTUNING.datasetpresenter dsp, apidbtuning.datasetproperty prop
-            WHERE dsp.dataset_presenter_id = prop.dataset_presenter_id
-              AND prop.property = 'projectName'
-          )
-          SELECT  dsp.dataset_presenter_id as dataset_id,
-             dsp.name as dataset_name, dsp.dataset_name_pattern,
-             ds.version,
-             dsp.short_display_name, dsp.description,
-             coalesce(dsp.summary, dsp.description) as summary,
-             dsp.protocol, dsp.usage,
-             dsp.type,
-             dsp.is_species_scope,
-             dsp.build_number_introduced,
-             CASE WHEN (r.project is null) THEN  introduced.project ELSE r.project END || ' rel.' || coalesce(history.eupath_release, introduced.eupath_release)  as eupath_release,
-             pubs.pmids,
-             pubs.pmids_download
-          FROM apidbTuning.DatasetPresenter dsp
-            LEFT JOIN apidb.datasource ds ON dsp.name = ds.name
-            LEFT JOIN relinfo r ON dsp.dataset_presenter_id = r.dataset_presenter_id
-            LEFT JOIN (
-              SELECT dataset_presenter_id
-                , string_agg('<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || pmid || '">' || citation || '</a>', ', ' ORDER BY pmid) as pmids
-                , string_agg(pmid, ', ' ORDER BY pmid) as pmids_download
-              FROM ApidbTuning.DatasetPublication
-              GROUP BY dataset_presenter_id
-            ) pubs ON dsp.dataset_presenter_id = pubs.dataset_presenter_id
-            LEFT JOIN (
-              SELECT dataset_presenter_id,
-                           release_number || ', ' || release_date as eupath_release, project
-              FROM (
-                SELECT dh.dataset_presenter_id, dh.build_number
-                  , to_char(ebd.release_date,'YYYY-MON-DD') as release_date
-                  , ebd.release_number, ebd.project
-                  , row_number() over (PARTITION BY dh.dataset_presenter_id ORDER BY ebd.release_number desc) rn
-                FROM apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
-                WHERE CAST(dh.build_number AS VARCHAR(10)) = ebd.build_number
-              ) t
-              WHERE rn = 1
-            ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
-            LEFT JOIN (
-              SELECT build_number, release_number || ', ' || release_date as eupath_release, project
-              FROM apidbTuning.EupathBuildDates
-            ) introduced ON CAST(dsp.build_number_introduced AS VARCHAR(10))= introduced.build_number AND r.project = introduced.project
-          UNION ALL
-          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id
-               , null as dataset_name
-               , null as dataset_name_pattern
-               , null as version
-               , d.name as short_display_name
-               , d.description
-               , d.summary
-               , null as protocol
-               , null as usage
-               , null as type
-               , null as is_species_scope
-               , null as build_number_introduced
-               , null as eupath_release
-               , null as pmids
-               , null as pmids_download
-          FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
         ]]>
       </sql>
     </sqlQuery>
@@ -2955,7 +2875,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             <![CDATA[
              select CONCAT('EDAUD_', user_dataset_id) as dataset_id,
                 identifier, display_name, version
-                from @VDI_CONTROL_SCHEMA@.dataset_dependency
+                from @VDI_CONTROL_SCHEMA@.dataset_dependencies
             ]]>
             </sql>
       </sqlQuery>
