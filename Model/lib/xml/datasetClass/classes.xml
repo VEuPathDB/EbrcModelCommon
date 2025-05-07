@@ -1586,6 +1586,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <!--
   <datasetClass class="BUSCO" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
@@ -1603,13 +1604,31 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile @@dataDir@@/protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --orgAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
   </datasetClass>
+-->
+  <datasetClass class="BuscoLineageMappers" category="" datasetFileHint="">
+    <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
+    <prop name="version"/>
+   
+    <datasetLoader datasetName="BuscoLineageMappers_RSRC" version="${version}"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   type="sres"
+                   scope="global"
+            >
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@manualDeliveryDir@@/common/buscoLineageMappers/${version}/final/lineage_dataset_map.txt @@dataDir@@/</unpack>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
   <datasetClass class="lineageTaxonLinkingTable" category="" datasetFileHint="">
     <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
 
     <graphTemplateFile name="microbiomeRoot.xml"/>
-   
+
     <datasetLoader datasetName="LineageTaxonLinkingTable_RSRC" version="dontcare"
               plugin="ApiCommonData::Load::LineageTaxonLinkingTable"
               type="sres"
