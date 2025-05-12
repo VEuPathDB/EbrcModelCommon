@@ -6586,7 +6586,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
     <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_WebService_RSRC"
       plugin="ApiCommonData::Load::Plugin::LoadNothing"
       scope="organism"
       type="feature"
