@@ -1586,7 +1586,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!--
   <datasetClass class="BUSCO" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
@@ -1604,7 +1603,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--genomeFile @@dataDir@@/genome_busco_short_summary.txt --proteinFile @@dataDir@@/protein_busco_short_summary.txt --extDbRlsSpec '%DATASET_NAME%|%DATASET_VERSION%' --orgAbbrev ${organismAbbrev}</pluginArgs>
     </datasetLoader>
   </datasetClass>
--->
+
   <datasetClass class="BuscoLineageMappers" category="" datasetFileHint="">
     <purpose>Create a lineage taxon linking table after the taxonomy and the results are in the database</purpose>
     <prop name="version"/>
