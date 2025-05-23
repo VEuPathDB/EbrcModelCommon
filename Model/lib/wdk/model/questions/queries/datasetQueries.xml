@@ -303,7 +303,7 @@
           SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetpresenter dsp
           WHERE dsp.project_id = '@PROJECT_ID@'
-          AND (category IS NULL and dsp.display_category = $$dataset_category$$)
+          AND ((category IS NULL and dsp.display_category = $$dataset_category$$)
             OR (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
             OR (coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
                 and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
@@ -312,6 +312,7 @@
              AND lower(display_category) = lower($$dataset_subtype$$)
             )
             OR coalesce(dsp.category, dsp.display_category) = $$dataset_category$$
+           )
         ]]>
       </sql>
     </sqlQuery>
