@@ -2825,7 +2825,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <sql>
         <![CDATA[
              select local_dataset_id as dataset_id, pubmed_id as pmid,
-                     associated_dataset_id, project, webapp_name, display_name,
+                     associated_dataset_id, project, webapp_name, display_name
              from ApidbTuning.AssociatedDataset
              where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
              order by local_dataset_id
