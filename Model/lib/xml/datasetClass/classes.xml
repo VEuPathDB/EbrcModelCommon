@@ -2697,6 +2697,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="hasPairedEnds"/>
     <prop name="extraBowtieParams"/>
     <prop name="experimentType">[histonemod, tfbinding, mnase, faire, dnase] The type of experiment, controlled vocabulary. All samples in the same experiment MUST be of the same type (e.g. you cannot have some faire and some mnase samples in the same experiment).</prop>
+    <prop name="fromSRA"/>
+    <prop name="readsFileType">[fasta, fastq]</prop>
 
     <graphTemplateFile name="chipSeqExperiment.xml"/>
    <!-- Inquiry: Always follow naming convention -->
@@ -5118,6 +5120,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="type"/>
+    <prop name="fromSRA"/>
+    <prop name="readsFileType"/>
+    <prop name="hasPairedEnds"/>
+
+
 
     <graphTemplateFile name="rnaSeqSplicedLeaderAndPolyASitesExperimentTemplate.xml"/>
     <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqSplicedLeaderAndPolyASites_RSRC" version="${version}"
@@ -6217,10 +6224,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="experimentName"></prop>
     <prop name="experimentVersion"></prop>
     <prop name="hasPairedEnds"/>
-    <prop name="isColorspace"/>
     <prop name="removePCRDuplicates">If true samtools rmdup will run after mapping</prop>
     <prop name="coverageWindowSize">This workflow calculates coverage in windows across the genome.  Default window size is 2500 (bp)</prop>
     <prop name="extraBowtieParams">Parameters for Bowtie(2) above and beyond the default can be added verbatim here. "None" if default is ok</prop>
+    <prop name="fromSRA"/>
 
     <graphTemplateFile name="originsOfReplicationExperiment.xml"/>
    
