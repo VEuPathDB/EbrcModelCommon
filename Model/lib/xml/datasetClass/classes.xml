@@ -2696,7 +2696,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="hasPairedEnds"/>
     <prop name="extraBowtieParams"/>
-    <prop name="experimentType">[histonemod, tfbinding, mnase, faire, dnase] The type of experiment, controlled vocabulary. All samples in the same experiment MUST be of the same type (e.g. you cannot have some faire and some mnase samples in the same experiment).</prop>
+    <prop name="experimentType">[histonemod, histonemod_noInput, tfbinding, mnase, faire, dnase] The type of experiment, controlled vocabulary. All samples in the same experiment MUST be of the same type (e.g. you cannot have some faire and some mnase samples in the same experiment). The experimentType can be set to histonemod only if it has input samples</prop>
     <prop name="fromSRA"/>
     <prop name="readsFileType">[fasta, fastq]</prop>
 
