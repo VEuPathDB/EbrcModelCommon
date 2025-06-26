@@ -1147,8 +1147,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                    ) dts LEFT OUTER JOIN (
                       SELECT dataset_id,
                              string_agg(email, ',' ORDER BY email)  request_email_bcc
-                      FROM useraccounts.accounts@ACCT_DBLINK@ acc,
-                           studyaccess.providers@ACCT_DBLINK@ pr
+                      FROM @REMOTE_USERACCOUNTS_SCHEMA@.accounts acc,
+                           @REMOTE_STUDYACCESS_SCHEMA@.providers pr
                       WHERE pr.user_id = acc.user_id
                         AND is_manager = 1
                       GROUP BY dataset_id
@@ -1267,7 +1267,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   SELECT DATASET_PRESENTER_ID,
                        count(1) as total_number,
                        count(case when approval_status_id = 0 then 1 end) as approved_number
-                  FROM studyaccess.end_users@ACCT_DBLINK@ eu
+                  FROM @REMOTE_STUDYACCESS_SCHEMA@.end_users eu
                   GROUP BY dataset_presenter_id
                 ) t
               ) mycounts
