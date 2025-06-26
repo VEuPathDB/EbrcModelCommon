@@ -45,6 +45,12 @@ sub extractAndDecodeTagContent {
 
 	my $tagContent = EbrcModelCommon::Model::XMLUtils::extractTagContent($source, $tag);
 
+	# If the extracted tag content does not contain any '<' characters, then there
+	# are no child XML nodes, and the text can be safely run through an HTML
+	# entities decoder to unescape any special characters (such as `&nbsp;`).
+	#
+	# Regex uses a negative lookahead `(?!<)` to verify the text contains no '<'
+	# characters.
 	if ($tagContent =~ /^(?!<).+$/) {
 		return HTML::Entities::decode($tagContent);
 	}
