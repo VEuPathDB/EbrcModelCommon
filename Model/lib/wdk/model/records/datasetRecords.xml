@@ -2151,7 +2151,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid AS url
               , row_number() OVER () AS rownumber
             FROM ApidbTuning.DatasetPublication
-            WHERE pmid IS NOT NULL
+            WHERE length(pmid) > 0
             ORDER BY dataset_publication_id
           )
           SELECT dataset_presenter_id AS dataset_id
