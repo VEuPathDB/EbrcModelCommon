@@ -222,6 +222,24 @@
 
 
 
+  <datasetClass class="orthomclGenomics" category="" datasetFileHint="">
+    <purpose>add steps downstream of project (requires all projects)  to a workflow</purpose>
+
+    <graphTemplateFile name="genomicsRoot.xml"/>
+    <datasetLoader datasetName="orthomclGenomics_INTERNAL_RSRC"
+              version="CURRENT"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="genome"
+              scope="project">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
 
 
 
