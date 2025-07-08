@@ -6984,7 +6984,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
   <!-- New dataset class for the long read RNA Seq -->
-  <datasetClass class="LongReadRnaSeqExperimentNextflow" category="" datasetFileHint="">
+  <datasetClass class="longReadRnaSeqExperiment" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
@@ -6996,7 +6996,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <qaNotes>
         To be added once after testing 
     </qaNotes> 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqNextflow_RSRC" version="${version}"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_longReadRnaSeq_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="organism"
               type="longRead_transcript_expression"
