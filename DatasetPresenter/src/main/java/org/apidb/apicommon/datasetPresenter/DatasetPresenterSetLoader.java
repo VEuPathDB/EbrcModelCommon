@@ -60,10 +60,8 @@ public class DatasetPresenterSetLoader {
   }
 
   /**
-   * 
-   * @param dps
    * @return set of dataset names in db not found (or matched by) the
-   *         DatasetPresenters in the input set
+   * DatasetPresenters in the input set
    */
   Set<String> syncPresenterSetWithDatasetTable() {
     initDbConnection();
@@ -75,30 +73,30 @@ public class DatasetPresenterSetLoader {
 
       for (InternalDataset internalDataset : dps.getInternalDatasets().values()) {
         findInternalDatasetNamesInDb(internalDataset, datasetTableStmt,
-            datasetNamesFoundInDb);
+                datasetNamesFoundInDb);
       }
 
       Set<String> presenterNamesNotInDb = new HashSet<String>();
       for (DatasetPresenter datasetPresenter : dps.getDatasetPresenters().values()) {
         getPresenterValuesFromDatasetTable(datasetPresenter, datasetTableStmt,
-            datasetNamesFoundInDb);
+                datasetNamesFoundInDb);
         if (!datasetPresenter.getFoundInDb())
           presenterNamesNotInDb.add(datasetPresenter.getDatasetName());
-        
+
         datasetPresenter.getContacts(allContacts); // validate contacts
         datasetPresenter.getModelReferences(); // validate model references
       }
 
       if (presenterNamesNotInDb.size() != 0) {
         System.err.println(NL
-            + "The following DatasetPresenters have no match in Apidb.Datasource: "
-            + NL + setToString(presenterNamesNotInDb));
+                + "The following DatasetPresenters have no match in Apidb.Datasource: "
+                + NL + setToString(presenterNamesNotInDb));
       }
-      
+
       dps.handleOverrides();
-      
+
       Set<String> dbDatasetNamesNotInPresenters = new HashSet<String>(
-          findDatasetNamesInDb());
+              findDatasetNamesInDb());
 
       dbDatasetNamesNotInPresenters.removeAll(datasetNamesFoundInDb);
 
@@ -119,23 +117,23 @@ public class DatasetPresenterSetLoader {
 
       try {
         dbConnection = DriverManager.getConnection(dsn, username, password);
-        dbConnection.createStatement().execute("SET search_path TO "+ schema);
+        dbConnection.createStatement().execute("SET search_path TO " + schema);
       } catch (SQLException e) {
         throw new UserException("Can't connect to instance " + instance +
-            " with login info found in config file " + propFileName, e);
+                " with login info found in config file " + propFileName, e);
       }
     }
     return dbConnection;
   }
 
   void findInternalDatasetNamesInDb(InternalDataset internalDataset,
-      PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
-      throws SQLException {
+                                    PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
+          throws SQLException {
 
     Set<String> datasetNamesFoundLocal = new HashSet<String>();
     ResultSet rs = null;
     String namePattern = internalDataset.getDatasetNamePattern() == null
-        ? internalDataset.getName() : internalDataset.getDatasetNamePattern();
+            ? internalDataset.getName() : internalDataset.getDatasetNamePattern();
     stmt.setString(1, namePattern);
     boolean found = false;
     try {
@@ -145,19 +143,18 @@ public class DatasetPresenterSetLoader {
         String name = rs.getString(1);
         if (datasetNamesFoundInDb.contains(name))
           throw new UserException(
-              "InternalDataset with name \""
-                  + internalDataset.getName()
-                  + "\" has a name or name pattern that is claimed by another DatasetPresenter or InternalDataset.  The conflicting name is: \""
-                  + name + "\"");
+                  "InternalDataset with name \""
+                          + internalDataset.getName()
+                          + "\" has a name or name pattern that is claimed by another DatasetPresenter or InternalDataset.  The conflicting name is: \""
+                          + name + "\"");
         datasetNamesFoundLocal.add(name);
         internalDataset.addNameFromDb(name);
       }
       if (!found) {
-          System.err.println("WARN:  InternalDataset with name or pattern \""
-            + namePattern + "\" does not match any row in Apidb.Datasource");
-      } 
-      else {
-          datasetNamesFoundInDb.addAll(datasetNamesFoundLocal);
+        System.err.println("WARN:  InternalDataset with name or pattern \""
+                + namePattern + "\" does not match any row in Apidb.Datasource");
+      } else {
+        datasetNamesFoundInDb.addAll(datasetNamesFoundLocal);
       }
     } finally {
       if (rs != null)
@@ -166,13 +163,13 @@ public class DatasetPresenterSetLoader {
   }
 
   void getPresenterValuesFromDatasetTable(DatasetPresenter datasetPresenter,
-      PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
-      throws SQLException {
+                                          PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
+          throws SQLException {
     Set<String> datasetNamesFoundLocal = new HashSet<String>();
     ResultSet rs = null;
     String namePattern = datasetPresenter.getDatasetNamePattern() == null
-        ? datasetPresenter.getDatasetName()
-        : datasetPresenter.getDatasetNamePattern();
+            ? datasetPresenter.getDatasetName()
+            : datasetPresenter.getDatasetNamePattern();
     stmt.setString(1, namePattern);
     String first_type = null;
     String first_subtype = null;
@@ -194,10 +191,10 @@ public class DatasetPresenterSetLoader {
         if (datasetPresenter.getOverride() == null) {
           if (datasetNamesFoundInDb.contains(name))
             throw new UserException(
-                "DatasetPresenter with name \""
-                    + datasetPresenter.getDatasetName()
-                    + "\" has a name or name pattern that is claimed by another DatasetPresenter or InternalDataset.  The conflicting name is: \""
-                    + name + "\"");
+                    "DatasetPresenter with name \""
+                            + datasetPresenter.getDatasetName()
+                            + "\" has a name or name pattern that is claimed by another DatasetPresenter or InternalDataset.  The conflicting name is: \""
+                            + name + "\"");
           datasetNamesFoundLocal.add(name);
         }
         if (!datasetPresenter.getFoundInDb()) {
@@ -211,18 +208,18 @@ public class DatasetPresenterSetLoader {
           datasetPresenter.setProjectId(projectId);
         } else {
           if ((first_type == null && type != null)
-              || (first_type != null && !type.equals(first_type))
-              || (first_subtype == null && subtype != null)
-              || (first_subtype != null && !subtype.equals(first_subtype))
-              || (first_isSpeciesScope != isSpeciesScope))
+                  || (first_type != null && !type.equals(first_type))
+                  || (first_subtype == null && subtype != null)
+                  || (first_subtype != null && !subtype.equals(first_subtype))
+                  || (first_isSpeciesScope != isSpeciesScope))
             throw new UserException(
-                "DatasetPresenter with datasetNamePattern=\""
-                    + namePattern
-                    + "\" matches rows in the Dataset table that disagree in their type, subtype or is_species_scope columns");
+                    "DatasetPresenter with datasetNamePattern=\""
+                            + namePattern
+                            + "\" matches rows in the Dataset table that disagree in their type, subtype or is_species_scope columns");
         }
         datasetPresenter.addNameTaxonPair(new NameTaxonPair(name, taxonId));
       }
-      if (datasetPresenter.getFoundInDb()) 
+      if (datasetPresenter.getFoundInDb())
         datasetNamesFoundInDb.addAll(datasetNamesFoundLocal);
     } finally {
       if (rs != null)
@@ -252,7 +249,7 @@ public class DatasetPresenterSetLoader {
 
   void schemaInstall() {
     System.err.println("Installing DatasetPresenter schema into instance "
-        + instance + " schema " + schema + " using suffix " + suffix);
+            + instance + " schema " + schema + " using suffix " + suffix);
     manageSchema(false);
     System.err.println("Install complete");
   }
@@ -265,17 +262,17 @@ public class DatasetPresenterSetLoader {
 
   void manageSchema(boolean dropConstraints) {
     String mode = dropConstraints ? "-dropConstraints" : "-create";
-    String[] cmd = { "presenterCreateSchema", instance, suffix, propFileName,
-        mode };
+    String[] cmd = {"presenterCreateSchema", instance, suffix, propFileName,
+            mode};
     Process process;
     try {
       process = Runtime.getRuntime().exec(cmd);
       process.waitFor();
       if (process.exitValue() != 0)
         throw new UserException(
-            "Failed running command to create DatasetPresenter schema: "
-                + System.lineSeparator() + "presenterCreateSchema '" + instance
-                + "' " + suffix + " " + propFileName + " " + mode);
+                "Failed running command to create DatasetPresenter schema: "
+                        + System.lineSeparator() + "presenterCreateSchema '" + instance
+                        + "' " + suffix + " " + propFileName + " " + mode);
       process.destroy();
     } catch (IOException | InterruptedException ex) {
       throw new UnexpectedException(ex);
@@ -286,14 +283,6 @@ public class DatasetPresenterSetLoader {
     System.err.println("Loading DatasetPresenters into " + instance);
     try {
       PreparedStatement presenterStmt = getPresenterStmt();
-      PreparedStatement contactStmt = getContactStmt();
-      PreparedStatement publicationStmt = getPublicationStmt();
-      PreparedStatement pubmedQuery = getPubmedQuery();
-      PreparedStatement referenceStmt = getReferenceStmt();
-      PreparedStatement linkStmt = getLinkStmt();
-      PreparedStatement historyStmt = getHistoryStmt();
-      PreparedStatement nameTaxonStmt = getNameTaxonStmt();
-      PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt() ;
 
       Map<String, Map<String, String>> defaultDatasetInjectorClasses = DatasetPresenterParser.parseDefaultInjectorsFile(defaultInjectorsFileName);
 
@@ -302,63 +291,17 @@ public class DatasetPresenterSetLoader {
 
         datasetPresenter.setDefaultDatasetInjector(defaultDatasetInjectorClasses);
 
-	    String datasetPresenterId = datasetPresenter.getId();
+        String datasetPresenterId = datasetPresenter.getId();
         String datasetFullDigest = datasetPresenter.getFullDigest();
 
         loadDatasetPresenter(datasetPresenterId, datasetFullDigest, datasetPresenter, presenterStmt);
 
-        DatasetInjector datasetInjector = datasetPresenter.getDatasetInjector();
-
-        if(datasetInjector != null) {
-            Map<String, String> injectorPropValues =  datasetInjector.getPropValues();
-            for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
-                
-		String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
-                loadInjectorPropValue(datasetPresenterId, pv.getKey(), dataValue, injectorPropertiesStmt);
-            }
-        }
-
-        String type = datasetPresenter.getType();
-        String subtype = datasetPresenter.getSubtype();
-
-
-
-        for (Contact contact : datasetPresenter.getContacts(allContacts)) {
-          loadContact(datasetPresenterId, contact, contactStmt);
-        }
-
-        for (Publication pub : datasetPresenter.getPublications()) {
-	    loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
-        }
-
-
-
-        for (ModelReference ref : datasetPresenter.getModelReferences()) {
-          loadModelReference(datasetPresenterId, ref, referenceStmt);
-        }
-
-        for (History history : datasetPresenter.getHistories()) {
-          loadHistory(datasetPresenterId, history, historyStmt);
-        }
-
-        if(type != null) {
-            String key = type + "." + subtype;
-
-            for (HyperLink link : defaultHyperLinks.getHyperLinksFromTypeSubtype(key)) {
-                loadLink(datasetPresenterId, link, linkStmt);
-            }
-        }
-
-        for (HyperLink link : datasetPresenter.getLinks()) {
-          loadLink(datasetPresenterId, link, linkStmt);
-        }
-
-        for (NameTaxonPair pair : datasetPresenter.getNameTaxonPairs()) {
-          loadNameTaxonPair(datasetPresenterId, pair, nameTaxonStmt);
-        }
-
+        for (DatasetInjector di : datasetPresenter.getDatasetInjectors())
+        loadDatasetInjector(datasetPresenter, di, datasetPresenterId);
       }
+
       System.err.println("Loading done");
+
     } catch (SQLException e) {
       throw new UnexpectedException(e);
     } finally {
@@ -370,6 +313,63 @@ public class DatasetPresenterSetLoader {
       }
     }
   }
+
+  void loadDatasetInjector(DatasetPresenter datasetPresenter, DatasetInjector datasetInjector, String datasetPresenterId) throws SQLException {
+    PreparedStatement contactStmt = getContactStmt();
+    PreparedStatement publicationStmt = getPublicationStmt();
+    PreparedStatement pubmedQuery = getPubmedQuery();
+    PreparedStatement referenceStmt = getReferenceStmt();
+    PreparedStatement linkStmt = getLinkStmt();
+    PreparedStatement historyStmt = getHistoryStmt();
+    PreparedStatement nameTaxonStmt = getNameTaxonStmt();
+    PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt();
+
+    Map<String, String> injectorPropValues = datasetInjector.getPropValues();
+    for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
+
+      String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
+      loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectId(), pv.getKey(), dataValue, injectorPropertiesStmt);
+    }
+
+    String type = datasetPresenter.getType();
+    String subtype = datasetPresenter.getSubtype();
+
+
+    for (Contact contact : datasetPresenter.getContacts(allContacts)) {
+      loadContact(datasetPresenterId, contact, contactStmt);
+    }
+
+    for (Publication pub : datasetPresenter.getPublications()) {
+      loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
+    }
+
+
+    for (ModelReference ref : datasetPresenter.getModelReferences()) {
+      loadModelReference(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectId(), ref, referenceStmt);
+    }
+
+    for (History history : datasetPresenter.getHistories()) {
+      loadHistory(datasetPresenterId, history, historyStmt);
+    }
+
+    if (type != null) {
+      String key = type + "." + subtype;
+
+      for (HyperLink link : defaultHyperLinks.getHyperLinksFromTypeSubtype(key)) {
+        loadLink(datasetPresenterId, link, linkStmt);
+      }
+    }
+
+    for (HyperLink link : datasetPresenter.getLinks()) {
+      loadLink(datasetPresenterId, link, linkStmt);
+    }
+
+    for (NameTaxonPair pair : datasetPresenter.getNameTaxonPairs()) {
+      loadNameTaxonPair(datasetPresenterId, pair, nameTaxonStmt);
+    }
+
+  }
+
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
@@ -453,16 +453,18 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetProperty" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_property_id, dataset_presenter_id, property, value)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?)";
+        + " (dataset_property_id, dataset_presenter_id, datasource_name, project_id, property, value)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
 
-    private void loadInjectorPropValue(String datasetPresenterId, String property, String value, PreparedStatement stmt) throws SQLException {
+    private void loadInjectorPropValue(String datasetPresenterId, String datasourceName, String projectId, String property, String value, PreparedStatement stmt) throws SQLException {
         stmt.setString(1, datasetPresenterId);
-        stmt.setString(2, property);
-        stmt.setString(3, value);
+        stmt.setString(2, datasourceName);
+        stmt.setString(3, projectId);
+        stmt.setString(4, property);
+        stmt.setString(5, value);
         stmt.execute();
     }
 
@@ -559,8 +561,8 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetModelRef" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_model_ref_id, dataset_presenter_id, record_type, target_type, target_name)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
+        + " (dataset_model_ref_id, dataset_presenter_id, datasource_name, project_id, record_type, target_type, target_name)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?. ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -587,16 +589,15 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadModelReference(String datasetPresenterId, ModelReference ref,
+  private void loadModelReference(String datasetPresenterId, String datasourceName, String projectId, ModelReference ref,
       PreparedStatement stmt) throws SQLException {
 
     stmt.setString(1, datasetPresenterId);
-    stmt.setString(2, ref.getRecordClassName());
-    stmt.setString(3, ref.getTargetType());
-    stmt.setString(4, ref.getTargetName().replace(":", ""));
-
-
-
+    stmt.setString(2, datasourceName);
+    stmt.setString(3, projectId);
+    stmt.setString(4, ref.getRecordClassName());
+    stmt.setString(5, ref.getTargetType());
+    stmt.setString(6, ref.getTargetName().replace(":", ""));
     stmt.execute();
   }
 

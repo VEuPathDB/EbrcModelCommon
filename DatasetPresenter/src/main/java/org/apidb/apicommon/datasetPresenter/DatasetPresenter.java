@@ -1,11 +1,6 @@
 package org.apidb.apicommon.datasetPresenter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 
@@ -26,7 +21,7 @@ public class DatasetPresenter {
   private static final Logger LOG = Logger.getLogger(DatasetPresenter.class);
 
   // use prop values for properties that might be injected into templates.
-  Map<String, String> propValues = new HashMap<String, String>();
+  Map<String, String> propValues = new HashMap<>();
 
   // use instance variables for properties that have no chance of being
   // injected.
@@ -36,7 +31,6 @@ public class DatasetPresenter {
   private String acknowledgement;
   private String caveat;
   private String releasePolicy;
-  private DatasetInjector datasetInjector;
   private String datasetNamePattern;
   private String type;
   private String subtype;
@@ -45,7 +39,7 @@ public class DatasetPresenter {
   private boolean foundInDb = false;
   private float maxHistoryBuildNumber = -1000;
 
-  private DatasetInjectorConstructor datasetInjectorConstructor;
+  private Set<DatasetInjectorConstructor> datasetInjectorConstructors = new HashSet<>();
   private List<String> contactIds = new ArrayList<String>(); // includes primary
   private String primaryContactId;
   private List<Contact> contacts;
@@ -385,18 +379,19 @@ public class DatasetPresenter {
    * 
    * @param datasetInjector
    */
-  public void setDatasetInjector(DatasetInjectorConstructor datasetInjector) {
-    if (datasetInjectorConstructor != null) throw new UserException("Adding more than one datasetInjector to datasetPresenter " + getDatasetName());
-    datasetInjectorConstructor = datasetInjector;
+  public void addDatasetInjector(DatasetInjectorConstructor datasetInjector) {
+    datasetInjectorConstructors.add(datasetInjector);
     datasetInjector.inheritDatasetProps(this);
   }
 
-  protected DatasetInjector getDatasetInjector() {
-    if (datasetInjector == null && datasetInjectorConstructor != null) {
-      datasetInjector = datasetInjectorConstructor.getDatasetInjector();
+  protected List<DatasetInjector> getDatasetInjectors() {
+    List<DatasetInjector> datasetInjectors = new ArrayList<>();
+    for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+      DatasetInjector datasetInjector = dic.getDatasetInjector();
       datasetInjector.addModelReferences();
+      datasetInjectors.add(datasetInjector);
     }
-    return datasetInjector;
+    return datasetInjectors;
   }
 
   void setDefaultDatasetInjector(
@@ -405,24 +400,24 @@ public class DatasetPresenter {
         || defaultDatasetInjectors == null
         || !defaultDatasetInjectors.containsKey(type)
         || !defaultDatasetInjectors.get(type).containsKey(subtype)
-        || datasetInjectorConstructor != null)
+        || !datasetInjectorConstructors.isEmpty())
       return;
     DatasetInjectorConstructor constructor = new DatasetInjectorConstructor();
     constructor.setClassName(defaultDatasetInjectors.get(type).get(subtype));
-    setDatasetInjector(constructor);
+    addDatasetInjector(constructor);
   }
 
   public List<ModelReference> getModelReferences() {
-    List<ModelReference> answer = new ArrayList<ModelReference>();
-    DatasetInjector di = getDatasetInjector();
-    if (di != null) {
-      answer = di.getModelReferences();
+    List<ModelReference> refs = new ArrayList<ModelReference>();
+    List<DatasetInjector> injectors = getDatasetInjectors();
+    for (DatasetInjector i : injectors) {
+      refs.addAll(i.getModelReferences());
     }
-    return answer;
+    return refs;
   }
 
-  public DatasetInjectorConstructor getDatasetInjectorConstructor() {
-    return datasetInjectorConstructor;
+  public Set<DatasetInjectorConstructor> getDatasetInjectorConstructors() {
+    return datasetInjectorConstructors;
   }
 
   /**
@@ -447,9 +442,9 @@ public class DatasetPresenter {
         NamedValue datasetDigest = new NamedValue("datasetDigest", getDigest());
         addProp(presenterId);
         addProp(datasetDigest);
-        if (datasetInjectorConstructor != null) {
-            datasetInjectorConstructor.addProp(presenterId);
-            datasetInjectorConstructor.addProp(datasetDigest);
+        for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+            dic.addProp(presenterId);
+            dic.addProp(datasetDigest);
         }
     }
 
@@ -466,7 +461,7 @@ public class DatasetPresenter {
     
     // add the global dataset properties to each datasetInjectorConstructor so they can be passed to each injector.
     // there might be a way to do this without duplicating that info across injector constructors, but it is not obvious, and this will work
-    if (datasetInjectorConstructor != null) datasetInjectorConstructor.setGlobalDatasetProperties(datasetNamesToProperties);
+    for (DatasetInjectorConstructor dic : datasetInjectorConstructors) dic.setGlobalDatasetProperties(datasetNamesToProperties);
     
     if (!datasetNamesToProperties.containsKey(datasetKey)) return;
     
@@ -478,12 +473,12 @@ public class DatasetPresenter {
       if (propValues.containsKey(key) ) throw new UserException("datasetPresenter '" + getDatasetName()
           + "' has a property duplicated from dataset property file provided by the dataset class: " + key);
       propValues.put(key, propsFromFile.get(key));
-      if (datasetInjectorConstructor != null) {
-        if (datasetInjectorConstructor.getPropValues().containsKey(key)) throw new UserException("a templateInjector in datasetPresenter '" + getDatasetName()
+      for (DatasetInjectorConstructor dic: datasetInjectorConstructors) {
+        if (dic.getPropValues().containsKey(key)) throw new UserException("a templateInjector in datasetPresenter '" + getDatasetName()
             + "' has a property duplicated from dataset property file provided by the dataset class: " + key);
 
         // Other properties are not valid when using pattern
-        datasetInjectorConstructor.addProp(new NamedValue(key, propsFromFile.get(key)));
+        dic.addProp(new NamedValue(key, propsFromFile.get(key)));
       }
     }
   }
@@ -504,8 +499,8 @@ public class DatasetPresenter {
           NamedValue property = new NamedValue(key, propsFromFile.get(key));
 
           addProp(property);
-          if (datasetInjectorConstructor != null) {
-              datasetInjectorConstructor.addProp(property);
+          for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+              dic.addProp(property);
           }
 
       }

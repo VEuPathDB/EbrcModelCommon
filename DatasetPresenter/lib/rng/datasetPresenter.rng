@@ -120,9 +120,11 @@
 	      <attribute name="type"/>
             </element>
           </zeroOrMore>
-          <optional>
+          <zeroOrMore>
 	    <element name="templateInjector">
 	      <attribute name="className"/>
+	      <attribute name="datasourceName"/>
+	      <attribute name="projectId"/>
 	      <zeroOrMore>
 		<element name="prop">
 		  <attribute name="name"/>
@@ -130,7 +132,7 @@
 		</element>
 	      </zeroOrMore>
 	    </element>
-          </optional>
+          </zeroOrMore>
         </element>
       </zeroOrMore>
       <zeroOrMore>
