@@ -20,7 +20,9 @@ public class DatasetInjectorConstructor {
   private final Map<String, String> propValues = new HashMap<String, String>();
   private String datasetName;
   private String datasourceName;
-  private String projectId;
+  private String projectName;
+  private String displayCategory;
+  private String category;
   private Contact primaryContact;
   private Map<String,Map<String, String>> globalDatasetProperties;
 
@@ -44,8 +46,8 @@ public class DatasetInjectorConstructor {
   /*
    * Called at model construction time
    */
-  public void setProjectId(String projectId) {
-    this.projectId = projectId;
+  public void setProjectName(String projectName) {
+    propValues.put("projectName", projectName);
   }
 
   /**
@@ -143,9 +145,27 @@ public class DatasetInjectorConstructor {
     di.addPropValues(propValues);
     di.setDatasetName(datasetName);
     di.setDatasourceName(datasourceName);
-    di.setProjectId(projectId);
+    di.setProjectName(projectName);
+    di.setCategory(category);
+    di.setDisplayCategory(displayCategory);
     di.setPrimaryContact(primaryContact);
     di.setGlobalDatasetProperties(globalDatasetProperties);
     return di;
   }
+
+    public String getDisplayCategory() {
+        return displayCategory;
+    }
+
+    public void setDisplayCategory(String displayCategory) {
+        this.displayCategory = displayCategory;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

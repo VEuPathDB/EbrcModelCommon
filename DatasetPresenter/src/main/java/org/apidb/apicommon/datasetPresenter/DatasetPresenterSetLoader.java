@@ -179,11 +179,10 @@ public class DatasetPresenterSetLoader {
       rs = stmt.executeQuery();
       while (rs.next()) {
         String name = rs.getString(1);
-        Integer taxonId = rs.getInt(2);
+        Integer datasourceId = rs.getInt(2);
         String type = rs.getString(3);
         String subtype = rs.getString(4);
         Boolean isSpeciesScope = rs.getBoolean(5);
-        String projectId = rs.getString(6);
 
         // track all dataset names for presenter
         datasetPresenter.addDatasetNameToList(name);
@@ -197,27 +196,27 @@ public class DatasetPresenterSetLoader {
                             + name + "\"");
           datasetNamesFoundLocal.add(name);
         }
-        if (!datasetPresenter.getFoundInDb()) {
-          datasetPresenter.setFoundInDb();
-          first_type = type;
-          first_subtype = subtype;
-          first_isSpeciesScope = isSpeciesScope;
-          datasetPresenter.setType(type);
-          datasetPresenter.setSubtype(subtype);
-          datasetPresenter.setIsSpeciesScope(isSpeciesScope);
-          datasetPresenter.setProjectId(projectId);
-        } else {
-          if ((first_type == null && type != null)
-                  || (first_type != null && !type.equals(first_type))
-                  || (first_subtype == null && subtype != null)
-                  || (first_subtype != null && !subtype.equals(first_subtype))
-                  || (first_isSpeciesScope != isSpeciesScope))
-            throw new UserException(
-                    "DatasetPresenter with datasetNamePattern=\""
-                            + namePattern
-                            + "\" matches rows in the Dataset table that disagree in their type, subtype or is_species_scope columns");
+        // if we have 0 or 1 injectors, validate that all datasources agree with each other
+        // (if we have 2 or more injectors, we might have diverse datasources)
+        if (datasetPresenter.getDatasetInjectors().size() < 2) {
+          if (!datasetPresenter.getFoundInDb()) {
+            datasetPresenter.setFoundInDb();
+            first_type = type;
+            first_subtype = subtype;
+            first_isSpeciesScope = isSpeciesScope;
+          } else {
+            if ((first_type == null && type != null)
+                    || (first_type != null && !type.equals(first_type))
+                    || (first_subtype == null && subtype != null)
+                    || (first_subtype != null && !subtype.equals(first_subtype))
+                    || (first_isSpeciesScope != isSpeciesScope))
+              throw new UserException(
+                      "DatasetPresenter with datasetNamePattern=\""
+                              + namePattern
+                              + "\" matches rows in the Dataset table that disagree in their type, subtype or is_species_scope columns");
+          }
         }
-        datasetPresenter.addNameTaxonPair(new NameTaxonPair(name, taxonId));
+        datasetPresenter.addDatasource(new Datasource(datasourceId, name));
       }
       if (datasetPresenter.getFoundInDb())
         datasetNamesFoundInDb.addAll(datasetNamesFoundLocal);
@@ -279,7 +278,13 @@ public class DatasetPresenterSetLoader {
     }
   }
 
-  void loadDatasetPresenterSet() {
+  void loadDatasetPresenterSet() throws SQLException {
+    PreparedStatement contactStmt = getContactStmt();
+    PreparedStatement publicationStmt = getPublicationStmt();
+    PreparedStatement pubmedQuery = getPubmedQuery();
+    PreparedStatement linkStmt = getLinkStmt();
+    PreparedStatement historyStmt = getHistoryStmt();
+
     System.err.println("Loading DatasetPresenters into " + instance);
     try {
       PreparedStatement presenterStmt = getPresenterStmt();
@@ -296,8 +301,24 @@ public class DatasetPresenterSetLoader {
 
         loadDatasetPresenter(datasetPresenterId, datasetFullDigest, datasetPresenter, presenterStmt);
 
+        for (Contact contact : datasetPresenter.getContacts(allContacts)) {
+          loadContact(datasetPresenterId, contact, contactStmt);
+        }
+
+        for (Publication pub : datasetPresenter.getPublications()) {
+          loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
+        }
+
+        for (HyperLink link : datasetPresenter.getLinks()) {
+          loadLink(datasetPresenterId, link, linkStmt);
+        }
+
+        for (History history : datasetPresenter.getHistories()) {
+          loadHistory(datasetPresenterId, history, historyStmt);
+        }
+
         for (DatasetInjector di : datasetPresenter.getDatasetInjectors())
-        loadDatasetInjector(datasetPresenter, di, datasetPresenterId);
+          loadDatasetInjector(datasetPresenter, di, datasetPresenterId);
       }
 
       System.err.println("Loading done");
@@ -315,12 +336,9 @@ public class DatasetPresenterSetLoader {
   }
 
   void loadDatasetInjector(DatasetPresenter datasetPresenter, DatasetInjector datasetInjector, String datasetPresenterId) throws SQLException {
-    PreparedStatement contactStmt = getContactStmt();
-    PreparedStatement publicationStmt = getPublicationStmt();
-    PreparedStatement pubmedQuery = getPubmedQuery();
+
     PreparedStatement referenceStmt = getReferenceStmt();
     PreparedStatement linkStmt = getLinkStmt();
-    PreparedStatement historyStmt = getHistoryStmt();
     PreparedStatement nameTaxonStmt = getNameTaxonStmt();
     PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt();
 
@@ -328,29 +346,15 @@ public class DatasetPresenterSetLoader {
     for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
 
       String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
-      loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectId(), pv.getKey(), dataValue, injectorPropertiesStmt);
+      loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), pv.getKey(), dataValue, injectorPropertiesStmt);
+    }
+
+    for (ModelReference ref : datasetPresenter.getModelReferences()) {
+      loadModelReference(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), ref, referenceStmt);
     }
 
     String type = datasetPresenter.getType();
     String subtype = datasetPresenter.getSubtype();
-
-
-    for (Contact contact : datasetPresenter.getContacts(allContacts)) {
-      loadContact(datasetPresenterId, contact, contactStmt);
-    }
-
-    for (Publication pub : datasetPresenter.getPublications()) {
-      loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
-    }
-
-
-    for (ModelReference ref : datasetPresenter.getModelReferences()) {
-      loadModelReference(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectId(), ref, referenceStmt);
-    }
-
-    for (History history : datasetPresenter.getHistories()) {
-      loadHistory(datasetPresenterId, history, historyStmt);
-    }
 
     if (type != null) {
       String key = type + "." + subtype;
@@ -360,29 +364,39 @@ public class DatasetPresenterSetLoader {
       }
     }
 
-    for (HyperLink link : datasetPresenter.getLinks()) {
-      loadLink(datasetPresenterId, link, linkStmt);
-    }
-
-    for (NameTaxonPair pair : datasetPresenter.getNameTaxonPairs()) {
+    for (Datasource pair : datasetPresenter.getDatasources()) {
       loadNameTaxonPair(datasetPresenterId, pair, nameTaxonStmt);
     }
+  }
 
+  PreparedStatement getDatasourceStmt() throws SQLException {
+    String table = config.getSchema() + ".DatasetDatasource" + suffix;
+    String sql = "INSERT INTO "
+            + table
+            + " (dataset_datasource_id, dataset_presenter_id, category, display_category)"
+            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
+    return dbConnection.prepareStatement(sql);
+  }
+
+  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String displayCategory) throws SQLException {
+
+    PreparedStatement stmt = getDatasourceStmt();
+
+    int i = 1;
+    stmt.setInt(i++, datasourceId);
+    stmt.setString(i++, datasetPresenterId);
+    stmt.setString(i++, category);
+    stmt.setString(i++, displayCategory);
   }
 
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
     String sql;
+    sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope"
+            + " FROM " + table
+            + " WHERE ds.NAME like ?";
 
-    if (instance.substring(0, 4).equals("eupa")){
-	sql = "SELECT name, taxon_id, type, subtype, is_species_scope, project_id " +
-         "FROM " + table + " WHERE name like ?";
-    } else {
-	sql = "SELECT ds.name, ds.taxon_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
-        + "FROM " + table
-        + " ds, core.ProjectInfo pi WHERE pi.project_id = ds.row_project_id and ds.NAME like ?";
-    }
     return dbConnection.prepareStatement(sql);
   }
 
@@ -415,7 +429,6 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenter.getCaveat());
     stmt.setString(i++, datasetPresenter.getAcknowledgement());
     stmt.setString(i++, datasetPresenter.getReleasePolicy());
-    stmt.setString(i++, datasetPresenter.getDisplayCategory());
     stmt.setString(i++, datasetPresenter.getType());
 
     String subtype = datasetPresenter.getSubtype() == null ? "" : datasetPresenter.getSubtype();
@@ -433,11 +446,17 @@ public class DatasetPresenterSetLoader {
 
     stmt.setInt(i++, buildNumberIntroduced.intValue());
 
-    String datasetClassCategory = datasetPresenter.getPropValue("datasetClassCategory");
-    stmt.setString(i++, datasetClassCategory);
-    stmt.setString(i++, projectId);
-
     stmt.execute();
+
+    for (Datasource datasource : datasetPresenter.getDatasources()) {
+      DatasetInjector di = datasetPresenter.findInjectorByName(datasource.getName());
+      loadDatasource(datasource.getDatasourceId(),
+              datasetPresenterId,
+              di == null || di.getCategory() == null?  datasetPresenter.getPropValue("datasetClassCategory") : di.getCategory(),
+              di == null|| di.getDisplayCategory() == null? datasetPresenter.getDisplayCategory() : di.getDisplayCategory()
+      );
+    }
+    datasetPresenter.validate();
   }
 
   PreparedStatement getContactStmt() throws SQLException {
@@ -549,11 +568,11 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadNameTaxonPair(String datasetPresenterId, NameTaxonPair pair,
+  private void loadNameTaxonPair(String datasetPresenterId, Datasource pair,
       PreparedStatement stmt) throws SQLException {
     stmt.setString(1, datasetPresenterId);
     stmt.setString(2, pair.getName());
-    stmt.setInt(3, pair.getTaxonId());
+    stmt.setInt(3, pair.getDatasourceId());
     stmt.execute();
   }
 
@@ -739,7 +758,7 @@ public class DatasetPresenterSetLoader {
         dpsl.loadDatasetPresenterSet();
         dpsl.schemaDropConstraints();
       }
-    } catch (UserException ex) {
+    } catch (UserException | SQLException ex) {
       System.err.println(NL + "Error: " + ex.getMessage() + NL);
       System.exit(1);
     }

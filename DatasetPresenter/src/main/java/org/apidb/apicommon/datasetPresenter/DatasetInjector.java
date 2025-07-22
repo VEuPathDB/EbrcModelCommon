@@ -29,8 +29,10 @@ public abstract class DatasetInjector {
 
   private final Map<String, String> _propValues = new HashMap<>();
   private String _datasetName;
-  private String datasourceName;
-  private String projectId;
+  private String _datasourceName;
+  private String _projectName;
+  private String _displayCategory;
+  private String _category;
   private Contact _primaryContact;
   private DatasetInjectorSet _datasetInjectorSet;
   private final Map<String, ModelReference> _modelReferences = new HashMap<>();
@@ -542,18 +544,34 @@ public abstract class DatasetInjector {
   }
 
     public String getDatasourceName() {
-        return datasourceName;
+        return _datasourceName;
     }
 
     public void setDatasourceName(String datasourceName) {
-        this.datasourceName = datasourceName;
+        this._datasourceName = datasourceName;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProjectName() {
+        return _projectName;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setProjectName(String projectId) {
+        this._projectName = projectId;
+    }
+
+    public String getDisplayCategory() {
+        return _displayCategory;
+    }
+
+    public void setDisplayCategory(String displayCategory) {
+        this._displayCategory = displayCategory;
+    }
+
+    public String getCategory() {
+        return _category;
+    }
+
+    public void setCategory(String category) {
+        this._category = category;
     }
 }

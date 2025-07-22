@@ -131,8 +131,8 @@ public class DatasetPresenterSet {
         DatasetPresenter overriddenDp = getDatasetPresenter(override);
         InternalDataset overriddenIntD = _internalDatasets.get(override);
         if (overriddenDp != null) {
-          if (!overriddenDp.containsNameTaxonPair(datasetName)) System.err.println("WARN:  " + partialErrMsg + " but the overridden dataset is not found in this instance");
-          overriddenDp.removeNameTaxonPair(datasetName);
+          if (!overriddenDp.containsDatasource(datasetName)) System.err.println("WARN:  " + partialErrMsg + " but the overridden dataset is not found in this instance");
+          overriddenDp.removeDatasource(datasetName);
         } else if (overriddenIntD != null) {
           if (!overriddenIntD.containsNameFromDb(datasetName)) System.err.println("WARN:  " + partialErrMsg + " but the overridden InternalDataset is not found in this instance"); 
         } else {
