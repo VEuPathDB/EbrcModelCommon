@@ -181,8 +181,8 @@ public class DatasetPresenter {
     return override;
   }
 
-  public void addDatasource(Datasource info) {
-    datasources.put(info.getName(), info);
+  public void addDatasource(Datasource ds) {
+    datasources.put(ds.getName(), ds);
   }
   
   public void removeDatasource(String name) {
@@ -461,6 +461,7 @@ public class DatasetPresenter {
     
     for (String key : propsFromFile.keySet()) {
       if (key.equals("datasetLoaderName")) continue;  // the dataset name; redundant
+      if (key.equals("projectName")) continue;  // redundant
       if (propValues.containsKey(key) ) throw new UserException("datasetPresenter '" + getDatasetName()
           + "' has a property duplicated from dataset property file provided by the dataset class: " + key);
       propValues.put(key, propsFromFile.get(key));
@@ -502,17 +503,21 @@ public class DatasetPresenter {
 
     if (dis.isEmpty()) return null;
 
+    // if just one injector, and it doesn't declare a datasourceName, it inherits the presenter name
     if (dis.size() == 1) {
       DatasetInjector di = dis.get(0);
       String nm = di.getDatasourceName();
       if (nm == null) return di;
     }
 
+    // handle multiple injectors case
     for (DatasetInjector di : dis) {
       String nm = di.getDatasourceName();
-      if (nm == null) throw new UserException ("Not allowed to have an injector with no datasourceName attribute");
+      if (nm == null) throw new UserException ("When multiple injectors, not allowed to have an injector with no datasourceName attribute");
       if (nm.equals(name)) return di;
     }
+
+    // we didn't find the requested name
     throw new UserException("In presenter " + getId() +
             " no injector found with name: " + name);
   }
@@ -521,9 +526,9 @@ public class DatasetPresenter {
     if (datasetInjectorConstructors.size() > 1) {
       String msg = "This presenter has more than one injector. ";
       if (getPropValue("datasetClassCategory") != null && !getPropValue("datasetClassCategory").isEmpty())
-        throw new UserException(msg + "It may not inherit a category from the dataset class.");
+        throw new UserException(msg + "It is not allowed to acquire a datasetClassCategory from the prop file.");
       if (displayCategory != null && !displayCategory.isEmpty())
-        throw new UserException(msg + "It may not have a 'displayCategory' attribute.");
+        throw new UserException(msg + "It it not allowed to have a 'displayCategory' attribute.");
       if (datasetNamesFromPattern.size() != datasetInjectorConstructors.size())
         throw new UserException(msg + "The number of injectors must match the number of dataset names in the pattern");
       for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
