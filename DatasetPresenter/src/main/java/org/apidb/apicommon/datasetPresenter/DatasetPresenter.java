@@ -435,13 +435,9 @@ public class DatasetPresenter {
 
     void addIdentityProperty() {
         NamedValue presenterId = new NamedValue("presenterId", getId());
-        NamedValue datasetDigest = new NamedValue("datasetDigest", getDigest());
         addProp(presenterId);
-        addProp(datasetDigest);
-        for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+        for (DatasetInjectorConstructor dic : datasetInjectorConstructors)
             dic.addProp(presenterId);
-            dic.addProp(datasetDigest);
-        }
     }
 
   

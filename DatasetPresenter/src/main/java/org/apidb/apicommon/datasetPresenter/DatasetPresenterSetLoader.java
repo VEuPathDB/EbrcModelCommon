@@ -339,7 +339,6 @@ public class DatasetPresenterSetLoader {
 
     PreparedStatement referenceStmt = getReferenceStmt();
     PreparedStatement linkStmt = getLinkStmt();
-    PreparedStatement nameTaxonStmt = getNameTaxonStmt();
     PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt();
 
     Map<String, String> injectorPropValues = datasetInjector.getPropValues();
@@ -362,10 +361,6 @@ public class DatasetPresenterSetLoader {
       for (HyperLink link : defaultHyperLinks.getHyperLinksFromTypeSubtype(key)) {
         loadLink(datasetPresenterId, link, linkStmt);
       }
-    }
-
-    for (Datasource pair : datasetPresenter.getDatasources()) {
-      loadNameTaxonPair(datasetPresenterId, pair, nameTaxonStmt);
     }
   }
 
@@ -558,22 +553,6 @@ public class DatasetPresenterSetLoader {
         throw(e);
     }
     
-  }
-
-  PreparedStatement getNameTaxonStmt() throws SQLException {
-    String table = config.getSchema() + ".DatasetNameTaxon" + suffix;
-    String sql = "INSERT INTO " + table
-        + " (dataset_taxon_id, dataset_presenter_id, name, taxon_id)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?)";
-    return dbConnection.prepareStatement(sql);
-  }
-
-  private void loadNameTaxonPair(String datasetPresenterId, Datasource pair,
-      PreparedStatement stmt) throws SQLException {
-    stmt.setString(1, datasetPresenterId);
-    stmt.setString(2, pair.getName());
-    stmt.setInt(3, pair.getDatasourceId());
-    stmt.execute();
   }
 
   PreparedStatement getReferenceStmt() throws SQLException {

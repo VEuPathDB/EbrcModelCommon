@@ -127,6 +127,9 @@
 	        <attribute name="datasourceName"/>
               </optional>
               <optional>
+	        <attribute name="category"/>
+              </optional>
+              <optional>
 	        <attribute name="displayCategory"/>
               </optional>
 	      <zeroOrMore>
