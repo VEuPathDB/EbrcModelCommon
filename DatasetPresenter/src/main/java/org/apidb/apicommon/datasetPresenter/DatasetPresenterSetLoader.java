@@ -311,14 +311,6 @@ public class DatasetPresenterSetLoader {
           loadPublication(datasetPresenterId, pub, publicationStmt, pubmedQuery);
         }
 
-        if (type != null) {
-          String key = type + "." + subtype;
-
-          for (HyperLink link : defaultHyperLinks.getHyperLinksFromTypeSubtype(key)) {
-            loadLink(datasetPresenterId, link, linkStmt);
-          }
-        }
-
         for (HyperLink link : datasetPresenter.getLinks()) {
           loadLink(datasetPresenterId, link, linkStmt);
         }
@@ -349,12 +341,18 @@ public class DatasetPresenterSetLoader {
 
     PreparedStatement referenceStmt = getReferenceStmt();
     PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt();
+    PreparedStatement linkStmt = getLinkStmt();
 
     Map<String, String> injectorPropValues = datasetInjector.getPropValues();
     for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
 
       String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
       loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), pv.getKey(), dataValue, injectorPropertiesStmt);
+    }
+
+    if (datasetInjector.getCategory() != null) {
+      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(datasetInjector.getCategory()))
+        loadLink(datasetPresenterId, link, linkStmt);
     }
 
     for (ModelReference ref : datasetPresenter.getModelReferences()) {

@@ -12,14 +12,11 @@ public class HyperLinks {
   String xmlFileName;
   
     public void addHyperLink(HyperLink link) {
-        String type = link.getType();
-        String subType = link.getSubtype();
 
-        String key = type + "." + subType;
+        String key = link.getCategory();
 
-
-        if(type == null && subType == null) {
-            throw new UserException("Invalid XML file " + xmlFileName);
+        if(key == null) {
+            throw new UserException("Invalid XML file.  Link '" + link.getUrl() + "' is missing 'category'" + xmlFileName);
         }
 
         if(hyperlinks.containsKey(key)) {
@@ -32,7 +29,7 @@ public class HyperLinks {
         }
     }
   
-  List<HyperLink> getHyperLinksFromTypeSubtype(String key) {
+  List<HyperLink> getHyperLinksFromCategory(String key) {
       if(hyperlinks.containsKey(key)) {
           return hyperlinks.get(key);
       }
