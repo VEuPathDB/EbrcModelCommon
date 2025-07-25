@@ -36,7 +36,6 @@ sub createTables {
       create table $schema.DatasetPresenter$suffix (
         dataset_presenter_id         varchar(15),
         name                         varchar(200),
-        project_id                   varchar(40),
         dataset_name_pattern         varchar(200),
         display_name                 varchar(200),
         short_display_name           varchar(200),
@@ -49,10 +48,7 @@ sub createTables {
         acknowledgement              varchar(4000),
         release_policy               varchar(4000),
         display_category             varchar(60),
-        type                         varchar(100),
-        subtype                      varchar(100),
         category                     varchar(100),
-        is_species_scope             numeric(1),
         build_number_introduced      numeric(5),
         dataset_sha1_digest          varchar(50),
         constraint DatasetPresenter${suffix}_pk primary key (dataset_presenter_id)
@@ -139,21 +135,26 @@ sub createTables {
   #######################################################
 
   $sql = "
-      create table $schema.DatasetNameTaxon$suffix (
-        dataset_taxon_id          numeric(12),
+      create table $schema.DatasetDatasource$suffix (
+        dataset_datasource_id          numeric(12),
+        datasource_id          varchar(15),
         dataset_presenter_id      varchar(15),
-        taxon_id                  numeric(12),
-        name                      varchar(200),
-        constraint DatasetNameTaxon${suffix}_pk primary key (dataset_taxon_id)
+        category                  varchar(200),
+        display_category          varchar(200),
+        project_id                varchar(20),
+        constraint DatasetDatasource${suffix}_pk primary key (dataset_datasource_id)
       )";
   runSql($dbh, $sql, 1);
 
-  $sql = "create sequence $schema.DatasetNameTaxon${suffix}_sq";
+  $sql = "create sequence $schema.DatasetDatasource${suffix}_sq";
   runSql($dbh, $sql, 1);
 
   $sql = "create index dsntix_${suffix}
             on ${schema}.DatasetNameTaxon${suffix} (name, dataset_presenter_id)
          ";
+  runSql($dbh, $sql, 1);
+
+  $sql = "ALTER TABLE ${schema}.DatasetNameTaxon${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (datasource_id, dataset_presenter_id);
   runSql($dbh, $sql, 1);
 
   #######################################################
