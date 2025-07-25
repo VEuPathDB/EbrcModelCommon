@@ -4,10 +4,12 @@ package org.apidb.apicommon.datasetPresenter;
 public class Datasource {
   String name;
   Integer datasourceId;
+  String projectId;
 
-  public Datasource(Integer datasourceId, String name) {
+  public Datasource(Integer datasourceId, String name, String projectId) {
     this.name = name;
     this.datasourceId = this.datasourceId;
+    this.projectId = projectId;
   }
   
   String getName() {
@@ -18,4 +20,5 @@ public class Datasource {
     return datasourceId;
   }
 
+  String getProjectId() { return projectId; }
 }

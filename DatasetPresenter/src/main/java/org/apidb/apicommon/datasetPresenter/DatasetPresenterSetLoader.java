@@ -183,6 +183,7 @@ public class DatasetPresenterSetLoader {
         String type = rs.getString(3);
         String subtype = rs.getString(4);
         Boolean isSpeciesScope = rs.getBoolean(5);
+        String projectId = rs.getString(6);
 
         // track all dataset names for presenter
         datasetPresenter.addDatasetNameToList(name);
@@ -216,7 +217,7 @@ public class DatasetPresenterSetLoader {
                               + "\" matches rows in the Dataset table that disagree in their type, subtype or is_species_scope columns");
           }
         }
-        datasetPresenter.addDatasource(new Datasource(datasourceId, name));
+        datasetPresenter.addDatasource(new Datasource(datasourceId, name, projectId));
       }
       if (datasetPresenter.getFoundInDb())
         datasetNamesFoundInDb.addAll(datasetNamesFoundLocal);
@@ -364,12 +365,12 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetDatasource" + suffix;
     String sql = "INSERT INTO "
             + table
-            + " (dataset_datasource_id, dataset_presenter_id, category, display_category)"
-            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
+            + " (datasource_id, dataset_presenter_id, category, display_category, project_id)"
+            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
-  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String displayCategory) throws SQLException {
+  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String displayCategory, String projectId) throws SQLException {
 
     PreparedStatement stmt = getDatasourceStmt();
 
@@ -378,15 +379,16 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenterId);
     stmt.setString(i++, category);
     stmt.setString(i++, displayCategory);
+    stmt.setString(i++, projectId);
   }
 
 
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
     String sql;
-    sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope"
-            + " FROM " + table
-            + " WHERE ds.NAME like ?";
+    sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id"
+            + "FROM " + table
+            + " ds, core.ProjectInfo pi WHERE pi.project_id = ds.row_project_id and ds.NAME like ?";
 
     return dbConnection.prepareStatement(sql);
   }
@@ -444,7 +446,8 @@ public class DatasetPresenterSetLoader {
       loadDatasource(datasource.getDatasourceId(),
               datasetPresenterId,
               di == null || di.getCategory() == null?  datasetPresenter.getPropValue("datasetClassCategory") : di.getCategory(),
-              di == null|| di.getDisplayCategory() == null? datasetPresenter.getDisplayCategory() : di.getDisplayCategory()
+              di == null|| di.getDisplayCategory() == null? datasetPresenter.getDisplayCategory() : di.getDisplayCategory(),
+              datasource.getProjectId()
       );
     }
     datasetPresenter.validate();
