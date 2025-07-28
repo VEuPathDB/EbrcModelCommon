@@ -510,7 +510,7 @@ public class DatasetPresenter {
       if (nm == null) return di;
     }
 
-    // handle multiple injectors case
+    // compare name against injectors name
     for (DatasetInjector di : dis) {
       String nm = di.getDatasourceName();
       if (nm == null) throw new UserException ("When multiple injectors, not allowed to have an injector with no datasourceName attribute");
