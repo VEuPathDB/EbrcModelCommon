@@ -1991,7 +1991,9 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM (
             SELECT DISTINCT dd.dataset_presenter_id as dataset_id
               , CASE when tn.organism_name is null then null
-                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>'
+	       -- italicize first 2 words
+                ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
+SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2)) + 1)
                 END as org
             FROM apidbtuning.datasetdatasource dd
               LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id

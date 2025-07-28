@@ -249,54 +249,6 @@
 
     </sqlQuery>
 
-    <sqlQuery name="ByType">
-      <testParamValues>
-        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-        <paramValue name="dataset_type">transcript_expression</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.record_class"/>
-      <paramRef ref="datasetParams.dataset_type"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp, apidbtuning.datasetdatasource dd
-          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
-            AND ref.record_type = $$record_class$$
-            AND dsp.type = $$dataset_type$$
-            AND dd.project_id = '@PROJECT_ID@'
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <sqlQuery name="ByTypeAndSubtype">
-      <testParamValues>
-        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-        <paramValue name="dataset_type">transcript_expression</paramValue>
-        <paramValue name="dataset_subtype">array</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.record_class"/>
-      <paramRef ref="datasetParams.dataset_type"/>
-      <paramRef ref="datasetParams.dataset_subtype"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp
-          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
-            AND ref.record_type = $$record_class$$
-            AND dsp.type = $$dataset_type$$
-            AND (dsp.subtype = $$dataset_subtype$$
-               OR dsp.display_category = $$dataset_subtype$$)
-            AND dsp.project_id = '@PROJECT_ID@'
-        ]]>
-      </sql>
-    </sqlQuery>
 
     <sqlQuery name="ByCategoryAndSubtype">
       <testParamValues>
