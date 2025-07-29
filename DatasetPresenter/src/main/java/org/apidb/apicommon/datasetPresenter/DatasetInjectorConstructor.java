@@ -14,29 +14,47 @@ import org.gusdb.fgputil.xml.NamedValue;
  */
 
 public class DatasetInjectorConstructor {
-  final static String nl = System.getProperty("line.separator");
+  final static String nl = System.lineSeparator();
 
   private String datasetInjectorClassName;
-  private Map<String, String> propValues = new HashMap<String, String>();
+  private final Map<String, String> propValues = new HashMap<String, String>();
   private String datasetName;
+  private String datasourceName;
+  private String projectName;
+  private String displayCategory;
+  private String category;
   private Contact primaryContact;
   private Map<String,Map<String, String>> globalDatasetProperties;
 
   /**
    * Set the name of the DatasetInjector subclass to construct. Must be a
    * subclass of DatasetInjector.
-   * 
+   * <p>
    * Called at model construction time.
    */
   public void setClassName(String datasetInjectorClassName) {
     this.datasetInjectorClassName = datasetInjectorClassName;
   }
 
+  /*
+   * Called at model construction time
+   */
+  public void setDatasourceName(String datasourceName) {
+    this.datasourceName = datasourceName;
+  }
+
+  /*
+   * Called at model construction time
+   */
+  public void setProjectName(String projectName) {
+    propValues.put("projectName", projectName);
+  }
+
   /**
    * Add a property value to pass to the constructed DatasetInjector subclass.
    * Property values added here in addition to those inherited by the containing
    * DatasetPresenter. Must not conflict with existing properties.
-   * 
+   * <p>
    * Called at model construction time.
    * 
    */
@@ -51,7 +69,7 @@ public class DatasetInjectorConstructor {
   /**
    * Inherit property values from a DatasetPresenter (typically the containing
    * one). Must not conflict with existing properties.
-   * 
+   * <p>
    * Called at model construction time.
    * 
    * @param datasetPresenter
@@ -69,7 +87,7 @@ public class DatasetInjectorConstructor {
 
   /**
    * Provide the property values added to this object.
-   * 
+   * <p>
    * Called at processing time.
    * 
    * @return Map of key-value pairs
@@ -106,12 +124,12 @@ public class DatasetInjectorConstructor {
   /**
    * Use reflection to construct a subclass of DatasetInjector. Initialize the
    * subclass's property values with those from this object.
-   * 
+   * <p>
    * Called at processing time.
    */
   DatasetInjector getDatasetInjector() {
-    DatasetInjector di = null;
-    Class<? extends DatasetInjector> injectorClass = null;
+    DatasetInjector di;
+    Class<? extends DatasetInjector> injectorClass;
     try {
       injectorClass = Class.forName(datasetInjectorClassName).asSubclass(
           DatasetInjector.class);
@@ -126,8 +144,28 @@ public class DatasetInjectorConstructor {
 
     di.addPropValues(propValues);
     di.setDatasetName(datasetName);
+    di.setDatasourceName(datasourceName);
+    di.setProjectName(projectName);
+    di.setCategory(category);
+    di.setDisplayCategory(displayCategory);
     di.setPrimaryContact(primaryContact);
     di.setGlobalDatasetProperties(globalDatasetProperties);
     return di;
   }
+
+    public String getDisplayCategory() {
+        return displayCategory;
+    }
+
+    public void setDisplayCategory(String displayCategory) {
+        this.displayCategory = displayCategory;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
