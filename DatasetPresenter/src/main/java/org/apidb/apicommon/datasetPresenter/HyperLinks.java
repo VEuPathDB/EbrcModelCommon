@@ -10,7 +10,8 @@ public class HyperLinks {
   
   Map<String, List<HyperLink>> hyperlinks = new HashMap<String, List<HyperLink>>();
   String xmlFileName;
-  
+
+    // called from digester
     public void addHyperLink(HyperLink link) {
 
         String key = link.getCategory();

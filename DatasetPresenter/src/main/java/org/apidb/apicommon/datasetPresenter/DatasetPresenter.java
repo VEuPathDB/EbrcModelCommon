@@ -25,7 +25,7 @@ public class DatasetPresenter {
 
   // use instance variables for properties that have no chance of being
   // injected.
-  private String displayCategory;
+  private String categoryOverride;
   private String protocol;
   private String usage;
   private String acknowledgement;
@@ -221,12 +221,12 @@ public class DatasetPresenter {
     return Float.valueOf(propValues.get("buildNumberRevised"));
   }
 
-  public void setDisplayCategory(Text displayCategory) {
-    this.displayCategory = displayCategory.getText();
+  public void setCategoryOverride(Text categoryOverride) {
+    this.categoryOverride = categoryOverride.getText();
   }
 
-  public String getDisplayCategory() {
-    return displayCategory;
+  public String getCategoryOverride() {
+    return categoryOverride;
   }
 
   public void setCaveat(Text caveat) {
@@ -527,13 +527,13 @@ public class DatasetPresenter {
       String msg = "This presenter has more than one injector. ";
       if (getPropValue("datasetClassCategory") != null && !getPropValue("datasetClassCategory").isEmpty())
         throw new UserException(msg + "It is not allowed to acquire a datasetClassCategory from the prop file.");
-      if (displayCategory != null && !displayCategory.isEmpty())
-        throw new UserException(msg + "It it not allowed to have a 'displayCategory' attribute.");
+      if (categoryOverride != null && !categoryOverride.isEmpty())
+        throw new UserException(msg + "It it not allowed to have a 'categoryOverride' attribute.");
       if (datasetNamesFromPattern.size() != datasetInjectorConstructors.size())
         throw new UserException(msg + "The number of injectors must match the number of dataset names in the pattern");
       for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
-        if (dic.getDatasetInjector().getDisplayCategory().isEmpty())
-          throw new UserException(msg + "Each injector is required to have a displayCategory");
+        if (dic.getDatasetInjector().getCategoryOverride().isEmpty())
+          throw new UserException(msg + "Each injector is required to have a categoryOverride");
         String nm = dic.getDatasetInjector().getDatasourceName();
         if (!datasetNamesFromPattern.contains(nm))
           throw new UserException(msg + "Datasource name '" + nm + "' from one of the injectors is not found in the names from pattern");

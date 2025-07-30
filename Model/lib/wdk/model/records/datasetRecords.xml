@@ -991,18 +991,14 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="dataset_id" columnType="string"/>
       <sql excludeProjects="EuPathDB">
         <![CDATA[
-          select c.dataset_presenter_id, string_agg(newcategory, ',')
-          from (
-            select distinct dd.dataset_presenter_id, coalesce(dd.display_category, dd.category, dsp.display_category, dsp.category) as newcategory
-            from apidbtuning.datasetpresenter dsp,
-	    apidbtuning.datasetdatasource dd
-	    where dd.project_id = '@PROJECT_ID'
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
-	  ) c  
+          select dataset_presenter_id, string_agg(category, ',')
+          from apidbtuning.datasetdatasource
+	  where project_id = '@PROJECT_ID'
+	  group by dataset_presenter_id
           -- UNION
           -- SELECT DISTINCT
           --   CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-          --   null as newcategory
+          --   null as category
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
@@ -1470,7 +1466,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
           WHERE dd.project_id = '@PROJECT_ID@'
-          AND dsp.category != 'Link outs'
+          AND dd.category != 'Link outs'
           -- UNION
           -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
@@ -2690,8 +2686,8 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           SELECT dataset_id, category, organism, count(*) AS dataset_count
           FROM
             (
-              SELECT dsp.dataset_presenter_id AS dataset_id
-                , coalesce(o_dsp.display_category, o_dsp.category) AS category
+              SELECT dd.dataset_presenter_id AS dataset_id
+                , dd.category
                 , tn.name AS organism
               FROM
                 apidbtuning.organismattributes oa
@@ -2707,7 +2703,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 AND dd.taxon_id = tn.taxon_id
                 AND tn.name_class = 'scientific name'
                 AND dsp.type = 'genome'
-                AND o_dsp.category NOT IN ('Genomics', 'Link outs')
+                AND o_dd.category NOT IN ('Genomics', 'Link outs')
             ) t
           GROUP BY dataset_id, category, organism
           ORDER BY count(*) DESC

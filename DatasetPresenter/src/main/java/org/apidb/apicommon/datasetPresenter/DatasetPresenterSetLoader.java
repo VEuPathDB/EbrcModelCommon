@@ -351,8 +351,8 @@ public class DatasetPresenterSetLoader {
       loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), pv.getKey(), dataValue, injectorPropertiesStmt);
     }
 
-    if (datasetInjector.getCategory() != null) {
-      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(datasetInjector.getCategory()))
+    if (datasetInjector.getCategoryOverride() != null) {
+      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(datasetInjector.getCategoryOverride()))
         loadLink(datasetPresenterId, link, linkStmt);
     }
 
@@ -365,12 +365,12 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetDatasource" + suffix;
     String sql = "INSERT INTO "
             + table
-            + " (datasource_id, dataset_presenter_id, category, display_category, project_id)"
-            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
+            + " (datasource_id, dataset_presenter_id, category, project_id)"
+            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
-  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String displayCategory, String projectId) throws SQLException {
+  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String projectId) throws SQLException {
 
     PreparedStatement stmt = getDatasourceStmt();
 
@@ -378,7 +378,7 @@ public class DatasetPresenterSetLoader {
     stmt.setInt(i++, datasourceId);
     stmt.setString(i++, datasetPresenterId);
     stmt.setString(i++, category);
-    stmt.setString(i++, displayCategory);
+
     stmt.setString(i++, projectId);
   }
 
@@ -399,9 +399,9 @@ public class DatasetPresenterSetLoader {
         " (dataset_presenter_id, dataset_sha1_digest, name, dataset_name_pattern, " +
         "display_name, short_display_name, short_attribution, summary, " +
         "protocol, usage, description, caveat, acknowledgement, release_policy, " +
-        "display_category, type, subtype, is_species_scope, build_number_introduced, " +
-        "category, project_id)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "type, subtype, is_species_scope, build_number_introduced, " +
+        "project_id)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -443,10 +443,12 @@ public class DatasetPresenterSetLoader {
 
     for (Datasource datasource : datasetPresenter.getDatasources()) {
       DatasetInjector di = datasetPresenter.findInjectorByName(datasource.getName());
+      String dpCategory = datasetPresenter.getPropValue("datasetClassCategory");
+      if (datasetPresenter.getCategoryOverride() != null) dpCategory = datasetPresenter.getCategoryOverride();
+      String diCategory = di == null || di.getCategoryOverride() == null? null : di.getCategoryOverride();
       loadDatasource(datasource.getDatasourceId(),
               datasetPresenterId,
-              di == null || di.getCategory() == null?  datasetPresenter.getPropValue("datasetClassCategory") : di.getCategory(),
-              di == null|| di.getDisplayCategory() == null? datasetPresenter.getDisplayCategory() : di.getDisplayCategory(),
+              diCategory == null? dpCategory : diCategory,
               datasource.getProjectId()
       );
     }

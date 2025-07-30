@@ -31,8 +31,7 @@ public abstract class DatasetInjector {
   private String _datasetName;
   private String _datasourceName;
   private String _projectName;
-  private String _displayCategory;
-  private String _category;
+  private String _categoryOverride;
   private Contact _primaryContact;
   private DatasetInjectorSet _datasetInjectorSet;
   private final Map<String, ModelReference> _modelReferences = new HashMap<>();
@@ -559,19 +558,11 @@ public abstract class DatasetInjector {
         this._projectName = projectId;
     }
 
-    public String getDisplayCategory() {
-        return _displayCategory;
+    public String getCategoryOverride() {
+        return _categoryOverride;
     }
 
-    public void setDisplayCategory(String displayCategory) {
-        this._displayCategory = displayCategory;
-    }
-
-    public String getCategory() {
-        return _category;
-    }
-
-    public void setCategory(String category) {
-        this._category = category;
+    public void setCategoryOverride(String categoryOverride) {
+        this._categoryOverride = categoryOverride;
     }
 }

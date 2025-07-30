@@ -47,8 +47,6 @@ sub createTables {
         caveat                       varchar(4000),
         acknowledgement              varchar(4000),
         release_policy               varchar(4000),
-        display_category             varchar(60),
-        category                     varchar(100),
         build_number_introduced      numeric(5),
         dataset_sha1_digest          varchar(50),
         constraint DatasetPresenter${suffix}_pk primary key (dataset_presenter_id)
@@ -140,7 +138,6 @@ sub createTables {
         datasource_id          varchar(15),
         dataset_presenter_id      varchar(15),
         category                  varchar(200),
-        display_category          varchar(200),
         project_id                varchar(20),
         constraint DatasetDatasource${suffix}_pk primary key (dataset_datasource_id)
       )";

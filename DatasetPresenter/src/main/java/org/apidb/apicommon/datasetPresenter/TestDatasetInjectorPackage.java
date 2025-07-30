@@ -333,7 +333,7 @@ public class TestDatasetInjectorPackage {
     assertTrue(dp2.getCaveat().equals("a caveat"));
     assertTrue(dp2.getAcknowledgement().equals("an acknowledgement"));
     assertTrue(dp2.getProtocol().equals("a protocol"));
-    assertTrue(dp2.getDisplayCategory().equals("a displayCategory"));
+    assertTrue(dp2.getCategoryOverride().equals("a displayCategory"));
     assertTrue(dp2.getReleasePolicy().equals("a releasePolicy"));
     assertTrue(dp2.getContactIds().size() == 2);
     assertTrue(dp2.getPublications().size() == 2);

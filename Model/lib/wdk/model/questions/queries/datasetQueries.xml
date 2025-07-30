@@ -13,10 +13,9 @@
       <column name="dataset_id"/>
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
-            SELECT distinct dsp.dataset_presenter_id as dataset_id
-            FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            WHERE (dsp.category is null OR dsp.category != 'Link outs')
-	    AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+            SELECT distinct dd.dataset_presenter_id as dataset_id
+            FROM apidbtuning.datasetdatasource dd
+            WHERE (dd.category is null OR dd.category != 'Link outs')
             AND (dd.project_id = '@PROJECT_ID@' or `@PROJECT_ID` = 'UniDB')
             EXCEPT
             SELECT dataset_presenter_id as dataset_id
@@ -27,17 +26,15 @@
 
       <sql includeProjects="ClinEpiDB">
         <![CDATA[
-            SELECT distinct dsp.dataset_presenter_id as dataset_id
-            FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            WHERE (dsp.category is null OR dsp.category != 'Link outs')
-             AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+            SELECT distinct dd.dataset_presenter_id as dataset_id
+            FROM apidbtuning.datasetdatasource dd
+            WHERE (dd.category is null OR dd.category != 'Link outs')
              AND  dd.project_id = '@PROJECT_ID@'
-              and dsp.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+              and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
-            select distinct dsp.dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            where (dsp.category is null OR dsp.category != 'Link outs')
-            AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+            select distinct dd.dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where (dd.category is null OR dd.category != 'Link outs')
             and  dd.project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
           ]]>
@@ -45,10 +42,9 @@
 
       <sql includeProjects="MicrobiomeDB">
         <![CDATA[
-            select distinct dsp.dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            where (dsp.category is null OR dsp.category != 'Link outs')
-            AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+            select distinct dd.dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where (dd.category is null OR dd.category != 'Link outs')
             and dd.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
@@ -288,17 +284,16 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetpresenter dsp, apidbtuning.datasetdatasource dd, sres.taxonname tn
-          WHERE coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
-            AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+          FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
+          WHERE dd.category = $$dataset_category$$
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
             AND dd.project_id = '@PROJECT_ID@'
 	  UNION
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          SELECT DISTINCT dd.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
-          WHERE coalesce(dd.display_category, dd.category) = $$dataset_category$$
+          WHERE dd.category = $$dataset_category$$
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
@@ -394,11 +389,10 @@
         <column name="dataset_id"/>
         <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
           <![CDATA[
-            (select dsp.dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            where dsp.category is null OR dsp.category != 'Link outs'
+            (select dd.dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where dd.category is null OR dd.category != 'Link outs'
 	    and ('@PROJECT_ID' = 'UniDB' or dd.project_id = '@PROJECT_ID')
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
             MINUS
             select dataset_presenter_id as dataset_id
               from apidbtuning.datasetproperty 
@@ -413,20 +407,18 @@
 
         <sql includeProjects="ClinEpiDB">
           <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter, apidbtuning.datasetdatasource dd
-            where (dsp.category is null OR dsp.category != 'Link outs')
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
+            select distinct dd.dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where (dd.category is null OR dd.category != 'Link outs')
             and dd.project_id = '@PROJECT_ID@'
-            and dsp.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
+            and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter, apidbtuning.datasetdatasource dd
-            where (dsp.category is null OR dsp.category != 'Link outs')
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
+            select distinct dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where (dd.category is null OR dd.category != 'Link outs')
             and dd.project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true'
-	    and dsp.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
+	    and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
 	   UNION
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
@@ -437,10 +429,9 @@
 
         <sql includeProjects="MicrobiomeDB">
           <![CDATA[
-            select dataset_presenter_id as dataset_id
-            from apidbTuning.DatasetPresenter, apidbtuning.datasetdatasource dd
-            where (dsp.category is null OR dsp.category != 'Link outs')
-            and dsp.dataset_presenter_id = dd.dataset_presenter_id
+            select distinct dataset_presenter_id as dataset_id
+            from apidbtuning.datasetdatasource dd
+            where (dd.category is null OR dd.category != 'Link outs')
             and dd.project_id = '@PROJECT_ID@'
 	   UNION
 	      select user_dataset_id as dataset_id

@@ -26,7 +26,7 @@
 	    </element>
 	  </optional>
 	  <optional>
-	    <element name="displayCategory">
+	    <element name="categoryOverride">
 	      <text/>
 	    </element>
 	  </optional>
@@ -127,10 +127,7 @@
 	        <attribute name="datasourceName"/>
               </optional>
               <optional>
-	        <attribute name="category"/>
-              </optional>
-              <optional>
-	        <attribute name="displayCategory"/>
+	        <attribute name="categoryOverride"/>
               </optional>
 	      <zeroOrMore>
 		<element name="prop">

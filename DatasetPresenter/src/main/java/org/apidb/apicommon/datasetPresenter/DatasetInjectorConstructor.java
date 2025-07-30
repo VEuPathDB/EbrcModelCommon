@@ -21,8 +21,7 @@ public class DatasetInjectorConstructor {
   private String datasetName;
   private String datasourceName;
   private String projectName;
-  private String displayCategory;
-  private String category;
+  private String categoryOverride;
   private Contact primaryContact;
   private Map<String,Map<String, String>> globalDatasetProperties;
 
@@ -146,26 +145,18 @@ public class DatasetInjectorConstructor {
     di.setDatasetName(datasetName);
     di.setDatasourceName(datasourceName);
     di.setProjectName(projectName);
-    di.setCategory(category);
-    di.setDisplayCategory(displayCategory);
+    di.setCategoryOverride(categoryOverride);
     di.setPrimaryContact(primaryContact);
     di.setGlobalDatasetProperties(globalDatasetProperties);
     return di;
   }
 
-    public String getDisplayCategory() {
-        return displayCategory;
+    public String getCategoryOverride() {
+        return categoryOverride;
     }
 
-    public void setDisplayCategory(String displayCategory) {
-        this.displayCategory = displayCategory;
+    public void setCategoryOverride(String categoryOverride) {
+        this.categoryOverride = categoryOverride;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 }
