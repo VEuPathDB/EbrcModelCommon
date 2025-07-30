@@ -1482,7 +1482,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
           WHERE dsp.project_id = '@PROJECT_ID@'
-          AND dsp.category != 'Link outs'
+          AND COALESCE(dsp.category,'') != 'Link outs'
           -- UNION
           -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
