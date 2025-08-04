@@ -6,7 +6,7 @@
   <datasetPresenter name="GO_RSRC">
     <displayName><![CDATA[Gene Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Ontology</displayCategory>
+    <categoryOverride>Ontology</categoryOverride>
     <summary>GO annotations from The GO Consortium </summary>
     <description><![CDATA[
          The Gene Ontology (GO) project provides a controlled, species-independent vocabulary to describe genes and gene products
@@ -64,7 +64,7 @@
   <datasetPresenter name="enzymeDB_RSRC">
     <displayName><![CDATA[Enzyme Nomenclature Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>
+    <categoryOverride>Function</categoryOverride>
     <summary>EC Numbers from ENZYME</summary>
     <description><![CDATA[
          ENZYME is a repository of information relevant to the nomenclature of enzymes.
@@ -94,7 +94,7 @@
   <datasetPresenter name="PDBProteinSequences_RSRC">
     <displayName><![CDATA[The Worldwide Protein Data Bank (wwPDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>
+    <categoryOverride>Protein Structure</categoryOverride>
     <summary>PDB proteins of known 3-dimensional structure</summary>
     <description><![CDATA[
          The Worldwide Protein Data Bank (wwPDB) is the international collaboration that manages the deposition, 
@@ -127,7 +127,7 @@
   <datasetPresenter name="taxonomy_RSRC">
     <displayName><![CDATA[NCBI Taxonomy]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Taxonomy and Phylogeny</displayCategory>
+    <categoryOverride>Taxonomy and Phylogeny</categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The NCBI Taxonomy database is a curated set of names and classifications for all organisms that are represented in the Entrez databases. 
@@ -154,7 +154,7 @@
   <datasetPresenter name="SO_RSRC">
     <displayName><![CDATA[The Sequence Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[        
          The Sequence Ontology Project (SO) is a joint effort by genome annotation centres, including: WormBase, 
@@ -177,7 +177,7 @@
   <datasetPresenter name="MGED_Ontology_RSRC">
     <displayName><![CDATA[The MGED Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[
          Concepts, definitions, terms, and resources for standardized description of a microarray experiment in support of MAGE v.1. The MGED ontology is divided into: the MGED Core ontology which is intended to be stable and in synch with MAGE v.1; and the MGED Extended ontology which adds further associations and classes not found in MAGE v.1.
@@ -197,7 +197,7 @@
   <datasetPresenter name="InterproscanData_RSRC">
     <displayName><![CDATA[InterPro Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>
+    <categoryOverride>Function</categoryOverride>
     <summary>Protein domain assignments from the InterPro family of databases </summary>
     <description><![CDATA[        
          InterPro is a tool for classifying proteins based on their functional and structural characteristics. 
@@ -225,7 +225,7 @@
   <datasetPresenter name="NRDB_RSRC">
     <displayName><![CDATA[The GenBank Non-Redundant Protein Sequence Database (NRDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The GenBank non-redundant protein sequence database (NRDB) is a component of the NCBI BLAST databases 
@@ -256,7 +256,7 @@
   <datasetPresenter name="isolateVocabulary_RSRC">
     <displayName><![CDATA[Isolate Vocabulary]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The Isolate Vocabulary is manually curated by VEuPathDB staff and comprises broad text terms shared among the isolate records included in our databases. 
@@ -278,7 +278,7 @@
   <datasetPresenter name="Continents_RSRC">
     <displayName><![CDATA[IsolatesByCountry]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Ontology</displayCategory>
+    <categoryOverride>Ontology</categoryOverride>
     <summary></summary>
     <description><![CDATA[
         World Atlas is a geography website and is used by VEuPathDB for a country-continent lookup.
@@ -328,7 +328,7 @@
   <datasetPresenter name="OrthoMCL_RSRC">
     <displayName><![CDATA[OrthoMCL Ortholog Groups]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary>Ortholog group assignments as predicted by OrthoMCL<![CDATA[  ]]></summary>
     <description><![CDATA[
    The OrthoMCL algorithm clusters proteins into ortholog groups based on BLAST similarity across at least 150 genomes that span the tree of life. 
@@ -355,7 +355,7 @@
                     datasetNamePattern="%_IEDB%RSRC">
     <displayName><![CDATA[Immune Epitope Database (IEDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[IEDB epitopes.]]></summary>
     <description><![CDATA[The Immune Epitope Database (IEDB) catalogs an ever growing body of immunological information concerning B and T cell epitopes from infectious pathogens.
     	]]></description>
@@ -379,7 +379,7 @@
                     datasetNamePattern="%_isolates_genbank_RSRC">
     <displayName><![CDATA[Popset Records from GenBank ]]></displayName>
     <shortDisplayName></shortDisplayName> 
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[GenBank records containing sequence and metadata for popsets]]></summary>
     <description><![CDATA[
     Popset records comprise genotyped (e.g. single locus sequencing) parasite samples collected from the field, as well as associated meta data. 
@@ -411,7 +411,7 @@
   <datasetPresenter name="_dbEST_RSRC$">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[ESTs from dbEST.]]></summary>
     <description><![CDATA[ The Database of Expressed Sequence Tags (dbEST) is a GenBank database that contains, for a number of organisms,  sequence data and other information on "single-pass" cDNA sequences, 
     or "Expressed Sequence Tags". These sequences provide a resource to evaluate gene expression.  
@@ -432,7 +432,7 @@
 <datasetPresenter name="_GenbankEST_RSRC$">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[ESTs from dbEST.]]></summary>
     <description><![CDATA[ The Database of Expressed Sequence Tags (dbEST) is a GenBank database that contains, for a number of organisms,  sequence data and other information on "single-pass" cDNA sequences, 
     or "Expressed Sequence Tags". These sequences provide a resource to evaluate gene expression.  
@@ -453,7 +453,7 @@
   <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$">
     <displayName><![CDATA[Homology-derived Structures of Proteins (HSSP) ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory> 
+    <categoryOverride>Protein Structure</categoryOverride> 
     <summary></summary>
     <description><![CDATA[
 HSSP (homology-derived structures of proteins) is a derived database merging structural (2-D and 3-D) and sequence information (1-D).
@@ -475,7 +475,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC">
     <displayName><![CDATA[Protein Sequences from PDB]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>    
+    <categoryOverride>Protein Structure</categoryOverride>    
     <summary></summary>
     <description><![CDATA[
          Protein sequences from the Protein Data Bank (PDB) used for mapping protein sequences to crystal structures in PDB.        
@@ -491,7 +491,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="_dbxref_niprot_RSRC$">
     <displayName><![CDATA[The Universal Protein Resource (UniProt)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[UniProt protein sequence and functional annotation]]></summary>
     <description>The Universal Protein Resource (UniProt) is a comprehensive, high-quality and freely accessible 
     resource of protein sequence and functional information. UniProt comprises four components: Knowledgebase, Reference Clusters, Archive, and Metagenomics and Environmental Sequences. 
@@ -517,7 +517,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="_dbxref_gene2Entrez_RSRC$">
     <displayName><![CDATA[Entrez Gene]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[DBRefs for Entrez gene links.]]></summary>
     <description><![CDATA[Entrez Gene is a repository for gene-specific information curated by the National Center for Biotechnology Information. Entrez gene records may include nomenclature, 
     Reference Sequences (RefSeqs), maps, pathways, variations, phenotypes, and links to genome-, phenotype-, and locus-specific resources worldwide.]]></description>
@@ -536,7 +536,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$">
     <displayName><![CDATA[PubMed from NCBI]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>General</displayCategory>
+    <categoryOverride>General</categoryOverride>
     <summary><![CDATA[
             Associated Publication (PubMed Link)            
         ]]></summary>
@@ -564,7 +564,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
                     datasetNamePattern="%_dbxref_pmid_from_%_RSRC">
     <displayName><![CDATA[PubMed from Genome Annotations]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>General</displayCategory>
+    <categoryOverride>General</categoryOverride>
     <summary><![CDATA[
             Associated Publication (PubMed Link)            
         ]]></summary>
@@ -591,7 +591,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC">
     <displayName><![CDATA[Gene ID Mapping File]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>    
+    <categoryOverride>Genomes and Annotation</categoryOverride>    
     <summary><![CDATA[Previous Gene IDs]]></summary>
     <description>When genome annotations are updated, gene IDs are sometimes retired or changed. 
     This dataset is a table of retired gene IDs mapped to their current ID. 
@@ -634,7 +634,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
                     >
     <displayName><![CDATA[GeneDB: The Sanger Institute Pathogen Genomics Database ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Genome sequence and annotations from GeneDB]]></summary>
     <description>The GeneDB project is part of the Sanger Institute's Pathogen Genomics activities. 
     GeneDB provides reliable access to the latest sequence data and annotation/curation for organisms sequenced by the Pathogen group.
@@ -659,7 +659,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
                     >
     <displayName><![CDATA[Broad]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[The Broad Institute of MIT and Harvard]]></summary>
     <description><![CDATA[The Broad Institute of MIT and Harvard is a biomedical and genomics research center that also makes many genomic datasets available on its web portal.]]></description>
     <protocol></protocol>
@@ -678,7 +678,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
                     >
     <displayName><![CDATA[PhylomeDB]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Taxonomy and Phylogeny</displayCategory>
+    <categoryOverride>Taxonomy and Phylogeny</categoryOverride>
     <summary><![CDATA[PhylomeDB: database for gene phylogenies]]></summary>
     <description><![CDATA[PhylomeDB is a public database for complete collections of gene phylogenies (phylomes). It allows users to interactively explore the evolutionary history of genes through the visualization of phylogenetic trees and multiple sequence alignments. Moreover, phylomeDB provides genome-wide orthology and paralogy predictions which are based on the analysis of the phylogenetic trees. The automated pipeline used to reconstruct trees aims at providing a high-quality phylogenetic analysis of different genomes, including Maximum Likelihood or Bayesian tree inference, alignment trimming and evolutionary model testing. PhylomeDB includes also a public download section with the complete set of trees, alignments and orthology predictions.]]></description>
     <protocol></protocol>
@@ -697,7 +697,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
                     >
     <displayName><![CDATA[TDR Targets Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Compounds and Metabolic Pathways</displayCategory>    
+    <categoryOverride>Compounds and Metabolic Pathways</categoryOverride>    
     <summary><![CDATA[TDR Targets Database of drug target prioritization ]]></summary>
     <description>The TDR Targets database facilitates the identification and prioritization of drugs and drug targets. 
     Using the TDR Targets database as a tool, researchers can quickly prioritize genes of interest by running simple queries, 
@@ -719,7 +719,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   <datasetPresenter name="_dbxref_goa_from_annotation_RSRC">
     <displayName><![CDATA[UniProt-GOA Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>  
+    <categoryOverride>Function</categoryOverride>  
     <summary></summary>
     <description><![CDATA[         
 The UniProt GO annotation program aims to provide high-quality Gene Ontology 
@@ -747,7 +747,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[ ApiLoc Predictions ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Subcellular localization</displayCategory>
+    <categoryOverride>Subcellular localization</categoryOverride>
     
     <summary><![CDATA[A database of published protein sub-cellular localisation in Apicomplexa]]></summary>
     <description>A database of published protein sub-cellular localisation in Apicomplexa
@@ -766,7 +766,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[ Rfam -RNA Families Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>RNA Structure</displayCategory>
+    <categoryOverride>RNA Structure</categoryOverride>
     
     <summary><![CDATA[
 ]]></summary>
@@ -786,7 +786,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     
     <summary><![CDATA[NCBI Reference Sequence Database
          ]]></summary>
@@ -807,7 +807,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     
     <summary><![CDATA[NCBI Reference Sequence Database
          ]]></summary>
@@ -828,7 +828,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[MEROPS Family]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[EMBL MEROPS Family 
          ]]></summary>
     <description> 
@@ -847,7 +847,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[CAZy Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Carbohydrate-Active enZYmes Database
          ]]></summary>
     <description> 
@@ -867,7 +867,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
                     >
     <displayName><![CDATA[Ares Lab Genome Browser]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Ares Lab genome browser]]></summary>
     <description></description>
     <protocol></protocol>
@@ -885,7 +885,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   <datasetPresenter name="compounds_chEBI_RSRC">
     <displayName><![CDATA[Chemical Entities of Biological Interest Compounds]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Compounds from ChEBI</displayCategory>    
+    <categoryOverride>Compounds from ChEBI</categoryOverride>    
     <summary><![CDATA[         
       Compound records from Chemical Entities of Biological Interest (ChEBI)
       ]]></summary>
@@ -917,7 +917,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   <datasetPresenter name="Pathways_KEGG_RSRC">
     <displayName><![CDATA[KEGG Metabolic Pathways ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>KEGG Metabolic Pathways</displayCategory>
+    <categoryOverride>KEGG Metabolic Pathways</categoryOverride>
     <summary><![CDATA[         
      Metabolic Pathway records from KEGG
       ]]></summary>
@@ -948,7 +948,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <datasetPresenter name="Pathways_MetaCyc_RSRC">
     <displayName><![CDATA[MetaCyc Metabolic Pathway Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>    
+    <categoryOverride></categoryOverride>    
     <summary><![CDATA[         
       Metacyc is a curated database of experimentally elucidated metabolic pathways from all domains of life.
       ]]></summary>
@@ -981,7 +981,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
   <datasetPresenter name="alphaFold_RSRC">
     <displayName><![CDATA[AlphaFold Predictions]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>
+    <categoryOverride>Protein Structure</categoryOverride>
     <summary><![CDATA[
       AlphaFold is an artificial intelligence created by DeepMind that predicts protein structure from amino acid sequences. AlphaFold has worked with EMBL-EBI to create a publicly available database of structural predictions.
       ]]></summary>
