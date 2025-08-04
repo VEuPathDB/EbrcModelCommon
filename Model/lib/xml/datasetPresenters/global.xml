@@ -3,9 +3,7 @@
 <!DOCTYPE datasetPresenters SYSTEM "datasetPresenters.dtd">
 <datasetPresenters>
 
-  <datasetPresenter name="GO_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="GO_RSRC">
     <displayName><![CDATA[Gene Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Ontology</displayCategory>
@@ -31,14 +29,12 @@
       <url><![CDATA[http://amigo.geneontology.org/cgi-bin/amigo/go.cgi]]></url>
     </link>
     <pubmedId>10802651</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
   </datasetPresenter>
 
 
 <!--
-  <datasetPresenter name="GO_evidence_codes_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="GO_evidence_codes_RSRC">
     <displayName><![CDATA[Gene Ontology Evidence Codes]]></displayName>
     <shortDisplayName></shortDisplayName>
     <summary>GO Evidence codes from The Sequence Ontology Project</summary>
@@ -61,13 +57,11 @@
       <url><![CDATA[http://obo.cvs.sourceforge.net/viewvc/obo/obo/ontology/evidence_code.obo]]></url>
     </link>
     <pubmedId>15892872</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
   </datasetPresenter>
 -->
 
-  <datasetPresenter name="enzymeDB_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="enzymeDB_RSRC">
     <displayName><![CDATA[Enzyme Nomenclature Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Function</displayCategory>
@@ -91,15 +85,13 @@
       <url><![CDATA[http://www.expasy.org/enzyme]]></url>
     </link>
     <pubmedId>10592255</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.EnzymeNumbers"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.EnzymeNumbers"/>
 
 
   </datasetPresenter>
 
 
-  <datasetPresenter name="PDBProteinSequences_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="PDBProteinSequences_RSRC">
     <displayName><![CDATA[The Worldwide Protein Data Bank (wwPDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Protein Structure</displayCategory>
@@ -129,12 +121,10 @@
     <pubmedId>10592235</pubmedId>
     <pubmedId>14634627</pubmedId>
     <pubmedId>23023942</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PdbProteins"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PdbProteins"/>
   </datasetPresenter>
   
-  <datasetPresenter name="taxonomy_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="taxonomy_RSRC">
     <displayName><![CDATA[NCBI Taxonomy]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Taxonomy and Phylogeny</displayCategory>
@@ -158,12 +148,10 @@
       <text>The Taxonomy Database of the National Center for Biotechnology Information</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/taxonomy]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.NcbiTaxonomy"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.NcbiTaxonomy"/>
   </datasetPresenter>
   
-  <datasetPresenter name="SO_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="SO_RSRC">
     <displayName><![CDATA[The Sequence Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -183,12 +171,10 @@
       <url><![CDATA[http://song.sourceforge.net]]></url>
     </link>
     <pubmedId>15892872</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.SequenceOntology"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.SequenceOntology"/>
   </datasetPresenter>
   
-  <datasetPresenter name="MGED_Ontology_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="MGED_Ontology_RSRC">
     <displayName><![CDATA[The MGED Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -208,9 +194,7 @@
     <pubmedId>16428806</pubmedId>
   </datasetPresenter>
   
-  <datasetPresenter name="InterproscanData_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="InterproscanData_RSRC">
     <displayName><![CDATA[InterPro Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Function</displayCategory>
@@ -235,12 +219,10 @@
     <pubmedId>15608177</pubmedId>
     <pubmedId>17202162</pubmedId>
     <pubmedId>18344544</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.InterPro"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.InterPro"/>
   </datasetPresenter>
   
-  <datasetPresenter name="NRDB_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="NRDB_RSRC">
     <displayName><![CDATA[The GenBank Non-Redundant Protein Sequence Database (NRDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Genomes and Annotation</displayCategory>
@@ -266,14 +248,12 @@
       <text>Information about the BLAST databases</text>
       <url><![CDATA[ftp://ftp.ncbi.nih.gov/blast/db/README]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.NRDB"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.NRDB"/>
   </datasetPresenter>
 
 
 <!--  
-  <datasetPresenter name="isolateVocabulary_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="isolateVocabulary_RSRC">
     <displayName><![CDATA[Isolate Vocabulary]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -291,13 +271,11 @@
       <text></text>
       <url><![CDATA[http://www.eupathdb.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.IsolateVocabulary"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.IsolateVocabulary"/>
   </datasetPresenter>
 -->
 <!--
-  <datasetPresenter name="Continents_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="Continents_RSRC">
     <displayName><![CDATA[IsolatesByCountry]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Ontology</displayCategory>
@@ -320,9 +298,7 @@
   </datasetPresenter>
 
 
-  <datasetPresenter name="OrthoMCL_Phyletic_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="OrthoMCL_Phyletic_RSRC">
     <displayName><![CDATA[OrthoMCL Phyletic Profiles]]></displayName>
     <shortDisplayName></shortDisplayName>    
     <summary><![CDATA[
@@ -344,14 +320,12 @@
       <url><![CDATA[https://orthomcl.org]]></url>
     </link>
     <pubmedId>16381887</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.OrthologyDB"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.OrthologyDB"/>
   </datasetPresenter>
 -->
 
 
-  <datasetPresenter name="OrthoMCL_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="OrthoMCL_RSRC">
     <displayName><![CDATA[OrthoMCL Ortholog Groups]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -374,11 +348,10 @@
     </link>
     <pubmedId>16381887</pubmedId>
     <pubmedId>12952885</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.OrthologyGroups"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.OrthologyGroups"/>
 
   </datasetPresenter>
   <datasetPresenter name="_IEDB(.*)RSRC$"
-                    projectName="@PROJECT_ID@"                    
                     datasetNamePattern="%_IEDB%RSRC">
     <displayName><![CDATA[Immune Epitope Database (IEDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
@@ -399,11 +372,10 @@
     </link>
     <pubmedId>19906713</pubmedId>
     <pubmedId>22610854</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.IEDBEpitopes"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.IEDBEpitopes"/>
   </datasetPresenter>
   
   <datasetPresenter name="_isolates_genbank_RSRC$"
-                    projectName="@PROJECT_ID@"                    
                     datasetNamePattern="%_isolates_genbank_RSRC">
     <displayName><![CDATA[Popset Records from GenBank ]]></displayName>
     <shortDisplayName></shortDisplayName> 
@@ -433,12 +405,10 @@
       <text>Nucleotide home page</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/nuccore]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Popset"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Popset"/>
   </datasetPresenter>
   
-  <datasetPresenter name="_dbEST_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbEST_RSRC">
+  <datasetPresenter name="_dbEST_RSRC$">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -459,9 +429,7 @@
     </link>
   </datasetPresenter>
 
-<datasetPresenter name="_GenbankEST_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_GenbankEST_RSRC">
+<datasetPresenter name="_GenbankEST_RSRC$">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>
@@ -482,9 +450,7 @@
     </link>
   </datasetPresenter>
 
-  <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_hssp_from_annotation_RSRC">
+  <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$">
     <displayName><![CDATA[Homology-derived Structures of Proteins (HSSP) ]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Protein Structure</displayCategory> 
@@ -506,9 +472,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
 
-  <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_pdb_from_annotation_RSRC">
+  <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC">
     <displayName><![CDATA[Protein Sequences from PDB]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Protein Structure</displayCategory>    
@@ -524,9 +488,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
    
-  <datasetPresenter name="_dbxref_niprot_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_%niprot_%RSRC">
+  <datasetPresenter name="_dbxref_niprot_RSRC$">
     <displayName><![CDATA[The Universal Protein Resource (UniProt)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Genomes and Annotation</displayCategory>
@@ -547,14 +509,12 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <url>http://www.uniprot.org/uniprot/</url>
     </link>
     <pubmedId>22102590</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.UniProt"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.UniProt"/>
   </datasetPresenter>
 
   
 
-  <datasetPresenter name="_dbxref_gene2Entrez_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_%gene2Entrez%_RSRC">
+  <datasetPresenter name="_dbxref_gene2Entrez_RSRC$">
     <displayName><![CDATA[Entrez Gene]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Genomes and Annotation</displayCategory>
@@ -573,9 +533,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
     </link>
   </datasetPresenter>
   
-  <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_gene2PubmedFromNcbi_RSRC">
+  <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$">
     <displayName><![CDATA[PubMed from NCBI]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>General</displayCategory>
@@ -599,11 +557,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>NCBI: PubMed</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/pubmed]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_pmid_from_(.*)_RSRC"
-                    projectName="@PROJECT_ID@" 
                     datasetNamePattern="%_dbxref_pmid_from_%_RSRC">
     <displayName><![CDATA[PubMed from Genome Annotations]]></displayName>
     <shortDisplayName></shortDisplayName>
@@ -628,12 +585,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>NCBI: PubMed</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/pubmed]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
   </datasetPresenter>
   
-  <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_PreviousGeneIDs_NAFeature_aliases_RSRC">
+  <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC">
     <displayName><![CDATA[Gene ID Mapping File]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Genomes and Annotation</displayCategory>    
@@ -657,9 +612,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
 <!-- add description-->
 <!--  
-  <datasetPresenter name="(.*)_genome_GeneDB_RSRC"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_genome_GeneDB_RSRC">
+  <datasetPresenter name="(.*)_genome_GeneDB_RSRC">
     <displayName><![CDATA[Previous Gene ID ]]></displayName>
     <shortDisplayName></shortDisplayName>    
     <summary><![CDATA[Previous Gene ID]]></summary>
@@ -677,7 +630,6 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 -->
 
   <datasetPresenter name="(.*)_dbxref_unity_GeneDB_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_GeneDB_RSRC"
                     >
     <displayName><![CDATA[GeneDB: The Sanger Institute Pathogen Genomics Database ]]></displayName>
@@ -699,11 +651,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>GeneDB</text>
       <url><![CDATA[http://www.genedb.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneDB"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneDB"/>
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_unity_BroadInstitute_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_BroadInstitute_RSRC"
                     >
     <displayName><![CDATA[Broad]]></displayName>
@@ -723,7 +674,6 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_unity_PhylomeDB_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_PhylomeDB_RSRC"
                     >
     <displayName><![CDATA[PhylomeDB]]></displayName>
@@ -743,7 +693,6 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_TDR_Targets_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_%_TDR_Targets_RSRC"
                     >
     <displayName><![CDATA[TDR Targets Database]]></displayName>
@@ -767,9 +716,7 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
 
-  <datasetPresenter name="_dbxref_goa_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
-                    datasetNamePattern="%_dbxref_goa_from_annotation_RSRC">
+  <datasetPresenter name="_dbxref_goa_from_annotation_RSRC">
     <displayName><![CDATA[UniProt-GOA Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Function</displayCategory>  
@@ -796,7 +743,6 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
 
 <!-- COMMENTING this dataset as this DB does not exist; see redmine #46465 
  <datasetPresenter name="(.*)_dbxref_ApiLoc_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_ApiLoc_RSRC"
                     >
     <displayName><![CDATA[ ApiLoc Predictions ]]></displayName>
@@ -816,7 +762,6 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
 
 
  <datasetPresenter name="(.*)_dbxref_rfam_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_rfam_from_annotation_RSRC"
                     >
     <displayName><![CDATA[ Rfam -RNA Families Database]]></displayName>
@@ -837,7 +782,6 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_gene2RefSeq_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_gene2RefSeq_RSRC"
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
@@ -855,11 +799,10 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>NCBI Reference Sequence Database</text>
       <url><![CDATA[https://www.ncbi.nlm.nih.gov/refseq/]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_refseq_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_refseq_from_annotation_RSRC"
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
@@ -877,11 +820,10 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>NCBI Reference Sequence Database</text>
       <url><![CDATA[https://www.ncbi.nlm.nih.gov/refseq/]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_merops_fam_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_merops_fam_from_annotation_RSRC"
                     >
     <displayName><![CDATA[MEROPS Family]]></displayName>
@@ -897,11 +839,10 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>EMBL MEROPS Family</text>
       <url><![CDATA[https://www.ebi.ac.uk/merops/index.shtml]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_cazy_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_cazy_from_annotation_RSRC"
                     >
     <displayName><![CDATA[CAZy Database]]></displayName>
@@ -918,11 +859,10 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>Carbohydrate-Active enZYmes Database</text>
       <url><![CDATA[http://www.cazy.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_UCSC_genome_browser_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref%_UCSC_genome_browser_RSRC"
                     >
     <displayName><![CDATA[Ares Lab Genome Browser]]></displayName>
@@ -942,9 +882,7 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   </datasetPresenter>
 
 
-  <datasetPresenter name="compounds_chEBI_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="compounds_chEBI_RSRC">
     <displayName><![CDATA[Chemical Entities of Biological Interest Compounds]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Compounds from ChEBI</displayCategory>    
@@ -971,14 +909,12 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <url>https://www.ebi.ac.uk/chebi/init.do</url>
     </link>
     <pubmedId>23180789</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Compounds"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Compounds"/>
   </datasetPresenter>
 
   
 
-  <datasetPresenter name="Pathways_KEGG_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="Pathways_KEGG_RSRC">
     <displayName><![CDATA[KEGG Metabolic Pathways ]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>KEGG Metabolic Pathways</displayCategory>
@@ -1006,12 +942,10 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>http://www.kegg.jp/</url>
     </link>
     <pubmedId></pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-    <datasetPresenter name="Pathways_MetaCyc_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+    <datasetPresenter name="Pathways_MetaCyc_RSRC">
     <displayName><![CDATA[MetaCyc Metabolic Pathway Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory></displayCategory>    
@@ -1041,12 +975,10 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>http://metacyc.org/</url>
     </link>
     <pubmedId>26527732</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-  <datasetPresenter name="alphaFold_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="alphaFold_RSRC">
     <displayName><![CDATA[AlphaFold Predictions]]></displayName>
     <shortDisplayName></shortDisplayName>
     <displayCategory>Protein Structure</displayCategory>
@@ -1069,12 +1001,11 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </link>
     <pubmedId>34265844</pubmedId>
     <pubmedId>34791371</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
   </datasetPresenter>
 
 <!-- bld 67 -->
-  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC"
-                    projectName="PlasmoDB">
+  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC">
     <displayName><![CDATA[Dual transcriptomes of malaria-infected Gambian children (Study Explorer)]]></displayName>
     <shortDisplayName>Study variables Gambian children</shortDisplayName>
     <shortAttribution>Lee et al.</shortAttribution>
@@ -1100,7 +1031,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/bioproject/PRJEB24613</url>
     </link>
     <pubmedId>29950443</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["PlasmoDB","HostDB"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1119,8 +1050,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
-                    projectName="PlasmoDB">
+  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for PlasmoDB organisms]]></displayName>
     <shortDisplayName>PlasmoDB Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
@@ -1177,7 +1107,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
     <pubmedId>26615191</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["PlasmoDB"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1195,8 +1125,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
-                    projectName="VectorBase">
+  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for VectorBase organisms]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
@@ -1303,7 +1232,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
     <pubmedId>26615191</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectId="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["VectorBase"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1321,7 +1250,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="@PROJECT_ID@"
+   <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC"
     datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
     <displayName><![CDATA[PHI-base]]></displayName>
     <shortDisplayName></shortDisplayName>
