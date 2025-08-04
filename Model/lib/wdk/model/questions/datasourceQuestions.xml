@@ -1,0 +1,37 @@
+<wdkModel>
+
+  <questionSet name="DatasourceQuestions">
+    <question name="DatasourcesByCategory"
+      displayName="Datasources by Category"
+      excludeProjects="MicrobiomeDB,ClinEpiDB"
+      shortDisplayName="Category"
+      fullAnswer="true"
+      queryRef="DatasourceIds.ByCategory"
+      recordClassRef="DatasourceRecordClasses.DatasourceRecordClass"
+      noSummaryOnSingleRecord="true">
+     />
+      <description>
+         Find data sets that are associated with a particular category
+      </description>
+    </question>
+
+  </questionSet>
+
+   <querySet name="DatasourceIds" queryType="id" isCacheable="false">
+    <sqlQuery name="ByCategory">
+      <paramRef ref="datasetParams.dataset_category"/>
+      <column name="dataset_id"/>
+
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dataset_datasource_id as dataset_id
+          FROM apidbtuning.datasetdatasource
+          WHERE (project_id = '@PROJECT_ID@' or `VEuPathDB` = @PROJECT_ID@)
+	  AND category == $$dataset_category$$
+        ]]>
+      </sql>
+    </sqlQuery>
+
+   </querySet>
+
+</wdkModel>

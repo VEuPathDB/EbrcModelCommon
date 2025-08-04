@@ -57,7 +57,7 @@
         <![CDATA[
           SELECT distinct dataset_presenter_id as dataset_id
           FROM apidbTuning.DatasetDatasource
-          WHERE project_id = '@PROJECT_ID@'
+          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
         ]]>
       </sql>
     </sqlQuery>
@@ -135,9 +135,12 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
-          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-          WHERE ref.DATASET_PRESENTER_ID = dnt.DATASET_PRESENTER_ID
-            AND ('any' = '$$taxon$$' or (dnt.taxon_id = 0 or dnt.taxon_id = $$taxon$$))
+          FROM apidbtuning.datasourcemodelref ref, apidbtuning.datasetdatasource dd,
+	       apidbtuning.datasetpresenter dsp, apidb.datasource ds
+          WHERE dsp.DATASET_PRESENTER_ID = dd.DATASET_PRESENTER_ID
+	    and dd.dataset_datasource_id = ref.dataset_datasource_id
+	    and dd.datasource_id = ds.datasource_id
+            AND ('any' = '$$taxon$$' or (ds.taxon_id = 0 or ds.taxon_id = $$taxon$$))
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
         ]]>
@@ -157,8 +160,9 @@
         <![CDATA[
           SELECT DISTINCT ref.dataset_presenter_id as dataset_id,
                  ref.target_name, ref.record_type
-          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetnametaxon dnt
-          WHERE ref.dataset_presenter_id = dnt.dataset_presenter_id
+          FROM apidbtuning.datasourcemodelref ref, apidbtuning.datasetdatasource dd, apidbtuning.datasetpresenter dsp
+          WHERE dsp.dataset_presenter_id = dd.dataset_presenter_id
+	    and dd.dataset_datasource_id = ref.dataset_datasource_id
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
         ]]>
@@ -177,7 +181,7 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT dataset_presenter_id as dataset_id
-          FROM APIDBTUNING.datasetnametaxon
+          FROM APIDBTUNING.datasetpresenter
           WHERE dataset_presenter_id in ($$dataset_id$$)
         ]]>
       </sql>
@@ -194,7 +198,7 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT dataset_presenter_id as dataset_id
-          FROM APIDBTUNING.datasetnametaxon
+          FROM APIDBTUNING.datasetdatasource 
           WHERE name IN ($$dataset_name$$)
         ]]>
       </sql>
@@ -215,7 +219,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.target_name = $$question_name$$
             AND ref.target_type = 'question'
-            AND dd.project_id = '@PROJECT_ID@'
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
       </sql>
@@ -238,39 +242,8 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.record_type = $$record_class$$
             AND ref.target_type IN ('table', 'attribute','profile_graph')
-            AND dd.project_id = '@PROJECT_ID@'
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
-        ]]>
-      </sql>
-
-    </sqlQuery>
-
-
-    <sqlQuery name="ByCategoryAndSubtype">
-      <testParamValues>
-        <paramValue name="dataset_category">transcript_expression</paramValue>
-        <paramValue name="dataset_subtype">array</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.dataset_category"/>
-      <paramRef ref="datasetParams.dataset_subtype"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetpresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
-          AND ((category IS NULL and dsp.display_category = $$dataset_category$$)
-            OR (dsp.display_category IS NULL and dsp.category = $$dataset_category$$)
-            OR (coalesce(dsp.display_category, dsp.category) = $$dataset_category$$
-                and case when lower(category) = 'phenotype' OR lower(display_category) = 'phenotype' then 'phenotype' else lower(subtype) end like lower($$dataset_subtype$$)
-            )
-            OR (dsp.category = 'Immunology'
-             AND lower(display_category) = lower($$dataset_subtype$$)
-            )
-            OR coalesce(dsp.category, dsp.display_category) = $$dataset_category$$
-           )
         ]]>
       </sql>
     </sqlQuery>
@@ -289,7 +262,7 @@
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
-            AND dd.project_id = '@PROJECT_ID@'
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
 	  UNION
           SELECT DISTINCT dd.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
@@ -297,7 +270,7 @@
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
-            AND dd.project_id = '@PROJECT_ID@'
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
 	    
         ]]>
       </sql>
@@ -379,7 +352,7 @@
 	      select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = '@PROJECT_ID@'
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
           ]]>
        </sql> 
     </sqlQuery>
@@ -401,7 +374,7 @@
               select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = '@PROJECT_ID@'
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
           ]]>
        </sql> 
 
@@ -457,7 +430,7 @@
         <![CDATA[
           SELECT dataset_presenter_id, dataset_presenter_name, project_name
           FROM apidb.legacydataset
-          WHERE project_name = '@PROJECT_ID@'
+          WHERE (project_name = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
         ]]>
       </sql>
     </sqlQuery>

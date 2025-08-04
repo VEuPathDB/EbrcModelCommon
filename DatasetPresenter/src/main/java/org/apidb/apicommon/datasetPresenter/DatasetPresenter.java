@@ -197,6 +197,8 @@ public class DatasetPresenter {
     return datasources.values();
   }
 
+  public Datasource getDatasource(String name) { return datasources.get(name); }
+
   public void setOrganismShortName(String organismShortName) {
     propValues.put("organismShortName", organismShortName);
   }
@@ -497,6 +499,7 @@ public class DatasetPresenter {
 
       }
     }
+
 
   DatasetInjector findInjectorByName(String name){
     List<DatasetInjector> dis = getDatasetInjectors();

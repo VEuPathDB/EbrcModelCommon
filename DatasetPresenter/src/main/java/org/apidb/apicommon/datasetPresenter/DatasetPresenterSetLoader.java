@@ -357,7 +357,8 @@ public class DatasetPresenterSetLoader {
     }
 
     for (ModelReference ref : datasetPresenter.getModelReferences()) {
-      loadModelReference(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), ref, referenceStmt);
+      Datasource ds = datasetPresenter.getDatasource(datasetInjector.getDatasourceName());
+      loadModelReference(ds.getDatasourceId(),  datasetInjector.getProjectName(), ref, referenceStmt);
     }
   }
 
@@ -553,15 +554,14 @@ public class DatasetPresenterSetLoader {
         LOG.error("Publication: " + publication.toString() + NL, e);
         throw(e);
     }
-    
   }
 
   PreparedStatement getReferenceStmt() throws SQLException {
     String table = config.getSchema() + ".DatasetModelRef" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_model_ref_id, dataset_presenter_id, datasource_name, project_id, record_type, target_type, target_name)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?. ?)";
+        + " (dataset_model_ref_id, dataset_datasource_id, project_id, record_type, target_type, target_name)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -588,15 +588,14 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadModelReference(String datasetPresenterId, String datasourceName, String projectId, ModelReference ref,
+  private void loadModelReference(Integer datasetSourceId, String projectId, ModelReference ref,
       PreparedStatement stmt) throws SQLException {
 
-    stmt.setString(1, datasetPresenterId);
-    stmt.setString(2, datasourceName);
-    stmt.setString(3, projectId);
-    stmt.setString(4, ref.getRecordClassName());
-    stmt.setString(5, ref.getTargetType());
-    stmt.setString(6, ref.getTargetName().replace(":", ""));
+    stmt.setInt(1, datasetSourceId);
+    stmt.setString(2, projectId);
+    stmt.setString(3, ref.getRecordClassName());
+    stmt.setString(4, ref.getTargetType());
+    stmt.setString(5, ref.getTargetName().replace(":", ""));
     stmt.execute();
   }
 

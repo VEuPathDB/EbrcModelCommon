@@ -1993,6 +1993,8 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 END as org
             FROM apidbtuning.datasetdatasource dd
               LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+            WHERE dd.project_id = '@PROJECT_ID@'
+            AND dd.category != 'Link outs'
           ) t
           GROUP BY dataset_id
           --UNION
@@ -2410,8 +2412,10 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 , replace (ref.target_name, ':', '') as target_name
                 , 'question' as link_type
               FROM ApidbTuning.datasetmodelref ref
-              LEFT JOIN ApidbTuning.DatasetPresenter dsp
-                ON dsp.dataset_presenter_id = ref.dataset_presenter_id
+              LEFT JOIN ApidbTuning.DatasetDatasource dd
+                ON dd.dataset_datasource_id = ref.dataset_datasource_id
+             JOIN ApidbTuning.DatasetPresenter dsp
+		ON dsp.dataset_presenter_id = dd.dataset_presenter_id
               WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
               ORDER BY dsp.name
                 , ref.target_type
