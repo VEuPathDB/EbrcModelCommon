@@ -146,12 +146,17 @@ sub createTables {
   $sql = "create sequence $schema.DatasetDatasource${suffix}_sq";
   runSql($dbh, $sql, 1);
 
-  $sql = "create index dsntix_${suffix}
-            on ${schema}.DatasetNameTaxon${suffix} (name, dataset_presenter_id)
+  $sql = "create index ddix1_${suffix}
+            on ${schema}.DatasetDatasource{suffix} (name, dataset_presenter_id)
          ";
   runSql($dbh, $sql, 1);
 
-  $sql = "ALTER TABLE ${schema}.DatasetNameTaxon${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (datasource_id, dataset_presenter_id);
+  $sql = "create index ddix2_${suffix}
+            on ${schema}.DatasetDatasource{suffix} (name, dataset_datasource_id)
+         ";
+  runSql($dbh, $sql, 1);
+
+  $sql = "ALTER TABLE ${schema}.DatasetDatasource${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (datasource_id, dataset_presenter_id)";
   runSql($dbh, $sql, 1);
 
   #######################################################
@@ -201,7 +206,7 @@ sub createTables {
 sub dropTables {
   my ($dbh, $schema, $suffix) = @_;
 
-  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'NameTaxon', 'ModelRef', 'History', 'Property') {
+  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'Datasource', 'ModelRef', 'History', 'Property') {
     my $sql = "drop table $schema.Dataset$nm${suffix}";
     runSql($dbh, $sql, 0);
 
@@ -214,7 +219,7 @@ sub dropConstraints {
     my $sql = "drop sequence $schema.DatasetPresenter${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'NameTaxon', 'ModelRef', 'History') {
+  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'Datasource', 'ModelRef', 'History') {
     my $sql = "drop sequence $schema.Dataset$nm${suffix}_sq";
     runSql($dbh, $sql, 0);
 
