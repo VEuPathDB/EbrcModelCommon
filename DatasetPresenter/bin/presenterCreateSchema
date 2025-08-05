@@ -147,12 +147,12 @@ sub createTables {
   runSql($dbh, $sql, 1);
 
   $sql = "create index ddix1_${suffix}
-            on ${schema}.DatasetDatasource{suffix} (name, dataset_presenter_id)
+            on ${schema}.DatasetDatasource${suffix} (name, dataset_presenter_id)
          ";
   runSql($dbh, $sql, 1);
 
   $sql = "create index ddix2_${suffix}
-            on ${schema}.DatasetDatasource{suffix} (name, dataset_datasource_id)
+            on ${schema}.DatasetDatasource${suffix} (name, dataset_datasource_id)
          ";
   runSql($dbh, $sql, 1);
 
