@@ -95,12 +95,12 @@ public class DatasetPresenterSetLoader {
 
       dps.handleOverrides();
 
-      Set<String> dbDatasetNamesNotInPresenters = new HashSet<String>(
-          findDatasetNamesInDb());
+      Set<String> dbDatasourceNamesNotInPresenters = new HashSet<String>(
+          findDatasourceNamesInDb());
 
-      dbDatasetNamesNotInPresenters.removeAll(datasetNamesFoundInDb);
+      dbDatasourceNamesNotInPresenters.removeAll(datasetNamesFoundInDb);
 
-      return dbDatasetNamesNotInPresenters;
+      return dbDatasourceNamesNotInPresenters;
     } catch (SQLException e) {
       throw new UnexpectedException(e);
     }
@@ -227,8 +227,8 @@ public class DatasetPresenterSetLoader {
     }
   }
 
-  Set<String> findDatasetNamesInDb() throws SQLException {
-    Set<String> datasetNamesInDb = new HashSet<String>();
+  Set<String> findDatasourceNamesInDb() throws SQLException {
+    Set<String> datasourceNamesInDb = new HashSet<String>();
     String sql = "select name from apidb.datasource";
     Statement stmt = null;
     ResultSet rs = null;
@@ -236,7 +236,7 @@ public class DatasetPresenterSetLoader {
       stmt = dbConnection.createStatement();
       rs = stmt.executeQuery(sql);
       while (rs.next()) {
-        datasetNamesInDb.add(rs.getString(1));
+        datasourceNamesInDb.add(rs.getString(1));
       }
     } finally {
       if (rs != null)
@@ -244,7 +244,7 @@ public class DatasetPresenterSetLoader {
       if (stmt != null)
         stmt.close();
     }
-    return datasetNamesInDb;
+    return datasourceNamesInDb;
   }
 
   void schemaInstall() {
