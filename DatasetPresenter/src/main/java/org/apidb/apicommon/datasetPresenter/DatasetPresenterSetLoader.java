@@ -387,7 +387,7 @@ public class DatasetPresenterSetLoader {
   PreparedStatement getDatasetTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
     String sql;
-    sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id"
+    sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
             + "FROM " + table
             + " ds, core.ProjectInfo pi WHERE pi.project_id = ds.row_project_id and ds.NAME like ?";
 
