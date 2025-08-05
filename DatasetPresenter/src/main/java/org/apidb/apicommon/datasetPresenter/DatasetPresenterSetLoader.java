@@ -252,17 +252,17 @@ public class DatasetPresenterSetLoader {
   void schemaInstall() {
     System.err.println("Installing DatasetPresenter schema into instance "
         + instance + " schema " + schema + " using suffix " + suffix);
-    manageSchema2(false);
+    manageSchema(false);
     System.err.println("Install complete");
   }
 
   void schemaDropConstraints() {
     System.err.println("Dropping integrity constraints from DatasetPresenter tables (so TuningManager can easily delete them)");
-    manageSchema2(true);
+    manageSchema(true);
     System.err.println("Drop complete");
   }
 
-  void manageSchema2(boolean dropConstraints) {
+  void manageSchema(boolean dropConstraints) {
     String mode = dropConstraints ? "-dropConstraints" : "-create";
     String[] cmd = { "presenterCreateSchema", instance, suffix, propFileName, mode };
     Process process;
@@ -291,26 +291,6 @@ public class DatasetPresenterSetLoader {
 
       process.destroy();
 
-    } catch (IOException | InterruptedException ex) {
-      throw new UnexpectedException(ex);
-    }
-  }
-
-
-  void manageSchema(boolean dropConstraints) {
-    String mode = dropConstraints ? "-dropConstraints" : "-create";
-    String[] cmd = { "presenterCreateSchema", instance, suffix, propFileName,
-        mode};
-    Process process;
-    try {
-      process = Runtime.getRuntime().exec(cmd);
-      process.waitFor();
-      if (process.exitValue() != 0)
-        throw new UserException(
-            "Failed running command to create DatasetPresenter schema: "
-                + System.lineSeparator() + "presenterCreateSchema '" + instance
-                + "' " + suffix + " " + propFileName + " " + mode);
-      process.destroy();
     } catch (IOException | InterruptedException ex) {
       throw new UnexpectedException(ex);
     }
