@@ -2,7 +2,9 @@ package org.apidb.apicommon.datasetPresenter;
 
 import static org.gusdb.fgputil.FormatUtil.NL;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -250,15 +252,50 @@ public class DatasetPresenterSetLoader {
   void schemaInstall() {
     System.err.println("Installing DatasetPresenter schema into instance "
         + instance + " schema " + schema + " using suffix " + suffix);
-    manageSchema(false);
+    manageSchema2(false);
     System.err.println("Install complete");
   }
 
   void schemaDropConstraints() {
     System.err.println("Dropping integrity constraints from DatasetPresenter tables (so TuningManager can easily delete them)");
-    manageSchema(true);
+    manageSchema2(true);
     System.err.println("Drop complete");
   }
+
+  void manageSchema2(boolean dropConstraints) {
+    String mode = dropConstraints ? "-dropConstraints" : "-create";
+    String[] cmd = { "presenterCreateSchema", instance, suffix, propFileName, mode };
+    Process process;
+
+    try {
+      process = Runtime.getRuntime().exec(cmd);
+
+      // Read and print stderr stream
+      try (BufferedReader errorReader = new BufferedReader(
+              new InputStreamReader(process.getErrorStream()))) {
+        String line;
+        while ((line = errorReader.readLine()) != null) {
+          System.err.println(line);
+        }
+      }
+
+      process.waitFor();
+
+      if (process.exitValue() != 0) {
+        throw new UserException(
+                "Failed running command to create DatasetPresenter schema:" +
+                        System.lineSeparator() +
+                        "presenterCreateSchema '" + instance + "' " + suffix + " " +
+                        propFileName + " " + mode);
+      }
+
+      process.destroy();
+
+    } catch (IOException | InterruptedException ex) {
+      throw new UnexpectedException(ex);
+    }
+  }
+
 
   void manageSchema(boolean dropConstraints) {
     String mode = dropConstraints ? "-dropConstraints" : "-create";
