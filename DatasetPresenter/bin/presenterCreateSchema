@@ -230,7 +230,7 @@ sub dropConstraints {
 
 sub runSql {
   my ($dbh, $sql, $die) = @_;
-  print STDERR "\n$sql\n" if $debug;
+  print STDERR "\n$sql\n";
   my $status = $dbh->do($sql);
   die "Failed running sql: \n$sql\n" if $die && !$status;
 }
