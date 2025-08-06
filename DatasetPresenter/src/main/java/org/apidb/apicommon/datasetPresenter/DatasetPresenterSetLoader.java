@@ -417,8 +417,8 @@ public class DatasetPresenterSetLoader {
         " (dataset_presenter_id, dataset_sha1_digest, name, dataset_name_pattern, " +
         "display_name, short_display_name, short_attribution, summary, " +
         "protocol, usage, description, caveat, acknowledgement, release_policy, " +
-        "type, subtype, is_species_scope, build_number_introduced)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "is_species_scope, build_number_introduced)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -439,9 +439,6 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenter.getCaveat());
     stmt.setString(i++, datasetPresenter.getAcknowledgement());
     stmt.setString(i++, datasetPresenter.getReleasePolicy());
-    stmt.setString(i++, datasetPresenter.getType());
-
-    String subtype = datasetPresenter.getSubtype() == null ? "" : datasetPresenter.getSubtype();
     int isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null || datasetPresenter.getIsSpeciesScope() ? 0 : 1;
     String projectId = datasetPresenter.getProjectId() == null ? "" : datasetPresenter.getProjectId();
 
