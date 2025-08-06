@@ -71,16 +71,16 @@ public class DatasetPresenterSetLoader {
     try {
       Set<String> datasetNamesFoundInDb = new HashSet<String>();
 
-      PreparedStatement datasetTableStmt = getDatasetTableStmt();
+      PreparedStatement datasourceTableStmt = getDatasourceTableStmt();
 
       for (InternalDataset internalDataset : dps.getInternalDatasets().values()) {
-        findInternalDatasetNamesInDb(internalDataset, datasetTableStmt,
+        findInternalDatasetNamesInDb(internalDataset, datasourceTableStmt,
             datasetNamesFoundInDb);
       }
 
       Set<String> presenterNamesNotInDb = new HashSet<String>();
       for (DatasetPresenter datasetPresenter : dps.getDatasetPresenters().values()) {
-        getPresenterValuesFromDatasetTable(datasetPresenter, datasetTableStmt,
+        getPresenterValuesFromDatasourceTable(datasetPresenter, datasourceTableStmt,
             datasetNamesFoundInDb);
         if (!datasetPresenter.getFoundInDb())
           presenterNamesNotInDb.add(datasetPresenter.getDatasetName());
@@ -164,8 +164,8 @@ public class DatasetPresenterSetLoader {
     }
   }
 
-  void getPresenterValuesFromDatasetTable(DatasetPresenter datasetPresenter,
-      PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
+  void getPresenterValuesFromDatasourceTable(DatasetPresenter datasetPresenter,
+                                             PreparedStatement stmt, Set<String> datasetNamesFoundInDb)
       throws SQLException {
     Set<String> datasetNamesFoundLocal = new HashSet<String>();
     ResultSet rs = null;
@@ -379,7 +379,7 @@ public class DatasetPresenterSetLoader {
     }
   }
 
-  PreparedStatement getDatasourceStmt() throws SQLException {
+  PreparedStatement getDatasetDatasourceStmt() throws SQLException {
     String table = config.getSchema() + ".DatasetDatasource" + suffix;
     String sql = "INSERT INTO "
             + table
@@ -388,9 +388,9 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String projectId) throws SQLException {
+  void loadDatasetDatasource(Integer datasourceId, String datasetPresenterId, String category, String projectId) throws SQLException {
 
-    PreparedStatement stmt = getDatasourceStmt();
+    PreparedStatement stmt = getDatasetDatasourceStmt();
   if (stmt == null) throw new RuntimeException("OOOPPPPPPPS");
     int i = 1;
     stmt.setInt(i++, datasourceId);
@@ -401,7 +401,7 @@ public class DatasetPresenterSetLoader {
   }
 
 
-  PreparedStatement getDatasetTableStmt() throws SQLException {
+  PreparedStatement getDatasourceTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
     String sql;
     sql = "SELECT ds.name, ds.data_source_id, ds.type, ds.subtype, ds.is_species_scope, pi.name as project_id "
@@ -452,7 +452,7 @@ public class DatasetPresenterSetLoader {
       String dpCategory = datasetPresenter.getPropValue("datasetClassCategory");
       if (datasetPresenter.getCategoryOverride() != null) dpCategory = datasetPresenter.getCategoryOverride();
       String diCategory = di == null || di.getCategoryOverride() == null? null : di.getCategoryOverride();
-      loadDatasource(datasource.getDatasourceId(),
+      loadDatasetDatasource(datasource.getDatasourceId(),
               datasetPresenterId,
               diCategory == null? dpCategory : diCategory,
               datasource.getProjectId()

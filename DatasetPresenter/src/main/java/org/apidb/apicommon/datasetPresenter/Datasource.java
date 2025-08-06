@@ -8,7 +8,7 @@ public class Datasource {
 
   public Datasource(Integer datasourceId, String name, String projectId) {
     this.name = name;
-    this.datasourceId = this.datasourceId;
+    this.datasourceId = datasourceId;
     this.projectId = projectId;
   }
   
