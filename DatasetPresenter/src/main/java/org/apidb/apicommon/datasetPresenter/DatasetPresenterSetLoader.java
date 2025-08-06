@@ -417,8 +417,8 @@ public class DatasetPresenterSetLoader {
         " (dataset_presenter_id, dataset_sha1_digest, name, dataset_name_pattern, " +
         "display_name, short_display_name, short_attribution, summary, " +
         "protocol, usage, description, caveat, acknowledgement, release_policy, " +
-        "is_species_scope, build_number_introduced)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "build_number_introduced)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
