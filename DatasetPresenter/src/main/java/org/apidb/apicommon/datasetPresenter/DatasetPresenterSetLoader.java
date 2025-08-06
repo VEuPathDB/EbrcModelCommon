@@ -391,7 +391,7 @@ public class DatasetPresenterSetLoader {
   void loadDatasource(Integer datasourceId, String datasetPresenterId, String category, String projectId) throws SQLException {
 
     PreparedStatement stmt = getDatasourceStmt();
-
+  if (stmt == null) throw new RuntimeException("OOOPPPPPPPS");
     int i = 1;
     stmt.setInt(i++, datasourceId);
     stmt.setString(i++, datasetPresenterId);
