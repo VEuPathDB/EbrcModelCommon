@@ -439,16 +439,10 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenter.getCaveat());
     stmt.setString(i++, datasetPresenter.getAcknowledgement());
     stmt.setString(i++, datasetPresenter.getReleasePolicy());
-    int isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null || datasetPresenter.getIsSpeciesScope() ? 0 : 1;
-
-    stmt.setInt(i++, isSpeciesScope);
-
     Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
-
     if(buildNumberIntroduced == null) {
         buildNumberIntroduced = Float.valueOf(0);
     }
-
     stmt.setInt(i++, buildNumberIntroduced.intValue());
 
     stmt.execute();
