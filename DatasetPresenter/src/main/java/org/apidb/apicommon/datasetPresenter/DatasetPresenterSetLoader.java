@@ -440,9 +440,7 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, datasetPresenter.getAcknowledgement());
     stmt.setString(i++, datasetPresenter.getReleasePolicy());
     int isSpeciesScope = datasetPresenter.getIsSpeciesScope() == null || datasetPresenter.getIsSpeciesScope() ? 0 : 1;
-    String projectId = datasetPresenter.getProjectId() == null ? "" : datasetPresenter.getProjectId();
 
-    stmt.setString(i++, subtype);
     stmt.setInt(i++, isSpeciesScope);
 
     Float buildNumberIntroduced = datasetPresenter.getBuildNumberIntroduced();
