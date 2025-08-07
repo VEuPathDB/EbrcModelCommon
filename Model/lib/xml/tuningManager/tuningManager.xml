@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
 
-  <import file="orthomclTuningManager.xml"/>
-
   <!-- EDA table -->	
   <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
     <comment>EDA Study ID, Dataset presenter ID (hash)
