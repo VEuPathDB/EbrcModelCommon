@@ -366,7 +366,7 @@ public class DatasetPresenterSetLoader {
 
   void loadDatasetInjector(DatasetPresenter datasetPresenter, DatasetInjector datasetInjector, String datasetPresenterId) throws SQLException {
 
-    PreparedStatement referenceStmt = getReferenceStmt();
+    PreparedStatement referenceStmt = getDatasetModelReferenceStmt();
     PreparedStatement injectorPropertiesStmt = getInjectorPropertiesStmt();
     PreparedStatement linkStmt = getLinkStmt();
 
@@ -383,10 +383,13 @@ public class DatasetPresenterSetLoader {
     }
 
     for (ModelReference ref : datasetInjector.getModelReferences()) {
-      Integer datasourceId = null;
-      if (datasetInjector.getDatasourceName() != null)
-        datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
-      loadModelReference(datasetPresenter.getId(), datasourceId,  datasetInjector.getProjectName(), ref, referenceStmt);
+      loadDatasetModelReference(datasetPresenter.getId(), datasetInjector.getProjectName(), ref, referenceStmt);
+
+      // for the case where we have multiple (named) injectors.  these map individually to a datasource.
+      if (datasetInjector.getDatasourceName() != null) {
+        Integer datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
+        loadDatasourceModelReference(datasourceId, datasetInjector.getProjectName(), ref, referenceStmt);
+      }
     }
   }
 
@@ -569,12 +572,21 @@ public class DatasetPresenterSetLoader {
     }
   }
 
-  PreparedStatement getReferenceStmt() throws SQLException {
+  PreparedStatement getDatasetModelReferenceStmt() throws SQLException {
     String table = config.getSchema() + ".DatasetModelRef" + suffix;
     String sql = "INSERT INTO "
+            + table
+            + " (dataset_model_ref_id, dataset_presenter_id, project_id, record_type, target_type, target_name)"
+            + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
+    return dbConnection.prepareStatement(sql);
+  }
+
+  PreparedStatement getDatasourceModelReferenceStmt() throws SQLException {
+    String table = config.getSchema() + ".DatasourceModelRef" + suffix;
+    String sql = "INSERT INTO "
         + table
-        + " (dataset_model_ref_id, dataset_presenter_id, dataset_datasource_id, project_id, record_type, target_type, target_name)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?, ?)";
+        + " (dataset_model_ref_id, datasource_id, project_id, record_type, target_type, target_name)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -601,15 +613,25 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadModelReference(String datasetPresenterId, Integer datasetSourceId, String projectId, ModelReference ref,
-      PreparedStatement stmt) throws SQLException {
+  private void loadDatasetModelReference(String datasetPresenterId, String projectId, ModelReference ref,
+                                         PreparedStatement stmt) throws SQLException {
 
     stmt.setString(1, datasetPresenterId);
-    stmt.setInt(2, datasetSourceId);
-    stmt.setString(3, projectId);
-    stmt.setString(4, ref.getRecordClassName());
-    stmt.setString(5, ref.getTargetType());
-    stmt.setString(6, ref.getTargetName().replace(":", ""));
+    stmt.setString(2, projectId);
+    stmt.setString(3, ref.getRecordClassName());
+    stmt.setString(4, ref.getTargetType());
+    stmt.setString(5, ref.getTargetName().replace(":", ""));
+    stmt.execute();
+  }
+
+  private void loadDatasourceModelReference(Integer datasourceId, String projectId, ModelReference ref,
+                                         PreparedStatement stmt) throws SQLException {
+
+    stmt.setInt(1, datasourceId);
+    stmt.setString(2, projectId);
+    stmt.setString(3, ref.getRecordClassName());
+    stmt.setString(4, ref.getTargetType());
+    stmt.setString(5, ref.getTargetName().replace(":", ""));
     stmt.execute();
   }
 
