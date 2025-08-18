@@ -84,6 +84,7 @@ sub createTables {
       create table $schema.DatasetProperty$suffix (
         dataset_property_id   numeric(12),
         dataset_presenter_id  varchar(15),
+        datasource_name       varchar(200),
         property              varchar(255),
         value                 varchar(4000),
         constraint DatasetProperty${suffix}_pk primary key (dataset_property_id)
