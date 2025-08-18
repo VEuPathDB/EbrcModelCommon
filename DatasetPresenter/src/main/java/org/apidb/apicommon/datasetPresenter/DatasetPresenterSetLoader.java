@@ -21,6 +21,15 @@ import org.apache.log4j.Logger;
 import org.gusdb.fgputil.CliUtil;
 import org.gusdb.fgputil.FormatUtil;
 
+/*
+there are these cases for a presenter:
+ 1. has no name pattern and no injector
+ 2. has no name pattern and a single injector
+ 3. has a name pattern but no injector (?)
+ 4. has a name pattern and a single injector
+ 5. has a name pattern and more than one injector
+ */
+
 public class DatasetPresenterSetLoader {
 
   private static final Logger LOG = Logger.getLogger(DatasetPresenterSetLoader.class);
@@ -65,7 +74,7 @@ public class DatasetPresenterSetLoader {
    * @return set of dataset names in db not found (or matched by) the
    * DatasetPresenters in the input set
    */
-  Set<String> syncPresenterSetWithDatasetTable() {
+  Set<String> syncPresenterSetWithDatasourceTable() {
     initDbConnection();
 
     try {
@@ -373,9 +382,11 @@ public class DatasetPresenterSetLoader {
         loadLink(datasetPresenterId, link, linkStmt);
     }
 
-    for (ModelReference ref : datasetPresenter.getModelReferences()) {
-      Datasource ds = datasetPresenter.getDatasource(datasetInjector.getDatasourceName());
-      loadModelReference(ds.getDatasourceId(),  datasetInjector.getProjectName(), ref, referenceStmt);
+    for (ModelReference ref : datasetInjector.getModelReferences()) {
+      Integer datasourceId = null;
+      if (datasetInjector.getDatasourceName() != null)
+        datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
+      loadModelReference(datasetPresenter.getId(), datasourceId,  datasetInjector.getProjectName(), ref, referenceStmt);
     }
   }
 
@@ -391,12 +402,10 @@ public class DatasetPresenterSetLoader {
   void loadDatasetDatasource(Integer datasourceId, String datasetPresenterId, String category, String projectId) throws SQLException {
 
     PreparedStatement stmt = getDatasetDatasourceStmt();
-  if (stmt == null) throw new RuntimeException("OOOPPPPPPPS");
     int i = 1;
     stmt.setInt(i++, datasourceId);
     stmt.setString(i++, datasetPresenterId);
     stmt.setString(i++, category);
-
     stmt.setString(i++, projectId);
   }
 
@@ -564,8 +573,8 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetModelRef" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_model_ref_id, dataset_datasource_id, project_id, record_type, target_type, target_name)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
+        + " (dataset_model_ref_id, dataset_presenter_id, dataset_datasource_id, project_id, record_type, target_type, target_name)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
@@ -592,14 +601,15 @@ public class DatasetPresenterSetLoader {
     return dbConnection.prepareStatement(sql);
   }
 
-  private void loadModelReference(Integer datasetSourceId, String projectId, ModelReference ref,
+  private void loadModelReference(String datasetPresenterId, Integer datasetSourceId, String projectId, ModelReference ref,
       PreparedStatement stmt) throws SQLException {
 
-    stmt.setInt(1, datasetSourceId);
-    stmt.setString(2, projectId);
-    stmt.setString(3, ref.getRecordClassName());
-    stmt.setString(4, ref.getTargetType());
-    stmt.setString(5, ref.getTargetName().replace(":", ""));
+    stmt.setString(1, datasetPresenterId);
+    stmt.setInt(2, datasetSourceId);
+    stmt.setString(3, projectId);
+    stmt.setString(4, ref.getRecordClassName());
+    stmt.setString(5, ref.getTargetType());
+    stmt.setString(6, ref.getTargetName().replace(":", ""));
     stmt.execute();
   }
 
@@ -710,7 +720,7 @@ public class DatasetPresenterSetLoader {
     dpsl.setDatasetPresenterSet(datasetPresenterSet);
 
     // RUNS SQL HERE
-    Set<String> namesFromDbNotFound = dpsl.syncPresenterSetWithDatasetTable();
+    Set<String> namesFromDbNotFound = dpsl.syncPresenterSetWithDatasourceTable();
     datasetPresenterSet.addCategoriesForPattern();
 
     if (namesFromDbNotFound.size() != 0)

@@ -160,7 +160,8 @@ sub createTables {
   $sql = "
       create table $schema.DatasourceModelRef$suffix (
         datasource_model_ref_id         numeric(12),
-        dataset_datasource_id         varchar(15),
+        dataset_presenter_id          varchar(15),
+        datasource_id                numeric(12), -- null unless injector has a datasourceName
         record_type                  varchar(100),
         target_type                  varchar(20),
         target_name                  varchar(300),
