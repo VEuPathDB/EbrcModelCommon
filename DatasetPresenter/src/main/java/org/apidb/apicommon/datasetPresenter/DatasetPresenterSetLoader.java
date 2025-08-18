@@ -365,7 +365,7 @@ public class DatasetPresenterSetLoader {
     for (Map.Entry<String, String> pv : injectorPropValues.entrySet()) {
 
       String dataValue = FormatUtil.shrinkUtf8String(pv.getValue(), 4000);
-      loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), datasetInjector.getProjectName(), pv.getKey(), dataValue, injectorPropertiesStmt);
+      loadInjectorPropValue(datasetPresenterId, datasetInjector.getDatasourceName(), pv.getKey(), dataValue, injectorPropertiesStmt);
     }
 
     if (datasetInjector.getCategoryOverride() != null) {
@@ -474,18 +474,17 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetProperty" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_property_id, dataset_presenter_id, datasource_name, project_id, property, value)"
-        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?)";
+        + " (dataset_property_id, dataset_presenter_id, datasource_name, property, value)"
+        + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
 
 
-    private void loadInjectorPropValue(String datasetPresenterId, String datasourceName, String projectId, String property, String value, PreparedStatement stmt) throws SQLException {
+    private void loadInjectorPropValue(String datasetPresenterId, String datasourceName, String property, String value, PreparedStatement stmt) throws SQLException {
         stmt.setString(1, datasetPresenterId);
         stmt.setString(2, datasourceName);
-        stmt.setString(3, projectId);
-        stmt.setString(4, property);
-        stmt.setString(5, value);
+        stmt.setString(3, property);
+        stmt.setString(4, value);
         stmt.execute();
     }
 
