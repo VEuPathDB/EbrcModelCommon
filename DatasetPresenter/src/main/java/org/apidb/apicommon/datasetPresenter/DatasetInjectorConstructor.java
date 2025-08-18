@@ -76,6 +76,8 @@ public class DatasetInjectorConstructor {
    */
   void inheritDatasetProps(DatasetPresenter datasetPresenter) {
     this.datasetName = datasetPresenter.getDatasetName();
+    if (this.datasourceName == null) this.datasetName = datasetPresenter.getDatasetName();
+    if (this.primaryContact == null) this.primaryContact = datasetPresenter.getPrimaryContact();
     for (String key : datasetPresenter.getPropValues().keySet()) {
       if (propValues.containsKey(key))
         throw new UserException("In DatasetPresenter " + datasetName
