@@ -140,6 +140,8 @@ sub createTables {
         dataset_presenter_id      varchar(15),
         category                  varchar(200),
         project_id                varchar(20),
+        name                      varchar(200),
+        taxon_id                  numeric(12),
         constraint DatasetDatasource${suffix}_pk primary key (dataset_datasource_id)
       )";
   runSql($dbh, $sql, 1);
@@ -224,7 +226,7 @@ sub createTables {
 sub dropTables {
   my ($dbh, $schema, $suffix) = @_;
 
-  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'Datasource', 'ModelRef', 'History', 'Property') {
+  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'History', 'Property') {
     my $sql = "drop table $schema.Dataset$nm${suffix}";
     runSql($dbh, $sql, 0);
 
@@ -237,7 +239,7 @@ sub dropConstraints {
     my $sql = "drop sequence $schema.DatasetPresenter${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'Datasource', 'ModelRef', 'History') {
+  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'History') {
     my $sql = "drop sequence $schema.Dataset$nm${suffix}_sq";
     runSql($dbh, $sql, 0);
 

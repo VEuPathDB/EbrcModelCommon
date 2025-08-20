@@ -5,11 +5,13 @@ public class Datasource {
   String name;
   Integer datasourceId;
   String projectId;
+  Integer taxonId;
 
-  public Datasource(Integer datasourceId, String name, String projectId) {
+  public Datasource(Integer datasourceId, String name, String projectId, Integer taxonId) {
     this.name = name;
     this.datasourceId = datasourceId;
     this.projectId = projectId;
+    this.taxonId = taxonId;
   }
   
   String getName() {
@@ -21,4 +23,6 @@ public class Datasource {
   }
 
   String getProjectId() { return projectId; }
+
+  Integer getTaxonId() { return taxonId; }
 }

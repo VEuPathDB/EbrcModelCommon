@@ -288,7 +288,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <sql>
         <![CDATA[
               SELECT dd.dataset_datasource_id as dataset_id
-                , ds.name as dataset_name
+                , dd.name as dataset_name
                 , '' as text
                 , '' as url
                 , '' as description
@@ -299,7 +299,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
               FROM ApidbTuning.datasetmodelref ref
               LEFT JOIN ApidbTuning.DatasetDatasource dd
                 ON dd.dataset_datasource_id = ref.dataset_datasource_id
-              JOIN apidb.datasource ds
 	        ON dd.datasource_id = ds.datasource_id	
               WHERE NOT (dd.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
 	    ]]>

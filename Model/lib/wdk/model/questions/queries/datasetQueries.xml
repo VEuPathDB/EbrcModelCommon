@@ -136,11 +136,10 @@
         <![CDATA[
           SELECT DISTINCT ref.dataset_presenter_id as dataset_id, ref.target_name, ref.record_type, dnt.TAXON_ID
           FROM apidbtuning.datasourcemodelref ref, apidbtuning.datasetdatasource dd,
-	       apidbtuning.datasetpresenter dsp, apidb.datasource ds
+	       apidbtuning.datasetpresenter dsp
           WHERE dsp.DATASET_PRESENTER_ID = dd.DATASET_PRESENTER_ID
 	    and dd.dataset_datasource_id = ref.dataset_datasource_id
-	    and dd.datasource_id = ds.datasource_id
-            AND ('any' = '$$taxon$$' or (ds.taxon_id = 0 or ds.taxon_id = $$taxon$$))
+            AND ('any' = '$$taxon$$' or (dd.taxon_id = 0 or dd.taxon_id = $$taxon$$))
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
         ]]>
