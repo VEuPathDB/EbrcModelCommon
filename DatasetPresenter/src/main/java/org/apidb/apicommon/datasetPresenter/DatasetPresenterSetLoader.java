@@ -197,7 +197,6 @@ public class DatasetPresenterSetLoader {
         Integer taxonId = rs.getInt(6);
         String projectId = rs.getString(7);
 
-
         // track all dataset names for presenter
         datasetPresenter.addDatasetNameToList(name);
 
@@ -414,9 +413,8 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, projectId);
     stmt.setString(i++, name);
     stmt.setInt(i++, taxonId);
-
+    stmt.execute();
   }
-
 
   PreparedStatement getDatasourceTableStmt() throws SQLException {
     String table = "Apidb.Datasource";
