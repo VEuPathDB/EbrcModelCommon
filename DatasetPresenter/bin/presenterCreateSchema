@@ -240,7 +240,7 @@ sub dropConstraints {
     runSql($dbh, $sql, 0);
 
   foreach my $nm ('DatasetContact', 'DatasetHyperLink', 'DatasetPublication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'DatasetHistory') {
-    my $sql = "drop sequence $schema.Dataset$nm${suffix}_sq";
+    my $sql = "drop sequence $schema.$nm${suffix}_sq";
     runSql($dbh, $sql, 0);
 
     $sql = "alter table $schema.$nm${suffix} drop constraint $nm${suffix}_fk";
