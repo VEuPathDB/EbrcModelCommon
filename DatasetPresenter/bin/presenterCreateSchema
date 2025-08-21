@@ -134,7 +134,7 @@ sub createTables {
   #######################################################
 
   $sql = "
-      create tabl $schema.DatasetDatasource$suffix (
+      create table $schema.DatasetDatasource$suffix (
         dataset_datasource_id          numeric(12),
         datasource_id          varchar(15),
         dataset_presenter_id      varchar(15),
