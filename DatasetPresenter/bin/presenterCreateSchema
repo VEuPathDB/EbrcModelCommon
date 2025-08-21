@@ -226,8 +226,8 @@ sub createTables {
 sub dropTables {
   my ($dbh, $schema, $suffix) = @_;
 
-  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'History', 'Property') {
-    my $sql = "drop table $schema.Dataset$nm${suffix}";
+  foreach my $nm ('DatasetPresenter', 'DatasetContact', 'DatasetHyperLink', 'DatasetPublication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'DatasetHistory', 'DatasetProperty') {
+    my $sql = "drop table $schema.$nm${suffix}";
     runSql($dbh, $sql, 0);
 
   }
@@ -239,11 +239,11 @@ sub dropConstraints {
     my $sql = "drop sequence $schema.DatasetPresenter${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'History') {
+  foreach my $nm ('DatasetContact', 'DatasetHyperLink', 'DatasetPublication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'DatasetHistory') {
     my $sql = "drop sequence $schema.Dataset$nm${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-    $sql = "alter table $schema.Dataset$nm${suffix} drop constraint Dataset$nm${suffix}_fk";
+    $sql = "alter table $schema.$nm${suffix} drop constraint $nm${suffix}_fk";
   # runSql($dbh, $sql, 0);
   }
 }
