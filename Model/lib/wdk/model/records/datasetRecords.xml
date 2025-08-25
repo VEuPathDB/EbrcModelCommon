@@ -956,7 +956,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         SELECT dsp.dataset_presenter_id as dataset_id
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.geneattributes ga
+          , webready.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetnametaxon dnt
         WHERE oa.component_taxon_id = ga.taxon_id
@@ -2664,7 +2664,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           , ta.transcript_type
           , count(*) as transcript_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.transcriptattributes ta
+          , webready.TranscriptAttributes ta
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetnametaxon dnt
         WHERE oa.component_taxon_id = ta.taxon_id
@@ -2687,7 +2687,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           , ga.gene_type
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.geneattributes ga
+          , webready.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetnametaxon dnt
         WHERE oa.component_taxon_id = ga.taxon_id
@@ -2710,7 +2710,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           , sa.sequence_type
           , count(*) as sequence_count
         FROM apidbtuning.organismattributes oa
-          , ApidbTuning.GenomicSeqAttributes sa
+          , webready.GenomicSeqAttributes sa
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetnametaxon dnt
         WHERE oa.component_taxon_id = sa.taxon_id
