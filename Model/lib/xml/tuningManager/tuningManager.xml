@@ -34,73 +34,6 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="ExternalSequenceTaxonRank" prefixEnabled="false">
-    <comment>Taxon ranks for sequences
-    </comment>
-    <externalDependency name="apidb.TaxonString"/>
-    <externalDependency name="dots.ExternalNaSequence"/>
-    <externalDependency name="sres.TaxonName"/>
-    <externalDependency name="sres.Taxon"/>
-    <sql>
-      <![CDATA[
-        CREATE TABLE ExternalSequenceTaxonRank&1 AS
-        WITH organism_rank AS (
-          SELECT tn1.taxon_id as organism, tn2.name as parent_organism,
-                 tn2.taxon_id as parent_organism_id, r.rank
-          FROM sres.TaxonName tn1, sres.TaxonName tn2,
-                (
-                  WITH RECURSIVE cte AS (
-                    SELECT taxon_id as input, taxon_id, rank, parent_id
-                    FROM sres.taxon
-                    WHERE taxon_id IN (
-                        SELECT taxon_id FROM dots.externalaasequence
-                        UNION
-                        SELECT taxon_id FROM apidb.taxonstring
-                    )
-                    UNION
-                    SELECT cte.input, t.taxon_id, t.rank, t.parent_id
-                    FROM sres.taxon t, cte
-                    WHERE cte.parent_id = t.taxon_id
-                  )
-                  SELECT input, taxon_id, rank
-                  FROM cte
-                ) r
-          WHERE r.input = tn1.taxon_id
-           and r.taxon_id = tn2.taxon_id
-           and tn1.name_class = 'scientific name'
-           and tn2.name_class = 'scientific name'
-           and r.rank in ('phylum', 'family','genus', 'species', 'superkingdom','kingdom', 'class', 'order')
-        )
-        SELECT organisms.organism,
-               coalesce(superkingdom.parent_organism, 'N/A') as superkingdom,
-               superkingdom.parent_organism_id as superkingdom_id,
-               coalesce(kingdom.parent_organism, 'N/A') as kingdom,
-               kingdom.parent_organism_id as kingdom_id,
-               coalesce (phylum.parent_organism, 'N/A') as phylum,
-               phylum.parent_organism_id as phylum_id,
-               coalesce (class.parent_organism, 'N/A') as class,
-               class.parent_organism_id as class_id,
-               coalesce (family.parent_organism, 'N/A') as family,
-               family.parent_organism_id as family_id,
-               coalesce (rank_order.parent_organism, 'N/A') as rank_order,
-               rank_order.parent_organism_id as rank_order_id,
-               coalesce ( genus.parent_organism, 'N/A') as genus,
-               genus.parent_organism_id as genus_id,
-               coalesce(species.parent_organism, 'N/A') as species,
-               species.parent_organism_id as species_id
-        FROM (SELECT DISTINCT organism FROM organism_rank) organisms
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'phylum') phylum ON  organisms.organism = phylum.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'genus') genus ON  organisms.organism = genus.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'species') species ON  organisms.organism = species.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'kingdom') kingdom ON  organisms.organism = kingdom.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'superkingdom') superkingdom ON  organisms.organism = superkingdom.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'class') class ON  organisms.organism = class.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'family') family ON  organisms.organism = family.organism
-             LEFT JOIN (SELECT * FROM organism_rank WHERE rank= 'order') rank_order ON organisms.organism = rank_order.organism
-        ORDER BY organism, species, genus
-       ]]>
-    </sql>
-  </tuningTable>
 
 <!-- CHECK AND FIX - regexp_count issue
   <tuningTable name="TaxonAbundance" prefixEnabled="false">
@@ -369,181 +302,10 @@
     </sql>
   </tuningTable>
 
-  <tuningTable name="SequencePieceClosure" prefixEnabled="true">
-    <comment>Extends dots.SequencePiece to handle multiple levels. Used in
-         sequence-record queries and in other tuning tables, including
-         GenomicSeqAttributes, and SimilaritySpanLocation
-     </comment>
-    <externalDependency name="dots.SequencePiece"/>
-    <sql>
-      <![CDATA[
-        CREATE TABLE &prefixSequencePieceClosure&1 AS
-        SELECT sp.sequence_piece_id,
-            sp.virtual_na_sequence_id,
-            sp.piece_na_sequence_id,
-            sp.sequence_order,
-            sp.distance_from_left,
-            sp.uncertainty,
-            sp.strand_orientation,
-            sp.start_position,
-            sp.end_position,
-            sp.modification_date,
-            1 AS edge_level
-        FROM dots.SequencePiece sp, dots.NaSequence ns
-        WHERE sp.piece_na_sequence_id = ns.na_sequence_id
-              AND (ns.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        /* known issue: this should be run not just once, but iteratively
-           until it doesn't create new records.  Currently (7/2008),
-           SequencePieces aren't nested even once. */
-        INSERT INTO &prefixSequencePieceClosure&1
-                    (edge_level, virtual_na_sequence_id, piece_na_sequence_id,
-                     distance_from_left, strand_orientation, modification_date, 
-                     start_position, end_position, sequence_order, sequence_piece_id)
-        SELECT 2, higher.virtual_na_sequence_id, lower.piece_na_sequence_id,
-               higher.distance_from_left,
-               case
-                 when coalesce(higher.strand_orientation, '+') = coalesce(lower.strand_orientation, '+')
-                 then '+'
-                 else '-'
-               end as strand_orientation,
-               now(),
-               higher.start_position - lower.distance_from_left, 
-               higher.end_position - lower.distance_from_left, 
-               higher.sequence_order,
-               nextval('dots.sequencepiece_sq')
-        FROM &prefixSequencePieceClosure&1 higher, &prefixSequencePieceClosure&1 lower
-        WHERE higher.piece_na_sequence_id = lower.virtual_na_sequence_id
-         AND higher.start_position >= lower.start_position + lower.distance_from_left
-         AND higher.end_position <= lower.end_position + lower.distance_from_left
-      ]]>
-    </sql>
-  </tuningTable>
-
-  <tuningTable name="GenomicSeqAttributes" prefixEnabled="true">
-    <comment>Each row represents one genomic sequence for which a WDK sequence
-         record can be instantiated. Used widely in the workflow, the model,
-         and GBrowse, as well as in the creation of a dozen or so other tuning
-         tables.
-    </comment>
-    <internalDependency name="ProjectTaxon"/>
-    <internalDependency name="SequencePieceClosure"/>
-    <externalDependency name="apidb.Synteny"/>
-    <externalDependency name="apidb.Organism"/>
-    <externalDependency name="dots.DbRefNaSequence"/>
-    <externalDependency name="dots.ExternalNaSequence"/>
-    <externalDependency name="sres.DbRef"/>
-    <externalDependency name="sres.ExternalDatabase"/>
-    <externalDependency name="sres.ExternalDatabaseRelease"/>
-    <externalDependency name="sres.OntologyTerm"/>
-    <externalDependency name="sres.Taxon"/>
-    <externalDependency name="sres.TaxonName"/>
-    <sql>
-      <![CDATA[
-        CREATE TABLE &prefixGenomicSeqAttributes&1 AS
-        SELECT
-               cast(apidb.prefixed_project_id(tn.name, '&prefix') as varchar(20)) as project_id,
-               SUBSTR(sequence.source_id, 1, 60) AS source_id, sequence.a_count,
-               sequence.c_count, sequence.g_count, sequence.t_count,
-               (sequence.length
-                - (sequence.a_count + sequence.c_count + sequence.g_count + sequence.t_count))
-                 AS other_count,
-               sequence.length,
-               to_char((sequence.a_count + sequence.t_count) / sequence.length * 100, '99.99')
-                 AS at_percent,
-               SUBSTR(tn.name, 1, 100) AS organism,
-               taxon.ncbi_tax_id,
-               taxon.taxon_id,
-               CASE WHEN sequence.description IS NULL  THEN SUBSTR(tn.name, 1, 100)
-                    ELSE SUBSTR(sequence.description, 1, 400)
-                    END AS sequence_description,
-               SUBSTR(genbank.genbank_accession, 1, 20) AS genbank_accession,
-               SUBSTR(db.database_version, 1, 30) AS database_version, db.database_name,
-               SUBSTR(sequence.chromosome, 1, 20) AS chromosome,
-               sequence.external_database_release_id, sequence.sequence_ontology_id,
-               sequence.chromosome_order_num, so.source_id as so_id, so.name as sequence_type,
-               coalesce(virtualization.is_top_level, 1) as is_top_level,
-               sequence.na_sequence_id, organism.genome_source,
-               organism.name_for_filenames, coalesce(msa.has_msa, 0) as has_msa
-        FROM sres.Taxon LEFT JOIN apidb.Organism ON taxon.taxon_id = organism.taxon_id,
-             sres.OntologyTerm so,
-             ( SELECT na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
-                      a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
-               FROM dots.ExternalNaSequence
-              UNION
-               SELECT na_sequence_id, source_id, length, chromosome, chromosome_order_num, taxon_id, description,
-                      a_count, c_count, g_count, t_count, external_database_release_id, sequence_ontology_id
-               FROM dots.VirtualSequence
-             ) sequence
-             LEFT JOIN
-             (SELECT drns.na_sequence_id, max(dr.primary_identifier) AS genbank_accession
-              FROM dots.dbrefNaSequence drns, sres.DbRef dr,
-                   sres.ExternalDatabaseRelease gb_edr, sres.ExternalDatabase gb_ed
-              WHERE drns.db_ref_id = dr.db_ref_id
-                AND dr.external_database_release_id
-                    = gb_edr.external_database_release_id
-                AND gb_edr.external_database_id = gb_ed.external_database_id
-                AND gb_ed.name = 'GenBank'
-              GROUP BY drns.na_sequence_id
-             ) genbank ON sequence.na_sequence_id = genbank.na_sequence_id
-             LEFT JOIN
-             (SELECT edr.external_database_release_id,
-                     edr.version AS database_version, ed.name AS database_name
-              FROM sres.ExternalDatabase ed, sres.ExternalDatabaseRelease edr
-              WHERE edr.external_database_id = ed.external_database_id
-             ) db ON sequence.external_database_release_id = db.external_database_release_id
-             LEFT JOIN
-             (SELECT distinct piece_na_sequence_id, 0 as is_top_level
-              FROM &prefixSequencePieceClosure
-             ) virtualization ON  sequence.na_sequence_id = virtualization.piece_na_sequence_id
-             LEFT JOIN
-             (SELECT a_na_sequence_id as na_sequence_id, 1 as has_msa
-              FROM apidb.Synteny syn
-              GROUP BY a_na_sequence_id
-             ) msa ON sequence.na_sequence_id = msa.na_sequence_id
-             LEFT JOIN
-             (SELECT taxon_id, max(name) as name
-              FROM sres.TaxonName
-              WHERE name_class = 'scientific name'
-              GROUP BY taxon_id
-             ) tn ON sequence.taxon_id = tn.taxon_id
-        WHERE
-          sequence.taxon_id = taxon.taxon_id
-          AND sequence.sequence_ontology_id = so.ontology_term_id
-          AND (sequence.taxon_id::varchar = '&filterValue' OR length('&filterValue') = 0)
-          AND so.name IN ('random_sequence', 'chromosome', 'contig', 'supercontig','mitochondrial_chromosome','plastid_sequence','cloned_genomic','apicoplast_chromosome','maxicircle')
-        ORDER BY organism, source_id
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create unique index pk_SeqAttr_&1 ON &prefixGenomicSeqAttributes&1 (lower(source_id), project_id)
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create unique index SeqAttr_source_id&1 ON &prefixGenomicSeqAttributes&1 (source_id)
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create unique index SeqAttr_naseqid&1 ON &prefixGenomicSeqAttributes&1 (na_sequence_id)
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create unique index SeqAttr_taxsrc_id&1 ON &prefixGenomicSeqAttributes&1 (taxon_id, source_id)
-      ]]>
-    </sql>
-  </tuningTable>
 
 <!--  <tuningTable name="DatasetPresenter" alwaysUpdate="true">-->
   <tuningTable name="DatasetPresenter">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
-    <internalDependency name="GenomicSeqAttributes"/>
     <externalDependency name="core.ProjectInfo"/>
     <externalDependency name="sres.ExternalDatabase"/>
     <ancillaryTable name="DatasetContact"/>
@@ -563,7 +325,6 @@
   </tuningTable>
 
   <tuningTable name="EupathBuildDates" alwaysUpdate="true">
-    <internalDependency name="GenomicSeqAttributes"/>
     <program commandLine="buildEupathBuildDatesTT"/>
   </tuningTable>
 
@@ -743,124 +504,9 @@
   </tuningTable>
 
 
-
-
-<!-- COPIED from studyTuningManager.xml -->
-
-   <!-- renamed from ProtocolAppNodeIO -->
-  <tuningTable name="PANIO" prefixEnabled="true">
-   <comment>ALL inputs and outputs</comment>
-    <internalDependency name="PANExtDbRls"/>
-    <externalDependency name="study.ProtocolApp"/>
-    <externalDependency name="study.Input"/>
-    <externalDependency name="study.Output"/>
-    <externalDependency name="sres.OntologyTerm"/>
-    <externalDependency name="study.ProtocolAppNode"/>
-    <sql>
-      <![CDATA[
-        CREATE TABLE &prefixPANIO&1 AS
-        SELECT DISTINCT io.*
-        FROM (
-          SELECT i.protocol_app_node_id input_pan_id, pa.protocol_app_id,
-                 o.protocol_app_node_id output_pan_id,
-                 in_type.source_id as input_pan_type_source_id,
-                 --in_type.name as input_pan_type,
-                 in_type.ontology_term_id as input_pan_type_id,
-                 out_type.source_id as output_pan_type_source_id,
-                 --out_type.name as output_pan_type,
-                 out_type.ontology_term_id as output_pan_type_id
-          FROM study.ProtocolApp pa, study.Input i, study.Output o,
-               study.ProtocolAppNode in_pan LEFT JOIN sres.OntologyTerm in_type ON in_pan.type_id = in_type.ontology_term_id,
-               study.ProtocolAppNode out_pan LEFT JOIN sres.OntologyTerm out_type ON out_pan.type_id = out_type.ontology_term_id
-          WHERE i.protocol_app_id = pa.protocol_app_id
-            AND o.protocol_app_id = pa.protocol_app_id
-            AND i.protocol_app_node_id = in_pan.protocol_app_node_id
-            AND o.protocol_app_node_id = out_pan.protocol_app_node_id
-        ) io, &prefixpanextdbrls panExtDbRls
-        WHERE io.input_pan_id = panExtDbRls.pan_id -- the input and outputs will have same dataset in prefix enabled mode only
-          AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
-        ORDER BY io.input_pan_id, io.output_pan_id
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create index &prefixpainio2_iix&1 on &prefixPANIO&1
-               (input_pan_id, output_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create index &prefixpainio2_oix&1 on &prefixPANIO&1
-               (output_pan_id, input_pan_id, protocol_app_id, input_pan_type_source_id, output_pan_type_source_id)
-
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create index &prefixpainio2_otypeix&1 on &prefixPANIO&1
-               (output_pan_type_source_id, input_pan_type_source_id, output_pan_id, input_pan_id, protocol_app_id)
-
-      ]]>
-    </sql>
-    <sql>
-      <![CDATA[
-        create index &prefixpainio2_itypeix&1 on &prefixPANIO&1
-               (input_pan_type_source_id, output_pan_type_source_id, input_pan_id, output_pan_id, protocol_app_id)
-
-      ]]>
-    </sql>
-  </tuningTable>
-
-   <!-- renamed from PANExternalDatabaseRelease -->
-  <tuningTable name="PANExtDbRls" prefixEnabled="true">
-   <comment>ALL inputs and outputs</comment>
-    <externalDependency name="study.NodeSet"/>
-    <externalDependency name="study.NodeNodeSet"/>
-    <externalDependency name="study.ProtocolAppNode"/>
-    <externalDependency name="sres.ExternalDatabase"/>
-    <externalDependency name="sres.ExternalDatabaseRelease"/>
-    <sql>
-      <![CDATA[
-        CREATE TABLE &prefixPANExtDbRls&1 AS
-        SELECT distinct protocol_app_node_id as pan_id, external_database_release_id, name as dataset_name
-        FROM (
-          SELECT
-            sl.protocol_app_node_id
-          , s.external_database_release_id
-          , d.name
-          FROM
-            study.nodeSet s
-          , study.nodeNodeSet sl
-          , sres.externaldatabaserelease r
-          , sres.externaldatabase d
-          WHERE
-            s.external_database_release_id = r.external_database_release_id
-            and r.external_database_id = d.external_database_id
-            and s.node_set_id = sl.node_set_id
-            and s.external_database_release_id is not null
-          UNION
-          SELECT pan.protocol_app_node_id
-          , pan.external_database_release_id
-          , d.name
-          FROM study.protocolappnode pan
-          , sres.externaldatabaserelease r
-          , sres.externaldatabase d
-          WHERE
-            pan.external_database_release_id = r.external_database_release_id
-            and r.external_database_id = d.external_database_id
-            and pan.external_database_release_id is not null
-        ) t
-        WHERE (name = '&filterValue' or length('&filterValue') = 0)
-        ORDER BY external_database_release_id, protocol_app_node_id
-      ]]>
-    </sql>
-  </tuningTable>
-
   <tuningTable name="PANResults" prefixEnabled="true">
     <comment>Table of protocol app node ids and the name of the result table where they are referenced
     </comment>
-    <internalDependency name="PANExtDbRls"/>
     <externalDependency name="apidb.ChrCopyNumber"/>
     <externalDependency name="apidb.CrisprPhenotype"/>
     <externalDependency name="apidb.GeneCopyNumber"/>
@@ -973,7 +619,7 @@
         UNION
           SELECT protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
           WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.crisprphenotype)
-        ) r, &prefixpanextdbrls panExtDbRls
+        ) r, webready.panextdbrls panExtDbRls
         WHERE r.pan_id = panExtDbRls.pan_id
           AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
       ]]>
