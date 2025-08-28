@@ -959,7 +959,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           AND oa.project_id = ga.project_id
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND dd.category = 'Genome'
           AND dd.project_id = '@PROJECT_ID@'
         GROUP BY oa.project_id, dsp.dataset_presenter_id
       </sql>
@@ -1670,7 +1670,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  dsp.short_display_name, dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
                  dsp.protocol, dsp.usage,
-                 dsp.type,
+                 ds.type,
                  dsp.is_species_scope,
                  dsp.build_number_introduced,
                  coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
@@ -1746,7 +1746,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  dsp.short_display_name, dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
                  dsp.protocol, dsp.usage,
-                 dsp.type,
+                 ds.type,
                  dsp.is_species_scope,
                  dsp.build_number_introduced,
                  coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
@@ -2021,7 +2021,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             FROM apidbTuning.DatasetPresenter dsp,
                  apidbTuning.DatasetDatasource dd,
                  apidbTuning.OrganismAttributes oa
-            WHERE dsp.type = 'genome'
+            WHERE dd.category = 'Genome'
               AND dsp.dataset_presenter_id = dd.dataset_presenter_id
               AND oa.component_taxon_id = dd.taxon_id
               AND dd.project_id = '@PROJECT_ID@'
@@ -2627,7 +2627,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.project_id = ta.project_id
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND dd.category = 'Genome'
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
         ORDER BY count(*) desc
       </sql>
@@ -2650,7 +2650,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.project_id = ga.project_id
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND dd.category = 'Genome'
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ga.gene_type
         ORDER BY count(*) desc
       </sql>
@@ -2673,7 +2673,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.project_id = sa.project_id
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND dd.category = 'Genome'
         GROUP BY dsp.dataset_presenter_id, sa.sequence_type
         ORDER BY count(*) desc
       </sql>
@@ -2706,7 +2706,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 AND dd.dataset_presenter_id = dsp.dataset_presenter_id
                 AND dd.taxon_id = tn.taxon_id
                 AND tn.name_class = 'scientific name'
-                AND dsp.type = 'genome'
+                AND dd.category = 'Genome'
                 AND o_dd.category NOT IN ('Genomics', 'Link outs')
             ) t
           GROUP BY dataset_id, category, organism
@@ -2741,7 +2741,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                   ) ext
                 WHERE ext.taxon_id = dd.taxon_id
                   AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-                  AND dsp.type = 'genome'
+                  AND dd.category = 'Genome'
               )
               SELECT dataset_id
                 , name
@@ -2823,7 +2823,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
               AND o.taxon_id = oa.component_taxon_id
               AND oa.component_taxon_id = dd.taxon_id
               AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-              AND dsp.type='genome'
+              AND dd.category='Genome'
         </sql>
       </sqlQuery>
 
