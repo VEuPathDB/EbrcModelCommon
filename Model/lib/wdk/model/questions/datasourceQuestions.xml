@@ -9,7 +9,7 @@
       queryRef="DatasourceIds.ByCategory"
       recordClassRef="DatasourceRecordClasses.DatasourceRecordClass"
       noSummaryOnSingleRecord="true">
-     />
+     >
       <description>
          Find data sets that are associated with a particular category
       </description>
