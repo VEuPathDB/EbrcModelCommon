@@ -16,7 +16,7 @@
             SELECT distinct dd.dataset_presenter_id as dataset_id
             FROM apidbtuning.datasetdatasource dd
             WHERE (dd.category is null OR dd.category != 'Link outs')
-            AND (dd.project_id = '@PROJECT_ID@' or `@PROJECT_ID` = 'UniDB')
+            AND (dd.project_id = '@PROJECT_ID@' or '@PROJECT_ID@' = 'UniDB')
             EXCEPT
             SELECT dataset_presenter_id as dataset_id
               FROM apidbtuning.datasetproperty
@@ -364,7 +364,7 @@
             (select dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where dd.category is null OR dd.category != 'Link outs'
-	    and ('@PROJECT_ID' = 'UniDB' or dd.project_id = '@PROJECT_ID')
+	    and ('@PROJECT_ID' = 'UniDB' or dd.project_id = '@PROJECT_ID@')
             MINUS
             select dataset_presenter_id as dataset_id
               from apidbtuning.datasetproperty 
