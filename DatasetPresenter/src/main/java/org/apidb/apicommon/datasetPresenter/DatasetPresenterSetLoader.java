@@ -399,7 +399,7 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasetDatasource" + suffix;
     String sql = "INSERT INTO "
             + table
-            + " (dataset_datasource_id, datasource_id, dataset_presenter_id, category, project_id, name, taxon_id)"
+            + " (dataset_datasource_id, data_source_id, dataset_presenter_id, category, project_id, name, taxon_id)"
             + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
@@ -591,7 +591,7 @@ public class DatasetPresenterSetLoader {
     String table = config.getSchema() + ".DatasourceModelRef" + suffix;
     String sql = "INSERT INTO "
         + table
-        + " (dataset_model_ref_id, datasource_id, record_type, target_type, target_name)"
+        + " (dataset_model_ref_id, data_source_id, record_type, target_type, target_name)"
         + " VALUES (nextval('" + table + "_sq'), ?, ?, ?, ?)";
     return dbConnection.prepareStatement(sql);
   }
