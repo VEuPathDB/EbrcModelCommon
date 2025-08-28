@@ -154,7 +154,7 @@ sub createTables {
          ";
   runSql($dbh, $sql, 1);
 
-  $sql = "ALTER TABLE ${schema}.DatasetDatasource${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (datasource_id, dataset_presenter_id)";
+  $sql = "ALTER TABLE ${schema}.DatasetDatasource${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (data_source_id, dataset_presenter_id)";
   runSql($dbh, $sql, 1);
 
   #######################################################
