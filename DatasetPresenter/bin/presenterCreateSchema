@@ -183,7 +183,7 @@ sub createTables {
   $sql = "
       create table $schema.DatasourceModelRef$suffix (
         datasource_model_ref_id         numeric(12),
-        datasource_id                numeric(12), 
+        data_source_id                numeric(12), 
         record_type                  varchar(100),
         target_type                  varchar(20),
         target_name                  varchar(300),
@@ -195,7 +195,7 @@ sub createTables {
   runSql($dbh, $sql, 1);
 
   $sql = "create index dscmrix_${suffix}
-            on ${schema}.DatasourceModelRef${suffix} (datasource_id)
+            on ${schema}.DatasourceModelRef${suffix} (data_source_id)
           ";
   runSql($dbh, $sql, 1);
 
