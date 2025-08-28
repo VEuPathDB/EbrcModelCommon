@@ -20,11 +20,11 @@
       <!--   Reporters -->
       <!-- =============================================================== -->
 
-      <reporter name="attributesTabular"
+      <reporter name="attributesTabular" displayName="" scopes=""
                 implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
         <property name="page_size">500</property>
       </reporter>
-      <reporter name="tableTabular" 
+      <reporter name="tableTabular" displayName="" scopes=""
                 implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
         <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
       </reporter>
@@ -51,7 +51,7 @@
                          help= "A short description of the dataset."/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.Contacts">
+      <attributeQueryRef ref="DatasourceAttributes.Contacts">
         <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
       </attributeQueryRef>
 
@@ -66,8 +66,8 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Publications"
              displayName="Associated Publications"
-             queryRef="DatasetTables.Publications">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+             queryRef="DatasourceTables.Publications">
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
         <columnAttribute name="citation" internal="true"/>
         <columnAttribute name="url" internal="true"/>
@@ -94,8 +94,8 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"  
              displayName="Explore this Data Set within this Website"
-             queryRef="DatasetTables.References">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+             queryRef="DatasourceTables.References">
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
         <columnAttribute name="text" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" inReportMaker="false" internal="true"/>
@@ -116,7 +116,7 @@
             isCacheable='false'>
 
     <sqlQuery name="DisplayName"  isCacheable="false">
-      <column name="dataset_id" columnType="string"/>
+      <column name="datasource_id" columnType="string"/>
       <column name="display_name" ignoreCase="true" columnType="string"/>
 
       <sql> 
@@ -140,14 +140,14 @@
 
  
     <sqlQuery name="All"  isCacheable="false">
-      <column name="dataset_id" columnType="string"/>
+      <column name="datasource_id" columnType="string"/>
       <column name="dataset_name" columnType="string"/>
       <column name="description" columnType="string"/>
       <column name="summary" columnType="string"/>
       <column name="build_number_introduced" columnType="string"/>
       <sql>
         <![CDATA[
-          SELECT dd.dataset_datasoure_id as datasource_id,
+          SELECT dd.dataset_datasource_id as datasource_id,
                  dsp.name as dataset_name,
                  --dsp.display_name,
 		 dsp.description,
@@ -171,16 +171,16 @@
     </sqlQuery>
     
     <sqlQuery name="Organisms"  isCacheable="false">
-      <column name="dataset_id"/>
+      <column name="datasource_id"/>
       <column name="organism_prefix"/>
 
       <sql>
         <![CDATA[
-          SELECT dataset_id,
+          SELECT datasource_id,
             regexp_replace(
               substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
           FROM (
-            SELECT DISTINCT dd.dataset_datasource_id as dataset_id
+            SELECT DISTINCT dd.dataset_datasource_id as datasource_id
               , CASE when tn.organism_name is null then null
 	       -- italicize first 2 words
                 ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
@@ -192,9 +192,9 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             AND dd.category != 'Link outs'
 
           ) t
-          GROUP BY dataset_id
+          GROUP BY datasource_id
           --UNION
-          --SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as organism_prefix
+          --SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id, null as organism_prefix
           --FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
@@ -202,12 +202,12 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
     <sqlQuery name="Contacts"  isCacheable="false">
-      <column name="dataset_id" columnType="string"/>
+      <column name="datasource_id" columnType="string"/>
       <column name="short_attribution" columnType="string"/>
 
             <sql>
         <![CDATA[
-          SELECT distinct dsp.dataset_presenter_id as dataset_id,
+          SELECT distinct dd.dataset_datasource_id as datasource_id,
                  CASE WHEN  dsc.name is not null THEN dsc.name
                       WHEN dsc.affiliation is not null THEN dsc.affiliation
                       ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
@@ -221,11 +221,9 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
 	  WHERE dd.project_id = '@PROJECT_ID@'
           AND dd.category != 'Link outs'
-
-          WHERE dsc.is_primary_contact = true
-          AND dd.project_id = '@PROJECT_ID@'
+          AND dsc.is_primary_contact = true
           -- UNION
-          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id
           --      , null as contact
           --      , null as institution
           --      , null as email
@@ -240,17 +238,17 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <!-- Table queries -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-  <querySet name="DatasetTables" queryType="table"
+  <querySet name="DatasourceTables" queryType="table"
             isCacheable='false'>
     <sqlQuery name="Publications"  isCacheable='false'>
-      <column name="dataset_id"/>
+      <column name="datasource_id"/>
       <column name="pmid"/>
       <column name="citation"/>
       <column name="url"/>
       <sql>
         <![CDATA[
           WITH pmidPublications AS (
-            SELECT dataset_datasource_id AS dataset_id
+            SELECT dataset_datasource_id AS datasource_id
               , pmid
               , regexp_replace(citation, '\s+<', ' <') AS citation
               , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid AS url
@@ -260,7 +258,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 	    and dp.dataset_presenter_id = dd.dataset_presenter_id
             ORDER BY dataset_publication_id
           )
-          SELECT dataset_datasource_id AS dataset_id
+          SELECT dataset_datasource_id AS datasource_id
             , NULL AS pmid
             , text AS citation
             , url
@@ -276,7 +274,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       </sql>
     </sqlQuery>
       <sqlQuery name="References"  isCacheable='false'>
-      <column name="dataset_id"/>
+      <column name="datasource_id"/>
       <column name="dataset_name"/>
       <column name="text"/>
       <column name="url"/>
@@ -287,7 +285,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="link_type"/>
       <sql>
         <![CDATA[
-              SELECT dd.dataset_datasource_id as dataset_id
+              SELECT dd.dataset_datasource_id as datasource_id
                 , dd.name as dataset_name
                 , '' as text
                 , '' as url
