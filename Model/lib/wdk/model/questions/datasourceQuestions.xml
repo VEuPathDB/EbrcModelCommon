@@ -1,6 +1,6 @@
 <wdkModel>
 
-  <questionSet name="DatasourceQuestions">
+  <questionSet name="DatasourceQuestions" displayName="Datasource">
     <question name="DatasourcesByCategory"
       displayName="Datasources by Category"
       excludeProjects="MicrobiomeDB,ClinEpiDB"

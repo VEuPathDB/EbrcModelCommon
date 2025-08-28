@@ -1,5 +1,5 @@
 <wdkModel>
-   <querySet name="DatasourceIds" displayName="Datasource" queryType="id" isCacheable="false">
+   <querySet name="DatasourceIds" queryType="id" isCacheable="false">
     <sqlQuery name="ByCategory">
       <paramRef ref="datasetParams.dataset_category"/>
       <column name="dataset_id"/>
