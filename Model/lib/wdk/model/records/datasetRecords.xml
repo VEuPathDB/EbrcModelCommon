@@ -2011,10 +2011,10 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
         <![CDATA[
             SELECT distinct dsp.dataset_presenter_id as dataset_id,
-                   dataset_presenter_id as old_dataset_id
+                   dsp.dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
             WHERE dd.project_id = '@PROJECT_ID@'
-	    AND dd.dataset_presetner_id = dsp.dataset_presenter_id
+	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
                    oa.source_id as old_dataset_id
@@ -2411,9 +2411,9 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 , ref.target_type
                 , replace (ref.target_name, ':', '') as target_name
                 , 'question' as link_type
-              FROM ApidbTuning.datasetmodelref ref
+              FROM ApidbTuning.datasourcemodelref ref
               LEFT JOIN ApidbTuning.DatasetDatasource dd
-                ON dd.dataset_datasource_id = ref.dataset_datasource_id
+                ON dd.datasource_id = ref.datasource_id
              JOIN ApidbTuning.DatasetPresenter dsp
 		ON dsp.dataset_presenter_id = dd.dataset_presenter_id
               WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
