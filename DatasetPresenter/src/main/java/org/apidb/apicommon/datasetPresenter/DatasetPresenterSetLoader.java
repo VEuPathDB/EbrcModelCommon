@@ -385,13 +385,10 @@ public class DatasetPresenterSetLoader {
     }
 
     for (ModelReference ref : datasetInjector.getModelReferences()) {
-      loadDatasetModelReference(datasetPresenter.getId(), ref, getDatasetModelReferenceStmt());
+	//      loadDatasetModelReference(datasetPresenter.getId(), ref, getDatasetModelReferenceStmt());
 
-      // for the case where we have multiple (named) injectors.  these map individually to a datasource.
-      if (datasetInjector.getDatasourceName() != null) {
-        Integer datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
-        loadDatasourceModelReference(datasourceId, ref, getDatasourceModelReferenceStmt());
-      }
+      Integer datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
+      loadDatasourceModelReference(datasourceId, ref, getDatasourceModelReferenceStmt());
     }
   }
 
