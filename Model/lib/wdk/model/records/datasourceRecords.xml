@@ -296,8 +296,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 , 'question' as link_type
               FROM ApidbTuning.datasetmodelref ref
               LEFT JOIN ApidbTuning.DatasetDatasource dd
-                ON dd.dataset_datasource_id = ref.dataset_datasource_id
-	        ON dd.datasource_id = ds.datasource_id	
+                ON dd.data_source_id = ref.data_source_id
               WHERE NOT (dd.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
 	    ]]>
       </sql>
