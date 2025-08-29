@@ -110,6 +110,7 @@
         <table name="References"  
              displayName="Explore this Data Set within this Website"
              queryRef="DatasourceTables.References">
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
         <columnAttribute name="text" inReportMaker="false" internal="true"/>
@@ -294,6 +295,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 
     <sqlQuery name="References"  isCacheable='false'>
       <column name="datasource_id"/>
+      <column name="dataset_id"/>
       <column name="dataset_name"/>
       <column name="text"/>
       <column name="url"/>
@@ -305,6 +307,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <sql>
         <![CDATA[
               SELECT dd.dataset_datasource_id as datasource_id
+                , dd.dataset_presenter_id as dataset_id
                 , dd.name as dataset_name
                 , '' as text
                 , '' as url
