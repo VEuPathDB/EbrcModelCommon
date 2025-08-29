@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -387,10 +388,16 @@ public class DatasetPresenterSetLoader {
     for (ModelReference ref : datasetInjector.getModelReferences()) {
       loadDatasetModelReference(datasetPresenter.getId(), ref, getDatasetModelReferenceStmt());
 
-      // for the case where we have multiple (named) injectors.  these map individually to a datasource.
-      if (datasetInjector.getDatasourceName() != null) {
-        Integer datasourceId = datasetPresenter.getDatasource(datasetInjector.getDatasourceName()).getDatasourceId();
-        loadDatasourceModelReference(datasourceId, ref, getDatasourceModelReferenceStmt());
+      // add this injector's model references to the datasources of this presenter.
+      // if this injector has a datasourceName, then add ref to that datasource
+      // otherwise add ref to all this presenter's datasources
+      Collection<Datasource> datasources = new HashSet<>();
+      if (datasetInjector.getDatasourceName() != null)
+        datasources.add(datasetPresenter.getDatasource(datasetInjector.getDatasourceName()));
+      else
+        datasources.addAll(datasetPresenter.getDatasources());
+      for (Datasource datasource : datasources) {
+        loadDatasourceModelReference(datasource.getDatasourceId(), ref, getDatasourceModelReferenceStmt());
       }
     }
   }
