@@ -1,0 +1,359 @@
+<wdkModel>
+
+  <!-- a minimal Datasource record only needed for genomics sites. Used for the Question that drives the internal search pages (eg RNA Seq).  -->
+
+  <recordClassSet name="DatasourceRecordClasses">
+
+   <recordClass name="DatasourceRecordClass" urlName="datasource" useBasket="false" excludeProjects="ClinEpiDB, MicrobiomeDB">
+
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+        <columnRef>datasource_id</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" >
+        <text>
+          <![CDATA[ $$display_name$$ ]]>
+        </text>
+      </idAttribute>
+
+      <!-- =============================================================== -->
+      <!--   Reporters -->
+      <!-- =============================================================== -->
+
+      <reporter name="attributesTabular" displayName="" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
+        <property name="page_size">500</property>
+      </reporter>
+      <reporter name="tableTabular" displayName="" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
+        <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
+      </reporter>
+
+
+      <!-- =================================================================== -->
+      <!--  Attributes  ++++++++-->
+      <!-- =================================================================== -->
+
+
+      <attributeQueryRef ref="DatasourceAttributes.Organisms">
+        <columnAttribute  name="organism_prefix"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="DatasourceAttributes.DisplayName">
+        <columnAttribute name="display_name" />
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="DatasourceAttributes.All">
+        <columnAttribute name="dataset_id" internal="true" displayName="Data Set ID" help="ID of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+        <columnAttribute name="description" displayName="Description" sortable="false"/>
+        <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
+        <columnAttribute name="summary" displayName="Summary" sortable="false"
+                         help= "A short description of the dataset."/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="DatasourceAttributes.Contacts">
+        <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
+      </attributeQueryRef>
+
+      
+
+      <!-- =================================================================================== -->
+      <!-- TABLES ++++++++-->
+      <!-- ================================================================================= -->
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Publications  -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Publications"
+             displayName="Associated Publications"
+             queryRef="DatasourceTables.Publications">
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
+        <columnAttribute name="citation" internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+
+        <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
+                       displayName="PubMed Link">
+
+          <displayText>
+            <![CDATA[
+              $$citation$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Version -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Version"
+             displayName="Provider's Version"
+             excludeProjects="MicrobiomeDB,ClinEpiDB"
+             queryRef="DatasourceTables.Version">
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="organism" displayName="Reference Organism"/>
+        <columnAttribute name="version" displayName="Version"/>
+        <columnAttribute name="project_id" displayName="Project"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- References -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="References"  
+             displayName="Explore this Data Set within this Website"
+             queryRef="DatasourceTables.References">
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="text" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" inReportMaker="false" internal="true"/>
+        <columnAttribute name="description" inReportMaker="false" internal="true"/>
+        <columnAttribute name="record_type" displayName="Record Type" />
+        <columnAttribute name="target_type" displayName="Type of Reference"/>
+        <columnAttribute name="target_name" displayName="Name"/>
+        <columnAttribute name="link_type" displayName="link_type"/>
+      </table>
+    </recordClass>
+  </recordClassSet>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Attribute queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="DatasourceAttributes" queryType="attribute" doNotTest="true"
+            isCacheable='false'>
+
+    <sqlQuery name="DisplayName"  isCacheable="false">
+      <column name="datasource_id" columnType="string"/>
+      <column name="display_name" ignoreCase="true" columnType="string"/>
+
+      <sql> 
+        <![CDATA[
+          SELECT distinct dd.dataset_datasource_id as datasource_id
+               , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
+                      when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'
+                      else dsp.display_name
+                 end as display_name
+          FROM apidbtuning.datasetpresenter dsp
+            LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE dd.project_id = '@PROJECT_ID@'
+          AND dd.category != 'Link outs'
+          -- UNION
+          -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
+          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+ 
+    <sqlQuery name="All"  isCacheable="false">
+      <column name="datasource_id" columnType="string"/>
+      <column name="dataset_id" columnType="string"/>
+      <column name="dataset_name" columnType="string"/>
+      <column name="description" columnType="string"/>
+      <column name="summary" columnType="string"/>
+      <column name="build_number_introduced" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT dd.dataset_datasource_id as datasource_id,
+                 dd.dataset_presenter_id as dataset_id,
+                 dsp.name as dataset_name,
+                 --dsp.display_name,
+		 dsp.description,
+                 coalesce(dsp.summary, dsp.description) as summary,
+                 dsp.build_number_introduced
+          FROM apidbtuning.datasetdatasource dd, apidbTuning.DatasetPresenter dsp
+	  WHERE dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.project_id = '@PROJECT_ID@'
+          AND dd.category != 'Link outs'
+
+          -- TODO:  add this back
+          --  UNION ALL
+          -- SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id
+          --      , null as dataset_name
+          --     , d.description
+          --     , d.summary
+          --     , null as build_number_introduced
+          --FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
+        ]]>
+      </sql>
+    </sqlQuery>
+    
+    <sqlQuery name="Organisms"  isCacheable="false">
+      <column name="datasource_id"/>
+      <column name="organism_prefix"/>
+
+      <sql>
+        <![CDATA[
+          SELECT datasource_id,
+            regexp_replace(
+              substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+          FROM (
+            SELECT DISTINCT dd.dataset_datasource_id as datasource_id
+              , CASE when tn.organism_name is null then null
+	       -- italicize first 2 words
+                ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
+SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2)) + 1)
+                END as org
+            FROM apidbtuning.datasetdatasource dd
+              LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+	    WHERE dd.project_id = '@PROJECT_ID@'
+            AND dd.category != 'Link outs'
+
+          ) t
+          GROUP BY datasource_id
+          --UNION
+          --SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id, null as organism_prefix
+          --FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+
+    </sqlQuery>
+
+    <sqlQuery name="Contacts"  isCacheable="false">
+      <column name="datasource_id" columnType="string"/>
+      <column name="short_attribution" columnType="string"/>
+
+            <sql>
+        <![CDATA[
+          SELECT distinct dd.dataset_datasource_id as datasource_id,
+                 CASE WHEN  dsc.name is not null THEN dsc.name
+                      WHEN dsc.affiliation is not null THEN dsc.affiliation
+                      ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
+                 END as contact,
+                 CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                      ELSE   dsc.affiliation END as institution,
+                 dsc.email as email,
+                 coalesce(dsp.short_attribution, dsc.name) as short_attribution
+          FROM ApidbTuning.DatasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
+	  WHERE dd.project_id = '@PROJECT_ID@'
+          AND dd.category != 'Link outs'
+          AND dsc.is_primary_contact = true
+          -- UNION
+          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id
+          --      , null as contact
+          --      , null as institution
+          --      , null as email
+          --      , null as short_attribution
+          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+</querySet>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Table queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="DatasourceTables" queryType="table"
+            isCacheable='false'>
+
+    <sqlQuery name="Publications"  isCacheable='false'>
+      <column name="datasource_id"/>
+      <column name="pmid"/>
+      <column name="citation"/>
+      <column name="url"/>
+      <sql>
+        <![CDATA[
+          WITH pmidPublications AS (
+            SELECT dataset_datasource_id AS datasource_id
+              , pmid
+              , regexp_replace(citation, '\s+<', ' <') AS citation
+              , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid AS url
+              , row_number() OVER () AS rownumber
+            FROM ApidbTuning.DatasetPublication dp, apidbtuning.datasetdatasource dd
+            WHERE length(pmid) > 0
+	    and dp.dataset_presenter_id = dd.dataset_presenter_id
+            ORDER BY dataset_publication_id
+          )
+          SELECT dataset_datasource_id AS datasource_id
+            , NULL AS pmid
+            , text AS citation
+            , url
+            , row_number() OVER () AS rownumber
+          FROM apidbtuning.datasethyperlink dh, apidbtuning.datasetdatasource dd
+          WHERE isPublication = 'Y'
+	  and dh.dataset_presenter_id = dd.dataset_presenter_id
+          UNION
+          SELECT *
+          FROM pmidPublications
+          ORDER BY rownumber
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="References"  isCacheable='false'>
+      <column name="datasource_id"/>
+      <column name="dataset_id"/>
+      <column name="dataset_name"/>
+      <column name="text"/>
+      <column name="url"/>
+      <column name="description"/>
+      <column name="record_type"/>
+      <column name="target_type"/>
+      <column name="target_name"/>
+      <column name="link_type"/>
+      <sql>
+        <![CDATA[
+              SELECT dd.dataset_datasource_id as datasource_id
+                , dd.dataset_presenter_id as dataset_id
+                , dd.name as dataset_name
+                , '' as text
+                , '' as url
+                , '' as description
+                , ref.record_type
+                , ref.target_type
+                , replace (ref.target_name, ':', '') as target_name
+                , 'question' as link_type
+              FROM ApidbTuning.datasourcemodelref ref
+              LEFT JOIN ApidbTuning.DatasetDatasource dd
+                ON dd.data_source_id = ref.data_source_id
+              WHERE NOT (dd.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
+	    ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Version"  isCacheable='false'>
+      <column name="dataset_name"/>
+      <column name="datasource_id"/>
+      <column name="version"/>
+      <column name="organism"/>
+      <column name="project_id"/>
+      <sql excludeProjects="EuPathDB">
+        <![CDATA[
+          WITH TaxonScientificName AS (
+            SELECT taxon_id,name
+            FROM sres.taxonname
+            WHERE name_class = 'scientific name'
+          )
+          SELECT dataset_name, datasource_id,organism, version, '@PROJECT_ID@' as project_id
+          FROM (
+            select distinct dd.name as dataset_name,
+                 dd.dataset_datasource_id as datasource_id,
+                 case when dd.taxon_id = 0
+                 then 'ALL'
+                 else tn.name
+                 end as organism,
+                 replace (ds.version, '_gus4','') as version
+            FROM apidb.datasource ds
+              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
+              LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
+            ORDER BY dd.name
+          ) t
+        ]]>
+      </sql>
+    </sqlQuery>
+  </querySet>
+  
+</wdkModel>

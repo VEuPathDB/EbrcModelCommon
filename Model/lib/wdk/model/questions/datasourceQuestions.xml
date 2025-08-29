@@ -1,0 +1,19 @@
+<wdkModel>
+
+  <questionSet name="DatasourceQuestions" displayName="Datasource">
+    <question name="DatasourcesByCategory"
+      displayName="Datasources by Category"
+      excludeProjects="MicrobiomeDB,ClinEpiDB"
+      shortDisplayName="Category"
+      fullAnswer="true"
+      queryRef="DatasourceIds.ByCategory"
+      recordClassRef="DatasourceRecordClasses.DatasourceRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find data sets that are associated with a particular category
+      </description>
+    </question>
+
+  </questionSet>
+
+</wdkModel>

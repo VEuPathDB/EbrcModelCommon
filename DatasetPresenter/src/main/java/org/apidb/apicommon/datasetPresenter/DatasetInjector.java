@@ -27,11 +27,14 @@ public abstract class DatasetInjector {
 
   private static final Logger LOG = Logger.getLogger(DatasetInjector.class);
 
-  private Map<String, String> _propValues = new HashMap<String, String>();
+  private final Map<String, String> _propValues = new HashMap<>();
   private String _datasetName;
+  private String _datasourceName;
+  private String _projectName;
+  private String _categoryOverride;
   private Contact _primaryContact;
   private DatasetInjectorSet _datasetInjectorSet;
-  private Map<String, ModelReference> _modelReferences = new HashMap<String, ModelReference>();
+  private final Map<String, ModelReference> _modelReferences = new HashMap<>();
   private Map<String, Map<String, String>> _globalDatasetProperties;
 
   private TemplateSet _templateSet;
@@ -45,7 +48,7 @@ public abstract class DatasetInjector {
    * templates the subclass injects. Standard properties supplied by the
    * containing <code>DatasetPresenter</code> (e.g. "datasetName") must be
    * declared if they are required by any of the templates.
-   * 
+   * <p>
    * The values for these properties are supplied in three ways:
    * <ul>
    * <li>Standard properties required by a DatasetPresenter are inherited. These
@@ -76,7 +79,7 @@ public abstract class DatasetInjector {
   /**
    * Subclasses call this method to add model references to the presentation
    * layer. To do so they add a call in this method to either {@link
-   * #addWdkReference(String,String,String} or
+   * #addWdkReference(String,String,String}
    * {@link #addModelReference(String, String). *
    */
   protected abstract void addModelReferences();
@@ -86,7 +89,7 @@ public abstract class DatasetInjector {
    * presentation layer. To do so they add a call in this method to
    * {@link #injectTemplate(String)}. The template will have available all
    * properties declared by <code>getPropertiesDeclaration</code>.
-   * 
+   * <p>
    * Optionally they provide additional hard-coded properties to templates by
    * calling {@link #setPropValue(String, String)} before calling
    * <code>injectTemplate()</code>.
@@ -98,8 +101,7 @@ public abstract class DatasetInjector {
    * are specified by the user in the datasetPresenter XML file. This will be
    * made available
    * 
-   * @param key
-   * @param value
+
    */
   protected void setPropValue(String key, String value) {
     _propValues.put(key, value);
@@ -142,7 +144,7 @@ public abstract class DatasetInjector {
   protected boolean getPropValueAsBoolean(String key) {
       String pv = getPropValue(key);
 
-      if(pv != null && !pv.toLowerCase().equals("true") && !pv.toLowerCase().equals("false")) {
+      if(pv != null && !pv.equalsIgnoreCase("true") && !pv.equalsIgnoreCase("false")) {
           throw new UserException("Required true/false value for boolean prop " + key + " for dataset " + _datasetName);
       }
 
@@ -172,10 +174,7 @@ public abstract class DatasetInjector {
   /**
    * Subclasses should call this method inside {@link #addModelReferences()} to
    * make a WDK reference.
-   * 
-   * @param recordClass
-   * @param type
-   * @param name
+   *
    */
   protected void addWdkReference(String recordClass, String type, String name) {
       addWdkReference(recordClass, type, name, EMPTY_ARRAY, null, 0);
@@ -196,10 +195,6 @@ public abstract class DatasetInjector {
   /**
    * Subclasses should call this method inside {@link #addModelReferences()} to
    * make a reference to a model object that is not in the WDK (eg, GBrowse).
-   * 
-   * @param recordClass
-   * @param type
-   * @param name
    */
     protected void addModelReference(String type, String name) {
         addModelReference(type, name, EMPTY_ARRAY, null);
@@ -223,8 +218,6 @@ public abstract class DatasetInjector {
 
   /**
    * Add property values.
-   * 
-   * @param propValues
    */
   protected void addPropValues(Map<String, String> propValues) {
     _propValues.putAll(propValues);
@@ -246,8 +239,7 @@ public abstract class DatasetInjector {
    * declared properties are present, then the injector is considered a match.
    * Subclasses can override this method to change the discover behavior or add
    * additional checks.
-   * 
-   * @param propValues
+   *
    * @return    true if the injector is a match with given param values.
    */
   public boolean discover(Map<String, String> propValues) {
@@ -270,8 +262,6 @@ public abstract class DatasetInjector {
 
   /**
    * Set the name of the dataset that is being injected.
-   * 
-   * @param datasetName
    */
   void setDatasetName(String datasetName) {
     _datasetName = datasetName;
@@ -279,17 +269,13 @@ public abstract class DatasetInjector {
 
   /**
    * Set the name of the dataset that is being injected.
-   * 
-   * @param primaryContact
    */
   void setPrimaryContact(Contact primaryContact) {
     _primaryContact = primaryContact;
   }
 
   /**
-   * Set the parent DatasetInjectorSet.
-   * 
-   * @param datasetInjectorSet
+   * Set the parent DatasetInjectorSet
    */
   void setDatasetInjectorSet(DatasetInjectorSet datasetInjectorSet) {
     _datasetInjectorSet = datasetInjectorSet;
@@ -301,7 +287,7 @@ public abstract class DatasetInjector {
    * 
    */
   protected String getOrganismAbbrevFromDatasetName() {
-    if (_datasetName.equals("")) {
+    if (_datasetName.isEmpty()) {
       return "";
     }
 
@@ -309,7 +295,7 @@ public abstract class DatasetInjector {
       String[] tokens = _datasetName.split("_");
       String organismAbbrev = tokens[0];
      
-      if(organismAbbrev.equals("")){
+      if(organismAbbrev.isEmpty()){
         return "";
       } else {
 
@@ -335,7 +321,7 @@ public abstract class DatasetInjector {
 
     // These conditions are a band-aid until we can read the organism xml file
     // in EUPathDatasets
-    /**
+    /*
     if (this.datasetName.substring(0, 4).equals("gass")) {
       return "G.l.";
     }
@@ -355,7 +341,7 @@ public abstract class DatasetInjector {
 
 
   protected String getOrganismAbbrevDisplayFromDatasetName() {
-    if (_datasetName.equals("")) {
+    if (_datasetName.isEmpty()) {
       return "";
     }
 
@@ -363,7 +349,7 @@ public abstract class DatasetInjector {
       String[] tokens = _datasetName.split("_");
       String organismAbbrev = tokens[0];
      
-      if(organismAbbrev.equals("")){
+      if(organismAbbrev.isEmpty()){
         return "";
       } else {
 
@@ -399,7 +385,7 @@ public abstract class DatasetInjector {
   }
 
  protected String getOrganismNamesForFilesFromDatasetName() {
-    if (_datasetName.equals("")) {
+    if (_datasetName.isEmpty()) {
       return "";
     }
 
@@ -407,7 +393,7 @@ public abstract class DatasetInjector {
       String[] tokens = _datasetName.split("_");
       String organismAbbrev = tokens[0];
      
-      if(organismAbbrev.equals("")){
+      if(organismAbbrev.isEmpty()){
         return "";
       } else {
 
@@ -421,8 +407,7 @@ public abstract class DatasetInjector {
           if (orgProps == null) {
             organismAbbrev +=  "_" + tokens[i+1];
           } else {
-           String orgNameForFiles =  orgProps.get("organismNameForFiles");
-            return orgNameForFiles;
+            return orgProps.get("organismNameForFiles");
           }
         } 
         return organismAbbrev;
@@ -453,8 +438,7 @@ public abstract class DatasetInjector {
   */
 
   protected String cleanString(String dirtyText) {
-      String cleanText = dirtyText.replaceAll("\\<.*?\\>", "");
-      return cleanText;
+      return dirtyText.replaceAll("\\<.*?\\>", "");
   }
 
   protected void setGraphDatasetName() {
@@ -473,7 +457,7 @@ public abstract class DatasetInjector {
   protected void setShortAttribution() {
     String shortAttribution = getPropValue("shortAttribution");
 
-    if (shortAttribution == null || shortAttribution.equals("")) {
+    if (shortAttribution == null || shortAttribution.isEmpty()) {
       Contact primaryContact = getPrimaryContact();
 
       String contactName = primaryContact.getName();
@@ -557,4 +541,28 @@ public abstract class DatasetInjector {
     Collections.sort(sampleNames, new NaturalOrderComparator());
     return sampleNames;
   }
+
+    public String getDatasourceName() {
+        return _datasourceName;
+    }
+
+    public void setDatasourceName(String datasourceName) {
+        this._datasourceName = datasourceName;
+    }
+
+    public String getProjectName() {
+        return _projectName;
+    }
+
+    public void setProjectName(String projectId) {
+        this._projectName = projectId;
+    }
+
+    public String getCategoryOverride() {
+        return _categoryOverride;
+    }
+
+    public void setCategoryOverride(String categoryOverride) {
+        this._categoryOverride = categoryOverride;
+    }
 }

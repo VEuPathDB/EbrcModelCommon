@@ -1,0 +1,20 @@
+<wdkModel>
+   <querySet name="DatasourceIds" queryType="id" isCacheable="false">
+    <sqlQuery name="ByCategory">
+      <paramRef ref="datasetParams.dataset_category"/>
+      <column name="datasource_id"/>
+
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT dataset_datasource_id as datasource_id
+          FROM apidbtuning.datasetdatasource
+          WHERE (project_id = '@PROJECT_ID@' or 'VEuPathDB' = '@PROJECT_ID@')
+	  AND category = $$dataset_category$$
+        ]]>
+      </sql>
+    </sqlQuery>
+
+   </querySet>
+
+
+</wdkModel>
