@@ -44,6 +44,7 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="DatasourceAttributes.All">
+        <columnAttribute name="dataset_id" internal="true" displayName="Data Set ID" help="ID of the dataset."/>
         <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
         <columnAttribute name="description" displayName="Description" sortable="false"/>
         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
@@ -88,6 +89,20 @@
         </linkAttribute>
       </table>
 
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Version -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Version"
+             displayName="Provider's Version"
+             excludeProjects="MicrobiomeDB,ClinEpiDB"
+             queryRef="DatasourceTables.Version">
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="organism" displayName="Reference Organism"/>
+        <columnAttribute name="version" displayName="Version"/>
+        <columnAttribute name="project_id" displayName="Project"/>
+      </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- References -->
@@ -141,6 +156,7 @@
  
     <sqlQuery name="All"  isCacheable="false">
       <column name="datasource_id" columnType="string"/>
+      <column name="dataset_id" columnType="string"/>
       <column name="dataset_name" columnType="string"/>
       <column name="description" columnType="string"/>
       <column name="summary" columnType="string"/>
@@ -148,6 +164,7 @@
       <sql>
         <![CDATA[
           SELECT dd.dataset_datasource_id as datasource_id,
+                 dd.dataset_presenter_id as dataset_id,
                  dsp.name as dataset_name,
                  --dsp.display_name,
 		 dsp.description,
@@ -240,6 +257,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <querySet name="DatasourceTables" queryType="table"
             isCacheable='false'>
+
     <sqlQuery name="Publications"  isCacheable='false'>
       <column name="datasource_id"/>
       <column name="pmid"/>
@@ -265,7 +283,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             , row_number() OVER () AS rownumber
           FROM apidbtuning.datasethyperlink dh, apidbtuning.datasetdatasource dd
           WHERE isPublication = 'Y'
-	  and dp.dataset_presenter_id = dd.dataset_presenter_id
+	  and dh.dataset_presenter_id = dd.dataset_presenter_id
           UNION
           SELECT *
           FROM pmidPublications
@@ -273,7 +291,8 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
         ]]>
       </sql>
     </sqlQuery>
-      <sqlQuery name="References"  isCacheable='false'>
+
+    <sqlQuery name="References"  isCacheable='false'>
       <column name="datasource_id"/>
       <column name="dataset_name"/>
       <column name="text"/>
@@ -302,6 +321,36 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="Version"  isCacheable='false'>
+      <column name="dataset_name"/>
+      <column name="datasource_id"/>
+      <column name="version"/>
+      <column name="organism"/>
+      <column name="project_id"/>
+      <sql excludeProjects="EuPathDB">
+        <![CDATA[
+          WITH TaxonScientificName AS (
+            SELECT taxon_id,name
+            FROM sres.taxonname
+            WHERE name_class = 'scientific name'
+          )
+          SELECT dataset_name, datasource_id,organism, version, '@PROJECT_ID@' as project_id
+          FROM (
+            select distinct dd.name as dataset_name,
+                 dd.dataset_datasource_id as datasource_id,
+                 case when dd.taxon_id = 0
+                 then 'ALL'
+                 else tn.name
+                 end as organism,
+                 replace (ds.version, '_gus4','') as version
+            FROM apidb.datasource ds
+              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
+              LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
+            ORDER BY dd.name
+          ) t
+        ]]>
+      </sql>
+    </sqlQuery>
   </querySet>
   
 </wdkModel>
