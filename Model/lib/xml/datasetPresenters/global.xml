@@ -408,7 +408,8 @@
     <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Popset"/>
   </datasetPresenter>
   
-  <datasetPresenter name="_dbEST_RSRC$">
+  <datasetPresenter name="_dbEST_RSRC$"
+                    datasetNamePattern="%_dbEST_RSRC">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride></categoryOverride>
@@ -429,7 +430,8 @@
     </link>
   </datasetPresenter>
 
-<datasetPresenter name="_GenbankEST_RSRC$">
+<datasetPresenter name="_GenbankEST_RSRC$"
+                    datasetNamePattern="%_GenbankEST_RSRC">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride></categoryOverride>
@@ -450,7 +452,8 @@
     </link>
   </datasetPresenter>
 
-  <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$">
+  <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$"
+                    datasetNamePattern="%_dbxref_hssp_from_annotation_RSRC">
     <displayName><![CDATA[Homology-derived Structures of Proteins (HSSP) ]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Protein Structure</categoryOverride> 
@@ -472,7 +475,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
 
-  <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC">
+  <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC"
+                    datasetNamePattern="%_dbxref_pdb_from_annotation_RSRC">
     <displayName><![CDATA[Protein Sequences from PDB]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Protein Structure</categoryOverride>    
@@ -488,7 +492,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
    
-  <datasetPresenter name="_dbxref_niprot_RSRC$">
+  <datasetPresenter name="_dbxref_niprot_RSRC$"
+                    datasetNamePattern="%_dbxref_%niprot_%RSRC">
     <displayName><![CDATA[The Universal Protein Resource (UniProt)]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Genomes and Annotation</categoryOverride>
@@ -514,7 +519,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
   
 
-  <datasetPresenter name="_dbxref_gene2Entrez_RSRC$">
+  <datasetPresenter name="_dbxref_gene2Entrez_RSRC$"
+                    datasetNamePattern="%_dbxref_%gene2Entrez%_RSRC">
     <displayName><![CDATA[Entrez Gene]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Genomes and Annotation</categoryOverride>
@@ -533,7 +539,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
     </link>
   </datasetPresenter>
   
-  <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$">
+  <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$"
+                    datasetNamePattern="%_dbxref_gene2PubmedFromNcbi_RSRC">
     <displayName><![CDATA[PubMed from NCBI]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>General</categoryOverride>
@@ -588,7 +595,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
     <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
   </datasetPresenter>
   
-  <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC">
+  <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC"
+                    datasetNamePattern="%_PreviousGeneIDs_NAFeature_aliases_RSRC">
     <displayName><![CDATA[Gene ID Mapping File]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Genomes and Annotation</categoryOverride>    
@@ -612,7 +620,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
 <!-- add description-->
 <!--  
-  <datasetPresenter name="(.*)_genome_GeneDB_RSRC">
+  <datasetPresenter name="(.*)_genome_GeneDB_RSRC"
+                    datasetNamePattern="%_genome_GeneDB_RSRC">
     <displayName><![CDATA[Previous Gene ID ]]></displayName>
     <shortDisplayName></shortDisplayName>    
     <summary><![CDATA[Previous Gene ID]]></summary>
@@ -716,7 +725,8 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
 
-  <datasetPresenter name="_dbxref_goa_from_annotation_RSRC">
+  <datasetPresenter name="_dbxref_goa_from_annotation_RSRC"
+                    datasetNamePattern="%_dbxref_goa_from_annotation_RSRC">
     <displayName><![CDATA[UniProt-GOA Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride>Function</categoryOverride>  
