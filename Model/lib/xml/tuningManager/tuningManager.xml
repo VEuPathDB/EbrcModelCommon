@@ -551,7 +551,8 @@
     <ancillaryTable name="DatasetHyperLink"/>
     <ancillaryTable name="DatasetPublication"/>
     <ancillaryTable name="DatasetModelRef"/>
-    <ancillaryTable name="DatasetNameTaxon"/>
+    <ancillaryTable name="DatasourceModelRef"/>
+    <ancillaryTable name="DatasetDatasource"/>
     <ancillaryTable name="DatasetHistory"/>
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>

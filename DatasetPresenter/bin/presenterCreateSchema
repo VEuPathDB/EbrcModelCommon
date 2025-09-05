@@ -36,7 +36,6 @@ sub createTables {
       create table $schema.DatasetPresenter$suffix (
         dataset_presenter_id         varchar(15),
         name                         varchar(200),
-        project_id                   varchar(40),
         dataset_name_pattern         varchar(200),
         display_name                 varchar(200),
         short_display_name           varchar(200),
@@ -48,11 +47,6 @@ sub createTables {
         caveat                       varchar(4000),
         acknowledgement              varchar(4000),
         release_policy               varchar(4000),
-        display_category             varchar(60),
-        type                         varchar(100),
-        subtype                      varchar(100),
-        category                     varchar(100),
-        is_species_scope             numeric(1),
         build_number_introduced      numeric(5),
         dataset_sha1_digest          varchar(50),
         constraint DatasetPresenter${suffix}_pk primary key (dataset_presenter_id)
@@ -90,6 +84,7 @@ sub createTables {
       create table $schema.DatasetProperty$suffix (
         dataset_property_id   numeric(12),
         dataset_presenter_id  varchar(15),
+        datasource_name       varchar(200),
         property              varchar(255),
         value                 varchar(4000),
         constraint DatasetProperty${suffix}_pk primary key (dataset_property_id)
@@ -139,21 +134,27 @@ sub createTables {
   #######################################################
 
   $sql = "
-      create table $schema.DatasetNameTaxon$suffix (
-        dataset_taxon_id          numeric(12),
+      create table $schema.DatasetDatasource$suffix (
+        dataset_datasource_id          numeric(12),
+        data_source_id                 numeric(12),
         dataset_presenter_id      varchar(15),
-        taxon_id                  numeric(12),
+        category                  varchar(200),
+        project_id                varchar(20),
         name                      varchar(200),
-        constraint DatasetNameTaxon${suffix}_pk primary key (dataset_taxon_id)
+        taxon_id                  numeric(12),
+        constraint DatasetDatasource${suffix}_pk primary key (dataset_datasource_id)
       )";
   runSql($dbh, $sql, 1);
 
-  $sql = "create sequence $schema.DatasetNameTaxon${suffix}_sq";
+  $sql = "create sequence $schema.DatasetDatasource${suffix}_sq";
   runSql($dbh, $sql, 1);
 
-  $sql = "create index dsntix_${suffix}
-            on ${schema}.DatasetNameTaxon${suffix} (name, dataset_presenter_id)
+  $sql = "create index ddix1_${suffix}
+            on ${schema}.DatasetDatasource${suffix} (dataset_presenter_id, dataset_datasource_id)
          ";
+  runSql($dbh, $sql, 1);
+
+  $sql = "ALTER TABLE ${schema}.DatasetDatasource${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (data_source_id, dataset_presenter_id)";
   runSql($dbh, $sql, 1);
 
   #######################################################
@@ -161,7 +162,7 @@ sub createTables {
   $sql = "
       create table $schema.DatasetModelRef$suffix (
         dataset_model_ref_id         numeric(12),
-        dataset_presenter_id         varchar(15),
+        dataset_presenter_id          varchar(15),
         record_type                  varchar(100),
         target_type                  varchar(20),
         target_name                  varchar(300),
@@ -176,6 +177,28 @@ sub createTables {
             on ${schema}.DatasetModelRef${suffix} (dataset_presenter_id)
           ";
   runSql($dbh, $sql, 1);
+
+  #######################################################
+
+  $sql = "
+      create table $schema.DatasourceModelRef$suffix (
+        datasource_model_ref_id         numeric(12),
+        data_source_id                numeric(12), 
+        record_type                  varchar(100),
+        target_type                  varchar(20),
+        target_name                  varchar(300),
+        constraint DatasourceModelRef${suffix}_pk primary key (datasource_model_ref_id)
+      )";
+  runSql($dbh, $sql, 1);
+
+  $sql = "create sequence $schema.DatasourceModelRef${suffix}_sq";
+  runSql($dbh, $sql, 1);
+
+  $sql = "create index dscmrix_${suffix}
+            on ${schema}.DatasourceModelRef${suffix} (data_source_id)
+          ";
+  runSql($dbh, $sql, 1);
+
 
   #######################################################
 
@@ -203,8 +226,8 @@ sub createTables {
 sub dropTables {
   my ($dbh, $schema, $suffix) = @_;
 
-  foreach my $nm ('Presenter', 'Contact', 'HyperLink', 'Publication', 'NameTaxon', 'ModelRef', 'History', 'Property') {
-    my $sql = "drop table $schema.Dataset$nm${suffix}";
+  foreach my $nm ('DatasetPresenter', 'DatasetContact', 'DatasetHyperLink', 'DatasetPublication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'DatasetHistory', 'DatasetProperty') {
+    my $sql = "drop table $schema.$nm${suffix}";
     runSql($dbh, $sql, 0);
 
   }
@@ -216,18 +239,18 @@ sub dropConstraints {
     my $sql = "drop sequence $schema.DatasetPresenter${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-  foreach my $nm ('Contact', 'HyperLink', 'Publication', 'NameTaxon', 'ModelRef', 'History') {
-    my $sql = "drop sequence $schema.Dataset$nm${suffix}_sq";
+  foreach my $nm ('DatasetContact', 'DatasetHyperLink', 'DatasetPublication', 'DatasetDatasource', 'DatasetModelRef', 'DatasourceModelRef', 'DatasetHistory') {
+    my $sql = "drop sequence $schema.$nm${suffix}_sq";
     runSql($dbh, $sql, 0);
 
-    $sql = "alter table $schema.Dataset$nm${suffix} drop constraint Dataset$nm${suffix}_fk";
+    $sql = "alter table $schema.$nm${suffix} drop constraint $nm${suffix}_fk";
   # runSql($dbh, $sql, 0);
   }
 }
 
 sub runSql {
   my ($dbh, $sql, $die) = @_;
-  print STDERR "\n$sql\n" if $debug;
+  print STDERR "\n$sql\n";
   my $status = $dbh->do($sql);
   die "Failed running sql: \n$sql\n" if $die && !$status;
 }
