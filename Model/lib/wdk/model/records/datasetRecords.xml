@@ -991,7 +991,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="dataset_id" columnType="string"/>
       <sql excludeProjects="EuPathDB">
         <![CDATA[
-          select dataset_presenter_id as dataset_id, string_agg(category, ',') as newcategory
+          select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
           from apidbtuning.datasetdatasource
 	  where project_id = '@PROJECT_ID@'
 	  group by dataset_presenter_id
