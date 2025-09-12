@@ -831,7 +831,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Resources and Databases for genomes -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-<!-- TODO add back
+
       <table name="ExternalDatabases"
              excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB"
              displayName="External Databases Associated to Genome Annotation"
@@ -848,7 +848,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           </text>
         </textAttribute>
       </table>
--->
+
+
       <table name="AssociatedDatasets"
              displayName="Associated Data Sets"
              queryRef="DatasetTables.AssociatedDatasets">
