@@ -255,13 +255,13 @@
 
       <sql>
         <![CDATA[
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+          SELECT DISTINCT dd.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
           WHERE dd.category = $$dataset_category$$
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	  UNION
           SELECT DISTINCT dd.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
@@ -269,7 +269,7 @@
             AND dd.taxon_id = tn.taxon_id
             AND tn.name_class =  'scientific name'
             AND tn.name = $$organism$$
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    
         ]]>
       </sql>
