@@ -2788,6 +2788,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                      associated_dataset_id, project, webapp_name, display_name
              from ApidbTuning.AssociatedDataset
              where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
+             and length(pubmed_id) > 0
              order by local_dataset_id
             ]]>
       </sql>
