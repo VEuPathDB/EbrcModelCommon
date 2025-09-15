@@ -57,7 +57,7 @@
         <![CDATA[
           SELECT distinct dataset_presenter_id as dataset_id
           FROM apidbTuning.DatasetDatasource
-          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -218,7 +218,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.target_name = $$question_name$$
             AND ref.target_type = 'question'
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
       </sql>
@@ -241,7 +241,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.record_type = $$record_class$$
             AND ref.target_type IN ('table', 'attribute','profile_graph')
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
       </sql>
@@ -351,7 +351,7 @@
 	      select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql> 
     </sqlQuery>
@@ -373,7 +373,7 @@
               select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and (project_id = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql> 
 
@@ -395,7 +395,7 @@
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = @PROJECT_ID@
+	      and project_id = '@PROJECT_ID@'
           ]]>
        </sql>
 
@@ -429,7 +429,7 @@
         <![CDATA[
           SELECT dataset_presenter_id, dataset_presenter_name, project_name
           FROM apidb.legacydataset
-          WHERE (project_name = '@PROJECT_ID@' or 'UniDB' = @PROJECT_ID@)
+          WHERE (project_name = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
