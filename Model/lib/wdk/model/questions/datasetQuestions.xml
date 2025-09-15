@@ -163,44 +163,6 @@
       </description>
     </question>
 
-    <question name="DatasetsByType"
-      displayName="Data Sets used on a record page for a type"
-      shortDisplayName="Type"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByType"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <attributesList sorting="category asc" />
-      <description>
-         Find data sets that are associated with a particular data set type.
-      </description>
-    </question>
-
-    <question name="DatasetsByTypeAndSubtype"
-      displayName="Data Sets used on a record page for a type and subtype"
-      shortDisplayName="TypeAndSubtype"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByTypeAndSubtype"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <attributesList sorting="category asc" />
-      <description>
-         Find data sets that are associated with a particular data set type and subtype
-      </description>
-    </question>
-
-    <question name="DatasetsByCategoryAndSubtype"
-      displayName="Data Sets used on a record page for a category and subtype"
-      shortDisplayName="CategoryAndSubtype"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByCategoryAndSubtype"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <description>
-         Find data sets that are associated with a particular data set type and subtype
-      </description>
-    </question>
-
     <question name="DatasetsByCategoryAndOrganism"
       displayName="Data Sets by Category and organism"
       excludeProjects="MicrobiomeDB,ClinEpiDB"

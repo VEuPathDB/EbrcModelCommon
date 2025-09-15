@@ -6,7 +6,6 @@
       <zeroOrMore>
         <element name="datasetPresenter">
           <attribute name="name" />
-          <attribute name="projectName" />
           <optional>
 	    <choice>
 	      <attribute name="datasetNamePattern" />
@@ -27,7 +26,7 @@
 	    </element>
 	  </optional>
 	  <optional>
-	    <element name="displayCategory">
+	    <element name="categoryOverride">
 	      <text/>
 	    </element>
 	  </optional>
@@ -120,9 +119,16 @@
 	      <attribute name="type"/>
             </element>
           </zeroOrMore>
-          <optional>
+          <zeroOrMore>
 	    <element name="templateInjector">
 	      <attribute name="className"/>
+              <attribute name="projectName" />
+              <optional>
+	        <attribute name="datasourceName"/>
+              </optional>
+              <optional>
+	        <attribute name="categoryOverride"/>
+              </optional>
 	      <zeroOrMore>
 		<element name="prop">
 		  <attribute name="name"/>
@@ -130,7 +136,7 @@
 		</element>
 	      </zeroOrMore>
 	    </element>
-          </optional>
+          </zeroOrMore>
         </element>
       </zeroOrMore>
       <zeroOrMore>

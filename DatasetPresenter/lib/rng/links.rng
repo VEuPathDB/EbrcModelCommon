@@ -5,8 +5,7 @@
     <element name="links">
 	  <zeroOrMore>
 	    <element name="link">
-	      <attribute name="type"/>
-	      <attribute name="subtype"/>
+	      <attribute name="category"/>
               <optional>
                 <element name="text">
                   <text/>

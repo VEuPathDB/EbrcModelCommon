@@ -3,12 +3,10 @@
 <!DOCTYPE datasetPresenters SYSTEM "datasetPresenters.dtd">
 <datasetPresenters>
 
-  <datasetPresenter name="GO_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="GO_RSRC">
     <displayName><![CDATA[Gene Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Ontology</displayCategory>
+    <categoryOverride>Ontology</categoryOverride>
     <summary>GO annotations from The GO Consortium </summary>
     <description><![CDATA[
          The Gene Ontology (GO) project provides a controlled, species-independent vocabulary to describe genes and gene products
@@ -31,14 +29,12 @@
       <url><![CDATA[http://amigo.geneontology.org/cgi-bin/amigo/go.cgi]]></url>
     </link>
     <pubmedId>10802651</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
   </datasetPresenter>
 
 
 <!--
-  <datasetPresenter name="GO_evidence_codes_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="GO_evidence_codes_RSRC">
     <displayName><![CDATA[Gene Ontology Evidence Codes]]></displayName>
     <shortDisplayName></shortDisplayName>
     <summary>GO Evidence codes from The Sequence Ontology Project</summary>
@@ -61,16 +57,14 @@
       <url><![CDATA[http://obo.cvs.sourceforge.net/viewvc/obo/obo/ontology/evidence_code.obo]]></url>
     </link>
     <pubmedId>15892872</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneOntology"/>
   </datasetPresenter>
 -->
 
-  <datasetPresenter name="enzymeDB_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="enzymeDB_RSRC">
     <displayName><![CDATA[Enzyme Nomenclature Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>
+    <categoryOverride>Function</categoryOverride>
     <summary>EC Numbers from ENZYME</summary>
     <description><![CDATA[
          ENZYME is a repository of information relevant to the nomenclature of enzymes.
@@ -91,18 +85,16 @@
       <url><![CDATA[http://www.expasy.org/enzyme]]></url>
     </link>
     <pubmedId>10592255</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.EnzymeNumbers"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.EnzymeNumbers"/>
 
 
   </datasetPresenter>
 
 
-  <datasetPresenter name="PDBProteinSequences_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="PDBProteinSequences_RSRC">
     <displayName><![CDATA[The Worldwide Protein Data Bank (wwPDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>
+    <categoryOverride>Protein Structure</categoryOverride>
     <summary>PDB proteins of known 3-dimensional structure</summary>
     <description><![CDATA[
          The Worldwide Protein Data Bank (wwPDB) is the international collaboration that manages the deposition, 
@@ -129,15 +121,13 @@
     <pubmedId>10592235</pubmedId>
     <pubmedId>14634627</pubmedId>
     <pubmedId>23023942</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PdbProteins"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PdbProteins"/>
   </datasetPresenter>
   
-  <datasetPresenter name="taxonomy_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="taxonomy_RSRC">
     <displayName><![CDATA[NCBI Taxonomy]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Taxonomy and Phylogeny</displayCategory>
+    <categoryOverride>Taxonomy and Phylogeny</categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The NCBI Taxonomy database is a curated set of names and classifications for all organisms that are represented in the Entrez databases. 
@@ -158,15 +148,13 @@
       <text>The Taxonomy Database of the National Center for Biotechnology Information</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/taxonomy]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.NcbiTaxonomy"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.NcbiTaxonomy"/>
   </datasetPresenter>
   
-  <datasetPresenter name="SO_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="SO_RSRC">
     <displayName><![CDATA[The Sequence Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[        
          The Sequence Ontology Project (SO) is a joint effort by genome annotation centres, including: WormBase, 
@@ -183,15 +171,13 @@
       <url><![CDATA[http://song.sourceforge.net]]></url>
     </link>
     <pubmedId>15892872</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.SequenceOntology"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.SequenceOntology"/>
   </datasetPresenter>
   
-  <datasetPresenter name="MGED_Ontology_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="MGED_Ontology_RSRC">
     <displayName><![CDATA[The MGED Ontology]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[
          Concepts, definitions, terms, and resources for standardized description of a microarray experiment in support of MAGE v.1. The MGED ontology is divided into: the MGED Core ontology which is intended to be stable and in synch with MAGE v.1; and the MGED Extended ontology which adds further associations and classes not found in MAGE v.1.
@@ -208,12 +194,10 @@
     <pubmedId>16428806</pubmedId>
   </datasetPresenter>
   
-  <datasetPresenter name="InterproscanData_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="InterproscanData_RSRC">
     <displayName><![CDATA[InterPro Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>
+    <categoryOverride>Function</categoryOverride>
     <summary>Protein domain assignments from the InterPro family of databases </summary>
     <description><![CDATA[        
          InterPro is a tool for classifying proteins based on their functional and structural characteristics. 
@@ -235,15 +219,13 @@
     <pubmedId>15608177</pubmedId>
     <pubmedId>17202162</pubmedId>
     <pubmedId>18344544</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.InterPro"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.InterPro"/>
   </datasetPresenter>
   
-  <datasetPresenter name="NRDB_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="NRDB_RSRC">
     <displayName><![CDATA[The GenBank Non-Redundant Protein Sequence Database (NRDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The GenBank non-redundant protein sequence database (NRDB) is a component of the NCBI BLAST databases 
@@ -266,17 +248,15 @@
       <text>Information about the BLAST databases</text>
       <url><![CDATA[ftp://ftp.ncbi.nih.gov/blast/db/README]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.NRDB"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.NRDB"/>
   </datasetPresenter>
 
 
 <!--  
-  <datasetPresenter name="isolateVocabulary_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="isolateVocabulary_RSRC">
     <displayName><![CDATA[Isolate Vocabulary]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary></summary>
     <description><![CDATA[
          The Isolate Vocabulary is manually curated by VEuPathDB staff and comprises broad text terms shared among the isolate records included in our databases. 
@@ -291,16 +271,14 @@
       <text></text>
       <url><![CDATA[http://www.eupathdb.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.IsolateVocabulary"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.IsolateVocabulary"/>
   </datasetPresenter>
 -->
 <!--
-  <datasetPresenter name="Continents_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="Continents_RSRC">
     <displayName><![CDATA[IsolatesByCountry]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Ontology</displayCategory>
+    <categoryOverride>Ontology</categoryOverride>
     <summary></summary>
     <description><![CDATA[
         World Atlas is a geography website and is used by VEuPathDB for a country-continent lookup.
@@ -320,9 +298,7 @@
   </datasetPresenter>
 
 
-  <datasetPresenter name="OrthoMCL_Phyletic_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="OrthoMCL_Phyletic_RSRC">
     <displayName><![CDATA[OrthoMCL Phyletic Profiles]]></displayName>
     <shortDisplayName></shortDisplayName>    
     <summary><![CDATA[
@@ -344,17 +320,15 @@
       <url><![CDATA[https://orthomcl.org]]></url>
     </link>
     <pubmedId>16381887</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.OrthologyDB"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.OrthologyDB"/>
   </datasetPresenter>
 -->
 
 
-  <datasetPresenter name="OrthoMCL_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="OrthoMCL_RSRC">
     <displayName><![CDATA[OrthoMCL Ortholog Groups]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary>Ortholog group assignments as predicted by OrthoMCL<![CDATA[  ]]></summary>
     <description><![CDATA[
    The OrthoMCL algorithm clusters proteins into ortholog groups based on BLAST similarity across at least 150 genomes that span the tree of life. 
@@ -374,15 +348,14 @@
     </link>
     <pubmedId>16381887</pubmedId>
     <pubmedId>12952885</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.OrthologyGroups"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.OrthologyGroups"/>
 
   </datasetPresenter>
   <datasetPresenter name="_IEDB(.*)RSRC$"
-                    projectName="@PROJECT_ID@"                    
                     datasetNamePattern="%_IEDB%RSRC">
     <displayName><![CDATA[Immune Epitope Database (IEDB)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[IEDB epitopes.]]></summary>
     <description><![CDATA[The Immune Epitope Database (IEDB) catalogs an ever growing body of immunological information concerning B and T cell epitopes from infectious pathogens.
     	]]></description>
@@ -399,15 +372,14 @@
     </link>
     <pubmedId>19906713</pubmedId>
     <pubmedId>22610854</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.IEDBEpitopes"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.IEDBEpitopes"/>
   </datasetPresenter>
   
   <datasetPresenter name="_isolates_genbank_RSRC$"
-                    projectName="@PROJECT_ID@"                    
                     datasetNamePattern="%_isolates_genbank_RSRC">
     <displayName><![CDATA[Popset Records from GenBank ]]></displayName>
     <shortDisplayName></shortDisplayName> 
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[GenBank records containing sequence and metadata for popsets]]></summary>
     <description><![CDATA[
     Popset records comprise genotyped (e.g. single locus sequencing) parasite samples collected from the field, as well as associated meta data. 
@@ -433,15 +405,14 @@
       <text>Nucleotide home page</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/nuccore]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Popset"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Popset"/>
   </datasetPresenter>
   
   <datasetPresenter name="_dbEST_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbEST_RSRC">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[ESTs from dbEST.]]></summary>
     <description><![CDATA[ The Database of Expressed Sequence Tags (dbEST) is a GenBank database that contains, for a number of organisms,  sequence data and other information on "single-pass" cDNA sequences, 
     or "Expressed Sequence Tags". These sequences provide a resource to evaluate gene expression.  
@@ -460,11 +431,10 @@
   </datasetPresenter>
 
 <datasetPresenter name="_GenbankEST_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_GenbankEST_RSRC">
     <displayName><![CDATA[ The Database of Expressed Sequence Tags (dbEST)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>
+    <categoryOverride></categoryOverride>
     <summary><![CDATA[ESTs from dbEST.]]></summary>
     <description><![CDATA[ The Database of Expressed Sequence Tags (dbEST) is a GenBank database that contains, for a number of organisms,  sequence data and other information on "single-pass" cDNA sequences, 
     or "Expressed Sequence Tags". These sequences provide a resource to evaluate gene expression.  
@@ -483,11 +453,10 @@
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_hssp_from_annotation_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_hssp_from_annotation_RSRC">
     <displayName><![CDATA[Homology-derived Structures of Proteins (HSSP) ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory> 
+    <categoryOverride>Protein Structure</categoryOverride> 
     <summary></summary>
     <description><![CDATA[
 HSSP (homology-derived structures of proteins) is a derived database merging structural (2-D and 3-D) and sequence information (1-D).
@@ -507,11 +476,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
 
   <datasetPresenter name="_dbxref_pdb_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_pdb_from_annotation_RSRC">
     <displayName><![CDATA[Protein Sequences from PDB]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>    
+    <categoryOverride>Protein Structure</categoryOverride>    
     <summary></summary>
     <description><![CDATA[
          Protein sequences from the Protein Data Bank (PDB) used for mapping protein sequences to crystal structures in PDB.        
@@ -525,11 +493,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
    
   <datasetPresenter name="_dbxref_niprot_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_%niprot_%RSRC">
     <displayName><![CDATA[The Universal Protein Resource (UniProt)]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[UniProt protein sequence and functional annotation]]></summary>
     <description>The Universal Protein Resource (UniProt) is a comprehensive, high-quality and freely accessible 
     resource of protein sequence and functional information. UniProt comprises four components: Knowledgebase, Reference Clusters, Archive, and Metagenomics and Environmental Sequences. 
@@ -547,17 +514,16 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <url>http://www.uniprot.org/uniprot/</url>
     </link>
     <pubmedId>22102590</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.UniProt"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.UniProt"/>
   </datasetPresenter>
 
   
 
   <datasetPresenter name="_dbxref_gene2Entrez_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_%gene2Entrez%_RSRC">
     <displayName><![CDATA[Entrez Gene]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[DBRefs for Entrez gene links.]]></summary>
     <description><![CDATA[Entrez Gene is a repository for gene-specific information curated by the National Center for Biotechnology Information. Entrez gene records may include nomenclature, 
     Reference Sequences (RefSeqs), maps, pathways, variations, phenotypes, and links to genome-, phenotype-, and locus-specific resources worldwide.]]></description>
@@ -574,11 +540,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
   
   <datasetPresenter name="_dbxref_gene2PubmedFromNcbi_RSRC$"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_gene2PubmedFromNcbi_RSRC">
     <displayName><![CDATA[PubMed from NCBI]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>General</displayCategory>
+    <categoryOverride>General</categoryOverride>
     <summary><![CDATA[
             Associated Publication (PubMed Link)            
         ]]></summary>
@@ -599,15 +564,14 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>NCBI: PubMed</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/pubmed]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_pmid_from_(.*)_RSRC"
-                    projectName="@PROJECT_ID@" 
                     datasetNamePattern="%_dbxref_pmid_from_%_RSRC">
     <displayName><![CDATA[PubMed from Genome Annotations]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>General</displayCategory>
+    <categoryOverride>General</categoryOverride>
     <summary><![CDATA[
             Associated Publication (PubMed Link)            
         ]]></summary>
@@ -628,15 +592,14 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>NCBI: PubMed</text>
       <url><![CDATA[http://www.ncbi.nlm.nih.gov/pubmed]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.PubMed"/>
   </datasetPresenter>
   
   <datasetPresenter name="(.*)_PreviousGeneIDs_NAFeature_aliases_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_PreviousGeneIDs_NAFeature_aliases_RSRC">
     <displayName><![CDATA[Gene ID Mapping File]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>    
+    <categoryOverride>Genomes and Annotation</categoryOverride>    
     <summary><![CDATA[Previous Gene IDs]]></summary>
     <description>When genome annotations are updated, gene IDs are sometimes retired or changed. 
     This dataset is a table of retired gene IDs mapped to their current ID. 
@@ -658,7 +621,6 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 <!-- add description-->
 <!--  
   <datasetPresenter name="(.*)_genome_GeneDB_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_genome_GeneDB_RSRC">
     <displayName><![CDATA[Previous Gene ID ]]></displayName>
     <shortDisplayName></shortDisplayName>    
@@ -677,12 +639,11 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 -->
 
   <datasetPresenter name="(.*)_dbxref_unity_GeneDB_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_GeneDB_RSRC"
                     >
     <displayName><![CDATA[GeneDB: The Sanger Institute Pathogen Genomics Database ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Genome sequence and annotations from GeneDB]]></summary>
     <description>The GeneDB project is part of the Sanger Institute's Pathogen Genomics activities. 
     GeneDB provides reliable access to the latest sequence data and annotation/curation for organisms sequenced by the Pathogen group.
@@ -699,16 +660,15 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
       <text>GeneDB</text>
       <url><![CDATA[http://www.genedb.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GeneDB"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GeneDB"/>
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_unity_BroadInstitute_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_BroadInstitute_RSRC"
                     >
     <displayName><![CDATA[Broad]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[The Broad Institute of MIT and Harvard]]></summary>
     <description><![CDATA[The Broad Institute of MIT and Harvard is a biomedical and genomics research center that also makes many genomic datasets available on its web portal.]]></description>
     <protocol></protocol>
@@ -723,12 +683,11 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_unity_PhylomeDB_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_unity_PhylomeDB_RSRC"
                     >
     <displayName><![CDATA[PhylomeDB]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Taxonomy and Phylogeny</displayCategory>
+    <categoryOverride>Taxonomy and Phylogeny</categoryOverride>
     <summary><![CDATA[PhylomeDB: database for gene phylogenies]]></summary>
     <description><![CDATA[PhylomeDB is a public database for complete collections of gene phylogenies (phylomes). It allows users to interactively explore the evolutionary history of genes through the visualization of phylogenetic trees and multiple sequence alignments. Moreover, phylomeDB provides genome-wide orthology and paralogy predictions which are based on the analysis of the phylogenetic trees. The automated pipeline used to reconstruct trees aims at providing a high-quality phylogenetic analysis of different genomes, including Maximum Likelihood or Bayesian tree inference, alignment trimming and evolutionary model testing. PhylomeDB includes also a public download section with the complete set of trees, alignments and orthology predictions.]]></description>
     <protocol></protocol>
@@ -743,12 +702,11 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
   </datasetPresenter>
 
   <datasetPresenter name="(.*)_dbxref_TDR_Targets_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_%_TDR_Targets_RSRC"
                     >
     <displayName><![CDATA[TDR Targets Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Compounds and Metabolic Pathways</displayCategory>    
+    <categoryOverride>Compounds and Metabolic Pathways</categoryOverride>    
     <summary><![CDATA[TDR Targets Database of drug target prioritization ]]></summary>
     <description>The TDR Targets database facilitates the identification and prioritization of drugs and drug targets. 
     Using the TDR Targets database as a tool, researchers can quickly prioritize genes of interest by running simple queries, 
@@ -768,11 +726,10 @@ HSSP (homology-derived structures of proteins) is a derived database merging str
 
 
   <datasetPresenter name="_dbxref_goa_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_goa_from_annotation_RSRC">
     <displayName><![CDATA[UniProt-GOA Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Function</displayCategory>  
+    <categoryOverride>Function</categoryOverride>  
     <summary></summary>
     <description><![CDATA[         
 The UniProt GO annotation program aims to provide high-quality Gene Ontology 
@@ -796,12 +753,11 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
 
 <!-- COMMENTING this dataset as this DB does not exist; see redmine #46465 
  <datasetPresenter name="(.*)_dbxref_ApiLoc_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_ApiLoc_RSRC"
                     >
     <displayName><![CDATA[ ApiLoc Predictions ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Subcellular localization</displayCategory>
+    <categoryOverride>Subcellular localization</categoryOverride>
     
     <summary><![CDATA[A database of published protein sub-cellular localisation in Apicomplexa]]></summary>
     <description>A database of published protein sub-cellular localisation in Apicomplexa
@@ -816,12 +772,11 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
 
 
  <datasetPresenter name="(.*)_dbxref_rfam_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_rfam_from_annotation_RSRC"
                     >
     <displayName><![CDATA[ Rfam -RNA Families Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>RNA Structure</displayCategory>
+    <categoryOverride>RNA Structure</categoryOverride>
     
     <summary><![CDATA[
 ]]></summary>
@@ -837,12 +792,11 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_gene2RefSeq_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_gene2RefSeq_RSRC"
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     
     <summary><![CDATA[NCBI Reference Sequence Database
          ]]></summary>
@@ -855,16 +809,15 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>NCBI Reference Sequence Database</text>
       <url><![CDATA[https://www.ncbi.nlm.nih.gov/refseq/]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_refseq_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_refseq_from_annotation_RSRC"
                     >
     <displayName><![CDATA[NCBI  RefSeq]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     
     <summary><![CDATA[NCBI Reference Sequence Database
          ]]></summary>
@@ -877,16 +830,15 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>NCBI Reference Sequence Database</text>
       <url><![CDATA[https://www.ncbi.nlm.nih.gov/refseq/]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_merops_fam_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_merops_fam_from_annotation_RSRC"
                     >
     <displayName><![CDATA[MEROPS Family]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[EMBL MEROPS Family 
          ]]></summary>
     <description> 
@@ -897,16 +849,15 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>EMBL MEROPS Family</text>
       <url><![CDATA[https://www.ebi.ac.uk/merops/index.shtml]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_cazy_from_annotation_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref_cazy_from_annotation_RSRC"
                     >
     <displayName><![CDATA[CAZy Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Carbohydrate-Active enZYmes Database
          ]]></summary>
     <description> 
@@ -918,16 +869,15 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <text>Carbohydrate-Active enZYmes Database</text>
       <url><![CDATA[http://www.cazy.org]]></url>
     </link>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.DBXRefs"/>
   </datasetPresenter>
 
   <datasetPresenter name="_dbxref_UCSC_genome_browser_RSRC"
-                    projectName="@PROJECT_ID@"
                     datasetNamePattern="%_dbxref%_UCSC_genome_browser_RSRC"
                     >
     <displayName><![CDATA[Ares Lab Genome Browser]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Genomes and Annotation</displayCategory>
+    <categoryOverride>Genomes and Annotation</categoryOverride>
     <summary><![CDATA[Ares Lab genome browser]]></summary>
     <description></description>
     <protocol></protocol>
@@ -942,12 +892,10 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
   </datasetPresenter>
 
 
-  <datasetPresenter name="compounds_chEBI_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="compounds_chEBI_RSRC">
     <displayName><![CDATA[Chemical Entities of Biological Interest Compounds]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Compounds from ChEBI</displayCategory>    
+    <categoryOverride>Compounds from ChEBI</categoryOverride>    
     <summary><![CDATA[         
       Compound records from Chemical Entities of Biological Interest (ChEBI)
       ]]></summary>
@@ -971,17 +919,15 @@ The UniProt GO annotation program aims to provide high-quality Gene Ontology
       <url>https://www.ebi.ac.uk/chebi/init.do</url>
     </link>
     <pubmedId>23180789</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Compounds"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Compounds"/>
   </datasetPresenter>
 
   
 
-  <datasetPresenter name="Pathways_KEGG_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="Pathways_KEGG_RSRC">
     <displayName><![CDATA[KEGG Metabolic Pathways ]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>KEGG Metabolic Pathways</displayCategory>
+    <categoryOverride>KEGG Metabolic Pathways</categoryOverride>
     <summary><![CDATA[         
      Metabolic Pathway records from KEGG
       ]]></summary>
@@ -1006,15 +952,13 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>http://www.kegg.jp/</url>
     </link>
     <pubmedId></pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-    <datasetPresenter name="Pathways_MetaCyc_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+    <datasetPresenter name="Pathways_MetaCyc_RSRC">
     <displayName><![CDATA[MetaCyc Metabolic Pathway Database]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory></displayCategory>    
+    <categoryOverride></categoryOverride>    
     <summary><![CDATA[         
       Metacyc is a curated database of experimentally elucidated metabolic pathways from all domains of life.
       ]]></summary>
@@ -1041,15 +985,13 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>http://metacyc.org/</url>
     </link>
     <pubmedId>26527732</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-  <datasetPresenter name="alphaFold_RSRC"
-                    projectName="@PROJECT_ID@"
-                    >
+  <datasetPresenter name="alphaFold_RSRC">
     <displayName><![CDATA[AlphaFold Predictions]]></displayName>
     <shortDisplayName></shortDisplayName>
-    <displayCategory>Protein Structure</displayCategory>
+    <categoryOverride>Protein Structure</categoryOverride>
     <summary><![CDATA[
       AlphaFold is an artificial intelligence created by DeepMind that predicts protein structure from amino acid sequences. AlphaFold has worked with EMBL-EBI to create a publicly available database of structural predictions.
       ]]></summary>
@@ -1069,12 +1011,11 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </link>
     <pubmedId>34265844</pubmedId>
     <pubmedId>34791371</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
   </datasetPresenter>
 
 <!-- bld 67 -->
-  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC"
-                    projectName="PlasmoDB">
+  <datasetPresenter name="ISASimple_EDA_leegambian_RSRC">
     <displayName><![CDATA[Dual transcriptomes of malaria-infected Gambian children (Study Explorer)]]></displayName>
     <shortDisplayName>Study variables Gambian children</shortDisplayName>
     <shortAttribution>Lee et al.</shortAttribution>
@@ -1100,7 +1041,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/bioproject/PRJEB24613</url>
     </link>
     <pubmedId>29950443</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["PlasmoDB","HostDB"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1119,8 +1060,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC"
-                    projectName="PlasmoDB">
+  <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for PlasmoDB organisms]]></displayName>
     <shortDisplayName>PlasmoDB Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
@@ -1177,7 +1117,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
     <pubmedId>26615191</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["PlasmoDB"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1195,8 +1135,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC"
-                    projectName="VectorBase">
+  <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for VectorBase organisms]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
     <shortAttribution>NCBI Popset DB</shortAttribution>
@@ -1303,7 +1242,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
       <url>https://www.ncbi.nlm.nih.gov/popset</url>
     </link>
     <pubmedId>26615191</pubmedId>
-    <templateInjector className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
+    <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.GenomicsEDAStudy">
        <prop name="studyCategories">["NA"]</prop>
        <prop name="projectAvailability">["VectorBase"]</prop>
        <prop name="studyAccess">public</prop>
@@ -1321,7 +1260,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     </templateInjector>
   </datasetPresenter>
 
-  <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC" projectName="@PROJECT_ID@"
+   <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC"
     datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
     <displayName><![CDATA[PHI-base]]></displayName>
     <shortDisplayName></shortDisplayName>
