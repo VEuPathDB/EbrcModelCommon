@@ -67,10 +67,10 @@ public class DatasetPresenterParser extends XmlParser {
         "setText", 0);
 
     configureNode(digester,
-        "datasetPresenters/datasetPresenter/displayCategory", Text.class,
-        "setDisplayCategory");
+        "datasetPresenters/datasetPresenter/categoryOverride", Text.class,
+        "setCategoryOverride");
     digester.addCallMethod(
-        "datasetPresenters/datasetPresenter/displayCategory", "setText", 0);
+        "datasetPresenters/datasetPresenter/categoryOverride", "setText", 0);
 
     configureNode(digester, "datasetPresenters/datasetPresenter/protocol",
         Text.class, "setProtocol");
