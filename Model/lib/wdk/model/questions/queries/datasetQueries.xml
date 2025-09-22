@@ -219,6 +219,7 @@
             AND ref.target_name = $$question_name$$
             AND ref.target_type = 'question'
             AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND  COALESCE(dd.category,'') != 'Link outs'
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
       </sql>
