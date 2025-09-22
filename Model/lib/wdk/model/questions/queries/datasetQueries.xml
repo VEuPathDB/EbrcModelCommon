@@ -213,7 +213,7 @@
       <column name="dataset_id"/>
       <sql>
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
           FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp, apidbtuning.datasetdatasource dd
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.target_name = $$question_name$$
