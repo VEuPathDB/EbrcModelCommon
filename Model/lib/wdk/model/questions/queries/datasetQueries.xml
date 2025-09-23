@@ -298,8 +298,8 @@
             ) d
             LEFT JOIN (
               select v.dataset_presenter_id, r.name as study_access
-              from studyaccess.end_users@ACCT_DBLINK@ v
-                INNER JOIN studyaccess.restriction_level@ACCT_DBLINK@ r ON v.restriction_level_id = r.restriction_level_id
+              from @REMOTE_STUDYACCESS_SCHEMA@.end_users v
+                INNER JOIN @REMOTE_STUDYACCESS_SCHEMA@.restriction_level r ON v.restriction_level_id = r.restriction_level_id
               WHERE user_id = $$user_id$$
                 AND (approval_status_id < 1 or approval_status_id is NULL)
             ) u ON d.dataset_presenter_id = u.dataset_presenter_id
