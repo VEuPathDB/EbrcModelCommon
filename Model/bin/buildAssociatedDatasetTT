@@ -90,9 +90,10 @@ SQL
 
 # get local datasets and PubMed IDs
 my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
-     select dpres.project_id, dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
-     from DatasetPresenter dpres, DatasetPublication dpub
+     select ds.project_id, dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
+     from DatasetPresenter dpres, DatasetPublication dpub, DatasetDatasource ds
      where dpres.dataset_presenter_id = dpub.dataset_presenter_id
+       and dpres.dataset_presenter_id = ds.dataset_presenter_id
        and dpub.pmid is not null
      order by pmid, dataset_presenter_id
 SQL

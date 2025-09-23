@@ -516,7 +516,7 @@
         FROM (
           WITH RECURSIVE cte AS (
             SELECT output_pan_id, input_pan_id, protocol_app_id
-            FROM apidbtuning.panio
+            FROM webready.PANIO
             WHERE output_pan_id IN (
                 SELECT pan_id FROM apidbtuning.PANResults
                 UNION
@@ -526,7 +526,7 @@
               )
             UNION
             SELECT cte.output_pan_id, p.input_pan_id, p.protocol_app_id
-            FROM cte, apidbtuning.panio p
+            FROM cte, webready.PANIO p
             WHERE cte.input_pan_id = p.output_pan_id
           )
           SELECT output_pan_id as pan_id, input_pan_id, protocol_app_id

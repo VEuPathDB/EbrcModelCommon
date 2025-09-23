@@ -222,6 +222,24 @@
 
 
 
+  <datasetClass class="orthomclGenomics" category="" datasetFileHint="">
+    <purpose>add steps downstream of project (requires all projects)  to a workflow</purpose>
+
+    <graphTemplateFile name="genomicsRoot.xml"/>
+    <datasetLoader datasetName="orthomclGenomics_INTERNAL_RSRC"
+              version="CURRENT"
+	      plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              type="genome"
+              scope="project">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+     <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+
+  </datasetClass>
+
 
 
 
@@ -2696,7 +2714,9 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="hasPairedEnds"/>
     <prop name="extraBowtieParams"/>
-    <prop name="experimentType">[histonemod, tfbinding, mnase, faire, dnase] The type of experiment, controlled vocabulary. All samples in the same experiment MUST be of the same type (e.g. you cannot have some faire and some mnase samples in the same experiment).</prop>
+    <prop name="experimentType">[histonemod, histonemod_noInput, tfbinding, mnase, faire, dnase] The type of experiment, controlled vocabulary. All samples in the same experiment MUST be of the same type (e.g. you cannot have some faire and some mnase samples in the same experiment). The experimentType can be set to histonemod only if it has input samples</prop>
+    <prop name="fromSRA"/>
+    <prop name="readsFileType">[fasta, fastq]</prop>
 
     <graphTemplateFile name="chipSeqExperiment.xml"/>
    <!-- Inquiry: Always follow naming convention -->
@@ -2991,7 +3011,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-    <graphTemplateFile name="organismSpecificMisc.xml"/> 
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertNAFeaturePhenotype"
               datasetName="${organismAbbrev}_${name}_NAFeaturePhenotypeGeneric_RSRC"
@@ -3007,6 +3027,35 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--file @@dataDir@@/final/phenotype_results.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+  <datasetClass class="PhenotypeEDA" category="phenotype" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_Phenotype_RSRC"
+              version="${version}"
+              scope="organism"
+              type="phenotype"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/phenotype/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
 
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
@@ -5118,6 +5167,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="type"/>
+    <prop name="fromSRA"/>
+    <prop name="readsFileType"/>
+    <prop name="hasPairedEnds"/>
+
+
 
     <graphTemplateFile name="rnaSeqSplicedLeaderAndPolyASitesExperimentTemplate.xml"/>
     <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqSplicedLeaderAndPolyASites_RSRC" version="${version}"
@@ -5781,7 +5835,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         </dir>
       </manualGet>
 
-      <pluginArgs>--cladeFile  @@dataDir@@/${release}/orthomclClades.txt --speciesFile  @@dataDir@@/${release}/orthomclTaxons.txt</pluginArgs>
+      <pluginArgs>--cladeFile  @@dataDir@@/${release}/orthomclClades.txt --taxonToCladeFile  @@dataDir@@/${release}/orthomclTaxonToClade.txt</pluginArgs>
 
     </datasetLoader>
   </datasetClass>
@@ -6217,10 +6271,10 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="experimentName"></prop>
     <prop name="experimentVersion"></prop>
     <prop name="hasPairedEnds"/>
-    <prop name="isColorspace"/>
     <prop name="removePCRDuplicates">If true samtools rmdup will run after mapping</prop>
     <prop name="coverageWindowSize">This workflow calculates coverage in windows across the genome.  Default window size is 2500 (bp)</prop>
     <prop name="extraBowtieParams">Parameters for Bowtie(2) above and beyond the default can be added verbatim here. "None" if default is ok</prop>
+    <prop name="fromSRA"/>
 
     <graphTemplateFile name="originsOfReplicationExperiment.xml"/>
    
@@ -6959,19 +7013,20 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
   <!-- New dataset class for the long read RNA Seq -->
-  <datasetClass class="LongReadRnaSeqExperimentNextflow" category="" datasetFileHint="">
+  <datasetClass class="longReadRnaSeqExperiment" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
     <prop name="sequencePlatform"></prop>
+    <prop name="fromSRA"></prop>
 
     <graphTemplateFile name="hisat.xml"/>
     <qaNotes>
         To be added once after testing 
     </qaNotes> 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_rnaSeqNextflow_RSRC" version="${version}"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_longReadRnaSeq_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               scope="organism"
               type="longRead_transcript_expression"

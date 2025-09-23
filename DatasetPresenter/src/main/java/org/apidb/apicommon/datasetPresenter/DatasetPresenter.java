@@ -1,11 +1,6 @@
 package org.apidb.apicommon.datasetPresenter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 
@@ -26,17 +21,16 @@ public class DatasetPresenter {
   private static final Logger LOG = Logger.getLogger(DatasetPresenter.class);
 
   // use prop values for properties that might be injected into templates.
-  Map<String, String> propValues = new HashMap<String, String>();
+  Map<String, String> propValues = new HashMap<>();
 
   // use instance variables for properties that have no chance of being
   // injected.
-  private String displayCategory;
+  private String categoryOverride;
   private String protocol;
   private String usage;
   private String acknowledgement;
   private String caveat;
   private String releasePolicy;
-  private DatasetInjector datasetInjector;
   private String datasetNamePattern;
   private String type;
   private String subtype;
@@ -45,17 +39,17 @@ public class DatasetPresenter {
   private boolean foundInDb = false;
   private float maxHistoryBuildNumber = -1000;
 
-  private DatasetInjectorConstructor datasetInjectorConstructor;
-  private List<String> contactIds = new ArrayList<String>(); // includes primary
+  private final Set<DatasetInjectorConstructor> datasetInjectorConstructors = new HashSet<>();
+  private final List<String> contactIds = new ArrayList<String>(); // includes primary
   private String primaryContactId;
   private List<Contact> contacts;
-  private List<Publication> publications = new ArrayList<Publication>();
-  private List<History> histories = new ArrayList<History>();
-  private List<HyperLink> links = new ArrayList<HyperLink>();
-  private Map<String, NameTaxonPair> nameTaxonPairs = new HashMap<String, NameTaxonPair>(); // expanded from pattern if we have one
+  private final List<Publication> publications = new ArrayList<Publication>();
+  private final List<History> histories = new ArrayList<>();
+  private final List<HyperLink> links = new ArrayList<>();
+  private final Map<String, Datasource> datasources = new HashMap<String, Datasource>(); // expanded from pattern if we have one
   private String override = null;
 
-  private List<String> datasetNamesFromPattern  = new ArrayList<String>();
+  private final List<String> datasetNamesFromPattern  = new ArrayList<String>();
 
     void addDatasetNameToList(String datasetName) {
         this.datasetNamesFromPattern.add(datasetName);
@@ -187,25 +181,23 @@ public class DatasetPresenter {
     return override;
   }
 
-  public void addNameTaxonPair(NameTaxonPair pair) {
-    nameTaxonPairs.put(pair.getName(), pair);
+  public void addDatasource(Datasource ds) {
+    datasources.put(ds.getName(), ds);
   }
   
-  public void removeNameTaxonPair(String name) {
-    nameTaxonPairs.remove(name);
+  public void removeDatasource(String name) {
+    datasources.remove(name);
   }
   
-  boolean containsNameTaxonPair(String name) {
-    return nameTaxonPairs.containsKey(name);
+  boolean containsDatasource(String name) {
+    return datasources.containsKey(name);
   }
 
-  public Collection<NameTaxonPair> getNameTaxonPairs() {
-    return nameTaxonPairs.values();
+  public Collection<Datasource> getDatasources() {
+    return datasources.values();
   }
 
-  public void setProjectName(String projectName) {
-    propValues.put("projectName", projectName);
-  }
+  public Datasource getDatasource(String name) { return datasources.get(name); }
 
   public void setOrganismShortName(String organismShortName) {
     propValues.put("organismShortName", organismShortName);
@@ -231,12 +223,12 @@ public class DatasetPresenter {
     return Float.valueOf(propValues.get("buildNumberRevised"));
   }
 
-  public void setDisplayCategory(Text displayCategory) {
-    this.displayCategory = displayCategory.getText();
+  public void setCategoryOverride(Text categoryOverride) {
+    this.categoryOverride = categoryOverride.getText();
   }
 
-  public String getDisplayCategory() {
-    return displayCategory;
+  public String getCategoryOverride() {
+    return categoryOverride;
   }
 
   public void setCaveat(Text caveat) {
@@ -385,18 +377,19 @@ public class DatasetPresenter {
    * 
    * @param datasetInjector
    */
-  public void setDatasetInjector(DatasetInjectorConstructor datasetInjector) {
-    if (datasetInjectorConstructor != null) throw new UserException("Adding more than one datasetInjector to datasetPresenter " + getDatasetName());
-    datasetInjectorConstructor = datasetInjector;
+  public void addDatasetInjector(DatasetInjectorConstructor datasetInjector) {
+    datasetInjectorConstructors.add(datasetInjector);
     datasetInjector.inheritDatasetProps(this);
   }
 
-  protected DatasetInjector getDatasetInjector() {
-    if (datasetInjector == null && datasetInjectorConstructor != null) {
-      datasetInjector = datasetInjectorConstructor.getDatasetInjector();
+  protected List<DatasetInjector> getDatasetInjectors() {
+    List<DatasetInjector> datasetInjectors = new ArrayList<>();
+    for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+      DatasetInjector datasetInjector = dic.getDatasetInjector();
       datasetInjector.addModelReferences();
+      datasetInjectors.add(datasetInjector);
     }
-    return datasetInjector;
+    return datasetInjectors;
   }
 
   void setDefaultDatasetInjector(
@@ -405,24 +398,24 @@ public class DatasetPresenter {
         || defaultDatasetInjectors == null
         || !defaultDatasetInjectors.containsKey(type)
         || !defaultDatasetInjectors.get(type).containsKey(subtype)
-        || datasetInjectorConstructor != null)
+        || !datasetInjectorConstructors.isEmpty())
       return;
     DatasetInjectorConstructor constructor = new DatasetInjectorConstructor();
     constructor.setClassName(defaultDatasetInjectors.get(type).get(subtype));
-    setDatasetInjector(constructor);
+    addDatasetInjector(constructor);
   }
 
   public List<ModelReference> getModelReferences() {
-    List<ModelReference> answer = new ArrayList<ModelReference>();
-    DatasetInjector di = getDatasetInjector();
-    if (di != null) {
-      answer = di.getModelReferences();
+    List<ModelReference> refs = new ArrayList<ModelReference>();
+    List<DatasetInjector> injectors = getDatasetInjectors();
+    for (DatasetInjector i : injectors) {
+      refs.addAll(i.getModelReferences());
     }
-    return answer;
+    return refs;
   }
 
-  public DatasetInjectorConstructor getDatasetInjectorConstructor() {
-    return datasetInjectorConstructor;
+  public Set<DatasetInjectorConstructor> getDatasetInjectorConstructors() {
+    return datasetInjectorConstructors;
   }
 
   /**
@@ -444,13 +437,9 @@ public class DatasetPresenter {
 
     void addIdentityProperty() {
         NamedValue presenterId = new NamedValue("presenterId", getId());
-        NamedValue datasetDigest = new NamedValue("datasetDigest", getDigest());
         addProp(presenterId);
-        addProp(datasetDigest);
-        if (datasetInjectorConstructor != null) {
-            datasetInjectorConstructor.addProp(presenterId);
-            datasetInjectorConstructor.addProp(datasetDigest);
-        }
+        for (DatasetInjectorConstructor dic : datasetInjectorConstructors)
+            dic.addProp(presenterId);
     }
 
   
@@ -459,14 +448,14 @@ public class DatasetPresenter {
    * @param datasetNamesToProperties
    */
   void addPropertiesFromFile(Map<String,Map<String,String>> datasetNamesToProperties, Set<String> duplicateDatasetNames) {
-      String datasetKey = propValues.containsKey("projectName") && !propValues.get("projectName").equals("@PROJECT_ID@") ? propValues.get("projectName") + ":" + getDatasetName() : getDatasetName();
+      String datasetKey = getDatasetName();
 
     if (duplicateDatasetNames.contains(datasetKey)) throw new UserException("datasetPresenter '" + getDatasetName()
         + "' is attempting to use properties from dataset '" + datasetKey + "' but that dataset is not unique in the dataset properties files");
     
     // add the global dataset properties to each datasetInjectorConstructor so they can be passed to each injector.
     // there might be a way to do this without duplicating that info across injector constructors, but it is not obvious, and this will work
-    if (datasetInjectorConstructor != null) datasetInjectorConstructor.setGlobalDatasetProperties(datasetNamesToProperties);
+    for (DatasetInjectorConstructor dic : datasetInjectorConstructors) dic.setGlobalDatasetProperties(datasetNamesToProperties);
     
     if (!datasetNamesToProperties.containsKey(datasetKey)) return;
     
@@ -478,12 +467,12 @@ public class DatasetPresenter {
       if (propValues.containsKey(key) ) throw new UserException("datasetPresenter '" + getDatasetName()
           + "' has a property duplicated from dataset property file provided by the dataset class: " + key);
       propValues.put(key, propsFromFile.get(key));
-      if (datasetInjectorConstructor != null) {
-        if (datasetInjectorConstructor.getPropValues().containsKey(key)) throw new UserException("a templateInjector in datasetPresenter '" + getDatasetName()
+      for (DatasetInjectorConstructor dic: datasetInjectorConstructors) {
+        if (dic.getPropValues().containsKey(key)) throw new UserException("a templateInjector in datasetPresenter '" + getDatasetName()
             + "' has a property duplicated from dataset property file provided by the dataset class: " + key);
 
         // Other properties are not valid when using pattern
-        datasetInjectorConstructor.addProp(new NamedValue(key, propsFromFile.get(key)));
+        dic.addProp(new NamedValue(key, propsFromFile.get(key)));
       }
     }
   }
@@ -504,11 +493,54 @@ public class DatasetPresenter {
           NamedValue property = new NamedValue(key, propsFromFile.get(key));
 
           addProp(property);
-          if (datasetInjectorConstructor != null) {
-              datasetInjectorConstructor.addProp(property);
+          for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+              dic.addProp(property);
           }
 
       }
     }
 
+
+  DatasetInjector findInjectorByName(String name){
+    List<DatasetInjector> dis = getDatasetInjectors();
+
+    if (dis.isEmpty()) return null;
+
+    // if just one injector, and it doesn't declare a datasourceName, it inherits the presenter name
+    if (dis.size() == 1) {
+      DatasetInjector di = dis.get(0);
+      String nm = di.getDatasourceName();
+      if (nm == null) return di;
+    }
+
+    // compare name against injectors name
+    for (DatasetInjector di : dis) {
+      String nm = di.getDatasourceName();
+      if (nm == null) throw new UserException ("When multiple injectors, not allowed to have an injector with no datasourceName attribute");
+      if (nm.equals(name)) return di;
+    }
+
+    // we didn't find the requested name
+    throw new UserException("In presenter " + getId() +
+            " no injector found with name: " + name);
+  }
+
+  public void validate () {
+    if (datasetInjectorConstructors.size() > 1) {
+      String msg = "This presenter has more than one injector. ";
+      if (getPropValue("datasetClassCategory") != null && !getPropValue("datasetClassCategory").isEmpty())
+        throw new UserException(msg + "It is not allowed to acquire a datasetClassCategory from the prop file.");
+      if (categoryOverride != null && !categoryOverride.isEmpty())
+        throw new UserException(msg + "It it not allowed to have a 'categoryOverride' attribute.");
+      if (datasetNamesFromPattern.size() != datasetInjectorConstructors.size())
+        throw new UserException(msg + "The number of injectors must match the number of dataset names in the pattern");
+      for (DatasetInjectorConstructor dic : datasetInjectorConstructors) {
+        if (dic.getDatasetInjector().getCategoryOverride().isEmpty())
+          throw new UserException(msg + "Each injector is required to have a categoryOverride");
+        String nm = dic.getDatasetInjector().getDatasourceName();
+        if (!datasetNamesFromPattern.contains(nm))
+          throw new UserException(msg + "Datasource name '" + nm + "' from one of the injectors is not found in the names from pattern");
+      }
+    }
+  }
 }

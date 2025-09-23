@@ -133,10 +133,6 @@
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.Projects"  includeProjects="EuPathDB">
-        <columnAttribute  name="project_id" displayName="VEuPathDB Project"/>
-      </attributeQueryRef>
-
 <!-- TODO Add back
       <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
         <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
@@ -835,7 +831,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Resources and Databases for genomes -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-<!-- TODO add back
+
       <table name="ExternalDatabases"
              excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB"
              displayName="External Databases Associated to Genome Annotation"
@@ -852,7 +848,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           </text>
         </textAttribute>
       </table>
--->
+
+
       <table name="AssociatedDatasets"
              displayName="Associated Data Sets"
              queryRef="DatasetTables.AssociatedDatasets">
@@ -940,8 +937,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
 
       <testRowCountSql includeProjects="ClinEpiDB,MicrobiomeDB">
         SELECT count(*) FROM (
-          SELECT dataset_presenter_id
-          FROM apidbtuning.datasetpresenter
+          SELECT distinct dataset_presenter_id
+          FROM apidbtuning.datasetdatasource
           WHERE project_id = '@PROJECT_ID@'
         UNION
           SELECT d.user_dataset_id
@@ -953,18 +950,18 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="dataset_id"/>
       <column name="gene_count"/>
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
-        SELECT dsp.dataset_presenter_id as dataset_id
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.geneattributes ga
+          , webready.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
-          , apidbtuning.datasetnametaxon dnt
+          , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ga.taxon_id
           AND oa.project_id = ga.project_id
-          AND oa.component_taxon_id = dnt.taxon_id
-          AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
-          AND dsp.project_id = '@PROJECT_ID@'
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
+          AND dd.project_id = '@PROJECT_ID@'
         GROUP BY oa.project_id, dsp.dataset_presenter_id
       </sql>
     </sqlQuery>
@@ -975,9 +972,9 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <sql>
         <![CDATA[
           SELECT
-              dataset_presenter_id as dataset_id,
+              distinct dataset_presenter_id as dataset_id,
               study_stable_id as eda_study_id
-          FROM apidbtuning.datasetpresenter
+          FROM apidbtuning.datasetdatasource
             LEFT JOIN apidbtuning.studyiddatasetid ON dataset_id = dataset_presenter_id
           WHERE project_id = '@PROJECT_ID@'
           UNION
@@ -995,14 +992,14 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="dataset_id" columnType="string"/>
       <sql excludeProjects="EuPathDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id,
-              coalesce(dsp.display_category, dsp.category) as newcategory
-          FROM ApidbTuning.DatasetPresenter dsp
-          WHERE project_id = '@PROJECT_ID@'
+          select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
+          from apidbtuning.datasetdatasource
+	  where project_id = '@PROJECT_ID@'
+	  group by dataset_presenter_id
           -- UNION
           -- SELECT DISTINCT
           --   CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-          --   null as newcategory
+          --   null as category
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
@@ -1019,34 +1016,20 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="dataset_sha1_digest" columnType="string"/>
       <column name="dataset_display_name" columnType="string"/>
       <column name="dataset_id" columnType="string"/>
-          <sql includeProjects="ClinEpiDB,MicrobiomeDB">
+          <sql includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase">
         <![CDATA[
-          SELECT dsp.dataset_sha1_digest
+          SELECT distinct dsp.dataset_sha1_digest
             , dsp.dataset_presenter_id as dataset_id
             , dsp.display_name as dataset_display_name
-          FROM ApidbTuning.DatasetPresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
+          FROM ApidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+          WHERE dd.project_id = '@PROJECT_ID@'
+	  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
           select DISTINCT
             null as dataset_sha1_digest,
                     CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             d.name as dataset_display_name
           from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-        ]]>
-      </sql>
-      <sql includeProjects="MicrobiomeDB,VectorBase">
-        <![CDATA[
-          SELECT dsp.dataset_sha1_digest
-            , dsp.dataset_presenter_id as dataset_id
-            , dsp.display_name as dataset_display_name
-          FROM ApidbTuning.DatasetPresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
-          UNION
-          SELECT DISTINCT
-            null as dataset_sha1_digest,
-            CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-            d.name as dataset_display_name
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
     </sqlQuery>
@@ -1097,7 +1080,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                        , CASE study_access WHEN 'prerelease' THEN 1 ELSE 0 END as is_prerelaase
                      FROM apidbtuning.datasetpresenter pres
                             LEFT JOIN (
-                         SELECT dataset_presenter_id
+                         SELECT distinct dataset_presenter_id
                              , max(project_availability) as project_availability
                              , max(is_public) as is_public
                              , max(study_access) as study_access
@@ -1135,7 +1118,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                                     , CASE WHEN property = 'customDownloadTab' THEN value END as custom_download_tab
                                     , CASE WHEN property = 'customDownloadAck' THEN value END as custom_download_ack
                                 FROM apidbtuning.datasetproperty
-                                WHERE  property in ('projectAvailability','isPublic','studyAccess','daysForApproval','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBody','requestNeedsApproval', 'requestEmailBodyManager', 'requestEmailBodyRequester', 'customDownloadTab', 'customDownloadAck')
+                                WHERE  property in ('projectAvailability','isPublic','studyAccess','daysForApproval','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBody','requestNeedsApproval', 'requestEmailBodyManager', 'requestEmailBodyRequester', 'customDownloadTab' , 'customDownloadAck')
                                   AND trim(value) is not null
                                 -- TEMPLATE_ANCHOR injectDatasetQuestions
 
@@ -1143,7 +1126,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                               ) pivot
                          GROUP BY dataset_presenter_id
                        ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
-                     WHERE project_id = '@PROJECT_ID@'
+                       JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dp.dataset_presenter_id
+                       WHERE dd.project_id = '@PROJECT_ID@'
                    ) dts LEFT OUTER JOIN (
                       SELECT dataset_id,
                              string_agg(email, ',' ORDER BY email)  request_email_bcc
@@ -1474,15 +1458,16 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          </sql>
          <sql excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
                , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
                       when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'
                       else dsp.display_name
                  end as display_name
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
-          WHERE dsp.project_id = '@PROJECT_ID@'
-          AND dsp.category != 'Link outs'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE dd.project_id = '@PROJECT_ID@'
+          AND  COALESCE(dd.category,'') != 'Link outs'
           -- UNION
           -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
@@ -1508,12 +1493,13 @@ Based on evolutionarily informed expectations of gene content of near-universal 
 
         <sql excludeProjects="EuPathDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
               , oa.megabps as megabase_pairs
               , nullif(oa.genecount, 0) as genecount
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
-          WHERE dsp.project_id = '@PROJECT_ID@'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE dd.project_id = '@PROJECT_ID@'
           -- UNION
           -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as megabase_pairs, null as genecount
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
@@ -1551,7 +1537,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         <sql excludeProjects="EuPathDB">
           <![CDATA[
             SELECT
-              dsp.dataset_presenter_id AS dataset_id
+              distinct dsp.dataset_presenter_id AS dataset_id
               , dp.is_public
             FROM
               apidbtuning.datasetpresenter dsp
@@ -1569,7 +1555,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   ) pivot
                   GROUP BY dataset_presenter_id
               ) dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
-            WHERE dsp.project_id = '@PROJECT_ID@'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            WHERE dd.project_id = '@PROJECT_ID@'
             -- UNION
             -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
             --   CASE WHEN is_public = 1 THEN 'yes' ELSE 'no' END as is_public
@@ -1631,13 +1618,14 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           all_versions_filtered as (
             SELECT * FROM all_versions where rn = 1
           )
-          SELECT dsp.dataset_presenter_id as dataset_id
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
             , av.genome_version
             , av.annotation_version
             , av.functional_annotation_version
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN all_versions_filtered av ON dsp.dataset_presenter_id = av.dataset_presenter_id
-          WHERE dsp.project_id = '@PROJECT_ID@'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE dd.project_id = '@PROJECT_ID@'
           -- UNION
           -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as genome_version, null as annotation_version, null as functional_annotation_version
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
@@ -1683,8 +1671,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  dsp.short_display_name, dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
                  dsp.protocol, dsp.usage,
-                 dsp.type,
-                 dsp.is_species_scope,
+                 ds.type,
+                 ds.is_species_scope,
                  dsp.build_number_introduced,
                  coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
                  pubs.pmids,
@@ -1759,8 +1747,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  dsp.short_display_name, dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
                  dsp.protocol, dsp.usage,
-                 dsp.type,
-                 dsp.is_species_scope,
+                 ds.type,
+                 ds.is_species_scope,
                  dsp.build_number_introduced,
                  coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
                  pubs.pmids,
@@ -1850,11 +1838,12 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="release_policy"/>
          <sql excludeProjects="EuPathDB">
             <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id,
+            select distinct dsp.dataset_presenter_id as dataset_id,
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
-            from apidbTuning.DatasetPresenter dsp
-            where dsp.project_id = '@PROJECT_ID@'
+            from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+            where dd.project_id = '@PROJECT_ID@'
+	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
             -- UNION
             -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
             --    , null as caveat
@@ -1865,11 +1854,12 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          </sql>
          <sql includeProjects="EuPathDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id,
+          SELECT distinct dsp.dataset_presenter_id as dataset_id,
                   dsp.caveat, dsp.acknowledgement,
                  dsp.release_policy
-          FROM apidbTuning.DatasetPresenter dsp
-          WHERE dsp.project_id = '@PROJECT_ID@'
+          FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+          WHERE dd.project_id = '@PROJECT_ID@'
+	  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
       </sql>
     </sqlQuery>
@@ -1883,7 +1873,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="short_attribution" columnType="string"/>
       <sql includeProjects="ClinEpiDB,MicrobiomeDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id,
+          SELECT distinct dsp.dataset_presenter_id as dataset_id,
                    CASE WHEN  dsc.name is not null THEN dsc.name
                         WHEN dsc.affiliation is not null THEN dsc.affiliation
                         ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
@@ -1893,10 +1883,11 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                    dsc.email as email,
                    coalesce(dsp.short_attribution, dsc.name) as short_attribution
           FROM ApidbTuning.DatasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN ApidbTuning.DatasetContact dsc ON
               dsp.dataset_presenter_id = dsc.dataset_presenter_id
               AND dsc.is_primary_contact = true
-              AND dsp.project_id = '@PROJECT_ID@'
+              AND dd.project_id = '@PROJECT_ID@'
           UNION
 --          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
 --               , dc.name as contact
@@ -1934,7 +1925,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
 
             <sql excludeProjects="EuPathDB,ClinEpiDB,MicrobiomeDB">
         <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id,
+          SELECT distinct dsp.dataset_presenter_id as dataset_id,
                  CASE WHEN  dsc.name is not null THEN dsc.name
                       WHEN dsc.affiliation is not null THEN dsc.affiliation
                       ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
@@ -1944,9 +1935,10 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                  dsc.email as email,
                  coalesce(dsp.short_attribution, dsc.name) as short_attribution
           FROM ApidbTuning.DatasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
           WHERE dsc.is_primary_contact = true
-          AND dsp.project_id = '@PROJECT_ID@'
+          AND dd.project_id = '@PROJECT_ID@'
           -- UNION
           -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
           --      , null as contact
@@ -1964,68 +1956,25 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
           WITH apollo_dataset AS (
-             SELECT distinct dsnt.dataset_presenter_id, 'Apollo' as in_apollo
-             FROM apidbtuning.datasetnametaxon dsnt
-                LEFT JOIN apidbtuning.organismattributes tn ON dsnt.taxon_id = tn.component_taxon_id
+             SELECT distinct dd.dataset_presenter_id, 'Apollo' as in_apollo
+             FROM apidbtuning.datasetdatasource dd
+                LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
                 LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism AND aid.apolloid IS NOT NULL
           )
-          SELECT dsp.dataset_presenter_id AS dataset_id,
+          SELECT distinct dsp.dataset_presenter_id AS dataset_id,
             CASE WHEN in_apollo IS NOT NULL
             THEN 'Apollo'
             ELSE 'N/A' END AS in_apollo
           FROM apidbtuning.datasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN apollo_dataset ad ON dsp.dataset_presenter_id = ad.dataset_presenter_id
-          WHERE dsp.project_id = '@PROJECT_ID@'
+          WHERE dd.project_id = '@PROJECT_ID@'
           -- UNION
           -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, 'N/A' as in_apollo
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
     </sqlQuery>
-
-    <sqlQuery name="Projects"  isCacheable="false" excludeProjects="EuPathDB">
-      <column name="dataset_id" columnType="string"/>
-      <column name="project_id" columnType="string"/>
-      <sql>
-        <![CDATA[
-          WITH projprop AS (
-            SELECT dataset_presenter_id, value as project
-            FROM apidbTuning.DatasetProperty
-            WHERE property = 'projectName'
-          )
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id, dsp.name,
-                CASE WHEN (dp.project IS NOT NULL) THEN dp.project
-                     ELSE ' ' END  as project_id
-          FROM apidbTuning.DatasetPresenter dsp
-            LEFT JOIN apidb.Datasource ds ON dsp.name = ds.name
-            LEFT JOIN projprop dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
-          WHERE dsp.project_id = '@PROJECT_ID@'
-          UNION
-          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, project_id as project
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <sqlQuery name="Projects"  isCacheable="false" includeProjects="EuPathDB">
-        <column name="dataset_id" columnType="string"/>
-        <column name="project_id" columnType="string"/>
-            <sql>
-            <![CDATA[
-               WITH projprop AS (
-                 SELECT dataset_presenter_id, value as project
-                 FROM apidbTuning.DatasetProperty
-                 WHERE property = 'projectName')
-               SELECT DISTINCT dsp.dataset_presenter_id as dataset_id, dsp.name,
-                      CASE WHEN (dp.project IS NOT NULL) THEN dp.project
-                           ELSE ' ' END  as project_id
-               FROM apidbTuning.DatasetPresenter dsp
-                LEFT JOIN apidb.Datasource ds ON ds.name = dsp.name
-                LEFT JOIN projprop dp dsp.dataset_presenter_id = dp.dataset_presenter_id
-            ]]>
-            </sql>
-    </sqlQuery>
-
 
     <sqlQuery name="Organisms"  isCacheable="false">
       <column name="dataset_id"/>
@@ -2037,12 +1986,16 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             regexp_replace(
               substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
           FROM (
-            SELECT DISTINCT dsnt.dataset_presenter_id as dataset_id
+            SELECT DISTINCT dd.dataset_presenter_id as dataset_id
               , CASE when tn.organism_name is null then null
-                ELSE REGEXP_REPLACE('Plasmodium vivax P01','^(\w*)\s(\w*)\s(\.*)','<I>\1 \2<\I>')||'</i>'
+	       -- italicize first 2 words
+                ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
+SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2)) + 1)
                 END as org
-            FROM apidbtuning.datasetnametaxon dsnt
-              LEFT JOIN apidbtuning.organismattributes tn ON dsnt.taxon_id = tn.component_taxon_id
+            FROM apidbtuning.datasetdatasource dd
+              LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+            WHERE dd.project_id = '@PROJECT_ID@'
+            AND dd.category != 'Link outs'
           ) t
           GROUP BY dataset_id
           --UNION
@@ -2058,20 +2011,21 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="old_dataset_id" columnType="string"/>
       <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
         <![CDATA[
-            SELECT dataset_presenter_id as dataset_id,
-                   dataset_presenter_id as old_dataset_id
-            FROM apidbTuning.DatasetPresenter
-            WHERE project_id = '@PROJECT_ID@'
+            SELECT distinct dsp.dataset_presenter_id as dataset_id,
+                   dsp.dataset_presenter_id as old_dataset_id
+            FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+            WHERE dd.project_id = '@PROJECT_ID@'
+	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
                    oa.source_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter dsp,
-                 apidbTuning.DatasetNameTaxon dnt,
+                 apidbTuning.DatasetDatasource dd,
                  apidbTuning.OrganismAttributes oa
-            WHERE dsp.type = 'genome'
-              AND dsp.dataset_presenter_id = dnt.dataset_presenter_id
-              AND oa.component_taxon_id = dnt.taxon_id
-              AND dsp.project_id = '@PROJECT_ID@'
+            WHERE dd.category = 'Genomes'
+              AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+              AND oa.component_taxon_id = dd.taxon_id
+              AND dd.project_id = '@PROJECT_ID@'
        -- To be FIXED if and when ebi datasets are loaded
        -- UNION
        --   SELECT dataset_presenter_id as dataset_id,
@@ -2112,24 +2066,24 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="average_value"/>
       <sql>
         <![CDATA[
-          SELECT dnt.dataset_presenter_id as dataset_id
+          SELECT dd.dataset_presenter_id as dataset_id
               , ps.study_name
               , ps.PROTOCOL_APP_NODE_NAME as sample
               , dp.value as switch_strands
               , avg(r.value) as average_value
           FROM apidbtuning.profilesamples ps
             , results.nafeatureexpression r
-            , apidbtuning.datasetnametaxon dnt
+            , apidbtuning.datasetdatasource dd
             , apidbtuning.datasetproperty dp
           WHERE dataset_type = 'transcript_expression'
             AND dataset_subtype = 'rnaseq'
             AND profile_type = 'values'
             AND ps.study_name like '% - tpm - unique%'
             AND ps.protocol_app_node_id = r.protocol_app_node_id
-            AND ps.dataset_name = dnt.name
-            AND dnt.dataset_presenter_id = dp.dataset_presenter_id
+            AND ps.dataset_name = dd.name
+            AND dd.dataset_presenter_id = dp.dataset_presenter_id
             AND dp.property = 'switchStrandsProfiles'
-          GROUP BY dnt.dataset_presenter_id
+          GROUP BY dd.dataset_presenter_id
             , dp.value
             , ps.study_name
             , ps.PROTOCOL_APP_NODE_NAME
@@ -2151,7 +2105,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
               , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid AS url
               , row_number() OVER () AS rownumber
             FROM ApidbTuning.DatasetPublication
-            WHERE pmid IS NOT NULL
+            WHERE length(pmid) > 0
             ORDER BY dataset_publication_id
           )
           SELECT dataset_presenter_id AS dataset_id
@@ -2227,12 +2181,12 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM
             ApidbTuning.DatasetHistory dh
             , ApidbTuning.EupathBuildDates bd
-            , apidbtuning.datasetnametaxon dnt
-                LEFT JOIN apidbtuning.organismattributes tn ON dnt.taxon_id = tn.component_taxon_id
+            , apidbtuning.datasetdatasource dd
+                LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
                 LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism
           WHERE dh.build_number = bd.build_number::NUMERIC
             AND bd.project = '@PROJECT_ID@'
-            AND dh.dataset_presenter_id = dnt.dataset_presenter_id
+            AND dh.dataset_presenter_id = dd.dataset_presenter_id
           ORDER BY dh.build_number
         ]]>
       </sql>
@@ -2297,10 +2251,11 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           SELECT dataset_name, dataset_id, build_number, release_date , 'Version ' || ROW_NUMBER() OVER (PARTITION BY dataset_id ORDER BY dataset_id, build_number) as version_number, note, dataset_sha1_digest
           FROM (
              SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MON-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number
-             FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp
+             FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp, apidbtuning.datasetdatasource dd
              WHERE dh.build_number = bd.build_number::numeric
-               AND dp.project_id = bd.project
-               AND dh.dataset_presenter_id = dp.dataset_presenter_id
+             AND dd.project_id = bd.project
+	     AND dh.dataset_presenter_id = dp.dataset_presenter_id
+	     AND dd.dataset_presenter_id = dp.dataset_presenter_id
              ORDER by dh.build_number
            ) t
           ORDER by build_number
@@ -2381,25 +2336,25 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="contact_name"/>
       <sql excludeProjects="Piroplasma,EuPathDB">
         <![CDATA[
-          SELECT ia.source_id,
+          SELECT distinct ia.source_id,
             ia.project_id,
             ds.name as dataset_name,
-            iads.dataset_presenter_id as dataset_id,
+            dd.dataset_presenter_id as dataset_id,
             ia.strain,
             string_agg(iac.name, ',' order by iac.name) as contact_name
           FROM study.Study s, apidb.Datasource ds, sres.ExternalDatabase d,
               sres.ExternalDatabaseRelease r, rad.StudyBiomaterial sb,
               ApidbTuning.PopsetAttributes ia,
-              ApidbTuning.DatasetNameTaxon iads
-              LEFT JOIN ApidbTuning.DatasetContact iac ON iads.dataset_presenter_id = iac.dataset_presenter_id
+              ApidbTuning.DatasetDatasource dd
+              LEFT JOIN ApidbTuning.DatasetContact iac ON dsp.dataset_presenter_id = iac.dataset_presenter_id
           WHERE s.external_database_release_id = r.external_database_release_id
             AND r.external_database_id = d.external_database_id
             AND ds.name = d.name
             AND ds.version = r.version
             AND s.study_id = sb.study_id
             AND sb.bio_material_id = ia.bio_material_id
-            AND ia.experiment_external_db_name = iads.name
-          GROUP BY iads.dataset_presenter_id, ia.source_id, ia.project_id, ds.name, ia.strain
+            AND ia.experiment_external_db_name = dd.name
+          GROUP BY dd.dataset_presenter_id, ia.source_id, ia.project_id, ds.name, ia.strain
         ]]>
       </sql>
       <sql includeProjects="EuPathDB">
@@ -2459,7 +2414,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                 , 'question' as link_type
               FROM ApidbTuning.datasetmodelref ref
               LEFT JOIN ApidbTuning.DatasetPresenter dsp
-                ON dsp.dataset_presenter_id = ref.dataset_presenter_id
+                ON dsp.dataset_presenter_id = ref.dataset_presenter_id		
               WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
               ORDER BY dsp.name
                 , ref.target_type
@@ -2529,17 +2484,17 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           )
           SELECT dataset_name, dataset_id,organism, version, '@PROJECT_ID@' as project_id
           FROM (
-            select distinct dnt.name as dataset_name,
-                 dnt.dataset_presenter_id as dataset_id,
-                 case when dnt.taxon_id = 0
+            select distinct dd.name as dataset_name,
+                 dd.dataset_presenter_id as dataset_id,
+                 case when dd.taxon_id = 0
                  then 'ALL'
                  else tn.name
                  end as organism,
                  replace (ds.version, '_gus4','') as version
             FROM apidb.datasource ds
-              INNER JOIN ApidbTuning.DatasetNameTaxon dnt ON ds.name = dnt.name
-              LEFT JOIN TaxonScientificName tn ON dnt.taxon_id = tn.taxon_id
-            ORDER BY dnt.name
+              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
+              LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
+            ORDER BY dd.name
           ) t
         ]]>
       </sql>
@@ -2549,18 +2504,18 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM apidbtuning.organismattributes
               ) SELECT dataset_name, dataset_id,organism, version, project_id
         FROM (
-          SELECT distinct dnt.name as dataset_name, ds.project_id,
-            dnt.dataset_presenter_id as dataset_id,
-            case when dnt.taxon_id = 0
+          SELECT distinct dd.name as dataset_name, ds.project_id,
+            dd.dataset_presenter_id as dataset_id,
+            case when dd.taxon_id = 0
             then 'ALL'
             else tn.name
             end as organism,
             replace (ds.version, '_gus4','') as version
           FROM apidb.datasource ds
-            INNER JOIN ApidbTuning.DatasetNameTaxon dnt ON ds.name = dnt.name
-            LEFT JOIN TaxonScientificName tn ON dnt.taxon_id = tn.taxon_id
+            INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
+            LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
           WHERE not ds.taxon_id is null
-          ORDER BY dnt.name
+          ORDER BY dd.name
         ) t
       </sql>
     </sqlQuery>
@@ -2624,7 +2579,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                    '@PROJECT_ID@' as project_id,
                    graph_descrip.dataset as dataset_name,
                    p.example_source_id as graph_ids,
-                   dnt.dataset_presenter_id as dataset_id,
+                   dd.dataset_presenter_id as dataset_id,
                    '1' as has_graph_data,
                    'FALSE' as has_meta_data,
                    '' as graph_organism,
@@ -2644,9 +2599,9 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                      1 as order_num
                     -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
             ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
-                   ApidbTuning.datasetnametaxon dnt
+                   ApidbTuning.datassetdatasource dd
             WHERE p.dataset = graph_descrip.dataset
-              AND graph_descrip.dataset = dnt.name
+              AND graph_descrip.dataset = dd.name
           ) g
         ]]>
       </sql>
@@ -2659,19 +2614,19 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="transcript_count"/>
 
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
-        SELECT dsp.dataset_presenter_id as dataset_id
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
           , ta.gene_type
           , ta.transcript_type
           , count(*) as transcript_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.transcriptattributes ta
+          , webready.TranscriptAttributes ta
           , apidbtuning.datasetpresenter dsp
-          , apidbtuning.datasetnametaxon dnt
+          , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ta.taxon_id
           AND oa.project_id = ta.project_id
-          AND oa.component_taxon_id = dnt.taxon_id
-          AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
         ORDER BY count(*) desc
       </sql>
@@ -2683,18 +2638,18 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="gene_count"/>
 
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
-        SELECT dsp.dataset_presenter_id as dataset_id
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
           , ga.gene_type
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , apidbtuning.geneattributes ga
+          , webready.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
-          , apidbtuning.datasetnametaxon dnt
+          , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ga.taxon_id
           AND oa.project_id = ga.project_id
-          AND oa.component_taxon_id = dnt.taxon_id
-          AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ga.gene_type
         ORDER BY count(*) desc
       </sql>
@@ -2706,18 +2661,18 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="sequence_count"/>
 
       <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
-        SELECT dsp.dataset_presenter_id as dataset_id
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
           , sa.sequence_type
           , count(*) as sequence_count
         FROM apidbtuning.organismattributes oa
-          , ApidbTuning.GenomicSeqAttributes sa
+          , webready.GenomicSeqAttributes sa
           , apidbtuning.datasetpresenter dsp
-          , apidbtuning.datasetnametaxon dnt
+          , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = sa.taxon_id
           AND oa.project_id = sa.project_id
-          AND oa.component_taxon_id = dnt.taxon_id
-          AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dsp.type = 'genome'
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
         GROUP BY dsp.dataset_presenter_id, sa.sequence_type
         ORDER BY count(*) desc
       </sql>
@@ -2734,24 +2689,24 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           SELECT dataset_id, category, organism, count(*) AS dataset_count
           FROM
             (
-              SELECT dsp.dataset_presenter_id AS dataset_id
-                , coalesce(o_dsp.display_category, o_dsp.category) AS category
+              SELECT dd.dataset_presenter_id AS dataset_id
+                , dd.category
                 , tn.name AS organism
               FROM
                 apidbtuning.organismattributes oa
                 , apidbtuning.datasetpresenter o_dsp
-                , apidbtuning.datasetnametaxon o_dnt
-                , apidbtuning.datasetnametaxon dnt
+                , apidbtuning.datasetdatasource o_dd
+                , apidbtuning.datasetdatasource dd
                 , sres.taxonname tn
                 , apidbtuning.datasetpresenter dsp
-              WHERE oa.component_taxon_id = o_dnt.taxon_id
-                AND o_dnt.dataset_presenter_id = o_dsp.dataset_presenter_id
-                AND oa.component_taxon_id = dnt.taxon_id
-                AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-                AND dnt.taxon_id = tn.taxon_id
+              WHERE oa.component_taxon_id = o_dd.taxon_id
+                AND o_dd.dataset_presenter_id = o_dsp.dataset_presenter_id
+                AND oa.component_taxon_id = dd.taxon_id
+                AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+                AND dd.taxon_id = tn.taxon_id
                 AND tn.name_class = 'scientific name'
-                AND dsp.type = 'genome'
-                AND o_dsp.category NOT IN ('Genomics', 'Link outs')
+                AND dd.category = 'Genomes'
+                AND o_dd.category NOT IN ('Genomics', 'Link outs')
             ) t
           GROUP BY dataset_id, category, organism
           ORDER BY count(*) DESC
@@ -2773,7 +2728,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   , ext.dataset AS name
                   , id_url
                 FROM
-                  apidbtuning.datasetnametaxon dnt
+                  apidbtuning.datasetdatasource dd
                   , apidbtuning.datasetpresenter dsp
                   , (
                     SELECT dataset
@@ -2783,9 +2738,9 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                     WHERE dataset != 'GeneDB: The Sanger Institute Pathogen Genomics Database'
                       AND dataset != 'protein_id'
                   ) ext
-                WHERE ext.taxon_id = dnt.taxon_id
-                  AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-                  AND dsp.type = 'genome'
+                WHERE ext.taxon_id = dd.taxon_id
+                  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+                  AND dd.category = 'Genomes'
               )
               SELECT dataset_id
                 , name
@@ -2833,6 +2788,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                      associated_dataset_id, project, webapp_name, display_name
              from ApidbTuning.AssociatedDataset
              where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
+             and length(pubmed_id) > 0
              order by local_dataset_id
             ]]>
       </sql>
@@ -2862,12 +2818,12 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                 apidb.organism                 o,
                 apidb.busco                    b
                 , apidbtuning.datasetpresenter dsp
-                , apidbtuning.datasetnametaxon dnt
+                , apidbtuning.datasetdatasource dd
             WHERE b.organism_id = o.organism_id
               AND o.taxon_id = oa.component_taxon_id
-              AND oa.component_taxon_id = dnt.taxon_id
-              AND dnt.dataset_presenter_id = dsp.dataset_presenter_id
-              AND dsp.type='genome'
+              AND oa.component_taxon_id = dd.taxon_id
+              AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+              AND dd.category='Genomes'
         </sql>
       </sqlQuery>
 
