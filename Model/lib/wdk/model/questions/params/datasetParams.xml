@@ -233,7 +233,7 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT dataset_presenter_id as term, dataset_presenter_id as internal
-          FROM APIDBTUNING.datasetnametaxon
+          FROM apidbtuning.DatasetDatasource
         ]]>
       </sql>
     </sqlQuery>
