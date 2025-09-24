@@ -179,10 +179,9 @@
       <column name="term"/>
       <sql>
        <![CDATA[
-          SELECT distinct organism_name as term, oa.COMPONENT_TAXON_ID as internal
-          FROM apidbtuning.organismattributes oa
-          , apidbtuning.datasetnametaxon dnt
-          WHERE dnt.taxon_id = oa.COMPONENT_TAXON_ID
+          SELECT distinct organism_name as term, oa.component_taxon_id as internal
+          FROM apidbtuning.organismAttributes oa, apidbtuning.datasetDatasource dd
+          WHERE dd.taxon_id = oa.component_taxon_id
           UNION
           SELECT 'any', -1
         ]]>
@@ -234,7 +233,7 @@
       <sql>
         <![CDATA[
           SELECT DISTINCT dataset_presenter_id as term, dataset_presenter_id as internal
-          FROM APIDBTUNING.datasetnametaxon
+          FROM apidbtuning.DatasetDatasource
         ]]>
       </sql>
     </sqlQuery>
