@@ -891,7 +891,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
              </url>
         </linkAttribute>
 
-        <linkAttribute displayName="Dataset" name="associated dataset" 
+        <linkAttribute displayName="Dataset Name" name="associated dataset"
                        internal="false">
              <displayText>
                 <![CDATA[
@@ -902,7 +902,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                 <![CDATA[ http://$$project$$.org/$$webapp_name$$/app/record/dataset/$$associated_dataset_id$$ ]]>
              </url>
         </linkAttribute>
-
+        <columnAttribute name="associated_summary" displayName="Dataset Summary"/>
       </table>
 
         <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -3057,16 +3057,20 @@ and graph_descrip.dataset = dnt.name) g
             <column name="dataset_id"/>
             <column name="pmid"/>
             <column name="associated_dataset_id"/>
+            <column name="associated_summary"/>
             <column name="project"/>
             <column name="webapp_name"/>
             <column name="display_name"/>
             <sql>
             <![CDATA[
              select local_dataset_id as dataset_id, pubmed_id as pmid,
-                     associated_dataset_id, project, webapp_name, display_name
-             from ApidbTuning.AssociatedDataset
+                     associated_dataset_id, project, webapp_name, ds.display_name,
+                     dsp.summary as associated_summary
+             from ApidbTuning.AssociatedDataset ds, ApidbTuning.DatasetPresenter dsp
              where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
-             order by local_dataset_id
+             and associated_dataset_id = dsp.dataset_presenter_id
+             and length(pubmed_id) > 0
+             order by local_dataset_id, ds.display_name
             ]]>
             </sql>
       </sqlQuery>
