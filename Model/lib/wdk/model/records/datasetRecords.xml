@@ -2689,7 +2689,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           SELECT dataset_id, category, organism, count(*) AS dataset_count
           FROM
             (
-              SELECT dd.dataset_presenter_id AS dataset_id
+              SELECT distinct dd.dataset_presenter_id AS dataset_id
                 , dd.category
                 , tn.name AS organism
               FROM
@@ -2779,17 +2779,20 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="dataset_id"/>
       <column name="pmid"/>
       <column name="associated_dataset_id"/>
+      <column name="associated_summary"/>
       <column name="project"/>
       <column name="webapp_name"/>
       <column name="display_name"/>
       <sql>
         <![CDATA[
              select local_dataset_id as dataset_id, pubmed_id as pmid,
-                     associated_dataset_id, project, webapp_name, display_name
-             from ApidbTuning.AssociatedDataset
+                     associated_dataset_id, project, webapp_name, ds.display_name,
+                     dsp.summary as associated_summary
+             from ApidbTuning.AssociatedDataset ds, ApidbTuning.DatasetPresenter dsp
              where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
+             and associated_dataset_id = dsp.dataset_presenter_id
              and length(pubmed_id) > 0
-             order by local_dataset_id
+             order by local_dataset_id, ds.display_name
             ]]>
       </sql>
     </sqlQuery>
