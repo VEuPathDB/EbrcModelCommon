@@ -147,6 +147,160 @@
   </tuningTable>
 -->
 
+  <tuningTable name="ProjectTaxon" prefixEnabled="true">
+    <comment>map taxon names onto project_ids. to be used by the apidb.project_id function</comment>
+    <externalDependency name="dots.ExternalNaSequence"/>
+    <externalDependency name="sres.TaxonName"/>
+    <externalDependency name="core.ProjectInfo"/>
+    <externalDependency name="apidb.Organism"/>
+    <sql>
+      <![CDATA[
+        CREATE TABLE &prefixProjectTaxon&1 AS
+        WITH
+            local_taxon -- a taxon found in this instance, either in dots.ExternalNaSequence or in apidb.Organism
+                AS (  SELECT distinct tn.name as taxon,
+                          substr((tn.name), 1, position(' ' IN tn.name||' ') - 1) as first_word,
+                          pi.name as project_id
+                      FROM dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
+                      WHERE ens.taxon_id = tn.taxon_id
+                              and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
+                                    OR tn.name_class = 'scientific name')
+                              and ens.row_project_id = pi.project_id
+                          -- get names from apidb.Organism.family_name_for_files
+                          --   (may not be necessary)
+                      UNION
+                      SELECT family_name_for_files as taxon,
+                          substr((family_name_for_files), 1, position(' ' IN family_name_for_files||' ') - 1) as first_word,
+                          project_name as project_id
+                      FROM apidb.Organism
+                      WHERE family_name_for_files in (select name from sres.TaxonName)
+            ),
+            mononym -- a taxon name that's the first word of a local taxon
+                AS (SELECT distinct lower(lt.first_word) as taxon, lt.project_id
+                    FROM local_taxon lt, sres.TaxonName tn
+                    WHERE lt.first_word = tn.name
+                          -- and tn.name_class = 'scientific name'
+                    ),
+            full_name -- the full name of a local taxon whose first name is not a taxon
+                AS (SELECT distinct lower(lt.taxon) as taxon, lt.project_id
+                    FROM local_taxon lt, sres.TaxonName tn
+                    WHERE lt.taxon = tn.name
+                            -- and tn.name_class = 'scientific name'
+                            and lower(lt.first_word) not in (select taxon from mononym))
+        SELECT * FROM mononym
+        UNION
+        SELECT * FROM full_name
+        UNION
+        SELECT 'hypocrea', 'FungiDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/afsm11', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/afsm2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/amopi', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/asl1', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/de11d', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/de4a', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/frs/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-1', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gd-d1-3', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillnor1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillnor2/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/gillrich3/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/lithon', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/net12afl/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/netc1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/netc2/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/neth2t3/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/np251002/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/nrss/ii', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/pal2', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/pao27/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/rp', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sed5a/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedc1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedcb1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedct1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedmh1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sedst1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sm53', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/sm68', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/st4n', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/st8v/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/su03', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/su4', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tg1162', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tg1267', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/tun1/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/wt2708/i', 'TriTrypDB'
+        UNION
+        SELECT 'perkinsiella-like_sp._plo/wtuts/i', 'TriTrypDB'
+        UNION
+        SELECT 'plo_of_paramoeba_invadens_ags-2013', 'TriTrypDB'
+        UNION
+        SELECT 'soil_flagellate_and31', 'TriTrypDB'
+        UNION
+        SELECT 'kinetoplastid_flagellate_lfs2', 'TriTrypDB'
+        UNION
+        SELECT 'cryptaulaxoides-like_sp._tcs-2003', 'TriTrypDB'
+        ORDER BY 2, 1
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        update &prefixProjectTaxon&1
+        set taxon = replace(taxon, '''', '')
+        where taxon like '%''%'
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index data_load_prjct_err&1 on &prefixProjectTaxon&1 (taxon)
+      ]]>
+    </sql>
+    <sql>
+      <![CDATA[
+        create unique index projtax_ix&1 on &prefixProjectTaxon&1 (taxon, project_id)
+      ]]>
+    </sql>
+  </tuningTable>
 
 
   <tuningTable name="DatasetPresenter" alwaysUpdate="true">
