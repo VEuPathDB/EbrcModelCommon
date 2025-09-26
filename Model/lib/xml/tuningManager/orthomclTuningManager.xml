@@ -606,74 +606,75 @@ CREATE TABLE PhyleticPattern&1 AS
                WHERE a.parent_id = b.orthomcl_clade_id
                )
         )) total,
-        (SELECT name as group_name,
-                SUM(CASE three_letter_abbrev WHEN 'ALVE' THEN number_of_taxa ELSE 0 END) as alveolata,
-                SUM(CASE three_letter_abbrev WHEN 'ARCH' THEN number_of_taxa ELSE 0 END) as archaea,
-                SUM(CASE three_letter_abbrev WHEN 'AMOE' THEN number_of_taxa ELSE 0 END) as amoeba,
-                SUM(CASE three_letter_abbrev WHEN 'BACT' THEN number_of_taxa ELSE 0 END) as bacteria,
-                SUM(CASE three_letter_abbrev WHEN 'FUNG' THEN number_of_taxa ELSE 0 END) as fungi,
-                SUM(CASE three_letter_abbrev WHEN 'EUGL' THEN number_of_taxa ELSE 0 END) as euglenozoa,
-                SUM(CASE three_letter_abbrev WHEN 'META' THEN number_of_taxa ELSE 0 END) as metazoa,
-                SUM(CASE three_letter_abbrev WHEN 'VIRI' THEN number_of_taxa ELSE 0 END) as viridiplantae,
-                SUM(CASE three_letter_abbrev WHEN 'OEUK' THEN number_of_taxa ELSE 0 END) as other_eukaryotes,
-                SUM(CASE three_letter_abbrev WHEN 'FIRM' THEN number_of_taxa ELSE 0 END) as bacteria_firm,
-                SUM(CASE three_letter_abbrev WHEN 'PROA' THEN number_of_taxa ELSE 0 END) as bacteria_proa,
-                SUM(CASE three_letter_abbrev WHEN 'PROB' THEN number_of_taxa ELSE 0 END) as bacteria_prob,
-                SUM(CASE three_letter_abbrev WHEN 'PROD' THEN number_of_taxa ELSE 0 END) as bacteria_prod,
-                SUM(CASE three_letter_abbrev WHEN 'PROE' THEN number_of_taxa ELSE 0 END) as bacteria_proe,
-                SUM(CASE three_letter_abbrev WHEN 'PROG' THEN number_of_taxa ELSE 0 END) as bacteria_prog,
-                SUM(CASE three_letter_abbrev WHEN 'OBAC' THEN number_of_taxa ELSE 0 END) as bacteria_obac,
-                SUM(CASE three_letter_abbrev WHEN 'ARCH' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'EURY' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'CREN' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'NANO' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'KORA' THEN number_of_taxa ELSE 0 END) as archaea_arch,
-                SUM(CASE three_letter_abbrev WHEN 'EURY' THEN number_of_taxa ELSE 0 END) as archaea_eury,
-                SUM(CASE three_letter_abbrev WHEN 'CREN' THEN number_of_taxa ELSE 0 END) as archaea_cren,
-                SUM(CASE three_letter_abbrev WHEN 'NANO' THEN number_of_taxa ELSE 0 END) as archaea_nano,
-                SUM(CASE three_letter_abbrev WHEN 'KORA' THEN number_of_taxa ELSE 0 END) as archaea_kora,
-                SUM(CASE three_letter_abbrev WHEN 'ALVE' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'CILI' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'APIC' THEN number_of_taxa ELSE 0 END) as alveolata_alve,
-                SUM(CASE three_letter_abbrev WHEN 'CILI' THEN number_of_taxa ELSE 0 END) as alveolata_cili,
-                SUM(CASE three_letter_abbrev WHEN 'APIC' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'COCC' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'ACON' THEN number_of_taxa ELSE 0 END) as alveolata_apic,
-                SUM(CASE three_letter_abbrev WHEN 'COCC' THEN number_of_taxa ELSE 0 END) as alveolata_cocc,
-                SUM(CASE three_letter_abbrev WHEN 'HAEM' THEN number_of_taxa ELSE 0 END) as alveolata_haem,
-                SUM(CASE three_letter_abbrev WHEN 'PIRO' THEN number_of_taxa ELSE 0 END) as alveolata_piro,
-                SUM(CASE three_letter_abbrev WHEN 'STRE' THEN number_of_taxa ELSE 0 END) as viridiplantae_stre,
-                SUM(CASE three_letter_abbrev WHEN 'CHLO' THEN number_of_taxa ELSE 0 END) as viridiplantae_chlo,
-                SUM(CASE three_letter_abbrev WHEN 'RHOD' THEN number_of_taxa ELSE 0 END) as viridiplantae_rhod,
-                SUM(CASE three_letter_abbrev WHEN 'CRYP' THEN number_of_taxa ELSE 0 END) as viridiplantae_cryp,
-                SUM(CASE three_letter_abbrev WHEN 'FUNG' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'MICR' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'BASI' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'ASCO' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'MUCO' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'CHYT' THEN number_of_taxa ELSE 0 END) as fungi_fung,
-                SUM(CASE three_letter_abbrev WHEN 'MICR' THEN number_of_taxa ELSE 0 END) as fungi_micr,
-		SUM(CASE three_letter_abbrev WHEN 'BASI' THEN number_of_taxa ELSE 0 END) as fungi_basi,
-                SUM(CASE three_letter_abbrev WHEN 'ASCO' THEN number_of_taxa ELSE 0 END) as fungi_asco,
-                SUM(CASE three_letter_abbrev WHEN 'MUCO' THEN number_of_taxa ELSE 0 END) as fungi_muco,
-                SUM(CASE three_letter_abbrev WHEN 'CHYT' THEN number_of_taxa ELSE 0 END) as fungi_chyt,
-                SUM(CASE three_letter_abbrev WHEN 'OMET' THEN number_of_taxa ELSE 0 END) as metazoa_omet,
-                SUM(CASE three_letter_abbrev WHEN 'NEMA' THEN number_of_taxa ELSE 0 END) as metazoa_nema,
-                SUM(CASE three_letter_abbrev WHEN 'ARTH' THEN number_of_taxa ELSE 0 END) as metazoa_arth,
-                SUM(CASE three_letter_abbrev WHEN 'CHOR' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'ACTI' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'AVES' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'MAMM' THEN number_of_taxa ELSE 0 END) -
-		SUM(CASE three_letter_abbrev WHEN 'TUNI' THEN number_of_taxa ELSE 0 END) as metazoa_chor,
-                SUM(CASE three_letter_abbrev WHEN 'ACTI' THEN number_of_taxa ELSE 0 END) as metazoa_acti,
-                SUM(CASE three_letter_abbrev WHEN 'AVES' THEN number_of_taxa ELSE 0 END) as metazoa_aves,
-                SUM(CASE three_letter_abbrev WHEN 'MAMM' THEN number_of_taxa ELSE 0 END) as metazoa_mamm,
-                SUM(CASE three_letter_abbrev WHEN 'TUNI' THEN number_of_taxa ELSE 0 END) as metazoa_tuni
-         FROM (SELECT og.group_id AS name,agt.three_letter_abbrev,agt.number_of_taxa::numeric
-               FROM ApiDB.OrthologGroupTaxon agt, apidb.orthologgroup og
-               WHERE agt.group_id = og.group_id
-	             AND agt.three_letter_abbrev = UPPER(agt.three_letter_abbrev))
-         GROUP BY name) actual
+        (SELECT 
+  og.group_id AS group_name,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ALVE' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ARCH' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'AMOE' THEN agt.number_of_taxa::int ELSE 0::int END) as amoeba,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'BACT' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'FUNG' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'EUGL' THEN agt.number_of_taxa::int ELSE 0::int END) as euglenozoa,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'META' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'VIRI' THEN agt.number_of_taxa::int ELSE 0::int END) as viridiplantae,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'OEUK' THEN agt.number_of_taxa::int ELSE 0::int END) as other_eukaryotes,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'FIRM' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_firm,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PROA' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_proa,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PROB' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_prob,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PROD' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_prod,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PROE' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_proe,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PROG' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_prog,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'OBAC' THEN agt.number_of_taxa::int ELSE 0::int END) as bacteria_obac,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ARCH' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'EURY' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CREN' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'NANO' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'KORA' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea_arch,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'EURY' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea_eury,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CREN' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea_cren,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'NANO' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea_nano,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'KORA' THEN agt.number_of_taxa::int ELSE 0::int END) as archaea_kora,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ALVE' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CILI' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'APIC' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_alve,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CILI' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_cili,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'APIC' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'COCC' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ACON' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_apic,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'COCC' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_cocc,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'HAEM' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_haem,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'PIRO' THEN agt.number_of_taxa::int ELSE 0::int END) as alveolata_piro,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'STRE' THEN agt.number_of_taxa::int ELSE 0::int END) as viridiplantae_stre,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CHLO' THEN agt.number_of_taxa::int ELSE 0::int END) as viridiplantae_chlo,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'RHOD' THEN agt.number_of_taxa::int ELSE 0::int END) as viridiplantae_rhod,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CRYP' THEN agt.number_of_taxa::int ELSE 0::int END) as viridiplantae_cryp,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'FUNG' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MICR' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'BASI' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ASCO' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MUCO' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CHYT' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_fung,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MICR' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_micr,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'BASI' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_basi,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ASCO' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_asco,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MUCO' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_muco,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CHYT' THEN agt.number_of_taxa::int ELSE 0::int END) as fungi_chyt,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'OMET' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_omet,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'NEMA' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_nema,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ARTH' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_arth,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'CHOR' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ACTI' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'AVES' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MAMM' THEN agt.number_of_taxa::int ELSE 0::int END) -
+       SUM(CASE WHEN oc.three_letter_abbrev = 'TUNI' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_chor,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'ACTI' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_acti,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'AVES' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_aves,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'MAMM' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_mamm,
+       SUM(CASE WHEN oc.three_letter_abbrev = 'TUNI' THEN agt.number_of_taxa::int ELSE 0::int END) as metazoa_tuni
+FROM apidb.orthologgrouptaxon agt
+JOIN apidb.orthologgroup og ON agt.group_id = og.group_id
+JOIN apidb.orthomclclade oc_child ON agt.three_letter_abbrev = oc_child.three_letter_abbrev
+JOIN apidb.orthomclclade oc ON oc_child.parent_id = oc.orthomcl_clade_id
+GROUP BY og.group_id) actual
 )
       ]]>
     </sql>
