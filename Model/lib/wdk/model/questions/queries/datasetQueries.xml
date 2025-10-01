@@ -307,8 +307,7 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
       <paramRef ref="sharedParams.text_expression"/>
       <paramRef ref="sharedParams.document_type" default="dataset"/>
       <paramRef ref="sharedParams.text_fields"/>
@@ -321,9 +320,7 @@
       <!-- <wsColumn name="fields_matched" width="500"/> -->
     </processQuery>
 
-    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
-                  doNotTest="true">
+    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"                  processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"                  doNotTest="true">
       <paramRef ref="sharedParams.ds_gene_ids"/>
       <paramRef ref="datasetParams.datasetSelection"/>
       <paramRef ref="datasetParams.enrichmentType"/>
@@ -435,12 +432,6 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="LegacyDatasetIds" includeProjects="EuPathDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin">
-      <wsColumn name="dataset_presenter_id" width="50" wsName="dataset_presenter_id"/>
-      <wsColumn name="dataset_presenter_name" width="50" wsName="dataset_presenter_name"/>
-      <wsColumn name="project_name" width="20"/>
-    </processQuery>
 
 
   </querySet>

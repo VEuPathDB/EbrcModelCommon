@@ -222,10 +222,6 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="extDbNames" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-      <wsColumn name="internal" width="200"/>
-      <wsColumn name="term" width="200"/>
-    </processQuery>
 
     <sqlQuery name="ids" excludeProjects="EuPathDB">
       <column name="internal"/>
@@ -238,10 +234,6 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="ids" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-      <wsColumn name="term" width="200"/>
-      <wsColumn name="internal" width="200"/>
-    </processQuery>
   </querySet>    
 
 </wdkModel>
