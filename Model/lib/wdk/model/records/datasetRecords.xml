@@ -175,6 +175,9 @@
         </linkAttribute>
       </attributeQueryRef>
 -->
+
+<!--   request_email_bcc contains providers names; used to come from presenters, now from studyaccess; 
+          comment out until we have mapped schemas (to a postgres acctdb)   -->
       <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute name="project_availability" internal="true"/>
         <columnAttribute name="is_public" internal="true"/>
@@ -193,7 +196,7 @@
          <columnAttribute name="request_protection_level" internal="true"/>
          <columnAttribute name="request_access_fields" internal="true"/>
          <columnAttribute name="request_email" internal="true"/>
-         <columnAttribute name="request_email_bcc" internal="true"/>
+        <!--  <columnAttribute name="request_email_bcc" internal="true"/>  -->
          <columnAttribute name="request_email_body" internal="true"/>
          <columnAttribute name="request_needs_approval" internal="true"/>
          <columnAttribute name="request_email_body_manager" internal="true"/>
@@ -245,6 +248,7 @@
         <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
         <columnAttribute name="ProjectName" displayName="Project name"/>
       </attributeQueryRef>
+<!--  comment out until we have mapped schemas (to a postgres acctdb)
 
       <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB">
         <columnAttribute name="total" displayName="Total requests" />
@@ -254,7 +258,7 @@
         <columnAttribute name="approved_number"  type="number"/>
         <columnAttribute name="percent_approved_number"  type="number"/>
       </attributeQueryRef>
-
+-->
       <attributeQueryRef ref="DatasetAttributes.All">
         <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
@@ -713,9 +717,10 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- request stats table -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+   <!--  comment out until we have mapped schemas (to a postgres acctdb) 
+
       <table name="AccessRequestStats" includeProjects="ClinEpiDB"
-             displayName="Data Access Statistics
-"
+             displayName="Data Access Statistics"
              queryRef="DatasetTables.AccessRequestStats">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
@@ -724,10 +729,12 @@
         <columnAttribute name="approved_percent" displayName="Percent approved"/>
 
       </table>
-
+-->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- request table -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+   <!--  comment out until we have mapped schemas (to a postgres acctdb)  
+
       <table name="AccessRequest" includeProjects="ClinEpiDB"
              displayName="Data Access Records"
              queryRef="DatasetTables.AccessRequest">
@@ -737,9 +744,8 @@
         <columnAttribute name="organization" displayName="Organization"/>
         <columnAttribute name="start_date" displayName="Date"/>
         <columnAttribute name="purpose" displayName="Purpose"/>
-
       </table>
-
+-->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Transcript type counts -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -1048,7 +1054,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          <column name="request_protection_level" columnType="string"/>
          <column name="request_access_fields" columnType="string"/>
          <column name="request_email" columnType="string"/>
-         <column name="request_email_bcc" columnType="string"/>
+         <!-- <column name="request_email_bcc" columnType="string"/>  -->
          <column name="request_email_body" columnType="string"/>
          <column name="request_needs_approval" columnType="string"/>
          <column name="request_email_body_manager" columnType="string"/>
@@ -1057,7 +1063,8 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          <column name="custom_download_ack" columnType="string"/>
             <sql>
             <![CDATA[
-              SELECT dts.*,bcc.request_email_bcc
+              SELECT dts.*
+                     -- ,bcc.request_email_bcc  --comment out until we have mapped schemas (to a postgres acctdb) 
               FROM (
                      SELECT pres.dataset_presenter_id as dataset_id
                        , dp.project_availability
@@ -1120,24 +1127,25 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                                 FROM apidbtuning.datasetproperty
                                 WHERE  property in ('projectAvailability','isPublic','studyAccess','daysForApproval','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBody','requestNeedsApproval', 'requestEmailBodyManager', 'requestEmailBodyRequester', 'customDownloadTab' , 'customDownloadAck')
                                   AND trim(value) is not null
-                                -- TEMPLATE_ANCHOR injectDatasetQuestions
+                                -- TEMPLATE_remove-from_DUAL_ANCHOR injectDatasetQuestions
 
-                                -- TEMPLATE_ANCHOR injectProjectAvailability
+                                -- TEMPLATE_remove-from_DUAL_ANCHOR injectProjectAvailability
                               ) pivot
                          GROUP BY dataset_presenter_id
                        ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
                        JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dp.dataset_presenter_id
                        WHERE dd.project_id = '@PROJECT_ID@'
-                   ) dts LEFT OUTER JOIN (
-                      SELECT dataset_id,
-                             string_agg(email, ',' ORDER BY email)  request_email_bcc
-                      FROM useraccounts.accounts@ACCT_DBLINK@ acc,
-                           studyaccess.providers@ACCT_DBLINK@ pr
-                      WHERE pr.user_id = acc.user_id
-                        AND is_manager = 1
-                      GROUP BY dataset_id
-                      ORDER BY dataset_id
-                   ) bcc ON dts.dataset_id = bcc.dataset_id
+                   ) dts 
+                      --LEFT OUTER JOIN (  --comment out until we have mapped schemas (to a postgres acctdb)
+                      --  SELECT dataset_id,
+                      --         string_agg(email, ',' ORDER BY email)  request_email_bcc
+                      --   FROM useraccounts.accounts@ACCT_DBLINK@ acc,
+                      --        studyaccess.providers@ACCT_DBLINK@ pr
+                      --  WHERE pr.user_id = acc.user_id
+                      --    AND is_manager = 1
+                      --  GROUP BY dataset_id
+                      --  ORDER BY dataset_id
+                      --) bcc ON dts.dataset_id = bcc.dataset_id
               UNION
               -- installed user datasets
               SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
@@ -1153,7 +1161,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                   , null as request_protection_level
                   , null as request_access_fields
                   , null as request_email
-                  , null as request_email_bcc
+                  --, null as request_email_bcc
                   , null as request_email_body
                   , null as request_needs_approval
                   , null as request_email_body_requester
@@ -1412,7 +1420,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
                , null
                , null
                , null
-               , null
+               , null::bigint
                , null
                , null
                , null
