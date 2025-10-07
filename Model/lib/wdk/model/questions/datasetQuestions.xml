@@ -58,7 +58,7 @@
     </question>
 
 
-    <question name="MapStudiesForToolbar"  includeProjects="EuPathDB,UniDB,VectorBase"
+    <question name="MapStudiesForToolbar"  includeProjects="UniDB,VectorBase"
       displayName="Studies to show in toolbar"
       shortDisplayName="Map Studies"
       fullAnswer="true"
@@ -248,7 +248,7 @@
       queryRef="DatasetIds.ByGeneList"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true" 
-      excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+      excludeProjects="MicrobiomeDB,ClinEpiDB">
       <description>
          Find RNA Seq data sets with high change of expression in the provided gene list.
       </description>
@@ -270,7 +270,7 @@
 
   </questionSet>
 
-  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+  <questionSet name="LegacyDatasetQuestions" displayName="Search for Data sets"  excludeProjects="MicrobiomeDB,ClinEpiDB">
 
     <question name="Datasets"
       displayName="All Legacy Datasets"

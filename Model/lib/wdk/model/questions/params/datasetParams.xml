@@ -76,7 +76,6 @@
                      prompt="Target List Cutoff Type"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Compare your strategy result to gene lists which match this criteria</help>
       <enumList>
         <enumValue default="true">
@@ -96,7 +95,6 @@
                      prompt="Use Orthology?"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Yes/No to use of orthology to match experiments</help>
       <enumList>
         <enumValue>
@@ -115,7 +113,6 @@
                      prompt="Target Enrichment Type"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Choose what enrichment type you would like to analyze</help>
       <enumList>
         <enumValue default="true">
@@ -212,7 +209,7 @@
         </sql>
     </sqlQuery>
 
-    <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
+    <sqlQuery name="extDbNames">
       <column name="internal"/>
       <column name="term"/>
       <sql>
@@ -223,7 +220,7 @@
     </sqlQuery>
 
 
-    <sqlQuery name="ids" excludeProjects="EuPathDB">
+    <sqlQuery name="ids" >
       <column name="internal"/>
       <column name="term"/>
       <sql>
