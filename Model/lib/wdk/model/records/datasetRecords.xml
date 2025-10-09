@@ -38,7 +38,7 @@
 
     <!-- ============== Internal class for tracking datasets from previous releases ===========  -->
 
-    <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+    <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB">
       <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
         <columnRef>dataset_presenter_id</columnRef>
         <columnRef>dataset_presenter_name</columnRef>
@@ -102,7 +102,7 @@
                 implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
         <property name="page_size">500</property>
       </reporter>
-      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results" excludeProjects="EuPathDB"
+      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results" 
                 implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
         <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
       </reporter>
@@ -264,8 +264,8 @@
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
         <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
         <columnAttribute name="short_display_name" internal="true"/>
-        <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB,EuPathDB"/>
-        <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"/>
+        <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB"/>
+        <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
         <columnAttribute name="description" displayName="Description" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>
@@ -307,20 +307,16 @@
         <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
+      <attributeQueryRef ref="DatasetAttributes.inApollo" excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
       </attributeQueryRef>
 
       <!--   <attributesList summary="organism_prefix,version,eupath_release,build_number_introduced,newcategory,pmids,summary,contact" -->
       <!-- TODO:  add back "organism_prefix" to summary here -->
       <attributesList summary="version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
-                      excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"/>
+                      excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
       <!-- TODO:  add back "organism_prefix" to summary here -->
-      <attributesList summary="project_id,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs"
-                      includeProjects="EuPathDB"/>
-
-
 
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
@@ -373,7 +369,7 @@
       <!-- =================================================================== -->
 <!-- TODO add back
       <table name="ExampleGraphs"
-             excludeProjects="EuPathDB,ClinEpiDB,MicrobiomeDB"
+             excludeProjects="ClinEpiDB,MicrobiomeDB"
              displayName="Example Graphs"
              queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
         <textAttribute name="thumbnail" displayName="Preview">
@@ -452,7 +448,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- clinepi versioning download files table -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,EuPathDB"
+        <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB"
              displayName="Data Versions"
              queryRef="DatasetTables.DownloadVersion">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -775,7 +771,7 @@
       <!-- Sequence type counts -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="SequenceTypeCounts"
-             excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB"
+             excludeProjects="MicrobiomeDB,ClinEpiDB"
              displayName="Sequence Types (Highest Level of Assembly)"
              queryRef="DatasetTables.SequenceTypeCounts">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -788,7 +784,7 @@
       <!-- Busco -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-      <table name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB"
+      <table name="Busco" excludeProjects="HostDB,MicrobiomeDB,ClinEpiDB"
              displayName="BUSCO"
              queryRef="DatasetTables.Busco">
         <description><![CDATA[<i>
@@ -811,7 +807,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <!-- Other data associated with genomes -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="GenomeAssociatedData"
-             excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
+             excludeProjects="MicrobiomeDB,ClinEpiDB"
              displayName="Explore other Categories of Data Associated with this Genome"
              queryRef="DatasetTables.GenomeAssociatedData">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -839,7 +835,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
       <table name="ExternalDatabases"
-             excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB"
+             excludeProjects="MicrobiomeDB,ClinEpiDB"
              displayName="External Databases Associated to Genome Annotation"
              queryRef="DatasetTables.ExternalDatabases">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
@@ -912,7 +908,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
   <!-- Attribute queries -->
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
-            isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+            isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB">
 
     <testRowCountSql>
       SELECT count(*) FROM apidb.legacydataset
@@ -996,7 +992,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
     <sqlQuery name="NewCategory" isCacheable="false">
       <column name="newcategory" columnType="string"/>
       <column name="dataset_id" columnType="string"/>
-      <sql excludeProjects="EuPathDB">
+      <sql>
         <![CDATA[
           select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
           from apidbtuning.datasetdatasource
@@ -1009,13 +1005,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
-         <sql includeProjects="EuPathDB">
-           <![CDATA[
-                       select dsp.dataset_presenter_id as dataset_id,
-                              coalesce(dsp.display_category, dsp.category) as newcategory
-                         from ApidbTuning.DatasetPresenter dsp
-                ]]>
-        </sql>
     </sqlQuery>
 
     <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
@@ -1452,19 +1441,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
           FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
-         <sql includeProjects="EuPathDB">
-            <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id
-                 , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
-                        when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'
-                        else dsp.display_name
-                   end as display_name
-            from apidbtuning.datasetpresenter dsp
-                 left join apidbtuning.organismattributes oa
-                     on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
-            ]]>
-         </sql>
-         <sql excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+         <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
           SELECT distinct dsp.dataset_presenter_id as dataset_id
                , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
@@ -1488,18 +1465,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="megabase_pairs"/>
       <column name="genecount"/>
 
-        <sql includeProjects="EuPathDB">
-          <![CDATA[
-          select dsp.dataset_presenter_id as dataset_id
-              , oa.megabps as megabase_pairs
-              , nullif(oa.genecount, 0) as genecount
-          from apidbtuning.datasetpresenter dsp
-              left join apidbtuning.organismattributes oa
-                  on dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
-          ]]>
-        </sql>
-
-        <sql excludeProjects="EuPathDB">
+        <sql>
         <![CDATA[
           SELECT distinct dsp.dataset_presenter_id as dataset_id
               , oa.megabps as megabase_pairs
@@ -1519,30 +1485,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         <column name="dataset_id"/>
         <column name="is_public"/>
 
-        <sql includeProjects="EuPathDB">
-          <![CDATA[
-          select dsp.dataset_presenter_id as dataset_id
-              , dp.is_public
-          from apidbtuning.datasetpresenter dsp,
-          (
-            select * from (
-              select dataset_presenter_id, property, value
-                from apidbtuning.datasetproperty
-                where property in ('isPublic')
-                  and trim(value) is not null
-            )
-            pivot
-            (
-              max(value)
-              for property in ('isPublic' as is_public)
-            )
-          ) dp
-
-          where dsp.dataset_presenter_id = dp.dataset_presenter_id(+)
-          ]]>
-        </sql>
-
-        <sql excludeProjects="EuPathDB">
+        <sql>
           <![CDATA[
             SELECT
               distinct dsp.dataset_presenter_id AS dataset_id
@@ -1579,35 +1522,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="genome_version"/>
       <column name="annotation_version"/>
       <column name="functional_annotation_version"/>
-        <sql includeProjects="EuPathDB">
-          <![CDATA[
-                   with all_versions as (
-                   select dh.dataset_presenter_id
-                       , bd.project
-                       , bd.release_number
-                       , dh.genome_version
-                       , dh.annotation_version
-                       , dh.functional_annotation_version
-                       , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.build_number desc) rn
-                     from ApidbTuning.DatasetHistory dh
-                       , ApidbTuning.EupathBuildDates bd
-                     where dh.build_number = bd.build_number
-                       and bd.project = '@PROJECT_ID@'
-                     order by dh.dataset_presenter_id
-                       , bd.build_number desc
-                ) ,
-                all_versions_filtered as (
-                  select * from all_versions where rn = 1
-                )
-                select dsp.dataset_presenter_id as dataset_id
-                  , av.genome_version
-                  , av.annotation_version
-                  , av.functional_annotation_version
-                from all_versions_filtered av, apidbtuning.datasetpresenter dsp
-                where dsp.dataset_presenter_id = av.dataset_presenter_id (+)
-          ]]>
-        </sql>
-        <sql excludeProjects="EuPathDB">
+        <sql>
         <![CDATA[
           WITH all_versions AS (
             SELECT dh.dataset_presenter_id
@@ -1658,7 +1573,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="eupath_release" sortingColumn="build_number_introduced" columnType="string"/>
       <column name="pmids" columnType="string"/>
       <column name="pmids_download" columnType="string"/>
-      <sql excludeProjects="EuPathDB">
+      <sql>
         <![CDATA[
           WITH allpubs AS (
             SELECT dp.dataset_presenter_id
@@ -1734,79 +1649,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         ]]>
       </sql>
 
-      <sql includeProjects="EuPathDB">
-        <![CDATA[
-          WITH allpubs AS (
-            SELECT dp.dataset_presenter_id
-              , CASE
-                  WHEN dp.pmid IS NULL THEN '<a href="' || dh.url ||'">' || dh.text || '</a>'
-                  ELSE '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>'
-                END as publink
-              , dp.pmid
-            FROM apidbtuning.datasetPublication dp
-              LEFT JOIN apidbtuning.datasethyperlink dh
-                ON dp.dataset_presenter_id = dh.dataset_presenter_id
-                   AND dh.isPublication = 'Y'
-          )
-          SELECT dsp.dataset_presenter_id as dataset_id,
-                 dsp.name as dataset_name, dsp.dataset_name_pattern,
-                 --dsp.display_name,
-                 ds.version,
-                 dsp.short_display_name, dsp.description,
-                 coalesce(dsp.summary, dsp.description) as summary,
-                 dsp.protocol, dsp.usage,
-                 ds.type,
-                 ds.is_species_scope,
-                 dsp.build_number_introduced,
-                 coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
-                 pubs.pmids,
-                 pubs.pmids_download
-          FROM apidbTuning.DatasetPresenter dsp
-            LEFT JOIN apidb.datasource ds ON dsp.name = ds.name
-            LEFT JOIN (
-              SELECT dataset_presenter_id
-                   , string_agg(publink, ', ' ORDER BY publink) as pmids
-                   , string_agg(pmid, ', ' ORDER BY pmid) as pmids_download
-              FROM allpubs
-              GROUP by dataset_presenter_id
-            ) pubs ON dsp.dataset_presenter_id = pubs.dataset_presenter_id
-            LEFT JOIN (
-              SELECT dataset_presenter_id,
-                     'VEuPathDB rel. ' || release_number || ', ' || release_date as eupath_release
-              FROM (
-                SELECT dh.dataset_presenter_id, dh.build_number
-                  , to_char(ebd.release_date,'YYYY-MON-DD') as release_date
-                  , ebd.release_number, ebd.project
-                  , row_number() over (PARTITION BY dh.dataset_presenter_id ORDER BY ebd.release_number desc) rn
-                FROM apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
-                WHERE dh.build_number = ebd.build_number
-                  AND ebd.project = '@PROJECT_ID@'
-              ) t
-              WHERE rn = 1
-            ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
-            LEFT JOIN (
-              SELECT build_number, '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
-              FROM apidbTuning.EupathBuildDates
-              WHERE project = '@PROJECT_ID@'
-            ) introduced ON dsp.build_number_introduced = introduced.build_number
-          WHERE NOT dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
-          UNION ALL
-          SELECT dsp.dataset_presenter_id as dataset_id,
-                 dsp.name as dataset_name, dsp.dataset_name_pattern,
-                 '' as version,
-                 dsp.short_display_name, dsp.description,
-                 coalesce(dsp.summary, dsp.description) as summary,
-                 dsp.protocol, dsp.usage,
-                 dsp.type,
-                 dsp.is_species_scope,
-                 dsp.build_number_introduced,
-                 '' as eupath_release,
-                 '' as pmids,
-                 '' as pmids_download
-          FROM apidbTuning.DatasetPresenter dsp
-          WHERE dsp.name IN ('taxonomy_RSRC','enzymeDB_RSRC','PDBProteinSequences_RSRC','NRDB_RSRC','GO_RSRC')
-        ]]>
-      </sql>
     </sqlQuery>
 
      <sqlQuery name="OwnerVisibility"  isCacheable="false">
@@ -1814,16 +1656,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
          <column name="owner"/>
          <column name="community"/>
 
-         <sql includeProjects="EuPathDB">
-            <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id,
-                   null as owner,
-                   null as community
-            from apidbTuning.DatasetPresenter dsp
-            ]]>
-         </sql>
-
-         <sql excludeProjects="EuPathDB">
+         <sql>
             <![CDATA[
             select dsp.dataset_presenter_id as dataset_id,
                    null as owner,
@@ -1844,7 +1677,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
       <column name="caveat"/>
       <column name="acknowledgement"/>
       <column name="release_policy"/>
-         <sql excludeProjects="EuPathDB">
+         <sql>
             <![CDATA[
             select distinct dsp.dataset_presenter_id as dataset_id,
                     dsp.caveat, dsp.acknowledgement,
@@ -1860,16 +1693,6 @@ Based on evolutionarily informed expectations of gene content of near-universal 
             -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
             ]]>
          </sql>
-         <sql includeProjects="EuPathDB">
-        <![CDATA[
-          SELECT distinct dsp.dataset_presenter_id as dataset_id,
-                  dsp.caveat, dsp.acknowledgement,
-                 dsp.release_policy
-          FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-          WHERE dd.project_id = '@PROJECT_ID@'
-	  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
-        ]]>
-      </sql>
     </sqlQuery>
 
 
@@ -1914,24 +1737,7 @@ Based on evolutionarily informed expectations of gene content of near-universal 
         ]]>
       </sql>
 
-            <sql includeProjects="EuPathDB">
-            <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id,
-                   CASE WHEN  dsc.name is not null THEN dsc.name
-                        WHEN dsc.affiliation is not null THEN dsc.affiliation
-                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
-                   END as contact,
-                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
-                        ELSE   dsc.affiliation END as institution,
-                   dsc.email as email,
-                   coalesce(dsp.short_attribution, dsc.name) as short_attribution
-            from ApidbTuning.DatasetPresenter dsp LEFT JOIN ApidbTuning.DatasetContact dsc
-            ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
-            WHERE dsc.is_primary_contact = 1
- ]]>
-            </sql>
-
-            <sql excludeProjects="EuPathDB,ClinEpiDB,MicrobiomeDB">
+            <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
         <![CDATA[
           SELECT distinct dsp.dataset_presenter_id as dataset_id,
                  CASE WHEN  dsc.name is not null THEN dsc.name
@@ -2246,7 +2052,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,EuPathDB">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB">
       <column name="dataset_name"/>
       <column name="dataset_id"/>
       <column name="release_date"/>
@@ -2342,7 +2148,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="source_id"/>
       <column name="strain"/>
       <column name="contact_name"/>
-      <sql excludeProjects="Piroplasma,EuPathDB">
+      <sql excludeProjects="Piroplasma">
         <![CDATA[
           SELECT distinct ia.source_id,
             ia.project_id,
@@ -2365,19 +2171,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           GROUP BY dd.dataset_presenter_id, ia.source_id, ia.project_id, ds.name, ia.strain
         ]]>
       </sql>
-      <sql includeProjects="EuPathDB">
-        <![CDATA[
-          SELECT '' as source_id,
-            '' as project_id,
-            name as dataset_name,
-            dataset_presenter_id as dataset_id,
-            '' as strain,
-            '' as  contact_name
-          FROM ApidbTuning.DatasetPresenter ds
-          WHERE ds.name = 'no isolates for portal'
-        ]]>
-      </sql>
-
     </sqlQuery>
 
     <sqlQuery name="HyperLinks"  isCacheable='false'>
@@ -2408,7 +2201,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="target_type"/>
       <column name="target_name"/>
       <column name="link_type"/>
-      <sql excludeProjects="EuPathDB">
+      <sql>
         <![CDATA[
           WITH projectQuestionLinks AS (
               SELECT dsp.dataset_presenter_id as dataset_id
@@ -2459,22 +2252,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 	    ]]>
       </sql>
 
-      <sql includeProjects="EuPathDB">
-        <![CDATA[
-          SELECT dsp.dataset_presenter_id as dataset_id
-            , dsp.name as dataset_name
-            , '' as text
-            , '' as url
-            , '' as description
-            , ref.record_type
-            , ref.target_type
-            , replace (ref.target_name, ':', '') as target_name
-            , 'question' as link_type
-          FROM ApidbTuning.datasetmodelref ref, ApidbTuning.DatasetPresenter dsp
-          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
-          ORDER BY ref.record_type, ref.target_name
-        ]]>
-      </sql>
     </sqlQuery>
 
     <sqlQuery name="Version"  isCacheable='false'>
@@ -2483,7 +2260,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="version"/>
       <column name="organism"/>
       <column name="project_id"/>
-      <sql excludeProjects="EuPathDB">
+      <sql >
         <![CDATA[
           WITH TaxonScientificName AS (
             SELECT taxon_id,name
@@ -2505,26 +2282,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             ORDER BY dd.name
           ) t
         ]]>
-      </sql>
-      <sql includeProjects="EuPathDB">
-        WITH TaxonScientificName AS (
-          SELECT component_taxon_id  as taxon_id, organism_name as name
-          FROM apidbtuning.organismattributes
-              ) SELECT dataset_name, dataset_id,organism, version, project_id
-        FROM (
-          SELECT distinct dd.name as dataset_name, ds.project_id,
-            dd.dataset_presenter_id as dataset_id,
-            case when dd.taxon_id = 0
-            then 'ALL'
-            else tn.name
-            end as organism,
-            replace (ds.version, '_gus4','') as version
-          FROM apidb.datasource ds
-            INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
-            LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
-          WHERE not ds.taxon_id is null
-          ORDER BY dd.name
-        ) t
       </sql>
     </sqlQuery>
 
@@ -2550,7 +2307,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       <column name="template"/>
 
       <!-- force no plots on dataset record while avoiding datasetexamplesourceid for mbio, clinepi-->
-      <sql includeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB">
+      <sql includeProjects="MicrobiomeDB, ClinEpiDB">
         <![CDATA[
           SELECT '' as source_id,
             '' as project_id,
@@ -2578,7 +2335,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
         ]]>
       </sql>
 
-      <sql excludeProjects="EuPathDB, MicrobiomeDB, ClinEpiDB">
+      <sql excludeProjects="MicrobiomeDB, ClinEpiDB">
         <![CDATA[
           SELECT g.*, CASE lower(is_graph_custom) WHEN 'false' THEN 1 ELSE 0 END as template, regexp_substr(graph_ids, '[^,]*') as default_graph_id
           FROM (
@@ -2663,12 +2420,12 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="SequenceTypeCounts" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
+    <sqlQuery name="SequenceTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB">
       <column name="dataset_id"/>
       <column name="sequence_type"/>
       <column name="sequence_count"/>
 
-      <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         SELECT distinct dsp.dataset_presenter_id as dataset_id
           , sa.sequence_type
           , count(*) as sequence_count
@@ -2687,12 +2444,12 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
 
-    <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+    <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB">
       <column name="dataset_id"/>
       <column name="category"/>
       <column name="dataset_count"/>
       <column name="organism"/>
-      <sql excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
           SELECT dataset_id, category, organism, count(*) AS dataset_count
           FROM
@@ -2722,11 +2479,11 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="ExternalDatabases" excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
+    <sqlQuery name="ExternalDatabases" excludeProjects="MicrobiomeDB,ClinEpiDB">
       <column name="dataset_id"/>
       <column name="name"/>
       <column name="id_url"/>
-      <sql excludeProjects="EuPathDB,MicrobiomeDB,ClinEpiDB">
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
           SELECT DISTINCT dataset_id, name, id_url
           FROM
@@ -2806,7 +2563,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
 
-      <sqlQuery name="Busco" excludeProjects="EuPathDB,HostDB,MicrobiomeDB,ClinEpiDB">
+      <sqlQuery name="Busco" excludeProjects="HostDB,MicrobiomeDB,ClinEpiDB">
         <column name="dataset_id"/>
         <column name="sequence_type"/>
         <column name="c_score"/>

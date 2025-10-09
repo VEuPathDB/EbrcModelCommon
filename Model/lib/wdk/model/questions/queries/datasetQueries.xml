@@ -77,9 +77,9 @@
     </sqlQuery>
 
 
-    <sqlQuery name="MapStudiesForToolbar" includeProjects="EuPathDB,UniDB,VectorBase">
+    <sqlQuery name="MapStudiesForToolbar" includeProjects="UniDB,VectorBase">
       <column name="dataset_id"/>
-        <sql excludeProjects="EuPathDB,UniDB">
+        <sql excludeProjects="UniDB">
         <![CDATA[
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop, apidbtuning.datasetdatasource dd
@@ -100,7 +100,7 @@
       </sql>
 
 
-       <sql includeProjects="EuPathDB,UniDB">
+       <sql includeProjects="UniDB">
           <![CDATA[
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
@@ -307,8 +307,7 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+    <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
       <paramRef ref="sharedParams.text_expression"/>
       <paramRef ref="sharedParams.document_type" default="dataset"/>
       <paramRef ref="sharedParams.text_fields"/>
@@ -321,9 +320,7 @@
       <!-- <wsColumn name="fields_matched" width="500"/> -->
     </processQuery>
 
-    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"
-                  doNotTest="true">
+    <processQuery name="ByGeneList" excludeProjects="MicrobiomeDB,ClinEpiDB"                  processName="org.apidb.apicomplexa.wsfplugin.listcomparison.ListComparisonPlugin"                  doNotTest="true">
       <paramRef ref="sharedParams.ds_gene_ids"/>
       <paramRef ref="datasetParams.datasetSelection"/>
       <paramRef ref="datasetParams.enrichmentType"/>
@@ -420,7 +417,7 @@
 
 
   <querySet name="LegacyDatasetIds" queryType="id" isCacheable="false"
-            excludeProjects="MicrobiomeDB,ClinEpiDB,EuPathDB">
+            excludeProjects="MicrobiomeDB,ClinEpiDB">
 
     <sqlQuery name="AllDatasets">
       <column name="dataset_presenter_id"/>
@@ -435,12 +432,6 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="LegacyDatasetIds" includeProjects="EuPathDB"
-                  processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin">
-      <wsColumn name="dataset_presenter_id" width="50" wsName="dataset_presenter_id"/>
-      <wsColumn name="dataset_presenter_name" width="50" wsName="dataset_presenter_name"/>
-      <wsColumn name="project_name" width="20"/>
-    </processQuery>
 
 
   </querySet>
