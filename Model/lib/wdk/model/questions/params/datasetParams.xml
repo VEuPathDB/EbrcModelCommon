@@ -76,7 +76,6 @@
                      prompt="Target List Cutoff Type"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Compare your strategy result to gene lists which match this criteria</help>
       <enumList>
         <enumValue default="true">
@@ -96,7 +95,6 @@
                      prompt="Use Orthology?"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Yes/No to use of orthology to match experiments</help>
       <enumList>
         <enumValue>
@@ -115,7 +113,6 @@
                      prompt="Target Enrichment Type"
                      multiPick="false"
                      quote="false">
-      <noTranslation value="true" includeProjects="EuPathDB" />
       <help>Choose what enrichment type you would like to analyze</help>
       <enumList>
         <enumValue default="true">
@@ -179,10 +176,9 @@
       <column name="term"/>
       <sql>
        <![CDATA[
-          SELECT distinct organism_name as term, oa.COMPONENT_TAXON_ID as internal
-          FROM apidbtuning.organismattributes oa
-          , apidbtuning.datasetnametaxon dnt
-          WHERE dnt.taxon_id = oa.COMPONENT_TAXON_ID
+          SELECT distinct organism_name as term, oa.component_taxon_id as internal
+          FROM apidbtuning.organismAttributes oa, apidbtuning.datasetDatasource dd
+          WHERE dd.taxon_id = oa.component_taxon_id
           UNION
           SELECT 'any', -1
         ]]>
@@ -213,7 +209,7 @@
         </sql>
     </sqlQuery>
 
-    <sqlQuery name="extDbNames" excludeProjects="EuPathDB">
+    <sqlQuery name="extDbNames">
       <column name="internal"/>
       <column name="term"/>
       <sql>
@@ -223,26 +219,18 @@
       </sql>
     </sqlQuery>
 
-    <processQuery name="extDbNames" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-      <wsColumn name="internal" width="200"/>
-      <wsColumn name="term" width="200"/>
-    </processQuery>
 
-    <sqlQuery name="ids" excludeProjects="EuPathDB">
+    <sqlQuery name="ids" >
       <column name="internal"/>
       <column name="term"/>
       <sql>
         <![CDATA[
           SELECT DISTINCT dataset_presenter_id as term, dataset_presenter_id as internal
-          FROM APIDBTUNING.datasetnametaxon
+          FROM apidbtuning.DatasetDatasource
         ]]>
       </sql>
     </sqlQuery>
 
-    <processQuery name="ids" processName="org.apidb.apicomplexa.wsfplugin.apifed.ApiFedPlugin" includeProjects="EuPathDB">
-      <wsColumn name="term" width="200"/>
-      <wsColumn name="internal" width="200"/>
-    </processQuery>
   </querySet>    
 
 </wdkModel>

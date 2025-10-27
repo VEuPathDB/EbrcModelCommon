@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tuningConfig>
 
+  <import file="orthomclTuningManager.xml"/>
+
   <!-- EDA table -->	
   <tuningTable name="StudyIdDatasetId" prefixEnabled="false">
     <comment>EDA Study ID, Dataset presenter ID (hash)
@@ -303,8 +305,7 @@
   </tuningTable>
 
 
-<!--  <tuningTable name="DatasetPresenter" alwaysUpdate="true">-->
-  <tuningTable name="DatasetPresenter">
+  <tuningTable name="DatasetPresenter" alwaysUpdate="true">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <externalDependency name="core.ProjectInfo"/>
     <externalDependency name="sres.ExternalDatabase"/>
@@ -333,24 +334,26 @@
     <comment> Stores text associated with each dataset. Used by dataset queries.
       </comment>
     <internalDependency name="DatasetPresenter"/>
+
+    <!-- TODO:  add back category here -->
     <sql>
       <![CDATA[
         CREATE TABLE DatasetDetail&1 AS
         SELECT dataset_presenter_id,
-          name || ' ' || category || ' ' || usage || ' ' ||
-          caveat || ' ' || acknowledgement || ' ' || type || ' ' || subtype
+          name  || ' ' || usage || ' ' ||
+          caveat || ' ' || acknowledgement 
           ||' ' || summary || ' ' || description || ' ' || contact || ' ' ||
           institution || ' ' || pubmed_id || ' ' || citation as search_string
         FROM (
           SELECT
             sub.dataset_presenter_id as dataset_presenter_id,
             sub.name as name,
-            sub.category as category,
+            --sub.category as category,
             sub.usage as usage,
             sub.caveat as caveat,
             sub.acknowledgement as acknowledgement,
-            sub.type as type,
-            sub.subtype as subtype,
+            --sub.type as type,
+            --sub.subtype as subtype,
             sub.contact,
             sub.institution,
             sub.pubmed_id,
@@ -362,12 +365,12 @@
             SELECT DISTINCT
               dp.dataset_presenter_id as dataset_presenter_id,
               dp.display_name as name,
-              dp.display_category as category,
+              --dp.display_category as category,
               dp.usage as usage,
               dp.caveat as caveat,
               dp.acknowledgement as acknowledgement,
-              dp.type as type,
-              dp.subtype as subtype,
+              --dp.type as type,
+              --dp.subtype as subtype,
               dc.name as contact,
               dc.affiliation as institution,
               string_agg(dpub.pmid, ' ' ORDER BY dpub.pmid) as pubmed_id,
@@ -382,8 +385,8 @@
             WHERE dp.dataset_presenter_id = dc.dataset_presenter_id
               AND dp.dataset_presenter_id = dpub.dataset_presenter_id
               AND dc.is_primary_contact = true
-            GROUP by dp.dataset_presenter_id, dp.display_name,dp.display_category,
-                     dp.usage,dp.caveat,dp.acknowledgement,dp.type,dp.subtype,dc.name,
+            GROUP by dp.dataset_presenter_id, dp.display_name,
+                     dp.usage,dp.caveat,dp.acknowledgement,dc.name,
                      dc.affiliation
           ) sub
           WHERE dp.dataset_presenter_id = sub.dataset_presenter_id

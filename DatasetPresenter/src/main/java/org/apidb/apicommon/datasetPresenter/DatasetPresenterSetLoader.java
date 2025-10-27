@@ -329,8 +329,8 @@ public class DatasetPresenterSetLoader {
 
         loadDatasetPresenter(datasetPresenterId, datasetFullDigest, datasetPresenter, presenterStmt);
 
-        String type = datasetPresenter.getType();
-        String subtype = datasetPresenter.getSubtype();
+        //String type = datasetPresenter.getType();
+        //String subtype = datasetPresenter.getSubtype();
 
         for (Contact contact : datasetPresenter.getContacts(allContacts)) {
           loadContact(datasetPresenterId, contact, contactStmt);
