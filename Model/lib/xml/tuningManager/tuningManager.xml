@@ -623,7 +623,7 @@
         UNION
           SELECT protocol_app_node_id, 'ApiDB::CrisprPhenotype' as result_table from study.ProtocolAppNode
           WHERE protocol_app_node_id in (select protocol_app_node_id FROM apidb.crisprphenotype)
-        ) r, webready.panextdbrls panExtDbRls
+        ) r, webready.PANExtDbRls_p panExtDbRls
         WHERE r.pan_id = panExtDbRls.pan_id
           AND (panExtDbRls.dataset_name = '&filterValue' or length('&filterValue') = 0)
       ]]>
