@@ -6623,21 +6623,22 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
   <!-- The bedgraph file for this class needs a non-zero value for the 4th column -->
-  <datasetClass class="createGffBigWig" category="" datasetFileHint=""> 
+  <datasetClass class="createBigWigFromBedgraph" category="" datasetFileHint=""> 
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="name">&name;</prop>
     <prop name="version">&version;</prop>
+    <prop name="hasAncillaryGFF">true or false</prop>
 
     <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
 
-    <datasetLoader datasetName="${organismAbbrev}_${name}_RSRC" version="${version}"
+    <datasetLoader datasetName="${organismAbbrev}_${name}_WebService_RSRC" version="${version}"
               plugin="ApiCommonData::Load::Plugin::LoadNothing"
               type=""
               scope="organism"
               organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/gff/${name}/${version}/final">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/bedgraph/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
