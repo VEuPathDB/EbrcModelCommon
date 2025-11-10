@@ -7070,4 +7070,31 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+
+  <datasetClass class="patchOrganism" category="" datasetFileHint="">
+    <purpose>patch genome and annotation</purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="patchOrganism.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${name}_patchOrganism_RSRC"
+	      version="${version}"
+	      plugin="ApiCommonData::Load::Plugin::PatchGenomeAndAnnotation"
+              scope="organism"
+              type=""
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/organismPatch/${name}/${version}/final/patch_organism.psql">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <pluginArgs>--psqlFile @@dataDir@@/patch_organism.psql  --organismAbbrev ${organismAbbrev}</pluginArgs>
+
+    </datasetLoader>
+  </datasetClass>
+
 </datasetClasses>
