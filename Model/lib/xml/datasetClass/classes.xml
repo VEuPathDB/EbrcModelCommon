@@ -4605,6 +4605,48 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="EntrezGene" category="" datasetFileHint="">
+    <purpose></purpose>
+    <datasetLoader datasetName="EntrezGene_RSRC" version="TODAY"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   scope="global"
+                   type="dbxref"
+                   >
+
+      <wgetArgs url="ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/gene_info.gz</wgetArgs>
+      <unpack>importGeneInfoToSqlite @@dataDir@@/</unpack>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="Gene2Pubmed" category="" datasetFileHint="">
+    <purpose></purpose>
+    <datasetLoader datasetName="Gene2Pubmed_RSRC" version="TODAY"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   scope="global"
+                   type="dbxref"
+                   >
+
+      <wgetArgs url="ftp://ftp.ncbi.nih.gov/gene/DATA/gene2pubmed.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/gene2pubmed.gz</wgetArgs>
+      <unpack>importGene2PubmedToSqlite @@dataDir@@/</unpack>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="UniprotIDs" category="" datasetFileHint="">
+    <purpose></purpose>
+    <datasetLoader datasetName="UniprotIDs_RSRC" version="TODAY"
+                   plugin="ApiCommonData::Load::Plugin::LoadNothing"
+                   scope="global"
+                   type="dbxref"
+                   >
+
+      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/idmapping_selected.tab.gz</wgetArgs>
+      <unpack>importIdMappingToSqlite @@dataDir@@/</unpack>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
   <datasetClass class="blatAlignmentQuality" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
