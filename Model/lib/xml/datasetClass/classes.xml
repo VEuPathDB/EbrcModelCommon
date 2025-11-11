@@ -4607,13 +4607,19 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="EntrezGene" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="version">&version;</prop>
     <datasetLoader datasetName="EntrezGene_RSRC" version="TODAY"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
                    >
 
-      <wgetArgs url="ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/gene_info.gz</wgetArgs>
+      <manualGet fileOrDir="common/alias/gene2Entrez/${version}/final/gene_info.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+
       <unpack>importGeneInfoToSqlite @@dataDir@@/</unpack>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
@@ -4621,13 +4627,20 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="Gene2Pubmed" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="version">&version;</prop>
+    
     <datasetLoader datasetName="Gene2Pubmed_RSRC" version="TODAY"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
                    >
 
-      <wgetArgs url="ftp://ftp.ncbi.nih.gov/gene/DATA/gene2pubmed.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/gene2pubmed.gz</wgetArgs>
+      <manualGet fileOrDir="common/dbxref/gene2PubmedFromNcbi/${version}/final/gene2pubmed.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+
       <unpack>importGene2PubmedToSqlite @@dataDir@@/</unpack>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
@@ -4635,13 +4648,19 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   <datasetClass class="UniprotIDs" category="" datasetFileHint="">
     <purpose></purpose>
+    <prop name="version">&version;</prop>
     <datasetLoader datasetName="UniprotIDs_RSRC" version="TODAY"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
                    >
 
-      <wgetArgs url="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz">--tries=5 --no-directories --no-host-directories --output-document=@@dataDir@@/idmapping_selected.tab.gz</wgetArgs>
+      <manualGet fileOrDir="common/dbxref/gene2Uniprot/${version}/final/idmapping_selected.tab.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+
       <unpack>importIdMappingToSqlite @@dataDir@@/</unpack>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
