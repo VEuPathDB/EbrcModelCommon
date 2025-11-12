@@ -1783,76 +1783,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass> 
 
-  <datasetClass class="dbxref_gene2PubmedFromNcbi" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
-    <prop name="genomeVersion"/>
-    <prop name="version">&version;</prop>
-
-    <graphTemplateFile name="dbXRefs.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_dbxref_gene2PubmedFromNcbi_RSRC"
-	      version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertDBxRefs"
-              scope="organism"
-              type="dbxref"
-              externalDbIdUrlUseSecondaryId="false"
-              organismAbbrev="${organismAbbrev}">
-
-      <externalDbIdUrl><![CDATA[http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=PureSearch&db=pubmed&term=EXTERNAL_ID_HERE[UID]]]></externalDbIdUrl>
-
-      <manualGet fileOrDir="common/dbxref/gene2PubmedFromNcbi/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <unpack>ncbiGenePubmed2DbRefsFile --gene2pubmedFile @@dataDir@@/final/gene2pubmed.gz --geneInfoFile @@dataDir@@/final/gene_info.gz --taxId ${ncbiTaxonId} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2PubmedFromNcbi.tab</unpack>
-
-      <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
-
-      <unpack>rm -f @@dataDir@@/gene2pubmed.gz</unpack>
-
-      <pluginArgs>--DbRefMappingFile @@dataDir@@/gene2PubmedFromNcbi.tab --extDbName %DATASET_NAME% --extDbReleaseNumber %DATASET_VERSION% --columnSpec "primary_identifier,secondary_identifier" --tableName "DbRefNAFeature"  --viewName GeneFeature --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}'  --organismAbbrev ${organismAbbrev}</pluginArgs>
-
-    </datasetLoader>
-  </datasetClass>
 
 
-  <!-- depends on gene2Entrez -->
-  <datasetClass class="dbxref_gene2Uniprot" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
-    <prop name="genomeVersion"/>
-    <prop name="version">&version;</prop>
-
-    <graphTemplateFile name="dbXRefs.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_dbxref_gene2Uniprot_RSRC"
-	      version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertDBxRefs"
-              externalDbIdType="alternate id"
-              scope="organism"
-              type="dbxref"
-              externalDbIdUrlUseSecondaryId="false"
-              organismAbbrev="${organismAbbrev}">
-
-      <externalDbIdUrl><![CDATA[http://www.uniprot.org/uniprot/EXTERNAL_ID_HERE]]></externalDbIdUrl>
-
-      <manualGet fileOrDir="common/dbxref/gene2Uniprot/${version}/final/idmapping_selected.tab.gz">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <!-- need to use the gene2entrez file to get map of NCBI ids -->
-      <unpack>uniprotIdMap2DbRefsFile @@dataDir@@/idmapping_selected.tab.gz @@dataDir@@/../${organismAbbrev}_dbxref_gene2Entrez_RSRC/gene2entrez.tab @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2uniprot.tab</unpack>
-
-      <pluginArgs>--DbRefMappingFile @@dataDir@@/gene2uniprot.tab --extDbName %DATASET_NAME% --extDbReleaseNumber %DATASET_VERSION% --columnSpec "primary_identifier,secondary_identifier,remark" --tableName "DbRefNAFeature"  --viewName GeneFeature --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}'  --organismAbbrev ${organismAbbrev}</pluginArgs>
-    </datasetLoader>
-  </datasetClass>
 
   <!-- Category: gene aliases -->
 
@@ -1892,41 +1824,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!-- ONLY INCLUDE IF THIS ORGANISM'S GENOME IS IN GENBANK -->
-  <datasetClass class="dbxref_gene2Entrez" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="ncbiTaxonId">&ncbiTaxonId;</prop>
-    <prop name="genomeVersion"/>
-    <prop name="version">&version;</prop>
-
-    <graphTemplateFile name="aliases.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_dbxref_gene2Entrez_RSRC"
-	      version="${version}"
-	      plugin="ApiCommonData::Load::Plugin::InsertDBxRefs"
-              externalDbIdType="alternate id"
-              externalDbIdIsAnAlias="true"
-              externalDbIdUrlUseSecondaryId="false"
-              scope="organism"
-              type="dbxref"
-              organismAbbrev="${organismAbbrev}">
-
-      <externalDbIdUrl><![CDATA[http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=EXTERNAL_ID_HERE]]></externalDbIdUrl>
-      <manualGet fileOrDir="common/alias/gene2Entrez/${version}/final/gene_info.gz">
-        <dir name="final">
-        </dir>
-      </manualGet>
-
-      <unpack>ncbiGeneInfo2DbRefsFile @@dataDir@@/gene_info.gz ${ncbiTaxonId} speciesTaxa @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config > @@dataDir@@/gene2entrez.tab</unpack>
-
-      <unpack>rm -f @@dataDir@@/gene_info.gz</unpack>
-
-      <pluginArgs>--DbRefMappingFile @@dataDir@@/gene2entrez.tab --extDbName %DATASET_NAME% --extDbReleaseNumber %DATASET_VERSION% --columnSpec "primary_identifier,secondary_identifier,remark" --tableName "DbRefNAFeature"  --viewName GeneFeature --geneExternalDatabaseSpec '${organismAbbrev}_primary_genome_RSRC|${genomeVersion}' --organismAbbrev ${organismAbbrev}</pluginArgs>
-
-    </datasetLoader>
-  </datasetClass>
 
 
   <!-- Category: SNPs -->
