@@ -4608,7 +4608,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="EntrezGene" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <datasetLoader datasetName="EntrezGene_RSRC" version="TODAY"
+    <datasetLoader datasetName="EntrezGene_RSRC" version="${version}"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
@@ -4629,7 +4629,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <purpose></purpose>
     <prop name="version">&version;</prop>
     
-    <datasetLoader datasetName="Gene2Pubmed_RSRC" version="TODAY"
+    <datasetLoader datasetName="Gene2Pubmed_RSRC" version="${version}"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
@@ -4649,7 +4649,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="UniprotIDs" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="version">&version;</prop>
-    <datasetLoader datasetName="UniprotIDs_RSRC" version="TODAY"
+    <datasetLoader datasetName="UniprotIDs_RSRC" version="${version}"
                    plugin="ApiCommonData::Load::Plugin::LoadNothing"
                    scope="global"
                    type="dbxref"
@@ -5131,7 +5131,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 	  <dir name="final">
 	  </dir>
 	</manualGet>
-	<pluginArgs>--file @@dataDir@@/geneName.txt --geneNameDbName '${organismAbbrev}_primary_genome_RSRC' --geneNameDbVer '${genomeVersion}'</pluginArgs>
+	<pluginArgs>--file @@dataDir@@/geneName.txt --geneNameDbName '${organismAbbrev}_primary_genome_RSRC' --geneNameDbVer '${genomeVersion}' --isPreferred</pluginArgs>
       </datasetLoader>
     </datasetClass>
     
