@@ -2930,20 +2930,19 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   <datasetClass class="PhenotypeEDA" category="phenotype" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-    <graphTemplateFile name="organismSpecificMisc.xml"/>
+    <graphTemplateFile name="globalEDA.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              datasetName="${organismAbbrev}_${name}_Phenotype_RSRC"
+              datasetName="${projectName}_${name}_Phenotype_RSRC"
               version="${version}"
-              scope="organism"
+              scope="global"
               type="phenotype"
-              organismAbbrev="${organismAbbrev}">
+              >
 
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/phenotype/${name}/${version}/final">
+      <manualGet fileOrDir="common/phenotype/${projectName}/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
