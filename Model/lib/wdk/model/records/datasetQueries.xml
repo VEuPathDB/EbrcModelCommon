@@ -1,0 +1,1069 @@
+<wdkModel>
+
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Attribute queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="LegacyDatasetAttributes" queryType="attribute" doNotTest="true"
+            isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB">
+
+    <testRowCountSql>
+      SELECT count(*) FROM apidb.legacydataset
+    </testRowCountSql>
+
+    <sqlQuery name="DatasetName" isCacheable="false">
+      <column name="dataset_presenter_name"/>
+      <column name="dataset_presenter_id"/>
+      <column name="project_name"/>
+      <sql>
+        SELECT dataset_presenter_id, dataset_presenter_name, project_name
+        FROM apidb.legacydataset
+      </sql>
+    </sqlQuery>
+
+  </querySet>
+
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Attribute queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="DatasetAttributes" queryType="attribute" doNotTest="true"
+            isCacheable='false'>
+
+    <testRowCountSql excludeProjects="ClinEpiDB,MicrobiomeDB">
+      SELECT count(*) FROM ApidbTuning.DatasetPresenter
+    </testRowCountSql>
+
+      <testRowCountSql includeProjects="ClinEpiDB,MicrobiomeDB">
+        SELECT count(*) FROM (
+          SELECT distinct dataset_presenter_id
+          FROM apidbtuning.datasetdatasource
+          WHERE project_id = '@PROJECT_ID@'
+        UNION
+          SELECT d.user_dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        );
+    </testRowCountSql>
+
+    <sqlQuery name="EdaStudyMapping" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+      <column name="dataset_id" columnType="string"/>
+      <column name="eda_study_id" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT
+              distinct dataset_presenter_id as dataset_id,
+              study_stable_id as eda_study_id
+          FROM apidbtuning.datasetdatasource
+            LEFT JOIN apidbtuning.studyiddatasetid ON dataset_id = dataset_presenter_id
+          WHERE project_id = '@PROJECT_ID@'
+          UNION
+            select
+              dataset_stable_id as dataset_id,
+              study_stable_id as eda_study_id
+            from @VDI_DATASETS_SCHEMA@.userstudydatasetid
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="NewCategory" isCacheable="false">
+      <column name="newcategory" columnType="string"/>
+      <column name="dataset_id" columnType="string"/>
+      <sql>
+        <![CDATA[
+          select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
+          from apidbtuning.datasetdatasource
+	  where project_id = '@PROJECT_ID@'
+	  group by dataset_presenter_id
+          -- UNION
+          -- SELECT DISTINCT
+          --   CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+          --   null as category
+          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="DatasetDigest" isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
+      <column name="dataset_sha1_digest" columnType="string"/>
+      <column name="dataset_display_name" columnType="string"/>
+      <column name="dataset_id" columnType="string"/>
+          <sql includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase">
+        <![CDATA[
+          SELECT distinct dsp.dataset_sha1_digest
+            , dsp.dataset_presenter_id as dataset_id
+            , dsp.display_name as dataset_display_name
+          FROM ApidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+          WHERE dd.project_id = '@PROJECT_ID@'
+	  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          UNION
+          select DISTINCT
+            null as dataset_sha1_digest,
+                    CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+            d.name as dataset_display_name
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ClinepiStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id" columnType="string"/>
+      <column name="is_public" columnType="string"/>
+         <column name="is_prerelease" columnType="string"/>
+         <column name="project_availability" columnType="string"/>
+         <column name="study_access" columnType="string"/>
+         <column name="days_for_approval"/>
+         <column name="policy_url" columnType="string"/>
+         <column name="card_headline" columnType="string"/>
+         <column name="card_points" columnType="string"/>
+         <column name="card_questions" columnType="string"/>
+         <column name="request_protection_level" columnType="string"/>
+         <column name="request_access_fields" columnType="string"/>
+         <column name="request_email" columnType="string"/>
+         <!-- <column name="request_email_bcc" columnType="string"/>  -->
+         <column name="request_email_body" columnType="string"/>
+         <column name="request_needs_approval" columnType="string"/>
+         <column name="request_email_body_manager" columnType="string"/>
+         <column name="request_email_body_requester" columnType="string"/>
+         <column name="custom_download_tab" columnType="string"/>
+         <column name="custom_download_ack" columnType="string"/>
+            <sql>
+            <![CDATA[
+              SELECT dts.*
+                     -- ,bcc.request_email_bcc  --comment out until we have mapped schemas (to a postgres acctdb) 
+              FROM (
+                     SELECT pres.dataset_presenter_id as dataset_id
+                       , dp.project_availability
+                       , dp.is_public
+                       , initcap(dp.study_access) as study_access
+                       , dp.days_for_approval
+                       , dp.policy_url
+                       , dp.card_headline
+                       , dp.card_points
+                       , card_questions
+                       , request_protection_level
+                       , request_access_fields
+                       , request_email
+                       , request_email_body
+                       , request_needs_approval
+                       , request_email_body_manager
+                       , request_email_body_requester
+                       , custom_download_tab
+                       , custom_download_ack
+                       , CASE study_access WHEN 'prerelease' THEN 1 ELSE 0 END as is_prerelaase
+                     FROM apidbtuning.datasetpresenter pres
+                            LEFT JOIN (
+                         SELECT distinct dataset_presenter_id
+                             , max(project_availability) as project_availability
+                             , max(is_public) as is_public
+                             , max(study_access) as study_access
+                             , max(days_for_approval) as days_for_approval
+                             , max(policy_url) as policy_url
+                             , max(card_headline) as card_headline
+                             , max(card_points) as card_points
+                             , max(card_questions) as card_questions
+                             , max(request_protection_level) as request_protection_level
+                             , max(request_access_fields) as request_access_fields
+                             , max(request_email) as request_email
+                             , max(request_email_body) as request_email_body
+                             , max(request_needs_approval) as request_needs_approval
+                             , max(request_email_body_manager) as request_email_body_manager
+                             , max(request_email_body_requester) as request_email_body_requester
+                             , max(custom_download_tab) as custom_download_tab
+                             , max(custom_download_ack) as custom_download_ack
+                         FROM (
+                                SELECT dataset_presenter_id
+                                    , CASE WHEN property = 'projectAvailability' THEN value END as project_availability
+                                    , CASE WHEN property = 'isPublic' THEN value END as is_public
+                                    , CASE WHEN property = 'studyAccess' THEN value END as study_access
+                                    , CASE WHEN property = 'daysForApproval' THEN value END as days_for_approval
+                                    , CASE WHEN property = 'policyUrl' THEN value END as policy_url
+                                    , CASE WHEN property = 'cardHeadline' THEN value END as card_headline
+                                    , CASE WHEN property = 'cardPoints' THEN value END as card_points
+                                    , CASE WHEN property = 'cardQuestions' THEN value END as card_questions
+                                    , CASE WHEN property = 'requestProtectionLevel' THEN value END as request_protection_level
+                                    , CASE WHEN property = 'requestAccessFields' THEN value END as request_access_fields
+                                    , CASE WHEN property = 'requestEmail' THEN value END as request_email
+                                    , CASE WHEN property = 'requestEmailBody' THEN value END as request_email_body
+                                    , CASE WHEN property = 'requestNeedsApproval' THEN value END as request_needs_approval
+                                    , CASE WHEN property = 'requestEmailBodyManager' THEN value END  as request_email_body_manager
+                                    , CASE WHEN property = 'requestEmailBodyRequester' THEN value END  as request_email_body_requester
+                                    , CASE WHEN property = 'customDownloadTab' THEN value END as custom_download_tab
+                                    , CASE WHEN property = 'customDownloadAck' THEN value END as custom_download_ack
+                                FROM apidbtuning.datasetproperty
+                                WHERE  property in ('projectAvailability','isPublic','studyAccess','daysForApproval','policyUrl','cardHeadline','cardPoints','cardQuestions','requestProtectionLevel','requestAccessFields','requestEmail', 'requestEmailBody','requestNeedsApproval', 'requestEmailBodyManager', 'requestEmailBodyRequester', 'customDownloadTab' , 'customDownloadAck')
+                                  AND trim(value) is not null
+                                -- TEMPLATE_remove-from_DUAL_ANCHOR injectDatasetQuestions
+
+                                -- TEMPLATE_remove-from_DUAL_ANCHOR injectProjectAvailability
+                              ) pivot
+                         GROUP BY dataset_presenter_id
+                       ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
+                       JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dp.dataset_presenter_id
+                       WHERE dd.project_id = '@PROJECT_ID@'
+
+                   ) dts LEFT OUTER JOIN (
+                      SELECT dataset_id,
+                             string_agg(email, ',' ORDER BY email)  request_email_bcc
+                      FROM @REMOTE_USERACCOUNTS_SCHEMA@.accounts acc,
+                           @REMOTE_STUDYACCESS_SCHEMA@.providers pr
+                      WHERE pr.user_id = acc.user_id
+                        AND is_manager = 1
+                      GROUP BY dataset_id
+                      ORDER BY dataset_id
+                   ) bcc ON dts.dataset_id = bcc.dataset_id
+
+              UNION
+              -- installed user datasets
+              SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_stable_id
+                  , null as project_availability
+                  , 'NA' as is_public
+                  , 'NA' as study_access
+                  , null  as days_for_approval
+                  , '0' as is_prerelease
+                  , null as policy_url
+                  , 'TODO_CARD_HEADLINE' as card_headline
+                  , '[]' as card_points
+                  , '[]' as card_questions
+                  , null as request_protection_level
+                  , null as request_access_fields
+                  , null as request_email
+                  --, null as request_email_bcc
+                  , null as request_email_body
+                  , null as request_needs_approval
+                  , null as request_email_body_requester
+                  , null as request_email_body_manager
+                  , null as custom_download_tab
+                  , null as custom_download_ack
+              FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            ]]>
+          </sql>
+      </sqlQuery>
+
+    <sqlQuery name="MicrobiomeStudyAttributes"  isCacheable="false" includeProjects="MicrobiomeDB">
+      <column name="dataset_id" columnType="string"/>
+      <column name="study_categories" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT pres.dataset_presenter_id as dataset_id, dp.study_categories
+          FROM apidbtuning.datasetpresenter pres
+            LEFT JOIN (
+              SELECT dataset_presenter_id, max(study_categories) study_categories
+              FROM (
+                     SELECT dataset_presenter_id
+                       , CASE WHEN property = 'studyCategories' THEN value END study_categories
+                     FROM apidbtuning.datasetproperty
+                     WHERE  property in ('studyCategories')
+                       AND trim(value) is not null
+                     -- TEMPLATE_ANCHOR injectDatasetQuestions
+
+                     -- TEMPLATE_ANCHOR injectProjectAvailability
+                   ) pivot
+              GROUP BY dataset_presenter_id
+            ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
+          UNION
+          SELECT
+            CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+            null as study_categories
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="StudyReqStats"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="dataset_id" columnType="string"/>
+      <column name="total"  sortingColumn="total_number" />
+      <column name="approved" sortingColumn="approved_number" />
+      <column name="percent_approved"  sortingColumn="percent_approved_number" />
+      <column name="total_number" columnType="number"/>
+      <column name="approved_number" columnType="number"/>
+      <column name="percent_approved_number" columnType="number"/>
+
+      <sql>
+        <![CDATA[
+          SELECT dataset_id,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 0.5
+              WHEN total_number is null THEN 0.1
+              ELSE total_number
+            END as total_number,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 0.5
+              WHEN approved_number is null THEN 0.1
+              ELSE approved_number
+            END as approved_number,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 0.5
+              WHEN percent_approved_number is null THEN 0.1
+              ELSE percent_approved_number
+            END as percent_approved_number,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 'N/A'
+              WHEN total_number > 0 THEN CAST(total_number AS VARCHAR(10))
+              ELSE '0'
+            END as total,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 'N/A'
+              WHEN approved_number > 0 THEN CAST(approved_number AS VARCHAR(10))
+              ELSE '0'
+            END as approved,
+            CASE
+              WHEN dp.value in ('public','prerelease') THEN 'N/A'
+              WHEN percent_approved_number > 0  THEN percent_approved_number ||'%'
+              ELSE '0'
+            END as percent_approved
+          FROM (
+              SELECT pres.dataset_presenter_id as dataset_id, total_number, approved_number,percent_approved_number
+              FROM apidbtuning.datasetpresenter pres
+              LEFT OUTER JOIN  (
+                select DATASET_PRESENTER_ID, total_number, approved_number,
+                     CASE
+                       WHEN total_number > 0  THEN ROUND(100*approved_number/total_number,0)
+                       ELSE 0
+                     END as percent_approved_number
+                from (
+                  SELECT DATASET_PRESENTER_ID,
+                       count(1) as total_number,
+                       count(case when approval_status_id = 0 then 1 end) as approved_number
+                  FROM @REMOTE_STUDYACCESS_SCHEMA@.end_users eu
+                  GROUP BY dataset_presenter_id
+                ) t
+              ) mycounts
+              ON pres.dataset_presenter_id = mycounts.dataset_presenter_id
+            ) mystudies,
+            apidbtuning.datasetproperty dp
+          WHERE mystudies.dataset_id = dp.dataset_presenter_id
+            AND dp.property= 'studyAccess'
+          UNION
+          SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+                 , null
+                 , null
+                 , null
+                 , null
+                 , null
+                 , null
+          from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+      ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="StudyCharacteristic"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="dataset_id" columnType="string"/>
+      <column name="disease" columnType="string"/>
+      <column name="sex" columnType="string"/>
+      <column name="Sample_Type" columnType="string"/>
+      <column name="Participant_Type" columnType="string"/>
+      <column name="Study_Type" columnType="string"/>
+      <column name="Study_Design" columnType="string"/>
+      <column name="Country" columnType="string"/>
+      <column name="Years" columnType="string"/>
+      <column name="Variable_count" columnType="number"/>
+      <column name="HH_count" columnType="number"/>
+      <column name="Part_count" columnType="number"/>
+      <column name="Obser_count" columnType="number"/>
+      <column name="Samp_count" columnType="number"/>
+      <column name="AdditionalData" columnType="string"/>
+      <column name="Age" columnType="string"/>
+      <column name="WHO" columnType="string"/>
+      <column name="ProjectName" columnType="string"/>
+
+      <sql>
+        <![CDATA[
+          WITH etypes AS (
+            SELECT sd.study_stable_id
+              , sd.dataset_id AS dataset_id
+              , etg.display_name
+              , etg.stable_id
+              , et.cardinality AS entity_type_count
+            FROM eda.entitytype et
+               , eda.entitytypegraph etg
+               , apidbtuning.studyiddatasetid sd
+               , apidbtuning.datasetpresenter dp
+            WHERE et.entity_type_id = etg.entity_type_id
+              AND etg.study_stable_id = sd.study_stable_id
+              AND sd.dataset_id = dp.dataset_presenter_id
+          ) , all_counts AS (
+              SELECT dataset_id
+                , string_agg(etypes.display_name || ':' || entity_type_count, '; ' ORDER BY etypes.display_name) all_counts
+              FROM etypes
+              GROUP BY dataset_id
+          ) , select_counts AS (
+            SELECT dataset_id
+              , TRIM(TO_CHAR(MAX(HH_count), '999,999,999,999,999')) HH_count
+              , TRIM(TO_CHAR(MAX(Part_count), '999,999,999,999,999')) Part_count
+              , TRIM(TO_CHAR(MAX(Obser_count), '999,999,999,999,999')) Obser_count
+              , TRIM(TO_CHAR(MAX(Samp_count), '999,999,999,999,999')) Samp_count
+            FROM (
+              SELECT dataset_id
+                 , CASE WHEN stable_id = 'PCO_0000024' THEN entity_type_count END HH_count
+                 , CASE WHEN stable_id = 'EUPATH_0000096' THEN entity_type_count END Part_count
+                 , CASE WHEN stable_id = 'EUPATH_0000738' THEN entity_type_count END Obser_count
+                 , CASE WHEN stable_id = 'EUPATH_0000609' THEN entity_type_count END Samp_count
+              FROM etypes
+            ) pivot
+            GROUP BY dataset_id
+          ) , syn AS (
+              SELECT s.ontology_term_id, ot.source_id, s.ontology_synonym AS label
+              FROM sres.ontologySynonym s
+                LEFT JOIN sres.ExternalDataBaseRelease edr ON s.external_database_release_ID = edr.external_database_release_ID
+                LEFT JOIN sres.ExternaldataBase ed ON edr.external_database_id = ed.external_database_id
+                LEFT JOIN sres.OntologyTerm ot ON s.ontology_term_id = ot.ontology_term_id
+              WHERE ed.name = 'OntologyTerm_classifications_RSRC'
+          ) , study_chars AS (
+            SELECT dataset_id
+              , string_agg(disease, ', ') disease
+              , string_agg(sex, ', ') sex
+              , string_agg(Sample_Type, ', ') Sample_Type
+              , string_agg(Participant_Type, ', ') Participant_Type
+              , string_agg(Study_Type, ', ') Study_Type
+              , string_agg(Study_Design, ', ') Study_Design
+              , string_agg(Country, ', ') Country
+              , string_agg(Years, ', ') Years
+              , string_agg(AdditionalData, ', ') AdditionalData
+              , string_agg(Age, ', ') Age
+              , string_agg(WHO, ', ') WHO
+              , string_agg(ProjectName, ', ') ProjectName
+            FROM (
+                   SELECT sd.dataset_id
+                     , CASE WHEN syn.label = 'Disease' THEN value END disease
+                     , CASE WHEN syn.label = 'Sample type' THEN value END sex
+                     , CASE WHEN syn.label = 'Sex' THEN value END Sample_Type
+                     , CASE WHEN syn.label = 'Population included' THEN value END Participant_Type
+                     , CASE WHEN syn.label = 'Investigation type' THEN value END Study_Type
+                     , CASE WHEN syn.label = 'Study design' THEN value END Study_Design
+                     , CASE WHEN syn.label = 'Country' THEN value END Country
+                     , CASE WHEN syn.label = 'Years' THEN value END Years
+                     , CASE WHEN syn.label = 'Additional data' THEN value END AdditionalData
+                     , CASE WHEN syn.label = 'Age' THEN value END Age
+                     , CASE WHEN syn.label = 'WHO indicator subdomain' THEN value END WHO
+                     , CASE WHEN syn.label = 'Project name' THEN value END ProjectName
+                   FROM eda.studycharacteristic sc
+                      , eda.study s
+                      , apidbtuning.studyiddatasetid sd
+                      , syn
+                   WHERE sc.attribute_id = syn.ontology_term_id
+                     AND s.stable_id = sd.study_stable_id
+                     AND sc.study_id = s.study_id
+                 ) pivot
+            GROUP BY dataset_id
+          ) , variable_counts AS (
+            SELECT sd.dataset_id, count(DISTINCT att.stable_id) AS Variable_count
+            FROM eda.attribute att
+               , eda.entitytype et
+               , eda.study s
+               , apidbtuning.studyiddatasetid sd
+            WHERE att.entity_type_id = et.entity_type_id
+              AND et.study_id = s.study_id
+              AND s.stable_id = sd.study_stable_id
+            GROUP BY sd.dataset_id
+          )
+            SELECT dsp.dataset_presenter_id AS dataset_id
+              , select_counts.HH_count
+              , select_counts.Part_count
+              , select_counts.Obser_count
+              , select_counts.Samp_count
+              , variable_counts.Variable_count
+              , study_chars.disease
+              , study_chars.sex
+              , study_chars.Sample_Type
+              , study_chars.Participant_Type
+              , study_chars.Study_Type
+              , study_chars.Study_Design
+              , study_chars.Country
+              , study_chars.Years
+              , study_chars.AdditionalData
+              , study_chars.Age
+              , study_chars.WHO
+              , study_chars.ProjectName
+            FROM apidbtuning.datasetpresenter dsp
+              LEFT JOIN all_counts ON dsp.dataset_presenter_id = all_counts.dataset_id
+              LEFT JOIN select_counts ON dsp.dataset_presenter_id = select_counts.dataset_id
+              LEFT JOIN study_chars ON dsp.dataset_presenter_id = study_chars.dataset_id
+              LEFT JOIN variable_counts ON dsp.dataset_presenter_id = variable_counts.dataset_id
+          UNION
+          SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+               , null
+               , null
+               , null
+               , null
+               , null::bigint
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+               , null
+            from @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="DatasetDisplayName"  isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="display_name" ignoreCase="true" columnType="string"/>
+
+      <sql includeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT dsp.dataset_presenter_id as dataset_id, dsp.display_name
+          FROM apidbtuning.datasetpresenter dsp
+          UNION
+          SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+         <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
+               , case when oa.is_annotated_genome = 1 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence and Annotation'
+                      when oa.is_annotated_genome = 0 then '<i>' || oa.species || '</i> ' || oa.strain || ' Genome Sequence'
+                      else dsp.display_name
+                 end as display_name
+          FROM apidbtuning.datasetpresenter dsp
+            LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE dd.project_id = '@PROJECT_ID@'
+          AND  COALESCE(dd.category,'') != 'Link outs'
+          -- UNION
+          -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
+          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="All"  isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="dataset_name" columnType="string"/>
+      <column name="dataset_name_pattern" columnType="string"/>
+      <!--         <column name="display_name" ignoreCase="true"/> -->
+      <column name="short_display_name" columnType="string"/>
+      <column name="description" columnType="string"/>
+      <column name="version" columnType="string"/>
+      <column name="summary" columnType="string"/>
+      <column name="protocol" columnType="string"/>
+      <column name="usage" columnType="string"/>
+      <column name="type" columnType="string"/>
+      <column name="is_species_scope" columnType="string"/>
+      <column name="build_number_introduced" columnType="string"/>
+      <column name="eupath_release" sortingColumn="build_number_introduced" columnType="string"/>
+      <column name="pmids" columnType="string"/>
+      <column name="pmids_download" columnType="string"/>
+      <sql>
+        <![CDATA[
+          WITH allpubs AS (
+            SELECT dp.dataset_presenter_id
+              , CASE
+                  WHEN dp.pmid IS NULL THEN '<a href="' || dh.url ||'">' || dh.text || '</a>'
+                  ELSE '<a href="https://www.ncbi.nlm.nih.gov/pubmed/' || dp.pmid || '">' || dp.citation || '</a>'
+                END as publink
+              , dp.pmid
+            FROM apidbtuning.datasetPublication dp
+            LEFT JOIN apidbtuning.datasethyperlink dh ON
+              dp.dataset_presenter_id = dh.dataset_presenter_id
+              AND dh.isPublication = 'Y'
+          )
+          SELECT dsp.dataset_presenter_id as dataset_id,
+                 dsp.name as dataset_name, dsp.dataset_name_pattern,
+                 --dsp.display_name,
+                 ds.version,
+                 dsp.short_display_name, dsp.description,
+                 coalesce(dsp.summary, dsp.description) as summary,
+                 dsp.protocol, dsp.usage,
+                 ds.type,
+                 ds.is_species_scope,
+                 dsp.build_number_introduced,
+                 coalesce(history.eupath_release, introduced.eupath_release) as eupath_release,
+                 pubs.pmids,
+                 pubs.pmids_download
+          FROM apidbTuning.DatasetPresenter dsp
+            LEFT JOIN apidb.datasource ds ON ds.name = dsp.name
+            LEFT JOIN (
+              SELECT dataset_presenter_id
+                     , string_agg(publink, '<br><br>' ORDER BY publink) || '<br><br>' as pmids
+                     , string_agg(pmid, ', ' ORDER BY pmid) as pmids_download
+              FROM allpubs
+              GROUP BY dataset_presenter_id
+            ) pubs ON dsp.dataset_presenter_id = pubs.dataset_presenter_id
+            LEFT JOIN (
+              SELECT dataset_presenter_id,
+                     '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+              FROM (
+                SELECT dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
+                       ebd.release_number, ebd.project,
+                       row_number() OVER (PARTITION BY dh.dataset_presenter_id ORDER BY ebd.release_number desc) rn
+                FROM apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
+                WHERE dh.build_number = ebd.build_number::numeric
+                  AND ebd.project = '@PROJECT_ID@'
+              ) t
+              WHERE rn = 1
+            ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
+            LEFT JOIN (
+              SELECT build_number,
+                     '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+              FROM apidbTuning.EupathBuildDates
+              WHERE project = '@PROJECT_ID@'
+            ) introduced ON dsp.build_number_introduced = introduced.build_number::numeric
+          -- TODO:  add this back
+          --  UNION ALL
+          -- SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id
+          --      , null as dataset_name
+          --     , null as dataset_name_pattern
+          --     , null as version
+          --     , d.name as short_display_name
+          --     , d.description
+          --     , d.summary::TEXT as summary
+          --     , null as protocol
+          --     , null as usage
+          --     , null as type
+          --     , null as is_species_scope
+          --     , null as build_number_introduced
+          --     , null as eupath_release
+          --     , null as pmids
+          --     , null as pmids_download
+          --FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
+        ]]>
+      </sql>
+
+    </sqlQuery>
+
+     <sqlQuery name="OwnerVisibility"  isCacheable="false">
+         <column name="dataset_id"/>
+         <column name="owner"/>
+         <column name="community"/>
+
+         <sql>
+            <![CDATA[
+            select dsp.dataset_presenter_id as dataset_id,
+                   null as owner,
+                   null as community
+            from apidbTuning.DatasetPresenter dsp
+            -- UNION
+            -- SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+            --        owner,
+            --        is_public as community
+            --     from @VDI_CONTROL_SCHEMA@.dataset
+            ]]>
+         </sql>
+      </sqlQuery>
+
+
+    <sqlQuery name="CavAckRP"  isCacheable="false">
+      <column name="dataset_id"/>
+      <column name="caveat"/>
+      <column name="acknowledgement"/>
+      <column name="release_policy"/>
+         <sql>
+            <![CDATA[
+            select distinct dsp.dataset_presenter_id as dataset_id,
+                    dsp.caveat, dsp.acknowledgement,
+                   dsp.release_policy
+            from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+            where dd.project_id = '@PROJECT_ID@'
+	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
+            -- UNION
+            -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+            --    , null as caveat
+            --    , null as acknowledgement
+            --   , null as release_policy
+            -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            ]]>
+         </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="Contacts"  isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="contact" columnType="string"/>
+      <column name="institution" columnType="string"/>
+      <column name="email" columnType="string"/>
+      <column name="short_attribution" columnType="string"/>
+      <sql includeProjects="ClinEpiDB,MicrobiomeDB">
+        <![CDATA[
+          SELECT distinct dsp.dataset_presenter_id as dataset_id,
+                   CASE WHEN  dsc.name is not null THEN dsc.name
+                        WHEN dsc.affiliation is not null THEN dsc.affiliation
+                        ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
+                   END as contact,
+                   CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                        ELSE   dsc.affiliation END as institution,
+                   dsc.email as email,
+                   coalesce(dsp.short_attribution, dsc.name) as short_attribution
+          FROM ApidbTuning.DatasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            LEFT JOIN ApidbTuning.DatasetContact dsc ON
+              dsp.dataset_presenter_id = dsc.dataset_presenter_id
+              AND dsc.is_primary_contact = true
+              AND dd.project_id = '@PROJECT_ID@'
+          UNION
+--          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+--               , dc.name as contact
+--               , affiliation as institution
+--               , email
+--               , short_attribution
+--               from @VDI_CONTROL_SCHEMA@.availableuserdatasets d, @VDI_CONTROL_SCHEMA@.dataset_contact dc
+--	       where dc.is_primary = 1
+--	       and dc.dataset_id = d.user_dataset_id
+          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+               , null as contact
+               , null as institution
+               , null as email
+               , null as short_attribution
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+
+            <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
+        <![CDATA[
+          SELECT distinct dsp.dataset_presenter_id as dataset_id,
+                 CASE WHEN  dsc.name is not null THEN dsc.name
+                      WHEN dsc.affiliation is not null THEN dsc.affiliation
+                      ELSE '<a href="http://eupathdb.org/eupathdb/app/contact-us" class="new-window" data-name="contact_us">Contact VEuPathDB for more details</a>'
+                 END as contact,
+                 CASE WHEN  (dsc.name is null and dsc.affiliation is not null) THEN dsc.name
+                      ELSE   dsc.affiliation END as institution,
+                 dsc.email as email,
+                 coalesce(dsp.short_attribution, dsc.name) as short_attribution
+          FROM ApidbTuning.DatasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
+          WHERE dsc.is_primary_contact = true
+          AND dd.project_id = '@PROJECT_ID@'
+          -- UNION
+          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id
+          --      , null as contact
+          --      , null as institution
+          --      , null as email
+          --      , null as short_attribution
+          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="DatasetAlias" doNotTest="true">
+      <column name="dataset_id" columnType="string"/>
+      <column name="old_dataset_id" columnType="string"/>
+      <sql excludeProjects="ClinEpiDB,MicrobiomeDB">
+        <![CDATA[
+            SELECT distinct dsp.dataset_presenter_id as dataset_id,
+                   dsp.dataset_presenter_id as old_dataset_id
+            FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
+            WHERE dd.project_id = '@PROJECT_ID@'
+	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          UNION
+            SELECT dsp.dataset_presenter_id as dataset_id,
+                   oa.source_id as old_dataset_id
+            FROM apidbTuning.DatasetPresenter dsp,
+                 apidbTuning.DatasetDatasource dd,
+                 apidbTuning.OrganismAttributes oa
+            WHERE dd.category = 'Genomes'
+              AND dsp.dataset_presenter_id = dd.dataset_presenter_id
+              AND oa.component_taxon_id = dd.taxon_id
+              AND dd.project_id = '@PROJECT_ID@'
+       -- To be FIXED if and when ebi datasets are loaded
+       -- UNION
+       --   SELECT dataset_presenter_id as dataset_id,
+       --       'DS_' ||
+       --       lower(substr(ENCODE(DIGEST(replace(name, '_ebi_', '_'), 'SHA1'),'hex'), 0, 10))
+       --       as old_dataset_id
+       --   FROM apidbtuning.datasetpresenter where name like '%_ebi_%'
+      --    UNION
+      --    SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
+      --    FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+
+      <sql includeProjects="ClinEpiDB,MicrobiomeDB">
+        <![CDATA[
+          SELECT dataset_presenter_id as dataset_id,
+                 dataset_presenter_id as old_dataset_id
+          FROM apidbTuning.DatasetPresenter
+          UNION
+          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+  </querySet>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Table queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="DatasetTables" queryType="table"
+            isCacheable='false'>
+
+
+    <sqlQuery name="Publications"  isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="pmid"/>
+      <column name="citation"/>
+      <column name="url"/>
+      <sql>
+        <![CDATA[
+          WITH pmidPublications AS (
+            SELECT dataset_presenter_id AS dataset_id
+              , pmid
+              , regexp_replace(citation, '\s+<', ' <') AS citation
+              , 'http://www.ncbi.nlm.nih.gov/pubmed/' || pmid AS url
+              , row_number() OVER () AS rownumber
+            FROM ApidbTuning.DatasetPublication
+            WHERE length(pmid) > 0
+            ORDER BY dataset_publication_id
+          )
+          SELECT dataset_presenter_id AS dataset_id
+            , NULL AS pmid
+            , text AS citation
+            , url
+            , row_number() OVER () AS rownumber
+          FROM apidbtuning.datasethyperlink
+          WHERE isPublication = 'Y'
+          UNION
+          SELECT *
+          FROM pmidPublications
+          ORDER BY rownumber
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="History"  isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="build"/>
+      <column name="release_date"/>
+      <column name="note"/>
+      <sql>
+        <![CDATA[
+           SELECT dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
+           FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
+           WHERE dh.build_number = bd.build_number::NUMERIC
+             AND bd.project = '@PROJECT_ID@'
+           ORDER BY bd.build_number
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="DatasetHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="build"/>
+      <column name="release_date"/>
+      <column name="project"/>
+      <column name="release_number"/>
+      <column name="version"/>
+      <column name="note"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT dh.dataset_presenter_id as dataset_id
+            , bd.build_number as build
+            , to_char(bd.release_date, 'yyyy-mm-dd') as release_date
+            , bd.project
+            , bd.release_number
+            , ds.version
+            , dh.note
+          FROM ApidbTuning.DatasetHistory dh
+            , ApidbTuning.EupathBuildDates bd
+            , apidb.datasource ds
+            RIGHT JOIN ApidbTuning.DatasetPresenter dsp ON ds.name = dsp.name
+          WHERE dh.build_number = bd.build_number::numeric
+            AND bd.project = '@PROJECT_ID@'
+            AND dh.dataset_presenter_id = dsp.dataset_presenter_id
+          ORDER BY bd.build_number
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Contacts"  isCacheable='false'>
+      <column name="dataset_name"/>
+      <column name="dataset_id"/>
+      <column name="contact_name"/>
+      <column name="affiliation"/>
+      <sql>
+        <![CDATA[
+          SELECT dsp.name as dataset_name, dsp.dataset_presenter_id as dataset_id,
+                dsc.name as contact_name, dsc.affiliation
+          FROM ApidbTuning.DatasetPresenter dsp, ApidbTuning.DatasetContact dsc
+          WHERE dsp.dataset_presenter_id = dsc.dataset_presenter_id
+          ORDER BY dsc.is_primary_contact desc, dsc.dataset_contact_id asc
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB">
+      <column name="dataset_name"/>
+      <column name="dataset_id"/>
+      <column name="release_date"/>
+      <column name="version_number"/>
+      <column name="note"/>
+      <column name="dataset_sha1_digest"/>
+      <column name="build_number"/>
+      <sql>
+        <![CDATA[
+          SELECT dataset_name, dataset_id, build_number, release_date , 'Version ' || ROW_NUMBER() OVER (PARTITION BY dataset_id ORDER BY dataset_id, build_number) as version_number, note, dataset_sha1_digest
+          FROM (
+             SELECT distinct dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, TO_CHAR(bd.release_date, 'YYYY-MON-DD') as release_date, dh.note, dp.dataset_sha1_digest , dh.build_number
+             FROM  ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,  ApidbTuning.DatasetPresenter dp, apidbtuning.datasetdatasource dd
+             WHERE dh.build_number = bd.build_number::numeric
+             AND dd.project_id = bd.project
+	     AND dh.dataset_presenter_id = dp.dataset_presenter_id
+	     AND dd.dataset_presenter_id = dp.dataset_presenter_id
+             ORDER by dh.build_number
+           ) t
+          ORDER by build_number
+	    ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="AccessRequestStats"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="dataset_name"/>
+      <column name="total"/>
+      <column name="approved"/>
+      <column name="approved_percent"/>
+      <sql>
+        <![CDATA[
+          SELECT pres.dataset_presenter_id as dataset_id, pres.name as dataset_name, total, approved, ROUND(100*approved/total,0)||'%' as approved_percent
+          FROM  apidbtuning.datasetpresenter pres,
+          (
+            SELECT DATASET_PRESENTER_ID,
+                   count(case when purpose is not null then 1 end) as total,
+                   count(case when purpose is not null and approval_status_id = 0 then 1 end) as approved
+            FROM @REMOTE_STUDYACCESS_SCHEMA@end_users eu
+            GROUP BY dataset_presenter_id
+          ) mycounts
+          WHERE pres.dataset_presenter_id = mycounts.dataset_presenter_id
+            AND total != 0
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="AccessRequest"  isCacheable="false" includeProjects="ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="dataset_name"/>
+      <column name="name"/>
+      <column name="organization"/>
+      <column name="start_date"/>
+      <column name="purpose"/>
+      <sql>
+        <![CDATA[
+          SELECT t1.name,t2.value as organization, to_char(CAST(t3.start_date AS DATE) , 'YYYY-MM-DD' ) as start_date, t3.purpose,t4.dataset_presenter_id as dataset_id, t4.name as dataset_name
+          FROM (
+              SELECT user_id, string_agg(value,' ' order by key ) as name
+              FROM (
+                   SELECT *
+                   FROM(
+                       SELECT user_id, key, value
+                       FROM @REMOTE_USERACCOUNTS_SCHEMA@account_properties where key in ('first_name', 'last_name')
+                   )
+               )
+              GROUP BY user_id
+            )t1,
+            (
+              SELECT user_id, value
+   FROM @REMOTE_USERACCOUNTS_SCHEMA@account_properties
+              WHERE key in ('organization')
+            ) t2,
+            (
+              SELECT user_id, dataset_presenter_id, start_date, purpose, a.name AS approval_status
+              FROM @REMOTE_STUDYACCESS_SCHEMA@end_users v
+                INNER JOIN @REMOTE_STUDYACCESS_SCHEMA@approval_status a ON v.approval_status_id = a.approval_status_id
+              WHERE purpose is not NULL
+                AND a.name = 'approved'
+            ) t3,
+            ( SELECT dataset_presenter_id, name FROM apidbtuning.datasetpresenter ) t4
+          WHERE t1.user_id = t2.user_id
+            AND t1.user_id = t3.user_id
+            AND t3.dataset_presenter_id = t4.dataset_presenter_id
+          ORDER by start_date desc
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="HyperLinks"  isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="text"/>
+      <column name="url"/>
+      <column name="description"/>
+      <sql>
+        SELECT dataset_presenter_id AS dataset_id
+          , text
+          , url
+          , description
+        FROM ApidbTuning.DatasetHyperLINK
+        WHERE url not like '/%'
+          AND url not like '%genedb.org%'
+          AND (isPublication != 'Y' OR isPublication is null)
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="AssociatedDatasets"  isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="pmid"/>
+      <column name="associated_dataset_id"/>
+      <column name="associated_summary"/>
+      <column name="project"/>
+      <column name="webapp_name"/>
+      <column name="display_name"/>
+      <sql>
+        <![CDATA[
+             select local_dataset_id as dataset_id, pubmed_id as pmid,
+                     associated_dataset_id, project, webapp_name, ds.display_name,
+                     dsp.summary as associated_summary
+             from ApidbTuning.AssociatedDataset ds, ApidbTuning.DatasetPresenter dsp
+             where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
+             and associated_dataset_id = dsp.dataset_presenter_id
+             and length(pubmed_id) > 0
+             order by local_dataset_id, ds.display_name
+            ]]>
+      </sql>
+    </sqlQuery>
+
+
+      <sqlQuery name="UdDependencies"  isCacheable='false'>
+            <column name="dataset_id"/>
+            <column name="identifier"/>
+            <column name="display_name"/>
+            <column name="version"/>
+            <sql>
+            <![CDATA[
+             select CONCAT('EDAUD_', dataset_id) as dataset_id,
+                identifier, display_name, version
+                from @VDI_CONTROL_SCHEMA@.dataset_dependency
+            ]]>
+            </sql>
+      </sqlQuery>
+
+    </querySet>
+
+  <querySet name="DatasetReleaseNotesTables" queryType="table"
+            isCacheable='false'>
+
+    <sqlQuery name="ReleaseNotes"  isCacheable='false'>
+      <column name="release_notes_id"/>
+      <column name="build_number"/>
+      <column name="release_date"/>
+      <column name="dataset_id"/>
+      <column name="dataset_name"/>
+      <column name="note"/>
+      <sql>
+        <![CDATA[
+          SELECT '111' as release_notes_id, bd.build_number, bd.release_date,
+                dh.dataset_presenter_id as dataset_id, dp.name as dataset_name, dh.note
+          FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd,
+              ApidbTuning.DatasetPresenter dp
+          WHERE dh.build_number = bd.build_number::NUMERIC
+            AND dh.dataset_presenter_id = dp.dataset_presenter_id
+          ORDER BY dh.build_number
+        ]]>
+      </sql>
+    </sqlQuery>
+  </querySet>
+</wdkModel>
