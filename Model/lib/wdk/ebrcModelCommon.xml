@@ -37,6 +37,8 @@
     <import file="model/questions/queries/datasetQueries.xml"/>
     <import file="model/questions/params/datasetParams.xml"/>
     <import file="model/records/datasetRecords.xml"/>
+    <import file="model/records/datasetQueries.xml"/>
+    <import file="model/records/genomeDatasetQueries.xml"/>
     <import file="model/questions/datasourceQuestions.xml"/>
     <import file="model/questions/queries/datasourceQueries.xml"/>
     <import file="model/records/datasourceRecords.xml"/>
