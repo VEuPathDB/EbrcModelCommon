@@ -529,7 +529,7 @@ public abstract class DatasetInjector {
 
     List<String> sampleNames = exptSamples.get(exptKey);
 
-    if (sampleNames.isEmpty()) {
+    if (sampleNames == null || sampleNames.isEmpty()) {
         throw new UserException ("No sample names found for dataset " + _datasetName);
     }
     // remove duplicates (NGS and CNV have dup experiment and samples)
