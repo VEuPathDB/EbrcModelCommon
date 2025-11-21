@@ -489,6 +489,18 @@
 
       </table>
 
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- User Dataset Dependencies (for use internally, eg, by jbrowse2 config) -->
+        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <table name="UdDependencies"
+               displayName=""
+               queryRef="DatasetTables.UdDependencies">
+            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+            <columnAttribute name="identifier"  />
+            <columnAttribute name="display_name"/>
+            <columnAttribute name="version" />
+        </table>
+
       <table name="DatasetAlias"
              excludeProjects="MicrobiomeDB,ClinEpiDB"
              displayName="Dataset Alias"
