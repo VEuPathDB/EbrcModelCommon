@@ -2765,6 +2765,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="soTermName"/>
     <prop name="sourceIdRegex">&sourceIdRegex;</prop>
+    <prop name="referenceStrainOrganismAbbrev">&referenceStrainOrganismAbbrev;</prop>
 
     <graphTemplateFile name="mapWithBlat.xml"/>
 
