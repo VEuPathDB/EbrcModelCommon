@@ -1,95 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <wdkModel>
 
-  <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB">Study</constant>
-  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB">Studies</constant>
+  <recordClassSet name="UserDatasetRecordClasses">
 
-  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB">Data Set</constant>
-  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB">Data Sets</constant>
+    <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
 
-  <recordClassSet name="DatasetRecordClasses">
+    <recordClass name="UserDatasetRecordClass" displayName="User Dataset" displayNamePlural="User Datasets" urlName="user-dataset" useBasket="false">
 
-
-    <!-- ============== a class with only one member.  the primary key is always 111 ===========  -->
-
-    <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Data Set Release Notes">
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
-        <columnRef>release_notes_id</columnRef>
-      </primaryKey>
-
-      <idAttribute name="primary_key" displayName="Release Notes ID">
-        <text>
-          <![CDATA[
-            $$release_notes_id$$
-          ]]>
-        </text>
-      </idAttribute>
-
-      <table name="ReleaseNotes"
-             displayName="Dataset Release Notes"
-             queryRef="DatasetReleaseNotesTables.ReleaseNotes">
-        <columnAttribute name="build_number" displayName="VEuPathDB Build #"/>
-        <columnAttribute name="release_date" displayName="Release Date"/>
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="note" displayName="Notes"/>
-      </table>
-
-    </recordClass>
-
-    <!-- ============== Internal class for tracking datasets from previous releases ===========  -->
-
-    <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB">
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
-        <columnRef>dataset_presenter_id</columnRef>
-        <columnRef>dataset_presenter_name</columnRef>
-        <columnRef>project_name</columnRef>
-      </primaryKey>
-
-      <idAttribute name="primary_key" displayName="Dataset Name">
-        <text>
-          <![CDATA[
-            $$dataset_presenter_id$$
-          ]]>
-        </text>
-      </idAttribute>
-      <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
-                implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
-      </reporter>
-
-      <attributeQueryRef ref="LegacyDatasetAttributes.DatasetName">
-      </attributeQueryRef>
-    </recordClass>
-
-
-    <!-- ======================================= DATASET RECORD CLASS =========================================================== -->
-
-    <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
-   <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset" useBasket="false" >
-      <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
-
-      <testParamValues >
-        <paramValue name="dataset_id">1</paramValue>
+      <testParamValues>
+        <paramValue name="dataset_id">test123</paramValue>
       </testParamValues>
 
-      <!-- primary key definition
-           NOTE:  the name here is from apidbtuning.DatasetPresenter NOT apidb.datasource
-      -->
-
-      <primaryKey aliasQueryRef="DatasetAttributes.DatasetAlias">
+      <!-- Primary key definition -->
+      <primaryKey aliasQueryRef="UserDatasetAttributes.DatasetAlias">
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Data Set" excludeProjects="MicrobiomeDB,ClinEpiDB"
-                   help="Click a data set to go to the full data set record">
+      <idAttribute name="primary_key" displayName="User Dataset"
+                   help="Click a user dataset to go to the full dataset record">
         <text>
-          <![CDATA[ $$display_name$$ ]]>
-        </text>
-      </idAttribute>
-
-      <idAttribute name="primary_key" displayName="Study" includeProjects="MicrobiomeDB,ClinEpiDB"
-                   help="Click a study to go to the full study record">
-        <text>
-          <![CDATA[ $$display_name$$ ]]>
+          <![CDATA[ $$name$$ ]]>
         </text>
       </idAttribute>
 
@@ -101,319 +32,89 @@
                 implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
         <property name="page_size">500</property>
       </reporter>
-      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results" 
+
+      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results"
                 implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
-        <property name="page_size">1000000</property>           <!-- huge page size to force no paging  -->
+        <property name="page_size">1000000</property>
       </reporter>
 
       <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" scopes="record"
                 implementation="org.gusdb.wdk.model.report.reporter.FullRecordReporter">
       </reporter>
 
-      <reporter name="xml"  displayName="XML: choose from columns and/or tables" scopes=""
+      <reporter name="xml" displayName="XML: choose from columns and/or tables" scopes=""
                 implementation="org.gusdb.wdk.model.report.reporter.XMLReporter">
       </reporter>
-      <reporter name="json"  displayName="json: choose from columns and/or tables" scopes=""
+
+      <reporter name="json" displayName="json: choose from columns and/or tables" scopes=""
                 implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
       </reporter>
 
       <!-- =============================================================== -->
-      <!--   Filters -->
+      <!--   Core Attributes -->
       <!-- =============================================================== -->
 
-
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-      <!--  Standard Attributes  ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-
-      <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
-        <columnAttribute name="display_name" internal="true" displayName="Dataset Name"/>
+      <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
+        <columnAttribute name="dataset_id" internal="true" displayName="Dataset ID"/>
+        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
+        <columnAttribute name="type_name" displayName="Type" help="Dataset type name"/>
+        <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>
+        <columnAttribute name="category" displayName="Category" help="Dataset category"/>
+        <columnAttribute name="deleted_status" displayName="Deleted Status"
+                         help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
+        <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
+        <columnAttribute name="accessibility" displayName="Accessibility"
+                         help="Access level: public, protected, or private"/>
+        <columnAttribute name="days_for_approval" displayName="Days for Approval"
+                         help="Number of days required for approval"/>
+        <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
       </attributeQueryRef>
 
-
-      <attributeQueryRef ref="DatasetAttributes.All">
-        <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
-        <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
-        <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
-        <columnAttribute name="short_display_name" internal="true"/>
-        <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
-        <columnAttribute name="description" displayName="Description" sortable="false"/>
-        <columnAttribute name="protocol" internal="true"/>
-        <columnAttribute name="usage" displayName="Usage" internal="true"/>
-        <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
-        <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
-        <columnAttribute name="type" displayName="Type" internal="true"/>
-        <columnAttribute name="eupath_release" displayName="Release # and date"
-                         help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false"
-                         help= "A short description of the dataset."/>
-        <columnAttribute name="pmids" displayName="References" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
-        <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
+      <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
+        <columnAttribute name="name" displayName="Name" help="Dataset name"/>
+        <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
+        <columnAttribute name="description" displayName="Description" sortable="false"
+                         help="Detailed dataset description"/>
+        <columnAttribute name="program_name" displayName="Program" help="Program name"/>
+        <columnAttribute name="project_name" displayName="Project" help="Project name"/>
+        <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
+        <columnAttribute name="short_name" displayName="Short Name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
-<!-- TODO Add back
-      <attributeQueryRef ref="DatasetAttributes.EdaStudyMapping"  includeProjects="MicrobiomeDB,ClinEpiDB,VectorBase">
-        <columnAttribute  name="eda_study_id" displayName="Eda study ID"/>
-      </attributeQueryRef>
--->
-
-      <attributeQueryRef ref="DatasetAttributes.Contacts">
-        <columnAttribute name="contact" displayName="Contact"
-                         help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="institution" displayName="Contact institution"
-                         help="The institution where the Contact is located. "/>
-        <columnAttribute name="email" internal="true"/>
-        <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
+      <attributeQueryRef ref="UserDatasetAttributes.SyncControl">
+        <columnAttribute name="shares_update_time" displayName="Shares Updated"
+                         help="Last time sharing information was updated"/>
+        <columnAttribute name="data_update_time" displayName="Data Updated"
+                         help="Last time data was updated"/>
+        <columnAttribute name="meta_update_time" displayName="Metadata Updated"
+                         help="Last time metadata was updated"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB">
-        <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
-        <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
-        <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB"
-                         help= "A request from the data provider stipulating the proper use of unpublished data. "  />
+      <attributeQueryRef ref="UserDatasetAttributes.InstallStatus">
+        <columnAttribute name="install_summary" displayName="Installation Status"
+                         help="Summary of installation status across all install types"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
-                         help= "Datasets are assigned to categories based on the biological attributes of the data." />
-      </attributeQueryRef>
+      <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
-      <attributeQueryRef ref="DatasetAttributes.OwnerVisibility" excludeProjects="MicrobiomeDB,ClinEpiDB">
-         <columnAttribute name="owner" displayName="Owner" />
-         <columnAttribute name="community" displayName="Community"/>
-       </attributeQueryRef>
-
-      <!-- ================================================================== -->
-      <!-- =================================================================== -->
-      <!--  Genome Attributes  ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-
-      <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
-                          help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="GenomeDatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="megabase_pairs" displayName="Megabase pairs"/>
-        <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
-      </attributeQueryRef>
-
-       <attributeQueryRef ref="GenomeDatasetAttributes.GenomicsStudyAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="is_public" displayName="Is public"/>
-       </attributeQueryRef>
-
-      <attributeQueryRef ref="GenomeDatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="genome_version" displayName="Genome Version"/>
-        <columnAttribute name="annotation_version" displayName="Annotation Version"/>
-        <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="GenomeDatasetAttributes.genecounts" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="gene_count" displayName="Genes" help="Total gene count" align="right" />
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="GenomeDatasetAttributes.inApollo" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
-      </attributeQueryRef>
-
-      <attributesList summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
-                      excludeProjects="MicrobiomeDB,ClinEpiDB"/>
-
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-      <!--  ClinEpi and Mbio Attributes  ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-
-      <!--   request_email_bcc contains providers names; used to come from presenters, now from studyaccess; 
-          comment out until we have mapped schemas (to a postgres acctdb)   -->
-      <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="project_availability" internal="true"/>
-        <columnAttribute name="is_public" internal="true"/>
-         <columnAttribute name="is_prerelease" type="number"/>
-         <columnAttribute name="study_access" displayName="Data accessibility"
-           help="Some studies require that the user requests approval to access certain functionality 
-            (they will be prompted when attempting the action):
-            if 'private', to explore the data, analyze it and download; if 'controlled' or 'protected', just to download.
-            In controlled studies the user will be allowed to access the data automatically upon request submission,
-            while in protected and private studies there will be human intervention in the decision."/>
-         <columnAttribute name="days_for_approval"/>
-         <columnAttribute name="policy_url" internal="true"/>
-         <columnAttribute name="card_headline" internal="true"/>
-         <columnAttribute name="card_points" internal="true"/>
-         <columnAttribute name="card_questions" displayName="Searches"/>
-         <columnAttribute name="request_protection_level" internal="true"/>
-         <columnAttribute name="request_access_fields" internal="true"/>
-         <columnAttribute name="request_email" internal="true"/>
-        <!--  <columnAttribute name="request_email_bcc" internal="true"/>  -->
-         <columnAttribute name="request_email_body" internal="true"/>
-         <columnAttribute name="request_needs_approval" internal="true"/>
-         <columnAttribute name="request_email_body_manager" internal="true"/>
-         <columnAttribute name="request_email_body_requester" internal="true"/>
-         <columnAttribute name="custom_download_tab"/>
-         <columnAttribute name="custom_download_ack"/>
-         <linkAttribute name="analyze" displayName="Explore &amp; analyze" sortable="false" includeProjects="ClinEpiDB">
-           <displayText>
-             <![CDATA[
-               <div style="text-align: center">
-                 <i style="color: black; font-size: 2em;" class="ebrc-icon-edaIcon"></i>
-               </div>
-             ]]>
-          </displayText>
-          <url>
-            @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/new
-           </url>
-         </linkAttribute>
-         <linkAttribute name="bulk_download_url" displayName="Download" inReportMaker="false">
-           <displayText>
-             <![CDATA[ <i class="fa fa-download"></i> ]]>
-           </displayText>
-           <url>
-             @WEBAPP_BASE_URL@/workspace/analyses/$$dataset_id$$/new/download
-          </url>
-        </linkAttribute>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="DatasetAttributes.MicrobiomeStudyAttributes" includeProjects="MicrobiomeDB">
-        <columnAttribute name="study_categories" displayName="Category"/>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB">
-        <columnAttribute name="disease" displayName="Disease"/>
-        <columnAttribute name="sex" displayName="Sex"/>
-        <columnAttribute name="Sample_Type" displayName="Sample type"/>
-         <!-- columnAttribute name="Participant_Type" displayName="Population included"/ -->
-        <columnAttribute name="Study_Type" displayName="Investigation type"/>
-        <columnAttribute name="Study_Design" displayName="Study design"/>
-        <columnAttribute name="Country" displayName="Country"/>
-        <columnAttribute name="Years" displayName="Years"/>
-        <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
-        <columnAttribute name="HH_count" displayName="Households" type="number"/>
-        <columnAttribute name="Part_count" displayName="Participants" type="number"/>
-        <columnAttribute name="Obser_count" displayName="Participant repeated measures" type="number"/>
-        <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
-        <columnAttribute name="AdditionalData" displayName="Additional data"/>
-        <columnAttribute name="Age" displayName="Age"/>
-        <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
-        <columnAttribute name="ProjectName" displayName="Project name"/>
-      </attributeQueryRef>
-
-
- <!--  comment out until we have mapped schemas (to a postgres acctdb)
-      <attributeQueryRef ref="DatasetAttributes.StudyReqStats" includeProjects="ClinEpiDB">
-        <columnAttribute name="total" displayName="Total requests" />
-        <columnAttribute name="approved" displayName="Approved requests" />
-        <columnAttribute name="percent_approved" displayName="Percent approved"/>
-        <columnAttribute name="total_number"  type="number" />
-        <columnAttribute name="approved_number"  type="number"/>
-        <columnAttribute name="percent_approved_number"  type="number"/>
-      </attributeQueryRef>
--->
-
-
-      <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
-      <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
-                      includeProjects="ClinEpiDB"/>
-
-      <attributesList summary="study_categories,summary,eupath_release"
-                      includeProjects="MicrobiomeDB"/>
-
-      <!-- =================================================================================== -->
-      <!-- =================================================================================== -->
-      <!-- STANDARD TABLES ++++++++-->
-      <!-- =================================================================================== -->
-      <!-- =================================================================================== -->
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Contacts -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Contacts"
-             displayName="Principal Investigator and Collaborators"
-             queryRef="DatasetTables.Contacts">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="contact_name" displayName="Investigator"/>
-        <columnAttribute name="affiliation" displayName="Affiliation"/>
-      </table>
-
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- clinepi versioning download files table -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB"
-             displayName="Data Versions"
-             queryRef="DatasetTables.DownloadVersion">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-
-        <columnAttribute name="version_number" inReportMaker="false" internal="true"/>
-
-        <textAttribute name="version_number_link" inReportMaker="false" internal="false"
-                       displayName="Download link">
-          <text>
-            <![CDATA[
-              <button
-                type="button"
-                class="study-action link"
-                data-study-id="$$dataset_id$$"
-                data-args='{
-                  "type": "download",
-                  "downloadUrl": "@WEBAPP_BASE_URL@/downloads/release-$$build_number$$/$$dataset_sha1_digest$$"
-                }'
-              >$$version_number$$</button>
-            ]]>
-          </text>
-        </textAttribute>
-        <columnAttribute name="build_number" displayName="Release #"/>
-        <columnAttribute name="release_date" displayName="Release Date"/>
-        <columnAttribute name="note" displayName="Updates"/>
-        <columnAttribute name="dataset_sha1_digest" internal="true"/>
-      </table>
+      <!-- =============================================================== -->
+      <!--   Tables -->
+      <!-- =============================================================== -->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Publications"
-             displayName="Selected Publications" includeProjects="ClinEpiDB"
-             queryRef="DatasetTables.Publications">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
-        <columnAttribute name="citation" internal="true"/>
+             displayName="Publications"
+             queryRef="UserDatasetTables.Publications">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="external_id" displayName="ID" internal="true"/>
+        <columnAttribute name="type" displayName="Type"/>
+        <columnAttribute name="citation" displayName="Citation" internal="true"/>
+        <columnAttribute name="is_primary" displayName="Primary"/>
         <columnAttribute name="url" internal="true"/>
 
-        <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
-                       displayName="PubMed Link">
-
-          <displayText>
-            <![CDATA[
-              $$citation$$
-            ]]>
-          </displayText>
-          <url>
-            <![CDATA[
-               http://www.ncbi.nlm.nih.gov/pubmed/$$pmid$$
-            ]]>
-          </url>
-        </linkAttribute>
-      </table>
-
-      <table name="Publications"
-             excludeProjects="ClinEpiDB"
-             displayName="Associated Publications"
-             queryRef="DatasetTables.Publications">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
-        <columnAttribute name="citation" internal="true"/>
-        <columnAttribute name="url" internal="true"/>
-
-        <linkAttribute name="pubmed_link" inReportMaker="false" internal="false"
-                       displayName="PubMed Link">
-
+        <linkAttribute name="publication_link" displayName="Link">
           <displayText>
             <![CDATA[
               $$citation$$
@@ -428,21 +129,46 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- External Links -->
+      <!-- Contacts -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Contacts"
+             displayName="Contacts"
+             queryRef="UserDatasetTables.Contacts">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="contact_name" displayName="Name"/>
+        <columnAttribute name="affiliation" displayName="Affiliation"/>
+        <columnAttribute name="email" displayName="Email"/>
+        <columnAttribute name="country" displayName="Country"/>
+        <columnAttribute name="is_primary" displayName="Primary Contact"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Organisms -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Organisms"
+             displayName="Organisms"
+             queryRef="UserDatasetTables.Organisms">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="organism_type" displayName="Type"
+                         help="experimental or host"/>
+        <columnAttribute name="species" displayName="Species"/>
+        <columnAttribute name="strain" displayName="Strain"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Hyperlinks -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="HyperLinks"
-             displayName="External Resources"
-             queryRef="DatasetTables.HyperLinks">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="text" internal="true"/>
+             displayName="External Links"
+             queryRef="UserDatasetTables.HyperLinks">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" internal="true"/>
+        <columnAttribute name="description" internal="true"/>
 
-        <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
-                       displayName="Links">
-
+        <linkAttribute name="hyper_link" displayName="Link">
           <displayText>
             <![CDATA[
-              $$text$$
+              $$description$$
             ]]>
           </displayText>
           <url>
@@ -451,369 +177,111 @@
             ]]>
           </url>
         </linkAttribute>
-
-      </table>
-
-      <table name="AssociatedDatasets"
-             displayName="Associated Data Sets"
-             queryRef="DatasetTables.AssociatedDatasets">
-        <columnAttribute name="pmid" internal="true"/>
-        <columnAttribute name="associated_dataset_id" internal="true"/>
-        <columnAttribute name="project" internal="true"/>
-        <columnAttribute name="webapp_name" internal="true"/>
-        <columnAttribute name="display_name" internal="true"/>
-
-        <linkAttribute displayName="PubMed ID" name="pubmed_link"
-                       internal="false">
-          <displayText>
-            <![CDATA[
-                $$pmid$$
-                ]]>
-          </displayText>
-          <url>
-            <![CDATA[ https://pubmed.ncbi.nlm.nih.gov/$$pmid$$/ ]]>
-          </url>
-        </linkAttribute>
-
-        <linkAttribute displayName="Dataset" name="associated dataset"
-                       internal="false">
-          <displayText>
-            <![CDATA[
-                $$project$$: $$display_name$$
-                ]]>
-          </displayText>
-          <url>
-            <![CDATA[ http://$$project$$.org/$$webapp_name$$/app/record/dataset/$$associated_dataset_id$$ ]]>
-          </url>
-        </linkAttribute>
-
-      </table>
-
-        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <!-- User Dataset Dependencies (for use internally, eg, by jbrowse2 config) -->
-        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <table name="UdDependencies"
-               displayName=""
-               queryRef="DatasetTables.UdDependencies">
-            <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-            <columnAttribute name="identifier"  />
-            <columnAttribute name="display_name"/>
-            <columnAttribute name="version" />
-        </table>
-
-      <table name="DatasetAlias"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Dataset Alias"
-             queryRef="DatasetAttributes.DatasetAlias" inReportMaker="false">
-        <columnAttribute name="dataset_id"/>
-        <columnAttribute name="old_dataset_id"/>
-      </table>
-
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Dataset History -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="DatasetHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Data Set Release History"
-             queryRef="DatasetTables.DatasetHistory">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="build" displayName="VEuPathDB Build"/>
-        <columnAttribute name="release_date" displayName="Release Date"/>
-        <columnAttribute name="release_number" displayName="Release"/>
-        <columnAttribute name="version" displayName="Data Set Version"/>
-        <columnAttribute name="note" displayName="Note"/>
-      </table>
-
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-      <!-- Genome tables ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-
-      <!-- =================================================================== -->
-      <!-- Example Graphs ++++++++-->
-      <!-- =================================================================== -->
- <!-- TODO add back
-      <table name="ExampleGraphs"
-             excludeProjects="ClinEpiDB,MicrobiomeDB"
-             displayName="Example Graphs"
-             queryRef="GenomeDatasetTables.ExampleGraphs" inReportMaker="false">
-        <textAttribute name="thumbnail" displayName="Preview">
-          <text>
-            <![CDATA[
-              <img src="/cgi-bin/dataPlotter.pl?project_id=@PROJECT_ID@&id=$$default_graph_id$$&type=$$module$$&fmt=png&template=$$template$$&h=35&w=70&compact=1&datasetId=$$dataset_id$$&default=1"/>
-            ]]>
-          </text>
-        </textAttribute>
-        <columnAttribute internal="true" displayName="source_id" name="source_id"/>
-        <columnAttribute internal="true" displayName="project_id" name="project_id"/>
-        <columnAttribute internal="true" displayName="graph_ids" name="graph_ids"/>
-        <columnAttribute internal="true" displayName="module" name="module"/>
-        <columnAttribute internal="true" displayName="mainOpen" name="mainOpen"/>
-        <columnAttribute internal="true" displayName="dataOpen" name="dataOpen"/>
-        <columnAttribute displayName="Name" name="display_name"/>
-        <columnAttribute internal="true" displayName="description" name="description"/>
-        <columnAttribute internal="true" displayName="x_axis" name="x_axis"/>
-        <columnAttribute internal="true" displayName="y_axis" name="y_axis"/>
-        <columnAttribute internal="true" displayName="has_graph_data" name="has_graph_data"/>
-        <columnAttribute internal="true" displayName="has_meta_data" name="has_meta_data"/>
-        <columnAttribute internal="true" displayName="meta_data_categories" name="meta_data_categories"/>
-        <columnAttribute internal="true" displayName="dataset_name" name="dataset_name"/>
-        <columnAttribute internal="true" displayName="dataset_id" name="dataset_id"/>
-        <columnAttribute internal="true" displayName="is_graph_custom" name="is_graph_custom"/>
-        <columnAttribute displayName="Assay Type" name="assay_type"/>
-        <columnAttribute internal="true"  displayName="Template" name="template"/>
-        <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
-        <propertyList name="excludeFromDumper"><value>true</value></propertyList>
-      </table>
--->
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Genome History -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Data Set Release History"
-             queryRef="GenomeDatasetTables.GenomeHistory">
-        <description includeProjects="VectorBase"><![CDATA[<i>
-                On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 
-              </i>]]>
-        </description>
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="build" displayName="VEuPathDB Build"/>
-        <columnAttribute name="release_date" displayName="Release Date"/>
-        <columnAttribute name="release_number" displayName="Release"/>
-        <columnAttribute name="genome_source" displayName="Genome Source"/>
-        <columnAttribute name="genome_version" displayName="Genome Version" internal="true"/>
-        <columnAttribute name="assembly_url" internal="true"/>
-        <linkAttribute name="genome_link" inReportMaker="false" internal="false"
-                       displayName="Genome Version">
-             <displayText>
-                <![CDATA[
-                $$genome_version$$
-                ]]>
-             </displayText>
-             <url>
-                <![CDATA[
-                      $$assembly_url$$
-                ]]>
-             </url>
-        </linkAttribute>
-        <columnAttribute name="annotation_source" displayName="Structural Annotation Source"/>
-        <columnAttribute name="annotation_version" displayName="Structural Annotation Version"/>
-        <columnAttribute name="functional_annotation_source" displayName="Functional Annotation Source"/>
-        <columnAttribute name="functional_annotation_version" displayName="Functional Annotation Version"/>
-        <columnAttribute name="note" displayName="Note"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- References -->
+      <!-- Dependencies -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Explore this Data Set within this Website"
-             queryRef="GenomeDatasetTables.References">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="text" inReportMaker="false" internal="true"/>
-        <columnAttribute name="url" inReportMaker="false" internal="true"/>
-        <columnAttribute name="description" inReportMaker="false" internal="true"/>
-        <columnAttribute name="record_type" displayName="Record Type" />
-        <columnAttribute name="target_type" displayName="Type of Reference"/>
-        <columnAttribute name="target_name" displayName="Name"/>
-        <columnAttribute name="link_type" displayName="link_type"/>
-      </table>
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Version   -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Version"
-             displayName="Provider's Version"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             queryRef="GenomeDatasetTables.Version">
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="organism" displayName="Reference Organism"/>
+      <table name="Dependencies"
+             displayName="Dependencies"
+             queryRef="UserDatasetTables.Dependencies">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="identifier" displayName="Identifier"/>
+        <columnAttribute name="display_name" displayName="Name"/>
         <columnAttribute name="version" displayName="Version"/>
-        <columnAttribute name="project_id" displayName="Project"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Transcript type counts -->
+      <!-- Funding Awards -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="TranscriptTypeCounts"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Transcript Types"
-             queryRef="GenomeDatasetTables.TranscriptTypeCounts">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="gene_type"  displayName="Gene type"/>
-        <columnAttribute name="transcript_type" displayName="Transcript type"/>
-        <columnAttribute name="transcript_count" displayName="Transcript count"/>
+      <table name="FundingAwards"
+             displayName="Funding Awards"
+             queryRef="UserDatasetTables.FundingAwards">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="agency" displayName="Funding Agency"/>
+        <columnAttribute name="award_number" displayName="Award Number"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Gene type counts -->
+      <!-- Countries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="GeneTypeCounts"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Gene Types"
-             queryRef="GenomeDatasetTables.GeneTypeCounts">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="gene_type"  displayName="Gene type"/>
-        <columnAttribute name="gene_count" displayName="Gene count"/>
+      <table name="Countries"
+             displayName="Countries"
+             queryRef="UserDatasetTables.Countries">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="country" displayName="Country"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Sequence type counts -->
+      <!-- Species -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="SequenceTypeCounts"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Sequence Types (Highest Level of Assembly)"
-             queryRef="GenomeDatasetTables.SequenceTypeCounts">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="sequence_type"  displayName="Sequence type"/>
-        <columnAttribute name="sequence_count" displayName="Sequence count"/>
+      <table name="Species"
+             displayName="Species"
+             queryRef="UserDatasetTables.Species">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="species" displayName="Species"/>
       </table>
 
-
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Busco -->
+      <!-- Diseases -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
-      <table name="Busco" excludeProjects="HostDB,MicrobiomeDB,ClinEpiDB"
-             displayName="BUSCO"
-             queryRef="GenomeDatasetTables.Busco">
-        <description><![CDATA[<i>
-Based on evolutionarily informed expectations of gene content of near-universal single-copy orthologs, BUSCO metric complements technical metrics like N50. For a comprehensive user guide, including result interpretation, the latest citation, and additional information, please refer to the following link: <a href="https://busco.ezlab.org">https://busco.ezlab.org</a>. The current version employed by VEuPathDB is v5.4.7. In "genome" mode, BUSCO utilized the MetaEuk gene predictor, while the official protein set of each genome was employed for BUSCO runs in "proteins" mode.
-</i>]]></description>
-        <!-- columnAttribute name="organism_id" internal="true"/ -->
-        <columnAttribute name="sequence_type" displayName="SequenceType"/>
-        <columnAttribute name="c_score" displayName="Complete BUSCOs (C)"/>
-        <columnAttribute name="s_score" displayName="Complete and single-copy BUSCOs (S)"/>
-        <columnAttribute name="d_score" displayName="Complete and duplicated BUSCOs (D) "/>
-        <columnAttribute name="f_score" displayName="Fragmented BUSCOs (F)"/>
-        <columnAttribute name="m_score" displayName="Missing BUSCOs (M)"/>
-        <columnAttribute name="lineage_dataset" displayName="Lineage Dataset"/>
+      <table name="Diseases"
+             displayName="Diseases"
+             queryRef="UserDatasetTables.Diseases">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="disease" displayName="Disease"/>
       </table>
 
-
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Other data associated with genomes -->
+      <!-- Study Characteristics -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="GenomeAssociatedData"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Explore other Categories of Data Associated with this Genome"
-             queryRef="GenomeDatasetTables.GenomeAssociatedData">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="category"  displayName="Category"/>
-        <columnAttribute name="organism"  displayName="organism" internal="true"/>
-        <columnAttribute name="dataset_count" displayName="Dataset count" internal="true"/>
-        <linkAttribute name="hyper_link" inReportMaker="false" internal="false"
-                       displayName="Dataset count">
-          <displayText>
-            <![CDATA[
-              $$dataset_count$$
-            ]]>
-          </displayText>
-          <url>
-            <![CDATA[
-              @WEBAPP_BASE_URL@/search/dataset/DatasetsByCategoryAndOrganism?param.organism=$$organism$$&param.dataset_category=$$category$$&autoRun=1
-            ]]>
-          </url>
-        </linkAttribute>
-      </table>
-
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- External Resources and Databases for genomes -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
-      <table name="ExternalDatabases"
-             excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="External Databases Associated to Genome Annotation"
-             queryRef="GenomeDatasetTables.ExternalDatabases">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="name"  internal="true"/>
-        <columnAttribute name="id_url"  internal="true"/>
-        <textAttribute name="external_link" inReportMaker="false" internal="false"
-                       displayName="Name">
-          <text>
-            <![CDATA[
-              <a href=$$id_url$$ target="_blank">$$name$$</a>
-            ]]>
-          </text>
-        </textAttribute>
-      </table>
-	
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-      <!-- ClinEpi and Mbio tables ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Study Characteristic -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
-      <!-- NOTE: We're reusing the attribute query here -->
-      <table name="StudyCharacteristicTable" includeProjects="ClinEpiDB"
+      <table name="Characteristics"
              displayName="Study Characteristics"
-             queryRef="DatasetAttributes.StudyCharacteristic">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <!--            <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/> -->
-        <columnAttribute name="disease" displayName="Disease" sortable="false"/>
-        <columnAttribute name="sex" displayName="Sex" sortable="false"/>
-        <columnAttribute name="Sample_Type" displayName="Sample Type" sortable="false"/>
-<!--           <columnAttribute name="Participant_Type" displayName="Population included" sortable="false"/> -->
-        <columnAttribute name="Study_Type"  displayName="Investigation Type" sortable="false"/>
-        <columnAttribute name="Study_Design"  displayName="Study Design" sortable="false"/>
-        <columnAttribute name="Country"  displayName="Country" sortable="false"/>
-        <columnAttribute name="Years"  displayName="Years" sortable="false"/>
-        <columnAttribute name="Variable_count" displayName="Variables" sortable="false"/>
-        <columnAttribute name="HH_count"  displayName="Households" sortable="false"/>
-        <columnAttribute name="Part_count" displayName="Participants" sortable="false"/>
-        <columnAttribute name="Obser_count" displayName="Participant Repeated Measures" sortable="false"/>
-        <columnAttribute name="Samp_count"  displayName="Samples" sortable="false"/>
-        <columnAttribute name="AdditionalData"  displayName="Additional Data" sortable="false"/>
-        <columnAttribute name="Age"  displayName="Age" sortable="false"/>
-        <columnAttribute name="WHO"  displayName="WHO indicator subdomain" sortable="false"/>
-        <columnAttribute name="ProjectName"  displayName="Project Name" sortable="false"/>
+             queryRef="UserDatasetTables.Characteristics">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="study_design" displayName="Study Design"/>
+        <columnAttribute name="study_type" displayName="Study Type"/>
+        <columnAttribute name="participant_ages" displayName="Participant Ages"/>
+        <columnAttribute name="sample_year_start" displayName="Sample Year Start"/>
+        <columnAttribute name="sample_year_end" displayName="Sample Year End"/>
       </table>
 
-
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- request stats table -->
+      <!-- Installation Messages -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
-      <!--  comment out until we have mapped schemas (to a postgres acctdb) 
-      <table name="AccessRequestStats" includeProjects="ClinEpiDB"
-             displayName="Data Access Statistics"
-             queryRef="DatasetTables.AccessRequestStats">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="total" displayName="Total requests"/>
-        <columnAttribute name="approved" displayName="Approved requests"/>
-        <columnAttribute name="approved_percent" displayName="Percent approved"/>
-
+      <table name="InstallMessages"
+             displayName="Installation Messages"
+             queryRef="UserDatasetTables.InstallMessages">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="install_type" displayName="Install Type"/>
+        <columnAttribute name="status" displayName="Status"/>
+        <columnAttribute name="message" displayName="Message"/>
+        <columnAttribute name="updated" displayName="Last Updated"/>
       </table>
--->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- request table -->
+      <!-- Projects -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!--  comment out until we have mapped schemas (to a postgres acctdb)  
-      <table name="AccessRequest" includeProjects="ClinEpiDB"
-             displayName="Data Access Records"
-             queryRef="DatasetTables.AccessRequest">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="name" displayName="Name"/>
-        <columnAttribute name="organization" displayName="Organization"/>
-        <columnAttribute name="start_date" displayName="Date"/>
-        <columnAttribute name="purpose" displayName="Purpose"/>
+      <table name="Projects"
+             displayName="Associated Projects"
+             queryRef="UserDatasetTables.Projects">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="project_id" displayName="Project ID"/>
       </table>
--->
 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- External Identifiers -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExternalIds"
+             displayName="External Identifiers"
+             queryRef="UserDatasetTables.ExternalIds">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="identifier_type" displayName="Type"/>
+        <columnAttribute name="identifier_value" displayName="Identifier"/>
+      </table>
 
     </recordClass>
+
   </recordClassSet>
 
 </wdkModel>

@@ -43,4 +43,8 @@
     <import file="model/questions/queries/datasourceQueries.xml"/>
     <import file="model/records/datasourceRecords.xml"/>
 
+    <!-- User Data Sets -->
+    <import file="model/records/userDatasetRecords.xml"/>
+    <import file="model/records/userDatasetQueries.xml"/>
+
 </wdkModel>
