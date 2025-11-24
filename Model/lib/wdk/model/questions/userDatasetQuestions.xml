@@ -1,0 +1,150 @@
+<wdkModel>
+
+  <questionSet name="UserDatasetQuestions" displayName="Search for User Datasets">
+
+    <!-- ************************************************************ -->
+    <!-- SourceId -->  
+    <!-- ************************************************************ -->
+
+    <question name="AllUserDatasets"
+      displayName="User Datasets"
+      shortDisplayName="All User DS"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.AllUserDatasets"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find all user datasets.
+      </description>
+    </question>
+
+    <question name="UserDatasetsByDatasetNames"
+      displayName="User Datasets by dataset names"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByExternalDatabaseNames"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.)
+      </description>
+    </question>
+
+<!-- TODO these questions need to be renamed per datatype
+
+    <question name="UserDatasetsByReferenceName"
+      displayName="User Datasets used to generate a table or result"
+      shortDisplayName="Reference"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByReferenceName"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+      </description>
+    </question>
+
+    <question name="UserDatasetsByReferenceNameNoTaxon"
+      displayName="User Datasets used in a search"
+      shortDisplayName="RefNoTaxon"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByReferenceNameNoTaxon"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="category asc" />
+      <description>
+         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+      </description>
+    </question>
+
+
+
+    <question name="UserDatasetsByQuestionName"
+      displayName="User Datasets used in a search"
+      shortDisplayName="Search"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByQuestionName"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="display_name asc" />
+      <description>
+        Find data sets that are associated with a particular search.
+      </description>
+    </question>
+-->
+
+
+    <question name="UserDatasetsById"
+      displayName="User Datasets by ID"
+      shortDisplayName="ID"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ById"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <attributesList sorting="display_name asc" />
+      <description>
+         Find data sets by ID
+      </description>
+    </question>
+
+
+    <question name="UserDatasetsByUserId"
+      displayName="User Datasets study_access level based on user_id"
+      shortDisplayName="StudyAccess"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByUserId"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      includeProjects="ClinEpiDB"
+      noSummaryOnSingleRecord="true">
+      <attributesList summary="study_id, restriction_level" />
+      <description>
+         Find data sets that are associated with a particular data set type and subtype
+      </description>
+       <dynamicAttributes>
+         <columnAttribute name="restriction_level" displayName="Study Access level"  align="left" />
+         <columnAttribute name="study_id" displayName="Study Id"  align="left" />
+      </dynamicAttributes>
+    </question>
+
+
+    <question name="UserDatasetsByText"
+        excludeProjects="MicrobiomeDB,ClinEpiDB"
+        displayName="Text (keyword)"
+        shortDisplayName="Text"
+        queryRef="UserDatasetsIds.UserDatasetsByText"
+        recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+        noSummaryOnSingleRecord="true">
+
+      <attributesList summary="contact,institution,max_score" sorting="max_score desc" /> 
+
+      <summary>
+        <![CDATA[
+          Find data sets by keyword search. Use * as a wildcard
+        ]]>
+      </summary>
+
+      <description>
+        <![CDATA[
+          Find data sets by keyword search. Use * as a wildcard
+        ]]>
+      </description>
+
+      <dynamicAttributes>
+        <columnAttribute name="max_score" displayName="Score" align="center">
+          <reporter name="histogram" displayName="Histogram" scopes=""
+              implementation="org.gusdb.wdk.model.report.reporter.HistogramAttributeReporter">
+            <description>Display the histogram of the values of this attribute</description>
+            <property name="type">int</property>
+          </reporter>
+        </columnAttribute>
+      </dynamicAttributes>
+
+    </question>
+
+
+
+  </questionSet>
+
+</wdkModel>

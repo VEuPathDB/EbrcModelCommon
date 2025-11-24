@@ -226,27 +226,6 @@
     </sqlQuery>
 
 
-    <!-- JB:  Weird that profile_graph is included here -->
-    <sqlQuery name="ByRecordClass">
-      <testParamValues>
-        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.record_class"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetmodelref ref, apidbtuning.datasetpresenter dsp, apidbtuning.datasetdatasource dd
-          WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
-            AND ref.record_type = $$record_class$$
-            AND ref.target_type IN ('table', 'attribute','profile_graph')
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
-	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
-        ]]>
-      </sql>
-    </sqlQuery>
 
     <sqlQuery name="ByCategoryAndOrganism" excludeProjects="MicrobiomeDB,ClinEpiDB">
 

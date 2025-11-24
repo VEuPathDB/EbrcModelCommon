@@ -1,0 +1,156 @@
+<wdkModel>
+
+  <!-- This set of queries is isCacheable=false because user datasets can be added/removed dynamically -->
+
+  <querySet name="UserDatasetsIds" queryType="id" isCacheable="false">
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- User Dataset ID Queries  -->
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <sqlQuery name="AllUserDatasets">
+      <paramRef ref="InternalParams.user_id"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+            SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id
+            FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+            WHERE user_id = $$user_id$$
+            AND (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByExternalDatabaseNames">
+      <testParamValues>
+        <paramValue name="dataset_name">example_dataset</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.dataset_name"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud,
+               @VDI_CONTROL_SCHEMA@.dataset_meta dm
+          WHERE aud.dataset_id = dm.dataset_id
+          AND dm.name IN ($$dataset_name$$)
+        ]]>
+      </sql>
+    </sqlQuery>
+
+<!-- TODO these questions is really datasets per dataset category (eg phenotype) 
+
+    <sqlQuery name="ByReferenceName">
+      <testParamValues>
+        <paramValue name="reference_name">GeneQuestions.GenesByTaxon</paramValue>
+        <paramValue name="record_class">TranscriptRecordClasses.TranscriptRecordClass</paramValue>
+        <paramValue name="taxon">any</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.reference_name"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <paramRef ref="datasetParams.taxon"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
+          WHERE 1=0  -- User datasets currently do not support model references
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ByReferenceNameNoTaxon">
+      <testParamValues>
+        <paramValue name="reference_name">Reference</paramValue>
+        <paramValue name="record_class">PopsetRecordClasses.PopsetRecordClass</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.reference_name"/>
+      <paramRef ref="datasetParams.record_class"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
+          WHERE 1=0  -- User datasets currently do not support model references
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="ByQuestionName">
+      <testParamValues>
+        <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.question_name"/>
+      <column name="dataset_id"/>
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
+          WHERE 1=0  -- User datasets currently do not support question references
+        ]]>
+      </sql>
+    </sqlQuery>
+-->
+    <sqlQuery name="ById">
+      <testParamValues>
+        <paramValue name="dataset_id">EDAUD_12345</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.dataset_id"/>
+      <column name="dataset_id"/>
+
+      <sql>
+        <![CDATA[
+          SELECT DISTINCT CONCAT('EDAUD_', user_dataset_id) as dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+          WHERE CONCAT('EDAUD_', user_dataset_id) in ($$dataset_id$$)
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
+      <testParamValues>
+        <paramValue name="user_id">48</paramValue>
+      </testParamValues>
+
+      <paramRef ref="datasetParams.user_id"/>
+      <column name="dataset_id"/>
+      <column name="study_id"/>
+      <column name="restriction_level"/>
+
+      <sql>
+        <![CDATA[
+          SELECT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id,
+                 CONCAT('EDAUD_', aud.user_dataset_id) as study_id,
+                 d.accessibility as restriction_level
+          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud,
+               @VDI_CONTROL_SCHEMA@.dataset d
+          WHERE aud.dataset_id = d.dataset_id
+          AND aud.user_id = $$user_id$$
+          AND aud.project_id = '@PROJECT_ID@'
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <processQuery name="UserDatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
+                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
+      <paramRef ref="sharedParams.text_expression"/>
+      <paramRef ref="sharedParams.document_type" default="user_dataset"/>
+      <paramRef ref="sharedParams.text_fields"/>
+      <!-- NOTE: organism param will break in mbio/clinepi/ortho if ever added! -->
+      <!-- <paramRef ref="organismParams.text_search_organism" selectMode="all"/> -->
+      <!-- the parameter below caches the results for 30 minutes -->
+      <paramRef ref="sharedParams.timestamp" interval="1800"/>
+      <wsColumn name="dataset_id" width="50"/>
+      <wsColumn name="max_score" width="10" columnType="float"/>
+    </processQuery>
+
+  </querySet>
+
+</wdkModel>
