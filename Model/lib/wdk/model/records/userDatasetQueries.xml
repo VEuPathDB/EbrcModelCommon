@@ -8,8 +8,21 @@
   <querySet name="UserDatasetAttributes" queryType="attribute" doNotTest="true" isCacheable='false'>
 
     <testRowCountSql>
-      SELECT count(*) FROM  @VDI_CONTROL_SCHEMA@.dataset
+      SELECT count(*) FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
     </testRowCountSql>
+
+    <sqlQuery name="EdaStudyMapping" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="eda_study_id" columnType="string"/>
+      <sql>
+        <![CDATA[
+            select
+              dataset_stable_id as dataset_id,
+              study_stable_id as eda_study_id
+            from @VDI_DATASETS_SCHEMA@.userstudydatasetid
+        ]]>
+      </sql>
+    </sqlQuery>
 
     <!-- Core metadata from dataset table -->
     <sqlQuery name="CoreMetadata" isCacheable="false">
@@ -67,46 +80,15 @@
       </sql>
     </sqlQuery>
 
-    <!-- Sync control timestamps -->
-    <sqlQuery name="SyncControl" isCacheable="false">
-      <column name="dataset_id" columnType="string"/>
-      <column name="shares_update_time" columnType="string"/>
-      <column name="data_update_time" columnType="string"/>
-      <column name="meta_update_time" columnType="string"/>
-      <sql>
-        <![CDATA[
-          SELECT
-            dataset_id,
-            TO_CHAR(shares_update_time, 'YYYY-MM-DD HH24:MI:SS TZ') as shares_update_time,
-            TO_CHAR(data_update_time, 'YYYY-MM-DD HH24:MI:SS TZ') as data_update_time,
-            TO_CHAR(meta_update_time, 'YYYY-MM-DD HH24:MI:SS TZ') as meta_update_time
-          FROM  @VDI_CONTROL_SCHEMA@.sync_control
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <!-- Installation status summary -->
-    <sqlQuery name="InstallStatus" isCacheable="false">
-      <column name="dataset_id" columnType="string"/>
-      <column name="install_summary" columnType="string"/>
-      <sql>
-        <![CDATA[
-          SELECT
-            dataset_id,
-            string_agg(install_type || ': ' || status, ', ' ORDER BY install_type) as install_summary
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_install_message
-          GROUP BY dataset_id
-        ]]>
-      </sql>
-    </sqlQuery>
-
     <!-- Dataset alias for primary key -->
     <sqlQuery name="DatasetAlias" doNotTest="true">
       <column name="dataset_id" columnType="string"/>
+      <column name="old_dataset_id" columnType="string"/>
       <sql>
         <![CDATA[
-          SELECT dataset_id
-          FROM  @VDI_CONTROL_SCHEMA@.dataset
+          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+	          CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
     </sqlQuery>
@@ -132,7 +114,7 @@
             dataset_id,
             external_id,
             type,
-            citation,
+            regexp_replace(citation, '\s+<', ' <') AS citation,
             CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary,
             CASE
               WHEN type = 'PubMed' THEN 'https://www.ncbi.nlm.nih.gov/pubmed/' || external_id
@@ -200,25 +182,6 @@
             description
           FROM  @VDI_CONTROL_SCHEMA@.dataset_hyperlink
           ORDER BY description
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <!-- Dependencies table -->
-    <sqlQuery name="Dependencies" isCacheable='false'>
-      <column name="dataset_id"/>
-      <column name="identifier"/>
-      <column name="display_name"/>
-      <column name="version"/>
-      <sql>
-        <![CDATA[
-          SELECT
-            dataset_id,
-            identifier,
-            display_name,
-            version
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_dependency
-          ORDER BY display_name
         ]]>
       </sql>
     </sqlQuery>
@@ -303,27 +266,6 @@
             sample_year_start,
             sample_year_end
           FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <!-- Installation Messages table -->
-    <sqlQuery name="InstallMessages" isCacheable='false'>
-      <column name="dataset_id"/>
-      <column name="install_type"/>
-      <column name="status"/>
-      <column name="message"/>
-      <column name="updated"/>
-      <sql>
-        <![CDATA[
-          SELECT
-            dataset_id,
-            install_type,
-            status,
-            message,
-            TO_CHAR(updated, 'YYYY-MM-DD HH24:MI:SS TZ') as updated
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_install_message
-          ORDER BY install_type, updated DESC
         ]]>
       </sql>
     </sqlQuery>

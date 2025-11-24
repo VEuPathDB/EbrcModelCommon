@@ -2,12 +2,18 @@
 
 <wdkModel>
 
+    <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB">User Study</constant>
+  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB">User Studies</constant>
+
+  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB">User Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB">User Datasets</constant>
+
+
   <recordClassSet name="UserDatasetRecordClasses">
 
     <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
 
-    <recordClass name="UserDatasetRecordClass" displayName="User Dataset" displayNamePlural="User Datasets" urlName="user-dataset" useBasket="false">
-
+    <recordClass name="UserDatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset" useBasket="false" >
       <testParamValues>
         <paramValue name="dataset_id">test123</paramValue>
       </testParamValues>
@@ -57,7 +63,7 @@
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
         <columnAttribute name="dataset_id" internal="true" displayName="Dataset ID"/>
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
-        <columnAttribute name="type_name" displayName="Type" help="Dataset type name"/>
+        <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
         <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>
         <columnAttribute name="category" displayName="Category" help="Dataset category"/>
         <columnAttribute name="deleted_status" displayName="Deleted Status"
@@ -65,7 +71,7 @@
         <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
         <columnAttribute name="accessibility" displayName="Accessibility"
                          help="Access level: public, protected, or private"/>
-        <columnAttribute name="days_for_approval" displayName="Days for Approval"
+        <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
         <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
       </attributeQueryRef>
@@ -78,21 +84,11 @@
         <columnAttribute name="program_name" displayName="Program" help="Program name"/>
         <columnAttribute name="project_name" displayName="Project" help="Project name"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
-        <columnAttribute name="short_name" displayName="Short Name" help="Abbreviated dataset name"/>
+        <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.SyncControl">
-        <columnAttribute name="shares_update_time" displayName="Shares Updated"
-                         help="Last time sharing information was updated"/>
-        <columnAttribute name="data_update_time" displayName="Data Updated"
-                         help="Last time data was updated"/>
-        <columnAttribute name="meta_update_time" displayName="Metadata Updated"
-                         help="Last time metadata was updated"/>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="UserDatasetAttributes.InstallStatus">
-        <columnAttribute name="install_summary" displayName="Installation Status"
-                         help="Summary of installation status across all install types"/>
+      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
+        <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
       </attributeQueryRef>
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
@@ -139,7 +135,7 @@
         <columnAttribute name="affiliation" displayName="Affiliation"/>
         <columnAttribute name="email" displayName="Email"/>
         <columnAttribute name="country" displayName="Country"/>
-        <columnAttribute name="is_primary" displayName="Primary Contact"/>
+        <columnAttribute name="is_primary" displayName="Primary contact"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -180,26 +176,14 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Dependencies -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Dependencies"
-             displayName="Dependencies"
-             queryRef="UserDatasetTables.Dependencies">
-        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="identifier" displayName="Identifier"/>
-        <columnAttribute name="display_name" displayName="Name"/>
-        <columnAttribute name="version" displayName="Version"/>
-      </table>
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Funding Awards -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="FundingAwards"
              displayName="Funding Awards"
              queryRef="UserDatasetTables.FundingAwards">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="agency" displayName="Funding Agency"/>
-        <columnAttribute name="award_number" displayName="Award Number"/>
+        <columnAttribute name="agency" displayName="Funding agency"/>
+        <columnAttribute name="award_number" displayName="Award number"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -239,24 +223,11 @@
              displayName="Study Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="study_design" displayName="Study Design"/>
-        <columnAttribute name="study_type" displayName="Study Type"/>
-        <columnAttribute name="participant_ages" displayName="Participant Ages"/>
-        <columnAttribute name="sample_year_start" displayName="Sample Year Start"/>
-        <columnAttribute name="sample_year_end" displayName="Sample Year End"/>
-      </table>
-
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Installation Messages -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="InstallMessages"
-             displayName="Installation Messages"
-             queryRef="UserDatasetTables.InstallMessages">
-        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="install_type" displayName="Install Type"/>
-        <columnAttribute name="status" displayName="Status"/>
-        <columnAttribute name="message" displayName="Message"/>
-        <columnAttribute name="updated" displayName="Last Updated"/>
+        <columnAttribute name="study_design" displayName="Study design"/>
+        <columnAttribute name="study_type" displayName="Study type"/>
+        <columnAttribute name="participant_ages" displayName="Participant ages"/>
+        <columnAttribute name="sample_year_start" displayName="Sample year start"/>
+        <columnAttribute name="sample_year_end" displayName="Sample year end"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
