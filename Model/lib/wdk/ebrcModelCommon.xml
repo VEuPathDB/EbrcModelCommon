@@ -44,6 +44,8 @@
     <import file="model/records/datasourceRecords.xml"/>
 
     <!-- User Data Sets -->
+    <import file="model/questions/userDatasetQuestions.xml"/>
+    <import file="model/questions/queries/userDatasetQueries.xml"/>
     <import file="model/records/userDatasetRecord.xml"/>
     <import file="model/records/userDatasetRecordQueries.xml"/>
 

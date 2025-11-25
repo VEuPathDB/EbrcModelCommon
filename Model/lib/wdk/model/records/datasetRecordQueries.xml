@@ -740,8 +740,8 @@
       </sql>
 
     </sqlQuery>
-
-    <sqlQuery name="ExampleGraphs">
+<!--
+    <sqlQuery name="ExampleGraphs" excludeProjects="MicrobiomeDB,ClinEpiDB">
       <column name="source_id" />
       <column name="project_id" />
       <column name="graph_ids" />
@@ -777,7 +777,7 @@
                    'TRUE' as mainOpen,
                    'FALSE' as dataOpen,
                    '' as meta_data_categories,
-                   graph_descrip.*--,
+                   ***********CHECK THIS LINE removed dashdash   graph_descrip.*,
             FROM (
               SELECT '' as dataset,
                      '' as display_name,
@@ -788,7 +788,6 @@
                      '' as is_graph_custom,
                      'other' as assay_type,
                      1 as order_num
-                    -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
             ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
                    ApidbTuning.datassetdatasource dd
             WHERE p.dataset = graph_descrip.dataset
@@ -797,7 +796,7 @@
         ]]>
       </sql>
     </sqlQuery>
-
+-->
     <sqlQuery name="History"  isCacheable='false'>
       <column name="dataset_id"/>
       <column name="build"/>
