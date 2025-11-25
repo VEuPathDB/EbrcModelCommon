@@ -21,7 +21,7 @@
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           AND dd.category = 'Genomes'
-          AND dd.project_id = '@PROJECT_ID@'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         GROUP BY oa.project_id, dsp.dataset_presenter_id
       </sql>
     </sqlQuery>
@@ -40,10 +40,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE dd.project_id = '@PROJECT_ID@'
-          -- UNION
-          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as megabase_pairs, null as genecount
-          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -74,11 +71,7 @@
                   GROUP BY dataset_presenter_id
               ) dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-            WHERE dd.project_id = '@PROJECT_ID@'
-            -- UNION
-            -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
-            --   CASE WHEN is_public = 1 THEN 'yes' ELSE 'no' END as is_public
-            -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
         </sql>
       </sqlQuery>
@@ -115,10 +108,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN all_versions_filtered av ON dsp.dataset_presenter_id = av.dataset_presenter_id
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE dd.project_id = '@PROJECT_ID@'
-          -- UNION
-          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as genome_version, null as annotation_version, null as functional_annotation_version
-          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -134,6 +124,7 @@
              FROM apidbtuning.datasetdatasource dd
                 LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
                 LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism AND aid.apolloid IS NOT NULL
+             WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           )
           SELECT distinct dsp.dataset_presenter_id AS dataset_id,
             CASE WHEN in_apollo IS NOT NULL
@@ -142,10 +133,7 @@
           FROM apidbtuning.datasetPresenter dsp
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN apollo_dataset ad ON dsp.dataset_presenter_id = ad.dataset_presenter_id
-          WHERE dd.project_id = '@PROJECT_ID@'
-          -- UNION
-          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, 'N/A' as in_apollo
-          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -168,13 +156,10 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 END as org
             FROM apidbtuning.datasetdatasource dd
               LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
-            WHERE dd.project_id = '@PROJECT_ID@'
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             AND dd.category != 'Link outs'
           ) t
           GROUP BY dataset_id
-          --UNION
-          --SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, null as organism_prefix
-          --FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
 
@@ -233,8 +218,8 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
                 LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism
           WHERE dh.build_number = bd.build_number::NUMERIC
-            AND bd.project = '@PROJECT_ID@'
             AND dh.dataset_presenter_id = dd.dataset_presenter_id
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ORDER BY dh.build_number
         ]]>
       </sql>
@@ -264,7 +249,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                  end as organism,
                  replace (ds.version, '_gus4','') as version
             FROM apidb.datasource ds
-              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name
+              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
               LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
             ORDER BY dd.name
           ) t
@@ -292,6 +277,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
         ORDER BY count(*) desc
       </sql>
@@ -315,6 +301,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         GROUP BY oa.project_id, dsp.dataset_presenter_id, ga.gene_type
         ORDER BY count(*) desc
       </sql>
@@ -338,6 +325,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           AND oa.component_taxon_id = dd.taxon_id
           AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         GROUP BY dsp.dataset_presenter_id, sa.sequence_type
         ORDER BY count(*) desc
       </sql>
@@ -371,6 +359,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 AND dd.taxon_id = tn.taxon_id
                 AND tn.name_class = 'scientific name'
                 AND dd.category = 'Genomes'
+                AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
                 AND o_dd.category NOT IN ('Genomics', 'Link outs')
             ) t
           GROUP BY dataset_id, category, organism
@@ -405,6 +394,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                   ) ext
                 WHERE ext.taxon_id = dd.taxon_id
                   AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+                  AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
                   AND dd.category = 'Genomes'
               )
               SELECT dataset_id
@@ -449,6 +439,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
               AND o.taxon_id = oa.component_taxon_id
               AND oa.component_taxon_id = dd.taxon_id
               AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+              AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
               AND dd.category='Genomes'
         </sql>
       </sqlQuery>
