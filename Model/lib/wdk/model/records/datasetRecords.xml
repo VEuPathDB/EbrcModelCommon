@@ -506,7 +506,7 @@
       <!-- References -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Explore this Data Set within this Website"
+             displayName="Explore this dataset within this website"
              queryRef="GenomeDatasetTables.References">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
