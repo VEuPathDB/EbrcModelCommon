@@ -90,6 +90,13 @@
         <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
+        <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
+        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
+        <columnAttribute name="primary_email" displayName="Primary contact email" help=""/>
+        <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
+      </attributeQueryRef>
+
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
       <!-- =============================================================== -->

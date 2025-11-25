@@ -93,6 +93,34 @@
       </sql>
     </sqlQuery>
 
+    <!-- Primary contact info -->
+    <sqlQuery name="PrimaryContact" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="primary_contact_name"/>
+      <column name="primary_affiliation"/>
+      <column name="primary_email"/>
+      <column name="primary_country"/>
+      <sql>
+        <![CDATA[
+          SELECT d.dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
+	  FROM @VDI_CONTROL_SCHEMA@.dataset d
+	  LEFT JOIN
+          (SELECT
+            dataset_id,
+            affiliation,
+            email,
+            country,
+	    first_name,
+	    last_name,
+	    middle_name
+           FROM @VDI_CONTROL_SCHEMA@.dataset_contact
+           WHERE is_primary is true
+	  ) prim on d.dataset_id = prim.dataset_id
+          ORDER BY last_name, first_name
+        ]]>
+      </sql>
+    </sqlQuery>
+
   </querySet>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

@@ -117,7 +117,7 @@
         recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
         noSummaryOnSingleRecord="true">
 
-<!--      <attributesList summary="contact,institution,max_score" sorting="max_score desc" /> -->
+      <attributesList summary="primary_contact_name, primary_affiliation, max_score" sorting="max_score desc" />
 
       <summary>
         <![CDATA[
