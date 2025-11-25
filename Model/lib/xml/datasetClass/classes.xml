@@ -2934,7 +2934,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-    <graphTemplateFile name="globalEDA.xml"/>
+    <graphTemplateFile name="eda.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
               datasetName="${projectName}_${name}_Phenotype_RSRC"
@@ -2943,7 +2943,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="phenotype"
               >
 
-      <manualGet fileOrDir="common/phenotype/${projectName}/${name}/${version}/final">
+      <manualGet fileOrDir="${projectName}/common/phenotype/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
@@ -2952,7 +2952,29 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
+  <datasetClass class="AntibodyArrayEDA" category="phenotype" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
 
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_AnibodyArray_RSRC"
+              version="${version}"
+              scope="global"
+              type="antibodyArray"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/antibodyArray/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
