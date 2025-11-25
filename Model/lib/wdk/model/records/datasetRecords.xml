@@ -507,7 +507,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
              displayName="Explore this dataset within this website"
-             queryRef="GenomeDatasetTables.References">
+             queryRef="DatasetTables.References">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
         <columnAttribute name="text" inReportMaker="false" internal="true"/>
@@ -526,7 +526,7 @@
       <table name="ExampleGraphs"
              excludeProjects="ClinEpiDB,MicrobiomeDB"
              displayName="Example Graphs"
-             queryRef="GenomeDatasetTables.ExampleGraphs" inReportMaker="false">
+             queryRef="DatasetTables.ExampleGraphs" inReportMaker="false">
         <textAttribute name="thumbnail" displayName="Preview">
           <text>
             <![CDATA[
