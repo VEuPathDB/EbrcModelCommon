@@ -45,6 +45,6 @@
 
     <!-- User Data Sets -->
     <import file="model/records/userDatasetRecord.xml"/>
-    <import file="model/records/userDatasetQueries.xml"/>
+    <import file="model/records/userDatasetRecordQueries.xml"/>
 
 </wdkModel>

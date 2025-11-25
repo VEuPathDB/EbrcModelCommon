@@ -13,7 +13,7 @@
         SELECT distinct dsp.dataset_presenter_id as dataset_id
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , webready.GeneAttributes_p ga
+          , apidbtuning.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ga.taxon_id
@@ -284,7 +284,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           , ta.transcript_type
           , count(*) as transcript_count
         FROM apidbtuning.organismattributes oa
-          , webready.TranscriptAttributes_p ta
+          , apidbtuning.TranscriptAttributes ta
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ta.taxon_id
@@ -307,7 +307,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           , ga.gene_type
           , count(*) as gene_count
         FROM apidbtuning.organismattributes oa
-          , webready.GeneAttributes_p ga
+          , apidbtuning.GeneAttributes ga
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = ga.taxon_id
@@ -330,7 +330,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           , sa.sequence_type
           , count(*) as sequence_count
         FROM apidbtuning.organismattributes oa
-          , webready.GenomicSeqAttributes_p sa
+          , apidbtuning.GenomicSeqAttributes sa
           , apidbtuning.datasetpresenter dsp
           , apidbtuning.datasetdatasource dd
         WHERE oa.component_taxon_id = sa.taxon_id
