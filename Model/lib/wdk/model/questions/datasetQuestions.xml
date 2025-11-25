@@ -150,25 +150,6 @@
       </description>
     </question>
 
-
-    <question name="DatasetsByCategoryAndOrganism"
-      displayName="Data Sets by Category and organism"
-      excludeProjects="MicrobiomeDB,ClinEpiDB"
-      shortDisplayName="Category"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByCategoryAndOrganism"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <!-- TODO Add back "organism prefix" here -->
-      <attributesList summary="newcategory,pmids,summary,contact" 
-                      sorting="contact asc"
-       />
-      <description>
-         Find data sets that are associated with a particular category and organism
-      </description>
-    </question>
-
-
     <question name="DatasetsByUserId"
       displayName="Data Sets study_access level based on user_id"
       shortDisplayName="StudyAccess"

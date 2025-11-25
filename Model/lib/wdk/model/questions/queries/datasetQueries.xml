@@ -226,36 +226,6 @@
     </sqlQuery>
 
 
-
-    <sqlQuery name="ByCategoryAndOrganism" excludeProjects="MicrobiomeDB,ClinEpiDB">
-
-      <paramRef ref="datasetParams.dataset_category"/>
-      <paramRef ref="datasetParams.organism"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dd.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
-          WHERE dd.category = $$dataset_category$$
-            AND dd.taxon_id = tn.taxon_id
-            AND tn.name_class =  'scientific name'
-            AND tn.name = $$organism$$
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
-	  UNION
-          SELECT DISTINCT dd.dataset_presenter_id as dataset_id
-          FROM apidbtuning.datasetdatasource dd, sres.taxonname tn
-          WHERE dd.category = $$dataset_category$$
-            AND dd.taxon_id = tn.taxon_id
-            AND tn.name_class =  'scientific name'
-            AND tn.name = $$organism$$
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
-	    
-        ]]>
-      </sql>
-    </sqlQuery>
-
-
     <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
       <testParamValues>
         <paramValue name="user_id">48</paramValue>

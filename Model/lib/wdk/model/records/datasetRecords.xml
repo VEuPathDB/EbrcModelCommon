@@ -512,11 +512,22 @@
         <columnAttribute name="note" displayName="Note"/>
       </table>
 
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
-      <!-- Genome tables ++++++++-->
-      <!-- =================================================================== -->
-      <!-- =================================================================== -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- References -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
+             displayName="Explore this Data Set within this Website"
+             queryRef="GenomeDatasetTables.References">
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="text" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" inReportMaker="false" internal="true"/>
+        <columnAttribute name="description" inReportMaker="false" internal="true"/>
+        <columnAttribute name="record_type" displayName="Record Type" />
+        <columnAttribute name="target_type" displayName="Type of Reference"/>
+        <columnAttribute name="target_name" displayName="Name"/>
+        <columnAttribute name="link_type" displayName="link_type"/>
+      </table>
 
       <!-- =================================================================== -->
       <!-- Example Graphs ++++++++-->
@@ -556,6 +567,13 @@
       </table>
 -->
 
+      <!-- =================================================================== -->
+      <!-- =================================================================== -->
+      <!-- Genome tables ++++++++-->
+      <!-- =================================================================== -->
+      <!-- =================================================================== -->
+
+
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Genome History -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -593,22 +611,6 @@
         <columnAttribute name="note" displayName="Note"/>
       </table>
 
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- References -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="References"  excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Explore this Data Set within this Website"
-             queryRef="GenomeDatasetTables.References">
-        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="text" inReportMaker="false" internal="true"/>
-        <columnAttribute name="url" inReportMaker="false" internal="true"/>
-        <columnAttribute name="description" inReportMaker="false" internal="true"/>
-        <columnAttribute name="record_type" displayName="Record Type" />
-        <columnAttribute name="target_type" displayName="Type of Reference"/>
-        <columnAttribute name="target_name" displayName="Name"/>
-        <columnAttribute name="link_type" displayName="link_type"/>
-      </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Version   -->

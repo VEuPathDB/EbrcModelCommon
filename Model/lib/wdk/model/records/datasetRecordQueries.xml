@@ -678,6 +678,126 @@
       </sql>
     </sqlQuery>
 
+   <sqlQuery name="References"  isCacheable='false'  excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="dataset_name"/>
+      <column name="text"/>
+      <column name="url"/>
+      <column name="description"/>
+      <column name="record_type"/>
+      <column name="target_type"/>
+      <column name="target_name"/>
+      <column name="link_type"/>
+      <sql>
+        <![CDATA[
+          WITH projectQuestionLinks AS (
+              SELECT dsp.dataset_presenter_id as dataset_id
+                , dsp.name as dataset_name
+                , '' as text
+                , '' as url
+                , '' as description
+                , ref.record_type
+                , ref.target_type
+                , replace (ref.target_name, ':', '') as target_name
+                , 'question' as link_type
+              FROM ApidbTuning.datasetmodelref ref
+              LEFT JOIN ApidbTuning.DatasetPresenter dsp
+                ON dsp.dataset_presenter_id = ref.dataset_presenter_id		
+              WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
+              ORDER BY dsp.name
+                , ref.target_type
+                , ref.record_type
+                , ref.target_name
+          )
+            SELECT dataset_presenter_id as dataset_id
+              , '' as dataset_name
+              , text
+              , url
+              , description
+              , '' as record_type
+              , '' as target_type
+              , '' as target_name
+              , 'genomicsInternal' as link_type
+            FROM apidbtuning.GenomicsInternalHyperlink
+            WHERE url not like '%app/record/organism/%'
+          UNION
+		    SELECT dsp.dataset_presenter_id as dataset_id
+		       , '' as dataset_name
+		       , 'View this Data Set in MapVEu' as text
+		       , '/popbio-map/web/?projectID=' || p.value as url
+		       , 'View this Data Set in MapVEu' as description
+		       , '' as record_type
+		       , '' as target_type
+		       , '' as target_name
+		       , 'genomicsInternal' as link_type
+            FROM apidbtuning.datasetpresenter dsp, apidbtuning.datasetproperty p
+            WHERE dsp.name like 'PopBio_Study%' and dsp.dataset_presenter_id = p.dataset_presenter_id
+                  and p.property = 'vbId'
+		  UNION
+	        SELECT * FROM projectQuestionLinks
+            ORDER BY text
+	    ]]>
+      </sql>
+
+    </sqlQuery>
+
+    <sqlQuery name="ExampleGraphs">
+      <column name="source_id" />
+      <column name="project_id" />
+      <column name="graph_ids" />
+      <column name="default_graph_id" />
+      <column name="module" />
+      <column name="mainOpen" />
+      <column name="dataOpen" />
+      <column name="display_name" />
+      <column name="description" />
+      <column name="x_axis" />
+      <column name="y_axis" />
+      <column name="has_graph_data"/>
+      <column name="has_meta_data"/>
+      <column name="meta_data_categories"/>
+      <column name="dataset_name"/>
+      <column name="dataset_id"/>
+      <column name="is_graph_custom"/>
+      <column name="assay_type"/>
+      <column name="template"/>
+      <sql excludeProjects="MicrobiomeDB, ClinEpiDB">
+        <![CDATA[
+          SELECT g.*, CASE lower(is_graph_custom) WHEN 'false' THEN 1 ELSE 0 END as template, regexp_substr(graph_ids, '[^,]*') as default_graph_id
+          FROM (
+            SELECT
+            p.example_source_id as source_id,
+                   '@PROJECT_ID@' as project_id,
+                   graph_descrip.dataset as dataset_name,
+                   p.example_source_id as graph_ids,
+                   dd.dataset_presenter_id as dataset_id,
+                   '1' as has_graph_data,
+                   'FALSE' as has_meta_data,
+                   '' as graph_organism,
+                   'TRUE' as mainOpen,
+                   'FALSE' as dataOpen,
+                   '' as meta_data_categories,
+                   graph_descrip.*--,
+            FROM (
+              SELECT '' as dataset,
+                     '' as display_name,
+                     '' as description,
+                     '' as module,
+                     '' as x_axis,
+                     '' y_axis,
+                     '' as is_graph_custom,
+                     'other' as assay_type,
+                     1 as order_num
+                    -- TEMPLATE_ANCHOR datasetExampleGraphDescriptions
+            ) graph_descrip, ApidbTuning.datasetexamplesourceid p,
+                   ApidbTuning.datassetdatasource dd
+            WHERE p.dataset = graph_descrip.dataset
+              AND graph_descrip.dataset = dd.name
+          ) g
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <sqlQuery name="History"  isCacheable='false'>
       <column name="dataset_id"/>
       <column name="build"/>
