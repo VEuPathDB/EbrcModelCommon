@@ -13,7 +13,7 @@
 
     <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
 
-    <recordClass name="UserDatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset" useBasket="false" >
+    <recordClass name="UserDatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="userdataset" useBasket="false" >
       <testParamValues>
         <paramValue name="dataset_id">test123</paramValue>
       </testParamValues>
@@ -61,7 +61,6 @@
       <!-- =============================================================== -->
 
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
-        <columnAttribute name="dataset_id" internal="true" displayName="Dataset ID"/>
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
         <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
         <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>

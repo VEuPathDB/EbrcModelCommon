@@ -1,17 +1,14 @@
 <wdkModel>
 
-  <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB">Study</constant>
-  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB">Studies</constant>
-
-  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB">Data Set</constant>
-  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB">Data Sets</constant>
+  <constant name="datasetRecordDisplayName">Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural">Datasets</constant>
 
   <recordClassSet name="DatasetRecordClasses">
 
 
     <!-- ============== a class with only one member.  the primary key is always 111 ===========  -->
 
-    <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Data Set Release Notes">
+    <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Dataset Release Notes">
       <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
         <columnRef>release_notes_id</columnRef>
       </primaryKey>
@@ -65,7 +62,7 @@
 
     <!-- This recordClass shows as "Study" in ClinEpi record page with some client rendering magic, since includeProjects cannot be used  -->
    <recordClass name="DatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="dataset" useBasket="false" >
-      <!-- description="A Data Set describes the information we acquired from a data provider. For some data sets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
+      <!-- description="A Dataset describes the information we acquired from a data provider. For some datasets we process the information to expose the analyzed result in our site (searches, GBrowse tracks etc)." -->
 
       <testParamValues >
         <paramValue name="dataset_id">1</paramValue>
@@ -79,15 +76,8 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Data Set" excludeProjects="MicrobiomeDB,ClinEpiDB"
-                   help="Click a data set to go to the full data set record">
-        <text>
-          <![CDATA[ $$display_name$$ ]]>
-        </text>
-      </idAttribute>
-
-      <idAttribute name="primary_key" displayName="Study" includeProjects="MicrobiomeDB,ClinEpiDB"
-                   help="Click a study to go to the full study record">
+      <idAttribute name="primary_key" displayName="Dataset"
+                   help="Click a dataset to go to the full dataset record">
         <text>
           <![CDATA[ $$display_name$$ ]]>
         </text>
@@ -134,12 +124,12 @@
 
 
       <attributeQueryRef ref="DatasetAttributes.All">
-        <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" displayName="Dataset Name" help="Name of the dataset."/>
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
         <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
         <columnAttribute name="short_display_name" internal="true"/>
-        <columnAttribute name="version" displayName="Data Set Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="Data Set Version" help="The data set provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
+        <columnAttribute name="version" displayName="Dataset Version" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
         <columnAttribute name="description" displayName="Description" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>
@@ -455,7 +445,7 @@
       </table>
 
       <table name="AssociatedDatasets"
-             displayName="Associated Data Sets"
+             displayName="Associated Datasets"
              queryRef="DatasetTables.AssociatedDatasets">
         <columnAttribute name="pmid" internal="true"/>
         <columnAttribute name="associated_dataset_id" internal="true"/>
@@ -502,13 +492,13 @@
       <!-- Dataset History -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="DatasetHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Data Set Release History"
+             displayName="Dataset Release History"
              queryRef="DatasetTables.DatasetHistory">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="build" displayName="VEuPathDB Build"/>
         <columnAttribute name="release_date" displayName="Release Date"/>
         <columnAttribute name="release_number" displayName="Release"/>
-        <columnAttribute name="version" displayName="Data Set Version"/>
+        <columnAttribute name="version" displayName="Dataset Version"/>
         <columnAttribute name="note" displayName="Note"/>
       </table>
 
@@ -578,7 +568,7 @@
       <!-- Genome History -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Data Set Release History"
+             displayName="Dataset Release History"
              queryRef="GenomeDatasetTables.GenomeHistory">
         <description includeProjects="VectorBase"><![CDATA[<i>
                 On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 
