@@ -2961,7 +2961,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <graphTemplateFile name="eda.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              datasetName="${projectName}_${name}_AnibodyArray_RSRC"
+              datasetName="${projectName}_${name}_AntibodyArray_RSRC"
               version="${version}"
               scope="global"
               type="antibodyArray"
