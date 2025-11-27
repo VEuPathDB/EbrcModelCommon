@@ -39,7 +39,7 @@
         SELECT count(*) FROM (
           SELECT distinct dataset_presenter_id
           FROM apidbtuning.datasetdatasource
-          WHERE project_id = '@PROJECT_ID@'
+          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         );
     </testRowCountSql>
 
@@ -53,7 +53,7 @@
               study_stable_id as eda_study_id
           FROM apidbtuning.datasetdatasource
             LEFT JOIN apidbtuning.studyiddatasetid ON dataset_id = dataset_presenter_id
-          WHERE project_id = '@PROJECT_ID@'
+          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -66,7 +66,7 @@
         <![CDATA[
           select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
           from apidbtuning.datasetdatasource
-	  where project_id = '@PROJECT_ID@'
+	  where (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	  group by dataset_presenter_id
         ]]>
       </sql>
@@ -166,7 +166,7 @@
                          GROUP BY dataset_presenter_id
                        ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
                        JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dp.dataset_presenter_id
-                       WHERE dd.project_id = '@PROJECT_ID@'
+                       WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
 
                    ) dts LEFT OUTER JOIN (
                       SELECT dataset_id,
@@ -434,7 +434,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE dd.project_id = '@PROJECT_ID@'
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
           AND  COALESCE(dd.category,'') != 'Link outs'
         ]]>
       </sql>
@@ -503,7 +503,7 @@
                        row_number() OVER (PARTITION BY dh.dataset_presenter_id ORDER BY ebd.release_number desc) rn
                 FROM apidbTuning.DatasetHistory dh, apidbTuning.EupathBuildDates ebd
                 WHERE dh.build_number = ebd.build_number::numeric
-                  AND ebd.project = '@PROJECT_ID@'
+                  AND (ebd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
               ) t
               WHERE rn = 1
             ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
@@ -511,7 +511,7 @@
               SELECT build_number,
                      '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
               FROM apidbTuning.EupathBuildDates
-              WHERE project = '@PROJECT_ID@'
+              WHERE (project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             ) introduced ON dsp.build_number_introduced = introduced.build_number::numeric
         ]]>
       </sql>
@@ -545,7 +545,7 @@
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            where dd.project_id = '@PROJECT_ID@'
+            where (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
             ]]>
          </sql>
@@ -574,7 +574,7 @@
             LEFT JOIN ApidbTuning.DatasetContact dsc ON
               dsp.dataset_presenter_id = dsc.dataset_presenter_id
               AND dsc.is_primary_contact = true
-              AND dd.project_id = '@PROJECT_ID@'
+              AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
 
@@ -593,7 +593,7 @@
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
           WHERE dsc.is_primary_contact = true
-          AND dd.project_id = '@PROJECT_ID@'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -607,7 +607,7 @@
             SELECT distinct dsp.dataset_presenter_id as dataset_id,
                    dsp.dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            WHERE dd.project_id = '@PROJECT_ID@'
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
 	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
@@ -618,7 +618,7 @@
             WHERE dd.category = 'Genomes'
               AND dsp.dataset_presenter_id = dd.dataset_presenter_id
               AND oa.component_taxon_id = dd.taxon_id
-              AND dd.project_id = '@PROJECT_ID@'
+              AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
        -- To be FIXED if and when ebi datasets are loaded
        -- UNION
        --   SELECT dataset_presenter_id as dataset_id,
@@ -807,7 +807,7 @@
            SELECT dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
            FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
            WHERE dh.build_number = bd.build_number::NUMERIC
-             AND bd.project = '@PROJECT_ID@'
+             AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
            ORDER BY bd.build_number
         ]]>
       </sql>
@@ -836,7 +836,7 @@
             , apidb.datasource ds
             RIGHT JOIN ApidbTuning.DatasetPresenter dsp ON ds.name = dsp.name
           WHERE dh.build_number = bd.build_number::numeric
-            AND bd.project = '@PROJECT_ID@'
+            AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             AND dh.dataset_presenter_id = dsp.dataset_presenter_id
           ORDER BY bd.build_number
         ]]>
@@ -981,7 +981,7 @@
                      associated_dataset_id, project, webapp_name, ds.display_name,
                      dsp.summary as associated_summary
              from ApidbTuning.AssociatedDataset ds, ApidbTuning.DatasetPresenter dsp
-             where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'EuPathDB')
+             where (local_project = '@PROJECT_ID@' or '@PROJECT_ID@' = 'UniDB')
              and associated_dataset_id = dsp.dataset_presenter_id
              and length(pubmed_id) > 0
              order by local_dataset_id, ds.display_name

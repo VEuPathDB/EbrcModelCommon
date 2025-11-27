@@ -29,13 +29,13 @@
             SELECT distinct dd.dataset_presenter_id as dataset_id
             FROM apidbtuning.datasetdatasource dd
             WHERE (dd.category is null OR dd.category != 'Link outs')
-             AND  dd.project_id = '@PROJECT_ID@'
+             AND  (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
               and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
             select distinct dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and  dd.project_id = '@PROJECT_ID@'
+            and  (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
           ]]>
       </sql>
@@ -45,7 +45,7 @@
             select distinct dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
 
@@ -70,7 +70,7 @@
           FROM apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop, apidbtuning.datasetdatasource dd
           WHERE dpres.dataset_presenter_id = dprop.dataset_presenter_id
             AND dprop.property = 'isPublic' and dprop.value = 'true'
-            AND dd.project_id = '@PROJECT_ID@'
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
         ]]>
       </sql>
@@ -86,7 +86,7 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic'
             -- and dprop.value = 'true'
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
             intersect
             select dpres.dataset_presenter_id as dataset_id
@@ -94,7 +94,7 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
             and dprop.value = 'GenomicsEDAStudy'
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
           ]]>
       </sql>
@@ -107,14 +107,14 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic'
             -- and dprop.value = 'true'
-            --and dpres.project_id = '@PROJECT_ID@'
+            --and (dpres.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             intersect
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
             and dprop.value = 'GenomicsEDAStudy'
-            --and dpres.project_id = '@PROJECT_ID@'
+            --and (dpres.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             -- we need this condition currently because no geolocation studies show up (the new plasmo dataset)
             and dpres.dataset_presenter_id = 'DS_480c976ef9'
           ]]>
@@ -330,20 +330,20 @@
             select distinct dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
             select distinct dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             and '@SHOW_UNRELEASED_DATA@' = 'true'
 	    and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
 	   UNION
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = '@PROJECT_ID@'
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql>
 
@@ -352,12 +352,12 @@
             select distinct dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and dd.project_id = '@PROJECT_ID@'
+            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	   UNION
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
 	      where user_id = $$user_id$$
-	      and project_id = '@PROJECT_ID@'
+	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql>
 

@@ -8,7 +8,7 @@
         <![CDATA[
           SELECT DISTINCT dataset_datasource_id as datasource_id
           FROM apidbtuning.datasetdatasource
-          WHERE (project_id = '@PROJECT_ID@' or 'VEuPathDB' = '@PROJECT_ID@')
+          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	  AND category = $$dataset_category$$
         ]]>
       </sql>

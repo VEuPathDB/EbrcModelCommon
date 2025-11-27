@@ -133,7 +133,7 @@
                @VDI_CONTROL_SCHEMA@.dataset d
           WHERE aud.dataset_id = d.dataset_id
           AND aud.user_id = $$user_id$$
-          AND aud.project_id = '@PROJECT_ID@'
+          AND (aud.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>

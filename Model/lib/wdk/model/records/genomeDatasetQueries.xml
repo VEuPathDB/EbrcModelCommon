@@ -95,7 +95,7 @@
             FROM ApidbTuning.DatasetHistory dh
                 , ApidbTuning.EupathBuildDates bd
             where dh.build_number = bd.build_number::numeric
-              AND bd.project = '@PROJECT_ID@'
+              AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             ORDER BY dh.dataset_presenter_id, bd.build_number desc
           ) ,
           all_versions_filtered as (
