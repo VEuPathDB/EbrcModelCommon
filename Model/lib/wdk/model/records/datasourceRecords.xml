@@ -147,9 +147,6 @@
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
           WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
-          -- UNION
-          -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
-          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
     </sqlQuery>
@@ -175,15 +172,6 @@
 	  WHERE dd.dataset_presenter_id = dsp.dataset_presenter_id
           AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
-
-          -- TODO:  add this back
-          --  UNION ALL
-          -- SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id
-          --      , null as dataset_name
-          --     , d.description
-          --     , d.summary
-          --     , null as build_number_introduced
-          --FROM @VDI_CONTROL_SCHEMA@.dataset_meta d -- NOTE: We're reaching into VDI control and selecting from dataset_meta here. This is because availabledatasets has duplicate rows and cannot be selected "distinct"ly since we're selecting clobs.
         ]]>
       </sql>
     </sqlQuery>
@@ -211,9 +199,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 
           ) t
           GROUP BY datasource_id
-          --UNION
-          --SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id, null as organism_prefix
-          --FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
 
@@ -240,13 +225,6 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 	  WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
           AND dsc.is_primary_contact = true
-          -- UNION
-          -- SELECT CONCAT('EDAUD_', d.user_dataset_id) as datasource_id
-          --      , null as contact
-          --      , null as institution
-          --      , null as email
-          --      , null as short_attribution
-          -- FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
         ]]>
       </sql>
     </sqlQuery>

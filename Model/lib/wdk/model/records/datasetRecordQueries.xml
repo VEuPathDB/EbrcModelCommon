@@ -511,7 +511,7 @@
               SELECT build_number,
                      '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
               FROM apidbTuning.EupathBuildDates
-              WHERE (project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+              WHERE (project = '@PROJECT_ID@' or (project = 'EuPathDB' and 'UniDB' = '@PROJECT_ID@'))
             ) introduced ON dsp.build_number_introduced = introduced.build_number::numeric
         ]]>
       </sql>
