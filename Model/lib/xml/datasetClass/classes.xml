@@ -2952,7 +2952,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="AntibodyArrayEDA" category="phenotype" datasetFileHint="">
+  <datasetClass class="AntibodyArrayEDA" category="antibodyArray" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="version">&version;</prop>
@@ -2975,6 +2975,34 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
+
+
+
+  <datasetClass class="CellularLocalizationEDA" category="cellularLocalization" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_CellularLocalization_RSRC"
+              version="${version}"
+              scope="global"
+              type="cellularLocalization"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/cellularLocalization/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+
 
 
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
