@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wdkModel>
+
+    <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB">User Study</constant>
+  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB">User Studies</constant>
+
+  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB">User Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB">User Datasets</constant>
+
+
+  <recordClassSet name="UserDatasetRecordClasses">
+
+    <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
+
+    <recordClass name="UserDatasetRecordClass" displayName="%%datasetRecordDisplayName%%" displayNamePlural="%%datasetRecordDisplayNamePlural%%" urlName="userdataset" useBasket="false" >
+      <testParamValues>
+        <paramValue name="dataset_id">test123</paramValue>
+      </testParamValues>
+
+      <!-- Primary key definition -->
+      <primaryKey aliasQueryRef="UserDatasetAttributes.DatasetAlias">
+        <columnRef>dataset_id</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="User Dataset"
+                   help="Click a user dataset to go to the full dataset record">
+        <text>
+          <![CDATA[ $$name$$ ]]>
+        </text>
+      </idAttribute>
+
+      <!-- =============================================================== -->
+      <!--   Reporters -->
+      <!-- =============================================================== -->
+
+      <reporter name="attributesTabular" displayName="Summary - tab delimited" scopes="results"
+                implementation="org.gusdb.wdk.model.report.reporter.AttributesTabularReporter">
+        <property name="page_size">500</property>
+      </reporter>
+
+      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results"
+                implementation="org.gusdb.wdk.model.report.reporter.TableTabularReporter">
+        <property name="page_size">1000000</property>
+      </reporter>
+
+      <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" scopes="record"
+                implementation="org.gusdb.wdk.model.report.reporter.FullRecordReporter">
+      </reporter>
+
+      <reporter name="xml" displayName="XML: choose from columns and/or tables" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.XMLReporter">
+      </reporter>
+
+      <reporter name="json" displayName="json: choose from columns and/or tables" scopes=""
+                implementation="org.gusdb.wdk.model.report.reporter.JSONReporter">
+      </reporter>
+
+      <!-- =============================================================== -->
+      <!--   Core Attributes -->
+      <!-- =============================================================== -->
+
+      <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
+        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
+        <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
+        <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>
+        <columnAttribute name="category" displayName="Category" help="Dataset category"/>
+        <columnAttribute name="deleted_status" displayName="Deleted Status"
+                         help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
+        <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
+        <columnAttribute name="accessibility" displayName="Accessibility"
+                         help="Access level: public, protected, or private"/>
+        <columnAttribute name="days_for_approval" displayName="Days for approval"
+                         help="Number of days required for approval"/>
+        <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
+        <columnAttribute name="name" displayName="Name" help="Dataset name"/>
+        <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
+        <columnAttribute name="description" displayName="Description" sortable="false"
+                         help="Detailed dataset description"/>
+        <columnAttribute name="program_name" displayName="Program" help="Program name"/>
+        <columnAttribute name="project_name" displayName="Project" help="Project name"/>
+        <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
+        <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
+        <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
+        <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
+        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
+        <columnAttribute name="primary_email" displayName="Primary contact email" help=""/>
+        <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
+      </attributeQueryRef>
+
+      <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
+
+      <!-- =============================================================== -->
+      <!--   Tables -->
+      <!-- =============================================================== -->
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- References --> 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!-- TODO will return search , name hardcoded based on dataset type
+
+      <table name="References" excludeProjects="ClinEpiDB,MicrobiomeDB"
+             displayName="Explore this Data Set within this Website"
+             queryRef="GenomeDatasetTables.References">
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="text" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" inReportMaker="false" internal="true"/>
+        <columnAttribute name="description" inReportMaker="false" internal="true"/>
+        <columnAttribute name="record_type" displayName="Record Type" />
+        <columnAttribute name="target_type" displayName="Type of Reference"/>
+        <columnAttribute name="target_name" displayName="Name"/>
+        <columnAttribute name="link_type" displayName="link_type"/>
+      </table>   
+-->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Publications -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Publications"
+             displayName="Publications"
+             queryRef="UserDatasetTables.Publications">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="external_id" displayName="ID" internal="true"/>
+        <columnAttribute name="type" displayName="Type"/>
+        <columnAttribute name="citation" displayName="Citation" internal="true"/>
+        <columnAttribute name="is_primary" displayName="Primary"/>
+        <columnAttribute name="url" internal="true"/>
+
+        <linkAttribute name="publication_link" displayName="Link">
+          <displayText>
+            <![CDATA[
+              $$citation$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Contacts -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Contacts"
+             displayName="Contacts"
+             queryRef="UserDatasetTables.Contacts">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="contact_name" displayName="Name"/>
+        <columnAttribute name="affiliation" displayName="Affiliation"/>
+        <columnAttribute name="email" displayName="Email"/>
+        <columnAttribute name="country" displayName="Country"/>
+        <columnAttribute name="is_primary" displayName="Primary contact"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Organisms -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Organisms"
+             displayName="Organisms"
+             queryRef="UserDatasetTables.Organisms">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="organism_type" displayName="Type"
+                         help="experimental or host"/>
+        <columnAttribute name="species" displayName="Species"/>
+        <columnAttribute name="strain" displayName="Strain"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Hyperlinks -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="HyperLinks"
+             displayName="External Links"
+             queryRef="UserDatasetTables.HyperLinks">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+        <columnAttribute name="description" internal="true"/>
+
+        <linkAttribute name="hyper_link" displayName="Link">
+          <displayText>
+            <![CDATA[
+              $$description$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Funding Awards -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="FundingAwards"
+             displayName="Funding Awards"
+             queryRef="UserDatasetTables.FundingAwards">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="agency" displayName="Funding agency"/>
+        <columnAttribute name="award_number" displayName="Award number"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Countries -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Countries"
+             displayName="Countries"
+             queryRef="UserDatasetTables.Countries">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="country" displayName="Country"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Species -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Species"
+             displayName="Species"
+             queryRef="UserDatasetTables.Species">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="species" displayName="Species"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Diseases -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Diseases"
+             displayName="Diseases"
+             queryRef="UserDatasetTables.Diseases">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="disease" displayName="Disease"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Study Characteristics -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Characteristics"
+             displayName="Study Characteristics"
+             queryRef="UserDatasetTables.Characteristics">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="study_design" displayName="Study design"/>
+        <columnAttribute name="study_type" displayName="Study type"/>
+        <columnAttribute name="participant_ages" displayName="Participant ages"/>
+        <columnAttribute name="sample_year_start" displayName="Sample year start"/>
+        <columnAttribute name="sample_year_end" displayName="Sample year end"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Projects -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Projects"
+             displayName="Associated Projects"
+             queryRef="UserDatasetTables.Projects">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="project_id" displayName="Project ID"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- External Identifiers -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExternalIds"
+             displayName="External Identifiers"
+             queryRef="UserDatasetTables.ExternalIds">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="identifier_type" displayName="Type"/>
+        <columnAttribute name="identifier_value" displayName="Identifier"/>
+      </table>
+
+    </recordClass>
+
+  </recordClassSet>
+
+</wdkModel>

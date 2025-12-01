@@ -154,6 +154,11 @@ sub createTables {
          ";
   runSql($dbh, $sql, 1);
 
+  $sql = "create index ddix2_${suffix}
+            on ${schema}.DatasetDatasource${suffix} (project_id, dataset_presenter_id, dataset_datasource_id)
+         ";
+  runSql($dbh, $sql, 1);
+
   $sql = "ALTER TABLE ${schema}.DatasetDatasource${suffix} ADD CONSTRAINT DatasetDatasource${suffix}_uq UNIQUE (data_source_id, dataset_presenter_id)";
   runSql($dbh, $sql, 1);
 

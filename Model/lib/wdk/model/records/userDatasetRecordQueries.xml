@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wdkModel>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- User Dataset Attribute Queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="UserDatasetAttributes" queryType="attribute" doNotTest="true" isCacheable='false'>
+
+    <testRowCountSql>
+      SELECT count(*) FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+    </testRowCountSql>
+
+    <sqlQuery name="EdaStudyMapping" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="eda_study_id" columnType="string"/>
+      <sql>
+        <![CDATA[
+            select
+              dataset_stable_id as dataset_id,
+              study_stable_id as eda_study_id
+            from @VDI_DATASETS_SCHEMA@.userstudydatasetid
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Core metadata from dataset table -->
+    <sqlQuery name="CoreMetadata" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="owner" columnType="number"/>
+      <column name="type_name" columnType="string"/>
+      <column name="type_version" columnType="string"/>
+      <column name="category" columnType="string"/>
+      <column name="deleted_status" columnType="number"/>
+      <column name="is_public" columnType="string"/>
+      <column name="accessibility" columnType="string"/>
+      <column name="days_for_approval" columnType="number"/>
+      <column name="creation_date" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            owner,
+            type_name,
+            type_version,
+            category,
+            deleted_status,
+            CASE WHEN is_public THEN 'Yes' ELSE 'No' END as is_public,
+            accessibility,
+            days_for_approval,
+            TO_CHAR(creation_date, 'YYYY-MM-DD') as creation_date
+          FROM  @VDI_CONTROL_SCHEMA@.dataset
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Descriptive metadata from dataset_meta table -->
+    <sqlQuery name="DescriptiveMetadata" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="name" columnType="string"/>
+      <column name="summary" columnType="string"/>
+      <column name="description" columnType="string"/>
+      <column name="program_name" columnType="string"/>
+      <column name="project_name" columnType="string"/>
+      <column name="short_attribution" columnType="string"/>
+      <column name="short_name" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            name,
+            summary,
+            description,
+            program_name,
+            project_name,
+            short_attribution,
+            short_name
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_meta
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Dataset alias for primary key -->
+    <sqlQuery name="DatasetAlias" doNotTest="true">
+      <column name="dataset_id" columnType="string"/>
+      <column name="old_dataset_id" columnType="string"/>
+      <sql>
+        <![CDATA[
+          SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
+	          CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
+          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Primary contact info -->
+    <sqlQuery name="PrimaryContact" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="primary_contact_name"/>
+      <column name="primary_affiliation"/>
+      <column name="primary_email"/>
+      <column name="primary_country"/>
+      <sql>
+        <![CDATA[
+          SELECT d.dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
+	  FROM @VDI_CONTROL_SCHEMA@.dataset d
+	  LEFT JOIN
+          (SELECT
+            dataset_id,
+            affiliation,
+            email,
+            country,
+	    first_name,
+	    last_name,
+	    middle_name
+           FROM @VDI_CONTROL_SCHEMA@.dataset_contact
+           WHERE is_primary is true
+	  ) prim on d.dataset_id = prim.dataset_id
+          ORDER BY last_name, first_name
+        ]]>
+      </sql>
+    </sqlQuery>
+
+  </querySet>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- User Dataset Table Queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="UserDatasetTables" queryType="table" isCacheable='false'>
+
+    <!-- Publications table -->
+    <sqlQuery name="Publications" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="external_id"/>
+      <column name="type"/>
+      <column name="citation"/>
+      <column name="is_primary"/>
+      <column name="url"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            external_id,
+            type,
+            regexp_replace(citation, '\s+<', ' <') AS citation,
+            CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary,
+            CASE
+              WHEN type = 'PubMed' THEN 'https://www.ncbi.nlm.nih.gov/pubmed/' || external_id
+              WHEN type = 'DOI' THEN 'https://doi.org/' || external_id
+              ELSE NULL
+            END as url
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_publication
+          ORDER BY is_primary DESC, external_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Contacts table -->
+    <sqlQuery name="Contacts" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="contact_name"/>
+      <column name="affiliation"/>
+      <column name="email"/>
+      <column name="country"/>
+      <column name="is_primary"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as contact_name,
+            affiliation,
+            email,
+            country,
+            CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_contact
+          ORDER BY is_primary DESC, last_name, first_name
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Organisms table -->
+    <sqlQuery name="Organisms" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="organism_type"/>
+      <column name="species"/>
+      <column name="strain"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            organism_type,
+            species,
+            strain
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_organism
+          ORDER BY organism_type, species
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Hyperlinks table -->
+    <sqlQuery name="HyperLinks" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="url"/>
+      <column name="description"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            url,
+            description
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_hyperlink
+          ORDER BY description
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Funding Awards table -->
+    <sqlQuery name="FundingAwards" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="agency"/>
+      <column name="award_number"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            agency,
+            award_number
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_funding_award
+          ORDER BY agency, award_number
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Countries table -->
+    <sqlQuery name="Countries" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="country"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            country
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_country
+          ORDER BY country
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Species table -->
+    <sqlQuery name="Species" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="species"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            species
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_species
+          ORDER BY species
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Diseases table -->
+    <sqlQuery name="Diseases" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="disease"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            disease
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_disease
+          ORDER BY disease
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Characteristics table -->
+    <sqlQuery name="Characteristics" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="study_design"/>
+      <column name="study_type"/>
+      <column name="participant_ages"/>
+      <column name="sample_year_start"/>
+      <column name="sample_year_end"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            study_design,
+            study_type,
+            participant_ages,
+            sample_year_start,
+            sample_year_end
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Projects table -->
+    <sqlQuery name="Projects" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="project_id"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            project_id
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_project
+          ORDER BY project_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- External Identifiers table -->
+    <sqlQuery name="ExternalIds" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="identifier_type"/>
+      <column name="identifier_value"/>
+      <sql>
+        <![CDATA[
+          SELECT dataset_id, 'DOI' as identifier_type, doi as identifier_value
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_doi
+          WHERE doi IS NOT NULL
+          UNION ALL
+          SELECT dataset_id, 'BioProject' as identifier_type, bioproject_id as identifier_value
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_bioproject_id
+          WHERE bioproject_id IS NOT NULL
+          ORDER BY identifier_type, identifier_value
+        ]]>
+      </sql>
+    </sqlQuery>
+
+  </querySet>
+
+</wdkModel>

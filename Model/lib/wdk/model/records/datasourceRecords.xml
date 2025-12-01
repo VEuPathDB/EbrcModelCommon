@@ -145,7 +145,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE dd.project_id = '@PROJECT_ID@'
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
           -- UNION
           -- SELECT DISTINCT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id, d.name as display_name
@@ -173,7 +173,7 @@
                  dsp.build_number_introduced
           FROM apidbtuning.datasetdatasource dd, apidbTuning.DatasetPresenter dsp
 	  WHERE dd.dataset_presenter_id = dsp.dataset_presenter_id
-          AND dd.project_id = '@PROJECT_ID@'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
 
           -- TODO:  add this back
@@ -206,7 +206,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
                 END as org
             FROM apidbtuning.datasetdatasource dd
               LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
-	    WHERE dd.project_id = '@PROJECT_ID@'
+	    WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             AND dd.category != 'Link outs'
 
           ) t
@@ -237,7 +237,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           FROM ApidbTuning.DatasetPresenter dsp
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
-	  WHERE dd.project_id = '@PROJECT_ID@'
+	  WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND dd.category != 'Link outs'
           AND dsc.is_primary_contact = true
           -- UNION

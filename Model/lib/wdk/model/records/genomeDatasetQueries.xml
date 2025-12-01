@@ -1,0 +1,449 @@
+<wdkModel>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Attribute queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="GenomeDatasetAttributes" queryType="attribute" doNotTest="true"
+            isCacheable='false'>
+
+    <sqlQuery name="genecounts" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="gene_count"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
+          , count(*) as gene_count
+        FROM apidbtuning.organismattributes oa
+          , apidbtuning.GeneAttributes ga
+          , apidbtuning.datasetpresenter dsp
+          , apidbtuning.datasetdatasource dd
+        WHERE oa.component_taxon_id = ga.taxon_id
+          AND oa.project_id = ga.project_id
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        GROUP BY oa.project_id, dsp.dataset_presenter_id
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="GenomicsDatasetAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="megabase_pairs"/>
+      <column name="genecount"/>
+
+        <sql>
+        <![CDATA[
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
+              , oa.megabps as megabase_pairs
+              , nullif(oa.genecount, 0) as genecount
+          FROM apidbtuning.datasetpresenter dsp
+            LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        ]]>
+      </sql>
+    </sqlQuery>
+
+      <sqlQuery name="GenomicsStudyAttributes" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <column name="dataset_id"/>
+        <column name="is_public"/>
+
+        <sql>
+          <![CDATA[
+            SELECT
+              distinct dsp.dataset_presenter_id AS dataset_id
+              , dp.is_public
+            FROM
+              apidbtuning.datasetpresenter dsp
+              LEFT JOIN (
+                SELECT dataset_presenter_id
+                  , MAX(isPublic) is_public
+                FROM
+                  (
+                    SELECT
+                      dataset_presenter_id
+                      , CASE WHEN property = 'isPublic' THEN value END isPublic
+                    FROM apidbtuning.datasetproperty
+                    WHERE property IN ('isPublic')
+                      AND TRIM(value) IS NOT NULL
+                  ) pivot
+                  GROUP BY dataset_presenter_id
+              ) dp ON dsp.dataset_presenter_id = dp.dataset_presenter_id
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          ]]>
+        </sql>
+      </sqlQuery>
+
+
+    <sqlQuery name="LatestVersion" isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="genome_version"/>
+      <column name="annotation_version"/>
+      <column name="functional_annotation_version"/>
+        <sql>
+        <![CDATA[
+          WITH all_versions AS (
+            SELECT dh.dataset_presenter_id
+                 , bd.project
+                 , bd.release_number
+                 , dh.genome_version
+                 , dh.annotation_version
+                 , dh.functional_annotation_version
+                 , row_number() OVER(PARTITION BY dh.dataset_presenter_id ORDER BY bd.build_number DESC) rn
+            FROM ApidbTuning.DatasetHistory dh
+                , ApidbTuning.EupathBuildDates bd
+            where dh.build_number = bd.build_number::numeric
+              AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            ORDER BY dh.dataset_presenter_id, bd.build_number desc
+          ) ,
+          all_versions_filtered as (
+            SELECT * FROM all_versions where rn = 1
+          )
+          SELECT distinct dsp.dataset_presenter_id as dataset_id
+            , av.genome_version
+            , av.annotation_version
+            , av.functional_annotation_version
+          FROM apidbtuning.datasetpresenter dsp
+            LEFT JOIN all_versions_filtered av ON dsp.dataset_presenter_id = av.dataset_presenter_id
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="inApollo"  isCacheable="false" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="in_apollo"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          WITH apollo_dataset AS (
+             SELECT distinct dd.dataset_presenter_id, 'Apollo' as in_apollo
+             FROM apidbtuning.datasetdatasource dd
+                LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+                LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism AND aid.apolloid IS NOT NULL
+             WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          )
+          SELECT distinct dsp.dataset_presenter_id AS dataset_id,
+            CASE WHEN in_apollo IS NOT NULL
+            THEN 'Apollo'
+            ELSE 'N/A' END AS in_apollo
+          FROM apidbtuning.datasetPresenter dsp
+            JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
+            LEFT JOIN apollo_dataset ad ON dsp.dataset_presenter_id = ad.dataset_presenter_id
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Organisms"  isCacheable="false">
+      <column name="dataset_id"/>
+      <column name="organism_prefix"/>
+
+      <sql>
+        <![CDATA[
+          SELECT dataset_id,
+            regexp_replace(
+              substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
+          FROM (
+            SELECT DISTINCT dd.dataset_presenter_id as dataset_id
+              , CASE when tn.organism_name is null then null
+	       -- italicize first 2 words
+                ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
+SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2)) + 1)
+                END as org
+            FROM apidbtuning.datasetdatasource dd
+              LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND dd.category != 'Link outs'
+          ) t
+          GROUP BY dataset_id
+        ]]>
+      </sql>
+
+    </sqlQuery>
+  </querySet>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Table queries -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <querySet name="GenomeDatasetTables" queryType="table"
+            isCacheable='false'>
+
+    <sqlQuery name="GenomeHistory"  isCacheable='false' excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="build"/>
+      <column name="release_date"/>
+      <column name="project"/>
+      <column name="release_number"/>
+      <column name="genome_source"/>
+      <column name="genome_version"/>
+      <column name="annotation_source"/>
+      <column name="annotation_version"/>
+      <column name="functional_annotation_source"/>
+      <column name="functional_annotation_version"/>
+      <column name="note"/>
+      <column name="isin_apollo"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT dh.dataset_presenter_id AS dataset_id
+            , CASE
+                WHEN (bd.project = 'VectorBase' AND bd.build_number::NUMERIC < 47) THEN NULL
+                ELSE bd.build_number
+              END AS build
+            , to_char(bd.release_date, 'yyyy-mm-dd') AS release_date
+            , bd.project
+            , bd.release_number
+            , dh.genome_source
+            , dh.genome_version
+            , dh.annotation_source
+            , dh.annotation_version
+            , dh.functional_annotation_source
+            , dh.functional_annotation_version
+            , dh.note
+            , CASE WHEN (aid.apolloid IS NOT NULL) THEN 'Apollo'
+                   ELSE 'N/A'
+              END AS isin_apollo,
+                    CASE WHEN dh.genome_version LIKE 'G%'
+                      THEN 'https://www.ncbi.nlm.nih.gov/data-hub/genome/' || dh.genome_version
+                      ELSE 'javascript:void(0);'
+                    END AS assembly_url
+
+          FROM
+            ApidbTuning.DatasetHistory dh
+            , ApidbTuning.EupathBuildDates bd
+            , apidbtuning.datasetdatasource dd
+                LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
+                LEFT JOIN apidbtuning.ApolloID aid ON tn.organism_name = aid.organism
+          WHERE dh.build_number = bd.build_number::NUMERIC
+            AND dh.dataset_presenter_id = dd.dataset_presenter_id
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          ORDER BY dh.build_number
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="Version"  isCacheable='false'>
+      <column name="dataset_name"/>
+      <column name="dataset_id"/>
+      <column name="version"/>
+      <column name="organism"/>
+      <column name="project_id"/>
+      <sql >
+        <![CDATA[
+          WITH TaxonScientificName AS (
+            SELECT taxon_id,name
+            FROM sres.taxonname
+            WHERE name_class = 'scientific name'
+          )
+          SELECT dataset_name, dataset_id,organism, version, '@PROJECT_ID@' as project_id
+          FROM (
+            select distinct dd.name as dataset_name,
+                 dd.dataset_presenter_id as dataset_id,
+                 case when dd.taxon_id = 0
+                 then 'ALL'
+                 else tn.name
+                 end as organism,
+                 replace (ds.version, '_gus4','') as version
+            FROM apidb.datasource ds
+              INNER JOIN ApidbTuning.DatasetDatasource dd ON ds.name = dd.name AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+              LEFT JOIN TaxonScientificName tn ON dd.taxon_id = tn.taxon_id
+            ORDER BY dd.name
+          ) t
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="TranscriptTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="gene_type"/>
+      <column name="transcript_type"/>
+      <column name="transcript_count"/>
+
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
+          , ta.gene_type
+          , ta.transcript_type
+          , count(*) as transcript_count
+        FROM apidbtuning.organismattributes oa
+          , apidbtuning.TranscriptAttributes ta
+          , apidbtuning.datasetpresenter dsp
+          , apidbtuning.datasetdatasource dd
+        WHERE oa.component_taxon_id = ta.taxon_id
+          AND oa.project_id = ta.project_id
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        GROUP BY oa.project_id, dsp.dataset_presenter_id, ta.gene_type, ta.transcript_type
+        ORDER BY count(*) desc
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="GeneTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="gene_type"/>
+      <column name="gene_count"/>
+
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
+          , ga.gene_type
+          , count(*) as gene_count
+        FROM apidbtuning.organismattributes oa
+          , apidbtuning.GeneAttributes ga
+          , apidbtuning.datasetpresenter dsp
+          , apidbtuning.datasetdatasource dd
+        WHERE oa.component_taxon_id = ga.taxon_id
+          AND oa.project_id = ga.project_id
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        GROUP BY oa.project_id, dsp.dataset_presenter_id, ga.gene_type
+        ORDER BY count(*) desc
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="SequenceTypeCounts" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="sequence_type"/>
+      <column name="sequence_count"/>
+
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        SELECT distinct dsp.dataset_presenter_id as dataset_id
+          , sa.sequence_type
+          , count(*) as sequence_count
+        FROM apidbtuning.organismattributes oa
+          , apidbtuning.GenomicSeqAttributes sa
+          , apidbtuning.datasetpresenter dsp
+          , apidbtuning.datasetdatasource dd
+        WHERE oa.component_taxon_id = sa.taxon_id
+          AND oa.project_id = sa.project_id
+          AND oa.component_taxon_id = dd.taxon_id
+          AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+          AND dd.category = 'Genomes'
+          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+        GROUP BY dsp.dataset_presenter_id, sa.sequence_type
+        ORDER BY count(*) desc
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="GenomeAssociatedData" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="category"/>
+      <column name="dataset_count"/>
+      <column name="organism"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT dataset_id, category, organism, count(*) AS dataset_count
+          FROM
+            (
+              SELECT distinct dd.dataset_presenter_id AS dataset_id
+                , dd.category
+                , tn.name AS organism
+              FROM
+                apidbtuning.organismattributes oa
+                , apidbtuning.datasetpresenter o_dsp
+                , apidbtuning.datasetdatasource o_dd
+                , apidbtuning.datasetdatasource dd
+                , sres.taxonname tn
+                , apidbtuning.datasetpresenter dsp
+              WHERE oa.component_taxon_id = o_dd.taxon_id
+                AND o_dd.dataset_presenter_id = o_dsp.dataset_presenter_id
+                AND oa.component_taxon_id = dd.taxon_id
+                AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+                AND dd.taxon_id = tn.taxon_id
+                AND tn.name_class = 'scientific name'
+                AND dd.category = 'Genomes'
+                AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+                AND o_dd.category NOT IN ('Genomics', 'Link outs')
+            ) t
+          GROUP BY dataset_id, category, organism
+          ORDER BY count(*) DESC
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ExternalDatabases" excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="name"/>
+      <column name="id_url"/>
+      <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
+        <![CDATA[
+          SELECT DISTINCT dataset_id, name, id_url
+          FROM
+            (
+              WITH full_urls_table AS (
+                SELECT dsp.dataset_presenter_id AS dataset_id
+                  , ext.dataset AS name
+                  , id_url
+                FROM
+                  apidbtuning.datasetdatasource dd
+                  , apidbtuning.datasetpresenter dsp
+                  , (
+                    SELECT dataset
+                      , taxon_id
+                      , id_url
+                    FROM apidbTuning.DatabaseTaxonUrl
+                    WHERE dataset != 'GeneDB: The Sanger Institute Pathogen Genomics Database'
+                      AND dataset != 'protein_id'
+                  ) ext
+                WHERE ext.taxon_id = dd.taxon_id
+                  AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+                  AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+                  AND dd.category = 'Genomes'
+              )
+              SELECT dataset_id
+                , name
+                , coalesce(CASE
+                    substr(id_url, 0, regexp_instr(id_url, '/', 1, 3) + 1)
+                    WHEN 'http://version_10.string-db.org/' THEN 'http://string-db.org/' END
+                  , substr(id_url, 0, regexp_instr(id_url, '/', 1, 3) + 1)
+                  ) AS id_url
+              FROM full_urls_table
+            ) t
+          ORDER BY name
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Busco" excludeProjects="HostDB,MicrobiomeDB,ClinEpiDB">
+        <column name="dataset_id"/>
+        <column name="sequence_type"/>
+        <column name="c_score"/>
+        <column name="s_score"/>
+        <column name="d_score"/>
+        <column name="f_score"/>
+        <column name="m_score"/>
+        <column name="lineage_dataset"/>
+        <sql>
+            SELECT dsp.dataset_presenter_id as dataset_id,
+                sequence_type,
+                to_char(c_score /(c_score + f_score + m_score) * 100, '990.9') || '%' AS c_score,
+                to_char(s_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS s_score,
+                to_char(d_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS d_score,
+                to_char(f_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS f_score,
+                to_char(m_score /(c_score + f_score + m_score) * 100, '990.9') || '%'AS m_score,
+                lineage_dataset
+            FROM
+                apidbtuning.organismattributes oa,
+                apidb.organism                 o,
+                apidb.busco                    b
+                , apidbtuning.datasetpresenter dsp
+                , apidbtuning.datasetdatasource dd
+            WHERE b.organism_id = o.organism_id
+              AND o.taxon_id = oa.component_taxon_id
+              AND oa.component_taxon_id = dd.taxon_id
+              AND dd.dataset_presenter_id = dsp.dataset_presenter_id
+              AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+              AND dd.category='Genomes'
+        </sql>
+      </sqlQuery>
+
+    </querySet>
+
+</wdkModel>
