@@ -166,7 +166,7 @@
                          GROUP BY dataset_presenter_id
                        ) dp ON pres.dataset_presenter_id = dp.dataset_presenter_id
                        JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dp.dataset_presenter_id
-                       WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
+                       WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 
                    ) dts LEFT OUTER JOIN (
                       SELECT dataset_id,
@@ -434,7 +434,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
+          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           AND  COALESCE(dd.category,'') != 'Link outs'
         ]]>
       </sql>
@@ -607,7 +607,7 @@
             SELECT distinct dsp.dataset_presenter_id as dataset_id,
                    dsp.dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID')
+            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
 	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
