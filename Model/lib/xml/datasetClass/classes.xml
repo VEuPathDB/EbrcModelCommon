@@ -2371,10 +2371,11 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
 
 
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final">
+      <manualGet fileOrDir="common/empty">
         <dir name="final">
         </dir>
       </manualGet>
+      <unpack>rsync -av --exclude='*.bw' @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/rnaSeq/${name}/${version}/final @@dataDir@@</unpack>
       <unpack>mv @@dataDir@@/final @@dataDir@@/results</unpack>
       <unpack>ebiRNASeqSeqRegionNameMapping.pl --samples_directory @@dataDir@@/results --organism_abbrev ${organismAbbrev} --gusConfigFile @@workflowRootDataDir@@/${projectName}/${organismAbbrev}/${organismAbbrev}_gus.config</unpack>
       <getAndUnpackOutput dir="@@dataDir@@/results" />
