@@ -1,6 +1,6 @@
 [templateStart]
 name=injectDatasetQuestions
-anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecordQueries.xml
 prop=cardQuestionsSql
 >templateTextStart<
 ${cardQuestionsSql}
@@ -8,7 +8,7 @@ ${cardQuestionsSql}
 
 [templateStart]
 name=injectProjectAvailability
-anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecordQueries.xml
 prop=projectAvailabilitySql
 >templateTextStart<
 ${projectAvailabilitySql}
@@ -17,7 +17,7 @@ ${projectAvailabilitySql}
 
 [templateStart] 
 name=datasetExampleGraphDescriptions
-anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecords.xml
+anchorFile=EbrcModelCommon/Model/lib/wdk/model/records/datasetRecordQueries.xml
 prop=datasetName
 prop=datasetDisplayName 
 prop=datasetDescrip
