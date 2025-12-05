@@ -522,7 +522,7 @@
       <!-- =================================================================== -->
       <!-- Example Graphs ++++++++-->
       <!-- =================================================================== -->
- <!-- TODO add back
+
       <table name="ExampleGraphs"
              excludeProjects="ClinEpiDB,MicrobiomeDB"
              displayName="Example Graphs"
@@ -555,7 +555,7 @@
         <columnAttribute internal="true" displayName="DefaultGraphId" name="default_graph_id"/>
         <propertyList name="excludeFromDumper"><value>true</value></propertyList>
       </table>
--->
+
 
       <!-- =================================================================== -->
       <!-- =================================================================== -->
