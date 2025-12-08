@@ -1548,4 +1548,13 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 <internalDataset name="_orthomclPeripheralProteome_RSRC" datasetNamePattern="%_orthomclPeripheralProteome_RSRC"/>
 <internalDataset name="orthomclClades_RSRC"/>
 
+
+
+<!-- dummy datasets, loaded with miniFlow -->
+<internalDataset name="PlasmoDB_Crompton_Mali_AntibodyArray_RSRC"/>
+<internalDataset name="PlasmoDB_ICEMR_combined_AntibodyArray_RSRC"/>
+<internalDataset name="ToxoDB_Combined_RFLP_RSRC"/>
+<internalDataset name="ToxoDB_tgonME49_LOPIT_CellularLocalization_RSRC"/>
+<internalDataset name="ToxoDB_tgonGT1_CrisprScreen_Phenotype_RSRC"/>
+
 </datasetPresenters>
