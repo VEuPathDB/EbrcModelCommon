@@ -14,11 +14,12 @@
     <sql>
       <![CDATA[
         CREATE TABLE StudyIdDatasetId&1 AS
-        SELECT s.STABLE_ID STUDY_STABLE_ID, dp.DATASET_PRESENTER_ID DATASET_ID, dp.SHORT_DISPLAY_NAME AS DATASET_SHORT_DISPLAY_NAME
+        SELECT s.stable_id study_stable_id, dp.dataset_presenter_id dataset_id, dp.short_display_name as dataset_short_display_name
         FROM EDA.STUDY s
-          LEFT JOIN sres.EXTERNALDATABASERELEASE e ON s.EXTERNAL_DATABASE_RELEASE_ID =e.EXTERNAL_DATABASE_RELEASE_ID
-          LEFT JOIN sres.EXTERNALDATABASE e2 ON e.EXTERNAL_DATABASE_ID =e2.EXTERNAL_DATABASE_ID
-          LEFT JOIN DatasetPresenter dp on e2.name=dp.name
+          INNER JOIN eda.studyExternalDatabaseRelease e ON s.study_id = e.study_id
+          INNER JOIN sres.externalDatabaseRelease r ON e.external_database_release_id = r.external_database_release_id
+          INNER JOIN sres.externalDatabase e2 ON e2.external_database_id = r.external_database_id 
+          INNER JOIN apidbtuning.DatasetPresenter dp on e2.name= dp.name
         -- This is TEMPORARY (used for alpha MapVEU Application)
         UNION
         select case
