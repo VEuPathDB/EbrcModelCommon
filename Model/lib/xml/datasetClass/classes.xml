@@ -2817,33 +2817,34 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="GeneImage" category="gene_image" datasetFileHint="">
+
+  <datasetClass class="GOAssociationsFromCellularLocalizationImages" category="cellularLocalization" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-	<!-- TODO test miniflow - need to set this to back organism specific xml -->
-	<!-- <graphTemplateFile name="miniflow.xml"/> -->
-	<graphTemplateFile name="organismSpecificMisc.xml"/>
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
 
-    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertNAFeatureImage"
-              datasetName="${organismAbbrev}_${name}_GeneImage_RSRC"
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertGOAssociationsSimple"
+              datasetName="${organismAbbrev}_${name}_CellularLocalizationImages_RSRC"
               version="${version}"
               scope="organism"
-              type="subcellular_localization"
               organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/geneimage/${name}_GeneImage/${version}/final">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/cellularLocation/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
+
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput dir="@@dataDir@@/final/images"/>
-      <pluginArgs>--file @@dataDir@@/final/geneimage.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
+      <getAndUnpackOutput dir="@@dataDir@@/final/associations.gas"/>
+      <getAndUnpackOutput dir="@@dataDir@@/final/geneimage.tab"/>
+      
+<pluginArgs>--externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --inputFile @@dataDir@@/associations.gas --goExtDbRlsName "GO_RSRC" --goEvidenceCodeExtDbRlsName "GO_evidence_codes_RSRC" --seqIdSql "SELECT g.source_id, taf.aa_sequence_id FROM dots.genefeature g, dots.transcript t, dots.translatedAAFeature taf WHERE g.na_feature_id = t.parent_id AND t.na_feature_id = taf.na_feature_id UNION all select t.source_id, taf.aa_sequence_id from dots.transcript t, dots.translatedAAFeature taf where t.na_feature_id = taf.na_feature_id UNION all SELECT taf.source_id, taf.aa_sequence_id FROM dots.translatedAAFeature taf order by SOURCE_ID" --targetTable "DoTS::TranslatedAASequence" --lineOfEvidence "${name}" --inputIdColumn id --tolerateMissingSeqs --skipBadGOTerms @@dataDir@@/badGOTerms.log</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
 
 
   <datasetClass class="Cellxgene" category="" datasetFileHint="">
@@ -3024,9 +3025,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
-
-
 
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
