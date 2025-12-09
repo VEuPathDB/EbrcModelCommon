@@ -1,0 +1,32 @@
+package org.apidb.apicommon.model.datasetInjector;
+
+public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
+
+    protected String getInternalQuestionName() {
+        return "GeneQuestions.GenesByCellularLocalizationEdaSubset_" + getDatasetName();
+    }
+
+    @Override
+    public void injectTemplates() {
+        String projectName = getPropValue("projectName");
+        setPropValue("includeProjects", projectName + ",UniDB");
+
+        String datasetDisplayName = getPropValue("datasetDisplayName");
+        String trimmedDatasetDisplayName = datasetDisplayName.replaceAll("<[^>]*>", "");
+        setPropValue("datasetDisplayName", trimmedDatasetDisplayName);
+
+        injectTemplate("cellularLocalizationEdaQuestion");
+
+        setPropValue("questionName", getInternalQuestionName());
+        setPropValue("searchCategory", "searchCategory-cellular-localization-quantitative");
+        injectTemplate("internalGeneSearchCategory");
+    }
+
+    @Override
+    public void addModelReferences() {
+        super.addModelReferences();
+
+        addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByCellularLocalizationEdaSubset_" + this.getDatasetName());
+    }
+
+}
