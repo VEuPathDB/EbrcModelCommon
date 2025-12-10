@@ -2839,10 +2839,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput dir="@@dataDir@@/final/images"/>
-      <getAndUnpackOutput dir="@@dataDir@@/final/associations.gas"/>
-      <getAndUnpackOutput dir="@@dataDir@@/final/geneimage.tab"/>
       
-<pluginArgs>--externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --inputFile @@dataDir@@/associations.gas --goExtDbRlsName "GO_RSRC" --goEvidenceCodeExtDbRlsName "GO_evidence_codes_RSRC" --seqIdSql "SELECT g.source_id, taf.aa_sequence_id FROM dots.genefeature g, dots.transcript t, dots.translatedAAFeature taf WHERE g.na_feature_id = t.parent_id AND t.na_feature_id = taf.na_feature_id UNION all select t.source_id, taf.aa_sequence_id from dots.transcript t, dots.translatedAAFeature taf where t.na_feature_id = taf.na_feature_id UNION all SELECT taf.source_id, taf.aa_sequence_id FROM dots.translatedAAFeature taf order by SOURCE_ID" --targetTable "DoTS::TranslatedAASequence" --lineOfEvidence "${name}" --inputIdColumn id --tolerateMissingSeqs --skipBadGOTerms @@dataDir@@/badGOTerms.log</pluginArgs>
+<pluginArgs>--externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --inputFile @@dataDir@@/final/associations.gas --goExtDbRlsName "GO_RSRC" --goEvidenceCodeExtDbRlsName "GO_evidence_codes_RSRC" --seqIdSql "SELECT g.source_id, taf.aa_sequence_id FROM dots.genefeature g, dots.transcript t, dots.translatedAAFeature taf WHERE g.na_feature_id = t.parent_id AND t.na_feature_id = taf.na_feature_id UNION all select t.source_id, taf.aa_sequence_id from dots.transcript t, dots.translatedAAFeature taf where t.na_feature_id = taf.na_feature_id UNION all SELECT taf.source_id, taf.aa_sequence_id FROM dots.translatedAAFeature taf order by SOURCE_ID" --targetTable "DoTS::TranslatedAASequence" --lineOfEvidence "${name}" --inputIdColumn id --tolerateMissingSeqs --skipBadGOTerms @@dataDir@@/badGOTerms.log</pluginArgs>
     </datasetLoader>
   </datasetClass>
 
