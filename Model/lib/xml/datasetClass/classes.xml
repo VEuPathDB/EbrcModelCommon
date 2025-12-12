@@ -2818,33 +2818,32 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <datasetClass class="GeneImage" category="gene_image" datasetFileHint="">
+
+  <datasetClass class="GOAssociationsFromCellularLocalizationImages" category="cellularLocalization" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
     <prop name="organismAbbrev">&organismAbbrev;</prop>
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-	<!-- TODO test miniflow - need to set this to back organism specific xml -->
-	<!-- <graphTemplateFile name="miniflow.xml"/> -->
-	<graphTemplateFile name="organismSpecificMisc.xml"/>
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
 
-    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertNAFeatureImage"
-              datasetName="${organismAbbrev}_${name}_GeneImage_RSRC"
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::InsertGOAssociationsSimple"
+              datasetName="${organismAbbrev}_${name}_CellularLocalizationImages_RSRC"
               version="${version}"
               scope="organism"
-              type="subcellular_localization"
               organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/geneimage/${name}_GeneImage/${version}/final">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/cellularLocation/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
+
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput dir="@@dataDir@@/final/images"/>
-      <pluginArgs>--file @@dataDir@@/final/geneimage.tab --extDBName "%DATASET_NAME%" --extDBVer "%DATASET_VERSION%"</pluginArgs>
+      
+<pluginArgs>--externalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%" --inputFile @@dataDir@@/final/associations.gas --goExtDbRlsName "GO_RSRC" --goEvidenceCodeExtDbRlsName "GO_evidence_codes_RSRC" --seqIdSql "SELECT g.source_id, taf.aa_sequence_id FROM dots.genefeature g, dots.transcript t, dots.translatedAAFeature taf WHERE g.na_feature_id = t.parent_id AND t.na_feature_id = taf.na_feature_id UNION all select t.source_id, taf.aa_sequence_id from dots.transcript t, dots.translatedAAFeature taf where t.na_feature_id = taf.na_feature_id UNION all SELECT taf.source_id, taf.aa_sequence_id FROM dots.translatedAAFeature taf order by SOURCE_ID" --targetTable "DoTS::TranslatedAASequence" --lineOfEvidence "${name}" --inputIdColumn id --tolerateMissingSeqs --skipBadGOTerms @@dataDir@@/badGOTerms.log</pluginArgs>
     </datasetLoader>
   </datasetClass>
-
 
 
   <datasetClass class="Cellxgene" category="" datasetFileHint="">
@@ -2935,7 +2934,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="version">&version;</prop>
     <prop name="name">&name;</prop>
 
-    <graphTemplateFile name="globalEDA.xml"/>
+    <graphTemplateFile name="eda.xml"/>
 
     <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
               datasetName="${projectName}_${name}_Phenotype_RSRC"
@@ -2944,7 +2943,83 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               type="phenotype"
               >
 
-      <manualGet fileOrDir="common/phenotype/${projectName}/${name}/${version}/final">
+      <manualGet fileOrDir="${projectName}/common/phenotype/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="PhenotypeEDAWithLongText" category="phenotype" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_Phenotype_RSRC"
+              version="${version}"
+              scope="global"
+              type="phenotype"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/phenotype/${name}/${version}/final">
+        <dir name="final">
+          </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="PhenotypeEDAWithImages" category="phenotype" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${organismAbbrev}_${name}_Phenotype_RSRC"
+              version="${version}"
+              scope="organism"
+              type="phenotype"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/phenotype/${name}/${version}/final">
+        <dir name="final">
+          <dir name="images">
+          </dir>
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput dir="@@dataDir@@/final/images"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="AntibodyArrayEDA" category="antibodyArray" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_AntibodyArray_RSRC"
+              version="${version}"
+              scope="global"
+              type="antibodyArray"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/antibodyArray/${name}/${version}/final">
         <dir name="final">
         </dir>
       </manualGet>
@@ -2954,7 +3029,53 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="RflpEDA" category="rflp" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
 
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_RFLP_RSRC"
+              version="${version}"
+              scope="global"
+              type="rflp"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/rflp/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <datasetClass class="CellularLocalizationEDA" category="cellularLocalization" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="name">&name;</prop>
+
+    <graphTemplateFile name="eda.xml"/>
+
+    <datasetLoader plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              datasetName="${projectName}_${name}_CellularLocalization_RSRC"
+              version="${version}"
+              scope="global"
+              type="cellularLocalization"
+              >
+
+      <manualGet fileOrDir="${projectName}/common/cellularLocalization/${name}/${version}/final">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
   <datasetClass class="GeneOntologyAssociations" category="gene_annotation" datasetFileHint="">
     <purpose></purpose>
