@@ -2971,7 +2971,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
           </dir>
       </manualGet>
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
-      <getAndUnpackOutput dir="@@dataDir@@/final/gene_phenotype.txt"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
