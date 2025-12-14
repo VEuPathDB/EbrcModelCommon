@@ -5265,8 +5265,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/splicedLeader_polyASites/${name}/${version}/final/ @@dataDir@@/final</unpack>
-
+      <unpack>rsync -avL @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/splicedLeader_polyASites/${name}/${version}/final @@dataDir@@</unpack>
       <getAndUnpackOutput dir="@@dataDir@@/final" />
       <getAndUnpackOutput file="@@dataDir@@/final/analysisConfig.xml"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
