@@ -99,6 +99,7 @@ orthomclEuPathReferenceProteome			proteome	reference
 manualDeliveryReferenceProteome			proteome	
 manualDeliveryPeripheralProteome			proteome	
 proteinMicroarrayProfiles	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	putative_function	immune_response
+AntibodyArrayEDA	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	putative_function	immune_response
 ## this is the default for genericProfiles				
 genericProfiles	http://edamontology.org/topic_0804	Immunoproteins, genes and antigens	putative_function	immune_response
 copyNumberVariationExperiment	http://edamontology.org/topic_3175	Structural Variation	resequencing	copyNumberVariation
