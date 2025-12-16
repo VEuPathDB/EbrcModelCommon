@@ -132,7 +132,7 @@
             isCacheable='false'>
 
     <sqlQuery name="DisplayName"  isCacheable="false">
-      <column name="datasource_id" columnType="string"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="display_name" ignoreCase="true" columnType="string"/>
 
       <sql> 
@@ -153,7 +153,7 @@
 
  
     <sqlQuery name="All"  isCacheable="false">
-      <column name="datasource_id" columnType="string"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="dataset_id" columnType="string"/>
       <column name="dataset_name" columnType="string"/>
       <column name="description" columnType="string"/>
@@ -177,7 +177,7 @@
     </sqlQuery>
     
     <sqlQuery name="Organisms"  isCacheable="false">
-      <column name="datasource_id"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="organism_prefix"/>
 
       <sql>
@@ -205,7 +205,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
     <sqlQuery name="Contacts"  isCacheable="false">
-      <column name="datasource_id" columnType="string"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="short_attribution" columnType="string"/>
 
             <sql>
@@ -238,7 +238,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             isCacheable='false'>
 
     <sqlQuery name="Publications"  isCacheable='false'>
-      <column name="datasource_id"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="pmid"/>
       <column name="citation"/>
       <column name="url"/>
@@ -272,7 +272,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
     </sqlQuery>
 
     <sqlQuery name="References"  isCacheable='false'>
-      <column name="datasource_id"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="dataset_id"/>
       <column name="dataset_name"/>
       <column name="text"/>
@@ -304,7 +304,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
 
     <sqlQuery name="Version"  isCacheable='false'>
       <column name="dataset_name"/>
-      <column name="datasource_id"/>
+      <column name="datasource_id" columnType="number"/>
       <column name="version"/>
       <column name="organism"/>
       <column name="project_id"/>
