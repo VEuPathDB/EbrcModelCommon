@@ -210,15 +210,17 @@ public class DatasetPresenterSetLoader {
                     + name + "\"");
           datasetNamesFoundLocal.add(name);
         }
-        // if we have 0 or 1 injectors, validate that all datasources agree with each other
-        // (if we have 2 or more injectors, we might have diverse datasources)
-        if (datasetPresenter.getDatasetInjectors().size() < 2) {
-          if (!datasetPresenter.getFoundInDb()) {
-            datasetPresenter.setFoundInDb();
-            first_type = type;
-            first_subtype = subtype;
-            first_isSpeciesScope = isSpeciesScope;
-          } else {
+
+        // Mark that we found this presenter in the database (on first match)
+        if (!datasetPresenter.getFoundInDb()) {
+          datasetPresenter.setFoundInDb();
+          first_type = type;
+          first_subtype = subtype;
+          first_isSpeciesScope = isSpeciesScope;
+        } else {
+          // if we have 0 or 1 injectors, validate that all datasources agree with each other
+          // (if we have 2 or more injectors, we might have diverse datasources)
+          if (datasetPresenter.getDatasetInjectors().size() < 2) {
             if ((first_type == null && type != null)
                     || (first_type != null && !type.equals(first_type))
                     || (first_subtype == null && subtype != null)
