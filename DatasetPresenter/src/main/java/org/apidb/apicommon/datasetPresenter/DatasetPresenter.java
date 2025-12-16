@@ -480,6 +480,8 @@ public class DatasetPresenter {
     void addCategoriesForPattern(Map<String,Map<String,String>> datasetNamesToProperties) {
       if(propValues.containsKey("datasetClassCategory")) return;
       if(datasetNamesFromPattern.size() < 1) return;
+      // Skip if presenter has multiple injectors (they must use injector-level categoryOverride)
+      if(datasetInjectorConstructors.size() > 1) return;
 
       String datasetKey = datasetNamesFromPattern.get(0);
 
