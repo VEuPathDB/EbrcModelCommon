@@ -142,8 +142,14 @@ public class DatasetInjectorConstructor {
           + datasetInjectorClassName + "'", ex);
     }
 
+    // When multiple injectors exist for a presenter, each injector should use its datasourceName
+    // as the datasetName for template instantiation
+    if (datasourceName != null) {
+      propValues.put("datasetName", datasourceName);
+    }
+
     di.addPropValues(propValues);
-    di.setDatasetName(datasetName);
+    di.setDatasetName(datasourceName != null ? datasourceName : datasetName);
     di.setDatasourceName(datasourceName);
     di.setProjectName(projectName);
     di.setCategoryOverride(categoryOverride);
@@ -158,6 +164,10 @@ public class DatasetInjectorConstructor {
 
     public void setCategoryOverride(String categoryOverride) {
         this.categoryOverride = categoryOverride;
+    }
+
+    public String getDatasourceName() {
+        return datasourceName;
     }
 
 }
