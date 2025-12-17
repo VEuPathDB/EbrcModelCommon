@@ -691,7 +691,7 @@
       <sql>
         <![CDATA[
           WITH projectQuestionLinks AS (
-              SELECT dsp.dataset_presenter_id as dataset_id
+		    SELECT dsp.dataset_presenter_id as dataset_id
                 , dsp.name as dataset_name
                 , '' as text
                 , '' as url
@@ -700,10 +700,15 @@
                 , ref.target_type
                 , replace (ref.target_name, ':', '') as target_name
                 , 'question' as link_type
-              FROM ApidbTuning.datasetmodelref ref
-              LEFT JOIN ApidbTuning.DatasetPresenter dsp
-                ON dsp.dataset_presenter_id = ref.dataset_presenter_id		
+              FROM ApidbTuning.datasourcemodelref ref
+			  INNER JOIN Apidb.datasource ds
+			    ON ref.data_source_id = ds.data_source_id
+			  INNER JOIN ApidbTuning.DatasetDatasource dds
+			    ON ds.name = dds.name
+              INNER JOIN ApidbTuning.DatasetPresenter dsp
+                ON dsp.dataset_presenter_id = dds.dataset_presenter_id	
               WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
+              AND (dds.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
               ORDER BY dsp.name
                 , ref.target_type
                 , ref.record_type
