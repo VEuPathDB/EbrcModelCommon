@@ -160,4 +160,8 @@ public class DatasetInjectorConstructor {
         this.categoryOverride = categoryOverride;
     }
 
+    public String getDatasourceName() {
+        return datasourceName;
+    }
+
 }
