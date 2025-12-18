@@ -157,7 +157,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
             FROM apidbtuning.datasetdatasource dd
               LEFT JOIN apidbtuning.organismattributes tn ON dd.taxon_id = tn.component_taxon_id
             WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
-            AND dd.category != 'Link outs'
+              AND COALESCE(dd.category,'') != 'Link outs'
           ) t
           GROUP BY dataset_id
         ]]>
