@@ -1,5 +1,7 @@
 <wdkModel>
 
+  <constant name="datasourceRecordFilter" includeProjects="VectorBase">Anopheles gambiae PEST</constant>
+
   <!-- a minimal Datasource record only needed for genomics sites. Used for the Question that drives the internal search pages (eg RNA Seq).  -->
 
   <recordClassSet name="DatasourceRecordClasses">
@@ -187,7 +189,7 @@
               substr(string_agg(org,'<br>' order by org), 1, 4000) , '<br>[A-Za-z\. <>&]+$', '<br>...') AS organism_prefix
           FROM (
             SELECT DISTINCT dd.dataset_datasource_id as datasource_id
-              , CASE when tn.organism_name is null then null
+              , CASE when tn.organism_name is null then '' -- TODO:  need to set this in either datasource OR Presenter
 	       -- italicize first 2 words
                 ELSE '<i>' || split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2) || '</i>' || 
 SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || ' ' || split_part(tn.organism_name, ' ', 2)) + 1)
