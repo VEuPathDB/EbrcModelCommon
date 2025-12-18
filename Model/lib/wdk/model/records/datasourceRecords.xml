@@ -163,7 +163,7 @@
         <![CDATA[
           SELECT dd.dataset_datasource_id as datasource_id,
                  dd.dataset_presenter_id as dataset_id,
-                 dsp.name as dataset_name,
+                 dd.name as dataset_name,
                  --dsp.display_name,
 		 dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
