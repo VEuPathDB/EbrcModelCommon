@@ -2942,6 +2942,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="global"
               type="phenotype"
+              organismAbbrev="${organismAbbrev}"
               >
 
       <manualGet fileOrDir="${projectName}/common/phenotype/${name}/${version}/final">
@@ -2967,6 +2968,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="global"
               type="phenotype"
+              organismAbbrev="${organismAbbrev}"
               >
 
       <manualGet fileOrDir="${projectName}/common/phenotype/${name}/${version}/final">
@@ -3020,6 +3022,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="global"
               type="antibodyArray"
+              organismAbbrev="${organismAbbrev}"
               >
 
       <manualGet fileOrDir="${projectName}/common/antibodyArray/${name}/${version}/final">
@@ -3046,6 +3049,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="global"
               type="rflp"
+              organismAbbrev="${organismAbbrev}"
               >
 
       <manualGet fileOrDir="${projectName}/common/rflp/${name}/${version}/final">
@@ -3071,6 +3075,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="${version}"
               scope="global"
               type="cellularLocalization"
+              organismAbbrev="${organismAbbrev}"
               >
 
       <manualGet fileOrDir="${projectName}/common/cellularLocalization/${name}/${version}/final">
