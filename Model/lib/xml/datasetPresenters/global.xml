@@ -1566,5 +1566,6 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
 <internalDataset name="Gene2Pubmed_RSRC"/>
 <internalDataset name="UniprotIDs_RSRC"/>
 <internalDataset name="_patchOrganism_RSRC" datasetNamePattern="%_patchOrganism_RSRC"/>
-
+<internalDataset name="metaData_ChIPChip_RSRC"/>
+<internalDataset name="metaData_RnaSeq_RSRC"/>
 </datasetPresenters>
