@@ -15,8 +15,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         String trimmedDatasetDisplayName = datasetDisplayName.replaceAll("<[^>]*>", "");
         setPropValue("datasetDisplayName", trimmedDatasetDisplayName);        
 
-	// COMMENT for now; TO BE FIXED
-        // injectTemplate("phenotypeEdaQuestion");
+        injectTemplate("phenotypeEdaQuestion");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-phenotype-quantitative");
