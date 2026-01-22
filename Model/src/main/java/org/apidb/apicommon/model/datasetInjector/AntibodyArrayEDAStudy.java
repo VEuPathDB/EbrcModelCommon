@@ -7,7 +7,13 @@ public class AntibodyArrayEDAStudy extends GenomicsEDAStudy {
     }
 
     @Override
+    public void setEdaEntityAbbrev() {
+        setPropValue("edaEntityAbbrev", "AntbdyAr");
+    }
+
+    @Override
     public void injectTemplates() {
+        super.injectTemplates();
         String projectName = getPropValue("projectName");
         setPropValue("includeProjects", projectName + ",UniDB");
 

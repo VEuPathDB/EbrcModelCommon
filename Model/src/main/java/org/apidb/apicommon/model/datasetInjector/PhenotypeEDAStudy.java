@@ -7,7 +7,13 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
     }
 
     @Override
+    public void setEdaEntityAbbrev() {
+        setPropValue("edaEntityAbbrev", "gnPhntyD");
+    }
+
+    @Override
     public void injectTemplates() {
+        super.injectTemplates();
         String projectName = getPropValue("projectName");
         setPropValue("includeProjects", projectName + ",UniDB");
 
@@ -16,6 +22,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         setPropValue("datasetDisplayName", trimmedDatasetDisplayName);        
 
         injectTemplate("phenotypeEdaQuestion");
+        injectTemplate("phenotypeEdaGeneTableSql");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-phenotype-quantitative");

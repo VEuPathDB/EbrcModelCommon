@@ -7,7 +7,13 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
     }
 
     @Override
+    public void setEdaEntityAbbrev() {
+        setPropValue("edaEntityAbbrev", "lopitDat");
+    }
+
+    @Override
     public void injectTemplates() {
+        super.injectTemplates();
         String projectName = getPropValue("projectName");
         setPropValue("includeProjects", projectName + ",UniDB");
 
