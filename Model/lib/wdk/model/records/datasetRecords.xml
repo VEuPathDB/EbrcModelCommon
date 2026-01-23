@@ -222,7 +222,7 @@
 
       <!--   request_email_bcc contains providers names; used to come from presenters, now from studyaccess; 
           comment out until we have mapped schemas (to a postgres acctdb)   -->
-      <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="MicrobiomeDB,ClinEpiDB">
+      <attributeQueryRef ref="DatasetAttributes.ClinepiStudyAttributes" includeProjects="ClinEpiDB">
         <columnAttribute name="project_availability" internal="true"/>
         <columnAttribute name="is_public" internal="true"/>
          <columnAttribute name="is_prerelease" type="number"/>
@@ -269,9 +269,6 @@
         </linkAttribute>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="DatasetAttributes.MicrobiomeStudyAttributes" includeProjects="MicrobiomeDB">
-        <columnAttribute name="study_categories" displayName="Category"/>
-      </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB">
         <columnAttribute name="disease" displayName="Disease"/>
@@ -310,8 +307,6 @@
       <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
                       includeProjects="ClinEpiDB"/>
 
-      <attributesList summary="study_categories,summary,eupath_release"
-                      includeProjects="MicrobiomeDB"/>
 
       <!-- =================================================================================== -->
       <!-- =================================================================================== -->
