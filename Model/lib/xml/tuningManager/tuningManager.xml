@@ -21,6 +21,7 @@
           INNER JOIN sres.externalDatabase e2 ON e2.external_database_id = r.external_database_id 
           INNER JOIN apidbtuning.DatasetDatasource dds on e2.name= dds.name
 		  INNER JOIN apidbtuning.DatasetPresenter dp on dds.dataset_presenter_id = dp.dataset_presenter_id
+        WHERE dds.dataset_presenter_id != 'DS_98fb258539' -- TEMP REMOVE THE RNAi TriTryp Phenotype Dataset. 
         -- This is TEMPORARY (used for alpha MapVEU Application)
         UNION
         select case
