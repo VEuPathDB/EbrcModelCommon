@@ -25,6 +25,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         injectTemplate("phenotypeEdaGeneTableSql");
         injectTemplate("phenotypeEdaAttributeQueries");
         injectTemplate("phenotypeEdaAttributeRef");
+        injectTemplate("phenotypeEdaAttributeCategory");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-phenotype-quantitative");
