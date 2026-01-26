@@ -14,7 +14,28 @@ public abstract class GenomicsEDAStudy extends DatasetInjector {
       setEdaEntityAbbrev();
   }
 
-    
+
+  public void setOrganismListForPartitionedTables() {
+      setOrganismAbbrevFromDatasetName();
+      String organismAbbrev = getPropValue("organismAbbrev");
+      
+      setPropValue("orgListForPartitionedTables", convertToSqlInClause(organismAbbrev));
+  }
+
+  public String convertToSqlInClause(String orgList) {
+    // Trim the list to avoid leading/trailing spaces and handle empty case
+    if (orgList == null || orgList.trim().isEmpty()) {
+        return "('')"; // or return empty parentheses "()" depending on your needs
+    }
+
+    String[] orgs = orgList.split(",");
+
+    String sqlInClause = "(" + Arrays.stream(orgs)
+        .map(org -> "'" + org.trim() + "'") // add quotes around each org
+        .collect(Collectors.joining(",")) + ")";
+
+    return sqlInClause;
+  }
 
   @Override
   public void addModelReferences() {
