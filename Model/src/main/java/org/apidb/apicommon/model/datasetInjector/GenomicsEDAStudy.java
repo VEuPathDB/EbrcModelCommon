@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apidb.apicommon.datasetPresenter.DatasetInjector;
 
 import java.util.Arrays;
-import java.util.Collectors;
+import java.util.stream.Collectors;
 
 public abstract class GenomicsEDAStudy extends DatasetInjector {
 
