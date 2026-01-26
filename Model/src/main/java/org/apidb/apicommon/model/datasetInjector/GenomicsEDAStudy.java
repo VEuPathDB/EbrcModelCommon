@@ -15,6 +15,7 @@ public abstract class GenomicsEDAStudy extends DatasetInjector {
       setPublicAccessProperties();
       setEdaStudyInternalAbbrev();
       setEdaEntityAbbrev();
+      setOrganismListForPartitionedTables
   }
 
 
