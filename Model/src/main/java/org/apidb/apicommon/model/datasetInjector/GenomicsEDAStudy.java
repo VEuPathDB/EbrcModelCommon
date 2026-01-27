@@ -20,9 +20,7 @@ public abstract class GenomicsEDAStudy extends DatasetInjector {
 
 
   public void setOrganismListForPartitionedTables() {
-      setOrganismAbbrevFromDatasetName();
       String organismAbbrev = getPropValue("organismAbbrev");
-      
       setPropValue("orgListForPartitionedTables", convertToSqlInClause(organismAbbrev));
   }
 
