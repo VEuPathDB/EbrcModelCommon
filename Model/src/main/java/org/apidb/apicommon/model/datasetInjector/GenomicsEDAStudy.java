@@ -5,6 +5,9 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apidb.apicommon.datasetPresenter.DatasetInjector;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public abstract class GenomicsEDAStudy extends DatasetInjector {
 
   @Override
@@ -12,9 +15,29 @@ public abstract class GenomicsEDAStudy extends DatasetInjector {
       setPublicAccessProperties();
       setEdaStudyInternalAbbrev();
       setEdaEntityAbbrev();
+      setOrganismListForPartitionedTables();
   }
 
-    
+
+  public void setOrganismListForPartitionedTables() {
+      String organismAbbrev = getPropValue("organismAbbrev");
+      setPropValue("orgListForPartitionedTables", convertToSqlInClause(organismAbbrev));
+  }
+
+  public String convertToSqlInClause(String orgList) {
+    // Trim the list to avoid leading/trailing spaces and handle empty case
+    if (orgList == null || orgList.trim().isEmpty()) {
+        return "('')"; // or return empty parentheses "()" depending on your needs
+    }
+
+    String[] orgs = orgList.split(",");
+
+    String sqlInClause = "(" + Arrays.stream(orgs)
+        .map(org -> "'" + org.trim() + "'") // add quotes around each org
+        .collect(Collectors.joining(",")) + ")";
+
+    return sqlInClause;
+  }
 
   @Override
   public void addModelReferences() {

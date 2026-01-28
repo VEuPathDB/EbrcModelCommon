@@ -21,7 +21,13 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
         String trimmedDatasetDisplayName = datasetDisplayName.replaceAll("<[^>]*>", "");
         setPropValue("datasetDisplayName", trimmedDatasetDisplayName);
 
+        // Inject all templates in order
         injectTemplate("cellularLocalizationEdaQuestion");
+        injectTemplate("cellularLocalizationEdaGeneTableSql");
+        injectTemplate("cellularLocalizationEdaAttributeQueriesNumeric");
+        injectTemplate("cellularLocalizationEdaAttributeQueriesString");
+        injectTemplate("cellularLocalizationEdaAttributeRef");
+        injectTemplate("cellularLocalizationEdaAttributeCategory");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-cellular-localization-quantitative");
