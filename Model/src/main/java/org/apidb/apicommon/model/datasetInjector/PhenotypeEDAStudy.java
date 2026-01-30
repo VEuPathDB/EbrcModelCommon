@@ -23,6 +23,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
 
         injectTemplate("phenotypeEdaQuestion");
         injectTemplate("phenotypeEdaGeneTableSql");
+        injectTemplate("phenotypeDataTableGeneTableSql");
         injectTemplate("phenotypeEdaAttributeQueriesNumeric");
         injectTemplate("phenotypeEdaAttributeQueriesString");
         injectTemplate("phenotypeEdaAttributeRef");

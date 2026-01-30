@@ -24,6 +24,7 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
         // Inject all templates in order
         injectTemplate("cellularLocalizationEdaQuestion");
         injectTemplate("cellularLocalizationEdaGeneTableSql");
+        injectTemplate("cellularLocalizationDataTableGeneTableSql");
         injectTemplate("cellularLocalizationEdaAttributeQueriesNumeric");
         injectTemplate("cellularLocalizationEdaAttributeQueriesString");
         injectTemplate("cellularLocalizationEdaAttributeRef");
