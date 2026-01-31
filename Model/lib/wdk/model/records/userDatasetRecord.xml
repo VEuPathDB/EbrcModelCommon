@@ -276,6 +276,63 @@
         <columnAttribute name="identifier_value" displayName="Identifier"/>
       </table>
 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Dependencies -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!-- not needed in UI
+      <table name="Dependencies"
+             displayName="Dependencies"
+             queryRef="UserDatasetTables.Dependencies">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="identifier" displayName="Identifier"/>
+        <columnAttribute name="display_name" displayName="Name"/>
+        <columnAttribute name="version" displayName="Version"/>
+      </table>
+-->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Associated Factors -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="AssociatedFactors"
+             displayName="Associated Factors"
+             queryRef="UserDatasetTables.AssociatedFactors">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="factor" displayName="Factor"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Sample Types -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="SampleTypes"
+             displayName="Sample Types"
+             queryRef="UserDatasetTables.SampleTypes">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="type" displayName="Sample Type"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Dataset Links -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="DatasetLinks"
+             displayName="Dataset Links"
+             queryRef="UserDatasetTables.DatasetLinks">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_uri" displayName="URI" internal="true"/>
+        <columnAttribute name="shares_records" displayName="Shares Records"/>
+
+        <linkAttribute name="dataset_link" displayName="Link">
+          <displayText>
+            <![CDATA[
+              $$dataset_uri$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$dataset_uri$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
     </recordClass>
 
   </recordClassSet>
