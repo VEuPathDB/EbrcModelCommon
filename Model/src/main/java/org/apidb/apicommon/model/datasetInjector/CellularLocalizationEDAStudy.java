@@ -8,7 +8,7 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
 
     @Override
     public void setEdaEntityAbbrev() {
-	if(this.getDatasetName().equals("ToxoDB_tgonME49_LOPIT_CellularLocalization_RSRC.R")) {
+	if(this.getDatasetName().equals("ToxoDB_tgonME49_LOPIT_CellularLocalization_RSRC")) {
 	    setPropValue("edaEntityAbbrev", "lopitDat");
 	}
 	else {
