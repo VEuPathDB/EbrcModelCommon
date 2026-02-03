@@ -120,7 +120,8 @@ blatAlignmentQuality	http://edamontology.org/topic_0089	Ontology and Terminology
 isolateGeographicLocationGPS	http://edamontology.org/topic_0089	Ontology and Terminology	sres	
 antiCodon	http://edamontology.org/topic_0160	sequence sites, features and motifs	sres	
 eupathOntologyTerms	http://edamontology.org/topic_0089	Ontology and Terminology	sres	
-GeneImage	http://edamontology.org/topic_0140	Protein targeting and localization	subcellular_localization	
+GOAssociationsFromCellularLocalizationImages	http://edamontology.org/topic_0140	Protein targeting and localization	subcellular_localization	
+CellularLocalizationEDA	http://edamontology.org/topic_0140	Protein targeting and localization	subcellular_localization	
 orthomclClades	http://edamontology.org/topic_3299	orthology	taxonomy	
 microarrayExpressionExperiment	http://purl.obolibrary.org/obo/OBI_0001985	Microarray Assay	transcript_expression	array
 microarrayExpressionExperimentWithProviderProbeMapping	http://purl.obolibrary.org/obo/OBI_0001985	Microarray Assay	transcript_expression	array
