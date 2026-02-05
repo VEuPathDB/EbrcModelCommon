@@ -302,11 +302,13 @@
     <sqlQuery name="Projects" isCacheable='false'>
       <column name="dataset_id"/>
       <column name="project_id"/>
+      <column name="project_display_name"/>
       <sql>
         <![CDATA[
           SELECT
             dataset_id,
-            project_id
+            project_id,
+            project_display_name
           FROM  @VDI_CONTROL_SCHEMA@.dataset_project
           ORDER BY project_id
         ]]>
@@ -328,6 +330,72 @@
           FROM  @VDI_CONTROL_SCHEMA@.dataset_bioproject_id
           WHERE bioproject_id IS NOT NULL
           ORDER BY identifier_type, identifier_value
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Dependencies table -->
+    <sqlQuery name="Dependencies" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="identifier"/>
+      <column name="display_name"/>
+      <column name="version"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            identifier,
+            display_name,
+            version
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_dependency
+          ORDER BY display_name, identifier
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Associated Factors table -->
+    <sqlQuery name="AssociatedFactors" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="factor"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            factor
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_associated_factor
+          ORDER BY factor
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Sample Types table -->
+    <sqlQuery name="SampleTypes" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="type"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            type
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_sample_type
+          ORDER BY type
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Dataset Links table -->
+    <sqlQuery name="DatasetLinks" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="dataset_uri"/>
+      <column name="shares_records"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            dataset_uri,
+            CASE WHEN shares_records THEN 'Yes' ELSE 'No' END as shares_records
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_link
+          ORDER BY dataset_uri
         ]]>
       </sql>
     </sqlQuery>
