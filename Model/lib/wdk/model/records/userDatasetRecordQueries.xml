@@ -246,17 +246,17 @@
       </sql>
     </sqlQuery>
 
-    <!-- Species table -->
-    <sqlQuery name="Species" isCacheable='false'>
+    <!-- Outcome table -->
+    <sqlQuery name="Outcome" isCacheable='false'>
       <column name="dataset_id"/>
-      <column name="species"/>
+      <column name="outcome"/>
       <sql>
         <![CDATA[
           SELECT
             dataset_id,
-            species
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_species
-          ORDER BY species
+            outcome
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_outcome
+          ORDER BY outcome
         ]]>
       </sql>
     </sqlQuery>

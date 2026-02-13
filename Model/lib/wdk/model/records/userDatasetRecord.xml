@@ -222,13 +222,13 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Species -->
+      <!-- Outcome -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Species"
-             displayName="Species"
-             queryRef="UserDatasetTables.Species">
+      <table name="Outcome"
+             displayName="Outcome"
+             queryRef="UserDatasetTables.Outcome">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="species" displayName="Species"/>
+        <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
