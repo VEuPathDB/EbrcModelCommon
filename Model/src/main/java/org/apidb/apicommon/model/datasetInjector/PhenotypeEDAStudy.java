@@ -39,6 +39,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         super.addModelReferences();
 
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByPhenotypeEdaSubset_" + this.getDatasetName());
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaPhenotypeGraphs");
     }
 
 }
