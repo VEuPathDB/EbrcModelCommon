@@ -2,6 +2,70 @@
 <tuningConfig>
 
 
+  <tuningTable name="GroupAttributes">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="apidb.Organism"/>
+    <externalDependency name="dots.AaSequence"/>
+
+    <sql>
+      <![CDATA[
+create table GroupAttributes&1 as
+SELECT 
+  og.group_id AS group_name,
+  CASE 
+    WHEN og.is_residual = 1 THEN 'Residual'
+    ELSE 'Core'
+  END AS group_type,
+  COALESCE(nm.number_of_members, 0) AS number_of_members,
+  COALESCE(cm.number_of_core_members, 0) AS number_of_core_members,
+  COALESCE(pm.number_of_peripheral_members, 0) AS number_of_peripheral_members
+FROM apidb.orthologgroup og
+LEFT JOIN (
+  SELECT COUNT(aa_sequence_id) AS number_of_members, group_id
+  FROM apidb.orthologgroupaasequence
+  GROUP BY group_id
+) nm 
+  ON og.group_id = nm.group_id
+LEFT JOIN (
+  SELECT COUNT(core.aa_sequence_id) AS number_of_core_members, group_id
+  FROM (
+    SELECT ogas.aa_sequence_id, ogas.group_id
+    FROM apidb.organism og
+    JOIN dots.aasequence das 
+      ON das.taxon_id = og.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas 
+      ON ogas.aa_sequence_id = das.aa_sequence_id
+    WHERE og.core_peripheral = 'core'
+  ) AS core
+  GROUP BY group_id
+) cm 
+  ON og.group_id = cm.group_id
+LEFT JOIN (
+  SELECT COUNT(peripheral.aa_sequence_id) AS number_of_peripheral_members, group_id
+  FROM (
+    SELECT ogas.aa_sequence_id, ogas.group_id
+    FROM apidb.organism og
+    JOIN dots.aasequence das 
+      ON das.taxon_id = og.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas 
+      ON ogas.aa_sequence_id = das.aa_sequence_id
+    WHERE og.core_peripheral = 'peripheral'
+  ) AS peripheral
+  GROUP BY group_id
+) pm 
+  ON og.group_id = pm.group_id	       
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        alter table GroupAttributes&1
+          add constraint GrpAttrs_pk&1 primary key (group_name)
+      ]]>
+    </sql>
+  </tuningTable>
+
   <tuningTable name="SequenceAttributes">
     <externalDependency name="apidb.OrthologGroup"/>
     <externalDependency name="apidb.OrthologGroupAaSequence"/>
@@ -144,8 +208,100 @@
 
   </tuningTable>
 
+  <tuningTable name="GroupStatsWide">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.orthologgroupstats"/>
 
-<!-- TODO:  if this is needed, need to redo the EC_NUMBER query -->
+    <sql>
+      <![CDATA[
+create table GroupStatsWide&1 (
+    group_name TEXT PRIMARY KEY,
+    -- Core statistics (protein_subset = 'C')
+    core_min_evalue TEXT,
+    core_25_evalue TEXT,
+    core_median_evalue TEXT,
+    core_75_evalue TEXT,
+    core_max_evalue TEXT,
+    -- Core + Peripheral statistics (protein_subset = 'C+P')
+    core_peripheral_min_evalue TEXT,
+    core_peripheral_25_evalue TEXT,
+    core_peripheral_median_evalue TEXT,
+    core_peripheral_75_evalue TEXT,
+    core_peripheral_max_evalue TEXT,
+    -- Residual statistics (protein_subset = 'R')
+    residual_min_evalue TEXT,
+    residual_25_evalue TEXT,
+    residual_median_evalue TEXT,
+    residual_75_evalue TEXT,
+    residual_max_evalue TEXT
+)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+INSERT INTO groupstatswide&1
+SELECT
+    og.group_id AS group_name,
+    -- Core statistics
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS core_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS core_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS core_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS core_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS core_max_evalue,
+    -- Core + Peripheral statistics
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS core_peripheral_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS core_peripheral_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS core_peripheral_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS core_peripheral_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS core_peripheral_max_evalue,
+    -- Residual statistics
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS residual_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS residual_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS residual_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS residual_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS residual_max_evalue
+FROM apidb.orthologgroup og
+LEFT JOIN apidb.orthologgroupstats ogs ON og.group_id = ogs.group_id
+GROUP BY og.group_id
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="GroupProteinPfam">
+    <internalDependency name="SequenceAttributes"/>
+    <internalDependency name="DomainAssignment"/>
+    <sql>
+      <![CDATA[
+   CREATE TABLE GroupProteinPfam&1 as
+   SELECT sa.group_name, 
+       sa.full_id, 
+       ROUND(sa.length::numeric, 0) AS protein_length, 
+       sa.organism_name AS taxon_name, 
+       CASE 
+           WHEN sa.core_peripheral = 'C' THEN 'Core' 
+           WHEN sa.core_peripheral = 'P' THEN 'Peripheral' 
+           ELSE '' 
+       END AS core_peripheral, 
+       da.accession, 
+       da.domain_index, 
+       da.start_min, 
+       da.end_max
+FROM SequenceAttributes sa
+LEFT OUTER JOIN DomainAssignment da 
+    ON da.full_id = sa.full_id
+ORDER BY sa.full_id, da.start_min
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+   create index grpprotpfam_1 on GroupProteinPfam&1 (group_name)
+      ]]>
+    </sql>
+  </tuningTable>
+  
+  <!-- TODO:  if this is needed, need to redo the EC_NUMBER query -->
   <tuningTable name="TypeAheadCounts">
     <externalDependency name="dots.DbRefAaFeature"/>
     <externalDependency name="sres.DbRef"/>
