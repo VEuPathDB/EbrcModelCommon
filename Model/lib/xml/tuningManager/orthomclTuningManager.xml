@@ -2,6 +2,84 @@
 <tuningConfig>
 
 
+  <tuningTable name="GroupAttributes">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="apidb.Organism"/>
+    <externalDependency name="dots.AaSequence"/>
+
+    <sql>
+      <![CDATA[
+create table GroupAttributes&1 as
+SELECT
+  og.group_id AS group_name,
+  CASE
+    WHEN og.is_residual = 1 THEN 'Residual'
+    ELSE 'Core'
+  END AS group_type,
+  COALESCE(nm.number_of_members, 0) AS number_of_members,
+  COALESCE(cm.number_of_core_members, 0) AS number_of_core_members,
+  COALESCE(pm.number_of_peripheral_members, 0) AS number_of_peripheral_members,
+  COALESCE(tc.core_taxa_count, 0) AS core_taxa_count,
+  COALESCE(tc.peripheral_taxa_count, 0) AS peripheral_taxa_count,
+  COALESCE(tc.taxa_count, 0) AS taxa_count
+FROM apidb.orthologgroup og
+LEFT JOIN (
+  SELECT COUNT(aa_sequence_id) AS number_of_members, group_id
+  FROM apidb.orthologgroupaasequence
+  GROUP BY group_id
+) nm 
+  ON og.group_id = nm.group_id
+LEFT JOIN (
+  SELECT COUNT(core.aa_sequence_id) AS number_of_core_members, group_id
+  FROM (
+    SELECT ogas.aa_sequence_id, ogas.group_id
+    FROM apidb.organism og
+    JOIN dots.aasequence das 
+      ON das.taxon_id = og.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas 
+      ON ogas.aa_sequence_id = das.aa_sequence_id
+    WHERE og.core_peripheral = 'core'
+  ) AS core
+  GROUP BY group_id
+) cm 
+  ON og.group_id = cm.group_id
+LEFT JOIN (
+  SELECT COUNT(peripheral.aa_sequence_id) AS number_of_peripheral_members, group_id
+  FROM (
+    SELECT ogas.aa_sequence_id, ogas.group_id
+    FROM apidb.organism og
+    JOIN dots.aasequence das 
+      ON das.taxon_id = og.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas 
+      ON ogas.aa_sequence_id = das.aa_sequence_id
+    WHERE og.core_peripheral = 'peripheral'
+  ) AS peripheral
+  GROUP BY group_id
+) pm
+  ON og.group_id = pm.group_id
+LEFT JOIN (
+  SELECT
+    group_name,
+    COUNT(DISTINCT CASE WHEN core_peripheral = 'C' THEN taxon_abbreviation END) AS core_taxa_count,
+    COUNT(DISTINCT CASE WHEN core_peripheral = 'P' THEN taxon_abbreviation END) AS peripheral_taxa_count,
+    COUNT(DISTINCT taxon_abbreviation) AS taxa_count
+  FROM SequenceAttributes
+  WHERE core_peripheral IN ('C', 'P')
+  GROUP BY group_name
+) tc
+  ON og.group_id = tc.group_name
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        alter table GroupAttributes&1
+          add constraint GrpAttrs_pk&1 primary key (group_name)
+      ]]>
+    </sql>
+  </tuningTable>
+
   <tuningTable name="SequenceAttributes">
     <externalDependency name="apidb.OrthologGroup"/>
     <externalDependency name="apidb.OrthologGroupAaSequence"/>
@@ -11,129 +89,142 @@
     <externalDependency name="dots.AaSequenceEnzymeClass"/>
     <externalDependency name="dots.AaSequence"/>
     <externalDependency name="apidbtuning.TranscriptAttributes"/>    
+    <internalDependency name="DomainAssignment"/>
 
     <sql>
       <!-- TODO:  urls and lenght are broken -->
       <![CDATA[
-        CREATE TABLE SequenceAttributes&1 AS
-        SELECT
-            aas.source_id AS full_id,
-            aas.source_id,
-            aas.aa_sequence_id,
-            length(aas.sequence) AS length,
+CREATE TABLE SequenceAttributes&1 AS
+SELECT
+    aas.source_id AS full_id,
+    aas.source_id,
+    aas.aa_sequence_id,
+    length(aas.sequence) AS length,
 
-            COALESCE(aas.description, ta.gene_product) AS product,
+    COALESCE(aas.description, ta.gene_product) AS product,
 
-            aas.taxon_id,
+    aas.taxon_id,
 
-            taxon.orthomcl_taxon_id,
-            taxon.taxon_group,
-            taxon.orthomcl_abbrev AS taxon_abbreviation,
-            taxon.name AS organism_name,
-            taxon.core_peripheral,
+    taxon.orthomcl_taxon_id,
+    taxon.taxon_group,
+    taxon.orthomcl_abbrev AS taxon_abbreviation,
+    taxon.name AS organism_name,
+    taxon.core_peripheral,
 
-            o.group_id AS group_name,
-            o.ortholog_group_id,
-            o.number_of_members AS group_size,
-            o.number_of_core_members,
-            o.number_of_peripheral_members,
-            CASE is_residual WHEN 1 THEN 'Residual'
-                     ELSE 'Core' END AS group_type,
-            urls.source_url,
-            urls.source_text
+    o.group_id AS group_name,
+    o.ortholog_group_id,
+    o.number_of_members AS group_size,
+    o.number_of_core_members,
+    o.number_of_peripheral_members,
+    CASE o.is_residual WHEN 1 THEN 'Residual'
+         ELSE 'Core' END AS group_type,
 
-        FROM dots.AASequence aas
+    urls.source_url,
+    urls.source_text,
+    da_agg.pfam_domains
 
-        JOIN apidb.orthologGroupAASequence ogseq
-          ON aas.aa_sequence_id = ogseq.aa_sequence_id
+FROM dots.AASequence aas
 
-        JOIN apidb.orthologGroup o
-          ON ogseq.group_id = o.group_id
+LEFT JOIN (
+    SELECT
+        aa_sequence_id,
+        string_agg(accession, ', ') AS pfam_domains
+    FROM DomainAssignment
+    GROUP BY aa_sequence_id
+) da_agg
+  ON aas.aa_sequence_id = da_agg.aa_sequence_id
 
-        LEFT JOIN apidbtuning.transcriptattributes ta
-          ON ta.protein_source_id = aas.source_id
+JOIN apidb.orthologGroupAASequence ogseq
+  ON ogseq.aa_sequence_id = aas.aa_sequence_id
 
-        JOIN (
-            SELECT o.orthomcl_abbrev,
-                   o.taxon_id AS orthomcl_taxon_id,
-                   t.name,
-                   t.core_peripheral,
-                   t.taxon_group
-            FROM apidb.organism o,
-                 (
-                   WITH RECURSIVE TaxonHierarchy AS (
-                       SELECT
-                           three_letter_abbrev,
-                           orthomcl_clade_id,
-                           name,
-                           core_peripheral,
-                           name AS taxon_group,
-                           parent_id
-                       FROM apidb.OrthomclClade
-                       WHERE name IN (
-                           'Archaea','Bacteria','Alveolates','Amoebozoa',
-                           'Euglenozoa','Fungi','Metazoa',
-                           'Other Eukaryota','Viridiplantae'
-                       )
-        
-                       UNION ALL
-        
-                       SELECT
-                           child.three_letter_abbrev,
-                           child.orthomcl_clade_id,
-                           child.name,
-                           child.core_peripheral,
-                           parent.taxon_group,
-                           child.parent_id
-                       FROM apidb.OrthomclClade child
-                       JOIN TaxonHierarchy parent
-                         ON child.parent_id = parent.orthomcl_clade_id
-                   )
-                   SELECT three_letter_abbrev, taxon_group, name, core_peripheral
-                   FROM TaxonHierarchy
-                   WHERE core_peripheral IN ('C','P')
-                 ) t
-            WHERE t.three_letter_abbrev = o.orthomcl_abbrev
-        ) taxon
-          ON taxon.orthomcl_taxon_id = aas.taxon_id
-        
-        JOIN (
-            SELECT aas.aa_sequence_id,
-                   CASE
-                     WHEN ores.resource_name IN (
-                        'AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB',
-                        'MicrosporidiaDB','PlasmoDB','PiroplasmaDB','ToxoDB',
-                        'TrichDB','TriTrypDB','VectorBase'
-                     )
-                     THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/downloads'))
-                          || 'record/gene/' || aas.source_id
-        
-                     WHEN ores.resource_name = 'Uniprot'
-                     THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/proteomes'))
-                          || 'uniprot/' || aas.source_id
-                     ELSE ''
-                   END AS source_url,
-        
-                   CASE
-                     WHEN ores.resource_name IS NULL THEN ''
-                     ELSE aas.source_id || ' (' || ores.resource_name || ')'
-                   END AS source_text
-        
-            FROM dots.AASequence aas,
-                 apidb.organism ot,
-                 apidb.orthomclresource ores
-            WHERE ot.taxon_id = ores.orthomcl_taxon_id
-              AND ot.taxon_id = aas.taxon_id
-        ) urls
-          ON aas.aa_sequence_id = urls.aa_sequence_id
-        
-        WHERE taxon.orthomcl_taxon_id = aas.taxon_id
-        AND aas.taxon_id IN (
-            SELECT DISTINCT eas.taxon_id
-            FROM apidb.organism og,
-                 dots.AASequence eas
-            WHERE eas.taxon_id = og.taxon_id
+JOIN apidb.orthologGroup o
+  ON o.ortholog_group_id = ogseq.ortholog_group_id
+
+JOIN (
+    SELECT
+        o.orthomcl_abbrev,
+        o.taxon_id AS orthomcl_taxon_id,
+        t.name,
+        t.core_peripheral,
+        t.taxon_group
+    FROM apidb.organism o
+    JOIN (
+        WITH RECURSIVE TaxonHierarchy AS (
+            SELECT
+                three_letter_abbrev,
+                orthomcl_clade_id,
+                name,
+                core_peripheral,
+                name AS taxon_group,
+                parent_id
+            FROM apidb.OrthomclClade
+            WHERE name IN (
+                'Archaea','Bacteria','Alveolates','Amoebozoa',
+                'Euglenozoa','Fungi','Metazoa',
+                'Other Eukaryota','Viridiplantae'
+            )
+
+            UNION ALL
+
+            SELECT
+                child.three_letter_abbrev,
+                child.orthomcl_clade_id,
+                child.name,
+                child.core_peripheral,
+                parent.taxon_group,
+                child.parent_id
+            FROM apidb.OrthomclClade child
+            JOIN TaxonHierarchy parent
+              ON child.parent_id = parent.orthomcl_clade_id
         )
+        SELECT three_letter_abbrev, taxon_group, name, core_peripheral
+        FROM TaxonHierarchy
+        WHERE core_peripheral IN ('C','P')
+    ) t
+      ON t.three_letter_abbrev = o.orthomcl_abbrev
+) taxon
+  ON taxon.orthomcl_taxon_id = aas.taxon_id
+
+JOIN (
+    SELECT
+        aas.aa_sequence_id,
+        CASE
+          WHEN ores.resource_name IN (
+            'AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB',
+            'MicrosporidiaDB','PlasmoDB','PiroplasmaDB','ToxoDB',
+            'TrichDB','TriTrypDB','VectorBase'
+          )
+          THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/downloads'))
+               || 'record/gene/' || aas.source_id
+
+          WHEN ores.resource_name = 'Uniprot'
+          THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/proteomes'))
+               || 'uniprot/' || aas.source_id
+          ELSE ''
+        END AS source_url,
+
+        CASE
+          WHEN ores.resource_name IS NULL THEN ''
+          ELSE aas.source_id || ' (' || ores.resource_name || ')'
+        END AS source_text
+
+    FROM dots.AASequence aas
+    JOIN apidb.organism ot
+      ON ot.taxon_id = aas.taxon_id
+    JOIN apidb.orthomclresource ores
+      ON ot.taxon_id = ores.orthomcl_taxon_id
+) urls
+  ON aas.aa_sequence_id = urls.aa_sequence_id
+
+LEFT JOIN apidbtuning.transcriptattributes ta
+  ON ta.protein_source_id = aas.source_id
+
+WHERE aas.taxon_id IN (
+    SELECT DISTINCT eas.taxon_id
+    FROM apidb.organism og
+    JOIN dots.AASequence eas
+      ON eas.taxon_id = og.taxon_id
+)
       ]]>
     </sql>
 
@@ -177,8 +268,157 @@
 
   </tuningTable>
 
+  <tuningTable name="GroupStatsWide">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.orthologgroupstats"/>
 
-<!-- TODO:  if this is needed, need to redo the EC_NUMBER query -->
+    <sql>
+      <![CDATA[
+create table GroupStatsWide&1 (
+    group_name TEXT PRIMARY KEY,
+    -- Core statistics (protein_subset = 'C')
+    core_min_evalue TEXT,
+    core_25_evalue TEXT,
+    core_median_evalue TEXT,
+    core_75_evalue TEXT,
+    core_max_evalue TEXT,
+    -- Core + Peripheral statistics (protein_subset = 'C+P')
+    core_peripheral_min_evalue TEXT,
+    core_peripheral_25_evalue TEXT,
+    core_peripheral_median_evalue TEXT,
+    core_peripheral_75_evalue TEXT,
+    core_peripheral_max_evalue TEXT,
+    -- Residual statistics (protein_subset = 'R')
+    residual_min_evalue TEXT,
+    residual_25_evalue TEXT,
+    residual_median_evalue TEXT,
+    residual_75_evalue TEXT,
+    residual_max_evalue TEXT
+)
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+INSERT INTO groupstatswide&1
+SELECT
+    og.group_id AS group_name,
+    -- Core statistics
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS core_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS core_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS core_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS core_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS core_max_evalue,
+    -- Core + Peripheral statistics
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS core_peripheral_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS core_peripheral_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS core_peripheral_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS core_peripheral_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'C+P' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS core_peripheral_max_evalue,
+    -- Residual statistics
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'min' THEN ogs.evalue END) AS residual_min_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = '25 PCT' THEN ogs.evalue END) AS residual_25_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'median' THEN ogs.evalue END) AS residual_median_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = '75 PCT' THEN ogs.evalue END) AS residual_75_evalue,
+    MAX(CASE WHEN ogs.protein_subset = 'R' AND ogs.stat_type = 'max' THEN ogs.evalue END) AS residual_max_evalue
+FROM apidb.orthologgroup og
+LEFT JOIN apidb.orthologgroupstats ogs ON og.group_id = ogs.group_id
+GROUP BY og.group_id
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <tuningTable name="GroupProteinPfam">
+    <internalDependency name="SequenceAttributes"/>
+    <internalDependency name="DomainAssignment"/>
+    <sql>
+      <![CDATA[
+   CREATE TABLE GroupProteinPfam&1 as
+   SELECT sa.group_name, 
+       sa.full_id, 
+       ROUND(sa.length::numeric, 0) AS protein_length, 
+       sa.organism_name AS taxon_name, 
+       CASE 
+           WHEN sa.core_peripheral = 'C' THEN 'Core' 
+           WHEN sa.core_peripheral = 'P' THEN 'Peripheral' 
+           ELSE '' 
+       END AS core_peripheral, 
+       da.accession, 
+       da.domain_index, 
+       da.start_min, 
+       da.end_max
+FROM SequenceAttributes sa
+LEFT OUTER JOIN DomainAssignment da 
+    ON da.full_id = sa.full_id
+ORDER BY sa.full_id, da.start_min
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+   create index grpprotpfam_1&1 on GroupProteinPfam&1 (group_name)
+      ]]>
+    </sql>
+  </tuningTable>
+  
+  <tuningTable name="SimilarOrthologGroup">
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="apidb.SimilarOrthologGroup"/>
+    <externalDependency name="apidb.OrthomclGroupKeyword"/>
+    <internalDependency name="DomainAssignment"/>    
+
+    <sql>
+      <![CDATA[
+CREATE TABLE SimilarOrthologGroup&1 as
+SELECT 
+    og.group_id AS group_name, 
+    sog.similar_group_id AS similar_group,  
+    groupProteinCount.protein_count AS protein_count, 
+    verbiage.keywords AS keyword, 
+    domains.pfam, 
+    evalue
+FROM 
+    apidb.SimilarOrthologGroup sog
+JOIN 
+    apidb.orthologgroup og ON og.group_id = sog.group_id
+JOIN 
+    (SELECT 
+        ogas.group_id, 
+        COUNT(ogas.aa_sequence_id) AS protein_count
+     FROM 
+        apidb.orthologgroupaasequence ogas
+     GROUP BY 
+        ogas.group_id) groupProteinCount ON sog.similar_group_id = groupProteinCount.group_id
+JOIN 
+    (SELECT 
+        ortholog_group_id, 
+        string_agg(keyword, '; ' ORDER BY CAST(frequency AS NUMERIC) DESC) AS keywords
+     FROM 
+        apidb.OrthomclGroupKeyword
+     GROUP BY 
+        ortholog_group_id) verbiage ON sog.similar_group_id = verbiage.ortholog_group_id
+JOIN 
+    (SELECT 
+        group_name, 
+        string_agg(DISTINCT accession, ', ') AS pfam
+     FROM 
+        DomainAssignment
+     GROUP BY 
+        group_name) domains ON sog.similar_group_id = domains.group_name
+ORDER BY 
+    evalue ASC
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+   create index simorthgrp_1 on SimilarOrthologGroup&1 (group_name)
+      ]]>
+    </sql>
+  </tuningTable>
+
+  <!-- TODO:  if this is needed, need to redo the EC_NUMBER query -->
   <tuningTable name="TypeAheadCounts">
     <externalDependency name="dots.DbRefAaFeature"/>
     <externalDependency name="sres.DbRef"/>
@@ -234,21 +474,29 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
   </tuningTable>
 
   <tuningTable name="DomainAssignment">
-    <internalDependency name="SequenceAttributes"/>
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="dots.AaSequence"/>
     <externalDependency name="apidb.interproresults"/>
     <intermediateTable name="DomainIndex"/>
     <sql>
       <![CDATA[
         create table DomainAssignment&1 as
-        select sa.full_id, sa.group_name,
+        select aas.source_id as full_id,
+               o.group_id as group_name,
                r.interpro_primary_id as accession,
                r.interpro_desc as description,
                CAST (NULL as NUMERIC) as domain_index,
-               sa.aa_sequence_id,
+               aas.aa_sequence_id,
                r.interpro_start_min as start_min,
                r.interpro_end_min as end_max
-        from SequenceAttributes sa,  apidb.interproresults r
-        where sa.full_id = r.protein_source_id
+        from dots.AASequence aas,
+             apidb.orthologGroup o,
+             apidb.orthologGroupAASequence ogseq,
+             apidb.interproresults r
+        where aas.aa_sequence_id = ogseq.aa_sequence_id
+          and ogseq.group_id = o.group_id
+          and aas.source_id = r.protein_source_id
           and upper(r.interpro_db_name) = 'PFAM'
       ]]>
     </sql>
