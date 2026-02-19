@@ -94,125 +94,137 @@ LEFT JOIN (
     <sql>
       <!-- TODO:  urls and lenght are broken -->
       <![CDATA[
-        CREATE TABLE SequenceAttributes&1 AS
-        SELECT
-            aas.source_id AS full_id,
-            aas.source_id,
-            aas.aa_sequence_id,
-            length(aas.sequence) AS length,
+CREATE TABLE SequenceAttributes&1 AS
+SELECT
+    aas.source_id AS full_id,
+    aas.source_id,
+    aas.aa_sequence_id,
+    length(aas.sequence) AS length,
 
-            COALESCE(aas.description, ta.gene_product) AS product,
+    COALESCE(aas.description, ta.gene_product) AS product,
 
-            aas.taxon_id,
+    aas.taxon_id,
 
-            taxon.orthomcl_taxon_id,
-            taxon.taxon_group,
-            taxon.orthomcl_abbrev AS taxon_abbreviation,
-            taxon.name AS organism_name,
-            taxon.core_peripheral,
+    taxon.orthomcl_taxon_id,
+    taxon.taxon_group,
+    taxon.orthomcl_abbrev AS taxon_abbreviation,
+    taxon.name AS organism_name,
+    taxon.core_peripheral,
 
-            o.group_id AS group_name,
-            o.ortholog_group_id,
-            o.number_of_members AS group_size,
-            o.number_of_core_members,
-            o.number_of_peripheral_members,
-            CASE is_residual WHEN 1 THEN 'Residual'
-                     ELSE 'Core' END AS group_type,
-            urls.source_url,
-            urls.source_text,
-            da_agg.pfam_domains
-        FROM
-            dots.AASequence aas
-            LEFT JOIN (
-                SELECT
-                    aa_sequence_id,
-                    string_agg(accession, ', ') AS pfam_domains
-                FROM DomainAssignment
-                GROUP BY aa_sequence_id
-            ) da_agg ON aas.aa_sequence_id = da_agg.aa_sequence_id,
-            apidb.orthologGroup o,
-            apidb.orthologGroupAASequence ogseq,
-            (
-            SELECT o.orthomcl_abbrev,
-                   o.taxon_id AS orthomcl_taxon_id,
-                   t.name,
-                   t.core_peripheral,
-                   t.taxon_group
-            FROM apidb.organism o,
-                 (
-                   WITH RECURSIVE TaxonHierarchy AS (
-                       SELECT
-                           three_letter_abbrev,
-                           orthomcl_clade_id,
-                           name,
-                           core_peripheral,
-                           name AS taxon_group,
-                           parent_id
-                       FROM apidb.OrthomclClade
-                       WHERE name IN (
-                           'Archaea','Bacteria','Alveolates','Amoebozoa',
-                           'Euglenozoa','Fungi','Metazoa',
-                           'Other Eukaryota','Viridiplantae'
-                       )
-        
-                       UNION ALL
-        
-                       SELECT
-                           child.three_letter_abbrev,
-                           child.orthomcl_clade_id,
-                           child.name,
-                           child.core_peripheral,
-                           parent.taxon_group,
-                           child.parent_id
-                       FROM apidb.OrthomclClade child
-                       JOIN TaxonHierarchy parent
-                         ON child.parent_id = parent.orthomcl_clade_id
-                   )
-                   SELECT three_letter_abbrev, taxon_group, name, core_peripheral
-                   FROM TaxonHierarchy
-                   WHERE core_peripheral IN ('C','P')
-                 ) t
-            WHERE t.three_letter_abbrev = o.orthomcl_abbrev
-        ) taxon
-          ON taxon.orthomcl_taxon_id = aas.taxon_id
-        
-        JOIN (
-            SELECT aas.aa_sequence_id,
-                   CASE
-                     WHEN ores.resource_name IN (
-                        'AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB',
-                        'MicrosporidiaDB','PlasmoDB','PiroplasmaDB','ToxoDB',
-                        'TrichDB','TriTrypDB','VectorBase'
-                     )
-                     THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/downloads'))
-                          || 'record/gene/' || aas.source_id
-        
-                     WHEN ores.resource_name = 'Uniprot'
-                     THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/proteomes'))
-                          || 'uniprot/' || aas.source_id
-                     ELSE ''
-                   END AS source_url,
-        
-                   CASE
-                     WHEN ores.resource_name IS NULL THEN ''
-                     ELSE aas.source_id || ' (' || ores.resource_name || ')'
-                   END AS source_text
-        
-            FROM dots.AASequence aas,
-                 apidb.organism ot,
-                 apidb.orthomclresource ores
-            WHERE ot.taxon_id = ores.orthomcl_taxon_id
-              AND ot.taxon_id = aas.taxon_id
-        ) urls
-          ON aas.aa_sequence_id = urls.aa_sequence_id
-        
-        WHERE taxon.orthomcl_taxon_id = aas.taxon_id
-        AND aas.taxon_id IN (
-            SELECT DISTINCT eas.taxon_id
-            FROM apidb.organism og,
-                 dots.AASequence eas
-            WHERE eas.taxon_id = og.taxon_id
+    o.group_id AS group_name,
+    o.ortholog_group_id,
+    o.number_of_members AS group_size,
+    o.number_of_core_members,
+    o.number_of_peripheral_members,
+    CASE o.is_residual WHEN 1 THEN 'Residual'
+         ELSE 'Core' END AS group_type,
+
+    urls.source_url,
+    urls.source_text,
+    da_agg.pfam_domains
+
+FROM dots.AASequence aas
+
+LEFT JOIN (
+    SELECT
+        aa_sequence_id,
+        string_agg(accession, ', ') AS pfam_domains
+    FROM DomainAssignment
+    GROUP BY aa_sequence_id
+) da_agg
+  ON aas.aa_sequence_id = da_agg.aa_sequence_id
+
+JOIN apidb.orthologGroupAASequence ogseq
+  ON ogseq.aa_sequence_id = aas.aa_sequence_id
+
+JOIN apidb.orthologGroup o
+  ON o.ortholog_group_id = ogseq.ortholog_group_id
+
+JOIN (
+    SELECT
+        o.orthomcl_abbrev,
+        o.taxon_id AS orthomcl_taxon_id,
+        t.name,
+        t.core_peripheral,
+        t.taxon_group
+    FROM apidb.organism o
+    JOIN (
+        WITH RECURSIVE TaxonHierarchy AS (
+            SELECT
+                three_letter_abbrev,
+                orthomcl_clade_id,
+                name,
+                core_peripheral,
+                name AS taxon_group,
+                parent_id
+            FROM apidb.OrthomclClade
+            WHERE name IN (
+                'Archaea','Bacteria','Alveolates','Amoebozoa',
+                'Euglenozoa','Fungi','Metazoa',
+                'Other Eukaryota','Viridiplantae'
+            )
+
+            UNION ALL
+
+            SELECT
+                child.three_letter_abbrev,
+                child.orthomcl_clade_id,
+                child.name,
+                child.core_peripheral,
+                parent.taxon_group,
+                child.parent_id
+            FROM apidb.OrthomclClade child
+            JOIN TaxonHierarchy parent
+              ON child.parent_id = parent.orthomcl_clade_id
         )
+        SELECT three_letter_abbrev, taxon_group, name, core_peripheral
+        FROM TaxonHierarchy
+        WHERE core_peripheral IN ('C','P')
+    ) t
+      ON t.three_letter_abbrev = o.orthomcl_abbrev
+) taxon
+  ON taxon.orthomcl_taxon_id = aas.taxon_id
+
+JOIN (
+    SELECT
+        aas.aa_sequence_id,
+        CASE
+          WHEN ores.resource_name IN (
+            'AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB',
+            'MicrosporidiaDB','PlasmoDB','PiroplasmaDB','ToxoDB',
+            'TrichDB','TriTrypDB','VectorBase'
+          )
+          THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/downloads'))
+               || 'record/gene/' || aas.source_id
+
+          WHEN ores.resource_name = 'Uniprot'
+          THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/proteomes'))
+               || 'uniprot/' || aas.source_id
+          ELSE ''
+        END AS source_url,
+
+        CASE
+          WHEN ores.resource_name IS NULL THEN ''
+          ELSE aas.source_id || ' (' || ores.resource_name || ')'
+        END AS source_text
+
+    FROM dots.AASequence aas
+    JOIN apidb.organism ot
+      ON ot.taxon_id = aas.taxon_id
+    JOIN apidb.orthomclresource ores
+      ON ot.taxon_id = ores.orthomcl_taxon_id
+) urls
+  ON aas.aa_sequence_id = urls.aa_sequence_id
+
+LEFT JOIN apidbtuning.transcriptattributes ta
+  ON ta.protein_source_id = aas.source_id
+
+WHERE aas.taxon_id IN (
+    SELECT DISTINCT eas.taxon_id
+    FROM apidb.organism og
+    JOIN dots.AASequence eas
+      ON eas.taxon_id = og.taxon_id
+)
       ]]>
     </sql>
 
