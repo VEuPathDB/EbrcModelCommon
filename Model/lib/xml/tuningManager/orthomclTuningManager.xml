@@ -11,15 +11,18 @@
     <sql>
       <![CDATA[
 create table GroupAttributes&1 as
-SELECT 
+SELECT
   og.group_id AS group_name,
-  CASE 
+  CASE
     WHEN og.is_residual = 1 THEN 'Residual'
     ELSE 'Core'
   END AS group_type,
   COALESCE(nm.number_of_members, 0) AS number_of_members,
   COALESCE(cm.number_of_core_members, 0) AS number_of_core_members,
-  COALESCE(pm.number_of_peripheral_members, 0) AS number_of_peripheral_members
+  COALESCE(pm.number_of_peripheral_members, 0) AS number_of_peripheral_members,
+  COALESCE(tc.core_taxa_count, 0) AS core_taxa_count,
+  COALESCE(tc.peripheral_taxa_count, 0) AS peripheral_taxa_count,
+  COALESCE(tc.taxa_count, 0) AS taxa_count
 FROM apidb.orthologgroup og
 LEFT JOIN (
   SELECT COUNT(aa_sequence_id) AS number_of_members, group_id
@@ -53,8 +56,19 @@ LEFT JOIN (
     WHERE og.core_peripheral = 'peripheral'
   ) AS peripheral
   GROUP BY group_id
-) pm 
-  ON og.group_id = pm.group_id	       
+) pm
+  ON og.group_id = pm.group_id
+LEFT JOIN (
+  SELECT
+    group_name,
+    COUNT(DISTINCT CASE WHEN core_peripheral = 'C' THEN taxon_abbreviation END) AS core_taxa_count,
+    COUNT(DISTINCT CASE WHEN core_peripheral = 'P' THEN taxon_abbreviation END) AS peripheral_taxa_count,
+    COUNT(DISTINCT taxon_abbreviation) AS taxa_count
+  FROM SequenceAttributes
+  WHERE core_peripheral IN ('C', 'P')
+  GROUP BY group_name
+) tc
+  ON og.group_id = tc.group_name
       ]]>
     </sql>
 
@@ -75,6 +89,7 @@ LEFT JOIN (
     <externalDependency name="dots.AaSequenceEnzymeClass"/>
     <externalDependency name="dots.AaSequence"/>
     <externalDependency name="apidbtuning.TranscriptAttributes"/>    
+    <internalDependency name="DomainAssignment"/>
 
     <sql>
       <!-- TODO:  urls and lenght are broken -->
@@ -110,7 +125,7 @@ LEFT JOIN (
                 SELECT
                     aa_sequence_id,
                     string_agg(accession, ', ') AS pfam_domains
-                FROM apidbTuning.DomainAssignment
+                FROM DomainAssignment
                 GROUP BY aa_sequence_id
             ) da_agg ON aas.aa_sequence_id = da_agg.aa_sequence_id,
             apidb.orthologGroup o,
@@ -305,7 +320,7 @@ ORDER BY sa.full_id, da.start_min
 
     <sql>
       <![CDATA[
-   create index grpprotpfam_1 on GroupProteinPfam&1 (group_name)
+   create index grpprotpfam_1&1 on GroupProteinPfam&1 (group_name)
       ]]>
     </sql>
   </tuningTable>
@@ -423,21 +438,29 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
   </tuningTable>
 
   <tuningTable name="DomainAssignment">
-    <internalDependency name="SequenceAttributes"/>
+    <externalDependency name="apidb.OrthologGroup"/>
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="dots.AaSequence"/>
     <externalDependency name="apidb.interproresults"/>
     <intermediateTable name="DomainIndex"/>
     <sql>
       <![CDATA[
         create table DomainAssignment&1 as
-        select sa.full_id, sa.group_name,
+        select aas.source_id as full_id,
+               o.group_id as group_name,
                r.interpro_primary_id as accession,
                r.interpro_desc as description,
                CAST (NULL as NUMERIC) as domain_index,
-               sa.aa_sequence_id,
+               aas.aa_sequence_id,
                r.interpro_start_min as start_min,
                r.interpro_end_min as end_max
-        from SequenceAttributes sa,  apidb.interproresults r
-        where sa.full_id = r.protein_source_id
+        from dots.AASequence aas,
+             apidb.orthologGroup o,
+             apidb.orthologGroupAASequence ogseq,
+             apidb.interproresults r
+        where aas.aa_sequence_id = ogseq.aa_sequence_id
+          and ogseq.group_id = o.group_id
+          and aas.source_id = r.protein_source_id
           and upper(r.interpro_db_name) = 'PFAM'
       ]]>
     </sql>
