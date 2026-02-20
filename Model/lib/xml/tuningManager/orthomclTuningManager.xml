@@ -88,7 +88,7 @@ LEFT JOIN (
     <externalDependency name="apidb.Organism"/>
     <externalDependency name="dots.AaSequenceEnzymeClass"/>
     <externalDependency name="dots.AaSequence"/>
-    <externalDependency name="apidbtuning.TranscriptAttributes"/>    
+    <internalDependency name="TranscriptAttributes"/>    
     <internalDependency name="DomainAssignment"/>
 
     <sql>
@@ -216,7 +216,7 @@ JOIN (
 ) urls
   ON aas.aa_sequence_id = urls.aa_sequence_id
 
-LEFT JOIN apidbtuning.transcriptattributes ta
+LEFT JOIN transcriptattributes ta
   ON ta.protein_source_id = aas.source_id
 
 WHERE aas.taxon_id IN (
