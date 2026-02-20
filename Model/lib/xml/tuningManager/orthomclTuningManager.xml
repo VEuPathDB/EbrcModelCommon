@@ -413,7 +413,7 @@ ORDER BY
 
     <sql>
       <![CDATA[
-   create index simorthgrp_1 on SimilarOrthologGroup&1 (group_name)
+   create index simorthgrp_1& on SimilarOrthologGroup&1 (group_name)
       ]]>
     </sql>
   </tuningTable>
