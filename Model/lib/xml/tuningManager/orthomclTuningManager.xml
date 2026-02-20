@@ -138,7 +138,7 @@ JOIN apidb.orthologGroupAASequence ogseq
   ON ogseq.aa_sequence_id = aas.aa_sequence_id
 
 JOIN apidb.orthologGroup o
-  ON o.ortholog_group_id = ogseq.ortholog_group_id
+  ON o.group_id = ogseq.group_id
 
 JOIN (
     SELECT
