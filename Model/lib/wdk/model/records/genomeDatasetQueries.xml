@@ -35,7 +35,7 @@
         <sql>
         <![CDATA[
           SELECT distinct dsp.dataset_presenter_id as dataset_id
-              , oa.megabps as megabase_pairs
+              , round(oa.megabps, 2) as megabase_pairs
               , nullif(oa.genecount, 0) as genecount
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
