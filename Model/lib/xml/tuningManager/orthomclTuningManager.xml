@@ -1151,5 +1151,39 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
 
   </tuningTable>
 
+  <tuningTable name="GroupDomainFrequency">
+    <externalDependency name="apidb.OrthologGroupAaSequence"/>
+    <externalDependency name="dots.AaSequence"/>
+    <externalDependency name="apidb.interproresults"/>
+    <sql>
+      <![CDATA[
+        create table GroupDomainFrequency&1 as
+        SELECT
+            ogas.group_id AS group_name,
+            ir.interpro_desc AS keyword,
+            COUNT(DISTINCT ogas.aa_sequence_id)::float / grp.seq_count AS frequency
+        FROM apidb.orthologgroupaasequence ogas
+        INNER JOIN dots.aasequence aas
+            ON ogas.aa_sequence_id = aas.aa_sequence_id
+        INNER JOIN apidb.interproresults ir
+            ON aas.source_id = ir.protein_source_id
+            AND ir.interpro_db_name = 'Pfam'
+        INNER JOIN (
+            SELECT group_id, COUNT(*) AS seq_count
+            FROM apidb.orthologgroupaasequence
+            GROUP BY group_id
+        ) grp ON ogas.group_id = grp.group_id
+        GROUP BY ogas.group_id, ir.interpro_desc, grp.seq_count
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+        create index group_domain_accession_ix&1
+               on GroupDomainFrequency&1 (group_name)
+      ]]>
+    </sql>
+
+  </tuningTable>
 
 </tuningConfig>
