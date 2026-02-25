@@ -27,7 +27,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList sorting="category asc" />
       <description>
-         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.)
+         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.)
       </description>
     </question>
 
@@ -42,7 +42,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList sorting="category asc" />
       <description>
-         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
       </description>
     </question>
 
@@ -55,7 +55,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList sorting="category asc" />
       <description>
-         Find data sets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
+         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
       </description>
     </question>
 
@@ -70,7 +70,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList sorting="display_name asc" />
       <description>
-        Find data sets that are associated with a particular search.
+        Find datasets that are associated with a particular search.
       </description>
     </question>
 -->
@@ -85,7 +85,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList sorting="display_name asc" />
       <description>
-         Find data sets by ID
+         Find datasets by ID
       </description>
     </question>
 
@@ -100,7 +100,7 @@
       noSummaryOnSingleRecord="true">
       <attributesList summary="study_id, restriction_level" />
       <description>
-         Find data sets that are associated with a particular data set type and subtype
+         Find datasets that are associated with a particular dataset type and subtype
       </description>
        <dynamicAttributes>
          <columnAttribute name="restriction_level" displayName="Study Access level"  align="left" />
@@ -121,13 +121,13 @@
 
       <summary>
         <![CDATA[
-          Find data sets by keyword search. Use * as a wildcard
+          Find datasets by keyword search. Use * as a wildcard
         ]]>
       </summary>
 
       <description>
         <![CDATA[
-          Find data sets by keyword search. Use * as a wildcard
+          Find datasets by keyword search. Use * as a wildcard
         ]]>
       </description>
 

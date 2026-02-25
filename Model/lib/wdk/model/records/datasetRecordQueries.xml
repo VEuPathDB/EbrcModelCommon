@@ -728,9 +728,9 @@
           UNION
 		    SELECT dsp.dataset_presenter_id as dataset_id
 		       , '' as dataset_name
-		       , 'View this Data Set in MapVEu' as text
+		       , 'View this Dataset in MapVEu' as text
 		       , '/popbio-map/web/?projectID=' || p.value as url
-		       , 'View this Data Set in MapVEu' as description
+		       , 'View this Dataset in MapVEu' as description
 		       , '' as record_type
 		       , '' as target_type
 		       , '' as target_name

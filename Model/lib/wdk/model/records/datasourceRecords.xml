@@ -46,8 +46,8 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="DatasourceAttributes.All">
-        <columnAttribute name="dataset_id" internal="true" displayName="Data Set ID" help="ID of the dataset."/>
-        <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+        <columnAttribute name="dataset_id" internal="true" displayName="Dataset ID" help="ID of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" displayName="Dataset Name" help="Name of the dataset."/>
         <columnAttribute name="description" displayName="Description" sortable="false"/>
         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
         <columnAttribute name="summary" displayName="Summary" sortable="false"
@@ -110,7 +110,7 @@
       <!-- References -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"  
-             displayName="Explore this Data Set within this Website"
+             displayName="Explore this Dataset within this website"
              queryRef="DatasourceTables.References">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>

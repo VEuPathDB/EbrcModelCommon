@@ -109,7 +109,7 @@
 <!-- TODO will return search , name hardcoded based on dataset type
 
       <table name="References" excludeProjects="ClinEpiDB,MicrobiomeDB"
-             displayName="Explore this Data Set within this Website"
+             displayName="Explore this Dataset within this Website"
              queryRef="GenomeDatasetTables.References">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="dataset_name"  inReportMaker="false" internal="true"/>
