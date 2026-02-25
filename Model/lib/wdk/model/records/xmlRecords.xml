@@ -250,7 +250,7 @@
 
         <xmlRecordClass   
                 name="DatasetsRecord"
-        	type="Data Set"
+        	type="Dataet"
         	idPrefix="DS."
         	delimiter="@">
             <xmlAttribute name="resource"/>
