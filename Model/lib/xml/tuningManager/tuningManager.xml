@@ -541,6 +541,7 @@
     <externalDependency name="results.SegmentResult"/>
     <externalDependency name="results.SeqVariation"/>
     <externalDependency name="study.ProtocolAppNode"/>
+    <externalDependency name="webready.PANExtDbRls_p"/>
     <sql>
       <![CDATA[
         CREATE TABLE &prefixPANResults&1 AS
