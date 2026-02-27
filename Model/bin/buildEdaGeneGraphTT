@@ -77,7 +77,10 @@ sub run{
             for(my $j = $minCol; $j <= $maxCol; $j++) {
               my $oCell = $oSheet->{Cells}[$i][$j];
               my $cellValue = $oCell ? $oCell->Value : undef;
-              $cellValue =~ s/["\']//g;
+              if (defined $cellValue) {
+                $cellValue =~ s/["\']//g;
+                $cellValue = undef if $cellValue eq '';
+              }
               push(@row, $cellValue);
             }
 
