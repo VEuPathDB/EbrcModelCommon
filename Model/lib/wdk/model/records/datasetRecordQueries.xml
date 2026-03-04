@@ -866,7 +866,7 @@
     </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,ToxoDB">
       <column name="dataset_name"/>
       <column name="dataset_id"/>
       <column name="release_date"/>
