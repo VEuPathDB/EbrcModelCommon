@@ -330,7 +330,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- clinepi versioning download files table -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB"
+      <table name="DownloadVersion"  includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,ToxoDB"
              displayName="Data Versions"
              queryRef="DatasetTables.DownloadVersion">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>

@@ -26,7 +26,7 @@
         </stringParam>
         
         <stringParam name="dataset_category"
-                     prompt="Data set category"
+                     prompt="Dataset category"
                      number="false">
             <help>The category of data in the dataset </help>
         </stringParam>
@@ -38,13 +38,13 @@
         </stringParam>
         
         <stringParam name="dataset_type"
-                     prompt="Data set type"
+                     prompt="Dataset type"
                      number="false">
             <help>The type of data in the dataset </help>
         </stringParam>
         
         <stringParam name="dataset_subtype"
-                     prompt="Data set subtype"
+                     prompt="Dataset subtype"
                      number="false">
             <help>The technology used to obtain data in the dataset </help>
         </stringParam>
@@ -141,10 +141,10 @@
     </flatVocabParam>
     <flatVocabParam name="dataset_name"
                  queryRef="datasetVQ.extDbNames"
-                 prompt="Data set INTERNAL name"
+                 prompt="Dataset INTERNAL name"
                  multiPick="true">
       <help>
-        The comma delimited list of data set names
+        The comma delimited list of dataset names
       </help>
     </flatVocabParam>
 
