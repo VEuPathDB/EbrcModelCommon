@@ -955,7 +955,8 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-    <datasetPresenter name="Pathways_MetaCyc_RSRC">
+
+  <datasetPresenter name="Pathways_BioCyc_MetaCyc_RSRC">
     <displayName><![CDATA[MetaCyc Metabolic Pathway Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride></categoryOverride>    
