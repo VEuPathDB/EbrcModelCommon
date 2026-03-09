@@ -1130,7 +1130,7 @@ CREATE INDEX GroupDomainAttribute_idx&1 ON GroupDomainAttribute&1 (group_name)
              , ec.ec_number_4
         FROM sequenceattributes sa
            , dots.AASequence aa
-           , dots.AASequenceEnzymeClass sec
+           , (select distinct aa_sequence_id, enzyme_class_id from dots.AASequenceEnzymeClass) sec
            , sres.ENZYMECLASS ec
         WHERE sa.aa_sequence_id = aa.aa_sequence_id
         AND sec.aa_sequence_id  = aa.aa_sequence_id
