@@ -31,7 +31,7 @@
      <propertyList name="forSitemap"/>
     </question>
 
-
+    <!--
     <question name="MapStudiesForToolbar"  includeProjects="UniDB,VectorBase"
       displayName="Studies to show in toolbar"
       shortDisplayName="Map Studies"
@@ -44,6 +44,7 @@
          Find all datasets.
       </description>
     </question>
+    -->
 
     <question name="DatasetsByDatasetNames"
       displayName="Datasets by dataset names"

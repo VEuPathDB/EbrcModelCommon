@@ -1,68 +1,90 @@
 package org.apidb.apicommon.model.datasetInjector;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.apidb.apicommon.datasetPresenter.DatasetInjector;
 
-public class GenomicsEDAStudy extends DatasetInjector {
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
+public abstract class GenomicsEDAStudy extends DatasetInjector {
 
   @Override
   public void injectTemplates() {
-      // boolean injectStudy = getPropValueAsBoolean("injectStudy");
-      // if(!injectStudy){
-      //     return;
-      // }
-
-      injectCardQuestions();
-      injectProjectAvailability();
+      setPublicAccessProperties();
+      setEdaStudyInternalAbbrev();
+      setEdaEntityAbbrev();
+      setOrganismListForPartitionedTables();
   }
 
-    private void injectCardQuestions() {
-        String presenterId = getPropValue("presenterId");
-        String cardQuestions = "UNION select '" + presenterId + "' as dataset_presenter_id, 'cardQuestions' as property, '{ ";
-        //cardQuestions = cardQuestions + getCardQuestionString();
-        cardQuestions = cardQuestions + " }' as value from dual";
-        //System.err.println("cardQuestionsSql=" + cardQuestions);
-        setPropValue("cardQuestionsSql",cardQuestions);
-        injectTemplate("injectDatasetQuestions");
+
+  public void setOrganismListForPartitionedTables() {
+      String organismAbbrev = getPropValue("organismAbbrev");
+      setPropValue("orgListForPartitionedTables", convertToSqlInClause(organismAbbrev));
+  }
+
+  public String convertToSqlInClause(String orgList) {
+    // Trim the list to avoid leading/trailing spaces and handle empty case
+    if (orgList == null || orgList.trim().isEmpty()) {
+        return "('')"; // or return empty parentheses "()" depending on your needs
     }
 
-    private void injectProjectAvailability() {
-        String presenterId = getPropValue("presenterId");
-        String projectAvailabilityProp = getPropValue("projectAvailability");
+    String[] orgs = orgList.split(",");
 
-        String projectAvailability = "UNION select '" + presenterId + "' as dataset_presenter_id, 'projectAvailability' as property, '" + projectAvailabilityProp + "' as value from dual";
-        setPropValue("projectAvailabilitySql",projectAvailability);
-        injectTemplate("injectProjectAvailability");
-    }
+    String sqlInClause = "(" + Arrays.stream(orgs)
+        .map(org -> "'" + org.trim() + "'") // add quotes around each org
+        .collect(Collectors.joining(",")) + ")";
 
+    return sqlInClause;
+  }
 
   @Override
   public void addModelReferences() {
+      setPublicAccessProperties();
+      setEdaStudyInternalAbbrev();
+      setEdaEntityAbbrev();
       String className = this.getClass().getSimpleName();
       setPropValue("templateInjectorClassName", className);
+  }
+
+  public void setPublicAccessProperties() {
+      setPropValue("isPublic", "true");
+      setPropValue("studyAccess", "public");
+  }
+
+  public void setEdaStudyInternalAbbrev() {
+      String datasetName = getDatasetName();
+      String stableId = "s" + sha1First10(datasetName);
+      setPropValue("edaStudyStableId", stableId);
+  }
+
+  public abstract void setEdaEntityAbbrev();
+
+  private String sha1First10(String input) {
+      try {
+          MessageDigest md = MessageDigest.getInstance("SHA-1");
+          byte[] digest = md.digest(input.getBytes());
+          StringBuilder sb = new StringBuilder();
+          for (byte b : digest) {
+              sb.append(String.format("%02x", b));
+          }
+          return sb.substring(0, 10);
+      } catch (NoSuchAlgorithmException e) {
+          throw new RuntimeException("SHA-1 algorithm not available", e);
+      }
   }
 
   @Override
   public String[][] getPropertiesDeclaration() {
 
       String [][] declaration = {
-                                //  {"injectStudy", ""},
-                                 {"isPublic", ""},
-                                //  {"studyAbbreviation", ""},
-                                 {"studyCategories", ""},
-                                 {"studyAccess", ""},
-                                 {"policyUrl", ""},
-                                 {"cardHeadline", ""},
-                                 {"cardPoints", ""},
-                                //  {"requestProtectionLevel", ""},
-                                //  {"requestAccessFields", ""},
-                                //  {"requestEmail", ""},
-                                //  {"requestEmailBody", ""},
-                                //  {"requestNeedsApproval", ""},
-
+//                                 {"isPublic", ""},
+//                                 {"studyAccess", ""},
       };
 
     return declaration;
   }
 
 }
+

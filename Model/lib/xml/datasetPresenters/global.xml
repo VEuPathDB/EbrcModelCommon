@@ -955,7 +955,8 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.Pathways"/>
   </datasetPresenter>
 
-    <datasetPresenter name="Pathways_MetaCyc_RSRC">
+
+  <datasetPresenter name="Pathways_BioCyc_MetaCyc_RSRC">
     <displayName><![CDATA[MetaCyc Metabolic Pathway Database]]></displayName>
     <shortDisplayName></shortDisplayName>
     <categoryOverride></categoryOverride>    
@@ -1014,7 +1015,8 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
     <templateInjector projectName="@PROJECT_ID@" className="org.apidb.apicommon.model.datasetInjector.AlphaFold"/>
   </datasetPresenter>
 
-<!-- bld 67 -->
+  <!-- bld 67 -->
+  <!-- NOT FOR bd-69
   <datasetPresenter name="ISASimple_EDA_leegambian_RSRC">
     <displayName><![CDATA[Dual transcriptomes of malaria-infected Gambian children (Study Explorer)]]></displayName>
     <shortDisplayName>Study variables Gambian children</shortDisplayName>
@@ -1059,7 +1061,9 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
      <prop name="requestEmailBcc">help@clinepidb.org</prop>
     </templateInjector>
   </datasetPresenter>
+  -->
 
+  <!-- NOT FOR bd-69  
   <datasetPresenter name="ISASimple_EDA_PlasmoDB_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for PlasmoDB organisms]]></displayName>
     <shortDisplayName>PlasmoDB Popset</shortDisplayName>
@@ -1134,7 +1138,9 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
      <prop name="requestEmail">help@plasmodb.org</prop>
     </templateInjector>
   </datasetPresenter>
+  -->
 
+  <!-- NOT FOR bd-69
   <datasetPresenter name="ISASimple_EDA_VectorBase_popset_RSRC">
     <displayName><![CDATA[NCBI Popset data for VectorBase organisms]]></displayName>
     <shortDisplayName>VectorBase Popset</shortDisplayName>
@@ -1259,7 +1265,8 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
      <prop name="requestEmail">help@vectorbase.org</prop>
     </templateInjector>
   </datasetPresenter>
-
+-->
+  
    <datasetPresenter name="(.*)_dbxref_PHI-base_linkouts_RSRC"
     datasetNamePattern="%_dbxref_PHI-base_linkouts_RSRC">
     <displayName><![CDATA[PHI-base]]></displayName>
@@ -1559,13 +1566,13 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
   NOTE:  because these are combined... there will also be several DUMMY datasets associated
   ~ 5 ICEMR Ab array studies and ~ 5 RFLP Studies
 -->
-<internalDataset name="PlasmoDB_ICEMR_combined_AntibodyArray_RSRC"/>
-<internalDataset name="ToxoDB_Combined_RFLP_RSRC"/>
+
 
 
 <internalDataset name="EntrezGene_RSRC"/>
 <internalDataset name="Gene2Pubmed_RSRC"/>
 <internalDataset name="UniprotIDs_RSRC"/>
 <internalDataset name="_patchOrganism_RSRC" datasetNamePattern="%_patchOrganism_RSRC"/>
-
+<internalDataset name="metaData_ChIPChip_RSRC"/>
+<internalDataset name="metaData_RnaSeq_RSRC"/>
 </datasetPresenters>

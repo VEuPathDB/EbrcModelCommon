@@ -196,6 +196,7 @@ public class DatasetPresenterSetLoader {
         String subtype = rs.getString(4);
         Boolean isSpeciesScope = rs.getBoolean(5);
         Integer taxonId = rs.getInt(6);
+        if (rs.wasNull()) taxonId = null;
         String projectId = rs.getString(7);
 
         // track all dataset names for presenter
@@ -422,7 +423,8 @@ public class DatasetPresenterSetLoader {
     stmt.setString(i++, category);
     stmt.setString(i++, projectId);
     stmt.setString(i++, name);
-    stmt.setInt(i++, taxonId);
+    if (taxonId == null) stmt.setNull(i++, java.sql.Types.INTEGER);
+    else stmt.setInt(i++, taxonId);
     stmt.execute();
   }
 

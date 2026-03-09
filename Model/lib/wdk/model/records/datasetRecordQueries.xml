@@ -308,7 +308,7 @@
                , eda.entitytypegraph etg
                , apidbtuning.studyiddatasetid sd
                , apidbtuning.datasetpresenter dp
-            WHERE et.entity_type_id = etg.entity_type_id
+            WHERE et.entity_type_id = etg.entity_type_graph_id
               AND etg.study_stable_id = sd.study_stable_id
               AND sd.dataset_id = dp.dataset_presenter_id
           ) , all_counts AS (
@@ -728,9 +728,9 @@
           UNION
 		    SELECT dsp.dataset_presenter_id as dataset_id
 		       , '' as dataset_name
-		       , 'View this Data Set in MapVEu' as text
+		       , 'View this Dataset in MapVEu' as text
 		       , '/popbio-map/web/?projectID=' || p.value as url
-		       , 'View this Data Set in MapVEu' as description
+		       , 'View this Dataset in MapVEu' as description
 		       , '' as record_type
 		       , '' as target_type
 		       , '' as target_name
@@ -866,7 +866,7 @@
     </sqlQuery>
 
 
-<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB">
+<sqlQuery name="DownloadVersion" isCacheable='false' includeProjects="ClinEpiDB,MicrobiomeDB,VectorBase,PlasmoDB,HostDB,ToxoDB">
       <column name="dataset_name"/>
       <column name="dataset_id"/>
       <column name="release_date"/>
