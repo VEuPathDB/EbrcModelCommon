@@ -511,6 +511,7 @@
               SELECT build_number,
                      '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
               FROM apidbTuning.EupathBuildDates
+              -- we could get rid of the EuPathDB special case by updating to UniDB in eupathBuildDates.yml
               WHERE (project = '@PROJECT_ID@' or (project = 'EuPathDB' and 'UniDB' = '@PROJECT_ID@'))
             ) introduced ON dsp.build_number_introduced = introduced.build_number::numeric
         ]]>
