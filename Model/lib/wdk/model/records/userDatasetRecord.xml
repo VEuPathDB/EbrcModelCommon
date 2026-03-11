@@ -2,11 +2,11 @@
 
 <wdkModel>
 
-    <constant name="datasetRecordDisplayName" includeProjects="ClinEpiDB">User Study</constant>
-  <constant name="datasetRecordDisplayNamePlural" includeProjects="ClinEpiDB">User Studies</constant>
+    <constant name="datasetRecordDisplayName" includeProjects="MicrobiomeDB">User Study</constant>
+  <constant name="datasetRecordDisplayNamePlural" includeProjects="MicrobiomeDB">User Studies</constant>
 
-  <constant name="datasetRecordDisplayName" excludeProjects="ClinEpiDB">User Dataset</constant>
-  <constant name="datasetRecordDisplayNamePlural" excludeProjects="ClinEpiDB">User Datasets</constant>
+  <constant name="datasetRecordDisplayName" excludeProjects="MicrobiomeDB">User Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural" excludeProjects="MicrobiomeDB">User Datasets</constant>
 
 
   <recordClassSet name="UserDatasetRecordClasses">
@@ -60,6 +60,9 @@
       <!--   Core Attributes -->
       <!-- =============================================================== -->
 
+
+      <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
+
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
         <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
@@ -97,7 +100,6 @@
         <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
       </attributeQueryRef>
 
-      <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
       <!-- =============================================================== -->
       <!--   Tables -->
