@@ -13,16 +13,12 @@ use DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
 
 use DBI;
 
-my ($propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug, $report, $timestamp);
+my ($propfile, $instance, $schema, $debug, $timestamp);
 Getopt::Long::Configure("pass_through");
 GetOptions("propfile=s" => \$propfile,
            "instance=s" => \$instance,
            "schema=s" => \$schema,
-           "suffix=s" => \$suffix,
-           "prefix=s" => \$prefix,
-           "filterValue=s" => \$filterValue,
            "debug!" => \$debug,
-           "report!" => \$report,
            "timestamp=s" => \$timestamp,
 	  );
 
