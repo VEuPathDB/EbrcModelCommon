@@ -11,6 +11,7 @@ use Getopt::Long qw(GetOptions);
 
 use EbrcModelCommon::Model::tmUtils;
 use CBIL::Util::PropertySet;
+use DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
 
 use DBI;
 
@@ -34,34 +35,7 @@ my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $prop
 
 $|=1;
 
-
-my $sql;
-if ($instance =~ /\/eda/i ){
-  $sql = <<SQL;
-    select 'EDA' as project_id, lower('EDA') as lower_project_id
-SQL
-} elsif ($PROJECT_HOME =~ /\/eupa/i){
-  $sql = <<SQL;
-    SELECT project_id, lower(project_id) as lower_project_id
-      FROM (SELECT DISTINCT project_id FROM GenomicSeqAttributes) t1
-SQL
-} elsif ($PROJECT_HOME =~ /\/uni/i || $PROJECT_HOME =~ /\/rm30362/  || $instance =~ /genomics/){
-  $sql = <<SQL;
-    SELECT project_id, lower(project_id) as lower_project_id
-      FROM (SELECT DISTINCT project_id from webready.GenomicSeqAttributes_p) t1
-    UNION
-    SELECT 'UniDB' AS project_id, 'unidb' as lower_project_id
-SQL
-} else {
-  $sql = <<SQL;
-    SELECT project_id, lower(project_id) as lower_project_id
-      FROM (
-        SELECT DISTINCT pi.name as project_id from Core.ProjectInfo pi, SRes.ExternalDatabase ed
-        WHERE ed.row_project_id = pi.project_id
-      ) t1
-SQL
-}
-my $projectQuery = $dbh->prepare($sql);
+my @projects = getProjectListFromDb($dbh, $instance, $PROJECT_HOME);
 
 my $TEMPDIR = tempdir( CLEANUP => 1 );
 
@@ -73,12 +47,13 @@ mkdir "$TEMPDIR/etc";
 my $presentersProjectBase;
 my $modelProjectBase;
 
-$projectQuery->execute() or die "getting a list of project IDs";
 my @presenterFiles;
 my $is_eda = 0;  # to determine if this is a EDA database (with Clin and Mbio data)
 
-while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
-  my $projectXmlFile = "${project}.xml";
+foreach my $project (@projects) {
+  my $projectId = $project->{project_id};
+  my $lowerProject = $project->{lower_project_id};
+  my $projectXmlFile = "${projectId}.xml";
   my $projectXmlPath = "$TEMPDIR/dsp/$projectXmlFile";
 
   if ($lowerProject =~/eda/) {
@@ -108,8 +83,6 @@ while (my ($project, $lowerProject) = $projectQuery->fetchrow_array()) {
     die "Dataset Presenter file $projectXmlPath could not be found.\n";
   }
 }
-
-$projectQuery->finish();
 
 
 my $globalXmlFile = "global.xml";

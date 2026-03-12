@@ -1,0 +1,98 @@
+#!/usr/bin/perl
+
+use strict;
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use Getopt::Long qw(GetOptions);
+use Time::Piece;
+use Time::Local;
+
+use EbrcModelCommon::Model::tmUtils;
+use CBIL::Util::PropertySet;
+use DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
+
+use DBI;
+
+my ($propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug, $report, $timestamp);
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "suffix=s" => \$suffix,
+           "prefix=s" => \$prefix,
+           "filterValue=s" => \$filterValue,
+           "debug!" => \$debug,
+           "report!" => \$report,
+           "timestamp=s" => \$timestamp,
+	  );
+
+die "required parameter missing" unless ($propfile && $instance && $timestamp);
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+
+# Parse timestamp in format 'yyyy-mm-dd hh24:mi:ss' to Unix epoch time
+my $epoch_timestamp;
+eval {
+  # Handle both space and 'T' separators between date and time
+  $timestamp =~ s/T/ /;
+
+  # Parse format like '2024-03-12 14:30:45'
+  if ($timestamp =~ /^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2}):(\d{2})$/) {
+    my ($year, $month, $day, $hour, $min, $sec) = ($1, $2, $3, $4, $5, $6);
+    $epoch_timestamp = timelocal($sec, $min, $hour, $day, $month - 1, $year);
+  } else {
+    die "Timestamp must be in format 'yyyy-mm-dd hh24:mi:ss' (e.g., '2024-03-12 14:30:45')";
+  }
+};
+if ($@) {
+  die "Error parsing timestamp: $@";
+}
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+$|=1;
+
+# Get list of projects from database
+my @projects = getProjectListFromDb($dbh, $instance, $PROJECT_HOME);
+
+# Get all resource file paths that would be read
+my @filePaths = getPresenterFilePaths($PROJECT_HOME, \@projects);
+
+$dbh->disconnect();
+
+# Check each file's modification time
+my @newerFiles;
+my @missingFiles;
+
+foreach my $filePath (@filePaths) {
+  unless (-e $filePath) {
+    push @missingFiles, $filePath;
+    next;
+  }
+
+  my $mtime = (stat($filePath))[9];
+  if ($mtime > $epoch_timestamp) {
+    push @newerFiles, $filePath;
+    if ($debug) {
+      my $mtime_str = localtime($mtime)->strftime('%Y-%m-%d %H:%M:%S');
+      print "Newer: $filePath (modified: $mtime_str)\n";
+    }
+  }
+}
+
+# Warn about missing files
+if (@missingFiles) {
+  print STDERR "Warning: The following files are missing:\n";
+  foreach my $missing (@missingFiles) {
+    print STDERR "  $missing\n";
+  }
+}
+
+# Final output
+if (@newerFiles || @missingFiles) {
+  print "out of date\n";
+} else {
+  print "up to date\n";
+}
+
+exit 0;
