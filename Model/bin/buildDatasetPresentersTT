@@ -11,7 +11,7 @@ use Getopt::Long qw(GetOptions);
 
 use EbrcModelCommon::Model::tmUtils;
 use CBIL::Util::PropertySet;
-use DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
+use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
 
 use DBI;
 

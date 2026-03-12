@@ -1,4 +1,4 @@
-package DatasetPresenterTTUtils;
+package EbrcModelCommon::Model::DatasetPresenterTTUtils;
 
 use strict;
 use warnings;

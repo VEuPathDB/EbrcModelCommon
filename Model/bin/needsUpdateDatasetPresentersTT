@@ -4,12 +4,10 @@ use strict;
 use lib "$ENV{GUS_HOME}/lib/perl";
 
 use Getopt::Long qw(GetOptions);
-use Time::Piece;
 use Time::Local;
 
 use EbrcModelCommon::Model::tmUtils;
-use CBIL::Util::PropertySet;
-use DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
+use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
 
 use DBI;
 
