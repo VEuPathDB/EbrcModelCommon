@@ -9,6 +9,7 @@ our @EXPORT_OK = qw(
   getProjectListFromDb
   getModelProjectBase
   getPresenterFilePaths
+  getGitTimestamp
 );
 
 =head1 NAME
@@ -170,6 +171,46 @@ sub getPresenterFilePaths {
   push @filePaths, "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml";
 
   return @filePaths;
+}
+
+=head2 getGitTimestamp($filePath, $PROJECT_HOME)
+
+Gets the Unix timestamp of the last git commit that modified a file.
+Dies if the file is not tracked in git.
+
+Arguments:
+  $filePath - Full path to the file
+  $PROJECT_HOME - PROJECT_HOME environment variable
+
+Returns:
+  Unix timestamp (integer) of the last commit that modified this file
+
+Dies:
+  If the file is not tracked in git
+
+=cut
+
+sub getGitTimestamp {
+  my ($filePath, $PROJECT_HOME) = @_;
+
+  # Extract repository root (first directory after PROJECT_HOME)
+  my $relativePath = $filePath;
+  $relativePath =~ s/^\Q$PROJECT_HOME\E\///;
+  my ($repoName) = split('/', $relativePath);
+  my $repoPath = "$PROJECT_HOME/$repoName";
+  my $fileRelativeToRepo = $relativePath;
+  $fileRelativeToRepo =~ s/^\Q$repoName\E\///;
+
+  # Get the last commit timestamp from git (run from repo root)
+  my $gitTimestamp = `cd "$repoPath" && git log -1 --format=%ct -- "$fileRelativeToRepo" 2>/dev/null`;
+  chomp($gitTimestamp);
+
+  # Error if file is not tracked in git
+  unless ($gitTimestamp) {
+    die "Error: File is not tracked in git: $filePath\n";
+  }
+
+  return $gitTimestamp;
 }
 
 1;
