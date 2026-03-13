@@ -7,7 +7,7 @@ use Getopt::Long qw(GetOptions);
 use Time::Local;
 
 use EbrcModelCommon::Model::tmUtils;
-use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths getGitTimestamp);
+use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
 
 use DBI;
 
@@ -46,7 +46,7 @@ foreach my $filePath (@filePaths) {
     next;
   }
 
-  my $gitTimestamp = getGitTimestamp($filePath, $PROJECT_HOME);
+  my $gitTimestamp = EbrcModelCommon::Model::tmUtils::getGitTimestamp($filePath, $PROJECT_HOME);
   if ($gitTimestamp > $unixTimestamp) {
     push @newerFiles, $filePath;
     if ($debug) {

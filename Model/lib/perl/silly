@@ -1,0 +1,26 @@
+print getGitTimestamp('/home/sfischer/sourceCode/website/EbrcModelCommon/Model/pom.xml', '/home/sfischer/sourceCode/website');
+
+sub getGitTimestamp {
+  my ($filePath, $PROJECT_HOME) = @_;
+
+  # Extract repository root (first directory after PROJECT_HOME)
+  my $relativePath = $filePath;
+  $relativePath =~ s/^\Q$PROJECT_HOME\E\///;
+  my ($repoName) = split('/', $relativePath);
+  my $repoPath = "$PROJECT_HOME/$repoName";
+  my $fileRelativeToRepo = $relativePath;
+  $fileRelativeToRepo =~ s/^\Q$repoName\E\///;
+
+  # Get the last commit timestamp from git (run from repo root)
+  my $cmd = "cd '$repoPath' && git log -1 --format=%ct -- '$fileRelativeToRepo' 2>/dev/null";
+  print STDERR "cmd: $cmd\n";
+    my $gitTimestamp = `$cmd`;
+  chomp($gitTimestamp);
+
+  # Error if file is not tracked in git
+  unless ($gitTimestamp) {
+    die "Error: File is not tracked in git: $filePath\n";
+  }
+
+  return $gitTimestamp;
+}
