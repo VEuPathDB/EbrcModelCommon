@@ -11,36 +11,19 @@ use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getP
 
 use DBI;
 
-my ($propfile, $instance, $schema, $debug, $timestamp);
+my ($propfile, $instance, $schema, $debug, $timestamp, $unixTimestamp);
 Getopt::Long::Configure("pass_through");
 GetOptions("propfile=s" => \$propfile,
            "instance=s" => \$instance,
            "schema=s" => \$schema,
            "debug!" => \$debug,
            "timestamp=s" => \$timestamp,
+           "unixtimestamp=s" => \$unixTimestamp,
 	  );
 
-die "required parameter missing" unless ($propfile && $instance && $timestamp);
+die "required parameter missing" unless ($propfile && $instance && $timestamp && $unixTimestamp);
 
 my $PROJECT_HOME = $ENV{PROJECT_HOME};
-
-# Parse timestamp in format 'yyyy-mm-dd hh24:mi:ss' to Unix epoch time
-my $epoch_timestamp;
-eval {
-  # Handle both space and 'T' separators between date and time
-  $timestamp =~ s/T/ /;
-
-  # Parse format like '2024-03-12 14:30:45'
-  if ($timestamp =~ /^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2}):(\d{2})$/) {
-    my ($year, $month, $day, $hour, $min, $sec) = ($1, $2, $3, $4, $5, $6);
-    $epoch_timestamp = timelocal($sec, $min, $hour, $day, $month - 1, $year);
-  } else {
-    die "Timestamp must be in format 'yyyy-mm-dd hh24:mi:ss' (e.g., '2024-03-12 14:30:45')";
-  }
-};
-if ($@) {
-  die "Error parsing timestamp: $@";
-}
 
 my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 
@@ -65,7 +48,7 @@ foreach my $filePath (@filePaths) {
   }
 
   my $mtime = (stat($filePath))[9];
-  if ($mtime > $epoch_timestamp) {
+  if ($mtime > $unixTimestamp) {
     push @newerFiles, $filePath;
     if ($debug) {
       my $mtime_str = localtime($mtime)->strftime('%Y-%m-%d %H:%M:%S');
