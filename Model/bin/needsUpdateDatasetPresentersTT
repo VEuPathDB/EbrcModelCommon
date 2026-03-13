@@ -31,11 +31,10 @@ $|=1;
 
 # Get list of projects from database
 my @projects = getProjectListFromDb($dbh, $instance, $PROJECT_HOME);
+$dbh->disconnect();
 
 # Get all resource file paths that would be read
 my @filePaths = getPresenterFilePaths($PROJECT_HOME, \@projects);
-
-$dbh->disconnect();
 
 # Check each file's modification time
 my @newerFiles;
