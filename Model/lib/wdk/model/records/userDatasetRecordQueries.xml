@@ -39,7 +39,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             owner,
             type_name,
             type_version,
@@ -67,7 +67,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             name,
             summary,
             description,
@@ -106,7 +106,7 @@
 	  FROM @VDI_CONTROL_SCHEMA@.dataset d
 	  LEFT JOIN
           (SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             affiliation,
             email,
             country,

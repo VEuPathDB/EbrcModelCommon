@@ -47,7 +47,8 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
         super.addModelReferences();
 
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByCellularLocalizationEdaSubset_" + this.getDatasetName());
-        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationGraphs");
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationDatasets");
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationGraphsDataTable");
     }
 
 }

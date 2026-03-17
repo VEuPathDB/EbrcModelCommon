@@ -5499,7 +5499,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
 
-     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -5896,7 +5896,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
