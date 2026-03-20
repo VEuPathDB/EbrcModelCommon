@@ -24,6 +24,35 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="OwnerInfo" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="owner_name" columnType="string"/>
+      <column name="owner_organization" columnType="string"/>
+      <sql>
+        <![CDATA[
+	   SELECT d.dataset_id,
+	   TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, ''))	as owner_name,
+	   organization as owner_organization
+           from @VDI_DATASETS_SCHEMA@.dataset d,
+	   (select * from
+            public.crosstab(
+	     'select user_id, key, value
+	      from @REMOTE_USERACCOUNTS_SCHEMA@.account_properties
+              where key = in (''first_name'', ''organization'', ''middle_name'', ''last_name'')
+	      order by user_id, key',
+             'SELECT unnest(ARRAY[''first_name'', ''last_name'', ''middle_name'', ''organization''])')
+	      as userinfo (
+	     user_id bigint,
+	     first_name varchar(4000),
+	     last_name varchar(4000),
+	     middle_name varchar(4000),
+	     organization varchar(4000))
+		 ) userinfo
+	     where d.owner = userinfo.user_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Core metadata from dataset table -->
     <sqlQuery name="CoreMetadata" isCacheable="false">
       <column name="dataset_id" columnType="string"/>

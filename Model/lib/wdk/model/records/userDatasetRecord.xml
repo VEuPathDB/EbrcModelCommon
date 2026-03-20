@@ -63,6 +63,11 @@
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
+      <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
+        <columnAttribute name="owner_name" displayName="Owner Name" help="Name of the dataset owner"/>
+        <columnAttribute name="owner_organization" displayName="Owner Organization" help="Organization of the dataset owner"/>
+      </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
         <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
