@@ -33,7 +33,7 @@
 	   SELECT d.dataset_id,
 	   TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, ''))	as owner_name,
 	   organization as owner_organization
-           from @VDI_DATASETS_SCHEMA@.dataset d,
+           from @VDI_CONTROL_SCHEMA@.dataset d,
 	   (select * from
             public.crosstab(
 	     'select user_id, key, value
