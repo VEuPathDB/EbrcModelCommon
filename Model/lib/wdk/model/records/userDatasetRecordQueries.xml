@@ -261,17 +261,17 @@
       </sql>
     </sqlQuery>
 
-    <!-- Diseases table -->
-    <sqlQuery name="Diseases" isCacheable='false'>
+    <!-- Outcomes table -->
+    <sqlQuery name="Outcomes" isCacheable='false'>
       <column name="dataset_id"/>
-      <column name="disease"/>
+      <column name="outcome"/>
       <sql>
         <![CDATA[
           SELECT
             dataset_id,
-            disease
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_disease
-          ORDER BY disease
+            outcome
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_outcome
+          ORDER BY outcome
         ]]>
       </sql>
     </sqlQuery>
@@ -313,6 +313,21 @@
       </sql>
     </sqlQuery>
 
+    <!-- Sample Type table -->
+    <sqlQuery name="SampleTypes" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="sample_type"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            type
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_sample_type
+          ORDER BY type
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- External Identifiers table -->
     <sqlQuery name="ExternalIds" isCacheable='false'>
       <column name="dataset_id"/>
@@ -328,6 +343,25 @@
           FROM  @VDI_CONTROL_SCHEMA@.dataset_bioproject_id
           WHERE bioproject_id IS NOT NULL
           ORDER BY identifier_type, identifier_value
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Linked datasets table -->
+    <sqlQuery name="LinkedDatasets" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="linked_dataset_id"/>
+      <column name="linked_dataset_type"/>
+      <column name="shares_records"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            linked_dataset_id,
+            linked_dataset_type,
+            shares_records
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_link
+          ORDER BY linked_dataset_id
         ]]>
       </sql>
     </sqlQuery>
