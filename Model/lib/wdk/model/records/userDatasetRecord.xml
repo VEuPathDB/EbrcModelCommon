@@ -184,6 +184,16 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Factors -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Factors"
+             displayName="Associated Factors"
+             queryRef="UserDatasetTables.AssociatedFactors">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="factor" displayName="Factor"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Hyperlinks -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="HyperLinks"

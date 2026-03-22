@@ -243,6 +243,17 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="AssociatedFactors">
+      <column name="dataset_id"/>
+      <column name="factor"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', daf.dataset_id) as dataset_id, factor
+          from @VDI_CONTROL_SCHEMA@dataset_associated_factor daf
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Funding Awards table -->
     <sqlQuery name="FundingAwards" isCacheable='false'>
       <column name="dataset_id"/>
