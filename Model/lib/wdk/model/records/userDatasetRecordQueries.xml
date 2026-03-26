@@ -24,6 +24,35 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="OwnerInfo" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="owner_name" columnType="string"/>
+      <column name="owner_organization" columnType="string"/>
+      <sql>
+        <![CDATA[
+	   SELECT d.dataset_id,
+	   TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, ''))	as owner_name,
+	   organization as owner_organization
+           from @VDI_CONTROL_SCHEMA@.dataset d,
+	   (select * from
+            public.crosstab(
+	     'select user_id, key, value
+	      from @REMOTE_USERACCOUNTS_SCHEMA@account_properties
+              where key = in (''first_name'', ''organization'', ''middle_name'', ''last_name'')
+	      order by user_id, key',
+             'SELECT unnest(ARRAY[''first_name'', ''last_name'', ''middle_name'', ''organization''])')
+	      as userinfo (
+	     user_id bigint,
+	     first_name varchar(4000),
+	     last_name varchar(4000),
+	     middle_name varchar(4000),
+	     organization varchar(4000))
+		 ) userinfo
+	     where d.owner = userinfo.user_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Core metadata from dataset table -->
     <sqlQuery name="CoreMetadata" isCacheable="false">
       <column name="dataset_id" columnType="string"/>
@@ -39,7 +68,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             owner,
             type_name,
             type_version,
@@ -67,7 +96,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             name,
             summary,
             description,
@@ -106,7 +135,7 @@
 	  FROM @VDI_CONTROL_SCHEMA@.dataset d
 	  LEFT JOIN
           (SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             affiliation,
             email,
             country,
@@ -214,6 +243,17 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="AssociatedFactors">
+      <column name="dataset_id"/>
+      <column name="factor"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', daf.dataset_id) as dataset_id, factor
+          from @VDI_CONTROL_SCHEMA@dataset_associated_factor daf
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Funding Awards table -->
     <sqlQuery name="FundingAwards" isCacheable='false'>
       <column name="dataset_id"/>
@@ -261,17 +301,17 @@
       </sql>
     </sqlQuery>
 
-    <!-- Diseases table -->
-    <sqlQuery name="Diseases" isCacheable='false'>
+    <!-- Outcomes table -->
+    <sqlQuery name="Outcomes" isCacheable='false'>
       <column name="dataset_id"/>
-      <column name="disease"/>
+      <column name="outcome"/>
       <sql>
         <![CDATA[
           SELECT
             dataset_id,
-            disease
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_disease
-          ORDER BY disease
+            outcome
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_outcome
+          ORDER BY outcome
         ]]>
       </sql>
     </sqlQuery>
@@ -313,6 +353,21 @@
       </sql>
     </sqlQuery>
 
+    <!-- Sample Type table -->
+    <sqlQuery name="SampleTypes" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="sample_type"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            type
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_sample_type
+          ORDER BY type
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- External Identifiers table -->
     <sqlQuery name="ExternalIds" isCacheable='false'>
       <column name="dataset_id"/>
@@ -328,6 +383,25 @@
           FROM  @VDI_CONTROL_SCHEMA@.dataset_bioproject_id
           WHERE bioproject_id IS NOT NULL
           ORDER BY identifier_type, identifier_value
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Linked datasets table -->
+    <sqlQuery name="LinkedDatasets" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="linked_dataset_id"/>
+      <column name="linked_dataset_type"/>
+      <column name="shares_records"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            linked_dataset_id,
+            linked_dataset_type,
+            shares_records
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_link
+          ORDER BY linked_dataset_id
         ]]>
       </sql>
     </sqlQuery>

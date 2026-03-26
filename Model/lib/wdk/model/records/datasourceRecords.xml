@@ -46,8 +46,8 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="DatasourceAttributes.All">
-        <columnAttribute name="dataset_id" internal="true" displayName="Data Set ID" help="ID of the dataset."/>
-        <columnAttribute name="dataset_name" internal="true" displayName="Data Set Name" help="Name of the dataset."/>
+        <columnAttribute name="dataset_id" internal="true" displayName="Dataset ID" help="ID of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" displayName="Dataset Name" help="Name of the dataset."/>
         <columnAttribute name="description" displayName="Description" sortable="false"/>
         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
         <columnAttribute name="summary" displayName="Summary" sortable="false"
@@ -110,7 +110,7 @@
       <!-- References -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
         <table name="References"  
-             displayName="Explore this Data Set within this Website"
+             displayName="Explore this Dataset within this website"
              queryRef="DatasourceTables.References">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
         <columnAttribute name="datasource_id"  inReportMaker="false" internal="true"/>
@@ -320,7 +320,7 @@ SUBSTRING(tn.organism_name FROM LENGTH(split_part(tn.organism_name, ' ', 1) || '
           FROM (
             select distinct dd.name as dataset_name,
                  dd.dataset_datasource_id as datasource_id,
-                 case when dd.taxon_id = 0
+                 case when dd.taxon_id IS NULL
                  then 'ALL'
                  else tn.name
                  end as organism,
