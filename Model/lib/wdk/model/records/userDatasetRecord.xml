@@ -63,6 +63,11 @@
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
+      <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
+        <columnAttribute name="owner_name" displayName="Owner Name" help="Name of the dataset owner"/>
+        <columnAttribute name="owner_organization" displayName="Owner Organization" help="Organization of the dataset owner"/>
+      </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
         <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
@@ -179,6 +184,16 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Factors -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Factors"
+             displayName="Associated Factors"
+             queryRef="UserDatasetTables.AssociatedFactors">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="factor" displayName="Factor"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Hyperlinks -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="HyperLinks"
@@ -234,13 +249,13 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Diseases -->
+      <!-- Outcomes -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Diseases"
-             displayName="Diseases"
-             queryRef="UserDatasetTables.Diseases">
+      <table name="Outcomes"
+             displayName="Outcomes"
+             queryRef="UserDatasetTables.Outcomes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="disease" displayName="Disease"/>
+        <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -268,6 +283,16 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Sample Types -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="SampleTypes"
+             displayName="Sample Types"
+             queryRef="UserDatasetTables.SampleTypes">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="sample_type" displayName="Type"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Identifiers -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="ExternalIds"
@@ -276,6 +301,18 @@
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="identifier_type" displayName="Type"/>
         <columnAttribute name="identifier_value" displayName="Identifier"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Linked Datasets -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="LinkedDatasets"
+             displayName="Linked Datasets"
+             queryRef="UserDatasetTables.LinkedDatasets">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="linked_dataset_id" displayName="Linked Dataset ID"/>
+        <columnAttribute name="linked_dataset_type" displayName="Linked Dataset Type"/>
+        <columnAttribute name="shares_records" displayName="Shares Records"/>
       </table>
 
     </recordClass>
