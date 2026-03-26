@@ -1978,9 +1978,14 @@
     <track>eaceHoughton</track>
     <track>ebruHoughton</track>
     <track>efalBayerHaberkorn1970</track>
+    <track>eflaA23</track>
+    <track>eintP0_A24</track>
+    <track>emagA19</track>
+    <track>emedPL19_A22</track>
     <track>emitHoughton</track>
     <track>enecHoughton</track>
     <track>epraHoughton</track>
+    <track>estiA26</track>
   </subtrackSet>
 
   <subtrackSet project="ToxoDB" name="Sarcocystis_gene" suffixes="_span;_gene">
@@ -2104,9 +2109,14 @@
     <org organism="Eimeria acervulina Houghton" abbrev="eaceHoughton"/>
     <org organism="Eimeria brunetti Houghton" abbrev="ebruHoughton"/>
     <org organism="Eimeria falciformis Bayer Haberkorn 1970" abbrev="efalBayerHaberkorn1970"/>
+    <org organism="Eimeria flavescens A23" abbrev="eflaA23"/>
+    <org organism="Eimeria intestinalis P0_A24" abbrev="eintP0_A24"/>
+    <org organism="Eimeria magna A19" abbrev="emagA19"/>
+    <org organism="Eimeria media PL19_A22" abbrev="emedPL19_A22"/>
     <org organism="Eimeria mitis Houghton" abbrev="emitHoughton"/>
     <org organism="Eimeria necatrix Houghton" abbrev="enecHoughton"/>
     <org organism="Eimeria praecox Houghton" abbrev="epraHoughton"/>
+    <org organism="Eimeria stiedai A26" abbrev="estiA26"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Eimeria_gene" />
