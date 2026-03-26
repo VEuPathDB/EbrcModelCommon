@@ -111,6 +111,7 @@
     <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pchachabaudiCB</track>
     <track>pvinvinckeivinckei</track>
     <track>pvinvinckeiCY</track>
     <track>pvinbrucechwattiDA</track>
@@ -126,6 +127,7 @@
     <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pchachabaudiCB</track>
     <track>pvinvinckeivinckei</track>
     <track>pvinvinckeiCY</track>
     <track>pvinbrucechwattiDA</track>
@@ -308,6 +310,7 @@
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
+    <org organism="Plasmodium chabaudi chabaudi CB" abbrev="pchachabaudiCB" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
     <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
     <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
@@ -332,6 +335,7 @@
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
+    <org organism="Plasmodium chabaudi chabaudi CB" abbrev="pchachabaudiCB" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
     <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
     <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
@@ -497,10 +501,13 @@
     <track>chomUdeA01</track>
     <track>chom30976</track>
     <track>cmelUKMEL1</track>
+    <track>cmelTU1867</track>
     <track>cmurRN66</track>
     <track>cand30847</track>
     <track>cubi39726</track>
     <track>crya45019</track>
+    <track>cser8845_47</track>
+    <track>csp43IA8</track>
     <track>cspc37763</track>
     <track>ctyzUGA55</track>
     <track>gnipUnknown</track>
@@ -520,10 +527,13 @@
     <org organism="Cryptosporidium hominis UdeA01" abbrev="chomUdeA01" />
     <org organism="Cryptosporidium hominis isolate 30976" abbrev="chom30976" />
     <org organism="Cryptosporidium meleagridis strain UKMEL1" abbrev="cmelUKMEL1" />
+    <org organism="Cryptosporidium meleagridis TU1867" abbrev="cmelTU1867" />
     <org organism="Cryptosporidium muris RN66" abbrev="cmurRN66" />
     <org organism="Cryptosporidium andersoni isolate 30847" abbrev="cand30847" />
     <org organism="Cryptosporidium ubiquitum isolate 39726" abbrev="cubi39726" />
     <org organism="Cryptosporidium ryanae 45019" abbrev="crya45019" />
+    <org organism="Cryptosporidium serpentis 8845_47" abbrev="cser8845_47" />
+    <org organism="Cryptosporidium sp. 43IA8 isolate 43IA8" abbrev="csp43IA8" />
     <org organism="Cryptosporidium sp. chipmunk genotype I strain 37763" abbrev="cspc37763" />
     <org organism="Cryptosporidium tyzzeri isolate UGA55" abbrev="ctyzUGA55" />
     <org organism="Gregarina niphandrodes Unknown strain" abbrev="gnipUnknown"/>
@@ -1598,6 +1608,7 @@
     <track>bcabUSDA-D6B2</track>
     <track>bdiv1802A</track>
     <track>bdunW12023</track>
+    <track>bgibAzabu</track>
     <track>bmicRI</track>
     <track>bovaMiyake</track>
     <track>bovisSelcuk</track>
@@ -1617,6 +1628,7 @@
     <org organism="Babesia caballi USDA-D6B2" abbrev="bcabUSDA-D6B2"/>
     <org organism="Babesia divergens strain 1802A" abbrev="bdiv1802A" />
     <org organism="Babesia duncani strain WA1 2023" abbrev="bdunW12023" />
+    <org organism="Babesia gibsoni Azabu" abbrev="bgibAzabu" />
     <org organism="Babesia microti strain RI" abbrev="bmicRI" />
     <org organism="Babesia ovata strain Miyake" abbrev="bovaMiyake" />
     <org organism="Babesia ovis Selcuk" abbrev="bovisSelcuk"/>
@@ -2101,6 +2113,7 @@
     <track>ldonLV9</track>
     <track>ldonHU3</track>
     <track>lenrMCAVBR2001CUR178</track>
+    <track>lguyM4147</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajFriedlin2021</track>
@@ -2206,6 +2219,7 @@
     <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
     <org organism="Leishmania donovani HU3" abbrev="ldonHU3" />
     <org organism="Leishmania enriettii MCAV/BR/2001/CUR178" abbrev="lenrMCAVBR2001CUR178" />
+    <org organism="Leishmania guyanensis M4147" abbrev="lguyM4147" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major Friedlin 2021" abbrev="lmajFriedlin2021" />
