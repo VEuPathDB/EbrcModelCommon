@@ -593,6 +593,7 @@
     <track>pstr93TX-2</track>
     <track>pstrsp.triticiPST130</track>
     <track>ptri1-1BBBDRace1</track>
+    <track>ppacMT2006</track>
   </subtrackSet>
 
   <subtrackSet name="Schizosaccharomycetes_gene" project="FungiDB" suffixes="_span;_gene">
@@ -719,6 +720,7 @@
     <track>acamIBT28561</track>
     <track>afumAf293</track>
     <track>afumA1163</track>
+    <track>afumA1160</track>
     <track>aclaNRRL1</track>
     <track>acriGZAAS20.1005</track>
     <track>aellCBS707.79</track>
@@ -804,6 +806,7 @@
     <track>foxyrace4</track>
     <track>foxy26406</track>
     <track>foxyFo47</track>
+    <track>foxyFo472020</track>
     <track>foxyFOSC3a</track>
     <track>fproET1</track>
     <track>fproNRRL62905</track>
@@ -943,6 +946,10 @@
     <track>aaltSRC1lrK2f</track>
     <track>cclayc1106</track>
     <track>vgalCBS43764</track>
+    <track>bmayC4</track>
+    <track>ffulRace5_Kim</track>
+    <track>cbetCb09-40</track>
+    <track>ckikMAFF305040</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -1027,6 +1034,7 @@
     <org abbrev="pstr93TX-2" organism="Puccinia striiformis 93TX-2"/>
     <org abbrev="pstrsp.triticiPST130" organism="Puccinia striiformis f. sp. tritici PST-130"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
+    <org abbrev="ppacMT2006" organism="Phakopsora pachyrhizi MT2006"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pucciniomycetes_gene"/>
@@ -1235,6 +1243,7 @@
     <org abbrev="acamIBT28561" organism="Aspergillus campestris IBT 28561"/>
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
     <org abbrev="afumA1163" organism="Aspergillus fumigatus A1163"/>
+    <org abbrev="afumA1160" organism="Aspergillus fumigatus A1160"/>
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
     <org abbrev="acriGZAAS20.1005" organism="Aspergillus cristatus GZAAS20.1005"/>
     <org abbrev="aellCBS707.79" organism="Aspergillus ellipticus CBS 707.79"/>
@@ -1329,6 +1338,7 @@
     <org abbrev="foxyrace4" organism="Fusarium odoratissimum strain race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
+    <org abbrev="foxyFo472020" organism="Fusarium oxysporum Strain Fo47 2020"/>
     <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum NRRL 32931"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
     <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
@@ -1525,6 +1535,10 @@
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
     <org abbrev="cclayc1106" organism="Curvularia clavata yc1106"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
+    <org abbrev="bmayC4" organism="Bipolaris maydis C4"/>
+    <org abbrev="ffulRace5_Kim" organism="Fulvia fulva Race5_Kim"/>
+    <org abbrev="cbetCb09-40" organism="Cercospora beticola Cb09-40"/>
+    <org abbrev="ckikMAFF305040" organism="Cercospora kikuchii MAFF 305040"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
