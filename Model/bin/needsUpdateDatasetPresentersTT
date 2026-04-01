@@ -1,0 +1,74 @@
+#!/usr/bin/perl
+
+use strict;
+use lib "$ENV{GUS_HOME}/lib/perl";
+
+use Getopt::Long qw(GetOptions);
+use Time::Local;
+
+use EbrcModelCommon::Model::tmUtils;
+use EbrcModelCommon::Model::DatasetPresenterTTUtils qw(getProjectListFromDb getPresenterFilePaths);
+
+use DBI;
+
+my ($propfile, $instance, $schema, $debug, $timestamp, $unixTimestamp);
+Getopt::Long::Configure("pass_through");
+GetOptions("propfile=s" => \$propfile,
+           "instance=s" => \$instance,
+           "schema=s" => \$schema,
+           "debug!" => \$debug,
+           "timestamp=s" => \$timestamp,
+           "unixtimestamp=s" => \$unixTimestamp,
+	  );
+
+die "required parameter missing" unless ($propfile && $instance && $timestamp && $unixTimestamp);
+
+my $PROJECT_HOME = $ENV{PROJECT_HOME};
+
+my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
+
+$|=1;
+
+# Get list of projects from database
+my @projects = getProjectListFromDb($dbh, $instance, $PROJECT_HOME);
+$dbh->disconnect();
+
+# Get all resource file paths that would be read
+my @filePaths = getPresenterFilePaths($PROJECT_HOME, \@projects);
+
+# Check each file's modification time
+my @newerFiles;
+my @missingFiles;
+
+foreach my $filePath (@filePaths) {
+  unless (-e $filePath) {
+    push @missingFiles, $filePath;
+    next;
+  }
+
+  my $gitTimestamp = EbrcModelCommon::Model::tmUtils::getGitTimestamp($filePath, $PROJECT_HOME);
+  if ($gitTimestamp > $unixTimestamp) {
+    push @newerFiles, $filePath;
+    if ($debug) {
+      my $mtime_str = localtime($gitTimestamp)->strftime('%Y-%m-%d %H:%M:%S');
+      print "Newer: $filePath (git commit: $mtime_str)\n";
+    }
+  }
+}
+
+# Warn about missing files
+if (@missingFiles) {
+  print STDERR "Warning: The following files are missing:\n";
+  foreach my $missing (@missingFiles) {
+    print STDERR "  $missing\n";
+  }
+}
+
+# Final output
+if (@newerFiles || @missingFiles) {
+  print "out of date\n";
+} else {
+  print "up to date\n";
+}
+
+exit 0;
