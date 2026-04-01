@@ -861,6 +861,7 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+    <!-- when rebuild, remove ${name} from datasetName in case where the sequence and annotation are from different sources -->
     <datasetLoader datasetName="${organismAbbrev}_${soTerm}_${name}_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
 	      parentDatasetName="${organismAbbrev}_primary_genome_RSRC"
@@ -890,6 +891,7 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+    <!-- when rebuild, remove ${name} from datasetName in case where the sequence and annotation are from different sources -->
     <datasetLoader datasetName="${organismAbbrev}_${soTerm}_${name}_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
               parentDatasetName="${organismAbbrev}_primary_genome_RSRC"
