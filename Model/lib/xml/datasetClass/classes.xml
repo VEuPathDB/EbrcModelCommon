@@ -7085,6 +7085,37 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetLoader>
   </datasetClass>  
 
+  <!-- New dataset class replacing dnaSeqExperimentFromAccession and dnaSeqExperimentFromLocal.
+       Uses nf-core samplesheet convention; fromSRA and ploidy are per-dataset props.
+       taxonId is looked up at runtime from the DB in MakeDnaSeqNextflowConfig. -->
+  <datasetClass class="dnaseqExperiment" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="name">&name;</prop>
+    <prop name="version">&version;</prop>
+    <prop name="fromSRA"></prop>
+    <prop name="ploidy"></prop>
+    <graphTemplateFile name="dnaseq.xml"/>
+    <datasetLoader datasetName="${organismAbbrev}_${name}_dnaseqExperiment_RSRC" version="${version}"
+          plugin="ApiCommonData::Load::Plugin::LoadNothing"
+              scope="organism"
+              type="isolates"
+              subType="Dna_Seq"
+              organismAbbrev="${organismAbbrev}">
+      <manualGet fileOrDir="common/empty">
+        <dir name="final">
+        </dir>
+      </manualGet>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
+      <getAndUnpackOutput dir="@@dataDir@@/final"/>
+      <getAndUnpackOutput file="@@dataDir@@/final/samplesheet.csv"/>
+      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
+
+  <!-- DEPRECATED - replaced by dnaseqExperiment above.
+       Retain until all organism dataset XMLs are migrated. -->
   <datasetClass class="dnaSeqExperimentFromAccession" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
@@ -7115,7 +7146,8 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
 
   </datasetClass>
 
-
+  <!-- DEPRECATED - replaced by dnaseqExperiment above.
+       Retain until all organism dataset XMLs are migrated. -->
   <datasetClass class="dnaSeqExperimentFromLocal" category="" datasetFileHint="">
     <purpose></purpose>
     <prop name="projectName">&projectName;</prop>
