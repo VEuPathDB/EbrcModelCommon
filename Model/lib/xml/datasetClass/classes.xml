@@ -861,6 +861,7 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+    <!-- when rebuild, remove ${name} from datasetName in case where the sequence and annotation are from different sources -->
     <datasetLoader datasetName="${organismAbbrev}_${soTerm}_${name}_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
 	      parentDatasetName="${organismAbbrev}_primary_genome_RSRC"
@@ -890,6 +891,7 @@
 
     <graphTemplateFile name="genomeSequenceAndFeatures.xml"/>
 
+    <!-- when rebuild, remove ${name} from datasetName in case where the sequence and annotation are from different sources -->
     <datasetLoader datasetName="${organismAbbrev}_${soTerm}_${name}_RSRC" version="${version}"
 	      plugin="GUS::Supported::Plugin::LoadFastaSequences"
               parentDatasetName="${organismAbbrev}_primary_genome_RSRC"
@@ -3233,7 +3235,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               scope="organism"
               organismAbbrev="${organismAbbrev}">
   
-     <wgetArgs url="rest.uniprot.org/uniprotkb/search?query=organism_id%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tsv&amp;fields=accession,gene_names,organism_name,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="rest.uniprot.org/uniprotkb/stream?query=organism_id%3a${speciesNcbiTaxonId}&amp;force=yes&amp;format=tsv&amp;fields=accession,gene_names,organism_name,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>printOrgSpecificGeneToEC --infile @@dataDir@@/ecAssocFromUniprot.tab --outfile @@dataDir@@/${organismAbbrev}LocTagToEC.tab --orgAbbrev ${organismAbbrev}</unpack>     
 
@@ -5499,7 +5501,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
 
-     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 
@@ -5896,7 +5898,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               version="TODAY"
               scope="dontcare">
   
-     <wgetArgs url="https://rest.uniprot.org/uniprotkb/search?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
+     <wgetArgs url="https://rest.uniprot.org/uniprotkb/stream?&amp;query=taxonomy_id:${ncbiTaxonId}&amp;format=tsv&amp;fields=accession,ec"> --output-document=@@dataDir@@/ecAssocFromUniprot.tab --content-disposition </wgetArgs>
      
      <unpack>orthomclUnpackUniprotEc @@dataDir@@/ecAssocFromUniprot.tab @@dataDir@@/ecAssoc.tab ${abbrev}</unpack>
 

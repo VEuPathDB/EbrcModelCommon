@@ -139,7 +139,7 @@
 	       apidbtuning.datasetpresenter dsp
           WHERE dsp.DATASET_PRESENTER_ID = dd.DATASET_PRESENTER_ID
 	    and dd.dataset_datasource_id = ref.data_source_id
-            AND ('any' = '$$taxon$$' or (dd.taxon_id = 0 or dd.taxon_id = $$taxon$$))
+            AND ('any' = '$$taxon$$' or (dd.taxon_id IS NULL or dd.taxon_id = $$taxon$$))
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
             AND  COALESCE(dd.category,'') != 'Link outs'
@@ -248,8 +248,8 @@
             ) d
             LEFT JOIN (
               select v.dataset_presenter_id, r.name as study_access
-              from @REMOTE_STUDYACCESS_SCHEMA@.end_users v
-                INNER JOIN @REMOTE_STUDYACCESS_SCHEMA@.restriction_level r ON v.restriction_level_id = r.restriction_level_id
+              from @REMOTE_STUDYACCESS_SCHEMA@end_users v
+                INNER JOIN @REMOTE_STUDYACCESS_SCHEMA@restriction_level r ON v.restriction_level_id = r.restriction_level_id
               WHERE user_id = $$user_id$$
                 AND (approval_status_id < 1 or approval_status_id is NULL)
             ) u ON d.dataset_presenter_id = u.dataset_presenter_id
