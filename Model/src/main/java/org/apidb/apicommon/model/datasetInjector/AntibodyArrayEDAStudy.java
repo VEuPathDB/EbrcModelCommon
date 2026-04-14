@@ -22,6 +22,11 @@ public class AntibodyArrayEDAStudy extends GenomicsEDAStudy {
         setPropValue("datasetDisplayName", trimmedDatasetDisplayName);
 
         injectTemplate("antibodyArrayEdaQuestion");
+        injectTemplate("antibodyArrayEdaAttributeQueriesNumeric");
+        injectTemplate("antibodyArrayEdaAttributeRef");
+        injectTemplate("antibodyArrayEdaAttributeCategory");
+        injectTemplate("antibodyArrayEdaGeneTableSql");
+        injectTemplate("antibodyArrayDataTableGeneTableSql");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-T-test-2-sample-unequal-variance");
@@ -33,6 +38,8 @@ public class AntibodyArrayEDAStudy extends GenomicsEDAStudy {
         super.addModelReferences();
 
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByAntibodyArrayEdaSubset_" + this.getDatasetName());
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaAntibodyArrayDatasets");
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaAntibodyArrayGraphsDataTable");
     }
 
 }
