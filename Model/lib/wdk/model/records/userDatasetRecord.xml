@@ -2,11 +2,9 @@
 
 <wdkModel>
 
-    <constant name="datasetRecordDisplayName" includeProjects="MicrobiomeDB">User Study</constant>
-  <constant name="datasetRecordDisplayNamePlural" includeProjects="MicrobiomeDB">User Studies</constant>
 
-  <constant name="datasetRecordDisplayName" excludeProjects="MicrobiomeDB">User Dataset</constant>
-  <constant name="datasetRecordDisplayNamePlural" excludeProjects="MicrobiomeDB">User Datasets</constant>
+  <constant name="datasetRecordDisplayName">User Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural">User Datasets</constant>
 
 
   <recordClassSet name="UserDatasetRecordClasses">
