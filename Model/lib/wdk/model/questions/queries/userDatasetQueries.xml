@@ -16,7 +16,7 @@
             SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id
             FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
             WHERE user_id = $$user_id$$
-            AND (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
         ]]>
       </sql>
     </sqlQuery>
@@ -133,7 +133,7 @@
                @VDI_CONTROL_SCHEMA@.dataset d
           WHERE aud.dataset_id = d.dataset_id
           AND aud.user_id = $$user_id$$
-          AND (aud.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          AND (aud.project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
         ]]>
       </sql>
     </sqlQuery>
