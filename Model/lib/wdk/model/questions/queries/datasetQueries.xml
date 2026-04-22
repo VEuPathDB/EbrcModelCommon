@@ -291,7 +291,9 @@
     </processQuery>
 
 
-    <sqlQuery name="AllUserDatasets">
+    <!-- no corresponding question?
+	
+     <sqlQuery name="AllUserDatasets">
         <paramRef ref="InternalParams.user_id"/>
         <column name="dataset_id"/>
         <sql>
@@ -324,7 +326,7 @@
 	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql> 
-
+    
         <sql includeProjects="ClinEpiDB">
           <![CDATA[
             select distinct dd.dataset_presenter_id as dataset_id
@@ -362,6 +364,9 @@
        </sql>
 
     </sqlQuery>
+    -->
+
+
 
 </querySet>
 
