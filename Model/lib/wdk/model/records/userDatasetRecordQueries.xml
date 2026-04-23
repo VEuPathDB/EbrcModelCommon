@@ -117,7 +117,8 @@
         <![CDATA[
           SELECT CONCAT('EDAUD_', d.user_dataset_id) as dataset_id,
 	          CONCAT('EDAUD_', d.user_dataset_id) as old_dataset_id
-          FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+            FROM @VDI_CONTROL_SCHEMA@.availableuserdatasets d
+        GROUP BY dataset_id,old_dataset_id 
         ]]>
       </sql>
     </sqlQuery>
