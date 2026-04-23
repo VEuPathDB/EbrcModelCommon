@@ -1,8 +1,3 @@
-<?xml version="1.0"?>
-
-
-<contacts>
-
   <contact>
     <contactId>TODO</contactId>
     <name>Please add Contact Info</name>
@@ -16,6 +11,18 @@
   </contact>
 
   <contact>
+    <contactId>sylvain.raffaele</contactId>
+    <name>Sylvain Raffaele</name>
+    <institution>Laboratoire des Interactions Plantes Microorganismes Environnement (LIPME), INRAE, CNRS, Castanet Tolosan Cedex, France</institution>
+    <email>sylvain.raffaele@inrae.fr</email>
+    <address></address>
+    <city>Castanet tolosan</city>
+    <state/>
+    <zip>31320</zip>
+    <country>France</country>
+  </contact>
+
+
     <contactId>kelly.t.rios</contactId>
     <name>Kelly T Rios</name>
     <institution>Pennsylvania State University</institution>
@@ -3021,10 +3028,10 @@ Bentley, Perth, Western Australia 6102, Australia</institution>
     <institution>Department of Plant and Microbial Biology, University of Zurich, Switzerland</institution>
     <email>bkeller@botinst.uzh.ch</email>
     <address/>
-    <city/>
+    <city>Zurich</city>
     <state/>
-    <zip/>
-    <country/>
+    <zip>8008</zip>
+    <country>Switzerland</country>
   </contact>
 
   <contact>
@@ -40771,6 +40778,163 @@ Academy of Sciences</institution>
     <state/>
     <zip/>
     <country/>
+  </contact>
+
+  <contact>
+    <contactId>c.ruiz-roldan</contactId>
+    <name>Carmen Ruiz-Roldán</name>
+    <institution>Departamento de Genética, Universidad de Córdoba, Campus de Excelencia Agroalimentario (ceiA3)</institution>
+    <email>ge2rurom@uco.es</email>
+    <address></address>
+    <city>Córdoba</city>
+    <state/>
+    <zip>E-14071</zip>
+    <country>Spain</country>
+  </contact>
+
+  <contact>
+    <contactId>y.pareja-jaime</contactId>
+    <name>Yolanda Pareja-Jaime</name>
+    <institution>Departamento de Genética, Universidad de Córdoba, Campus de Excelencia Agroalimentario (ceiA3)</institution>
+    <email></email>
+    <address></address>
+    <city>Córdoba</city>
+    <state/>
+    <zip>E-14071</zip>
+    <country>Spain</country>
+  </contact>
+
+  <contact>
+    <contactId>ja.gonzalez-reyes</contactId>
+    <name>José Antonio González-Reyes</name>
+    <institution>Departamento de Biología Celular, Fisiología e Inmunología, Universidad de Córdoba, Campus de Excelencia Agroalimentario (ceiA3)</institution>
+    <email></email>
+    <address></address>
+    <city>Córdoba</city>
+    <state/>
+    <zip>E-14071</zip>
+    <country>Spain</country>
+  </contact>
+
+  <contact>
+    <contactId>mi.roncero</contactId>
+    <name>M. Isabel G. Roncero</name>
+    <institution>Departamento de Genética, Universidad de Córdoba, Campus de Excelencia Agroalimentario (ceiA3)</institution>
+    <email></email>
+    <address></address>
+    <city>Córdoba</city>
+    <state/>
+    <zip>E-14071</zip>
+    <country>Spain</country>
+  </contact>
+
+  <contact>
+    <contactId>silvia.restrepo</contactId>
+    <name>Silvia Restrepo</name>
+    <institution>Universidad de los Andes</institution>
+    <email>srestrep@uniandes.edu.co</email>
+    <address></address>
+    <city>Bogotá</city>
+    <state/>
+    <zip></zip>
+    <country>Colombia</country>
+  </contact>
+
+  <contact>
+    <contactId>yangrae.cho</contactId>
+    <name>Yangrae Cho</name>
+    <institution>University of Hawaii at Manoa</institution>
+    <email>yangrae@hawaii.edu</email>
+    <address></address>
+    <city>Honolulu</city>
+    <state>Hawaii</state>
+    <zip></zip>
+    <country>USA</country>
+  </contact>
+
+  <contact>
+    <contactId>akhil.srivastava</contactId>
+    <name>Akhil Srivastava</name>
+    <institution>University of Hawaii at Manoa</institution>
+    <email></email>
+    <address></address>
+    <city>Honolulu</city>
+    <state>Hawaii</state>
+    <zip></zip>
+    <country>USA</country>
+  </contact>
+
+  <contact>
+    <contactId>pietro.spanu</contactId>
+    <name>Pietro D. Spanu</name>
+    <institution>Department of Life Sciences, Imperial College London</institution>
+    <email>p.spanu@imperial.ac.uk</email>
+    <address></address>
+    <city>London</city>
+    <state/>
+    <zip></zip>
+    <country>UK</country>
+  </contact>
+
+  <contact>
+    <contactId>fabrizio.menardo</contactId>
+    <name>Fabrizio Menardo</name>
+    <institution>Department of Plant and Microbial Biology, University of Zurich</institution>
+    <email>fabrizio.menardo@uzh.ch</email>
+    <address/>
+    <city>Zurich</city>
+    <state/>
+    <zip/>
+    <country>Switzerland</country>
+  </contact>
+
+  <contact>
+    <contactId>coraline.praz</contactId>
+    <name>Coraline R. Praz</name>
+    <institution>Department of Plant and Microbial Biology, University of Zürich</institution>
+    <email>coraline.praz@botinst.uzh.ch</email>
+    <address/>
+    <city>Zurich</city>
+    <state/>
+    <zip/>
+    <country>Switzerland</country>
+  </contact>
+
+  <contact>
+    <contactId>salim.bourras</contactId>
+    <name>Salim Bourras</name>
+    <institution>Department of Plant and Microbial Biology, University of Zürich</institution>
+    <email/>
+    <address/>
+    <city>Zurich</city>
+    <state/>
+    <zip/>
+    <country>Switzerland</country>
+  </contact>
+
+  <contact>
+    <contactId>marion.muller</contactId>
+    <name>Marion C. Müller</name>
+    <institution>Department of Plant and Microbial Biology, University of Zürich</institution>
+    <email/>
+    <address/>
+    <city>Zurich</city>
+    <state/>
+    <zip/>
+    <country>Switzerland</country>
+  </contact>
+
+
+  <contact>
+    <contactId>xiaoyi.shan</contactId>
+    <name>Xiaoyi Shan</name>
+    <institution>Shanghai Institutes for Biological Sciences, Chinese Academy of Sciences</institution>
+    <email/>
+    <address/>
+    <city>Shanghai</city>
+    <state/>
+    <zip/>
+    <country>China</country>
   </contact>
 
 </contacts>
