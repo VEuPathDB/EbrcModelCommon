@@ -83,7 +83,7 @@
       queryRef="UserDatasetsIds.ById"
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList sorting="display_name asc" />
+      <attributesList sorting="name asc" />
       <description>
          Find datasets by ID
       </description>
@@ -98,7 +98,7 @@
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
       includeProjects="ClinEpiDB"
       noSummaryOnSingleRecord="true">
-      <attributesList summary="study_id, restriction_level" />
+      <attributesList summary="eda_study_id, accessibility" />
       <description>
          Find datasets that are associated with a particular dataset type and subtype
       </description>
