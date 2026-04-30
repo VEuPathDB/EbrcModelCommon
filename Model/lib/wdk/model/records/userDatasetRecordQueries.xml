@@ -151,6 +151,19 @@
       </sql>
     </sqlQuery>
 
+        <!-- Primary publication -->
+    <sqlQuery name="PrimaryPublication" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="primary_publication"/>
+      <sql>
+        <![CDATA[
+           SELECT dataset_id, citation  as primary_publication
+           FROM @VDI_CONTROL_SCHEMA@.dataset_publication
+           WHERE is_primary is true
+        ]]>
+      </sql>
+    </sqlQuery>
+
   </querySet>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

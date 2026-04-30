@@ -74,7 +74,7 @@
         <columnAttribute name="deleted_status" displayName="Deleted Status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
         <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
-        <columnAttribute name="accessibility" displayName="Accessibility"
+        <columnAttribute name="accessibility" displayName="Data Accessibility"
                          help="Access level: public, protected, or private"/>
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
@@ -103,6 +103,9 @@
         <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
+        <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
+     </attributeQueryRef>
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -128,10 +131,10 @@
       </table>   
 -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Publications -->
+      <!-- Selected Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Publications"
-             displayName="Publications"
+             displayName="Selected Publications"
              queryRef="UserDatasetTables.Publications">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="external_id" displayName="ID" internal="true"/>
@@ -155,10 +158,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Contacts -->
+      <!-- Principal Investigator and Collaborators -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Contacts"
-             displayName="Contacts"
+             displayName="Principal Investigator and Collaborators"
              queryRef="UserDatasetTables.Contacts">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="contact_name" displayName="Name"/>
@@ -171,13 +174,13 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Organisms -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Organisms"
+      <table name="Organisms" excludeProjects="ClinEpiDB,MicrobiomeDB" 
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="organism_type" displayName="Type"
                          help="experimental or host"/>
-        <columnAttribute name="species" displayName="Species"/>
+        <columnAttribute name="species" displayName="Study population species"/>
         <columnAttribute name="strain" displayName="Strain"/>
       </table>
 
@@ -185,17 +188,17 @@
       <!-- Factors -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Factors"
-             displayName="Associated Factors"
+             displayName="Associated factors"
              queryRef="UserDatasetTables.AssociatedFactors">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="factor" displayName="Factor"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Hyperlinks -->
+      <!-- External Resources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="HyperLinks"
-             displayName="External Links"
+             displayName="External Resources"
              queryRef="UserDatasetTables.HyperLinks">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" internal="true"/>
@@ -216,10 +219,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Funding Awards -->
+      <!-- Funding -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="FundingAwards"
-             displayName="Funding Awards"
+             displayName="Funding"
              queryRef="UserDatasetTables.FundingAwards">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="agency" displayName="Funding agency"/>
@@ -247,20 +250,20 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Outcomes -->
+      <!-- Outcomes of interest -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Outcomes"
-             displayName="Outcomes"
+             displayName="Outcomes of interest"
              queryRef="UserDatasetTables.Outcomes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Study Characteristics -->
+      <!-- Field Study or Clinical Trial - Characteristics -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Characteristics"
-             displayName="Study Characteristics"
+             displayName="Field Study or Clinical Trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="study_design" displayName="Study design"/>
@@ -271,10 +274,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Projects -->
+      <!-- Project and Programmatic Affiliations -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Projects"
-             displayName="Associated Projects"
+             displayName="Project and Programmatic Affiliations"
              queryRef="UserDatasetTables.Projects">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="project_id" displayName="Project ID"/>
@@ -291,10 +294,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- External Identifiers -->
+      <!-- External Identifiers - Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="ExternalIds"
-             displayName="External Identifiers"
+             displayName="Dataset Source(s)"
              queryRef="UserDatasetTables.ExternalIds">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="identifier_type" displayName="Type"/>
@@ -302,10 +305,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Linked Datasets -->
+      <!-- VEuPathDB Related Datasets -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="LinkedDatasets"
-             displayName="Linked Datasets"
+             displayName="VEuPathDB Related Datasets"
              queryRef="UserDatasetTables.LinkedDatasets">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="linked_dataset_id" displayName="Linked Dataset ID"/>
