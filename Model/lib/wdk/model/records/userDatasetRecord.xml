@@ -96,6 +96,7 @@
         <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
       </attributeQueryRef>
 
+      <!--
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
         <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
         <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
@@ -106,6 +107,7 @@
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
      </attributeQueryRef>
+      -->
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -267,10 +269,10 @@
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Study type"/>
+        <columnAttribute name="study_type" displayName="Investigation type"/>
         <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Sample year start"/>
-        <columnAttribute name="sample_year_end" displayName="Sample year end"/>
+        <columnAttribute name="sample_year_start" displayName="Start year"/>
+        <columnAttribute name="sample_year_end" displayName="End year"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -287,7 +289,7 @@
       <!-- Sample Types -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="SampleTypes"
-             displayName="Sample Types"
+             displayName="Sample types"
              queryRef="UserDatasetTables.SampleTypes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="sample_type" displayName="Type"/>
