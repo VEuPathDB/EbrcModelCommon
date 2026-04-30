@@ -850,6 +850,25 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="Variables"  isCacheable="false">
+      <column name="dataset_id"/>
+      <column name="variable_source_id"/>
+      <column name="variable_display_name"/>
+      <column name="variable_definition"/>
+      <sql>
+        <![CDATA[
+          SELECT dataset_id
+            , variable_source_id
+            , variable_display_name
+            , variable_definition
+          FROM ApidbTuning.DatasetVariable dv
+            JOIN ApidbTuning.DatasetDatasource dd ON dv.dataset_id = dd.dataset_presenter_id
+          WHERE (dd.project = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
+          ORDER BY variable_display_name
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <sqlQuery name="Contacts"  isCacheable='false'>
       <column name="dataset_name"/>
       <column name="dataset_id"/>
