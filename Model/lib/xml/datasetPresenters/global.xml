@@ -1403,6 +1403,7 @@ Coloring of the pathway maps was performed in-house with custom scripts and anno
   <internalDataset name="_apicoplast_chromosome_GeneDB_features_RSRC" datasetNamePattern="%_apicoplast_chromosome_GeneDB_features_RSRC"/>
   <internalDataset name="_apicoplast_chromosome_GeneDB_RSRC" datasetNamePattern="%_apicoplast_chromosome_GeneDB_RSRC"/>
   <internalDataset name="_mitochondrial_chromosome_" datasetNamePattern="%_mitochondrial_chromosome_%"/>
+  <internalDataset name="_chloroplast_chromosome_" datasetNamePattern="%_chloroplast_chromosome_%"/>
 
 
   <internalDataset name="copyNumberVariations" datasetNamePattern="%_copyNumberVariations_%"/>
