@@ -85,7 +85,7 @@
         <columnAttribute name="name" displayName="Name" help="Dataset name"/>
         <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
         <columnAttribute name="description" displayName="Description" sortable="false"
-                         help="Detailed dataset description"/>
+                         help="Free text entered by the author"/>
         <columnAttribute name="program_name" displayName="Program" help="Program name"/>
         <columnAttribute name="project_name" displayName="Project" help="Project name"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
@@ -106,8 +106,9 @@
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
-     </attributeQueryRef>
+      </attributeQueryRef>
       -->
+
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -242,10 +243,10 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Species -->
+      <!-- Study population species -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Species"
-             displayName="Species"
+             displayName="Study population species"
              queryRef="UserDatasetTables.Species">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="species" displayName="Species"/>
@@ -286,7 +287,7 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Sample Types -->
+      <!-- Sample types -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="SampleTypes"
              displayName="Sample types"
@@ -316,6 +317,33 @@
         <columnAttribute name="linked_dataset_id" displayName="Linked Dataset ID"/>
         <columnAttribute name="linked_dataset_type" displayName="Linked Dataset Type"/>
         <columnAttribute name="shares_records" displayName="Shares Records"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Explore this Dataset within this Website -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExploreWebsite"
+             displayName="Explore this Dataset within this Website"
+             queryRef="UserDatasetTables.ExploreWebsite">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+	<columnAttribute name="description" internal="true"/>
+        <columnAttribute name="order" internal="true"/>
+
+	<linkAttribute name="eda_link" displayName="Link">
+          <displayText>
+            <![CDATA[
+              $$description$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+	
+            
       </table>
 
     </recordClass>

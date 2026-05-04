@@ -13,9 +13,11 @@ UserDatasetRecordClasses.UserDatasetRecordClass.Factors	topic_0219_synonym		User
 UserDatasetRecordClasses.UserDatasetRecordClass.SampleTypes	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	SampleTypes					6	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Publications	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Publications					10	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.ExternalIds	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExternalIds					20	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.description	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	description					30	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Contacts	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Contacts					40	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					60	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					70	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsite	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsite					80	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.accessibility	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	accessibility						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.creation_date	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	creation_date						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.name	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	name						results	record-internal	download
