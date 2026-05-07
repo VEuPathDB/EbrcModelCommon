@@ -341,11 +341,17 @@
               $$url$$
             ]]>
           </url>
-        </linkAttribute>
-	
-            
+        </linkAttribute>	            
       </table>
 
+      <table name="Variables"
+             displayName="Variables"
+             queryRef="UserDatasetTables.Variables">
+        <columnAttribute name="dataset_id"/>
+        <columnAttribute name="name" displayName="Variable name"/>
+        <columnAttribute name="definition" displayName="Definition"/>
+      </table>
+      
     </recordClass>
 
   </recordClassSet>
