@@ -107,8 +107,15 @@
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
       </attributeQueryRef>
+      
+      <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
+        <columnAttribute name="study_design" displayName="Study design"/>
+        <columnAttribute name="study_type" displayName="Investigation type"/>
+        <columnAttribute name="participant_ages" displayName="Participant ages"/>
+        <columnAttribute name="sample_year_start" displayName="Start year"/>
+        <columnAttribute name="sample_year_end" displayName="End year"/>
+      </attributeQueryRef>
       -->
-
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -143,7 +150,7 @@
         <columnAttribute name="external_id" displayName="ID" internal="true"/>
         <columnAttribute name="type" displayName="Type"/>
         <columnAttribute name="citation" displayName="Citation" internal="true"/>
-        <columnAttribute name="is_primary" displayName="Primary"/>
+        <columnAttribute name="is_primary" displayName="Primary" internal="true"/>
         <columnAttribute name="url" internal="true"/>
 
         <linkAttribute name="publication_link" displayName="Link">
@@ -325,7 +332,7 @@
       <table name="ExploreWebsite"
              displayName="Explore this Dataset within this Website"
              queryRef="UserDatasetTables.ExploreWebsite">
-        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="dataset_id"  internal="true"/>
         <columnAttribute name="url" internal="true"/>
 	<columnAttribute name="description" internal="true"/>
         <columnAttribute name="order" internal="true"/>
@@ -347,7 +354,7 @@
       <table name="Variables"
              displayName="Variables"
              queryRef="UserDatasetTables.Variables">
-        <columnAttribute name="dataset_id"/>
+        <columnAttribute name="dataset_id" internal="true"/>
         <columnAttribute name="name" displayName="Variable name"/>
         <columnAttribute name="definition" displayName="Definition"/>
       </table>

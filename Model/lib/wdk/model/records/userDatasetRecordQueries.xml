@@ -164,6 +164,28 @@
       </sql>
     </sqlQuery>
 
+    <!-- Characteristics (same as in table) -->
+    <sqlQuery name="Characteristics" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="study_design"/>
+      <column name="study_type"/>
+      <column name="participant_ages"/>
+      <column name="sample_year_start"/>
+      <column name="sample_year_end"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            dataset_id,
+            study_design,
+            study_type,
+            participant_ages,
+            sample_year_start,
+            sample_year_end
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+        ]]>
+      </sql>
+    </sqlQuery>
+
   </querySet>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
