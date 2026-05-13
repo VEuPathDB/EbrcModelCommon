@@ -25,7 +25,8 @@ UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.o
 UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsite	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsite					30	results	record	download
 
-UserDatasetRecordClasses.UserDatasetRecordClass.Variables	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	Variables					10	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.dataFiles	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	dataFiles					10	record
+UserDatasetRecordClasses.UserDatasetRecordClass.Variables	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	Variables					20	results	record	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.accessibility	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	accessibility						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.creation_date	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	creation_date						results	record-internal	download

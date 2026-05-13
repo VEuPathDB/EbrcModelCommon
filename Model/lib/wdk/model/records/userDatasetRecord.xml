@@ -81,6 +81,11 @@
         <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
       </attributeQueryRef>
 
+         <textAttribute name="dataFiles" displayName="Data Files Download">
+           <display>YES</display>
+           <text>YES</text>
+         </textAttribute>
+
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
         <columnAttribute name="name" displayName="Name" help="Dataset name"/>
         <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
