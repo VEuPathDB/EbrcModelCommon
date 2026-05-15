@@ -7114,69 +7114,6 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     </datasetLoader>
   </datasetClass>
 
-  <!-- DEPRECATED - replaced by dnaseqExperiment above.
-       Retain until all organism dataset XMLs are migrated. -->
-  <datasetClass class="dnaSeqExperimentFromAccession" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="isPaired"></prop>
-    <prop name="ploidy"></prop>
-    <prop name="fromBAM"></prop>
-    <prop name="isLocal"></prop>
-    <prop name="taxonId"></prop>
-    <graphTemplateFile name="dnaseq.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_dnaseqExperiment_${name}_RSRC" version="${version}"
-          plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="organism"
-              type="isolates"
-              subType="Dna_Seq"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/accessions.tsv">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput file="@@dataDir@@/accessions.tsv"/>
-
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-
-  </datasetClass>
-
-  <!-- DEPRECATED - replaced by dnaseqExperiment above.
-       Retain until all organism dataset XMLs are migrated. -->
-  <datasetClass class="dnaSeqExperimentFromLocal" category="" datasetFileHint="">
-    <purpose></purpose>
-    <prop name="projectName">&projectName;</prop>
-    <prop name="organismAbbrev">&organismAbbrev;</prop>
-    <prop name="name">&name;</prop>
-    <prop name="version">&version;</prop>
-    <prop name="isPaired"></prop>
-    <prop name="ploidy"></prop>
-    <prop name="fromBAM"></prop>
-    <prop name="isLocal"></prop>
-    <prop name="taxonId"></prop>
-    <graphTemplateFile name="dnaseq.xml"/>
-
-    <datasetLoader datasetName="${organismAbbrev}_dnaseqExperiment_${name}_RSRC" version="${version}"
-          plugin="ApiCommonData::Load::Plugin::LoadNothing"
-              scope="organism"
-              type="isolates"
-              subType="Dna_Seq"
-              organismAbbrev="${organismAbbrev}">
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/">
-        <dir name="final">
-        </dir>
-      </manualGet>
-      <getAndUnpackOutput file="@@dataDir@@/final"/>
-
-      <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
-    </datasetLoader>
-
-  </datasetClass>
 
   <!-- New dataset class for the long read RNA Seq -->
   <datasetClass class="longReadRnaSeqExperiment" category="" datasetFileHint="">
