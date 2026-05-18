@@ -81,7 +81,7 @@
         <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
       </attributeQueryRef>
 
-         <textAttribute name="dataFiles" displayName="Data Files Download">
+         <textAttribute name="dataFiles" displayName="Dataset Files Download">
            <display>YES</display>
            <text>YES</text>
          </textAttribute>
