@@ -7107,7 +7107,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
         <dir name="final">
         </dir>
       </manualGet>
-      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/dnaSeq/${name}/${version}/final/ @@dataDir@@/final</unpack>
+      <unpack>ln -s @@manualDeliveryDir@@/${projectName}/${organismAbbrev}/SNP/${name}/${version}/final/ @@dataDir@@/final</unpack>
       <getAndUnpackOutput dir="@@dataDir@@/final"/>
       <getAndUnpackOutput file="@@dataDir@@/final/samplesheet.csv"/>
       <pluginArgs>--dbRefExternalDatabaseSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
