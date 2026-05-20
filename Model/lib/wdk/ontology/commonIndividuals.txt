@@ -10,7 +10,11 @@ DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym		Da
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_key	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_key					1	results		download
 ## UserDatasetRecordClasses.UserDatasetRecordClass.Characteristics	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Characteristics					1	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Countries	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Countries					3	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.study_type	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	study_type					1	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.study_type	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	Investigation Type					1	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.study_design	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	Study Design					2	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.sample_year_start	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	Start Year					4	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.sample_year_end	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	End Year					5	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.participant_ages	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	Participant Ages					5	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Species	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Species					6	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Outcomes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Outcomes					7	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Factors	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Factors					8	results	record	download

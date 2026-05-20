@@ -101,7 +101,6 @@
         <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
       </attributeQueryRef>
 
-      <!--
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
         <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
         <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
@@ -109,9 +108,11 @@
         <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
       </attributeQueryRef>
 
+      <!-- phase 2
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
       </attributeQueryRef>
+      -->
       
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
         <columnAttribute name="study_design" displayName="Study design"/>
@@ -120,7 +121,6 @@
         <columnAttribute name="sample_year_start" displayName="Start year"/>
         <columnAttribute name="sample_year_end" displayName="End year"/>
       </attributeQueryRef>
-      -->
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -148,6 +148,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Selected Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="Publications"
              displayName="Selected Publications"
              queryRef="UserDatasetTables.Publications">
@@ -171,7 +172,7 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Principal Investigator and Collaborators -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -193,8 +194,6 @@
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="organism_type" displayName="Type"
-                         help="experimental or host"/>
         <columnAttribute name="species" displayName="Study population species"/>
         <columnAttribute name="strain" displayName="Strain"/>
       </table>
@@ -212,6 +211,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Resources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="HyperLinks"
              displayName="External Resources"
              queryRef="UserDatasetTables.HyperLinks">
@@ -232,7 +232,8 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
+      
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Funding -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -305,23 +306,37 @@
              displayName="Sample types"
              queryRef="UserDatasetTables.SampleTypes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="sample_type" displayName="Type"/>
+        <columnAttribute name="type" displayName="Type"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Dataset Sources -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="DataSources"
+             displayName="Data Sources"
+             queryRef="UserDatasetTables.DataSources">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" displayName="URL"/>
+        <columnAttribute name="version" displayName="Version"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Identifiers - Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="ExternalIds"
-             displayName="Dataset Source(s)"
+             displayName="External Identifiers"
              queryRef="UserDatasetTables.ExternalIds">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="identifier_type" displayName="Type"/>
         <columnAttribute name="identifier_value" displayName="Identifier"/>
       </table>
+      -->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- VEuPathDB Related Datasets -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="LinkedDatasets"
              displayName="VEuPathDB Related Datasets"
              queryRef="UserDatasetTables.LinkedDatasets">
@@ -330,7 +345,8 @@
         <columnAttribute name="linked_dataset_type" displayName="Linked Dataset Type"/>
         <columnAttribute name="shares_records" displayName="Shares Records"/>
       </table>
-
+      -->
+      
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Explore this Dataset within this Website -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

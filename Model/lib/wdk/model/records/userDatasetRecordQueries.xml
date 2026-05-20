@@ -132,7 +132,7 @@
       <column name="primary_country"/>
       <sql>
         <![CDATA[
-          SELECT d.dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
+          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
 	  FROM @VDI_CONTROL_SCHEMA@.dataset d
 	  LEFT JOIN
           (SELECT
@@ -157,9 +157,13 @@
       <column name="primary_publication"/>
       <sql>
         <![CDATA[
-           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, citation  as primary_publication
-           FROM @VDI_CONTROL_SCHEMA@.dataset_publication
-           WHERE is_primary is true
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, primary_publication
+	   FROM @VDI_CONTROL_SCHEMA@.dataset d
+	   LEFT JOIN
+           (SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, citation  as primary_publication
+            FROM @VDI_CONTROL_SCHEMA@.dataset_publication
+            WHERE is_primary is true
+	   ) prim on d.dataset_id = prim.dataset_id
         ]]>
       </sql>
     </sqlQuery>
@@ -174,14 +178,18 @@
       <column name="sample_year_end"/>
       <sql>
         <![CDATA[
-          SELECT
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, study_design, study_type, participant_ages, sample_year_start, sample_year_end
+	  from @VDI_CONTROL_SCHEMA@.dataset d
+ 	  LEFT JOIN
+           (SELECT
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             study_design,
             study_type,
             participant_ages,
             sample_year_start,
             sample_year_end
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+            FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+	   ) char on char.dataset_id = d.dataset_id
         ]]>
       </sql>
     </sqlQuery>
@@ -389,10 +397,26 @@
       </sql>
     </sqlQuery>
 
+    <!-- Data Sources table -->
+    <sqlQuery name="DataSources" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="url"/>
+      <column name="version"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
+            url, version
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_source
+          ORDER BY url,version
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Sample Type table -->
     <sqlQuery name="SampleTypes" isCacheable='false'>
       <column name="dataset_id"/>
-      <column name="sample_type"/>
+      <column name="type"/>
       <sql>
         <![CDATA[
           SELECT
