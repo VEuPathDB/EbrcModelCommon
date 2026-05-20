@@ -18,7 +18,7 @@
       </description>
       <attributesList
               summary="name,summary,creation_date,accessibility"
-              sorting="creation_date"
+              sorting="creation_date desc"
       />
     </question>
 
