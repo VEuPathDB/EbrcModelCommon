@@ -852,17 +852,20 @@
 
     <sqlQuery name="Variables"  isCacheable="false">
       <column name="dataset_id"/>
-      <column name="variable_source_id"/>
-      <column name="variable_display_name"/>
-      <column name="variable_definition"/>
+      <column name="display_name"/>
+      <column name="definition"/>
+      <column name="data_type"/>
+      <column name="entity_display_name"/>
       <sql>
         <![CDATA[
           SELECT dataset_id
-            , variable_source_id
-            , variable_display_name
-            , variable_definition
+            , dv.display_name
+            , dv.definition
+            , dv.data_type
+            , etg.display_name as entity_display_name
           FROM ApidbTuning.DatasetVariable dv
-            JOIN ApidbTuning.DatasetDatasource dd ON dv.dataset_id = dd.dataset_presenter_id
+           JOIN ApidbTuning.DatasetDatasource dd ON dv.dataset_id = dd.dataset_presenter_id
+           JOIN eda.entitytypegraph etg ON dv.entity_stable_id = etg.stable_id and dv.study_id = etg.study_id
           WHERE (dd.project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
           ORDER BY variable_display_name
         ]]>
