@@ -1,7 +1,7 @@
  			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
 			eupath/eupath.owl#recordClassName	eupath/eupath.owl#targetType	eupath/eupath.owl#name	EUPATH_0000052	eupath/eupath.owl#shortDisplayName	eupath/eupath.owl#description	eupath/eupath.owl#geneOrTranscript	EUPATH_0000274	eupath/eupath.owl#scope	eupath/eupath.owl#scope	eupath/eupath.owl#scope
 topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	Data Provenance	DP	Data submission, annotation and curation		2	internal		
-topic_3077_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			characteristics	Dataset Characteristics	DH	Data acquisition		3	internal		
+topic_3077_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			characteristics	Field Study or Clinical Trial Characteristics	DH	Data acquisition		3	internal		
 topic_3308_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_context	Data Context	DC	Data context		5	internal		
 
 DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
