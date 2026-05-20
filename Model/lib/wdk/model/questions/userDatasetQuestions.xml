@@ -17,7 +17,7 @@
          Find all user datasets.
       </description>
       <attributesList
-              summary="name,summary,creation_date,accessibility"
+              summary="summary,creation_date,accessibility"
               sorting="creation_date desc"
       />
     </question>
