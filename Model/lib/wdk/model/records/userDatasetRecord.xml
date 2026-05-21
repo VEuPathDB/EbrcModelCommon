@@ -122,6 +122,10 @@
         <columnAttribute name="sample_year_end" displayName="End year"/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
+        <columnAttribute name="is_clinical_field" displayName="Field Study or Clinical Trial"/>
+      </attributeQueryRef>
+
       <!-- =============================================================== -->
       <!--   Tables -->
       <!-- =============================================================== -->
