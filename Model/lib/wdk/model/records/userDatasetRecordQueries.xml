@@ -205,7 +205,7 @@
           (case when coalesce(study_design, study_type, participant_ages) is null
           and coalesce(sample_year_start, sample_year_end) is null
 	  then 'No' else 'Yes' end) as is_clinical_field
-	  from VDI_CONTROL_dev_n.dataset d
+	  from @VDI_CONTROL_SCHEMA@.dataset d
  	  LEFT JOIN
            (SELECT
             dataset_id,
@@ -214,12 +214,30 @@
             participant_ages,
             sample_year_start,
             sample_year_end
-            FROM  VDI_CONTROL_dev_n.dataset_characteristics
+            FROM @VDI_CONTROL_SCHEMA@.dataset_characteristics
 	   ) char on char.dataset_id = d.dataset_id
         ]]>
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="OutcomesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="outcomes_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, outcomes_list
+	  from @VDI_CONTROL_SCHEMA@.dataset d
+ 	  LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(outcome, ', ' order by outcome) as outcomes_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_outcome
+		  group by dataset_id
+	   ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+    
   </querySet>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

@@ -126,6 +126,10 @@
         <columnAttribute name="is_clinical_field" displayName="Field Study or Clinical Trial"/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="UserDatasetAttributes.OutcomesList">
+        <columnAttribute name="outcomes_list" displayName="Outcomes"/>
+      </attributeQueryRef>
+
       <!-- =============================================================== -->
       <!--   Tables -->
       <!-- =============================================================== -->
