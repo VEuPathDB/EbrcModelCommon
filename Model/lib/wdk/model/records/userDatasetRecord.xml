@@ -384,8 +384,10 @@
              displayName="Variables"
              queryRef="UserDatasetTables.Variables">
         <columnAttribute name="dataset_id" internal="true"/>
+        <columnAttribute name="entity_name" displayName="Entity name"/>
         <columnAttribute name="name" displayName="Variable name"/>
-        <columnAttribute name="definition" displayName="Definition"/>
+        <columnAttribute name="definition" displayName="Variable definition"/>
+        <columnAttribute name="data_type" displayName="Variable data type"/>
       </table>
       
     </recordClass>
