@@ -73,9 +73,9 @@
         <columnAttribute name="category" displayName="Category" help="Dataset category"/>
         <columnAttribute name="deleted_status" displayName="Deleted Status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
+        <columnAttribute name="is_public" displayName="Community" help="Whether the dataset is a community dataset"/>
         <columnAttribute name="accessibility" displayName="Data Accessibility"
-                         help="Access level: public, protected, or private"/>
+                         help="Access level to a community dataset: public, protected, or private"/>
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
         <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
