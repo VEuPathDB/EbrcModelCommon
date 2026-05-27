@@ -385,7 +385,8 @@
              queryRef="UserDatasetTables.Variables">
         <columnAttribute name="dataset_id" internal="true"/>
         <columnAttribute name="entity_name" displayName="Entity name"/>
-        <columnAttribute name="name" displayName="Variable name"/>
+        <columnAttribute name="provider_label" displayName="Variable name"/>
+        <columnAttribute name="display_name" displayName="Variable label"/>
         <columnAttribute name="definition" displayName="Variable definition"/>
         <columnAttribute name="data_type" displayName="Variable data type"/>
       </table>

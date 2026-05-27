@@ -540,14 +540,16 @@
 
     <sqlQuery name="Variables"  isCacheable="false">
       <column name="dataset_id"/>
-      <column name="name"/>
+      <column name="display_name"/>
+      <column name="provider_label"/>
       <column name="entity_name"/>
       <column name="definition"/>
       <column name="data_type"/>
       <sql>
         <![CDATA[
           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id
-            , v.display_name as name
+            , v.display_name
+            , array_to_string(ARRAY(SELECT jsonb_array_elements_text(provider_label::jsonb)), '; ') as provider_label
             , etg.display_name as entity_name
             , definition 
             , data_type 
