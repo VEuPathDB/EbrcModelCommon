@@ -8,11 +8,9 @@ use EbrcModelCommon::Model::tmUtils;
 
 usage() unless scalar(@ARGV) >= 4;
 
-my ($instance, $suffix, $propfile, $mode, $debug) = @ARGV;
+my ($instance, $schema, $suffix, $propfile, $mode, $debug) = @ARGV;
 
 usage() unless ($mode eq '-create' || $mode eq '-drop' || $mode eq '-dropConstraints');
-
-my $schema = "ApidbTuning";
 
 my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 

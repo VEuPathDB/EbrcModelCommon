@@ -73,19 +73,24 @@
         <columnAttribute name="category" displayName="Category" help="Dataset category"/>
         <columnAttribute name="deleted_status" displayName="Deleted Status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
-        <columnAttribute name="accessibility" displayName="Accessibility"
-                         help="Access level: public, protected, or private"/>
+        <columnAttribute name="is_public" displayName="Community" help="Whether the dataset is a community dataset"/>
+        <columnAttribute name="accessibility" displayName="Data Accessibility"
+                         help="Access level to a community dataset: public, protected, or private"/>
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
         <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
       </attributeQueryRef>
 
+         <textAttribute name="dataFiles" displayName="Dataset Files Download">
+           <display>YES</display>
+           <text>YES</text>
+         </textAttribute>
+
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
         <columnAttribute name="name" displayName="Name" help="Dataset name"/>
         <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
         <columnAttribute name="description" displayName="Description" sortable="false"
-                         help="Detailed dataset description"/>
+                         help="Free text entered by the author"/>
         <columnAttribute name="program_name" displayName="Program" help="Program name"/>
         <columnAttribute name="project_name" displayName="Project" help="Project name"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
@@ -103,6 +108,27 @@
         <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
       </attributeQueryRef>
 
+      <!-- phase 2
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
+        <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
+      </attributeQueryRef>
+      -->
+      
+      <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
+        <columnAttribute name="study_design" displayName="Study design"/>
+        <columnAttribute name="study_type" displayName="Investigation type"/>
+        <columnAttribute name="participant_ages" displayName="Participant ages"/>
+        <columnAttribute name="sample_year_start" displayName="Start year"/>
+        <columnAttribute name="sample_year_end" displayName="End year"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
+        <columnAttribute name="is_clinical_field" displayName="Field Study or Clinical Trial"/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.OutcomesList">
+        <columnAttribute name="outcomes_list" displayName="Outcomes"/>
+      </attributeQueryRef>
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -128,16 +154,17 @@
       </table>   
 -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Publications -->
+      <!-- Selected Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="Publications"
-             displayName="Publications"
+             displayName="Selected Publications"
              queryRef="UserDatasetTables.Publications">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="external_id" displayName="ID" internal="true"/>
         <columnAttribute name="type" displayName="Type"/>
         <columnAttribute name="citation" displayName="Citation" internal="true"/>
-        <columnAttribute name="is_primary" displayName="Primary"/>
+        <columnAttribute name="is_primary" displayName="Primary" internal="true"/>
         <columnAttribute name="url" internal="true"/>
 
         <linkAttribute name="publication_link" displayName="Link">
@@ -153,12 +180,12 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Contacts -->
+      <!-- Principal Investigator and Collaborators -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Contacts"
-             displayName="Contacts"
+             displayName="Principal Investigator and Collaborators"
              queryRef="UserDatasetTables.Contacts">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="contact_name" displayName="Name"/>
@@ -171,13 +198,11 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Organisms -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Organisms"
+      <table name="Organisms" excludeProjects="ClinEpiDB,MicrobiomeDB" 
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="organism_type" displayName="Type"
-                         help="experimental or host"/>
-        <columnAttribute name="species" displayName="Species"/>
+        <columnAttribute name="species" displayName="Study population species"/>
         <columnAttribute name="strain" displayName="Strain"/>
       </table>
 
@@ -185,17 +210,18 @@
       <!-- Factors -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Factors"
-             displayName="Associated Factors"
+             displayName="Associated factors"
              queryRef="UserDatasetTables.AssociatedFactors">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="factor" displayName="Factor"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Hyperlinks -->
+      <!-- External Resources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="HyperLinks"
-             displayName="External Links"
+             displayName="External Resources"
              queryRef="UserDatasetTables.HyperLinks">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" internal="true"/>
@@ -214,12 +240,13 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
+      
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Funding Awards -->
+      <!-- Funding -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="FundingAwards"
-             displayName="Funding Awards"
+             displayName="Funding"
              queryRef="UserDatasetTables.FundingAwards">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="agency" displayName="Funding agency"/>
@@ -237,62 +264,74 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Species -->
+      <!-- Study population species -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Species"
-             displayName="Species"
+             displayName="Study population species"
              queryRef="UserDatasetTables.Species">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="species" displayName="Species"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Outcomes -->
+      <!-- Outcomes of interest -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Outcomes"
-             displayName="Outcomes"
+             displayName="Outcomes of interest"
              queryRef="UserDatasetTables.Outcomes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Study Characteristics -->
+      <!-- Field Study or Clinical Trial - Characteristics -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Characteristics"
-             displayName="Study Characteristics"
+             displayName="Field Study or Clinical Trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Study type"/>
+        <columnAttribute name="study_type" displayName="Investigation type"/>
         <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Sample year start"/>
-        <columnAttribute name="sample_year_end" displayName="Sample year end"/>
+        <columnAttribute name="sample_year_start" displayName="Start year"/>
+        <columnAttribute name="sample_year_end" displayName="End year"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Projects -->
+      <!-- Project and Programmatic Affiliations -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Projects"
-             displayName="Associated Projects"
+             displayName="Project and Programmatic Affiliations"
              queryRef="UserDatasetTables.Projects">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="project_id" displayName="Project ID"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Sample Types -->
+      <!-- Sample types -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="SampleTypes"
-             displayName="Sample Types"
+             displayName="Sample types"
              queryRef="UserDatasetTables.SampleTypes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="sample_type" displayName="Type"/>
+        <columnAttribute name="type" displayName="Type"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- External Identifiers -->
+      <!-- Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="DataSources"
+             displayName="Data Sources"
+             queryRef="UserDatasetTables.DataSources">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" displayName="URL"/>
+        <columnAttribute name="version" displayName="Version"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- External Identifiers - Dataset Sources -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="ExternalIds"
              displayName="External Identifiers"
              queryRef="UserDatasetTables.ExternalIds">
@@ -300,19 +339,58 @@
         <columnAttribute name="identifier_type" displayName="Type"/>
         <columnAttribute name="identifier_value" displayName="Identifier"/>
       </table>
+      -->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Linked Datasets -->
+      <!-- VEuPathDB Related Datasets -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="LinkedDatasets"
-             displayName="Linked Datasets"
+             displayName="VEuPathDB Related Datasets"
              queryRef="UserDatasetTables.LinkedDatasets">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="linked_dataset_id" displayName="Linked Dataset ID"/>
         <columnAttribute name="linked_dataset_type" displayName="Linked Dataset Type"/>
         <columnAttribute name="shares_records" displayName="Shares Records"/>
       </table>
+      -->
+      
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Explore this Dataset within this Website -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExploreWebsite"
+             displayName="Explore this Dataset within this Website"
+             queryRef="UserDatasetTables.ExploreWebsite">
+        <columnAttribute name="dataset_id"  internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+	<columnAttribute name="description" internal="true"/>
+        <columnAttribute name="order" internal="true"/>
 
+	<linkAttribute name="eda_link" displayName="Link">
+          <displayText>
+            <![CDATA[
+              $$description$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>	            
+      </table>
+
+      <table name="Variables"
+             displayName="Variables"
+             queryRef="UserDatasetTables.Variables">
+        <columnAttribute name="dataset_id" internal="true"/>
+        <columnAttribute name="entity_name" displayName="Entity name"/>
+        <columnAttribute name="provider_label" displayName="Variable name"/>
+        <columnAttribute name="display_name" displayName="Variable label"/>
+        <columnAttribute name="definition" displayName="Variable definition"/>
+        <columnAttribute name="data_type" displayName="Variable data type"/>
+      </table>
+      
     </recordClass>
 
   </recordClassSet>

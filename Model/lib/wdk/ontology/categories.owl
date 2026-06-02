@@ -417,7 +417,15 @@
         <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
     </owl:Class>
     
-
+    <!-- http://edamontology.org/topic_3077 -->
+    
+    <owl:Class rdf:about="http://edamontology.org/topic_3077">
+        <rdfs:label>Data acquisition</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://edamontology.org/topic_0219_synonym"/>
+	<oboInOwl:hasNarrowSynonym>Dataset characteristics</oboInOwl:hasNarrowSynonym>
+        <obo:IAO_0000412 rdf:resource="http://edamontology.org/EDAM.owl"/>
+    </owl:Class>
+    
 
     <!-- http://edamontology.org/topic_0601 -->
 

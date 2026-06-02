@@ -325,6 +325,19 @@
         <columnAttribute name="affiliation" displayName="Affiliation"/>
       </table>
 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Variables -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Variables"
+             displayName="Variables used in this dataset"
+             queryRef="DatasetTables.Variables">
+        <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
+        <columnAttribute name="entity_display_name" displayName="Entity name"/>
+        <columnAttribute name="display_name" displayName="Variable name"/>
+        <columnAttribute name="definition" displayName="Variable definition"/>
+        <columnAttribute name="data_type" displayName="Variable data type"/>
+      </table>
+
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- clinepi versioning download files table -->

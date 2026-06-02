@@ -308,7 +308,7 @@
   </tuningTable>
 
 
-  <tuningTable name="DatasetPresenter" alwaysUpdate="true">
+  <tuningTable name="DatasetPresenter">
     <comment> Data for a dataset. Used widely in the model, and by GBrowse.</comment>
     <externalDependency name="core.ProjectInfo"/>
     <externalDependency name="sres.ExternalDatabase"/>
@@ -320,6 +320,7 @@
     <ancillaryTable name="DatasourceModelRef"/>
     <ancillaryTable name="DatasetDatasource"/>
     <ancillaryTable name="DatasetHistory"/>
+    <needsUpdateProgram commandLine="needsUpdateDatasetPresentersTT"/>
     <program commandLine="buildDatasetPresentersTT"/>
   </tuningTable>
 

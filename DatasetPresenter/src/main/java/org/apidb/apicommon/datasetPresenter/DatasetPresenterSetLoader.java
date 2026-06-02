@@ -278,7 +278,7 @@ public class DatasetPresenterSetLoader {
 
   void manageSchema(boolean dropConstraints) {
     String mode = dropConstraints ? "-dropConstraints" : "-create";
-    String[] cmd = { "presenterCreateSchema", instance, suffix, propFileName, mode };
+    String[] cmd = { "presenterCreateSchema", instance, schema, suffix, propFileName, mode };
     Process process;
 
     try {

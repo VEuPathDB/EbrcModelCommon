@@ -7,8 +7,8 @@
     <!-- ************************************************************ -->
 
     <question name="AllUserDatasets"
-      displayName="User Datasets"
-      shortDisplayName="All User DS"
+      displayName="Dataset Summaries"
+      shortDisplayName="AllUserDatasets"
       fullAnswer="true"
       queryRef="UserDatasetsIds.AllUserDatasets"
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
@@ -16,6 +16,10 @@
       <description>
          Find all user datasets.
       </description>
+      <attributesList
+              summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
+              sorting="creation_date desc"
+      />
     </question>
 
     <question name="UserDatasetsByDatasetNames"
@@ -25,7 +29,6 @@
       queryRef="UserDatasetsIds.ByExternalDatabaseNames"
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList sorting="category asc" />
       <description>
          Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.)
       </description>
@@ -83,7 +86,6 @@
       queryRef="UserDatasetsIds.ById"
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList sorting="display_name asc" />
       <description>
          Find datasets by ID
       </description>
@@ -98,7 +100,6 @@
       recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
       includeProjects="ClinEpiDB"
       noSummaryOnSingleRecord="true">
-      <attributesList summary="study_id, restriction_level" />
       <description>
          Find datasets that are associated with a particular dataset type and subtype
       </description>
@@ -116,21 +117,16 @@
         queryRef="UserDatasetsIds.UserDatasetsByText"
         recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
         noSummaryOnSingleRecord="true">
-
-      <attributesList summary="primary_contact_name, primary_affiliation, max_score" sorting="max_score desc" />
-
       <summary>
         <![CDATA[
           Find datasets by keyword search. Use * as a wildcard
         ]]>
       </summary>
-
       <description>
         <![CDATA[
           Find datasets by keyword search. Use * as a wildcard
         ]]>
       </description>
-
       <dynamicAttributes>
         <columnAttribute name="max_score" displayName="Score" align="center">
           <reporter name="histogram" displayName="Histogram" scopes=""
