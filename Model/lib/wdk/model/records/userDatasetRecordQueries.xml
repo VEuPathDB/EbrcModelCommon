@@ -457,6 +457,21 @@
       </sql>
     </sqlQuery>
 
+    <!-- Usage table -->
+    <sqlQuery name="Usage" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="disclaimer"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
+            disclaimer
+            FROM  @VDI_CONTROL_SCHEMA@.dataset_meta
+	    where disclaimer is not null and disclaimer != ''
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <!-- Sample Type table -->
     <sqlQuery name="SampleTypes" isCacheable='false'>
       <column name="dataset_id"/>

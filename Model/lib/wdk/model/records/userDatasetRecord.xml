@@ -321,11 +321,21 @@
       <!-- Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="DataSources"
-             displayName="Data Sources"
+             displayName="Dataset Sources"
              queryRef="UserDatasetTables.DataSources">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" displayName="URL"/>
         <columnAttribute name="version" displayName="Version"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Dataset Usage -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="Usage"
+             displayName="Dataset Usage"
+             queryRef="UserDatasetTables.Usage">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="disclaimer" displayName="Reuse considerations"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

@@ -26,6 +26,8 @@ UserDatasetRecordClasses.UserDatasetRecordClass.Publications	topic_0219_synonym	
 UserDatasetRecordClasses.UserDatasetRecordClass.ExternalIds	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExternalIds					20	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.description	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	description					30	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Contacts	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Contacts					40	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.DataSources	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	DataSources					50	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.Usage	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Usage					60	results	record	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					10	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
