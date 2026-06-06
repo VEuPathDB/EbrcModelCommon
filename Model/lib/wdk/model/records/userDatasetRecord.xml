@@ -287,7 +287,7 @@
       <!-- Field Study or Clinical Trial - Characteristics -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Characteristics"
-             displayName="Field Study or Clinical Trial - Characteristics"
+             displayName="Field study or clinical trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="study_design" displayName="Study design"/>
@@ -301,7 +301,7 @@
       <!-- Project and Programmatic Affiliations -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Projects"
-             displayName="Project and Programmatic Affiliations"
+             displayName="Project and programmatic affiliations"
              queryRef="UserDatasetTables.Projects">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="project_id" displayName="Project ID"/>
@@ -321,7 +321,7 @@
       <!-- Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="DataSources"
-             displayName="Dataset Sources"
+             displayName="Dataset external sources"
              queryRef="UserDatasetTables.DataSources">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="url" displayName="URL"/>
@@ -332,7 +332,7 @@
       <!-- Dataset Usage -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Usage"
-             displayName="Dataset Usage"
+             displayName="Dataset reuse considerations"
              queryRef="UserDatasetTables.Usage">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="disclaimer" displayName="Reuse considerations"/>
@@ -369,7 +369,7 @@
       <!-- Explore this Dataset within this Website -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="ExploreWebsite"
-             displayName="Explore this Dataset within this Website"
+             displayName="Explore this dataset within this website"
              queryRef="UserDatasetTables.ExploreWebsite">
         <columnAttribute name="dataset_id"  internal="true"/>
         <columnAttribute name="url" internal="true"/>
