@@ -19,6 +19,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.participant_ages	topic_3077_syno
 UserDatasetRecordClasses.UserDatasetRecordClass.Species	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Species					60	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Outcomes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Outcomes					70	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.outcomes_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	outcomes_list					70	results		download
+UserDatasetRecordClasses.UserDatasetRecordClass.countries_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	countries_list					70	results		download
 UserDatasetRecordClasses.UserDatasetRecordClass.Factors	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Factors					80	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.SampleTypes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	SampleTypes					100	results	record	download
 
@@ -39,7 +40,6 @@ UserDatasetRecordClasses.UserDatasetRecordClass.is_public	topic_0219_synonym		Us
 UserDatasetRecordClasses.UserDatasetRecordClass.accessibility	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	accessibility						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.category	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	category						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.creation_date	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	creation_date						results	record-internal	download
-UserDatasetRecordClasses.UserDatasetRecordClass.name	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	name						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.owner_name	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	owner_name						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_affiliation	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_affiliation						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_contact_name	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_contact_name						results	record-internal	download
