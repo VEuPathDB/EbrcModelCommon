@@ -89,6 +89,7 @@
       <column name="name" columnType="string"/>
       <column name="summary" columnType="string"/>
       <column name="description" columnType="string"/>
+      <column name="disclaimer" columnType="string"/>
       <column name="program_name" columnType="string"/>
       <column name="project_name" columnType="string"/>
       <column name="short_attribution" columnType="string"/>
@@ -99,7 +100,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             name,
             summary,
-            description,
+            description,disclaimer,
             program_name,
             project_name,
             short_attribution,
