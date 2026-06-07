@@ -91,7 +91,8 @@
         <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
         <columnAttribute name="description" displayName="Description" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="program_name" displayName="Program" help="Program name"/>
+        <columnAttribute name="disclaimer" displayName="Reuse considerations"/>
+	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
         <columnAttribute name="project_name" displayName="Project" help="Project name"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
@@ -328,15 +329,6 @@
         <columnAttribute name="version" displayName="Version"/>
       </table>
 
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Dataset Usage -->
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Usage"
-             displayName="Reuse considerations"
-             queryRef="UserDatasetTables.Usage">
-        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="disclaimer" displayName="Reuse considerations"/>
-      </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Identifiers - Dataset Sources -->
