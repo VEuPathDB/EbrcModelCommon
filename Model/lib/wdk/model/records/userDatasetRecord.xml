@@ -21,8 +21,8 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="User Dataset"
-                   help="Click a user dataset to go to the full dataset record">
+      <idAttribute name="primary_key" displayName="Dataset name"
+                   help="Click a user dataset to open its associated page.">
         <text>
           <![CDATA[ $$name$$ ]]>
         </text>
@@ -62,36 +62,36 @@
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
-        <columnAttribute name="owner_name" displayName="Owner Name" help="Name of the dataset owner"/>
-        <columnAttribute name="owner_organization" displayName="Owner Organization" help="Organization of the dataset owner"/>
+        <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset to this database."/>
+        <columnAttribute name="owner_organization" displayName="Uploader organization" help="Organization of the dataset owner."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
-        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
-        <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
-        <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>
-        <columnAttribute name="category" displayName="Category" help="Dataset category"/>
-        <columnAttribute name="deleted_status" displayName="Deleted Status"
+        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
+        <columnAttribute name="type_name" displayName="Type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
+        <columnAttribute name="type_version" displayName="Type Version" help=""/>
+        <columnAttribute name="category" displayName="Category" help=""/>
+        <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="is_public" displayName="Community" help="Whether the dataset is a community dataset"/>
-        <columnAttribute name="accessibility" displayName="Data Accessibility"
-                         help="Access level to a community dataset: public, protected, or private"/>
+        <columnAttribute name="is_public" displayName="Community" help="‘Public’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
+        <columnAttribute name="accessibility" displayName="Visibility"
+                         help="‘Discoverable’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
-        <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
+        <columnAttribute name="creation_date" displayName="Created" help="The date the dataset was first uploaded." />
       </attributeQueryRef>
 
-         <textAttribute name="dataFiles" displayName="Dataset Files Download">
+         <textAttribute name="dataFiles" displayName="Dataset files">
            <display>YES</display>
            <text>YES</text>
          </textAttribute>
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
         <columnAttribute name="name" displayName="Name" help="Dataset name"/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
+        <columnAttribute name="summary" displayName="Summary" sortable="false" help="A short description of the dataset"/>
         <columnAttribute name="description" displayName="Description" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="disclaimer" displayName="Reuse considerations"/>
+        <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
         <columnAttribute name="project_name" displayName="Project" help="Project name"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
@@ -103,9 +103,9 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
-        <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
-        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
-        <columnAttribute name="primary_email" displayName="Primary contact email" help=""/>
+        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
+        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help="The institution where the contact person is located."/>
+        <columnAttribute name="primary_email" displayName="Primary contact email" help="The email address for the contact person or organization for this dataset."/>
         <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
       </attributeQueryRef>
 
@@ -124,11 +124,11 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
-        <columnAttribute name="is_clinical_field" displayName="Field Study or Clinical Trial"/>
+        <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OutcomesList">
-        <columnAttribute name="outcomes_list" displayName="Outcomes"/>
+        <columnAttribute name="outcomes_list" displayName="Outcomes of interest" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."/>
       </attributeQueryRef>
 
       <!-- =============================================================== -->
@@ -203,14 +203,14 @@
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="species" displayName="Study population species"/>
+        <columnAttribute name="species" displayName="Study population species" help="For field studies and clinical trials: scientific name of the population the study is based on, even if the dataset contains laboratory measurements on pathogens or other organisms"/>
         <columnAttribute name="strain" displayName="Strain"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Factors -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Factors"
+      <table name="Factors" help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."
              displayName="Associated factors"
              queryRef="UserDatasetTables.AssociatedFactors">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
@@ -257,7 +257,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Countries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Countries"
+      <table name="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population."
              displayName="Countries"
              queryRef="UserDatasetTables.Countries">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
@@ -277,7 +277,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Outcomes of interest -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Outcomes"
+      <table name="Outcomes" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."
              displayName="Outcomes of interest"
              queryRef="UserDatasetTables.Outcomes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
@@ -291,11 +291,11 @@
              displayName="Field study or clinical trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Investigation type"/>
-        <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Start year"/>
-        <columnAttribute name="sample_year_end" displayName="End year"/>
+        <columnAttribute name="study_design" displayName="Study design" help="For field studies and clinical trials: describes the overall structure and methodology used to conduct the study."/>
+        <columnAttribute name="study_type" displayName="Investigation type" help="For field studies and clinical trials: indicates whether the dataset was generated through observational or experimental investigation."/>
+        <columnAttribute name="participant_ages" displayName="Participant ages" help="For field studies and clinical trials: age range(s) of participants when data were collected."/>
+        <columnAttribute name="sample_year_start" displayName="Start year" help="For field studies and clinical trials: year when data collection was initiated."/>
+        <columnAttribute name="sample_year_end" displayName="End year" help="For field studies and clinical trials: year when data collection concluded."/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -311,7 +311,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Sample types -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="SampleTypes"
+      <table name="SampleTypes" help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."
              displayName="Sample types"
              queryRef="UserDatasetTables.SampleTypes">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
