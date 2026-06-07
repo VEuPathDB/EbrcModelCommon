@@ -74,8 +74,11 @@
             type_version,
             category,
             deleted_status,
-            CASE WHEN is_public THEN 'Yes' ELSE 'No' END as is_public,
-            accessibility,
+            CASE WHEN is_public THEN 'Discoverable' ELSE 'Private' END as is_public,
+            CASE WHEN accessibility = 'public' THEN 'Public'
+                 WHEN accessibility = 'private' THEN 'Restricted'
+                 WHEN accessibility = 'protected' THEN 'Protected'
+            END as accessibility,
             days_for_approval,
             TO_CHAR(creation_date, 'YYYY-MM-DD') as creation_date
           FROM  @VDI_CONTROL_SCHEMA@.dataset
@@ -130,17 +133,15 @@
       <column name="primary_contact_name"/>
       <column name="primary_affiliation"/>
       <column name="primary_email"/>
-      <column name="primary_country"/>
       <sql>
         <![CDATA[
-          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
+          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email
 	  FROM @VDI_CONTROL_SCHEMA@.dataset d
 	  LEFT JOIN
           (SELECT
             dataset_id,
             affiliation,
             email,
-            country,
 	    first_name,
 	    last_name,
 	    middle_name
@@ -238,7 +239,25 @@
         ]]>
       </sql>
     </sqlQuery>
-    
+
+    <sqlQuery name="CountriesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="countries_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, countries_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(country, ', ' order by country) as countries_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_country
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
   </querySet>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

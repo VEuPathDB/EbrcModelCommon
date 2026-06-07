@@ -61,6 +61,11 @@
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
+
+      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
+        <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
+      </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
         <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset to this database."/>
         <columnAttribute name="owner_organization" displayName="Uploader organization" help="Organization of the dataset owner."/>
@@ -73,12 +78,18 @@
         <columnAttribute name="category" displayName="Data type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="is_public" displayName="Community" help="‘Public’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
-        <columnAttribute name="accessibility" displayName="Visibility"
+        <columnAttribute name="accessibility" displayName="Download access" help="‘Public’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
+        <columnAttribute name="is_public" displayName="Visibility"
                          help="‘Discoverable’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
         <columnAttribute name="creation_date" displayName="Created" help="The date the dataset was first uploaded." />
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
+        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
+        <columnAttribute name="primary_affiliation" displayName="Contact affiliation" help="The institution where the contact person is located."/>
+        <columnAttribute name="primary_email" displayName="Contact email" help="The email address for the contact person or organization for this dataset."/>
       </attributeQueryRef>
 
          <textAttribute name="dataFiles" displayName="Dataset files">
@@ -93,28 +104,26 @@
                          help="Free text entered by the author"/>
         <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
-        <columnAttribute name="project_name" displayName="Project" help="Project name"/>
+        <columnAttribute name="project_name" displayName="VEuPathDB project" help="VEuPathDB component website (ex: PlasmoDB, FungiDB, ToxoDB, etc.) where the dataset was uploaded."/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
-        <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
-      </attributeQueryRef>
-
-      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
-        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help="The institution where the contact person is located."/>
-        <columnAttribute name="primary_email" displayName="Primary contact email" help="The email address for the contact person or organization for this dataset."/>
-        <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
-      </attributeQueryRef>
 
       <!-- phase 2
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
       </attributeQueryRef>
       -->
-      
+   
+       <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
+        <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.CountriesList">
+        <columnAttribute name="countries_list" displayName="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+      </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
         <columnAttribute name="study_design" displayName="Study design"/>
         <columnAttribute name="study_type" displayName="Investigation type"/>
@@ -123,13 +132,11 @@
         <columnAttribute name="sample_year_end" displayName="End year"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
-        <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
-      </attributeQueryRef>
-
       <attributeQueryRef ref="UserDatasetAttributes.OutcomesList">
         <columnAttribute name="outcomes_list" displayName="Outcomes of interest" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."/>
       </attributeQueryRef>
+
+
 
       <!-- =============================================================== -->
       <!--   Tables -->
