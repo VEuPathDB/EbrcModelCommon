@@ -17,7 +17,7 @@
          Find all user datasets.
       </description>
       <attributesList
-              summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
+	      summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,accessibility"
               sorting="creation_date desc"
       />
     </question>
