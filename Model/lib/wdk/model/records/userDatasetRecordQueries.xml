@@ -74,10 +74,11 @@
             type_version,
             category,
             deleted_status,
-            CASE WHEN is_public THEN 'Discoverable' ELSE 'Private' END as is_public,
-            CASE WHEN accessibility = 'public' THEN 'Public'
+            CASE WHEN is_public THEN 'Public' ELSE 'Private' END as is_public,
+            CASE WHEN accessibility = 'public' THEN 'Open access'
                  WHEN accessibility = 'private' THEN 'Restricted'
-                 WHEN accessibility = 'protected' THEN 'Protected'
+		 WHEN accessibility = 'protected' THEN 'Protected'
+		 WHEN accessibility = 'controlled' THEN 'Controlled'
             END as accessibility,
             days_for_approval,
             TO_CHAR(creation_date, 'YYYY-MM-DD') as creation_date

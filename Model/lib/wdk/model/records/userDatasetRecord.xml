@@ -78,9 +78,9 @@
         <columnAttribute name="category" displayName="Data type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="accessibility" displayName="Download access" help="‘Public’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
+        <columnAttribute name="accessibility" displayName="Download access" help="‘Open access’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="is_public" displayName="Visibility"
-                         help="‘Discoverable’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
+                         help="‘Public’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
         <columnAttribute name="creation_date" displayName="Created" help="The date the dataset was first uploaded." />
@@ -335,7 +335,6 @@
         <columnAttribute name="url" displayName="URL"/>
         <columnAttribute name="version" displayName="Version"/>
       </table>
-
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Identifiers - Dataset Sources -->
