@@ -592,6 +592,7 @@
                @VDI_DATASETS_SCHEMA@.entitytypegraph etg
           WHERE v.entity_stable_id = etg.stable_id
 	    AND v.study_stable_id = etg.study_stable_id
+            AND (v.hidden is null or v.hidden not like '%everywhere%')
         ]]>
       </sql>
     </sqlQuery>
