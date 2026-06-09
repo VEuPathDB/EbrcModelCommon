@@ -13,7 +13,7 @@
       <column name="dataset_id"/>
       <sql>
         <![CDATA[
-            SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id
+            SELECT distinct CONCAT('EDAUD_', user_dataset_id) as dataset_id
             FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
             WHERE (user_id = $$user_id$$ or is_public = true)
             AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
