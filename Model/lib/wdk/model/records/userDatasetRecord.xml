@@ -116,7 +116,7 @@
       </attributeQueryRef>
       -->
    
-       <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField">
+       <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField" includeProjects="ClinEpiDB">
         <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
       </attributeQueryRef>
 
@@ -294,7 +294,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Field Study or Clinical Trial - Characteristics -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Characteristics"
+      <table name="Characteristics" includeProjects="ClinEpiDB"
              displayName="Field study or clinical trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>

@@ -16,8 +16,12 @@
       <description>
          Find all user datasets.
       </description>
-      <attributesList
+      <attributesList includeProjects="ClinEpiDB" 
 	      summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
+              sorting="creation_date desc"
+      />
+      <attributesList excludeProjects="ClinEpiDB" 
+              summary="creation_date,category,owner_name,summary,primary_contact_name,outcomes_list,is_public"
               sorting="creation_date desc"
       />
     </question>
