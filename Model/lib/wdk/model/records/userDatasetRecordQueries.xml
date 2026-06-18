@@ -206,9 +206,17 @@
         <![CDATA[
           select CONCAT('EDAUD_', d.dataset_id) as dataset_id, 
           (case when coalesce(study_design, study_type, participant_ages) is null
-          and coalesce(sample_year_start, sample_year_end) is null
-	  then 'No' else 'Yes' end) as is_clinical_field
-	  from @VDI_CONTROL_SCHEMA@.dataset d
+                     and coalesce(sample_year_start, sample_year_end) is null
+                     and is_public = 't'
+                     and type_name = 'isasimple'
+                then 'No' 
+                when coalesce(study_design, study_type, participant_ages) is not null
+                     and coalesce(sample_year_start, sample_year_end) is not null
+                then 'Yes' 
+                else ' '
+            end
+          ) as is_clinical_field
+            from @VDI_CONTROL_SCHEMA@.dataset d
  	  LEFT JOIN
            (SELECT
             dataset_id,
