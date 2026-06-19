@@ -21,7 +21,7 @@
               sorting="creation_date desc"
       />
       <attributesList excludeProjects="ClinEpiDB" 
-              summary="creation_date,category,owner_name,summary,primary_contact_name,outcomes_list,is_public"
+              summary="creation_date,category,owner_name,summary,primary_contact_name,is_public"
               sorting="creation_date desc"
       />
     </question>

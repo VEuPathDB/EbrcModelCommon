@@ -120,11 +120,11 @@
         <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.CountriesList">
+      <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
         <columnAttribute name="countries_list" displayName="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
+      <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
         <columnAttribute name="study_design" displayName="Study design"/>
         <columnAttribute name="study_type" displayName="Investigation type"/>
         <columnAttribute name="participant_ages" displayName="Participant ages"/>
@@ -132,7 +132,7 @@
         <columnAttribute name="sample_year_end" displayName="End year"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.OutcomesList">
+      <attributeQueryRef ref="UserDatasetAttributes.OutcomesList" includeProjects="ClinEpiDB">
         <columnAttribute name="outcomes_list" displayName="Outcomes of interest" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."/>
       </attributeQueryRef>
 
@@ -206,7 +206,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Organisms -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Organisms" excludeProjects="ClinEpiDB,MicrobiomeDB" 
+      <table name="Organisms" includeProjects="ClinEpiDB" 
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
@@ -219,7 +219,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Factors" help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."
              displayName="Associated factors"
-             queryRef="UserDatasetTables.AssociatedFactors">
+             queryRef="UserDatasetTables.AssociatedFactors" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="factor" displayName="Factor"/>
       </table>
@@ -266,7 +266,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population."
              displayName="Countries"
-             queryRef="UserDatasetTables.Countries">
+             queryRef="UserDatasetTables.Countries" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="country" displayName="Country"/>
       </table>
@@ -276,7 +276,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Species"
              displayName="Study population species"
-             queryRef="UserDatasetTables.Species">
+             queryRef="UserDatasetTables.Species" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="species" displayName="Species"/>
       </table>
@@ -286,7 +286,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Outcomes" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."
              displayName="Outcomes of interest"
-             queryRef="UserDatasetTables.Outcomes">
+             queryRef="UserDatasetTables.Outcomes" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
@@ -320,7 +320,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="SampleTypes" help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."
              displayName="Sample types"
-             queryRef="UserDatasetTables.SampleTypes">
+             queryRef="UserDatasetTables.SampleTypes" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="type" displayName="Type"/>
       </table>
