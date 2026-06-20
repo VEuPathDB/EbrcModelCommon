@@ -163,13 +163,73 @@
            SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, primary_publication
 	   FROM @VDI_CONTROL_SCHEMA@.dataset d
 	   LEFT JOIN
-           (dataset_id, citation  as primary_publication
+           (SELECT dataset_id, citation  as primary_publication
             FROM @VDI_CONTROL_SCHEMA@.dataset_publication
             WHERE is_primary is true
 	   ) prim on d.dataset_id = prim.dataset_id
         ]]>
       </sql>
     </sqlQuery>
+
+
+    <sqlQuery name="Search" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="url"/>
+      <column name="display_text"/>
+      <sql>
+        <![CDATA[
+               SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+                  'Search genes found in this dataset' as display_text,
+                  CASE WHEN type = 'genelist'
+                       THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
+                                || user_dataset_id || '&autoRun' 
+                      WHEN type = 'rnaseq'
+                      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                                || user_dataset_id
+                      WHEN type = 'phenotype'
+                      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+		                || CONCAT('EDAUD_', user_dataset_id)
+                      ELSE null
+                  END as url
+            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets            
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="ExpOrganism" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="exp_organism"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, exp_organism
+           FROM @VDI_CONTROL_SCHEMA@.dataset d
+           LEFT JOIN
+           (SELECT dataset_id, species || ' ' || strain  as exp_organism
+            FROM @VDI_CONTROL_SCHEMA@.dataset_organism
+            WHERE organism_type = 'experimental'
+           ) prim on d.dataset_id = prim.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="RefOrganism" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="ref_organism"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, ref_organism
+           FROM @VDI_CONTROL_SCHEMA@.dataset d
+           LEFT JOIN
+           (SELECT dataset_id, organism_name as ref_organism
+            FROM @VDI_CONTROL_SCHEMA@.dataset_dependency d,
+                  apidbtuning.organismattributes org
+            WHERE substring(identifier FROM '^[A-Za-z]+-\d+_(.+)_Genome') = org.name_for_filenames
+           ) prim on d.dataset_id = prim.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
 
     <!-- Characteristics (same as in table) -->
     <sqlQuery name="Characteristics" isCacheable='false'>
@@ -266,6 +326,64 @@
         ]]>
       </sql>
     </sqlQuery>
+
+
+    <sqlQuery name="SpeciesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="species_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, species_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(species, ', ' order by species) as species_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_species
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="FactorsList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="factors_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, factors_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(factor, ', ' order by factor) as factors_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_associated_factor
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="SampleTypesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="sampletypes_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, sampletypes_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(type, ', ' order by type) as sampletypes_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_sample_type
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+
 
   </querySet>
 
@@ -555,7 +673,35 @@
     </sqlQuery>
 
     <!-- Explore links in this website    table -->
-    <sqlQuery name="ExploreWebsite" isCacheable='false'>
+    <sqlQuery name="ExploreWebsite" isCacheable='false' excludeProjects="ClinEpiDB">
+      <column name="dataset_id"/>
+      <column name="description"/>
+      <column name="url"/>
+      <column name="order"/>
+
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+		  'Search genes found in this dataset' as description,
+                  CASE WHEN type = 'genelist'
+                       THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
+		                || user_dataset_id || '&autoRun' 
+                      WHEN type = 'rnaseq'
+		      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                                || user_dataset_id
+		      WHEN type = 'phenotype'
+		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+		                || CONCAT('EDAUD_', user_dataset_id) 
+                      ELSE null
+		  END as url
+            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+
+    <sqlQuery name="ExploreWebsite" isCacheable='false' includeProjects="ClinEpiDB">
       <column name="dataset_id"/>
       <column name="description"/>
       <column name="url"/>
