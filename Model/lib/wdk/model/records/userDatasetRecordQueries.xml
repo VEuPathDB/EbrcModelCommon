@@ -483,7 +483,8 @@
         <![CDATA[
           select CONCAT('EDAUD_', daf.dataset_id) as dataset_id, factor
           from @VDI_CONTROL_SCHEMA@.dataset_associated_factor daf
-        ]]>
+	  ORDER BY factor
+	]]>
       </sql>
     </sqlQuery>
 
@@ -678,7 +679,7 @@
                       ELSE null
 		  END as url
             FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
-	GROUP BY dataset_id,order,display_text,url
+	GROUP BY dataset_id,url
         ]]>
       </sql>
     </sqlQuery>
