@@ -113,7 +113,7 @@
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.Search" excludeProjects="ClinEpiDB">
+      <attributeQueryRef ref="UserDatasetAttributes.Search">
         <columnAttribute name="url" internal="true"/>
         <columnAttribute name="display_text" internal="true"/>
         <linkAttribute name="search_link" displayName="Search for genes in this dataset">
