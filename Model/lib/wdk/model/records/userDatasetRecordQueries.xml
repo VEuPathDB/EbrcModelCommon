@@ -149,7 +149,7 @@
            FROM @VDI_CONTROL_SCHEMA@.dataset_contact
            WHERE is_primary is true
 	  ) prim on d.dataset_id = prim.dataset_id
-          ORDER BY last_name, first_name
+          --needed?  ORDER BY last_name, first_name
         ]]>
       </sql>
     </sqlQuery>
@@ -302,7 +302,7 @@
  	  LEFT JOIN
           (SELECT
             dataset_id,
-            string_agg(outcome, ', ' order by outcome) as outcomes_list
+            string_agg(outcome, ', ' order by LOWER(outcome)) as outcomes_list
           FROM @VDI_CONTROL_SCHEMA@.dataset_outcome
 		  group by dataset_id
 	   ) o on o.dataset_id = d.dataset_id
@@ -320,7 +320,7 @@
           LEFT JOIN
           (SELECT
             dataset_id,
-            string_agg(country, ', ' order by country) as countries_list
+            string_agg(country, ', ' order by LOWER(country)) as countries_list
           FROM @VDI_CONTROL_SCHEMA@.dataset_country
                   group by dataset_id
            ) o on o.dataset_id = d.dataset_id
@@ -339,7 +339,7 @@
           LEFT JOIN
           (SELECT
             dataset_id,
-            string_agg(species, ', ' order by species) as species_list
+            string_agg(species, ', ' order by LOWER(species)) as species_list
           FROM @VDI_CONTROL_SCHEMA@.dataset_species
                   group by dataset_id
            ) o on o.dataset_id = d.dataset_id
@@ -357,7 +357,7 @@
           LEFT JOIN
           (SELECT
             dataset_id,
-            string_agg(factor, ', ' order by factor) as factors_list
+            string_agg(factor, ', ' order by LOWER(factor)) as factors_list
           FROM @VDI_CONTROL_SCHEMA@.dataset_associated_factor
                   group by dataset_id
            ) o on o.dataset_id = d.dataset_id
@@ -375,7 +375,7 @@
           LEFT JOIN
           (SELECT
             dataset_id,
-            string_agg(type, ', ' order by type) as sampletypes_list
+            string_agg(type, ', ' order by LOWER(type)) as sampletypes_list
           FROM @VDI_CONTROL_SCHEMA@.dataset_sample_type
                   group by dataset_id
            ) o on o.dataset_id = d.dataset_id
@@ -435,7 +435,7 @@
             country,
             CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary
           FROM  @VDI_CONTROL_SCHEMA@.dataset_contact
-          ORDER BY is_primary DESC, last_name, first_name
+          ORDER BY is_primary DESC, LOWER(last_name), LOWER(first_name)
         ]]>
       </sql>
     </sqlQuery>
@@ -454,7 +454,7 @@
             species,
             strain
           FROM  @VDI_CONTROL_SCHEMA@.dataset_organism
-          ORDER BY organism_type, species
+          ORDER BY organism_type, LOWER(species)
         ]]>
       </sql>
     </sqlQuery>
@@ -471,7 +471,7 @@
             url,
             description
           FROM  @VDI_CONTROL_SCHEMA@.dataset_hyperlink
-          ORDER BY description
+          ORDER BY LOWER(description)
         ]]>
       </sql>
     </sqlQuery>
@@ -483,7 +483,7 @@
         <![CDATA[
           select CONCAT('EDAUD_', daf.dataset_id) as dataset_id, factor
           from @VDI_CONTROL_SCHEMA@.dataset_associated_factor daf
-	  ORDER BY factor
+	  ORDER BY LOWER(factor)
 	]]>
       </sql>
     </sqlQuery>
@@ -500,7 +500,7 @@
             agency,
             award_number
           FROM  @VDI_CONTROL_SCHEMA@.dataset_funding_award
-          ORDER BY agency, award_number
+          ORDER BY LOWER(agency), LOWER(award_number)
         ]]>
       </sql>
     </sqlQuery>
@@ -515,7 +515,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             country
           FROM  @VDI_CONTROL_SCHEMA@.dataset_country
-          ORDER BY country
+          ORDER BY LOWER(country)
         ]]>
       </sql>
     </sqlQuery>
@@ -530,7 +530,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             species
           FROM  @VDI_CONTROL_SCHEMA@.dataset_species
-          ORDER BY species
+          ORDER BY LOWER(species)
         ]]>
       </sql>
     </sqlQuery>
@@ -545,7 +545,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             outcome
           FROM  @VDI_CONTROL_SCHEMA@.dataset_outcome
-          ORDER BY outcome
+          ORDER BY LOWER(outcome)
         ]]>
       </sql>
     </sqlQuery>
@@ -598,7 +598,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             url, version
           FROM  @VDI_CONTROL_SCHEMA@.dataset_source
-          ORDER BY url,version
+          ORDER BY LOWER(url),version
         ]]>
       </sql>
     </sqlQuery>
@@ -613,7 +613,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             type
           FROM  @VDI_CONTROL_SCHEMA@.dataset_sample_type
-          ORDER BY type
+          ORDER BY LOWER(type)
         ]]>
       </sql>
     </sqlQuery>
@@ -733,6 +733,7 @@
           WHERE v.entity_stable_id = etg.stable_id
 	    AND v.study_stable_id = etg.study_stable_id
             AND (v.hidden is null or v.hidden not like '%everywhere%')
+        ORDER BY LOWER(v.display_name)
         ]]>
       </sql>
     </sqlQuery>
