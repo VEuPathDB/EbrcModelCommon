@@ -192,20 +192,25 @@
       <sql>
         <![CDATA[
                SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
-                  'Search genes found in this dataset' as display_text,
+		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+		        THEN 'Search genes found in this dataset'
+                        WHEN type_name = 'isasimple'
+		        THEN 'Browse and subset this dataset'
+                        ELSE null
+                  END as display_text,
                   CASE WHEN type_name = 'genelist'
                        THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
                                 || dataset_id || '&autoRun' 
-                      WHEN type_name = 'rnaseq'
-                      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                       WHEN type_name = 'rnaseq'
+                       THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
                                 || dataset_id
-                      WHEN type_name = 'phenotype'
-                      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+                       WHEN type_name = 'phenotype'
+                       THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id)
-                      WHEN type_name = 'isasimple'
-		      THEN '/a/app/workspace/analyses/'
-		      || CONCAT('EDAUD_', dataset_id, '/new')
-		      ELSE null
+                       WHEN type_name = 'isasimple'
+		       THEN '/a/app/workspace/analyses/'
+		                || CONCAT('EDAUD_', dataset_id, '/new')
+		       ELSE null
                   END as url
 		FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
