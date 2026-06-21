@@ -20,8 +20,12 @@
 	      summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
               sorting="creation_date desc"
       />
-      <attributesList excludeProjects="ClinEpiDB" 
+      <attributesList excludeProjects="UniDB,ClinEpiDB" 
               summary="creation_date,category,summary,primary_contact_name,exp_organism,ref_organism,is_public"
+              sorting="creation_date desc"
+      />
+      <attributesList includeProjects="UniDB" 
+              summary="creation_date,veupathdb_project,category,summary,primary_contact_name,exp_organism,ref_organism,is_public"
               sorting="creation_date desc"
       />
     </question>

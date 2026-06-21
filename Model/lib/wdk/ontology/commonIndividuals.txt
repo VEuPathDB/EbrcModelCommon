@@ -8,6 +8,8 @@ DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.Data
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym		DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
 
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_key	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_key					1	results		download
+UserDatasetRecordClasses.UserDatasetRecordClass.veupathdb_id			UserDatasetRecordClasses.UserDatasetRecordClass	attribute	veupathdb_id						results	record-internal	download
+UserDatasetRecordClasses.UserDatasetRecordClass.veupathdb_project			UserDatasetRecordClasses.UserDatasetRecordClass	attribute	veupathdb_project						results	record-internal	download
 
 ## UserDatasetRecordClasses.UserDatasetRecordClass.Characteristics	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Characteristics					1	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Countries	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Countries					30		record	download

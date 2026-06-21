@@ -65,6 +65,10 @@
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
       </attributeQueryRef>
+      <attributeQueryRef ref="UserDatasetAttributes.VEuPathDBIdProject">
+        <columnAttribute name="veupathdb_id" displayName="VEuPathDB ID" />
+	<columnAttribute name="veupathdb_project" displayName="VEuPathDB project" />
+      </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
         <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset to this database."/>

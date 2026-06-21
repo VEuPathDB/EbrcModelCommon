@@ -24,6 +24,19 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="VEuPathDBIdProject" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="veupathdb_id" columnType="string"/>
+      <column name="veupathdb_project" columnType="string"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+            CONCAT('EDAUD_', dataset_id) as veupathdb_id, project_id as veupathdb_project
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_project
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <sqlQuery name="OwnerInfo" isCacheable="false">
       <column name="dataset_id" columnType="string"/>
       <column name="owner_name" columnType="string"/>
@@ -178,21 +191,20 @@
       <column name="display_text"/>
       <sql>
         <![CDATA[
-               SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id,
+               SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
                   'Search genes found in this dataset' as display_text,
-                  CASE WHEN type = 'genelist'
+                  CASE WHEN type_name = 'genelist'
                        THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
-                                || user_dataset_id || '&autoRun' 
-                      WHEN type = 'rnaseq'
+                                || dataset_id || '&autoRun' 
+                      WHEN type_name = 'rnaseq'
                       THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
-                                || user_dataset_id
-                      WHEN type = 'phenotype'
+                                || dataset_id
+                      WHEN type_name = 'phenotype'
                       THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
-		                || CONCAT('EDAUD_', user_dataset_id)
+		                || CONCAT('EDAUD_', dataset_id)
                       ELSE null
                   END as url
-		FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
-             GROUP BY dataset_id,url
+		FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
       </sql>
     </sqlQuery>
@@ -665,21 +677,20 @@
 
       <sql>
         <![CDATA[
-           SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
 		  'Search genes found in this dataset' as description,
-                  CASE WHEN type = 'genelist'
+                  CASE WHEN type_name = 'genelist'
                        THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
-		                || user_dataset_id || '&autoRun' 
-                      WHEN type = 'rnaseq'
+		                || dataset_id || '&autoRun' 
+                      WHEN type_name = 'rnaseq'
 		      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
-                                || user_dataset_id
-		      WHEN type = 'phenotype'
+                                || dataset_id
+		      WHEN type_name = 'phenotype'
 		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
-		                || CONCAT('EDAUD_', user_dataset_id) 
+		                || CONCAT('EDAUD_', dataset_id) 
                       ELSE null
 		  END as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
-	GROUP BY dataset_id,url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
       </sql>
     </sqlQuery>
@@ -694,20 +705,20 @@
 
       <sql>
         <![CDATA[
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
                  'Browse and Subset Data' as description,
-                 '/a/app/workspace/analyses/' || CONCAT('EDAUD_', user_dataset_id) || '/new' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+                 '/a/app/workspace/analyses/' || CONCAT('EDAUD_', dataset_id) || '/new' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
           UNION
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 2 as order,
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 2 as order,
                  'Visualize Data' as description,
-		      '/a/app/workspace/analyses/' || CONCAT('EDAUD_', user_dataset_id) || '/new/visualizations' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+		      '/a/app/workspace/analyses/' || CONCAT('EDAUD_', dataset_id) || '/new/visualizations' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
           UNION
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 3 as order,
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 3 as order,
                  'Explore Data on Interactive Map' as description,
-                 '/a/app/workspace/maps/' || CONCAT('EDAUD_', user_dataset_id) || '/new' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+                 '/a/app/workspace/maps/' || CONCAT('EDAUD_', dataset_id) || '/new' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
 
         ]]>
       </sql>
