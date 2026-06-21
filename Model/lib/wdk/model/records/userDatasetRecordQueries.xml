@@ -178,7 +178,7 @@
       <column name="display_text"/>
       <sql>
         <![CDATA[
-               SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+               SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id,
                   'Search genes found in this dataset' as display_text,
                   CASE WHEN type = 'genelist'
                        THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
@@ -191,12 +191,13 @@
 		                || CONCAT('EDAUD_', user_dataset_id)
                       ELSE null
                   END as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets            
+		FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+             GROUP BY dataset_id,url
         ]]>
       </sql>
     </sqlQuery>
 
-        <sqlQuery name="ExpOrganism" doNotTest="true">
+    <sqlQuery name="ExpOrganism" doNotTest="true">
       <column name="dataset_id"/>
       <column name="exp_organism"/>
       <sql>
@@ -212,7 +213,7 @@
       </sql>
     </sqlQuery>
 
-        <sqlQuery name="RefOrganism" doNotTest="true">
+    <sqlQuery name="RefOrganism" doNotTest="true">
       <column name="dataset_id"/>
       <column name="ref_organism"/>
       <sql>
@@ -381,9 +382,6 @@
         ]]>
       </sql>
     </sqlQuery>
-
-
-
 
   </querySet>
 
@@ -604,21 +602,6 @@
       </sql>
     </sqlQuery>
 
-    <!-- Usage table -->
-    <sqlQuery name="Usage" isCacheable='false'>
-      <column name="dataset_id"/>
-      <column name="disclaimer"/>
-      <sql>
-        <![CDATA[
-          SELECT
-            CONCAT('EDAUD_', dataset_id) as dataset_id,
-            disclaimer
-            FROM  @VDI_CONTROL_SCHEMA@.dataset_meta
-	    where disclaimer is not null and disclaimer != ''
-        ]]>
-      </sql>
-    </sqlQuery>
-
     <!-- Sample Type table -->
     <sqlQuery name="SampleTypes" isCacheable='false'>
       <column name="dataset_id"/>
@@ -695,6 +678,7 @@
                       ELSE null
 		  END as url
             FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+	GROUP BY dataset_id,order,display_text,url
         ]]>
       </sql>
     </sqlQuery>

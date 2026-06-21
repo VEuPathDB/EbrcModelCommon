@@ -10,7 +10,7 @@ DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym		Da
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_key	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_key					1	results		download
 
 ## UserDatasetRecordClasses.UserDatasetRecordClass.Characteristics	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Characteristics					1	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.Countries	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Countries					30	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.Countries	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Countries					30		record	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.study_type	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	study_type					1	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.study_design	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	study_design					2	results	record	download
@@ -19,14 +19,14 @@ UserDatasetRecordClasses.UserDatasetRecordClass.sample_year_start	topic_3077_syn
 UserDatasetRecordClasses.UserDatasetRecordClass.sample_year_end	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	sample_year_end					5	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.participant_ages	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	participant_ages					6	results	record	download
 
-UserDatasetRecordClasses.UserDatasetRecordClass.Species	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Species					60	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.Species	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Species					60		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.species_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	species_list						results		download
-UserDatasetRecordClasses.UserDatasetRecordClass.Outcomes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Outcomes					70	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.Outcomes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Outcomes					70		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.outcomes_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	outcomes_list						results		download
 UserDatasetRecordClasses.UserDatasetRecordClass.countries_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	countries_list						results		download
-UserDatasetRecordClasses.UserDatasetRecordClass.Factors	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Factors					80	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.Factors	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Factors					80		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.factors_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	factors_list						results		download
-UserDatasetRecordClasses.UserDatasetRecordClass.SampleTypes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	SampleTypes					100	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.SampleTypes	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	SampleTypes					100		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.sampletypes_list	topic_3077_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	sampletypes_list						results		download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.Publications	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Publications					10	results	record	download
@@ -40,7 +40,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.DataSources	topic_0219_synonym		
 UserDatasetRecordClasses.UserDatasetRecordClass.Contacts	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Contacts					60	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					10	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsite	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsite					30	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsite	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsite					30		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.search_link	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	search_link							record-internal	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.dataFiles	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	dataFiles					10	  record
@@ -60,7 +60,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.summary	topic_0219_synonym		User
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_publication	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_publication						results	record-internal	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.ref_organism	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	ref_organism					6	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.Organisms	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	Organisms					11	results	record	download
+##UserDatasetRecordClasses.UserDatasetRecordClass.Organisms	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	Organisms					11	results	record	download
 
 DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs							record	download
 DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	TranscriptTypeCounts							record	download
