@@ -31,7 +31,13 @@
       <sql>
         <![CDATA[
            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
-            CONCAT('EDAUD_', dataset_id) as veupathdb_id, project_id as veupathdb_project
+		  CONCAT('EDAUD_', dataset_id) as veupathdb_id, 
+                  CASE WHEN project_id = 'EuPathDB' 
+                       THEN 'VEuPathDB'
+                       WHEN project_id = 'ClinEpiDB'
+                       THEN 'dataExplorer'
+                       ELSE project_id 
+		   END as veupathdb_project
           FROM  @VDI_CONTROL_SCHEMA@.dataset_project
         ]]>
       </sql>
