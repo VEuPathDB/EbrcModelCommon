@@ -246,7 +246,7 @@
     <org organism="Plasmodium brasilianum strain Bolivian I" abbrev="pbraBolivianI" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
-    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
+    <org organism="Plasmodium ovale wallikeri PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
@@ -288,7 +288,7 @@
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
-    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
+    <org organism="Plasmodium ovale wallikeri PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
@@ -480,7 +480,7 @@
     <org organism="Entamoeba invadens IP1" abbrev="einvIP1" />
     <org organism="Entamoeba nuttalli P19" abbrev="enutP19" />
     <org organism="Entamoeba moshkovskii Laredo" abbrev="emosLaredo" />
-    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
+    <org organism="Mastigamoeba balamuthi ATCC 30984" abbrev="mbalATCC30984" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Amoebozoa_gene" />
@@ -1101,7 +1101,7 @@
     <org abbrev="cdubCD36" organism="Candida dubliniensis CD36"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Nakaseomyces glabratus CBS 138"/>
-    <org abbrev="cglaCBS1382020" organism="Nakaseomyces glabratus CBS 138 2020"/>
+    <org abbrev="cglaCBS1382020" organism="Nakaseomyces glabratus CBS138 2020"/>
     <org abbrev="cglaBG2" organism="Nakaseomyces glabratus BG2"/>
     <org abbrev="cglaBG3993" organism="Nakaseomyces glabratus BG3993"/>
     <org abbrev="cglaDSY562" organism="Nakaseomyces glabratus DSY562"/>
@@ -1257,7 +1257,7 @@
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
     <org abbrev="anigATCC13496" organism="Aspergillus niger ATCC 13496"/>
-    <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
+    <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC64974)"/>
     <org abbrev="alIFO4308" organism="Aspergillus luchuensis IFO 4308"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
@@ -1304,7 +1304,7 @@
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
     <org abbrev="macrCQMa102" organism="Metarhizium acridum CQMa 102"/>
-    <org abbrev="maniARSEF549" organism="Metarhizium anisopliae ARSEF 549"/>
+    <org abbrev="maniARSEF549" organism="Metarhizium hybridum ARSEF 549"/>
     <org abbrev="cmilATCC34164" organism="Cordyceps militaris ATCC 34164"/>
     <org abbrev="cmilCM01" organism="Cordyceps militaris CM01"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
@@ -1353,18 +1353,18 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="cneoJEC21" organism="Cryptococcus neoformans var. neoformans JEC21"/>
-    <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
-    <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
-    <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
+    <org abbrev="cneoJEC21" organism="Cryptococcus deneoformans JEC21"/>
+    <org abbrev="cneoB-3501A" organism="Cryptococcus deneoformans B-3501A"/>
+    <org abbrev="cneoH99" organism="Cryptococcus neoformans H99"/>
+    <org abbrev="cneoKN99" organism="Cryptococcus neoformans KN99"/>
     <org abbrev="cneoVNII" organism="Cryptococcus neoformans strain:VNII"/>
     <org abbrev="ccf.gattiiMF34" organism="Cryptococcus cf. gattii MF34"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
     <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
-    <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
+    <org abbrev="cgatIND107" organism="Cryptococcus tetragattii IND107"/>
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
-    <org abbrev="cgatVGIIR265" organism="Cryptococcus gattii VGII R265"/>
+    <org abbrev="cgatVGIIR265" organism="Cryptococcus deuterogattii R265"/>
     <org abbrev="cdepCBS7841" organism="Cryptococcus depauperatus CBS 7841"/>
     <org abbrev="cdepCBS7855" organism="Cryptococcus depauperatus CBS 7855"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
@@ -1493,7 +1493,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="umay521" organism="Ustilago maydis 521"/>
+    <org abbrev="umay521" organism="Mycosarcoma maydis 521"/>
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
     <org abbrev="mpacCBS1879" organism="Malassezia pachydermatis CBS 1879"/>
@@ -1594,11 +1594,11 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev = "hcapNAm1" organism="Histoplasma capsulatum NAm1"/> 
+    <org abbrev = "hcapNAm1" organism="Histoplasma mississippiense (nom. inval.) NAm1"/> 
     <org abbrev = "hcapG184AR" organism="Histoplasma capsulatum G184AR"/>
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
-    <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
+    <org abbrev = "hcapH88" organism="Histoplasma capsulatum var. duboisii H88"/>
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
     <org abbrev = "hcapWU24" organism="Histoplasma capsulatum WU24"/>
     <org abbrev = "bderATCC26199" organism="Blastomyces dermatitidis ATCC 26199"/>
@@ -1865,11 +1865,11 @@
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Vairimorpha ceranae BRL01" abbrev="ncerBRL01" />
     <org organism="Nosema ceranae BRL" abbrev="ncerBRL" />
     <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
     <org organism="Nosema granulosis Ou3-Ou53" abbrev="ngraOu3Ou53" />
-    <org organism="Nosema apis BRL 01" abbrev="napiBRL01" />
+    <org organism="Vairimorpha apis BRL 01" abbrev="napiBRL01" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <track name="Gene" />
@@ -2361,7 +2361,7 @@
   </url>
 
   <url project="TriTrypDB" type="synteny">
-    <org organism="Angomonas deanei strain Crithidia deanei Carvalho (ATCC PRA-265)" abbrev="adeaATCCPRA-265"/>
+    <org organism="Angomonas deanei strain Cavalho ATCC PRA-265" abbrev="adeaATCCPRA-265"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Angomonas_gene"/>
@@ -2734,7 +2734,7 @@
   </url>
 
   <url project="VectorBase" type="synteny">
-    <org organism="Culicoides sonorensis strain PIR-s-3" abbrev="csonPIR-s-3" />
+    <org organism="Culicoides sonorensis PIR-s-3" abbrev="csonPIR-s-3" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Ceratopogonidae" />
       <subtrack set="Culicinae" />
