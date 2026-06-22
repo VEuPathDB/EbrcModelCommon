@@ -208,7 +208,7 @@
                        THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id)
                        WHEN type_name = 'isasimple'
-		       THEN '/a/app/workspace/analyses/'
+		       THEN '/workspace/analyses/'
 		                || CONCAT('EDAUD_', dataset_id, '/new')
 		       ELSE null
                   END as url
