@@ -205,13 +205,13 @@
                         ELSE null
                   END as display_text,
                   CASE WHEN type_name = 'genelist'
-                       THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
+                       THEN '/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
                                 || dataset_id || '&autoRun' 
                        WHEN type_name = 'rnaseq'
-                       THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                       THEN '/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
                                 || dataset_id
                        WHEN type_name = 'phenotype'
-                       THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+                       THEN '/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id)
                        WHEN type_name = 'isasimple'
 		       THEN '/workspace/analyses/'
