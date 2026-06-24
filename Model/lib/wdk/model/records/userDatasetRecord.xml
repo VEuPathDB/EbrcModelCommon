@@ -134,7 +134,7 @@
         <columnAttribute name="exp_organism" displayName="Experimental organism" help="The organism used to generate the samples that were analyzed to produce this dataset."/>
       </attributeQueryRef>
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
-        <columnAttribute name="ref_organism" displayName="Reference organism" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
+        <columnAttribute name="ref_organism" displayName="Reference genome" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
       </attributeQueryRef>
 
       <!-- phase 2
