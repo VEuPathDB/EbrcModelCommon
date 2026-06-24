@@ -32,6 +32,7 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
         injectTemplate("cellularLocalizationEdaQuestion");
         injectTemplate("cellularLocalizationEdaGeneTableSql");
         injectTemplate("cellularLocalizationDataTableGeneTableSql");
+        injectTemplate("cellularLocalizationAllDataGeneTableSql");
         injectTemplate("cellularLocalizationEdaAttributeQueriesNumeric");
         injectTemplate("cellularLocalizationEdaAttributeQueriesString");
         injectTemplate("cellularLocalizationEdaAttributeRef");
@@ -49,6 +50,7 @@ public class CellularLocalizationEDAStudy extends GenomicsEDAStudy {
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByCellularLocalizationEdaSubset_" + this.getDatasetName());
         addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationDatasets");
         addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationGraphsDataTable");
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaCellularLocalizationDataTable");
     }
 
 }

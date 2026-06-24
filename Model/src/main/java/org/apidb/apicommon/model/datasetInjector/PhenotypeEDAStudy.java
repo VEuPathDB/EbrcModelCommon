@@ -24,6 +24,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         injectTemplate("phenotypeEdaQuestion");
         injectTemplate("phenotypeEdaGeneTableSql");
         injectTemplate("phenotypeDataTableGeneTableSql");
+        injectTemplate("phenotypeAllDataGeneTableSql");
         injectTemplate("phenotypeEdaAttributeQueriesNumeric");
         injectTemplate("phenotypeEdaAttributeQueriesString");
         injectTemplate("phenotypeEdaAttributeRef");
@@ -41,6 +42,7 @@ public class PhenotypeEDAStudy extends GenomicsEDAStudy {
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByPhenotypeEdaSubset_" + this.getDatasetName());
         addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaPhenotypeDatasets");
         addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaPhenotypeGraphsDataTable");
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "EdaPhenotypeDataTable");
     }
 
 }
