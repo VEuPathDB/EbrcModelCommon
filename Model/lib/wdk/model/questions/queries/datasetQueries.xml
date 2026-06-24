@@ -188,25 +188,6 @@
       </sql>
     </sqlQuery>
 
-
-    <sqlQuery name="ByExternalDatabaseNames">
-      <testParamValues>
-        <paramValue name="dataset_name">taxonomy_RSRC</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.dataset_name"/>
-      <column name="dataset_id"/>
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT dataset_presenter_id as dataset_id
-          FROM APIDBTUNING.datasetdatasource 
-          WHERE name IN ($$dataset_name$$)
-	    -- TODO needs project filter
-        ]]>
-      </sql>
-    </sqlQuery>
-
-
     <sqlQuery name="ByQuestionName">
       <testParamValues>
         <paramValue name="question_name">GeneQuestions.GenesByTaxon</paramValue>

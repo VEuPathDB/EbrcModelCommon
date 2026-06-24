@@ -59,19 +59,6 @@
     </question>
     -->
 
-    <question name="DatasetsByDatasetNames"
-      displayName="Datasets by dataset names"
-      shortDisplayName="Search"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByExternalDatabaseNames"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <attributesList sorting="category asc" />
-      <description>
-         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
-      </description>
-    </question>
-
     <question name="DatasetsByReferenceName"
       displayName="Datasets used to generate a table or result"
       shortDisplayName="Reference"
