@@ -29,13 +29,13 @@
             SELECT distinct dd.dataset_presenter_id as dataset_id
             FROM apidbtuning.datasetdatasource dd
             WHERE (dd.category is null OR dd.category != 'Link outs')
-             AND  (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+             AND  dd.project_id = '@PROJECT_ID@'
               and dd.dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='true' )
             UNION
             select distinct dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and  (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            and  dd.project_id = '@PROJECT_ID@'
             and '@SHOW_UNRELEASED_DATA@' = 'true' and dataset_presenter_id in (select dataset_presenter_id from apidbtuning.datasetproperty where property='isPublic' and value='false' )
           ]]>
       </sql>
@@ -45,7 +45,7 @@
             select distinct dd.dataset_presenter_id as dataset_id
             from apidbtuning.datasetdatasource dd
             where (dd.category is null OR dd.category != 'Link outs')
-            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            and dd.project_id = '@PROJECT_ID@'
         ]]>
       </sql>
 
@@ -70,7 +70,7 @@
           FROM apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop, apidbtuning.datasetdatasource dd
           WHERE dpres.dataset_presenter_id = dprop.dataset_presenter_id
             AND dprop.property = 'isPublic' and dprop.value = 'true'
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND dd.project_id = '@PROJECT_ID@'
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
         ]]>
       </sql>
@@ -86,7 +86,7 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic'
             -- and dprop.value = 'true'
-            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            and dd.project_id = '@PROJECT_ID@'
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
             intersect
             select dpres.dataset_presenter_id as dataset_id
@@ -94,7 +94,7 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
             and dprop.value = 'GenomicsEDAStudy'
-            and (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            and dd.project_id = '@PROJECT_ID@'
 	    and dd.dataset_presenter_id = dpres.dataset_presenter_id
           ]]>
       </sql>
@@ -107,14 +107,12 @@
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'isPublic'
             -- and dprop.value = 'true'
-            --and (dpres.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             intersect
             select dpres.dataset_presenter_id as dataset_id
             from apidbTuning.DatasetPresenter dpres, apidbtuning.datasetproperty dprop
             where dpres.dataset_presenter_id = dprop.dataset_presenter_id
             and dprop.property = 'templateInjectorClassName'
             and dprop.value = 'GenomicsEDAStudy'
-            --and (dpres.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
             -- we need this condition currently because no geolocation studies show up (the new plasmo dataset)
             and dpres.dataset_presenter_id = 'DS_480c976ef9'
           ]]>
@@ -143,6 +141,7 @@
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
             AND  COALESCE(dd.category,'') != 'Link outs'
+	    -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -165,6 +164,7 @@
 	    and dd.dataset_datasource_id = ref.dataset_datasource_id
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
+	    -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -183,6 +183,7 @@
           SELECT DISTINCT dataset_presenter_id as dataset_id
           FROM APIDBTUNING.datasetpresenter
           WHERE dataset_presenter_id in ($$dataset_id$$)
+	    -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -200,6 +201,7 @@
           SELECT DISTINCT dataset_presenter_id as dataset_id
           FROM APIDBTUNING.datasetdatasource 
           WHERE name IN ($$dataset_name$$)
+	    -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -226,36 +228,6 @@
       </sql>
     </sqlQuery>
 
-
-    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
-      <testParamValues>
-        <paramValue name="user_id">48</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.user_id"/>
-      <column name="dataset_id"/>
-      <column name="study_id"/>
-      <column name="restriction_level"/>
-      <column name="approval_status"/>
-
-      <sql>
-        <![CDATA[
-          SELECT d.dataset_presenter_id as dataset_id, d.dataset_presenter_id as study_id, CASE WHEN u.study_access is null THEN d.study_access ELSE u.study_access END as restriction_level
-          FROM (
-              select dataset_presenter_id, value as study_access
-              from apidbtuning.datasetproperty
-              where  property = 'studyAccess'
-            ) d
-            LEFT JOIN (
-              select v.dataset_presenter_id, r.name as study_access
-              from @REMOTE_STUDYACCESS_SCHEMA@end_users v
-                INNER JOIN @REMOTE_STUDYACCESS_SCHEMA@restriction_level r ON v.restriction_level_id = r.restriction_level_id
-              WHERE user_id = $$user_id$$
-                AND (approval_status_id < 1 or approval_status_id is NULL)
-            ) u ON d.dataset_presenter_id = u.dataset_presenter_id
-        ]]>
-      </sql>
-    </sqlQuery>
 
     <processQuery name="DatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"                  processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">
       <paramRef ref="sharedParams.text_expression"/>
@@ -287,7 +259,7 @@
       <wsColumn name="p_value" width="100" wsName="p_value"/>
       <!--<wsColumn name="percent_count" width="50" wsName="percent_count"/>  NOTE: need more general column name -->
       <!--<wsColumn name="hit_count" width="50" wsName="hit_count"/> NOTE: need more general column name -->
-
+      <!-- is this being used?  if so, might need a projectID filter for genomicsdb -->
     </processQuery>
 
 

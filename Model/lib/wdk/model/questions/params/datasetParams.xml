@@ -185,30 +185,6 @@
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="geneListUserDataset" isCacheable="false">
-      <paramRef ref="InternalParams.user_id"/>
-        <column name="internal" />
-        <column name="term" />
-        <sql>
-          SELECT  term, internal from (
-            SELECT 0 as term1, 0 as internal1,
-                  'Choose a Gene List, if you have any' as internal,
-                  'Choose a Gene List, if you have any' as term,
-                  'Choose a Gene List, if you have any' as display,
-                  1 as num
-          UNION
-            SELECT distinct a.user_dataset_id as term1, a.user_dataset_id as internal1
-                  , name as internal, name as term, name as display, 3 as num
-            FROM ApiDbUserDatasets.installedUserDataset i, ApiDbUserDatasets.UserDatasetAccessControl a, ApiDbUserDatasets.UD_GeneId g
-            WHERE a.user_id =  '1926010'  ----- should also update user_id in ApiCommonModel/Model/lib/wdk/model/stepAnalysisParams.xml
-              AND a.user_dataset_id = i.user_dataset_id
-              AND g.user_dataset_id = i.user_dataset_id
-              AND (i.is_invalid is null or i.is_invalid = 0)
-          ) t
-          ORDER BY num, display
-        </sql>
-    </sqlQuery>
-
     <sqlQuery name="extDbNames">
       <column name="internal"/>
       <column name="term"/>
