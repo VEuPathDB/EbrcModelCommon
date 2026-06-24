@@ -253,7 +253,7 @@
           <![CDATA[
 	      select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
-	      where user_id = $$user_id$$
+	      where (user_id = $$user_id$$ or is_public = true)
 	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql> 
@@ -275,7 +275,7 @@
 	   UNION
               select CONCAT('EDAUD_', user_dataset_id) as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
-	      where user_id = $$user_id$$
+	      where (user_id = $$user_id$$ or is_public = true)
 	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql> 
@@ -297,7 +297,7 @@
 	   UNION
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
-	      where user_id = $$user_id$$
+	      where (user_id = $$user_id$$ or is_public = true)
 	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql>
@@ -311,7 +311,7 @@
 	   UNION
 	      select user_dataset_id as dataset_id
 	      from @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
-	      where user_id = $$user_id$$
+	      where (user_id = $$user_id$$ or is_public = true)
 	      and (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
           ]]>
        </sql>

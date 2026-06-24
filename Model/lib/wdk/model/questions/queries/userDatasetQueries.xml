@@ -38,7 +38,8 @@
         <![CDATA[
           SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
           FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
-          WHERE 1=0   User datasets currently do not support model references
+          WHERE (user_id = $$user_id$$ or is_public = true)
+            AND 1=0   User datasets currently do not support model references
         ]]>
       </sql>
     </sqlQuery>
