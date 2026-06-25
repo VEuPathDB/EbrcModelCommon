@@ -14,24 +14,23 @@ use JSON;
 my ($help, $propfile, $instance, $schema, $suffix, $prefix, $filterValue, $debug);
 
 Getopt::Long::Configure("pass_through");
-GetOptions("propfile=s" => \$propfile,
-           "instance=s" => \$instance,
-           "schema=s" => \$schema,
-           "suffix=s" => \$suffix,
-           "prefix=s" => \$prefix,
+GetOptions("propfile=s"    => \$propfile,
+           "instance=s"    => \$instance,
+           "schema=s"      => \$schema,
+           "suffix=s"      => \$suffix,
+           "prefix=s"      => \$prefix,
            "filterValue=s" => \$filterValue,
-           "debug!" => \$debug,
-           "help|h" => \$help,
+           "debug!"        => \$debug,
+           "help|h"        => \$help,
           );
 
-usage() if ($help);
+usage() if $help;
 
 die "required parameter missing" unless ($propfile && $instance && $suffix);
 
 my $dbh = EbrcModelCommon::Model::tmUtils::getDbHandle($instance, $schema, $propfile);
 
-# create table
-$dbh->do(<<SQL) or die "creating table";
+$dbh->do(<<SQL) or die $dbh->errstr;
    create table AssociatedDataset$suffix (
       local_dataset_id      varchar(15),
       local_project         varchar(20),
@@ -44,153 +43,195 @@ $dbh->do(<<SQL) or die "creating table";
 SQL
 
 my %projects = (
-#   'abbreviation' => 'project',
-    'ameb'         => 'AmoebaDB',
-    'cryp'         => 'CryptoDB',
-    'giar'         => 'GiardiaDB',
-    'host'         => 'HostDB',
-    'micr'         => 'MicrosporidiaDB',
-    'piro'         => 'PiroplasmaDB',
-    'plas'         => 'PlasmoDB',
-    'toxo'         => 'ToxoDB',
-    'tvag'         => 'TrichDB',
-    'tryp'         => 'TriTrypDB',
-    'fung'         => 'FungiDB',
-    'vect'         => 'VectorBase',
-    'clin'         => 'ClinEpiDB',
-    'mbio'         => 'MicrobiomeDB',
+    'ameb' => 'AmoebaDB',
+    'cryp' => 'CryptoDB',
+    'giar' => 'GiardiaDB',
+    'host' => 'HostDB',
+    'micr' => 'MicrosporidiaDB',
+    'piro' => 'PiroplasmaDB',
+    'plas' => 'PlasmoDB',
+    'toxo' => 'ToxoDB',
+    'tvag' => 'TrichDB',
+    'tryp' => 'TriTrypDB',
+    'fung' => 'FungiDB',
+    'vect' => 'VectorBase',
+    'clin' => 'ClinEpiDB',
+    'mbio' => 'MicrobiomeDB',
 );
 
 my %webapps = (
-#   'abbreviation' => 'webapp',
-    'ameb'         => 'amoeba',
-    'cryp'         => 'cryptodb',
-    'giar'         => 'giardiadb',
-    'host'         => 'hostdb',
-    'micr'         => 'micro',
-    'piro'         => 'piro',
-    'plas'         => 'plasmo',
-    'toxo'         => 'toxo',
-    'tvag'         => 'trichdb',
-    'tryp'         => 'tritrypdb',
-    'fung'         => 'fungidb',
-    'vect'         => 'vectorbase',
-    'clin'         => 'ce',
-    'mbio'         => 'mbio',
-    'eda-'          => {'clin', 1, 'mbio', 1, 'vect', 1},
+    'ameb' => 'amoeba',
+    'cryp' => 'cryptodb',
+    'giar' => 'giardiadb',
+    'host' => 'hostdb',
+    'micr' => 'micro',
+    'piro' => 'piro',
+    'plas' => 'plasmo',
+    'toxo' => 'toxo',
+    'tvag' => 'trichdb',
+    'tryp' => 'tritrypdb',
+    'fung' => 'fungidb',
+    'vect' => 'vectorbase',
+    'clin' => 'ce',
+    'mbio' => 'mbio',
+    'eda-' => {'clin', 1, 'mbio', 1, 'vect', 1},
 );
 
+# Reverse maps: project_id (from DatasetDatasource) -> project display name and webapp name.
+# GenomicsDB datasets (GO, pathways, etc.) are surfaced under the VEuPathDB umbrella.
+my (%projectIdToName, %projectIdToWebapp);
+foreach my $key (keys %projects) {
+    next if ref($webapps{$key});  # skip eda- hash-valued entry
+    $projectIdToName{$projects{$key}}   = $projects{$key};
+    $projectIdToWebapp{$projects{$key}} = $webapps{$key};
+}
+$projectIdToName{'GenomicsDB'}   = 'VEuPathDB';
+$projectIdToWebapp{'GenomicsDB'} = 'veupathdb';
 
-# prepare insert
-my $insertStmt = $dbh->prepare(<<SQL);
+my $insertStmt = $dbh->prepare(<<SQL) or die $dbh->errstr;
    insert into AssociatedDataset$suffix
    (local_dataset_id, pubmed_id, associated_dataset_id, project, webapp_name, display_name, local_project)
    values (?, ?, ?, ?, ?, ?, ?)
 SQL
 
-# get local datasets and PubMed IDs
-my $stmt = $dbh->prepare(<<SQL) or print STDERR $dbh->errstr;
-     select ds.project_id, dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
-     from DatasetPresenter dpres, DatasetPublication dpub, DatasetDatasource ds
-     where dpres.dataset_presenter_id = dpub.dataset_presenter_id
-       and dpres.dataset_presenter_id = ds.dataset_presenter_id
-       and dpub.pmid is not null
-     order by pmid, dataset_presenter_id
+# Fetch all local datasets that have a non-empty PubMed ID.
+my $stmt = $dbh->prepare(<<SQL) or die $dbh->errstr;
+   select ds.project_id, dpres.dataset_presenter_id, dpub.pmid, dpres.display_name
+   from DatasetPresenter dpres, DatasetPublication dpub, DatasetDatasource ds
+   where dpres.dataset_presenter_id = dpub.dataset_presenter_id
+     and dpres.dataset_presenter_id = ds.dataset_presenter_id
+     and dpub.pmid is not null
+     and dpub.pmid != ''
+   order by pmid, dataset_presenter_id
 SQL
 
-$stmt->execute();
+$stmt->execute() or die $dbh->errstr;
 
 my (@projectId, @localDatasetId, @localPmid, @displayName);
 my $localDatasets = 0;
 
-while ( ($projectId[$localDatasets], $localDatasetId[$localDatasets], $localPmid[$localDatasets], $displayName[$localDatasets])
-	= $stmt->fetchrow_array()) {
-  $localDatasets++
+while (($projectId[$localDatasets], $localDatasetId[$localDatasets],
+        $localPmid[$localDatasets], $displayName[$localDatasets])
+       = $stmt->fetchrow_array()) {
+    $localDatasets++;
 }
 $stmt->finish();
 print "fetched $localDatasets local datasets\n";
 
-# use instance name to orient ourselves
-my $instanceProject = substr $instance, 0, 4;
+# Determine instance type, host for web service calls, and which projects are external.
+my $isGenomicsDB = ($instance =~ /genomicsdb/i);
 
 my $host;
-if ($instance =~ /^rm/ || $instance =~ /-/) {
-  $host = "qa";
+if    ($instance =~ /^rm/ || $instance =~ /-/) { $host = "qa";  }
+elsif ($isGenomicsDB)                           { $host = "b1";  }
+else                                            { $host = "www"; }
+
+# For genomicsdb, all genomic projects are local; only ClinEpiDB and MicrobiomeDB are external.
+# For single-project/EDA instances, derive local projects from the instance name.
+my ($webappProjects, @externalProjectKeys);
+if ($isGenomicsDB) {
+    @externalProjectKeys = ('clin', 'mbio');
 } else {
-  $host = "www";
+    (my $strippedInstance = $instance) =~ s/^rm//;
+    my $instanceProject = substr($strippedInstance, 0, 4);
+    $webappProjects = $webapps{$instanceProject};
+    unless (ref($webappProjects) eq 'HASH') {
+        $webappProjects = { $webappProjects => 1 };
+    }
+    @externalProjectKeys = grep { !$webappProjects->{$_} && !ref($webapps{$_}) } keys %projects;
 }
 
 my $insertCount = 0;
 
-my $webappProjects = $webapps{$instanceProject};
+# --- Local associations ---
+if ($isGenomicsDB) {
+    # All genomic projects are in this DB. Associate any pair of local datasets
+    # sharing a pmid, regardless of project.
+    print "checking for associations among all local projects\n";
+    for my $iLocal (0 .. $localDatasets - 1) {
+        for my $iAssociated (0 .. $localDatasets - 1) {
+            next if $iLocal == $iAssociated;
+            next unless $localPmid[$iLocal] eq $localPmid[$iAssociated];
+            next unless $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated];
 
-unless(ref($webappProjects) eq 'HASH'){ # multiple projects in one instance (EDA)
-  $webappProjects = { $webappProjects, 1 }; # single project instance
-}
+            my $assocProject = $projectIdToName{$projectId[$iAssociated]};
+            my $assocWebapp  = $projectIdToWebapp{$projectId[$iAssociated]};
+            next unless $assocProject && $assocWebapp;
 
-foreach my $localProject (keys %$webappProjects){
-  # associations within the local project
-  if ($webapps{$localProject}) {
-  
-    printf("checking for associations within project %s\n", $projects{$localProject});
-    for (my $iLocal = 0; $iLocal < $localDatasets; $iLocal++) {
-      next unless ( $projects{$localProject} eq $projectId[$iLocal] );
-      for (my $iAssociated = 0; $iAssociated < $localDatasets; $iAssociated++) {
-        next unless (($iLocal != $iAssociated) && # not self
-          ($projectId[$iLocal] eq $projectId[$iAssociated]) && # same project
-          ($localPmid[$iLocal] eq $localPmid[$iAssociated]) && # same pubmed id
-          ($localDatasetId[$iLocal] ne $localDatasetId[$iAssociated]) # impossible, but safe
-        );
-
-        $insertStmt->execute($localDatasetId[$iLocal], $localPmid[$iLocal], $localDatasetId[$iAssociated],
-          $projects{$localProject}, $webapps{$localProject}, $displayName[$iAssociated], $projectId[$iLocal])
-          or die "inserting intramural record for local dataset \"" . $localDatasetId[$iLocal] . "\"";
-        $insertCount++;
-      }
+            $insertStmt->execute(
+                $localDatasetId[$iLocal],    $localPmid[$iLocal],
+                $localDatasetId[$iAssociated],
+                $assocProject,               $assocWebapp,
+                $displayName[$iAssociated],
+                $projectIdToName{$projectId[$iLocal]}
+            ) or die "inserting local record for \"$localDatasetId[$iLocal]\": " . $dbh->errstr;
+            $insertCount++;
+        }
     }
-  }
-}
-  
-  print "inserted $insertCount intramural records.\n";
-  
-# get dataset records from all other projects
-foreach my $projectKey (keys %projects) {
+} else {
+    # Single-project or EDA instance: associate datasets within each local project.
+    foreach my $localProject (keys %$webappProjects) {
+        next unless $webapps{$localProject};
+        printf("checking for associations within project %s\n", $projects{$localProject});
 
-  next if $webappProjects->{$projectKey};
+        for my $iLocal (0 .. $localDatasets - 1) {
+            next unless $projects{$localProject} eq $projectId[$iLocal];
 
-  my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}/service/record-types/dataset/searches/AllDatasets/reports/standard?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
+            for my $iAssociated (0 .. $localDatasets - 1) {
+                next unless $iLocal != $iAssociated
+                    && $projectId[$iLocal]    eq $projectId[$iAssociated]
+                    && $localPmid[$iLocal]    eq $localPmid[$iAssociated]
+                    && $localDatasetId[$iLocal] ne $localDatasetId[$iAssociated];
 
-  # print "Web service request url:\n$url\n";
-  my $datasetsJson = getData($url);
-
-  # print Dumper $datasetsJson->{records}[0];
-
-  foreach my $record (@{$datasetsJson->{records}}) {
-
-    my $displayName = $record->{displayName};
-    # print Dumper $record;
-
-    foreach my $pubrec (@{$record->{tables}->{Publications}}) {
-
-      # print "dataset: " . $pubrec->{dataset_id} . "; pmid: " . $pubrec->{pmid} . "\n";
-
-      for (my $i=0; $i<$localDatasets; $i++) {
-	if ($pubrec->{pmid} eq $localPmid[$i] and $localDatasetId[$i] ne $pubrec->{dataset_id}) {
-	  $insertStmt->execute($localDatasetId[$i], $localPmid[$i], $pubrec->{dataset_id},
-			       $projects{$projectKey}, $webapps{$projectKey}, $displayName, $projectId[$i])
-	    or die "inserting record for local dataset \"" . $localDatasetId[$i] . "\"";
-	  $insertCount++;
-	}
-      }
+                $insertStmt->execute(
+                    $localDatasetId[$iLocal],    $localPmid[$iLocal],
+                    $localDatasetId[$iAssociated],
+                    $projects{$localProject},    $webapps{$localProject},
+                    $displayName[$iAssociated],
+                    $projectId[$iLocal]
+                ) or die "inserting local record for \"$localDatasetId[$iLocal]\": " . $dbh->errstr;
+                $insertCount++;
+            }
+        }
     }
-  }
 }
+print "inserted $insertCount local association records\n";
+
+# --- External associations (via web service) ---
+foreach my $projectKey (@externalProjectKeys) {
+    my $url = "https://$host.$projects{$projectKey}.org/$webapps{$projectKey}"
+            . "/service/record-types/dataset/searches/AllDatasets/reports/standard"
+            . "?reportConfig=%7B%22attributes%22%3A%5B%22primary_key%22%5D%2C%22tables%22%3A%5B%22Publications%22%5D%2C%22attributeFormat%22%3A%22text%22%7D";
+
+    my $datasetsJson = getData($url);
+
+    foreach my $record (@{$datasetsJson->{records}}) {
+        my $displayName = $record->{displayName};
+
+        foreach my $pubrec (@{$record->{tables}->{Publications}}) {
+            next unless $pubrec->{pmid} && $pubrec->{pmid} ne '';
+
+            for my $i (0 .. $localDatasets - 1) {
+                next unless $pubrec->{pmid} eq $localPmid[$i]
+                    && $localDatasetId[$i] ne $pubrec->{dataset_id};
+
+                $insertStmt->execute(
+                    $localDatasetId[$i],    $localPmid[$i],
+                    $pubrec->{dataset_id},
+                    $projects{$projectKey}, $webapps{$projectKey},
+                    $displayName,
+                    $projectIdToName{$projectId[$i]}
+                ) or die "inserting external record for \"$localDatasetId[$i]\": " . $dbh->errstr;
+                $insertCount++;
+            }
+        }
+    }
+}
+
 $dbh->commit();
+print "inserted $insertCount total records\n";
 
-print "inserted $insertCount records.\n";
-
-# create index
-$dbh->do(<<SQL) or die "creating index";
+$dbh->do(<<SQL) or die $dbh->errstr;
    create index ldsix$suffix
       on AssociatedDataset$suffix (local_dataset_id, pubmed_id)
 SQL
@@ -198,32 +239,22 @@ SQL
 $dbh->disconnect();
 
 sub usage {
-  my $e = shift;
-  if($e) {
-    print STDERR $e . "\n";
-  }
-  print STDERR "
-Build a table of associations between datasets in the current instance and in other projects using shared PubMed IDs
+    my $e = shift;
+    print STDERR "$e\n" if $e;
+    print STDERR "
+Build a table of associations between datasets sharing PubMed IDs, across projects.
 
-usage:  buildAssociatedDatasetsTT -propfile prop_file -instance instance -schema schema -suffix suffix  [-debug] [-help]
+usage: buildAssociatedDatasetTT -propfile prop_file -instance instance -schema schema -suffix suffix [-debug] [-help]
 ";
-  exit;
+    exit;
 }
 
 sub getData {
-  my ($url) = @_;
-
-
-  my $json = get $url;
-  die "Couldn't get $url" unless defined $json;
-
-  if ($json =~ /\*\*\*\*\*\*\* ERROR \*\*\*\*\*\*\*/) {
-    print "error in response at URL $url\n";
-    die "error in JSON";
-  }
-
-  return decode_json ($json);
+    my ($url) = @_;
+    my $json = get($url);
+    die "Couldn't get $url" unless defined $json;
+    die "Error in response at URL $url" if $json =~ /\*\*\*\*\*\*\* ERROR \*\*\*\*\*\*\*/;
+    return decode_json($json);
 }
 
 1;
-
