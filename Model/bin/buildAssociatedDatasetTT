@@ -130,7 +130,7 @@ else                                            { $host = "www"; }
 # For single-project/EDA instances, derive local projects from the instance name.
 my ($webappProjects, @externalProjectKeys);
 if ($isGenomicsDB) {
-    @externalProjectKeys = ('clin', 'mbio');
+    @externalProjectKeys = ();  # all projects are local in genomicsdb
 } else {
     (my $strippedInstance = $instance) =~ s/^rm//;
     my $instanceProject = substr($strippedInstance, 0, 4);
