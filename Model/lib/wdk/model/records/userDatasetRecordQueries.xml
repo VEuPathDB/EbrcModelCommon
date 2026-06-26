@@ -199,10 +199,12 @@
         <![CDATA[
                SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
 		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
-		        THEN 'Search genes found in this dataset'
+		        THEN 'Identify genes by this dataset'
                         WHEN type_name = 'isasimple'
 		        THEN 'Browse and subset this dataset'
-                        ELSE null
+                        WHEN type_name = 'bigwigfiles'
+                        THEN 'View in Genome Browser'
+		        ELSE null
                   END as display_text,
                   CASE WHEN type_name = 'genelist'
                        THEN '/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
@@ -216,7 +218,11 @@
                        WHEN type_name = 'isasimple'
 		       THEN '/workspace/analyses/'
 		                || CONCAT('EDAUD_', dataset_id, '/new')
-		       ELSE null
+                       WHEN type_name = 'bigwigfiles'
+		       THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
+		                || 'myorg&tracks=gene,mydsnamei%' 
+		                || 'myfilename&highlight=&loc=myseqname'
+		      ELSE null
                   END as url
 		FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
@@ -692,7 +698,14 @@
       <sql>
         <![CDATA[
            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
-		  'Search genes found in this dataset' as description,
+                   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+                        THEN 'Identify genes by this dataset'
+                        WHEN type_name = 'isasimple'
+                        THEN 'Browse and subset this dataset'
+                        WHEN type_name = 'bigwigfiles'
+		        THEN 'View in Genome Browser'
+                        ELSE null
+		   END as description,
                   CASE WHEN type_name = 'genelist'
                        THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
 		                || dataset_id || '&autoRun' 
@@ -702,7 +715,14 @@
 		      WHEN type_name = 'phenotype'
 		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id) 
-                      ELSE null
+                       WHEN type_name = 'isasimple'
+                       THEN '/workspace/analyses/'
+                                || CONCAT('EDAUD_', dataset_id, '/new')
+                       WHEN type_name = 'bigwigfiles'
+                       THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
+                                || 'myorg&tracks=gene,mydsnamei%' 
+                                || 'myfilename&highlight=&loc=myseqname'
+		      ELSE null
 		  END as url
             FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
