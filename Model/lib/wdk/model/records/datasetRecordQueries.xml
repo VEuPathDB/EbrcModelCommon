@@ -739,7 +739,20 @@
             FROM apidbtuning.datasetpresenter dsp, apidbtuning.datasetproperty p
             WHERE dsp.name like 'PopBio_Study%' and dsp.dataset_presenter_id = p.dataset_presenter_id
                   and p.property = 'vbId'
-		  UNION
+	    UNION
+	    SELECT dsp.dataset_presenter_id as dataset_id
+                       , '' as dataset_name
+                       , 'Dataset Explorer - Combined PCR-RFLP Genotypes' as text
+                       , '/a/app/workspace/analyses/DS_6d31c76b75/new/variables/RFLP_ISOLATE/VAR_998763dc' as url
+                       , 'PCR-RFLP genotypes of Toxoplasma gondii isolates compiled from multiple studies' as description
+                       , '' as record_type
+                       , '' as target_type
+                       , '' as target_name
+                       , 'genomicsInternal' as link_type
+            FROM apidbtuning.datasetpresenter dsp, apidbtuning.datasetproperty p
+            WHERE dsp.name like '%RFLP%'
+            AND dsp.dataset_presenter_id = p.dataset_presenter_id 
+	    UNION
 	        SELECT * FROM projectQuestionLinks
             ORDER BY text
 	    ]]>
