@@ -220,7 +220,7 @@
 		                || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
 		      THEN '/../../a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
-		                || 'myorg&tracks=gene,mydsnamei%' 
+		                || 'myorg&tracks=gene,mydsname%' 
 		                || 'myfilename&highlight=&loc=myseqname'
 		      ELSE null
                   END as url
@@ -720,7 +720,7 @@
                                 || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
                        THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
-                                || 'myorg&tracks=gene,mydsnamei%' 
+                                || 'myorg&tracks=gene,mydsname%' 
                                 || 'myfilename&highlight=&loc=myseqname'
 		      ELSE null
 		  END as url
