@@ -219,7 +219,7 @@
 		       THEN '/workspace/analyses/'
 		                || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
-		      THEN '/../jbrowse/index.html?data=/a/service/jbrowse/tracks/'
+		      THEN '/../../a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
 		                || 'myorg&tracks=gene,mydsnamei%' 
 		                || 'myfilename&highlight=&loc=myseqname'
 		      ELSE null
