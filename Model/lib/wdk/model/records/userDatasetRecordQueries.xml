@@ -219,7 +219,7 @@
 		       THEN '/workspace/analyses/'
 		                || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
-		       THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
+		      THEN '/../jbrowse/index.html?data=/a/service/jbrowse/tracks/'
 		                || 'myorg&tracks=gene,mydsnamei%' 
 		                || 'myfilename&highlight=&loc=myseqname'
 		      ELSE null
@@ -716,7 +716,7 @@
 		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id) 
                        WHEN type_name = 'isasimple'
-                       THEN '/workspace/analyses/'
+		      THEN '/a/app/workspace/analyses/'
                                 || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
                        THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
