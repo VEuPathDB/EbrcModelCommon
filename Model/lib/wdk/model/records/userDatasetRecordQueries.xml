@@ -199,7 +199,7 @@
         <![CDATA[
                SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
 		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
-		        THEN 'Identify genes by this dataset'
+		        THEN 'Identify genes based on ' || category
                         WHEN type_name = 'isasimple'
 		        THEN 'Browse and subset this dataset'
                         WHEN type_name = 'bigwigfiles'
