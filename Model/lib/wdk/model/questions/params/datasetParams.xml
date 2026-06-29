@@ -139,14 +139,6 @@
                     multiPick="false" >
       <help>A Gene List dataset you have imported into your workspace, and that is installed in @PROJECT_ID@ </help>
     </flatVocabParam>
-    <flatVocabParam name="dataset_name"
-                 queryRef="datasetVQ.extDbNames"
-                 prompt="Dataset INTERNAL name"
-                 multiPick="true">
-      <help>
-        The comma delimited list of dataset names
-      </help>
-    </flatVocabParam>
 
     <flatVocabParam name="taxon"
                  queryRef="datasetVQ.taxon"
@@ -185,7 +177,7 @@
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="geneListUserDataset" isCacheable="false">
+   <sqlQuery name="geneListUserDataset" isCacheable="false">
       <paramRef ref="InternalParams.user_id"/>
         <column name="internal" />
         <column name="term" />
@@ -207,9 +199,9 @@
           ) t
           ORDER BY num, display
         </sql>
-    </sqlQuery>
+   </sqlQuery>
 
-    <sqlQuery name="extDbNames">
+   <sqlQuery name="extDbNames">
       <column name="internal"/>
       <column name="term"/>
       <sql>

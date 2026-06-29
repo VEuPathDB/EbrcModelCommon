@@ -16,25 +16,7 @@
             SELECT distinct CONCAT('EDAUD_', user_dataset_id) as dataset_id
             FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
             WHERE (user_id = $$user_id$$ or is_public = true)
-            AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
-        ]]>
-      </sql>
-    </sqlQuery>
-
-    <sqlQuery name="ByExternalDatabaseNames">
-      <testParamValues>
-        <paramValue name="dataset_name">example_dataset</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.dataset_name"/>
-      <column name="dataset_id"/>
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
-          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud,
-               @VDI_CONTROL_SCHEMA@.dataset_meta dm
-          WHERE aud.dataset_id = dm.dataset_id
-          AND dm.name IN ($$dataset_name$$)
+            AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != project_id))
         ]]>
       </sql>
     </sqlQuery>
@@ -56,7 +38,8 @@
         <![CDATA[
           SELECT DISTINCT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id
           FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud
-          WHERE 1=0   User datasets currently do not support model references
+          WHERE (user_id = $$user_id$$ or is_public = true)
+            AND 1=0   User datasets currently do not support model references
         ]]>
       </sql>
     </sqlQuery>
@@ -96,47 +79,6 @@
       </sql>
     </sqlQuery>
 -->
-    <sqlQuery name="ById">
-      <testParamValues>
-        <paramValue name="dataset_id">EDAUD_12345</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.dataset_id"/>
-      <column name="dataset_id"/>
-
-      <sql>
-        <![CDATA[
-          SELECT DISTINCT CONCAT('EDAUD_', user_dataset_id) as dataset_id
-          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
-          WHERE CONCAT('EDAUD_', user_dataset_id) in ($$dataset_id$$)
-        ]]>
-      </sql>
-    </sqlQuery>
-
-
-    <sqlQuery name="ByUserId" includeProjects="ClinEpiDB">
-      <testParamValues>
-        <paramValue name="user_id">48</paramValue>
-      </testParamValues>
-
-      <paramRef ref="datasetParams.user_id"/>
-      <column name="dataset_id"/>
-      <column name="study_id"/>
-      <column name="restriction_level"/>
-
-      <sql>
-        <![CDATA[
-          SELECT CONCAT('EDAUD_', aud.user_dataset_id) as dataset_id,
-                 CONCAT('EDAUD_', aud.user_dataset_id) as study_id,
-                 d.accessibility as restriction_level
-          FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets aud,
-               @VDI_CONTROL_SCHEMA@.dataset d
-          WHERE aud.dataset_id = d.dataset_id
-          AND aud.user_id = $$user_id$$
-          AND (aud.project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != '@PROJECT_ID@'))
-        ]]>
-      </sql>
-    </sqlQuery>
 
     <processQuery name="UserDatasetsByText" excludeProjects="MicrobiomeDB,ClinEpiDB"
                   processName="org.apidb.apicomplexa.wsfplugin.solrsearch.SiteSearchPlugin">

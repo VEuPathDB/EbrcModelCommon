@@ -30,18 +30,6 @@
       />
     </question>
 
-    <question name="UserDatasetsByDatasetNames"
-      displayName="User Datasets by dataset names"
-      shortDisplayName="Search"
-      fullAnswer="true"
-      queryRef="UserDatasetsIds.ByExternalDatabaseNames"
-      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <description>
-         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.)
-      </description>
-    </question>
-
 <!-- TODO these questions need to be renamed per datatype
 
     <question name="UserDatasetsByReferenceName"
@@ -85,38 +73,6 @@
       </description>
     </question>
 -->
-
-
-    <question name="UserDatasetsById"
-      displayName="User Datasets by ID"
-      shortDisplayName="ID"
-      fullAnswer="true"
-      queryRef="UserDatasetsIds.ById"
-      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <description>
-         Find datasets by ID
-      </description>
-    </question>
-
-
-    <question name="UserDatasetsByUserId"
-      displayName="User Datasets study_access level based on user_id"
-      shortDisplayName="StudyAccess"
-      fullAnswer="true"
-      queryRef="UserDatasetsIds.ByUserId"
-      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
-      includeProjects="ClinEpiDB"
-      noSummaryOnSingleRecord="true">
-      <description>
-         Find datasets that are associated with a particular dataset type and subtype
-      </description>
-       <dynamicAttributes>
-         <columnAttribute name="restriction_level" displayName="Study Access level"  align="left" />
-         <columnAttribute name="study_id" displayName="Study Id"  align="left" />
-      </dynamicAttributes>
-    </question>
-
 
     <question name="UserDatasetsByText"
         excludeProjects="MicrobiomeDB,ClinEpiDB"

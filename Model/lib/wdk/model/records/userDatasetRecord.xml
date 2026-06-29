@@ -108,7 +108,7 @@
                          help="Free text entered by the author"/>
         <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
-        <columnAttribute name="project_name" displayName="VEuPathDB project" help="VEuPathDB component website (ex: PlasmoDB, FungiDB, ToxoDB, etc.) where the dataset was uploaded."/>
+	<columnAttribute name="project_name" displayName="Project" help="?"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
@@ -135,6 +135,7 @@
       </attributeQueryRef>
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
         <columnAttribute name="ref_organism" displayName="Reference genome" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
+	<columnAttribute name="ref_genome_filename" />
       </attributeQueryRef>
 
       <!-- phase 2
@@ -181,6 +182,7 @@
       <!-- References --> 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 <!-- TODO will return search , name hardcoded based on dataset type
+          BEWARE  There is already a search_link attribute, since we only provide one search per user dataset right now
 
       <table name="References" excludeProjects="ClinEpiDB,MicrobiomeDB"
              displayName="Explore this Dataset within this Website"
@@ -335,7 +337,7 @@
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Field Study or Clinical Trial - Characteristics 
-           UNUSED, we use attributes instead
+           UNUSED, we use attributes for these values  nstead
       -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!--     <table name="Characteristics" includeProjects="ClinEpiDB"

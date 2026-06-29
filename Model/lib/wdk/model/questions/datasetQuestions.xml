@@ -59,19 +59,6 @@
     </question>
     -->
 
-    <question name="DatasetsByDatasetNames"
-      displayName="Datasets by dataset names"
-      shortDisplayName="Search"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByExternalDatabaseNames"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      noSummaryOnSingleRecord="true">
-      <attributesList sorting="category asc" />
-      <description>
-         Find datasets that are associated with an attribute on record page (ex.SNP table, Winzeler profile graphs etc.) 
-      </description>
-    </question>
-
     <question name="DatasetsByReferenceName"
       displayName="Datasets used to generate a table or result"
       shortDisplayName="Reference"
@@ -122,24 +109,6 @@
       <description>
          Find datasets by ID
       </description>
-    </question>
-
-    <question name="DatasetsByUserId"
-      displayName="Datasets access level based on user_id"
-      shortDisplayName="Dataset access"
-      fullAnswer="true"
-      queryRef="DatasetIds.ByUserId"
-      recordClassRef="DatasetRecordClasses.DatasetRecordClass"
-      includeProjects="ClinEpiDB"
-      noSummaryOnSingleRecord="true">
-      <attributesList summary="study_id, restriction_level" />
-      <description>
-         Find datasets that are associated with a particular dataset type and subtype
-      </description>
-       <dynamicAttributes>
-         <columnAttribute name="restriction_level" displayName="Dataset Access level"  align="left" />
-         <columnAttribute name="study_id" displayName="Dataset Id"  align="left" />
-      </dynamicAttributes>
     </question>
 
   <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

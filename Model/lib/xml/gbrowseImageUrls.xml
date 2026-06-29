@@ -2570,6 +2570,7 @@
     <track>mdomaabys</track>
     <track>mdomaabys2023</track>
     <track>scalUSDA</track>
+    <track>scalidStoCalc2.1</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Chelicerata" suffixes="_span;_gene">
@@ -2582,10 +2583,17 @@
     <track>aaegLVP_AGWG</track>
     <track>aalbFoshan</track>
     <track>aalbFPA</track>
+    <track>aalbFoshanFPA2023</track>
     <track>aalbC6-36</track>
     <track>cquiJHB</track>
     <track>cquiJohannesburg</track>
+    <track>cpippallensTS</track>
+    <track>mgenUrasoe2022</track>
     <track>scyaScyaPA1</track>
+    <track>tyanYona2022</track>
+    <track>trutseptentrionalisSRP</track>
+    <track>ulowMFRUFL</track>
+    <track>wsmiHCP4</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Ceratopogonidae" suffixes="_span;_gene">
@@ -2595,6 +2603,7 @@
   <subtrackSet project="VectorBase" name="Gastropoda" suffixes="_span;_gene">
     <track>bglaBB02</track>
     <track>bglaXG47</track>
+    <track>bpfeKasaAsao</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Hemiptera" suffixes="_span;_gene">
@@ -2603,6 +2612,7 @@
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
+    <track>aameF_SG_1</track>
     <track>dandqqDerAnde1</track>
     <track>dsilDsil-2018</track>
     <track>hasiHyas2018</track>
@@ -2625,6 +2635,10 @@
 
   <subtrackSet project="VectorBase" name="Phthiraptera" suffixes="_span;_gene">
     <track>phumUSDA</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Siphonaptera" suffixes="_span;_gene">
+    <track>cfelEL2017DRISC</track>
   </subtrackSet>
 
  
@@ -2666,6 +2680,7 @@
 
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
+    <org organism="Anopheles atroparvus Infravec2 EBRE" abbrev="aatrInfravec2EBRE" />
     <org organism="Anopheles bellator AbelBR1" abbrev="abelAbelBR1" />
     <org organism="Anopheles dirus WRAIR2" abbrev="adirWRAIR2" />
     <org organism="Anopheles epiroticus Epiroticus2" abbrev="aepiEpiroticus2" />
@@ -2705,6 +2720,7 @@
     <org organism="Musca domestica aabys" abbrev="mdomaabys" />
     <org organism="Musca domestica aabys 2023" abbrev="mdomaabys2023" />
     <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
+    <org organism="Stomoxys calcitrans idStoCalc2.1" abbrev="scalidStoCalc2.1" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Brachycera" />
     </track>
@@ -2723,10 +2739,17 @@
     <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
     <org organism="Aedes albopictus Foshan FPA" abbrev="aalbFPA" />
+    <org organism="Aedes albopictus Foshan FPA2023" abbrev="aalbFoshanFPA2023" />
     <org organism="Aedes albopictus C6/36 cell line" abbrev="aalbC6-36" />
     <org organism="Culex quinquefasciatus JHB 2020" abbrev="cquiJHB" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
+    <org organism="Culex pipiens pallens TS" abbrev="cpippallensTS" />
+    <org organism="Malaya genurostris Urasoe2022" abbrev="mgenUrasoe2022" />
     <org organism="Sabethes cyaneus ScyaPA1" abbrev="scyaScyaPA1" />
+    <org organism="Topomyia yanbarensis Yona2022" abbrev="tyanYona2022" />
+    <org organism="Toxorhynchites rutilus septentrionalis SRP" abbrev="trutseptentrionalisSRP" />
+    <org organism="Uranotaenia lowii MFRU-FL" abbrev="ulowMFRUFL" />
+    <org organism="Wyeomyia smithii HCP4" abbrev="wsmiHCP4" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
       <subtrack set="Ceratopogonidae" />
@@ -2745,6 +2768,7 @@
   <url project="VectorBase" type="synteny">
     <org organism="Biomphalaria glabrata BB02" abbrev="bglaBB02" />
     <org organism="Biomphalaria glabrata XG47" abbrev="bglaXG47" />
+    <org organism="Biomphalaria pfeifferi KasaAsao" abbrev="bpfeKasaAsao" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Gastropoda" />
       <!-- TODO
@@ -2774,6 +2798,7 @@
   </url>
 
   <url project="VectorBase" type="synteny">
+    <org organism="Amblyomma americanum F_SG_1" abbrev="aameF_SG_1" />
     <org organism="Dermacentor andersoni qqDerAnde1.2" abbrev="dandqqDerAnde1" />
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
@@ -2800,6 +2825,13 @@
       <subtrack name="someabbrev_span" />
       <subtrack name="someabbrev_gene" />
       -->
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Ctenocephalides felis EL2017-DRISC" abbrev="cfelEL2017DRISC" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Siphonaptera" />
     </track>
   </url>
 

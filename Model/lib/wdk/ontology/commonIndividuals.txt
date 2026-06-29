@@ -62,6 +62,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.summary	topic_0219_synonym		User
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_publication	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_publication						results	record-internal	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.ref_organism	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	ref_organism					6	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ref_genome_filename			UserDatasetRecordClasses.UserDatasetRecordClass	attribute	ref_genome_filename						record-internal	
 ##UserDatasetRecordClasses.UserDatasetRecordClass.Organisms	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	table	Organisms					11	results	record	download
 
 DatasetRecordClasses.DatasetRecordClass.ExampleGraphs	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	ExampleGraphs							record	download
