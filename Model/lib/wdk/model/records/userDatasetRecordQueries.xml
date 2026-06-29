@@ -248,12 +248,14 @@
     <sqlQuery name="RefOrganism" doNotTest="true">
       <column name="dataset_id"/>
       <column name="ref_organism"/>
+      <column name="ref_genome_filename"/>
       <sql>
         <![CDATA[
-           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, ref_organism
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, ref_organism, ref_genome_filename
            FROM @VDI_CONTROL_SCHEMA@.dataset d
            LEFT JOIN
-           (SELECT dataset_id, organism_name as ref_organism
+            (SELECT dataset_id, organism_name as ref_organism,
+                    split_part(d.display_name, ' ', 1) as ref_genome_filename
             FROM @VDI_CONTROL_SCHEMA@.dataset_dependency d,
                   apidbtuning.organismattributes org
             WHERE substring(identifier FROM '^[A-Za-z]+-\d+_(.+)_Genome') = org.name_for_filenames
