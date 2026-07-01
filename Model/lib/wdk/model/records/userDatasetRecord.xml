@@ -100,7 +100,7 @@
            <display>YES</display>
            <text>YES</text>
          </textAttribute>
-         <textAttribute name="bwFiles" displayName="View your bigWig data in our Genome Browser">
+         <textAttribute name="bwFiles" displayName="View your bigWig data in our Genome Browser" excludeProjects="ClinEpiDB">
            <display>YES if bw dataset, MAYBE if rnaseq dataset</display>
            <text>YES</text>
          </textAttribute>
@@ -444,7 +444,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Explore this Dataset within this Website ==== SEARCHES -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="ExploreWebsiteSearches"
+      <table name="ExploreWebsiteSearches"   excludeProjects='ClinEpiDB'
              displayName="Run a Gene search on this dataset"
              queryRef="UserDatasetTables.ExploreWebsiteSearches">
         <columnAttribute name="dataset_id"  internal="true"/>
