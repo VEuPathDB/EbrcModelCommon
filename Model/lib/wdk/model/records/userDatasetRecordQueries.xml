@@ -201,7 +201,7 @@
 		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
 		        THEN 'Identify Genes based on ' || category
                         WHEN type_name = 'isasimple'
-		        THEN 'Browse and subset this dataset'
+		        THEN 'Explore and visualize'
                         WHEN type_name = 'bigwigfiles'
                         THEN 'View in Genome Browser'
 		        ELSE null
