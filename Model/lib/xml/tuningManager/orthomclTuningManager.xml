@@ -114,8 +114,8 @@ SELECT
     o.group_id AS group_name,
     o.ortholog_group_id,
     o.number_of_members AS group_size,
-    o.number_of_core_members,
-    o.number_of_peripheral_members,
+    COALESCE(cm.number_of_core_members, 0) AS number_of_core_members,
+    COALESCE(pm.number_of_peripheral_members, 0) AS number_of_peripheral_members,
     CASE o.is_residual WHEN 1 THEN 'Residual'
          ELSE 'Core' END AS group_type,
 
@@ -139,6 +139,30 @@ JOIN apidb.orthologGroupAASequence ogseq
 
 JOIN apidb.orthologGroup o
   ON o.group_id = ogseq.group_id
+
+LEFT JOIN (
+    SELECT COUNT(ogas.aa_sequence_id) AS number_of_core_members, ogas.group_id
+    FROM apidb.organism org_c
+    JOIN dots.aasequence das_c
+      ON das_c.taxon_id = org_c.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas
+      ON ogas.aa_sequence_id = das_c.aa_sequence_id
+    WHERE org_c.core_peripheral = 'core'
+    GROUP BY ogas.group_id
+) cm
+  ON o.group_id = cm.group_id
+
+LEFT JOIN (
+    SELECT COUNT(ogas.aa_sequence_id) AS number_of_peripheral_members, ogas.group_id
+    FROM apidb.organism org_p
+    JOIN dots.aasequence das_p
+      ON das_p.taxon_id = org_p.taxon_id
+    JOIN apidb.orthologgroupaasequence ogas
+      ON ogas.aa_sequence_id = das_p.aa_sequence_id
+    WHERE org_p.core_peripheral = 'peripheral'
+    GROUP BY ogas.group_id
+) pm
+  ON o.group_id = pm.group_id
 
 JOIN (
     SELECT
