@@ -219,9 +219,7 @@
 		       THEN '/workspace/analyses/'
 		                || CONCAT('EDAUD_', dataset_id, '/new')
                        WHEN type_name = 'bigwigfiles'
-		      THEN '/../../a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
-		                || 'myorg&tracks=gene,mydsname%' 
-		                || 'myfilename&highlight=&loc=myseqname'
+                       THEN '#bwFiles'
 		      ELSE null
                   END as url
 		FROM  @VDI_CONTROL_SCHEMA@.dataset
@@ -255,8 +253,8 @@
            FROM @VDI_CONTROL_SCHEMA@.dataset d
            LEFT JOIN
             (SELECT dataset_id, organism_name as ref_organism,
-                    split_part(d.display_name, ' ', 1) as ref_genome_filename
-            FROM @VDI_CONTROL_SCHEMA@.dataset_dependency d,
+                    split_part(dd.identifier, '_', 2) as ref_genome_filename
+            FROM @VDI_CONTROL_SCHEMA@.dataset_dependency dd,
                   apidbtuning.organismattributes org
             WHERE substring(identifier FROM '^[A-Za-z]+-\d+_(.+)_Genome') = org.name_for_filenames
            ) prim on d.dataset_id = prim.dataset_id
@@ -691,7 +689,7 @@
     </sqlQuery>
 
     <!-- Explore links in this website    table -->
-    <sqlQuery name="ExploreWebsite" isCacheable='false' excludeProjects="ClinEpiDB">
+    <sqlQuery name="ExploreWebsiteSearches" isCacheable='false' excludeProjects="ClinEpiDB">
       <column name="dataset_id"/>
       <column name="description"/>
       <column name="url"/>
@@ -701,11 +699,9 @@
         <![CDATA[
            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
                    CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
-                        THEN 'Identify genes by this dataset'
+                        THEN 'Identify Genes based on ' || category
                         WHEN type_name = 'isasimple'
                         THEN 'Browse and subset this dataset'
-                        WHEN type_name = 'bigwigfiles'
-		        THEN 'View in Genome Browser'
                         ELSE null
 		   END as description,
                   CASE WHEN type_name = 'genelist'
@@ -717,14 +713,6 @@
 		      WHEN type_name = 'phenotype'
 		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id) 
-                       WHEN type_name = 'isasimple'
-		      THEN '/a/app/workspace/analyses/'
-                                || CONCAT('EDAUD_', dataset_id, '/new')
-                       WHEN type_name = 'bigwigfiles'
-                       THEN '/a/jbrowse/index.html?data=/a/service/jbrowse/tracks/'
-                                || 'myorg&tracks=gene,mydsname%' 
-                                || 'myfilename&highlight=&loc=myseqname'
-		      ELSE null
 		  END as url
             FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
@@ -733,7 +721,7 @@
 
 
 
-    <sqlQuery name="ExploreWebsite" isCacheable='false' includeProjects="ClinEpiDB">
+    <sqlQuery name="ExploreWebsiteEDA" isCacheable='false'>
       <column name="dataset_id"/>
       <column name="description"/>
       <column name="url"/>
