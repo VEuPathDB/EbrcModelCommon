@@ -824,7 +824,7 @@
       <column name="note"/>
       <sql>
         <![CDATA[
-           SELECT dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
+           SELECT distinct dh.dataset_presenter_id as dataset_id, bd.build_number as build, bd.release_date, dh.note
            FROM ApidbTuning.DatasetHistory dh, ApidbTuning.EupathBuildDates bd
            WHERE dh.build_number = bd.build_number::NUMERIC
              AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
