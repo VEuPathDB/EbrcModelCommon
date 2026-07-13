@@ -838,16 +838,14 @@
       <column name="dataset_id"/>
       <column name="build"/>
       <column name="release_date"/>
-      <column name="project"/>
       <column name="release_number"/>
       <column name="version"/>
       <column name="note"/>
       <sql excludeProjects="MicrobiomeDB,ClinEpiDB">
         <![CDATA[
-          SELECT dh.dataset_presenter_id as dataset_id
+         SELECT distinct dh.dataset_presenter_id as dataset_id
             , bd.build_number as build
             , to_char(bd.release_date, 'yyyy-mm-dd') as release_date
-            , bd.project
             , bd.release_number
             , ds.version
             , dh.note
@@ -856,7 +854,7 @@
             , apidb.datasource ds
             RIGHT JOIN ApidbTuning.DatasetPresenter dsp ON ds.name = dsp.name
           WHERE dh.build_number = bd.build_number::numeric
-            AND (bd.project = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND (bd.project = '@PROJECT_ID@' or  ('UniDB' = '@PROJECT_ID@' and bd.project != 'OrthoMCL'))
             AND dh.dataset_presenter_id = dsp.dataset_presenter_id
           ORDER BY bd.build_number
         ]]>
