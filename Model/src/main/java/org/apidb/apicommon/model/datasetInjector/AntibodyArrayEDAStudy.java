@@ -31,7 +31,8 @@ public class AntibodyArrayEDAStudy extends GenomicsEDAStudy {
     @Override
     public void addModelReferences() {
         super.addModelReferences();
-
+        addWdkReference("GeneRecordClasses.GeneRecordClass", "table", "HostResponseGraphs");
+	addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "profile_graph", getPropValue("graphModule") + getDatasetName() );
         addWdkReference("TranscriptRecordClasses.TranscriptRecordClass", "question", "GeneQuestions.GenesByAntibodyArrayEdaSubset_" + this.getDatasetName());
     }
 

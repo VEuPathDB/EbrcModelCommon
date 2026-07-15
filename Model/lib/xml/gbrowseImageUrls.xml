@@ -111,6 +111,7 @@
     <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pchachabaudiCB</track>
     <track>pvinvinckeivinckei</track>
     <track>pvinvinckeiCY</track>
     <track>pvinbrucechwattiDA</track>
@@ -126,6 +127,7 @@
     <track>pyoeyoelii17XNL2023</track>
     <track>pknoMalayanPk1A</track>
     <track>pchachabaudi</track>
+    <track>pchachabaudiCB</track>
     <track>pvinvinckeivinckei</track>
     <track>pvinvinckeiCY</track>
     <track>pvinbrucechwattiDA</track>
@@ -244,7 +246,7 @@
     <org organism="Plasmodium brasilianum strain Bolivian I" abbrev="pbraBolivianI" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
-    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
+    <org organism="Plasmodium ovale wallikeri PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
@@ -286,7 +288,7 @@
     <org organism="Plasmodium reichenowi CDC" abbrev="preiCDC" />
     <org organism="Plasmodium malariae UG01" abbrev="pmalUG01" />
     <org organism="Plasmodium ovale curtisi GH01" abbrev="povaGH01" />
-    <org organism="Plasmodium ovale wallikeri strain PowCR01" abbrev="povaCR01" />
+    <org organism="Plasmodium ovale wallikeri PowCR01" abbrev="povaCR01" />
     <org organism="Plasmodium coatneyi Hackeri" abbrev="pcoaHackeri" />
     <org organism="Plasmodium inui San Antonio 1" abbrev="pinuSanAntonio1" />
     <org organism="Plasmodium fragile strain nilgiri" abbrev="pfraNilgiri" />
@@ -308,6 +310,7 @@
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
+    <org organism="Plasmodium chabaudi chabaudi CB" abbrev="pchachabaudiCB" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
     <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
     <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
@@ -332,6 +335,7 @@
     <org organism="Plasmodium yoelii yoelii YM" abbrev="pyoeyoeliiYM" />
     <org organism="Plasmodium knowlesi strain Malayan Strain Pk1 A" abbrev="pknoMalayanPk1A" />
     <org organism="Plasmodium chabaudi chabaudi" abbrev="pchachabaudi" />
+    <org organism="Plasmodium chabaudi chabaudi CB" abbrev="pchachabaudiCB" />
     <org organism="Plasmodium vinckei vinckei strain vinckei" abbrev="pvinvinckeivinckei" />
     <org organism="Plasmodium vinckei vinckei CY" abbrev="pvinvinckeiCY" />
     <org organism="Plasmodium vinckei brucechwatti DA" abbrev="pvinbrucechwattiDA" />
@@ -476,7 +480,7 @@
     <org organism="Entamoeba invadens IP1" abbrev="einvIP1" />
     <org organism="Entamoeba nuttalli P19" abbrev="enutP19" />
     <org organism="Entamoeba moshkovskii Laredo" abbrev="emosLaredo" />
-    <org organism="Mastigamoeba balamuthi ATTC 30984" abbrev="mbalATCC30984" />
+    <org organism="Mastigamoeba balamuthi ATCC 30984" abbrev="mbalATCC30984" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Amoebozoa_gene" />
@@ -497,10 +501,13 @@
     <track>chomUdeA01</track>
     <track>chom30976</track>
     <track>cmelUKMEL1</track>
+    <track>cmelTU1867</track>
     <track>cmurRN66</track>
     <track>cand30847</track>
     <track>cubi39726</track>
     <track>crya45019</track>
+    <track>cser8845_47</track>
+    <track>csp43IA8</track>
     <track>cspc37763</track>
     <track>ctyzUGA55</track>
     <track>gnipUnknown</track>
@@ -520,10 +527,13 @@
     <org organism="Cryptosporidium hominis UdeA01" abbrev="chomUdeA01" />
     <org organism="Cryptosporidium hominis isolate 30976" abbrev="chom30976" />
     <org organism="Cryptosporidium meleagridis strain UKMEL1" abbrev="cmelUKMEL1" />
+    <org organism="Cryptosporidium meleagridis TU1867" abbrev="cmelTU1867" />
     <org organism="Cryptosporidium muris RN66" abbrev="cmurRN66" />
     <org organism="Cryptosporidium andersoni isolate 30847" abbrev="cand30847" />
     <org organism="Cryptosporidium ubiquitum isolate 39726" abbrev="cubi39726" />
     <org organism="Cryptosporidium ryanae 45019" abbrev="crya45019" />
+    <org organism="Cryptosporidium serpentis 8845_47" abbrev="cser8845_47" />
+    <org organism="Cryptosporidium sp. 43IA8 isolate 43IA8" abbrev="csp43IA8" />
     <org organism="Cryptosporidium sp. chipmunk genotype I strain 37763" abbrev="cspc37763" />
     <org organism="Cryptosporidium tyzzeri isolate UGA55" abbrev="ctyzUGA55" />
     <org organism="Gregarina niphandrodes Unknown strain" abbrev="gnipUnknown"/>
@@ -583,6 +593,7 @@
     <track>pstr93TX-2</track>
     <track>pstrsp.triticiPST130</track>
     <track>ptri1-1BBBDRace1</track>
+    <track>ppacMT2006</track>
   </subtrackSet>
 
   <subtrackSet name="Schizosaccharomycetes_gene" project="FungiDB" suffixes="_span;_gene">
@@ -709,6 +720,7 @@
     <track>acamIBT28561</track>
     <track>afumAf293</track>
     <track>afumA1163</track>
+    <track>afumA1160</track>
     <track>aclaNRRL1</track>
     <track>acriGZAAS20.1005</track>
     <track>aellCBS707.79</track>
@@ -794,6 +806,7 @@
     <track>foxyrace4</track>
     <track>foxy26406</track>
     <track>foxyFo47</track>
+    <track>foxyFo472020</track>
     <track>foxyFOSC3a</track>
     <track>fproET1</track>
     <track>fproNRRL62905</track>
@@ -933,6 +946,10 @@
     <track>aaltSRC1lrK2f</track>
     <track>cclayc1106</track>
     <track>vgalCBS43764</track>
+    <track>bmayC4</track>
+    <track>ffulRace5_Kim</track>
+    <track>cbetCb09-40</track>
+    <track>ckikMAFF305040</track>
   </subtrackSet>
 
   <subtrackSet name="Peronosporales" project="FungiDB" suffixes="_span;_gene">
@@ -1017,6 +1034,7 @@
     <org abbrev="pstr93TX-2" organism="Puccinia striiformis 93TX-2"/>
     <org abbrev="pstrsp.triticiPST130" organism="Puccinia striiformis f. sp. tritici PST-130"/>
     <org abbrev="ptri1-1BBBDRace1" organism="Puccinia triticina 1-1 BBBD Race 1"/>
+    <org abbrev="ppacMT2006" organism="Phakopsora pachyrhizi MT2006"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Pucciniomycetes_gene"/>
@@ -1083,7 +1101,7 @@
     <org abbrev="cdubCD36" organism="Candida dubliniensis CD36"/>
     <org abbrev="cduoB09383" organism="Candida duobushaemulonis strain B09383"/>
     <org abbrev="cglaCBS138" organism="Nakaseomyces glabratus CBS 138"/>
-    <org abbrev="cglaCBS1382020" organism="Nakaseomyces glabratus CBS 138 2020"/>
+    <org abbrev="cglaCBS1382020" organism="Nakaseomyces glabratus CBS138 2020"/>
     <org abbrev="cglaBG2" organism="Nakaseomyces glabratus BG2"/>
     <org abbrev="cglaBG3993" organism="Nakaseomyces glabratus BG3993"/>
     <org abbrev="cglaDSY562" organism="Nakaseomyces glabratus DSY562"/>
@@ -1225,6 +1243,7 @@
     <org abbrev="acamIBT28561" organism="Aspergillus campestris IBT 28561"/>
     <org abbrev="afumAf293" organism="Aspergillus fumigatus Af293"/>
     <org abbrev="afumA1163" organism="Aspergillus fumigatus A1163"/>
+    <org abbrev="afumA1160" organism="Aspergillus fumigatus A1160"/>
     <org abbrev="aclaNRRL1" organism="Aspergillus clavatus NRRL 1"/>
     <org abbrev="acriGZAAS20.1005" organism="Aspergillus cristatus GZAAS20.1005"/>
     <org abbrev="aellCBS707.79" organism="Aspergillus ellipticus CBS 707.79"/>
@@ -1238,7 +1257,7 @@
     <org abbrev="anigCBS513-88" organism="Aspergillus niger CBS 513.88"/>
     <org abbrev="anigATCC1015" organism="Aspergillus niger ATCC 1015"/>
     <org abbrev="anigATCC13496" organism="Aspergillus niger ATCC 13496"/>
-    <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC 64974)"/>
+    <org abbrev="anigN402ATCC64974" organism="Aspergillus niger strain N402 (ATCC64974)"/>
     <org abbrev="alIFO4308" organism="Aspergillus luchuensis IFO 4308"/>
     <org abbrev="anovIBT16806" organism="Aspergillus novofumigatus IBT 16806"/>
     <org abbrev="aterNIH2624" organism="Aspergillus terreus NIH2624"/>
@@ -1285,7 +1304,7 @@
     <org abbrev="moryBR32" organism="Pyricularia oryzae BR32"/>
     <org abbrev="cpur20.1" organism="Claviceps purpurea 20.1"/>
     <org abbrev="macrCQMa102" organism="Metarhizium acridum CQMa 102"/>
-    <org abbrev="maniARSEF549" organism="Metarhizium anisopliae ARSEF 549"/>
+    <org abbrev="maniARSEF549" organism="Metarhizium hybridum ARSEF 549"/>
     <org abbrev="cmilATCC34164" organism="Cordyceps militaris ATCC 34164"/>
     <org abbrev="cmilCM01" organism="Cordyceps militaris CM01"/>
     <org abbrev="treeQM6a" organism="Trichoderma reesei QM6a"/>
@@ -1319,6 +1338,7 @@
     <org abbrev="foxyrace4" organism="Fusarium odoratissimum strain race 4"/>
     <org abbrev="foxy26406" organism="Fusarium oxysporum f. sp. melonis 26406"/>
     <org abbrev="foxyFo47" organism="Fusarium oxysporum Fo47"/>
+    <org abbrev="foxyFo472020" organism="Fusarium oxysporum Strain Fo47 2020"/>
     <org abbrev="foxyFOSC3a" organism="Fusarium oxysporum NRRL 32931"/>
     <org abbrev="fproET1" organism="Fusarium proliferatum ET1"/>
     <org abbrev="fproNRRL62905" organism="Fusarium proliferatum strain NRRL62905"/>
@@ -1333,18 +1353,18 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="cneoJEC21" organism="Cryptococcus neoformans var. neoformans JEC21"/>
-    <org abbrev="cneoB-3501A" organism="Cryptococcus neoformans var. neoformans B-3501A"/>
-    <org abbrev="cneoH99" organism="Cryptococcus neoformans var. grubii H99"/>
-    <org abbrev="cneoKN99" organism="Cryptococcus neoformans var. grubii KN99"/>
+    <org abbrev="cneoJEC21" organism="Cryptococcus deneoformans JEC21"/>
+    <org abbrev="cneoB-3501A" organism="Cryptococcus deneoformans B-3501A"/>
+    <org abbrev="cneoH99" organism="Cryptococcus neoformans H99"/>
+    <org abbrev="cneoKN99" organism="Cryptococcus neoformans KN99"/>
     <org abbrev="cneoVNII" organism="Cryptococcus neoformans strain:VNII"/>
     <org abbrev="ccf.gattiiMF34" organism="Cryptococcus cf. gattii MF34"/>
     <org abbrev="cgatWM276" organism="Cryptococcus gattii WM276"/>
-    <org abbrev="cgatCA1873" organism="Cryptococcus gattii CA1873"/>
-    <org abbrev="cgatIND107" organism="Cryptococcus gattii VGIV IND107"/>
+    <org abbrev="cgatCA1873" organism="Cryptococcus bacillisporus CA1873"/>
+    <org abbrev="cgatIND107" organism="Cryptococcus tetragattii IND107"/>
     <org abbrev="cgatEJB2" organism="Cryptococcus gattii EJB2"/>
     <org abbrev="cgatNT10" organism="Cryptococcus gattii NT-10"/>
-    <org abbrev="cgatVGIIR265" organism="Cryptococcus gattii VGII R265"/>
+    <org abbrev="cgatVGIIR265" organism="Cryptococcus deuterogattii R265"/>
     <org abbrev="cdepCBS7841" organism="Cryptococcus depauperatus CBS 7841"/>
     <org abbrev="cdepCBS7855" organism="Cryptococcus depauperatus CBS 7855"/>
     <org abbrev="kbesCBS10118" organism="Kwoniella bestiolae CBS 10118"/>
@@ -1473,7 +1493,7 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev="umay521" organism="Ustilago maydis 521"/>
+    <org abbrev="umay521" organism="Mycosarcoma maydis 521"/>
     <org abbrev="sreiSRZ2" organism="Sporisorium reilianum SRZ2"/>
     <org abbrev="mgloCBS7966" organism="Malassezia globosa CBS 7966"/>
     <org abbrev="mpacCBS1879" organism="Malassezia pachydermatis CBS 1879"/>
@@ -1515,6 +1535,10 @@
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
     <org abbrev="cclayc1106" organism="Curvularia clavata yc1106"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
+    <org abbrev="bmayC4" organism="Bipolaris maydis C4"/>
+    <org abbrev="ffulRace5_Kim" organism="Fulvia fulva Race5_Kim"/>
+    <org abbrev="cbetCb09-40" organism="Cercospora beticola Cb09-40"/>
+    <org abbrev="ckikMAFF305040" organism="Cercospora kikuchii MAFF 305040"/>
     <track name="Gene"/>
     <track abbrevFirst="true" name="Synteny">
       <subtrack set="Dothideomycetes"/>
@@ -1536,7 +1560,7 @@
     <org abbrev="pcinGKB4" organism="Phytophthora cinnamomi GKB4"/>
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
     <org abbrev="ppalsbr112.9" organism="Phytophthora palmivora var. palmivora strain sbr112.9"/>
-    <org abbrev="pparINRA-310" organism="Phytophthora parasitica INRA-310"/>
+    <org abbrev="pparINRA-310" organism="Phytophthora nicotianae INRA-310"/>
     <org abbrev="pramPr-102" organism="Phytophthora ramorum strain Pr102"/>
     <org abbrev="pram14567" organism="Phytophthora ramorum 14567"/>
     <org abbrev="psojP6497" organism="Phytophthora sojae strain P6497"/>
@@ -1570,11 +1594,11 @@
   </url>
 
   <url project="FungiDB" type="synteny">
-    <org abbrev = "hcapNAm1" organism="Histoplasma capsulatum NAm1"/> 
+    <org abbrev = "hcapNAm1" organism="Histoplasma mississippiense (nom. inval.) NAm1"/> 
     <org abbrev = "hcapG184AR" organism="Histoplasma capsulatum G184AR"/>
     <org abbrev = "hcapG186AR" organism="Histoplasma capsulatum G186AR"/>
     <org abbrev = "hcapG217B" organism="Histoplasma capsulatum G217B"/>
-    <org abbrev = "hcapH88" organism="Histoplasma capsulatum H88"/>
+    <org abbrev = "hcapH88" organism="Histoplasma capsulatum var. duboisii H88"/>
     <org abbrev = "hcapH143" organism="Histoplasma capsulatum H143"/>
     <org abbrev = "hcapWU24" organism="Histoplasma capsulatum WU24"/>
     <org abbrev = "bderATCC26199" organism="Blastomyces dermatitidis ATCC 26199"/>
@@ -1598,6 +1622,7 @@
     <track>bcabUSDA-D6B2</track>
     <track>bdiv1802A</track>
     <track>bdunW12023</track>
+    <track>bgibAzabu</track>
     <track>bmicRI</track>
     <track>bovaMiyake</track>
     <track>bovisSelcuk</track>
@@ -1617,6 +1642,7 @@
     <org organism="Babesia caballi USDA-D6B2" abbrev="bcabUSDA-D6B2"/>
     <org organism="Babesia divergens strain 1802A" abbrev="bdiv1802A" />
     <org organism="Babesia duncani strain WA1 2023" abbrev="bdunW12023" />
+    <org organism="Babesia gibsoni Azabu" abbrev="bgibAzabu" />
     <org organism="Babesia microti strain RI" abbrev="bmicRI" />
     <org organism="Babesia ovata strain Miyake" abbrev="bovaMiyake" />
     <org organism="Babesia ovis Selcuk" abbrev="bovisSelcuk"/>
@@ -1761,7 +1787,7 @@
     <org organism="Cucumispora dikerogammari Dv6" abbrev="cdikDv6"/>
     <org organism="Edhazardia aedis USNM 41457" abbrev="eaedUSNM41457" />
     <org organism="Mitosporidium daphniae UGP3" abbrev="mdapUGP3" />
-    <org organism="Microsporidium sp. FI-F-10" abbrev="mspFIF10" />
+    <org organism="Ordospora pajunii FI-F-10" abbrev="mspFIF10" />
     <org organism="Pseudoloma neurophilia strain MK1" abbrev="pneuMK1" />
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
@@ -1839,11 +1865,11 @@
   </url>
 
   <url project="MicrosporidiaDB" type="synteny">
-    <org organism="Nosema ceranae BRL01" abbrev="ncerBRL01" />
+    <org organism="Vairimorpha ceranae BRL01" abbrev="ncerBRL01" />
     <org organism="Nosema ceranae BRL" abbrev="ncerBRL" />
     <org organism="Nosema ceranae strain PA08_1199" abbrev="ncerPA08_1199" />
     <org organism="Nosema granulosis Ou3-Ou53" abbrev="ngraOu3Ou53" />
-    <org organism="Nosema apis BRL 01" abbrev="napiBRL01" />
+    <org organism="Vairimorpha apis BRL 01" abbrev="napiBRL01" />
     <org organism="Nosema bombycis CQ1" abbrev="nbomCQ1" />
     <org organism="Vittaforma corneae ATCC 50505" abbrev="vcorATCC50505" />
     <track name="Gene" />
@@ -1952,9 +1978,14 @@
     <track>eaceHoughton</track>
     <track>ebruHoughton</track>
     <track>efalBayerHaberkorn1970</track>
+    <track>eflaA23</track>
+    <track>eintP0_A24</track>
+    <track>emagA19</track>
+    <track>emedPL19_A22</track>
     <track>emitHoughton</track>
     <track>enecHoughton</track>
     <track>epraHoughton</track>
+    <track>estiA26</track>
   </subtrackSet>
 
   <subtrackSet project="ToxoDB" name="Sarcocystis_gene" suffixes="_span;_gene">
@@ -2078,9 +2109,14 @@
     <org organism="Eimeria acervulina Houghton" abbrev="eaceHoughton"/>
     <org organism="Eimeria brunetti Houghton" abbrev="ebruHoughton"/>
     <org organism="Eimeria falciformis Bayer Haberkorn 1970" abbrev="efalBayerHaberkorn1970"/>
+    <org organism="Eimeria flavescens A23" abbrev="eflaA23"/>
+    <org organism="Eimeria intestinalis P0_A24" abbrev="eintP0_A24"/>
+    <org organism="Eimeria magna A19" abbrev="emagA19"/>
+    <org organism="Eimeria media PL19_A22" abbrev="emedPL19_A22"/>
     <org organism="Eimeria mitis Houghton" abbrev="emitHoughton"/>
     <org organism="Eimeria necatrix Houghton" abbrev="enecHoughton"/>
     <org organism="Eimeria praecox Houghton" abbrev="epraHoughton"/>
+    <org organism="Eimeria stiedai A26" abbrev="estiA26"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Eimeria_gene" />
@@ -2101,6 +2137,7 @@
     <track>ldonLV9</track>
     <track>ldonHU3</track>
     <track>lenrMCAVBR2001CUR178</track>
+    <track>lguyM4147</track>
     <track>linfJPCM5</track>
     <track>lmajFriedlin</track>
     <track>lmajFriedlin2021</track>
@@ -2206,6 +2243,7 @@
     <org organism="Leishmania donovani strain LV9" abbrev="ldonLV9" />
     <org organism="Leishmania donovani HU3" abbrev="ldonHU3" />
     <org organism="Leishmania enriettii MCAV/BR/2001/CUR178" abbrev="lenrMCAVBR2001CUR178" />
+    <org organism="Leishmania guyanensis M4147" abbrev="lguyM4147" />
     <org organism="Leishmania infantum JPCM5" abbrev="linfJPCM5" />
     <org organism="Leishmania major strain Friedlin" abbrev="lmajFriedlin" />
     <org organism="Leishmania major Friedlin 2021" abbrev="lmajFriedlin2021" />
@@ -2323,7 +2361,7 @@
   </url>
 
   <url project="TriTrypDB" type="synteny">
-    <org organism="Angomonas deanei strain Crithidia deanei Carvalho (ATCC PRA-265)" abbrev="adeaATCCPRA-265"/>
+    <org organism="Angomonas deanei strain Cavalho ATCC PRA-265" abbrev="adeaATCCPRA-265"/>
     <track name="Gene" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Angomonas_gene"/>
@@ -2532,6 +2570,7 @@
     <track>mdomaabys</track>
     <track>mdomaabys2023</track>
     <track>scalUSDA</track>
+    <track>scalidStoCalc2.1</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Chelicerata" suffixes="_span;_gene">
@@ -2544,10 +2583,17 @@
     <track>aaegLVP_AGWG</track>
     <track>aalbFoshan</track>
     <track>aalbFPA</track>
+    <track>aalbFoshanFPA2023</track>
     <track>aalbC6-36</track>
     <track>cquiJHB</track>
     <track>cquiJohannesburg</track>
+    <track>cpippallensTS</track>
+    <track>mgenUrasoe2022</track>
     <track>scyaScyaPA1</track>
+    <track>tyanYona2022</track>
+    <track>trutseptentrionalisSRP</track>
+    <track>ulowMFRUFL</track>
+    <track>wsmiHCP4</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Ceratopogonidae" suffixes="_span;_gene">
@@ -2557,6 +2603,7 @@
   <subtrackSet project="VectorBase" name="Gastropoda" suffixes="_span;_gene">
     <track>bglaBB02</track>
     <track>bglaXG47</track>
+    <track>bpfeKasaAsao</track>
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Hemiptera" suffixes="_span;_gene">
@@ -2565,6 +2612,7 @@
   </subtrackSet>
 
   <subtrackSet project="VectorBase" name="Ixodidae" suffixes="_span;_gene">
+    <track>aameF_SG_1</track>
     <track>dandqqDerAnde1</track>
     <track>dsilDsil-2018</track>
     <track>hasiHyas2018</track>
@@ -2587,6 +2635,10 @@
 
   <subtrackSet project="VectorBase" name="Phthiraptera" suffixes="_span;_gene">
     <track>phumUSDA</track>
+  </subtrackSet>
+
+  <subtrackSet project="VectorBase" name="Siphonaptera" suffixes="_span;_gene">
+    <track>cfelEL2017DRISC</track>
   </subtrackSet>
 
  
@@ -2628,6 +2680,7 @@
 
   <url project="VectorBase" type="synteny">
     <org organism="Anopheles atroparvus EBRO" abbrev="aatrEBRO" />
+    <org organism="Anopheles atroparvus Infravec2 EBRE" abbrev="aatrInfravec2EBRE" />
     <org organism="Anopheles bellator AbelBR1" abbrev="abelAbelBR1" />
     <org organism="Anopheles dirus WRAIR2" abbrev="adirWRAIR2" />
     <org organism="Anopheles epiroticus Epiroticus2" abbrev="aepiEpiroticus2" />
@@ -2667,6 +2720,7 @@
     <org organism="Musca domestica aabys" abbrev="mdomaabys" />
     <org organism="Musca domestica aabys 2023" abbrev="mdomaabys2023" />
     <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
+    <org organism="Stomoxys calcitrans idStoCalc2.1" abbrev="scalidStoCalc2.1" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Brachycera" />
     </track>
@@ -2685,10 +2739,17 @@
     <org organism="Aedes aegypti LVP_AGWG" abbrev="aaegLVP_AGWG" />
     <org organism="Aedes albopictus Foshan" abbrev="aalbFoshan" />
     <org organism="Aedes albopictus Foshan FPA" abbrev="aalbFPA" />
+    <org organism="Aedes albopictus Foshan FPA2023" abbrev="aalbFoshanFPA2023" />
     <org organism="Aedes albopictus C6/36 cell line" abbrev="aalbC6-36" />
     <org organism="Culex quinquefasciatus JHB 2020" abbrev="cquiJHB" />
     <org organism="Culex quinquefasciatus Johannesburg" abbrev="cquiJohannesburg" />
+    <org organism="Culex pipiens pallens TS" abbrev="cpippallensTS" />
+    <org organism="Malaya genurostris Urasoe2022" abbrev="mgenUrasoe2022" />
     <org organism="Sabethes cyaneus ScyaPA1" abbrev="scyaScyaPA1" />
+    <org organism="Topomyia yanbarensis Yona2022" abbrev="tyanYona2022" />
+    <org organism="Toxorhynchites rutilus septentrionalis SRP" abbrev="trutseptentrionalisSRP" />
+    <org organism="Uranotaenia lowii MFRU-FL" abbrev="ulowMFRUFL" />
+    <org organism="Wyeomyia smithii HCP4" abbrev="wsmiHCP4" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Culicinae" />
       <subtrack set="Ceratopogonidae" />
@@ -2696,7 +2757,7 @@
   </url>
 
   <url project="VectorBase" type="synteny">
-    <org organism="Culicoides sonorensis strain PIR-s-3" abbrev="csonPIR-s-3" />
+    <org organism="Culicoides sonorensis PIR-s-3" abbrev="csonPIR-s-3" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Ceratopogonidae" />
       <subtrack set="Culicinae" />
@@ -2707,6 +2768,7 @@
   <url project="VectorBase" type="synteny">
     <org organism="Biomphalaria glabrata BB02" abbrev="bglaBB02" />
     <org organism="Biomphalaria glabrata XG47" abbrev="bglaXG47" />
+    <org organism="Biomphalaria pfeifferi KasaAsao" abbrev="bpfeKasaAsao" />
     <track name="Synteny" abbrevFirst="true">
       <subtrack set="Gastropoda" />
       <!-- TODO
@@ -2736,6 +2798,7 @@
   </url>
 
   <url project="VectorBase" type="synteny">
+    <org organism="Amblyomma americanum F_SG_1" abbrev="aameF_SG_1" />
     <org organism="Dermacentor andersoni qqDerAnde1.2" abbrev="dandqqDerAnde1" />
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
@@ -2762,6 +2825,13 @@
       <subtrack name="someabbrev_span" />
       <subtrack name="someabbrev_gene" />
       -->
+    </track>
+  </url>
+
+  <url project="VectorBase" type="synteny">
+    <org organism="Ctenocephalides felis EL2017-DRISC" abbrev="cfelEL2017DRISC" />
+    <track name="Synteny" abbrevFirst="true">
+      <subtrack set="Siphonaptera" />
     </track>
   </url>
 

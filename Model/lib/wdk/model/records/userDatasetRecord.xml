@@ -21,8 +21,8 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="User Dataset"
-                   help="Click a user dataset to go to the full dataset record">
+      <idAttribute name="primary_key" displayName="Dataset name"
+                   help="Click a user dataset to open its associated page.">
         <text>
           <![CDATA[ $$name$$ ]]>
         </text>
@@ -61,66 +61,123 @@
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
+
+      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
+        <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
+      </attributeQueryRef>
+      <attributeQueryRef ref="UserDatasetAttributes.VEuPathDBIdProject">
+        <columnAttribute name="veupathdb_id" displayName="VEuPathDB ID" />
+	<columnAttribute name="veupathdb_project" displayName="VEuPathDB project" />
+      </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
-        <columnAttribute name="owner_name" displayName="Owner Name" help="Name of the dataset owner"/>
-        <columnAttribute name="owner_organization" displayName="Owner Organization" help="Organization of the dataset owner"/>
+        <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset to this database."/>
+        <columnAttribute name="owner_organization" displayName="Uploader organization" help="Organization of the dataset owner."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
-        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner"/>
-        <columnAttribute name="type_name" displayName="Type" help="Dataset type"/>
-        <columnAttribute name="type_version" displayName="Type Version" help="Dataset type version"/>
-        <columnAttribute name="category" displayName="Category" help="Dataset category"/>
-        <columnAttribute name="deleted_status" displayName="Deleted Status"
+        <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
+        <columnAttribute name="type_name" displayName="internal data type name" />
+        <columnAttribute name="type_version" displayName="Type Version" help=""/>
+        <columnAttribute name="category" displayName="Data type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
+        <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
-        <columnAttribute name="is_public" displayName="Public" help="Whether the dataset is public"/>
-        <columnAttribute name="accessibility" displayName="Data Accessibility"
-                         help="Access level: public, protected, or private"/>
+        <columnAttribute name="accessibility" displayName="Download access" help="‘Open access’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
+        <columnAttribute name="is_public" displayName="Visibility"
+                         help="‘Public’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
-        <columnAttribute name="creation_date" displayName="Created" help="Dataset creation date"/>
+        <columnAttribute name="creation_date" displayName="Created" help="The date the dataset was first uploaded." />
       </attributeQueryRef>
 
-         <textAttribute name="dataFiles" displayName="Data Files Download">
+      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
+        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
+        <columnAttribute name="primary_affiliation" displayName="Contact affiliation" help="The institution where the contact person is located."/>
+        <columnAttribute name="primary_email" displayName="Contact email" help="The email address for the contact person or organization for this dataset."/>
+      </attributeQueryRef>
+
+         <textAttribute name="dataFiles" displayName="Dataset files">
            <display>YES</display>
+           <text>YES</text>
+         </textAttribute>
+         <textAttribute name="bwFiles" displayName="View your bigWig data in our Genome Browser" excludeProjects="ClinEpiDB">
+           <display>YES if bw dataset, MAYBE if rnaseq dataset</display>
            <text>YES</text>
          </textAttribute>
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
         <columnAttribute name="name" displayName="Name" help="Dataset name"/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false" help="Brief dataset summary"/>
+        <columnAttribute name="summary" displayName="Summary" sortable="false" help="A short description of the dataset"/>
         <columnAttribute name="description" displayName="Description" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="program_name" displayName="Program" help="Program name"/>
-        <columnAttribute name="project_name" displayName="Project" help="Project name"/>
+        <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
+	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
+	<columnAttribute name="project_name" displayName="Project" help="?"/>
         <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
-        <columnAttribute name="eda_study_id" displayName="EDA Study ID" help="EDA study identifier"/>
+      <attributeQueryRef ref="UserDatasetAttributes.Search">
+        <columnAttribute name="url" internal="true"/>
+        <columnAttribute name="display_text" internal="true"/>
+        <linkAttribute name="search_link" displayName="Search for genes in this dataset">
+          <displayText>
+            <![CDATA[
+              $$display_text$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
       </attributeQueryRef>
 
-      <!--
-      <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
-        <columnAttribute name="primary_contact_name" displayName="Primary contact name" help=""/>
-        <columnAttribute name="primary_affiliation" displayName="Primary contact affiliation" help=""/>
-        <columnAttribute name="primary_email" displayName="Primary contact email" help=""/>
-        <columnAttribute name="primary_country" displayName="Primary contact country" help=""/>
+      <attributeQueryRef ref="UserDatasetAttributes.ExpOrganism">
+        <columnAttribute name="exp_organism" displayName="Experimental organism" help="The organism used to generate the samples that were analyzed to produce this dataset."/>
       </attributeQueryRef>
 
+      <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
+        <columnAttribute name="ref_organism" displayName="Reference genome" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
+	<columnAttribute name="ref_genome_filename" />
+      </attributeQueryRef>
+
+      <!-- phase 2
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
         <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
       </attributeQueryRef>
-      
-      <attributeQueryRef ref="UserDatasetAttributes.Characteristics">
+      -->
+   
+       <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField" includeProjects="ClinEpiDB">
+        <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
+        <columnAttribute name="countries_list" displayName="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
         <columnAttribute name="study_design" displayName="Study design"/>
         <columnAttribute name="study_type" displayName="Investigation type"/>
         <columnAttribute name="participant_ages" displayName="Participant ages"/>
         <columnAttribute name="sample_year_start" displayName="Start year"/>
         <columnAttribute name="sample_year_end" displayName="End year"/>
       </attributeQueryRef>
-      -->
+
+      <attributeQueryRef ref="UserDatasetAttributes.OutcomesList" includeProjects="ClinEpiDB">
+        <columnAttribute name="outcomes_list" displayName="Outcomes of interest" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."/>
+      </attributeQueryRef>
+
+      <attributeQueryRef ref="UserDatasetAttributes.SpeciesList" includeProjects="ClinEpiDB">
+        <columnAttribute name="species_list" displayName="Study population species"  help="For field studies and clinical trials: scientific name of the population the study is based on, even if the dataset contains laboratory measurements on pathogens or other organisms."/>
+      </attributeQueryRef>
+      <attributeQueryRef ref="UserDatasetAttributes.FactorsList" includeProjects="ClinEpiDB">
+        <columnAttribute name="factors_list" displayName="Associated factors"  help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."/>
+      </attributeQueryRef>
+      <attributeQueryRef ref="UserDatasetAttributes.SampleTypesList" includeProjects="ClinEpiDB">
+        <columnAttribute name="sampletypes_list" displayName="Sample types"  help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."/>
+      </attributeQueryRef>
 
       <!-- =============================================================== -->
       <!--   Tables -->
@@ -130,6 +187,7 @@
       <!-- References --> 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 <!-- TODO will return search , name hardcoded based on dataset type
+          BEWARE  There is already a search_link attribute, since we only provide one search per user dataset right now
 
       <table name="References" excludeProjects="ClinEpiDB,MicrobiomeDB"
              displayName="Explore this Dataset within this Website"
@@ -148,6 +206,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Selected Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="Publications"
              displayName="Selected Publications"
              queryRef="UserDatasetTables.Publications">
@@ -171,12 +230,12 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Principal Investigator and Collaborators -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Contacts"
-             displayName="Principal Investigator and Collaborators"
+             displayName="Principal investigator and collaborators"
              queryRef="UserDatasetTables.Contacts">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="contact_name" displayName="Name"/>
@@ -187,24 +246,27 @@
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Organisms -->
+      <!-- Organisms UNCLEAR ITS NEED POSSIBLY phase 2
+                    for clinepi we have a study pop species table
+                    for genomics we have 2 attributes: ref and exp organism 
+      COMMENTING OUT -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Organisms" excludeProjects="ClinEpiDB,MicrobiomeDB" 
+      <!--
+      <table name="Organisms" excludeProjects="ClinEpiDB" 
              displayName="Organisms"
              queryRef="UserDatasetTables.Organisms">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="organism_type" displayName="Type"
-                         help="experimental or host"/>
-        <columnAttribute name="species" displayName="Study population species"/>
+        <columnAttribute name="species" displayName="Study population species" help="For field studies and clinical trials: scientific name of the population the study is based on, even if the dataset contains laboratory measurements on pathogens or other organisms"/>
         <columnAttribute name="strain" displayName="Strain"/>
       </table>
+      -->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Factors -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Factors"
+      <table name="Factors" help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."
              displayName="Associated factors"
-             queryRef="UserDatasetTables.AssociatedFactors">
+             queryRef="UserDatasetTables.AssociatedFactors" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="factor" displayName="Factor"/>
       </table>
@@ -212,6 +274,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Resources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="HyperLinks"
              displayName="External Resources"
              queryRef="UserDatasetTables.HyperLinks">
@@ -232,24 +295,27 @@
           </url>
         </linkAttribute>
       </table>
-
+      -->
+      
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Funding -->
+      <!-- Funding 
+            phase 2?
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="FundingAwards"
+      <!--    <table name="FundingAwards"
              displayName="Funding"
              queryRef="UserDatasetTables.FundingAwards">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="agency" displayName="Funding agency"/>
         <columnAttribute name="award_number" displayName="Award number"/>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Countries -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Countries"
+      <table name="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population."
              displayName="Countries"
-             queryRef="UserDatasetTables.Countries">
+             queryRef="UserDatasetTables.Countries" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="country" displayName="Country"/>
       </table>
@@ -259,7 +325,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Species"
              displayName="Study population species"
-             queryRef="UserDatasetTables.Species">
+             queryRef="UserDatasetTables.Species" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="species" displayName="Species"/>
       </table>
@@ -267,61 +333,79 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Outcomes of interest -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Outcomes"
+      <table name="Outcomes" help="For field studies and clinical trials: primary disease, condition, or outcome being studied."
              displayName="Outcomes of interest"
-             queryRef="UserDatasetTables.Outcomes">
+             queryRef="UserDatasetTables.Outcomes" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="outcome" displayName="Outcome"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Field Study or Clinical Trial - Characteristics -->
+      <!-- Field Study or Clinical Trial - Characteristics 
+           UNUSED, we use attributes for these values  instead
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Characteristics"
-             displayName="Field Study or Clinical Trial - Characteristics"
+      <!--     <table name="Characteristics" includeProjects="ClinEpiDB"
+             displayName="Field study or clinical trial - Characteristics"
              queryRef="UserDatasetTables.Characteristics">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Investigation type"/>
-        <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Start year"/>
-        <columnAttribute name="sample_year_end" displayName="End year"/>
+        <columnAttribute name="study_design" displayName="Study design" help="For field studies and clinical trials: describes the overall structure and methodology used to conduct the study."/>
+        <columnAttribute name="study_type" displayName="Investigation type" help="For field studies and clinical trials: indicates whether the dataset was generated through observational or experimental investigation."/>
+        <columnAttribute name="participant_ages" displayName="Participant ages" help="For field studies and clinical trials: age range(s) of participants when data were collected."/>
+        <columnAttribute name="sample_year_start" displayName="Start year" help="For field studies and clinical trials: year when data collection was initiated."/>
+        <columnAttribute name="sample_year_end" displayName="End year" help="For field studies and clinical trials: year when data collection concluded."/>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Project and Programmatic Affiliations -->
+      <!-- Project and Programmatic Affiliations 
+            Phase 2??
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="Projects"
-             displayName="Project and Programmatic Affiliations"
+      <!--  <table name="Projects"
+             displayName="Project and programmatic affiliations"
              queryRef="UserDatasetTables.Projects">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="project_id" displayName="Project ID"/>
       </table>
-
+      -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Sample types -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="SampleTypes"
+      <table name="SampleTypes" help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."
              displayName="Sample types"
-             queryRef="UserDatasetTables.SampleTypes">
+             queryRef="UserDatasetTables.SampleTypes" includeProjects="ClinEpiDB">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
-        <columnAttribute name="sample_type" displayName="Type"/>
+        <columnAttribute name="type" displayName="Type"/>
+      </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Dataset Sources -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="DataSources"
+             displayName="External sources"
+             queryRef="UserDatasetTables.DataSources">
+        <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
+        <columnAttribute name="url" displayName="URL"/>
+        <columnAttribute name="version" displayName="Version"/>
       </table>
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- External Identifiers - Dataset Sources -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2
       <table name="ExternalIds"
-             displayName="Dataset Source(s)"
+             displayName="External Identifiers"
              queryRef="UserDatasetTables.ExternalIds">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="identifier_type" displayName="Type"/>
         <columnAttribute name="identifier_value" displayName="Identifier"/>
       </table>
+      -->
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- VEuPathDB Related Datasets -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- phase 2 ?
       <table name="LinkedDatasets"
              displayName="VEuPathDB Related Datasets"
              queryRef="UserDatasetTables.LinkedDatasets">
@@ -330,19 +414,20 @@
         <columnAttribute name="linked_dataset_type" displayName="Linked Dataset Type"/>
         <columnAttribute name="shares_records" displayName="Shares Records"/>
       </table>
-
+      -->
+      
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Explore this Dataset within this Website -->
+      <!-- Explore this Dataset within this Website  ====  DATASET EXPLORER -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="ExploreWebsite"
-             displayName="Explore this Dataset within this Website"
-             queryRef="UserDatasetTables.ExploreWebsite">
+      <table name="ExploreWebsiteEDA" 
+             displayName="Explore this dataset in our Dataset Explorer"
+             queryRef="UserDatasetTables.ExploreWebsiteEDA">
         <columnAttribute name="dataset_id"  internal="true"/>
         <columnAttribute name="url" internal="true"/>
 	<columnAttribute name="description" internal="true"/>
         <columnAttribute name="order" internal="true"/>
 
-	<linkAttribute name="eda_link" displayName="Link">
+	<linkAttribute name="eda_link">
           <displayText>
             <![CDATA[
               $$description$$
@@ -356,12 +441,44 @@
         </linkAttribute>	            
       </table>
 
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Explore this Dataset within this Website ==== SEARCHES -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExploreWebsiteSearches"   excludeProjects='ClinEpiDB'
+             displayName="Run a Gene search on this dataset"
+             queryRef="UserDatasetTables.ExploreWebsiteSearches">
+        <columnAttribute name="dataset_id"  internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+        <columnAttribute name="description" internal="true"/>
+        <columnAttribute name="order" internal="true"/>
+
+        <linkAttribute name="search_link">
+          <displayText>
+            <![CDATA[
+              $$description$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- EDA datasets: variables-->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Variables"
              displayName="Variables"
              queryRef="UserDatasetTables.Variables">
         <columnAttribute name="dataset_id" internal="true"/>
-        <columnAttribute name="name" displayName="Variable name"/>
-        <columnAttribute name="definition" displayName="Definition"/>
+        <columnAttribute name="entity_name" displayName="Entity name"/>
+        <columnAttribute name="provider_label" displayName="Variable name"/>
+        <columnAttribute name="display_name" displayName="Variable label"/>
+        <columnAttribute name="definition" displayName="Variable definition"/>
+        <columnAttribute name="data_type" displayName="Variable data type"/>
       </table>
       
     </recordClass>

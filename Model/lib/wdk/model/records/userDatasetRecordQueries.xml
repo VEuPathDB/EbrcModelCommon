@@ -24,13 +24,32 @@
       </sql>
     </sqlQuery>
 
+    <sqlQuery name="VEuPathDBIdProject" isCacheable="false">
+      <column name="dataset_id" columnType="string"/>
+      <column name="veupathdb_id" columnType="string"/>
+      <column name="veupathdb_project" columnType="string"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+		  CONCAT('EDAUD_', dataset_id) as veupathdb_id, 
+                  CASE WHEN project_id = 'EuPathDB' 
+                       THEN 'VEuPathDB'
+                       WHEN project_id = 'ClinEpiDB'
+                       THEN 'dataExplorer'
+                       ELSE project_id 
+		   END as veupathdb_project
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_project
+        ]]>
+      </sql>
+    </sqlQuery>
+
     <sqlQuery name="OwnerInfo" isCacheable="false">
       <column name="dataset_id" columnType="string"/>
       <column name="owner_name" columnType="string"/>
       <column name="owner_organization" columnType="string"/>
       <sql>
         <![CDATA[
-	   SELECT d.dataset_id,
+	   SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id,
 	   TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, ''))	as owner_name,
 	   organization as owner_organization
            from @VDI_CONTROL_SCHEMA@.dataset d,
@@ -38,7 +57,7 @@
             public.crosstab(
 	     'select user_id, key, value
 	      from @REMOTE_USERACCOUNTS_SCHEMA@account_properties
-              where key = in (''first_name'', ''organization'', ''middle_name'', ''last_name'')
+              where key in (''first_name'', ''organization'', ''middle_name'', ''last_name'')
 	      order by user_id, key',
              'SELECT unnest(ARRAY[''first_name'', ''last_name'', ''middle_name'', ''organization''])')
 	      as userinfo (
@@ -74,8 +93,12 @@
             type_version,
             category,
             deleted_status,
-            CASE WHEN is_public THEN 'Yes' ELSE 'No' END as is_public,
-            accessibility,
+            CASE WHEN is_public THEN 'Public' ELSE 'Private' END as is_public,
+            CASE WHEN accessibility = 'public' THEN 'Open access'
+                 WHEN accessibility = 'private' THEN 'Restricted'
+		 WHEN accessibility = 'protected' THEN 'Protected'
+		 WHEN accessibility = 'controlled' THEN 'Controlled'
+            END as accessibility,
             days_for_approval,
             TO_CHAR(creation_date, 'YYYY-MM-DD') as creation_date
           FROM  @VDI_CONTROL_SCHEMA@.dataset
@@ -89,6 +112,7 @@
       <column name="name" columnType="string"/>
       <column name="summary" columnType="string"/>
       <column name="description" columnType="string"/>
+      <column name="disclaimer" columnType="string"/>
       <column name="program_name" columnType="string"/>
       <column name="project_name" columnType="string"/>
       <column name="short_attribution" columnType="string"/>
@@ -99,7 +123,7 @@
             CONCAT('EDAUD_', dataset_id) as dataset_id,
             name,
             summary,
-            description,
+            description,disclaimer,
             program_name,
             project_name,
             short_attribution,
@@ -129,24 +153,22 @@
       <column name="primary_contact_name"/>
       <column name="primary_affiliation"/>
       <column name="primary_email"/>
-      <column name="primary_country"/>
       <sql>
         <![CDATA[
-          SELECT d.dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email, country as primary_country
+          SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as primary_contact_name, affiliation as primary_affiliation, email as primary_email
 	  FROM @VDI_CONTROL_SCHEMA@.dataset d
 	  LEFT JOIN
           (SELECT
-            CONCAT('EDAUD_', dataset_id) as dataset_id,
+            dataset_id,
             affiliation,
             email,
-            country,
 	    first_name,
 	    last_name,
 	    middle_name
            FROM @VDI_CONTROL_SCHEMA@.dataset_contact
            WHERE is_primary is true
 	  ) prim on d.dataset_id = prim.dataset_id
-          ORDER BY last_name, first_name
+          --needed?  ORDER BY last_name, first_name
         ]]>
       </sql>
     </sqlQuery>
@@ -157,12 +179,90 @@
       <column name="primary_publication"/>
       <sql>
         <![CDATA[
-           SELECT dataset_id, citation  as primary_publication
-           FROM @VDI_CONTROL_SCHEMA@.dataset_publication
-           WHERE is_primary is true
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, primary_publication
+	   FROM @VDI_CONTROL_SCHEMA@.dataset d
+	   LEFT JOIN
+           (SELECT dataset_id, citation  as primary_publication
+            FROM @VDI_CONTROL_SCHEMA@.dataset_publication
+            WHERE is_primary is true
+	   ) prim on d.dataset_id = prim.dataset_id
         ]]>
       </sql>
     </sqlQuery>
+
+
+    <sqlQuery name="Search" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="url"/>
+      <column name="display_text"/>
+      <sql>
+        <![CDATA[
+               SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
+		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+		        THEN 'Identify Genes based on ' || category
+                        WHEN type_name = 'isasimple'
+		        THEN 'Explore and visualize'
+                        WHEN type_name = 'bigwigfiles'
+                        THEN 'View in Genome Browser'
+		        ELSE null
+                  END as display_text,
+                  CASE WHEN type_name = 'genelist'
+                       THEN '/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
+                                || dataset_id || '&autoRun' 
+                       WHEN type_name = 'rnaseq'
+                       THEN '/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                                || dataset_id
+                       WHEN type_name = 'phenotype'
+                       THEN '/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+		                || CONCAT('EDAUD_', dataset_id)
+                       WHEN type_name = 'isasimple'
+		       THEN '/workspace/analyses/'
+		                || CONCAT('EDAUD_', dataset_id, '/new')
+                       WHEN type_name = 'bigwigfiles'
+                       THEN '#bwFiles'
+		      ELSE null
+                  END as url
+		FROM  @VDI_CONTROL_SCHEMA@.dataset
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ExpOrganism" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="exp_organism"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, exp_organism
+           FROM @VDI_CONTROL_SCHEMA@.dataset d
+           LEFT JOIN
+           (SELECT dataset_id, species || ' ' || strain  as exp_organism
+            FROM @VDI_CONTROL_SCHEMA@.dataset_organism
+            WHERE organism_type = 'experimental'
+           ) prim on d.dataset_id = prim.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="RefOrganism" doNotTest="true">
+      <column name="dataset_id"/>
+      <column name="ref_organism"/>
+      <column name="ref_genome_filename"/>
+      <sql>
+        <![CDATA[
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, ref_organism, ref_genome_filename
+           FROM @VDI_CONTROL_SCHEMA@.dataset d
+           LEFT JOIN
+            (SELECT dataset_id, organism_name as ref_organism,
+                    split_part(dd.identifier, '_', 2) as ref_genome_filename
+            FROM @VDI_CONTROL_SCHEMA@.dataset_dependency dd,
+                  apidbtuning.organismattributes org
+            WHERE substring(identifier FROM '^[A-Za-z]+-\d+_(.+)_Genome') = org.name_for_filenames
+           ) prim on d.dataset_id = prim.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
 
     <!-- Characteristics (same as in table) -->
     <sqlQuery name="Characteristics" isCacheable='false'>
@@ -174,14 +274,143 @@
       <column name="sample_year_end"/>
       <sql>
         <![CDATA[
-          SELECT
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, study_design, study_type, participant_ages, sample_year_start, sample_year_end
+	  from @VDI_CONTROL_SCHEMA@.dataset d
+ 	  LEFT JOIN
+           (SELECT
             dataset_id,
             study_design,
             study_type,
             participant_ages,
             sample_year_start,
             sample_year_end
-          FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+            FROM  @VDI_CONTROL_SCHEMA@.dataset_characteristics
+	   ) char on char.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Clinical or Field Study -->
+    <!-- if there is a row in characteristics for this dataset, we know it is a field study. -->
+    <sqlQuery name="ClinicalOrField" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="is_clinical_field"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, 
+          (case when coalesce(study_design, study_type, participant_ages) is null
+                     and coalesce(sample_year_start, sample_year_end) is null
+                     and is_public = 't'
+                     and type_name = 'isasimple'
+                then 'No' 
+                when coalesce(study_design, study_type, participant_ages) is not null
+                     and coalesce(sample_year_start, sample_year_end) is not null
+                then 'Yes' 
+                else ' '
+            end
+          ) as is_clinical_field
+            from @VDI_CONTROL_SCHEMA@.dataset d
+ 	  LEFT JOIN
+           (SELECT
+            dataset_id,
+            study_design,
+            study_type,
+            participant_ages,
+            sample_year_start,
+            sample_year_end
+            FROM @VDI_CONTROL_SCHEMA@.dataset_characteristics
+	   ) char on char.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="OutcomesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="outcomes_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, outcomes_list
+	  from @VDI_CONTROL_SCHEMA@.dataset d
+ 	  LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(outcome, ', ' order by LOWER(outcome)) as outcomes_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_outcome
+		  group by dataset_id
+	   ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <sqlQuery name="CountriesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="countries_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, countries_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(country, ', ' order by LOWER(country)) as countries_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_country
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+    <sqlQuery name="SpeciesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="species_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, species_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(species, ', ' order by LOWER(species)) as species_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_species
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="FactorsList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="factors_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, factors_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(factor, ', ' order by LOWER(factor)) as factors_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_associated_factor
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
+        ]]>
+      </sql>
+    </sqlQuery>
+
+        <sqlQuery name="SampleTypesList" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="sampletypes_list"/>
+      <sql>
+        <![CDATA[
+          select CONCAT('EDAUD_', d.dataset_id) as dataset_id, sampletypes_list
+          from @VDI_CONTROL_SCHEMA@.dataset d
+          LEFT JOIN
+          (SELECT
+            dataset_id,
+            string_agg(type, ', ' order by LOWER(type)) as sampletypes_list
+          FROM @VDI_CONTROL_SCHEMA@.dataset_sample_type
+                  group by dataset_id
+           ) o on o.dataset_id = d.dataset_id
         ]]>
       </sql>
     </sqlQuery>
@@ -204,7 +433,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             external_id,
             type,
             regexp_replace(citation, '\s+<', ' <') AS citation,
@@ -231,14 +460,14 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, '')) as contact_name,
             affiliation,
             email,
             country,
             CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary
           FROM  @VDI_CONTROL_SCHEMA@.dataset_contact
-          ORDER BY is_primary DESC, last_name, first_name
+          ORDER BY is_primary DESC, LOWER(last_name), LOWER(first_name)
         ]]>
       </sql>
     </sqlQuery>
@@ -252,12 +481,12 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             organism_type,
             species,
             strain
           FROM  @VDI_CONTROL_SCHEMA@.dataset_organism
-          ORDER BY organism_type, species
+          ORDER BY organism_type, LOWER(species)
         ]]>
       </sql>
     </sqlQuery>
@@ -270,11 +499,11 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             url,
             description
           FROM  @VDI_CONTROL_SCHEMA@.dataset_hyperlink
-          ORDER BY description
+          ORDER BY LOWER(description)
         ]]>
       </sql>
     </sqlQuery>
@@ -286,7 +515,8 @@
         <![CDATA[
           select CONCAT('EDAUD_', daf.dataset_id) as dataset_id, factor
           from @VDI_CONTROL_SCHEMA@.dataset_associated_factor daf
-        ]]>
+	  ORDER BY LOWER(factor)
+	]]>
       </sql>
     </sqlQuery>
 
@@ -298,11 +528,11 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             agency,
             award_number
           FROM  @VDI_CONTROL_SCHEMA@.dataset_funding_award
-          ORDER BY agency, award_number
+          ORDER BY LOWER(agency), LOWER(award_number)
         ]]>
       </sql>
     </sqlQuery>
@@ -314,10 +544,10 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             country
           FROM  @VDI_CONTROL_SCHEMA@.dataset_country
-          ORDER BY country
+          ORDER BY LOWER(country)
         ]]>
       </sql>
     </sqlQuery>
@@ -329,10 +559,10 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             species
           FROM  @VDI_CONTROL_SCHEMA@.dataset_species
-          ORDER BY species
+          ORDER BY LOWER(species)
         ]]>
       </sql>
     </sqlQuery>
@@ -344,10 +574,10 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             outcome
           FROM  @VDI_CONTROL_SCHEMA@.dataset_outcome
-          ORDER BY outcome
+          ORDER BY LOWER(outcome)
         ]]>
       </sql>
     </sqlQuery>
@@ -363,7 +593,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             study_design,
             study_type,
             participant_ages,
@@ -381,7 +611,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             project_id
           FROM  @VDI_CONTROL_SCHEMA@.dataset_project
           ORDER BY project_id
@@ -389,17 +619,33 @@
       </sql>
     </sqlQuery>
 
-    <!-- Sample Type table -->
-    <sqlQuery name="SampleTypes" isCacheable='false'>
+    <!-- Data Sources table -->
+    <sqlQuery name="DataSources" isCacheable='false'>
       <column name="dataset_id"/>
-      <column name="sample_type"/>
+      <column name="url"/>
+      <column name="version"/>
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
+            url, version
+          FROM  @VDI_CONTROL_SCHEMA@.dataset_source
+          ORDER BY LOWER(url),version
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- Sample Type table -->
+    <sqlQuery name="SampleTypes" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="type"/>
+      <sql>
+        <![CDATA[
+          SELECT
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             type
           FROM  @VDI_CONTROL_SCHEMA@.dataset_sample_type
-          ORDER BY type
+          ORDER BY LOWER(type)
         ]]>
       </sql>
     </sqlQuery>
@@ -411,11 +657,11 @@
       <column name="identifier_value"/>
       <sql>
         <![CDATA[
-          SELECT dataset_id, 'DOI' as identifier_type, doi as identifier_value
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 'DOI' as identifier_type, doi as identifier_value
           FROM  @VDI_CONTROL_SCHEMA@.dataset_doi
           WHERE doi IS NOT NULL
           UNION ALL
-          SELECT dataset_id, 'BioProject' as identifier_type, bioproject_id as identifier_value
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 'BioProject' as identifier_type, bioproject_id as identifier_value
           FROM  @VDI_CONTROL_SCHEMA@.dataset_bioproject_id
           WHERE bioproject_id IS NOT NULL
           ORDER BY identifier_type, identifier_value
@@ -432,7 +678,7 @@
       <sql>
         <![CDATA[
           SELECT
-            dataset_id,
+            CONCAT('EDAUD_', dataset_id) as dataset_id,
             linked_dataset_id,
             linked_dataset_type,
             shares_records
@@ -443,7 +689,7 @@
     </sqlQuery>
 
     <!-- Explore links in this website    table -->
-    <sqlQuery name="ExploreWebsite" isCacheable='false'>
+    <sqlQuery name="ExploreWebsiteSearches" isCacheable='false' excludeProjects="ClinEpiDB">
       <column name="dataset_id"/>
       <column name="description"/>
       <column name="url"/>
@@ -451,20 +697,52 @@
 
       <sql>
         <![CDATA[
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 1 as order,
+           SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
+                   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+                        THEN 'Identify Genes based on ' || category
+                        WHEN type_name = 'isasimple'
+                        THEN 'Browse and subset this dataset'
+                        ELSE null
+		   END as description,
+                  CASE WHEN type_name = 'genelist'
+                       THEN '/a/app/search/transcript/GenesByUserDatasetGeneList?param.geneListUserDataset='
+		                || dataset_id || '&autoRun' 
+                      WHEN type_name = 'rnaseq'
+		      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                                || dataset_id
+		      WHEN type_name = 'phenotype'
+		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
+		                || CONCAT('EDAUD_', dataset_id) 
+		  END as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
+        ]]>
+      </sql>
+    </sqlQuery>
+
+
+
+    <sqlQuery name="ExploreWebsiteEDA" isCacheable='false'>
+      <column name="dataset_id"/>
+      <column name="description"/>
+      <column name="url"/>
+      <column name="order"/>
+
+      <sql>
+        <![CDATA[
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
                  'Browse and Subset Data' as description,
-                 '/a/app/workspace/analyses/' || CONCAT('EDAUD_', user_dataset_id) || '/new' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+                 '/a/app/workspace/analyses/' || CONCAT('EDAUD_', dataset_id) || '/new' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
           UNION
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 2 as order,
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 2 as order,
                  'Visualize Data' as description,
-		      '/a/app/workspace/analyses/' || CONCAT('EDAUD_', user_dataset_id) || '/new/visualizations' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+		      '/a/app/workspace/analyses/' || CONCAT('EDAUD_', dataset_id) || '/new/visualizations' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
           UNION
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id, 3 as order,
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 3 as order,
                  'Explore Data on Interactive Map' as description,
-                 '/a/app/workspace/maps/' || CONCAT('EDAUD_', user_dataset_id) || '/new' as url
-            FROM  @VDI_CONTROL_SCHEMA@.availableuserdatasets
+                 '/a/app/workspace/maps/' || CONCAT('EDAUD_', dataset_id) || '/new' as url
+            FROM  @VDI_CONTROL_SCHEMA@.dataset
 
         ]]>
       </sql>
@@ -472,15 +750,25 @@
 
     <sqlQuery name="Variables"  isCacheable="false">
       <column name="dataset_id"/>
-      <column name="name"/>
+      <column name="display_name"/>
+      <column name="provider_label"/>
+      <column name="entity_name"/>
       <column name="definition"/>
+      <column name="data_type"/>
       <sql>
         <![CDATA[
-          SELECT CONCAT('EDAUD_', user_dataset_id) as dataset_id
-            , display_name as name
+          SELECT CONCAT('EDAUD_', dataset_id) as dataset_id
+            , v.display_name
+            , array_to_string(ARRAY(SELECT jsonb_array_elements_text(provider_label::jsonb)), '; ') as provider_label
+            , etg.display_name as entity_name
             , definition 
-          FROM @VDI_DATASETS_SCHEMA@.AttributeGraph ag
-	  JOIN @VDI_DATASETS_SCHEMA@.Study s on ag.study_stable_id = s.stable_id
+            , data_type 
+          FROM @VDI_DATASETS_SCHEMA@.Variable v,
+               @VDI_DATASETS_SCHEMA@.entitytypegraph etg
+          WHERE v.entity_stable_id = etg.stable_id
+	    AND v.study_stable_id = etg.study_stable_id
+            AND (v.hidden is null or v.hidden not like '%everywhere%')
+        ORDER BY LOWER(v.display_name)
         ]]>
       </sql>
     </sqlQuery>
