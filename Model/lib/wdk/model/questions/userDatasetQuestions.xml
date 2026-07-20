@@ -86,6 +86,19 @@
     </question>
 -->
 
+    <question name="UserDatasetsByCategory"
+      displayName="User Datasets by Category"
+      excludeProjects="MicrobiomeDB,ClinEpiDB"
+      shortDisplayName="Category"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByCategory"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find user datasets that are associated with a particular category
+      </description>
+    </question>
+
     <question name="UserDatasetsByText"
         excludeProjects="MicrobiomeDB,ClinEpiDB"
         displayName="Text (keyword)"
