@@ -2884,7 +2884,7 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
     <prop name="experimentName">The name of the experiment; forms part of the dataset name and the manual-delivery path.</prop>
     <prop name="experimentVersion">The version of the experiment, typically a release number or a date in yyyy-mm-dd format.</prop>
 
-    <graphTemplateFile name="organismSpecificMiscNoAlias.xml"/>
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
 
     <datasetLoader datasetName="${organismAbbrev}_${experimentName}_geneCoexpression_RSRC"
               version="${experimentVersion}"
