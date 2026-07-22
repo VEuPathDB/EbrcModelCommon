@@ -2894,11 +2894,12 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
               subType="coexpression"
               organismAbbrev="${organismAbbrev}">
 
-      <manualGet fileOrDir="${projectName}/${organismAbbrev}/${assayType}/${experimentName}/${experimentVersion}/final/gene_coexpression.txt">
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/${assayType}/${experimentName}/${experimentVersion}/final/gene_coexpression.txt.gz">
         <dir name="final">
         </dir>
       </manualGet>
 
+      <unpack>gunzip -d @@dataDir@@/gene_coexpression.txt.gz</unpack>
       <pluginArgs>--inputFile @@dataDir@@/gene_coexpression.txt --extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
     </datasetLoader>
   </datasetClass>
