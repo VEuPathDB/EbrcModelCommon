@@ -697,7 +697,7 @@
       <column name="description"/>
       <column name="url"/>
       <column name="question_name"/>
-      <column name="record_type"/>
+      <column name="record_class"/>
       <column name="dataset_id_param"/>
       <column name="order"/>
 
@@ -721,12 +721,19 @@
 		                || CONCAT('EDAUD_', dataset_id) 
 		      END as url,
                   CASE WHEN type_name = 'genelist'
-                       THEN 'GenesByUserDatasetGeneList'
+                       THEN 'GeneQuestions.GenesByUserDatasetGeneList'
                       WHEN type_name = 'rnaseq'
-		      THEN 'GenesByRNASeqUserDataset'
+		      THEN 'GeneQuestions.GenesByRNASeqUserDataset'
 		      WHEN type_name = 'phenotype'
-		      THEN 'GenesByPhenotypeUserDataset'
+		      THEN 'GeneQuestions.GenesByPhenotypeUserDataset'
 		  END as question_name,
+                  CASE WHEN type_name = 'genelist'
+                       THEN 'TranscriptRecordClasses.TranscriptRecordClass'
+                      WHEN type_name = 'rnaseq'
+		      THEN 'TranscriptRecordClasses.TranscriptRecordClass'
+		      WHEN type_name = 'phenotype'
+		      THEN 'TranscriptRecordClasses.TranscriptRecordClass'
+		  END as record_class,
                   CASE WHEN type_name = 'genelist'
                        THEN 'geneListUserDataset'
                       WHEN type_name = 'rnaseq'

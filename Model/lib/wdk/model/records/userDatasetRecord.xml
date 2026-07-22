@@ -469,6 +469,7 @@
         <columnAttribute name="order" internal="true"/>
         <columnAttribute name="question_name" internal="true"/>
         <columnAttribute name="dataset_id_param" internal="true"/>
+        <columnAttribute name="record_class" internal="true"/>
 
         <linkAttribute name="search_link">
           <displayText>
