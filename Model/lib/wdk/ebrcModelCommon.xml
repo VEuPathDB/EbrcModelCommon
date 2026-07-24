@@ -31,6 +31,7 @@
     <import file="apiCommonModel/stepAnalysisPlugins.xml"/>
     -->
 
+    <import file="model/records/sharedDisplayNames.xml"/>
 
     <!-- Data Sets -->
     <import file="model/questions/datasetQuestions.xml"/>

@@ -7,6 +7,23 @@
   <constant name="datasetRecordDisplayNamePlural">User Datasets</constant>
 
 
+  <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
+  <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
+  <constant name="sharedDisplayName_Name">Name</constant>
+  <constant name="sharedDisplayName_Summary">Summary</constant>
+  <constant name="sharedDisplayName_Description">Description</constant>
+  <constant name="sharedDisplayName_ShortAttribution">Short attribution</constant>
+  <constant name="sharedDisplayName_Category">Category</constant>
+  <constant name="sharedDisplayName_ReuseConsiderations">Reuse considerations</constant>
+  <constant name="sharedDisplayName_Project">Project</constant>
+  <constant name="sharedDisplayName_InvestigationType">Investigation type</constant>
+  <constant name="sharedDisplayName_StudyDesign">Study design</constant>
+  <constant name="sharedDisplayName_SampleType">Sample type</constant>
+  <constant name="sharedDisplayName_StartYear">Start year</constant>
+  <constant name="sharedDisplayName_EndYear">End year</constant>
+  <constant name="sharedDisplayName_Age">Age</constant>
+  <constant name="sharedDisplayName_Country">Country</constant>
+
   <recordClassSet name="UserDatasetRecordClasses">
 
     <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
@@ -78,7 +95,7 @@
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
         <columnAttribute name="type_name" displayName="internal data type name" />
         <columnAttribute name="type_version" displayName="Type Version" help=""/>
-        <columnAttribute name="category" displayName="Data type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
+        <columnAttribute name="category" displayName="%%sharedDisplayName_Category%%" help="The category classifies the dataset according to the biological characteristics and structure of the data it contains."/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
         <columnAttribute name="accessibility" displayName="Download access" help="‘Open access’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
@@ -90,8 +107,8 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
-        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="primary_affiliation" displayName="Contact affiliation" help="The institution where the contact person is located."/>
+        <columnAttribute name="primary_contact_name" displayName="%%sharedDisplayName_PrimaryContact%%" help="The person or organization that serves as a source of information concerning this dataset."/>
+        <columnAttribute name="primary_affiliation" displayName="%%sharedDisplayName_ContactInstitution%%" help="The institution where the contact person is located."/>
         <columnAttribute name="primary_email" displayName="Contact email" help="The email address for the contact person or organization for this dataset."/>
       </attributeQueryRef>
 
@@ -105,14 +122,14 @@
          </textAttribute>
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
-        <columnAttribute name="name" displayName="Name" help="Dataset name"/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false" help="A short description of the dataset"/>
-        <columnAttribute name="description" displayName="Description" sortable="false"
+        <columnAttribute name="name" displayName="%%sharedDisplayName_Name%%" help="Dataset name"/>
+        <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false" help="A short description of the dataset"/>
+        <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
+        <columnAttribute name="disclaimer" displayName="%%sharedDisplayName_ReuseConsiderations%%" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
-	<columnAttribute name="project_name" displayName="Project" help="?"/>
-        <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
+	<columnAttribute name="project_name" displayName="%%sharedDisplayName_Project%%" help="?"/>
+        <columnAttribute name="short_attribution" displayName="%%sharedDisplayName_ShortAttribution%%" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
@@ -154,15 +171,15 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="countries_list" displayName="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+        <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%s" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
-        <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Investigation type"/>
-        <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Start year"/>
-        <columnAttribute name="sample_year_end" displayName="End year"/>
+        <columnAttribute name="study_design" displayName="%%sharedDisplayName_StudyDesign%%"/>
+        <columnAttribute name="study_type" displayName="%%sharedDisplayName_InvestigationType%%"/>
+        <columnAttribute name="participant_ages" displayName="%%sharedDisplayName_Age%%"/>
+        <columnAttribute name="sample_year_start" displayName="%%sharedDisplayName_StartYear%%"/>
+        <columnAttribute name="sample_year_end" displayName="%%sharedDisplayName_EndYear%%"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OutcomesList" includeProjects="ClinEpiDB">
@@ -176,7 +193,7 @@
         <columnAttribute name="factors_list" displayName="Associated factors"  help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."/>
       </attributeQueryRef>
       <attributeQueryRef ref="UserDatasetAttributes.SampleTypesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="sampletypes_list" displayName="Sample types"  help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."/>
+        <columnAttribute name="sampletypes_list" displayName="%%sharedDisplayName_SampleType%%s"  help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."/>
       </attributeQueryRef>
 
       <!-- =============================================================== -->
