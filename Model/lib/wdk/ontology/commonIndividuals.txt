@@ -3,6 +3,7 @@
 topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	Data Provenance	DP	Data submission, annotation and curation		2	internal		
 topic_3077_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			characteristics	Field Study or Clinical Trial Characteristics	DH	Data acquisition		3	internal		
 topic_3308_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_context	Data Context	DC	Data context		5	internal		
+topic_3345_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			link_outs	Link Outs	LO	Link Outs		4	internal		
 
 DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym		DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
@@ -42,7 +43,9 @@ UserDatasetRecordClasses.UserDatasetRecordClass.DataSources	topic_0219_synonym		
 UserDatasetRecordClasses.UserDatasetRecordClass.Contacts	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Contacts					60	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					10	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsite	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsite					30		record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteEDA	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteEDA					30		record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteSearches	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteSearches					25		record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.bwFiles	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	bwFiles					350		record	
 UserDatasetRecordClasses.UserDatasetRecordClass.search_link	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	search_link							record-internal	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.dataFiles	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	dataFiles					10	  record
@@ -52,6 +55,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.Variables	topic_3308_synonym	Dat
 UserDatasetRecordClasses.UserDatasetRecordClass.is_public	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	is_public						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.accessibility	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	accessibility						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.category	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	category						results	record-internal	download
+UserDatasetRecordClasses.UserDatasetRecordClass.type_name			UserDatasetRecordClasses.UserDatasetRecordClass	attribute	type_name							record-internal	
 UserDatasetRecordClasses.UserDatasetRecordClass.creation_date	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	creation_date						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.owner_name	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	owner_name						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_affiliation	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_affiliation						results	record-internal	download

@@ -7,6 +7,23 @@
   <constant name="datasetRecordDisplayNamePlural">User Datasets</constant>
 
 
+  <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
+  <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
+  <constant name="sharedDisplayName_Name">Name</constant>
+  <constant name="sharedDisplayName_Summary">Summary</constant>
+  <constant name="sharedDisplayName_Description">Description</constant>
+  <constant name="sharedDisplayName_ShortAttribution">Short attribution</constant>
+  <constant name="sharedDisplayName_Category">Category</constant>
+  <constant name="sharedDisplayName_ReuseConsiderations">Reuse considerations</constant>
+  <constant name="sharedDisplayName_Project">Project</constant>
+  <constant name="sharedDisplayName_InvestigationType">Investigation type</constant>
+  <constant name="sharedDisplayName_StudyDesign">Study design</constant>
+  <constant name="sharedDisplayName_SampleType">Sample type</constant>
+  <constant name="sharedDisplayName_StartYear">Start year</constant>
+  <constant name="sharedDisplayName_EndYear">End year</constant>
+  <constant name="sharedDisplayName_Age">Age</constant>
+  <constant name="sharedDisplayName_Country">Country</constant>
+
   <recordClassSet name="UserDatasetRecordClasses">
 
     <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
@@ -61,7 +78,6 @@
 
       <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
 
-
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
       </attributeQueryRef>
@@ -79,7 +95,7 @@
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
         <columnAttribute name="type_name" displayName="internal data type name" />
         <columnAttribute name="type_version" displayName="Type Version" help=""/>
-        <columnAttribute name="category" displayName="Data type" help="The data type classifies the dataset according to the biological characteristics and structure of the data it contains."/>
+        <columnAttribute name="category" displayName="%%sharedDisplayName_Category%%" help="The category classifies the dataset according to the biological characteristics and structure of the data it contains."/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
         <columnAttribute name="accessibility" displayName="Download access" help="‘Open access’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
@@ -91,8 +107,8 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
-        <columnAttribute name="primary_contact_name" displayName="Primary contact" help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="primary_affiliation" displayName="Contact affiliation" help="The institution where the contact person is located."/>
+        <columnAttribute name="primary_contact_name" displayName="%%sharedDisplayName_PrimaryContact%%" help="The person or organization that serves as a source of information concerning this dataset."/>
+        <columnAttribute name="primary_affiliation" displayName="%%sharedDisplayName_ContactInstitution%%" help="The institution where the contact person is located."/>
         <columnAttribute name="primary_email" displayName="Contact email" help="The email address for the contact person or organization for this dataset."/>
       </attributeQueryRef>
 
@@ -100,16 +116,20 @@
            <display>YES</display>
            <text>YES</text>
          </textAttribute>
+         <textAttribute name="bwFiles" displayName="View your bigWig data in our Genome Browser" excludeProjects="ClinEpiDB">
+           <display>YES if bw dataset, MAYBE if rnaseq dataset</display>
+           <text>YES</text>
+         </textAttribute>
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
-        <columnAttribute name="name" displayName="Name" help="Dataset name"/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false" help="A short description of the dataset"/>
-        <columnAttribute name="description" displayName="Description" sortable="false"
+        <columnAttribute name="name" displayName="%%sharedDisplayName_Name%%" help="Dataset name"/>
+        <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false" help="A short description of the dataset"/>
+        <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="disclaimer" displayName="Reuse considerations" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
+        <columnAttribute name="disclaimer" displayName="%%sharedDisplayName_ReuseConsiderations%%" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
-	<columnAttribute name="project_name" displayName="Project" help="?"/>
-        <columnAttribute name="short_attribution" displayName="Attribution" help="Short attribution text"/>
+	<columnAttribute name="project_name" displayName="%%sharedDisplayName_Project%%" help="?"/>
+        <columnAttribute name="short_attribution" displayName="%%sharedDisplayName_ShortAttribution%%" help="Short attribution text"/>
         <columnAttribute name="short_name" displayName="Short name" help="Abbreviated dataset name"/>
       </attributeQueryRef>
 
@@ -130,12 +150,14 @@
         </linkAttribute>
       </attributeQueryRef>
 
-      <attributeQueryRef ref="UserDatasetAttributes.ExpOrganism" excludeProjects="ClinEpiDB">
+      <attributeQueryRef ref="UserDatasetAttributes.ExpOrganism">
         <columnAttribute name="exp_organism" displayName="Experimental organism" help="The organism used to generate the samples that were analyzed to produce this dataset."/>
       </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
         <columnAttribute name="ref_organism" displayName="Reference genome" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
 	<columnAttribute name="ref_genome_filename" />
+	<columnAttribute name="ref_organism_formatted" internal="true" />
       </attributeQueryRef>
 
       <!-- phase 2
@@ -149,15 +171,15 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="countries_list" displayName="Countries" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+        <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%s" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
-        <columnAttribute name="study_design" displayName="Study design"/>
-        <columnAttribute name="study_type" displayName="Investigation type"/>
-        <columnAttribute name="participant_ages" displayName="Participant ages"/>
-        <columnAttribute name="sample_year_start" displayName="Start year"/>
-        <columnAttribute name="sample_year_end" displayName="End year"/>
+        <columnAttribute name="study_design" displayName="%%sharedDisplayName_StudyDesign%%"/>
+        <columnAttribute name="study_type" displayName="%%sharedDisplayName_InvestigationType%%"/>
+        <columnAttribute name="participant_ages" displayName="%%sharedDisplayName_Age%%"/>
+        <columnAttribute name="sample_year_start" displayName="%%sharedDisplayName_StartYear%%"/>
+        <columnAttribute name="sample_year_end" displayName="%%sharedDisplayName_EndYear%%"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OutcomesList" includeProjects="ClinEpiDB">
@@ -171,7 +193,7 @@
         <columnAttribute name="factors_list" displayName="Associated factors"  help="For field studies and clinical trials: pathogen, exposure, or risk factor associated with the outcome."/>
       </attributeQueryRef>
       <attributeQueryRef ref="UserDatasetAttributes.SampleTypesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="sampletypes_list" displayName="Sample types"  help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."/>
+        <columnAttribute name="sampletypes_list" displayName="%%sharedDisplayName_SampleType%%s"  help="For field studies and clinical trials: a list of the types of biological or environmental samples represented in this dataset."/>
       </attributeQueryRef>
 
       <!-- =============================================================== -->
@@ -197,6 +219,22 @@
         <columnAttribute name="target_name" displayName="Name"/>
         <columnAttribute name="link_type" displayName="link_type"/>
       </table>   
+-->
+
+<!--
+      THIS IS SAMPLE JSON NEEDED FOR PUBLICATIONS BY INTERNAL SEARCH PAGE
+                  "Publications": [
+                    {
+                        "pubmed_link": {
+                            "displayText": "A Plasmodium Falciparum Bromodomain Protein Regulates Invasion Gene Expression. Josling et al. Cell Host Microbe 2015 Jun 10;17(6):741-51",
+                            "url": "http://www.ncbi.nlm.nih.gov/pubmed/26067602"
+                        },
+                        "datasource_id": "2295",
+                        "citation": "A Plasmodium Falciparum Bromodomain Protein Regulates Invasion Gene Expression. Josling et al. Cell Host Microbe 2015 Jun 10;17(6):741-51",
+                        "pmid": "26067602",
+                        "url": "http://www.ncbi.nlm.nih.gov/pubmed/26067602"
+                    }
+                ],
 -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Selected Publications -->
@@ -337,7 +375,7 @@
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- Field Study or Clinical Trial - Characteristics 
-           UNUSED, we use attributes for these values  nstead
+           UNUSED, we use attributes for these values  instead
       -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!--     <table name="Characteristics" includeProjects="ClinEpiDB"
@@ -400,7 +438,7 @@
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- VEuPathDB Related Datasets -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- phase 2
+      <!-- phase 2 ?
       <table name="LinkedDatasets"
              displayName="VEuPathDB Related Datasets"
              queryRef="UserDatasetTables.LinkedDatasets">
@@ -412,17 +450,17 @@
       -->
       
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- Explore this Dataset within this Website -->
+      <!-- Explore this Dataset within this Website  ====  DATASET EXPLORER -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <table name="ExploreWebsite"
-             displayName="Explore this dataset within this website"
-             queryRef="UserDatasetTables.ExploreWebsite">
+      <table name="ExploreWebsiteEDA" 
+             displayName="Explore this dataset in our Dataset Explorer"
+             queryRef="UserDatasetTables.ExploreWebsiteEDA">
         <columnAttribute name="dataset_id"  internal="true"/>
         <columnAttribute name="url" internal="true"/>
 	<columnAttribute name="description" internal="true"/>
         <columnAttribute name="order" internal="true"/>
 
-	<linkAttribute name="eda_link" displayName="Link">
+	<linkAttribute name="eda_link">
           <displayText>
             <![CDATA[
               $$description$$
@@ -435,6 +473,35 @@
           </url>
         </linkAttribute>	            
       </table>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- Explore this Dataset within this Website ==== SEARCHES -->
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <table name="ExploreWebsiteSearches"   excludeProjects='ClinEpiDB'
+             displayName="Run a Gene search on this dataset"
+             queryRef="UserDatasetTables.ExploreWebsiteSearches">
+        <columnAttribute name="dataset_id"  internal="true"/>
+        <columnAttribute name="url" internal="true"/>
+        <columnAttribute name="description" internal="true"/>
+        <columnAttribute name="order" internal="true"/>
+        <columnAttribute name="question_name" internal="true"/>
+        <columnAttribute name="dataset_id_param" internal="true"/>
+        <columnAttribute name="record_class" internal="true"/>
+
+        <linkAttribute name="search_link">
+          <displayText>
+            <![CDATA[
+              $$description$$
+            ]]>
+          </displayText>
+          <url>
+            <![CDATA[
+              $$url$$
+            ]]>
+          </url>
+        </linkAttribute>
+      </table>
+
 
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- EDA datasets: variables-->
@@ -453,5 +520,4 @@
     </recordClass>
 
   </recordClassSet>
-
 </wdkModel>

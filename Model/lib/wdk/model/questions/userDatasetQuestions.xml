@@ -6,8 +6,24 @@
     <!-- SourceId -->  
     <!-- ************************************************************ -->
 
-    <question name="AllUserDatasets"
+    <question name="AllUserDatasets" includeProjects="ClinEpiDB"
       displayName="Dataset Summaries"
+      shortDisplayName="AllUserDatasets"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.AllUserDatasets"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find all datasets.
+      </description>
+      <attributesList  
+	      summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
+              sorting="creation_date desc"
+      />
+    </question>
+
+    <question name="AllUserDatasets" excludeProjects="ClinEpiDB"
+      displayName="User Datasets"
       shortDisplayName="AllUserDatasets"
       fullAnswer="true"
       queryRef="UserDatasetsIds.AllUserDatasets"
@@ -16,11 +32,7 @@
       <description>
          Find all user datasets.
       </description>
-      <attributesList includeProjects="ClinEpiDB" 
-	      summary="creation_date,summary,primary_contact_name,is_clinical_field,outcomes_list,is_public"
-              sorting="creation_date desc"
-      />
-      <attributesList excludeProjects="UniDB,ClinEpiDB" 
+      <attributesList excludeProjects="UniDB" 
               summary="creation_date,category,summary,primary_contact_name,exp_organism,ref_organism,is_public"
               sorting="creation_date desc"
       />
@@ -30,7 +42,7 @@
       />
     </question>
 
-<!-- TODO these questions need to be renamed per datatype
+    <!-- TODO these questions need to be renamed per datatype
 
     <question name="UserDatasetsByReferenceName"
       displayName="User Datasets used to generate a table or result"
@@ -73,6 +85,19 @@
       </description>
     </question>
 -->
+
+    <question name="UserDatasetsByCategory"
+      displayName="User Datasets by Category"
+      excludeProjects="MicrobiomeDB,ClinEpiDB"
+      shortDisplayName="Category"
+      fullAnswer="true"
+      queryRef="UserDatasetsIds.ByCategory"
+      recordClassRef="UserDatasetRecordClasses.UserDatasetRecordClass"
+      noSummaryOnSingleRecord="true">
+      <description>
+         Find user datasets that are associated with a particular category
+      </description>
+    </question>
 
     <question name="UserDatasetsByText"
         excludeProjects="MicrobiomeDB,ClinEpiDB"

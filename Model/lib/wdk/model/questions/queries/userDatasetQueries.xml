@@ -21,7 +21,24 @@
       </sql>
     </sqlQuery>
 
-<!-- TODO these questions is really datasets per dataset category (eg phenotype) 
+    <sqlQuery name="ByCategory">
+      <paramRef ref="datasetParams.dataset_category"/>
+      <paramRef ref="InternalParams.user_id"/>
+      <column name="dataset_id"/>
+
+      <sql>
+        <![CDATA[
+            SELECT distinct CONCAT('EDAUD_', user_dataset_id) as dataset_id
+            FROM @VDI_CONTROL_SCHEMA@.AvailableUserDatasets
+            WHERE (user_id = $$user_id$$ or is_public = true)
+            AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != project_id))
+	    -- map vdi category to datasource category provided in param
+	    and (category = $$dataset_category$$ or ($$dataset_category$$ = 'RNASeq' and category = 'RNA-Seq'))
+        ]]>
+      </sql>
+    </sqlQuery>
+
+    <!-- TODO these questions is really datasets per dataset category (eg phenotype) 
 
     <sqlQuery name="ByReferenceName">
       <testParamValues>

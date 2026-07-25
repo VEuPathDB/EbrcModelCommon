@@ -2876,6 +2876,33 @@ where e.na_sequence_id = ns.na_sequence_id and ns.external_database_release_id =
   </datasetClass>
 
 
+  <datasetClass class="geneCoExpression" category="" datasetFileHint="">
+    <purpose></purpose>
+    <prop name="projectName">&projectName;</prop>
+    <prop name="organismAbbrev">&organismAbbrev;</prop>
+    <prop name="assayType">The assay type subdirectory in manual delivery under which this experiment lives, e.g. 'rnaseq'.</prop>
+    <prop name="experimentName">The name of the experiment; forms part of the dataset name and the manual-delivery path.</prop>
+    <prop name="experimentVersion">The version of the experiment, typically a release number or a date in yyyy-mm-dd format.</prop>
+
+    <graphTemplateFile name="organismSpecificMisc.xml"/>
+
+    <datasetLoader datasetName="${organismAbbrev}_${experimentName}_geneCoexpression_RSRC"
+              version="${experimentVersion}"
+              plugin="ApiCommonData::Load::Plugin::InsertGeneCoexpression"
+              scope="organism"
+              type="transcript_expression"
+              subType="coexpression"
+              organismAbbrev="${organismAbbrev}">
+
+      <manualGet fileOrDir="${projectName}/${organismAbbrev}/${assayType}/${experimentName}/${experimentVersion}/final/gene_coexpression.txt.gz">
+        <dir name="final">
+        </dir>
+      </manualGet>
+
+      <unpack>gunzip -d @@dataDir@@/gene_coexpression.txt.gz</unpack>
+      <pluginArgs>--inputFile @@dataDir@@/gene_coexpression.txt --extDbRlsSpec "%DATASET_NAME%|%DATASET_VERSION%"</pluginArgs>
+    </datasetLoader>
+  </datasetClass>
 
 
   <datasetClass class="NAFeaturePhenotypeImage" category="phenotype" datasetFileHint="">
