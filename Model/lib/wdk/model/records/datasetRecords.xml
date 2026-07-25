@@ -3,24 +3,6 @@
   <constant name="datasetRecordDisplayName">Dataset</constant>
   <constant name="datasetRecordDisplayNamePlural">Datasets</constant>
 
-  
-  <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
-  <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
-  <constant name="sharedDisplayName_Name">Name</constant>
-  <constant name="sharedDisplayName_Summary">Summary</constant>
-  <constant name="sharedDisplayName_Description">Description</constant>
-  <constant name="sharedDisplayName_ShortAttribution">Short attribution</constant>
-  <constant name="sharedDisplayName_Category">Category</constant>
-  <constant name="sharedDisplayName_ReuseConsiderations">Reuse considerations</constant>
-  <constant name="sharedDisplayName_Project">Project</constant>
-  <constant name="sharedDisplayName_InvestigationType">Investigation type</constant>
-  <constant name="sharedDisplayName_StudyDesign">Study design</constant>
-  <constant name="sharedDisplayName_SampleType">Sample type</constant>
-  <constant name="sharedDisplayName_StartYear">Start year</constant>
-  <constant name="sharedDisplayName_EndYear">End year</constant>
-  <constant name="sharedDisplayName_Age">Age</constant>
-  <constant name="sharedDisplayName_Country">Country</constant>
-
   <recordClassSet name="DatasetRecordClasses">
 
 
