@@ -21,7 +21,7 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Dataset name"
+      <idAttribute name="primary_key" displayName="%%sharedDisplayName_PrimaryKey%%"
                    help="Click a user dataset to open its associated page.">
         <text>
           <![CDATA[ $$name$$ ]]>
