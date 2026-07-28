@@ -581,10 +581,7 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
   </tuningTable>
 
   <tuningTable name="PhyleticPattern">
-<!-- This should be included BUT this table is not created until the plugin is run so it breaks the tm
-     OrthoMCLData/Load/plugin/perl/InsertOrthomclGroupTaxonMatrix.pm
     <externalDependency name="ApiDB.OrthologGroupTaxon"/>
-    -->
     <externalDependency name="apidb.OrthologGroup"/>
     <!-- externalDependency name="apidb.OrthomclTaxon"/ -->
 
