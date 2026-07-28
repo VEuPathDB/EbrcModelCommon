@@ -222,8 +222,7 @@ JOIN (
                || 'record/gene/' || aas.source_id
 
           WHEN ores.resource_name = 'Uniprot'
-          THEN SUBSTR(ores.resource_url,0,strpos(ores.resource_url,'/proteomes'))
-               || 'uniprot/' || aas.source_id
+          THEN REPLACE(ores.resource_url, 'EXTERNAL_ID_HERE', aas.source_id)
           ELSE ''
         END AS source_url,
 
