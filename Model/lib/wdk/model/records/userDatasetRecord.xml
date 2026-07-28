@@ -7,23 +7,6 @@
   <constant name="datasetRecordDisplayNamePlural">User Datasets</constant>
 
 
-  <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
-  <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
-  <constant name="sharedDisplayName_Name">Name</constant>
-  <constant name="sharedDisplayName_Summary">Summary</constant>
-  <constant name="sharedDisplayName_Description">Description</constant>
-  <constant name="sharedDisplayName_ShortAttribution">Short attribution</constant>
-  <constant name="sharedDisplayName_Category">Category</constant>
-  <constant name="sharedDisplayName_ReuseConsiderations">Reuse considerations</constant>
-  <constant name="sharedDisplayName_Project">Project</constant>
-  <constant name="sharedDisplayName_InvestigationType">Investigation type</constant>
-  <constant name="sharedDisplayName_StudyDesign">Study design</constant>
-  <constant name="sharedDisplayName_SampleType">Sample type</constant>
-  <constant name="sharedDisplayName_StartYear">Start year</constant>
-  <constant name="sharedDisplayName_EndYear">End year</constant>
-  <constant name="sharedDisplayName_Age">Age</constant>
-  <constant name="sharedDisplayName_Country">Country</constant>
-
   <recordClassSet name="UserDatasetRecordClasses">
 
     <!-- ======================================= USER DATASET RECORD CLASS =========================================================== -->
@@ -38,7 +21,7 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Dataset name"
+      <idAttribute name="primary_key" displayName="%%sharedDisplayName_PrimaryKey%%"
                    help="Click a user dataset to open its associated page.">
         <text>
           <![CDATA[ $$name$$ ]]>
@@ -76,7 +59,7 @@
       <!-- =============================================================== -->
 
 
-      <attributesList summary="name,owner,type_name,accessibility,creation_date,summary"/>
+      <attributesList summary="name,owner_name,type_name,accessibility,creation_date,summary"/>
 
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
@@ -155,9 +138,9 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
-        <columnAttribute name="ref_organism" displayName="Reference genome" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
+        <columnAttribute name="ref_organism" displayName="Reference genome"/>
 	<columnAttribute name="ref_genome_filename" />
-	<columnAttribute name="ref_organism_formatted" internal="true" />
+	<columnAttribute name="ref_organism_formatted" displayName="%%sharedDisplayName_RefOrganism%%" help="The genome that the data were aligned to. For functional datasets, the experimental organism may differ from the reference."/>
       </attributeQueryRef>
 
       <!-- phase 2
