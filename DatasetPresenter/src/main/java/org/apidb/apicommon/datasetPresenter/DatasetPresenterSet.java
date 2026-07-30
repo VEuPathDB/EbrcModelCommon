@@ -1,10 +1,14 @@
 package org.apidb.apicommon.datasetPresenter;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 /**
@@ -26,6 +30,7 @@ public class DatasetPresenterSet {
 
   private Map<String,Map<String,String>> _propertiesFromFiles = new HashMap<String,Map<String,String>>();
   private Set<String> _duplicateDatasetNames = new HashSet<String>();
+  private Set<String> _presentersNotLoaded = new LinkedHashSet<String>();
 
   /**
    * Add a DatasetPresenter to this set.
@@ -142,6 +147,93 @@ public class DatasetPresenterSet {
     }        
   }
   
+  /**
+   * Drop presenters whose dataset this instance has not loaded, according to the supplied
+   * source. The presenters XML directory is a legitimate superset of any one instance, so
+   * these are not errors — but they must go before anything walks the set, because
+   * constructing a DatasetInjector for an absent dataset fails on the props the dataset
+   * would have supplied.
+   *
+   * Filtering here, once, rather than at each point of use is deliberate: every consumer
+   * (dataset injectors, contact validation, model references, the loader) then inherits
+   * the gate without knowing it exists, and a consumer added later cannot forget it.
+   *
+   * Skipped presenters are always reported. A gate that dropped them silently would turn
+   * a loud build failure into a website that builds green with searches missing.
+   */
+  void retainLoadedDatasets(LoadedDatasetSource loadedDatasets) {
+    Iterator<Map.Entry<String, DatasetPresenter>> presenters = _presenters.entrySet().iterator();
+    while (presenters.hasNext()) {
+      DatasetPresenter presenter = presenters.next().getValue();
+
+      // a presenter carries either a name or a datasetNamePattern; resolve the same way
+      // DatasetPresenterSetLoader.getPresenterValuesFromDatasourceTable does
+      String pattern = presenter.getDatasetNamePattern();
+      String nameOrPattern = pattern == null ? presenter.getDatasetName() : pattern;
+
+      if (!loadedDatasets.isLoaded(nameOrPattern)) {
+        _presentersNotLoaded.add(nameOrPattern);
+        presenters.remove();
+        if (pattern != null) _namePatterns.remove(pattern);
+      }
+    }
+
+  }
+
+  /**
+   * @return where to list the skipped presenters, or null if GUS_HOME is not set
+   */
+  static File skippedReportFile() {
+    String gusHome = System.getenv("GUS_HOME");
+    return gusHome == null ? null : new File(gusHome + "/lib/wdk/presentersNotLoaded.txt");
+  }
+
+  /**
+   * Report the skipped presenters: the count on stderr, the names in a file.
+   *
+   * The count goes in the build log because a silent gate is worse than no gate — a build
+   * that quietly drops presenters looks successful while the website loses searches. The
+   * names go to a file because there can be thousands of them, and burying the rest of the
+   * build log to list them defeats the purpose of reporting at all.
+   */
+  void reportPresentersNotLoaded(File reportFile) {
+    if (_presentersNotLoaded.isEmpty()) return;
+
+    String summary = "Dataset gate: skipping " + _presentersNotLoaded.size()
+        + " DatasetPresenter(s) whose dataset is not loaded in this instance";
+
+    if (reportFile == null) {
+      // no GUS_HOME to write under; the names are all we can offer
+      System.err.println(summary + ":" + System.lineSeparator() + "  "
+          + String.join(System.lineSeparator() + "  ", _presentersNotLoaded));
+      return;
+    }
+
+    try {
+      File parent = reportFile.getParentFile();
+      if (parent != null) parent.mkdirs();
+      try (PrintWriter out = new PrintWriter(reportFile)) {
+        out.println("# DatasetPresenters skipped because their dataset is not in this");
+        out.println("# instance's apidb.Datasource. Presenters are a superset by design;");
+        out.println("# these are not errors.");
+        for (String name : _presentersNotLoaded) {
+          out.println(name);
+        }
+      }
+      System.err.println(summary + "; names listed in " + reportFile);
+    }
+    catch (IOException e) {
+      // reporting must not break the build, but it must not disappear either
+      System.err.println(summary + " (could not write " + reportFile + ": " + e.getMessage()
+          + "):" + System.lineSeparator() + "  "
+          + String.join(System.lineSeparator() + "  ", _presentersNotLoaded));
+    }
+  }
+
+  Set<String> getPresentersNotLoaded() {
+    return Collections.unmodifiableSet(_presentersNotLoaded);
+  }
+
   void addPropertiesFromFiles(Map<String,Map<String,String>> datasetNamesToProperties, Set<String> duplicateDatasetNames) {
     for (DatasetPresenter datasetPresenter : _presenters.values()) {
       datasetPresenter.addPropertiesFromFile(datasetNamesToProperties, duplicateDatasetNames);
@@ -167,6 +259,12 @@ public class DatasetPresenterSet {
   // //////////////////// Static methods //////////////////
 
   static DatasetPresenterSet createFromPresentersDir(String presentersDir, String globalXmlFile) {
+    return createFromPresentersDir(presentersDir, globalXmlFile,
+        LoadedDatasetSources.fromSiteConfig());
+  }
+
+  static DatasetPresenterSet createFromPresentersDir(String presentersDir, String globalXmlFile,
+      LoadedDatasetSource loadedDatasets) {
     File pres = new File(presentersDir);
     if (!pres.isDirectory())
       throw new UserException("Presenters dir " + presentersDir
@@ -175,7 +273,13 @@ public class DatasetPresenterSet {
     // get the presenters into memory
     DatasetPresenterParser dpp = new DatasetPresenterParser();
     DatasetPresenterSet dps = dpp.parseDir(presentersDir, globalXmlFile);
-    
+
+    // drop presenters for datasets this instance has not loaded, before anything walks
+    // the set. Off by default, so a normal build is unchanged.
+    System.err.println(loadedDatasets.describe());
+    dps.retainLoadedDatasets(loadedDatasets);
+    dps.reportPresentersNotLoaded(skippedReportFile());
+
     // add properties from dataset prop files to presenters
 
     DatasetPropertiesParser propParser = new DatasetPropertiesParser();
