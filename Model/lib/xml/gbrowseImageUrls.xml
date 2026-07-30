@@ -2564,9 +2564,13 @@
     <track>gbreIAEA</track>
     <track>gfusIAEA</track>
     <track>gfusIAEA2018</track>
+    <track>gfusIAEA2023</track>
+    <track>gfusUG</track>
     <track>gmorYale</track>
     <track>gpalIAEA</track>
     <track>gpapIAEA</track>
+    <track>lcupLc737</track>
+    <track>lserMDLA</track>
     <track>mdomaabys</track>
     <track>mdomaabys2023</track>
     <track>scalUSDA</track>
@@ -2617,6 +2621,7 @@
     <track>dsilDsil-2018</track>
     <track>hasiHyas2018</track>
     <track>hlonHaeL2018</track>
+    <track>ipacREF</track>
     <track>iperIper2018</track>
     <track>iscaWikel</track>
     <track>iscaISE6</track>
@@ -2714,9 +2719,13 @@
     <org organism="Glossina brevipalpis IAEA" abbrev="gbreIAEA" />
     <org organism="Glossina fuscipes IAEA" abbrev="gfusIAEA" />
     <org organism="Glossina fuscipes IAEA 2018" abbrev="gfusIAEA2018" />
+    <org organism="Glossina fuscipes IAEA 2023" abbrev="gfusIAEA2023" />
+    <org organism="Glossina fuscipes UG" abbrev="gfusUG" />
     <org organism="Glossina morsitans Yale" abbrev="gmorYale" />
     <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
     <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
+    <org organism="Lucilia cuprina Lc7/37" abbrev="lcupLc737" />
+    <org organism="Lucilia sericata MDLA" abbrev="lserMDLA" />
     <org organism="Musca domestica aabys" abbrev="mdomaabys" />
     <org organism="Musca domestica aabys 2023" abbrev="mdomaabys2023" />
     <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
@@ -2803,6 +2812,7 @@
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
     <org organism="Haemaphysalis longicornis HaeL-2018" abbrev="hlonHaeL2018" />
+    <org organism="Ixodes pacificus REF" abbrev="ipacREF" />
     <org organism="Ixodes persulcatus Iper-2018" abbrev="iperIper2018" />
     <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />
