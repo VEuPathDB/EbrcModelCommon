@@ -33,7 +33,10 @@
             WHERE (user_id = $$user_id$$ or is_public = true)
             AND (project_id = '@PROJECT_ID@' or ('UniDB' = '@PROJECT_ID@' and 'ClinEpiDB' != project_id))
 	    -- map vdi category to datasource category provided in param
-	    and (category = $$dataset_category$$ or ($$dataset_category$$ = 'RNASeq' and category = 'RNA-Seq'))
+	    and (category = $$dataset_category$$
+	      or ($$dataset_category$$ = 'RNASeq' and category = 'RNA-Seq')
+	      or ($$dataset_category$$ = 'RNASeq' and category = 'RNA-Seq raw counts')
+	    )
         ]]>
       </sql>
     </sqlQuery>

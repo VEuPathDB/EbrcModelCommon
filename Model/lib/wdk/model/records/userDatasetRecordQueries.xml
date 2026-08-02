@@ -198,7 +198,7 @@
       <sql>
         <![CDATA[
                SELECT CONCAT('EDAUD_', dataset_id) as dataset_id,
-		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+		   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq' OR type_name = 'rnaseqrc' OR type_name = 'phenotype' )
 		        THEN 'Identify Genes based on ' || category
                         WHEN type_name = 'isasimple'
 		        THEN 'Explore and visualize'
@@ -211,6 +211,9 @@
                                 || dataset_id || '&autoRun' 
                        WHEN type_name = 'rnaseq'
                        THEN '/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
+                                || dataset_id
+                       WHEN type_name = 'rnaseqrc'
+                       THEN '/search/transcript/GenesDESeqSeqUserDataset?param.eda_dataset_id='
                                 || dataset_id
                        WHEN type_name = 'phenotype'
                        THEN '/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
@@ -704,7 +707,7 @@
       <sql>
         <![CDATA[
            SELECT CONCAT('EDAUD_', dataset_id) as dataset_id, 1 as order,
-                   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq'  OR type_name = 'phenotype' )
+                   CASE WHEN (type_name = 'genelist' OR type_name = 'rnaseq' OR type_name = 'rnaseqrc' OR type_name = 'phenotype' )
                         THEN 'Identify Genes based on ' || category
                         WHEN type_name = 'isasimple'
                         THEN 'Browse and subset this dataset'
@@ -716,6 +719,9 @@
                       WHEN type_name = 'rnaseq'
 		      THEN '/a/app/search/transcript/GenesByRNASeqUserDataset?param.rna_seq_dataset='
                                 || dataset_id
+                      WHEN type_name = 'rnaseqrc'
+		      THEN '/a/app/search/transcript/GenesByDESeqUserDataset?param.eda_dataset_id='
+                                || CONCAT('EDAUD_', dataset_id)
 		      WHEN type_name = 'phenotype'
 		      THEN '/a/app/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id) 
@@ -724,12 +730,16 @@
                        THEN 'GeneQuestions.GenesByUserDatasetGeneList'
                       WHEN type_name = 'rnaseq'
 		      THEN 'GeneQuestions.GenesByRNASeqUserDataset'
+                      WHEN type_name = 'rnaseqrc'
+		      THEN 'GeneQuestions.GenesByDESeqUserDataset'
 		      WHEN type_name = 'phenotype'
 		      THEN 'GeneQuestions.GenesByPhenotypeUserDataset'
 		  END as question_name,
                   CASE WHEN type_name = 'genelist'
                        THEN 'TranscriptRecordClasses.TranscriptRecordClass'
                       WHEN type_name = 'rnaseq'
+		      THEN 'TranscriptRecordClasses.TranscriptRecordClass'
+                      WHEN type_name = 'rnaseqrc'
 		      THEN 'TranscriptRecordClasses.TranscriptRecordClass'
 		      WHEN type_name = 'phenotype'
 		      THEN 'TranscriptRecordClasses.TranscriptRecordClass'
@@ -739,6 +749,8 @@
                       WHEN type_name = 'rnaseq'
 		      THEN 'rna_seq_dataset'
 		      WHEN type_name = 'phenotype'
+		      THEN 'eda_dataset_id'
+		      WHEN type_name = 'rnaseqrc'
 		      THEN 'eda_dataset_id'
 		  END as dataset_id_param
             FROM  @VDI_CONTROL_SCHEMA@.dataset
