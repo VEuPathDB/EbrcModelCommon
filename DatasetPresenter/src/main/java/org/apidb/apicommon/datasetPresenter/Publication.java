@@ -18,7 +18,11 @@ public class Publication {
             try {
                 byte[] bo = new byte[100000];
                 byte[] err = new byte[100000];
-                String[] cmd = { "pubmedIdToCitation", pubmedId };
+                // the optional api key grants a higher NCBI request rate limit
+                String apiKey = System.getenv("NCBI_EUTILS_API_KEY");
+                String[] cmd = (apiKey == null || apiKey.isEmpty())
+                    ? new String[] { "pubmedIdToCitation", pubmedId }
+                    : new String[] { "pubmedIdToCitation", pubmedId, apiKey };
                 Process p = Runtime.getRuntime().exec(cmd);
                 p.waitFor();
                 p.getInputStream().read(bo);
