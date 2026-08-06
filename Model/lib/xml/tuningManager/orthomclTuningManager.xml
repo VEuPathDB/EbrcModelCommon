@@ -7,6 +7,7 @@
     <externalDependency name="apidb.OrthologGroupAaSequence"/>
     <externalDependency name="apidb.Organism"/>
     <externalDependency name="dots.AaSequence"/>
+    <internalDependency name="SequenceAttributes"/>
 
     <sql>
       <![CDATA[
