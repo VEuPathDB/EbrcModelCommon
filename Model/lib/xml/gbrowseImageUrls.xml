@@ -870,6 +870,7 @@
     <track>bgraTritici96224</track>
     <track>bgrasp.triticaleTHUN12</track>
     <track>bgrasphordeiiRACE1</track>
+    <track>enecEnFRAME01</track>
     <track>paphDRCT72020</track>
     <track>bcinB05-10</track>
     <track>mfruCPMC6</track>
@@ -942,11 +943,14 @@
     <track>ztriST99CH3D1</track>
     <track>hwerEXF-2000</track>
     <track>lmacJN3</track>
+    <track>plinCAN1</track>
     <track>pnodSN15</track>
     <track>aaltSRC1lrK2f</track>
+    <track>adauA2016</track>
     <track>cclayc1106</track>
     <track>vgalCBS43764</track>
     <track>bmayC4</track>
+    <track>bsorND90Pr</track>
     <track>ffulRace5_Kim</track>
     <track>cbetCb09-40</track>
     <track>ckikMAFF305040</track>
@@ -957,6 +961,7 @@
     <track>haraEmoy2</track>
     <track>peffR13</track>
     <track>pcac10300</track>
+    <track>pcacP414</track>
     <track>pcapLT1534</track>
     <track>pcinGKB4</track>
     <track>pinfT30-4</track>
@@ -1439,6 +1444,7 @@
     <org abbrev = "bgraTritici96224" organism="Blumeria graminis f. sp. tritici 96224"/>
     <org abbrev = "bgrasp.triticaleTHUN12" organism="Blumeria graminis f. sp. triticale THUN-12"/>
     <org abbrev = "bgrasphordeiiRACE1" organism="Blumeria hordei strain RACE1"/>
+    <org abbrev = "enecEnFRAME01" organism="Erysiphe necator EnFRAME01"/>
     <org abbrev = "paphDRCT72020" organism="Podosphaera aphanis DRCT72020"/>
     <org abbrev = "bcinB05-10" organism="Botrytis cinerea B05.10"/>
     <org abbrev="mfruCPMC6" organism="Monilinia fructicola CPMC6"/>
@@ -1531,11 +1537,14 @@
     <org abbrev="ztriST99CH3D1" organism="Zymoseptoria tritici ST99CH_3D1"/>
     <org abbrev="hwerEXF-2000" organism="Hortaea werneckii EXF-2000"/>
     <org abbrev="lmacJN3" organism="Plenodomus lingam JN3"/>
+    <org abbrev="plinCAN1" organism="Plenodomus lingam CAN1"/>
     <org abbrev="pnodSN15" organism="Parastagonospora nodorum SN15"/>
     <org abbrev="aaltSRC1lrK2f" organism="Alternaria alternata SRC1lrK2f"/>
+    <org abbrev="adauA2016" organism="Alternaria dauci A2016"/>
     <org abbrev="cclayc1106" organism="Curvularia clavata yc1106"/>
     <org abbrev="vgalCBS43764" organism="Verruconis gallopava strain CBS 43764"/>
     <org abbrev="bmayC4" organism="Bipolaris maydis C4"/>
+    <org abbrev="bsorND90Pr" organism="Bipolaris sorokiniana ND90Pr"/>
     <org abbrev="ffulRace5_Kim" organism="Fulvia fulva Race5_Kim"/>
     <org abbrev="cbetCb09-40" organism="Cercospora beticola Cb09-40"/>
     <org abbrev="ckikMAFF305040" organism="Cercospora kikuchii MAFF 305040"/>
@@ -1556,6 +1565,7 @@
     <org abbrev="haraEmoy2" organism="Hyaloperonospora arabidopsidis Emoy2"/>
     <org abbrev="peffR13" organism="Peronospora effusa R13"/>
     <org abbrev="pcac10300" organism="Phytophthora cactorum 10300"/>
+    <org abbrev="pcacP414" organism="Phytophthora cactorum P414"/>
     <org abbrev="pcapLT1534" organism="Phytophthora capsici LT1534"/>
     <org abbrev="pcinGKB4" organism="Phytophthora cinnamomi GKB4"/>
     <org abbrev="pinfT30-4" organism="Phytophthora infestans T30-4"/>
@@ -2564,9 +2574,13 @@
     <track>gbreIAEA</track>
     <track>gfusIAEA</track>
     <track>gfusIAEA2018</track>
+    <track>gfusIAEA2023</track>
+    <track>gfusUG</track>
     <track>gmorYale</track>
     <track>gpalIAEA</track>
     <track>gpapIAEA</track>
+    <track>lcupLc737</track>
+    <track>lserMDLA</track>
     <track>mdomaabys</track>
     <track>mdomaabys2023</track>
     <track>scalUSDA</track>
@@ -2617,6 +2631,7 @@
     <track>dsilDsil-2018</track>
     <track>hasiHyas2018</track>
     <track>hlonHaeL2018</track>
+    <track>ipacREF</track>
     <track>iperIper2018</track>
     <track>iscaWikel</track>
     <track>iscaISE6</track>
@@ -2714,9 +2729,13 @@
     <org organism="Glossina brevipalpis IAEA" abbrev="gbreIAEA" />
     <org organism="Glossina fuscipes IAEA" abbrev="gfusIAEA" />
     <org organism="Glossina fuscipes IAEA 2018" abbrev="gfusIAEA2018" />
+    <org organism="Glossina fuscipes IAEA 2023" abbrev="gfusIAEA2023" />
+    <org organism="Glossina fuscipes UG" abbrev="gfusUG" />
     <org organism="Glossina morsitans Yale" abbrev="gmorYale" />
     <org organism="Glossina pallidipes IAEA" abbrev="gpalIAEA" />
     <org organism="Glossina palpalis IAEA" abbrev="gpapIAEA" />
+    <org organism="Lucilia cuprina Lc7/37" abbrev="lcupLc737" />
+    <org organism="Lucilia sericata MDLA" abbrev="lserMDLA" />
     <org organism="Musca domestica aabys" abbrev="mdomaabys" />
     <org organism="Musca domestica aabys 2023" abbrev="mdomaabys2023" />
     <org organism="Stomoxys calcitrans USDA" abbrev="scalUSDA" />
@@ -2803,6 +2822,7 @@
     <org organism="Dermacentor silvarum Dsil-2018" abbrev="dsilDsil-2018" />
     <org organism="Hyalomma asiaticum Hyas-2018" abbrev="hasiHyas2018" />
     <org organism="Haemaphysalis longicornis HaeL-2018" abbrev="hlonHaeL2018" />
+    <org organism="Ixodes pacificus REF" abbrev="ipacREF" />
     <org organism="Ixodes persulcatus Iper-2018" abbrev="iperIper2018" />
     <org organism="Ixodes scapularis Wikel" abbrev="iscaWikel" />
     <org organism="Ixodes scapularis ISE6" abbrev="iscaISE6" />

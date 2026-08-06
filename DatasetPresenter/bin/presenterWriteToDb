@@ -3,10 +3,25 @@
 use lib "$ENV{GUS_HOME}/lib/perl";
 use FgpUtil::Util::CommandHelper;
 
+use Getopt::Long;
+use EbrcModelCommon::Model::tmUtils;
+
+# parse the args for use in this script; @ARGV is left untouched so that all
+# args are still passed through to the java program below
+my ($presentersDir, $contactsXmlFile, $tuningPropsXmlFile, $instance, $suffix,
+    $defaultInjectorClassesFile, $defaultHyperLinksFile, $report);
+my @argvCopy = @ARGV;
+Getopt::Long::Configure("pass_through");
+Getopt::Long::GetOptionsFromArray(\@argvCopy, "tuningPropsXmlFile=s" => \$tuningPropsXmlFile);
+my $props = EbrcModelCommon::Model::tmUtils::parsePropfile($tuningPropsXmlFile);
+
 my $GUS_HOME = $ENV{GUS_HOME};
 my $CLASSPATH = &FgpUtil::Util::CommandHelper::getJavaClasspath($GUS_HOME);
 my $sysProps = &FgpUtil::Util::CommandHelper::getSystemProps($GUS_HOME, 'presenterWriteToDb');
 my $args = &FgpUtil::Util::CommandHelper::getJavaArgs(@ARGV);
+
+# make the api key available to the java program as a system env variable
+$ENV{NCBI_EUTILS_API_KEY} = $props->{ncbiEutilsApiKey};
 
 my $cmd = "java $sysProps -classpath $CLASSPATH org.apidb.apicommon.datasetPresenter.DatasetPresenterSetLoader $args";
 

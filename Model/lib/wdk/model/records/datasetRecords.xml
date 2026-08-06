@@ -75,7 +75,7 @@
         <columnRef>dataset_id</columnRef>
       </primaryKey>
 
-      <idAttribute name="primary_key" displayName="Dataset"
+      <idAttribute name="primary_key" displayName="%%sharedDisplayName_PrimaryKey%%"
                    help="Click a dataset to go to the full dataset record">
         <text>
           <![CDATA[ $$display_name$$ ]]>
@@ -118,18 +118,18 @@
       <!-- =================================================================== -->
 
       <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
-        <columnAttribute name="display_name" internal="true" displayName="Dataset Name"/>
+        <columnAttribute name="display_name" internal="true" displayName="%%sharedDisplayName_Name%%"/>
       </attributeQueryRef>
 
 
       <attributeQueryRef ref="DatasetAttributes.All">
-        <columnAttribute name="dataset_name" internal="true" displayName="Dataset Name" help="Name of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" displayName="%%sharedDisplayName_Name%%" help="Name of the dataset."/>
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
         <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
         <columnAttribute name="short_display_name" internal="true"/>
         <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="Dataset Version" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
-        <columnAttribute name="description" displayName="Description" sortable="false"/>
+        <columnAttribute name="version" displayName="%%sharedDisplayName_SourceVersion%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>
         <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
@@ -137,9 +137,9 @@
         <columnAttribute name="type" displayName="Type" internal="true"/>
         <columnAttribute name="eupath_release" displayName="Release # and date"
                          help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
-        <columnAttribute name="summary" displayName="Summary" sortable="false"
+        <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
-        <columnAttribute name="pmids" displayName="References" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
+        <columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublications%%" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
       </attributeQueryRef>
 
@@ -150,31 +150,26 @@
 -->
 
       <attributeQueryRef ref="DatasetAttributes.Contacts">
-        <columnAttribute name="contact" displayName="Contact"
+        <columnAttribute name="contact" displayName="%%sharedDisplayName_PrimaryContact%%"
                          help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="institution" displayName="Contact institution"
+        <columnAttribute name="institution" displayName="%%sharedDisplayName_ContactInstitution%%"
                          help="The institution where the Contact is located. "/>
         <columnAttribute name="email" internal="true"/>
-        <columnAttribute name="short_attribution" displayName="Short Attribution" internal="true"/>
+        <columnAttribute name="short_attribution" displayName="%%sharedDisplayName_ShortAttribution%%" internal="true"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.CavAckRP" excludeProjects="ClinEpiDB">
         <columnAttribute name="caveat" displayName="Caveat" internal="true"/>
         <columnAttribute name="acknowledgement" displayName="Acknowledgement" internal="true"/>
         <columnAttribute name="release_policy" displayName="Release Policy" internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="release_policy" displayName="Release Policy" excludeProjects="MicrobiomeDB,ClinEpiDB"
+        <columnAttribute name="release_policy" displayName="%%sharedDisplayName_ReuseConsiderations%%" excludeProjects="MicrobiomeDB,ClinEpiDB"
                          help= "A request from the data provider stipulating the proper use of unpublished data. "  />
       </attributeQueryRef>
 
       <attributeQueryRef ref="DatasetAttributes.NewCategory" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="newcategory" displayName="Category" inReportMaker="false"
+        <columnAttribute name="newcategory" displayName="%%sharedDisplayName_Category%%" inReportMaker="false"
                          help= "Datasets are assigned to categories based on the biological attributes of the data." />
       </attributeQueryRef>
-
-      <attributeQueryRef ref="DatasetAttributes.OwnerVisibility" excludeProjects="MicrobiomeDB,ClinEpiDB">
-         <columnAttribute name="owner" displayName="Owner" />
-         <columnAttribute name="community" displayName="Community"/>
-       </attributeQueryRef>
 
       <!-- ================================================================== -->
       <!-- =================================================================== -->
@@ -183,7 +178,7 @@
       <!-- =================================================================== -->
 
       <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute  name="organism_prefix" displayName="Organism(s) (source or reference)"
+        <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_RefOrganism%%"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
       </attributeQueryRef>
 
@@ -191,10 +186,6 @@
         <columnAttribute name="megabase_pairs" displayName="Megabase pairs"/>
         <columnAttribute name="genecount" displayName="Genes" help="Total gene count" align="right" />
       </attributeQueryRef>
-
-       <attributeQueryRef ref="GenomeDatasetAttributes.GenomicsStudyAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute name="is_public" displayName="Is public"/>
-       </attributeQueryRef>
 
       <attributeQueryRef ref="GenomeDatasetAttributes.LatestVersion" excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute name="genome_version" displayName="Genome Version"/>
@@ -272,11 +263,11 @@
       <attributeQueryRef ref="DatasetAttributes.StudyCharacteristic" includeProjects="ClinEpiDB">
         <columnAttribute name="disease" displayName="Disease"/>
         <columnAttribute name="sex" displayName="Sex"/>
-        <columnAttribute name="Sample_Type" displayName="Sample type"/>
+        <columnAttribute name="Sample_Type" displayName="%%sharedDisplayName_SampleType%%"/>
          <!-- columnAttribute name="Participant_Type" displayName="Population included"/ -->
-        <columnAttribute name="Study_Type" displayName="Investigation type"/>
-        <columnAttribute name="Study_Design" displayName="Study design"/>
-        <columnAttribute name="Country" displayName="Country"/>
+        <columnAttribute name="Study_Type" displayName="%%sharedDisplayName_InvestigationType%%"/>
+        <columnAttribute name="Study_Design" displayName="%%sharedDisplayName_StudyDesign%%"/>
+        <columnAttribute name="Country" displayName="%%sharedDisplayName_Country%%"/>
         <columnAttribute name="Years" displayName="Years"/>
         <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
         <columnAttribute name="HH_count" displayName="Households" type="number"/>
@@ -284,9 +275,9 @@
         <columnAttribute name="Obser_count" displayName="Participant repeated measures" type="number"/>
         <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
         <columnAttribute name="AdditionalData" displayName="Additional data"/>
-        <columnAttribute name="Age" displayName="Age"/>
+        <columnAttribute name="Age" displayName="%%sharedDisplayName_Age%%"/>
         <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
-        <columnAttribute name="ProjectName" displayName="Project name"/>
+        <columnAttribute name="ProjectName" displayName="%%sharedDisplayName_Project%%"/>
       </attributeQueryRef>
 
 

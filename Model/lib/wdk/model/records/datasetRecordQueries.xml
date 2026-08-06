@@ -519,22 +519,6 @@
 
     </sqlQuery>
 
-     <sqlQuery name="OwnerVisibility"  isCacheable="false">
-         <column name="dataset_id"/>
-         <column name="owner"/>
-         <column name="community"/>
-
-         <sql>
-            <![CDATA[
-            select dsp.dataset_presenter_id as dataset_id,
-                   null as owner,
-                   null as community
-            from apidbTuning.DatasetPresenter dsp
-            ]]>
-         </sql>
-      </sqlQuery>
-
-
     <sqlQuery name="CavAckRP"  isCacheable="false">
       <column name="dataset_id"/>
       <column name="caveat"/>
