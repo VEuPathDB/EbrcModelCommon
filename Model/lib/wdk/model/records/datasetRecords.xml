@@ -139,7 +139,7 @@
                          help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
         <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
-        <columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublications%%" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
+        <columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
       </attributeQueryRef>
 
@@ -201,8 +201,10 @@
         <columnAttribute name="in_apollo" displayName="Apollo" help="This genome is available in Apollo for community annotation" align="right" />
       </attributeQueryRef>
 
-      <attributesList summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo"
-                      excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+      <!-- summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo" -->
+      <attributesList 
+        summary="eupath_release, newcategory, organism_prefix, contact, pmids"
+        excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
       <!-- =================================================================== -->
       <!-- =================================================================== -->
@@ -293,9 +295,12 @@
 -->
 
 
+
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
-      <attributesList summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access"
-                      includeProjects="ClinEpiDB"/>
+      <!-- summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access" -->	
+      <attributesList 
+        summary="eupath_release, contact, pmids, study_access, Study_Design"
+        includeProjects="ClinEpiDB"/>
 
 
       <!-- =================================================================================== -->

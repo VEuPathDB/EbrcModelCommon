@@ -3,15 +3,24 @@
 <wdkModel>
 
   <!-- Shared display names for attributes common to both DatasetRecordClass and UserDatasetRecordClass -->
-  <!-- SEE ALSO ApiCommonModel/Model/lib/wdk/model/records/userDatasetRecord.xml -->
       
+  <!-- TURNS OUT these are never used.. they need to be defined in the specific cohort model repos -->    
+
+  <!-- only genomics -->
+  <constant name="sharedDisplayName_RefOrganism">Organism(s) (source or reference)</constant>
+  <constant name="sharedDisplayName_SourceVersion">Source version</constant>
+
+  <!-- both genomics and dexp -->
+  <constant name="sharedDisplayName_PrimaryKey">Dataset name</constant>
+  <constant name="sharedDisplayName_PrimaryPublications">Primary publications</constant>
   <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
   <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
-  <constant name="sharedDisplayName_Name">Name</constant>
   <constant name="sharedDisplayName_Summary">Summary</constant>
   <constant name="sharedDisplayName_Description">Description</constant>
   <constant name="sharedDisplayName_ShortAttribution">Short attribution</constant>
   <constant name="sharedDisplayName_Category">Category</constant>
+
+  <!-- only dexp -->
   <constant name="sharedDisplayName_ReuseConsiderations">Reuse considerations</constant>
   <constant name="sharedDisplayName_Project">Project</constant>
   <constant name="sharedDisplayName_InvestigationType">Investigation type</constant>
