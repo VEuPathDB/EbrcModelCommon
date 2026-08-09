@@ -35,7 +35,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.sampletypes_list	topic_3077_syno
 UserDatasetRecordClasses.UserDatasetRecordClass.Publications	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Publications					10	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.ExternalIds	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExternalIds					20	results	record	download
 
-UserDatasetRecordClasses.UserDatasetRecordClass.description	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	description					30	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.description	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	description					30		record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.disclaimer	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	disclaimer					40	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.exp_organism	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	exp_organism					35	results	record	download
 
@@ -109,7 +109,7 @@ DatasetRecordClasses.DatasetRecordClass.dataset_id	topic_0219_synonym	Curation a
 DatasetRecordClasses.DatasetRecordClass.dataset_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name								
 DatasetRecordClasses.DatasetRecordClass.dataset_name_pattern	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name_pattern								
 DatasetRecordClasses.DatasetRecordClass.short_display_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_display_name								
-DatasetRecordClasses.DatasetRecordClass.description	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description					20	results	record	
+DatasetRecordClasses.DatasetRecordClass.description	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description					20		record	
 DatasetRecordClasses.DatasetRecordClass.protocol	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	protocol								
 DatasetRecordClasses.DatasetRecordClass.usage	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	usage								
 DatasetRecordClasses.DatasetRecordClass.caveat	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	caveat							record-internal	

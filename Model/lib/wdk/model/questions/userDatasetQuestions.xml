@@ -17,7 +17,7 @@
          Find all datasets.
       </description>
       <attributesList  
-	      summary="creation_date,summary,primary_contact_name,owner_name,is_clinical_field,outcomes_list,is_public"
+	      summary="creation_date,category,exp_organism,summary,primary_contact_name,accessibility,is_clinical_field"
               sorting="creation_date desc"
       />
     </question>
@@ -33,11 +33,11 @@
          Find all user datasets.
       </description>
       <attributesList excludeProjects="UniDB" 
-              summary="creation_date,category,summary,primary_contact_name,owner_name,exp_organism,ref_organism_formatted,is_public"
+	      summary="creation_date,category,exp_organism,summary,primary_contact_name,accessibility"
               sorting="creation_date desc"
       />
-      <attributesList includeProjects="UniDB" 
-              summary="creation_date,veupathdb_project,category,summary,primary_contact_name,owner_name,exp_organism,ref_organism_formatted,is_public"
+      <attributesList includeProjects="UniDB"
+	      summary="creation_date,veupathdb_project,category,exp_organism,summary,primary_contact_name,accessibility"
               sorting="creation_date desc"
       />
     </question>

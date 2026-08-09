@@ -59,7 +59,7 @@
       <!-- =============================================================== -->
 
 
-      <attributesList summary="name,owner_name,type_name,accessibility,creation_date,summary"/>
+      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_contact_name,accessibility"/>
 
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
@@ -77,7 +77,7 @@
 
       <attributeQueryRef ref="UserDatasetAttributes.CoreMetadata">
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
-        <columnAttribute name="type_name" displayName="internal data type name" />
+	<columnAttribute name="type_name"  /> <!-- internal name for category maybe used by client in record page based on ontology scope record-internal -->
         <columnAttribute name="type_version" displayName="Type Version" help=""/>
         <columnAttribute name="category" displayName="%%sharedDisplayName_Category%%" help="The category classifies the dataset according to the biological characteristics and structure of the data it contains."/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
@@ -155,7 +155,7 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%s" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+        <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
