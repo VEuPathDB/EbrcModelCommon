@@ -106,7 +106,7 @@
          </textAttribute>
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
-        <columnAttribute name="name" displayName="%%sharedDisplayName_Name%%" help="Dataset name"/>
+        <columnAttribute name="name" />
         <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false" help="A short description of the dataset"/>
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"
                          help="Free text entered by the author"/>
