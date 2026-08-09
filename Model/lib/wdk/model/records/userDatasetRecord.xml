@@ -135,7 +135,7 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.ExpOrganism">
-        <columnAttribute name="exp_organism" displayName="Experimental organism" help="The organism used to generate the samples that were analyzed to produce this dataset."/>
+        <columnAttribute name="exp_organism" displayName="%%sharedDisplayName_ExpOrganism%%" help="The organism used to generate the samples that were analyzed to produce this dataset."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
