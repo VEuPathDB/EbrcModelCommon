@@ -299,7 +299,7 @@
       <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <!-- summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access" -->	
       <attributesList 
-        summary="eupath_release, contact, pmids, study_access, Study_Design"
+        summary="eupath_release, contact, study_access, Study_Design"
         includeProjects="ClinEpiDB"/>
 
 
