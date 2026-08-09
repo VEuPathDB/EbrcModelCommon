@@ -3,7 +3,8 @@
 <wdkModel>
 
   <!-- Shared display names for attributes common to both DatasetRecordClass and UserDatasetRecordClass -->
-
+  <!-- SEE ALSO ApiCommonModel/Model/lib/wdk/model/records/userDatasetRecord.xml -->
+      
   <constant name="sharedDisplayName_PrimaryContact">Primary contact</constant>
   <constant name="sharedDisplayName_ContactInstitution">Contact institution</constant>
   <constant name="sharedDisplayName_Name">Name</constant>
