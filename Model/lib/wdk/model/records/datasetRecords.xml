@@ -178,7 +178,7 @@
       <!-- =================================================================== -->
 
       <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
-        <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_RefOrganism%%"
+        <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_ExpOrganism%%"
                           help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
       </attributeQueryRef>
 
@@ -296,7 +296,7 @@
 
 
 
-      <!--  <attributesList summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
+      <!-- summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <!-- summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access" -->	
       <attributesList 
         summary="eupath_release, contact, study_access, Study_Design"

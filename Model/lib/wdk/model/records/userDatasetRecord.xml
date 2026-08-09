@@ -70,7 +70,7 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
-        <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset to this database."/>
+	      <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset through the 'User Datasets workflow'. This field is not applicable to datasets integrated using the 'VEuPathDB workflow' pipeline."/>
         <columnAttribute name="owner_organization" displayName="Uploader organization" help="Organization of the dataset uploader."/>
         <columnAttribute name="owner_is_veupathdb_curator" displayName="Uploader is a VEuPathDB curator" help="Uploaded by VEuPathDB curatorial staff."/>
       </attributeQueryRef>
