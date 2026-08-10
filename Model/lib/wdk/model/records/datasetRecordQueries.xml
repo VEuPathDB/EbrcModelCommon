@@ -495,8 +495,8 @@
               GROUP BY dataset_presenter_id
             ) pubs ON dsp.dataset_presenter_id = pubs.dataset_presenter_id
             LEFT JOIN (
-              SELECT dataset_presenter_id,
-                     '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+                SELECT dataset_presenter_id,
+                       release_date || ', ' || '@PROJECT_ID@ rel. ' || release_number  as eupath_release
               FROM (
                 SELECT dh.dataset_presenter_id, dh.build_number, to_char(ebd.release_date,'YYYY-MON-DD') as release_date,
                        ebd.release_number, ebd.project,
@@ -509,7 +509,7 @@
             ) history ON dsp.dataset_presenter_id = history.dataset_presenter_id
             LEFT JOIN (
               SELECT build_number,
-                     '@PROJECT_ID@ rel. ' || release_number || ', ' || release_date as eupath_release
+                     release_date || ', ' || '@PROJECT_ID@ rel. ' || release_number  as eupath_release
               FROM apidbTuning.EupathBuildDates
               -- we could get rid of the EuPathDB special case by updating to UniDB in eupathBuildDates.yml
               WHERE (project = '@PROJECT_ID@' or (project = 'EuPathDB' and 'UniDB' = '@PROJECT_ID@'))

@@ -135,8 +135,8 @@
         <columnAttribute name="is_species_scope" displayName="Is Species Scope" internal="true"/>
         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
         <columnAttribute name="type" displayName="Type" internal="true"/>
-        <columnAttribute name="eupath_release" displayName="Release # and date"
-                         help="The VEuPathDB release number and date that the dataset first appeared in VEuPathDB. "/>
+	<columnAttribute name="eupath_release" displayName="%%sharedDisplayName_DateVersion%%"
+                         help="The date, and VEuPathDB release number for 'VEuPathDB workflow' datasets, when the dataset first appeared in VEuPathDB. "/>
         <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
         <columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>

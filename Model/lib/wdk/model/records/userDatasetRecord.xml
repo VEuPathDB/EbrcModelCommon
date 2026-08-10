@@ -87,7 +87,7 @@
                          help="‘Public’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
-        <columnAttribute name="creation_date" displayName="Created" help="The date the dataset was first uploaded." />
+       <columnAttribute name="creation_date" displayName="%%sharedDisplayName_DateVersion%%" help="The date when the dataset first appeared in VEuPathDB. " />
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
