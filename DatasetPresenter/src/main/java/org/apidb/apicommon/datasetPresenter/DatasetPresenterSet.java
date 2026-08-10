@@ -90,10 +90,43 @@ public class DatasetPresenterSet {
    * Called at processing time.
    */
   void addToDatasetInjectorSet(DatasetInjectorSet datasetInjectorSet) {
+    String currentProjectId = getCurrentProjectId();
     for (DatasetPresenter presenter : _presenters.values()) {
-      for (DatasetInjectorConstructor dic : presenter.getDatasetInjectorConstructors())
+      Set<DatasetInjectorConstructor> dics = presenter.getDatasetInjectorConstructors();
+      boolean hasMultipleInjectors = dics.size() > 1;
+      for (DatasetInjectorConstructor dic : dics) {
+        // A presenter with multiple injectors (one per project variant of the same
+        // underlying dataset, e.g. a dual host+pathogen transcriptome study) must
+        // only inject the one matching the project currently being built. All of
+        // them otherwise collapse onto this presenter's single shared package name
+        // (see DatasetPresenter.getId()), and the last one processed silently wins
+        // over the rest - e.g. HostDB's settings winning on a PlasmoDB build.
+        // Single-injector presenters (the common case) are unaffected.
+        if (hasMultipleInjectors) {
+          String injectorProjectId = dic.getPropValue("projectName");
+          if (injectorProjectId != null && currentProjectId != null
+              && !injectorProjectId.equalsIgnoreCase(currentProjectId))
+            continue;
+        }
         datasetInjectorSet.addDatasetInjector(dic.getDatasetInjector());
+      }
     }
+  }
+
+  /**
+   * The GUS project (e.g. "PlasmoDB") this build is running for, derived from
+   * GUS_HOME's conventional path shape (.../<ProjectId>/<webapp>/gus_home) rather
+   * than requiring a new CLI/system property just for this filter. Returns null
+   * if GUS_HOME isn't set or doesn't have the expected shape, in which case
+   * multi-injector presenters fall back to injecting every declared injector
+   * (today's behavior) rather than silently dropping all of them.
+   */
+  private static String getCurrentProjectId() {
+    String gusHome = System.getenv("GUS_HOME");
+    if (gusHome == null) return null;
+    File webappDir = new File(gusHome).getParentFile();
+    File projectDir = webappDir == null ? null : webappDir.getParentFile();
+    return projectDir == null ? null : projectDir.getName();
   }
 
   int getSize() {
