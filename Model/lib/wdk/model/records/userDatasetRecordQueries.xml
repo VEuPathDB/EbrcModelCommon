@@ -53,7 +53,7 @@
 	   SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id,
 	   TRIM(COALESCE(first_name || ' ', '') || COALESCE(middle_name || ' ', '') || COALESCE(last_name, ''))	as owner_name,
 	   organization as owner_organization,
-	   case when user_id = 119782143 then 'yes' else 'no' end as owner_is_veupathdb_curator
+	   case when user_id = @VEUPATHDB_STAFF_USER_ID@ then 'yes' else 'no' end as owner_is_veupathdb_curator
            from @VDI_CONTROL_SCHEMA@.dataset d,
 	   (select * from
             public.crosstab(
