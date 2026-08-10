@@ -449,6 +449,7 @@
       <column name="short_display_name" columnType="string"/>
       <column name="description" columnType="string"/>
       <column name="version" columnType="string"/>
+      <column name="integration" columnType="string"/>
       <column name="summary" columnType="string"/>
       <column name="protocol" columnType="string"/>
       <column name="usage" columnType="string"/>
@@ -475,7 +476,7 @@
           SELECT dsp.dataset_presenter_id as dataset_id,
                  dsp.name as dataset_name, dsp.dataset_name_pattern,
                  --dsp.display_name,
-                 ds.version,
+                 ds.version, 'VEuPathDB workflow' as integration, 
                  dsp.short_display_name, dsp.description,
                  coalesce(dsp.summary, dsp.description) as summary,
                  dsp.protocol, dsp.usage,

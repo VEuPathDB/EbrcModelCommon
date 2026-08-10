@@ -108,6 +108,7 @@
 
       <attributeQueryRef ref="UserDatasetAttributes.DescriptiveMetadata">
         <columnAttribute name="name" />
+        <columnAttribute name="integration" displayName="%%sharedDisplayName_Integration%%"  help="Datasets integrated using the 'VEuPathDB workflow' were processed using standardized internal methods prior to integration. Datasets integrated using the 'User Datasets workflow' were added through the My Datasets workspace and may vary in their level of processing, structure, annotation, and available analyses."/>
         <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false" help="A short description of the dataset"/>
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"
                          help="Free text entered by the author"/>
@@ -147,11 +148,11 @@
           help="The genome that the data were aligned to, where applicable. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to release 72, reference genome information was not captured separately from organism information and may not be available as a distinct value."/>
       </attributeQueryRef>
 
-      <!-- phase 2
+   
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
-        <columnAttribute name="primary_publication" displayName="Primary publication" help=""/>
+        <columnAttribute name="primary_publication" displayName="Primary publication" help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters. "/>
       </attributeQueryRef>
-      -->
+     
    
        <attributeQueryRef ref="UserDatasetAttributes.ClinicalOrField" includeProjects="ClinEpiDB">
         <columnAttribute name="is_clinical_field" displayName="Field study or Clinical trial" help="Whether the dataset or underlying samples originated from a human, vector, animal, or plant population study; an epidemiological or surveillance study; or a clinical trial."/>

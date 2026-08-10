@@ -112,6 +112,7 @@
     <sqlQuery name="DescriptiveMetadata" isCacheable="false">
       <column name="dataset_id" columnType="string"/>
       <column name="name" columnType="string"/>
+      <column name="integration" columnType="string"/>
       <column name="summary" columnType="string"/>
       <column name="description" columnType="string"/>
       <column name="disclaimer" columnType="string"/>
@@ -123,7 +124,7 @@
         <![CDATA[
           SELECT
             CONCAT('EDAUD_', dataset_id) as dataset_id,
-            name,
+            name, 'User Datasets workflow' as integration,
             summary,
             description,disclaimer,
             program_name,

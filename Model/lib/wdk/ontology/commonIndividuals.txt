@@ -65,6 +65,8 @@ UserDatasetRecordClasses.UserDatasetRecordClass.primary_country	topic_0219_synon
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_email	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_email						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.summary	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	summary						results	record-internal	download
 UserDatasetRecordClasses.UserDatasetRecordClass.primary_publication	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	primary_publication						results	record-internal	download
+UserDatasetRecordClasses.UserDatasetRecordClass.integration	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	integration						results	record-internal	download
+
 
 UserDatasetRecordClasses.UserDatasetRecordClass.ref_organism_formatted	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	ref_organism_formatted					6	results	record	
 UserDatasetRecordClasses.UserDatasetRecordClass.ref_organism	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	ref_organism					6			download

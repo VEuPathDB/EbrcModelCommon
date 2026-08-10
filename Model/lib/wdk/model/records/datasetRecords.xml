@@ -137,7 +137,8 @@
         <columnAttribute name="type" displayName="Type" internal="true"/>
 	<columnAttribute name="eupath_release" displayName="%%sharedDisplayName_DateVersion%%"
                          help="The date, and VEuPathDB release number for 'VEuPathDB workflow' datasets, when the dataset first appeared in VEuPathDB. "/>
-        <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
+        <columnAttribute name="integration" displayName="%%sharedDisplayName_Integration%%" help= "Datasets integrated using the 'VEuPathDB workflow' were processed using standardized internal methods prior to integration. Datasets integrated using the 'User Datasets workflow' were added through the My Datasets workspace and may vary in their level of processing, structure, annotation, and available analyses."/>
+	<columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
         <columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" excludeProjects="ClinEpiDB" help="Links related to the dataset including PubMed for scientific papers and DOIs for other resources, e.g, book chapters. Other DOI links are linkouts to databases where raw data has been deposited, specially frequent in the case of population abundance data."/>
         <columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" help="PubMed links related to the dataset."/>
