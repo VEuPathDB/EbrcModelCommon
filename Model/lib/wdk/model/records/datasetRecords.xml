@@ -179,7 +179,7 @@
 
       <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
         <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_ExpOrganism%%"
-                          help="The 'source' is the organism used to generate the samples that were analyzed to produce this dataset. The 'reference' is the genome that the data were aligned to. For functional datasets, the source may differ from the reference."/>
+          help="The organisms represented by biological data in this dataset. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to Release 72, organism and reference genome information was not captured separately and 'Organisms' may refer to the organism represented by the data, the reference genome used for mapping or analysis, or both."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="GenomeDatasetAttributes.GenomicsDatasetAttributes" excludeProjects="MicrobiomeDB,ClinEpiDB">
