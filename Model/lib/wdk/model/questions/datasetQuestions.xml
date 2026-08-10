@@ -13,7 +13,7 @@
       queryRef="DatasetIds.AllDatasets"
       recordClassRef="DatasetRecordClasses.DatasetRecordClass"
       noSummaryOnSingleRecord="true">
-      <attributesList sorting="eupath_release asc" />
+      <attributesList sorting="eupath_release desc" />
       <description>
          Find all datasets.
       </description>

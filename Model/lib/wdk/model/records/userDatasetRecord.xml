@@ -59,7 +59,8 @@
       <!-- =============================================================== -->
 
 
-      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_contact_name,accessibility"/>
+      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_contact_name,accessibility"
+	      sorting="creation_date desc"/>
 
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>

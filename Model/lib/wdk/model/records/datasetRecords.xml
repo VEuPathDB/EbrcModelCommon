@@ -203,7 +203,7 @@
 
       <!-- summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo" -->
       <attributesList 
-        summary="eupath_release, newcategory, organism_prefix, contact, pmids"
+        summary="eupath_release, newcategory, organism_prefix, contact, pmids" sorting="eupath_release desc"
         excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
       <!-- =================================================================== -->
