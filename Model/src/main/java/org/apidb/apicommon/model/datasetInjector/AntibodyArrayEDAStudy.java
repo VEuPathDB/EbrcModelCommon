@@ -24,10 +24,6 @@ public class AntibodyArrayEDAStudy extends GenomicsEDAStudy {
         injectTemplate("antibodyArrayEdaQuestion");
         injectTemplate("antibodyArrayEdaGeneTableSql");
         injectTemplate("antibodyArrayDataTableGeneTableSql");
-        injectTemplate("antibodyArrayEdaAttributeQueriesNumeric");
-        injectTemplate("antibodyArrayEdaAttributeQueriesString");
-        injectTemplate("antibodyArrayEdaAttributeRef");
-        injectTemplate("antibodyArrayEdaAttributeCategory");
 
         setPropValue("questionName", getInternalQuestionName());
         setPropValue("searchCategory", "searchCategory-T-test-2-sample-unequal-variance");
