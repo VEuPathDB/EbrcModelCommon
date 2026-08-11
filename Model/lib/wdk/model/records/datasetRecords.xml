@@ -128,7 +128,7 @@
         <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
         <columnAttribute name="short_display_name" internal="true"/>
         <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="%%sharedDisplayName_SourceVersion%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>

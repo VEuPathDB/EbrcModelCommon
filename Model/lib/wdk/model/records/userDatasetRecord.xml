@@ -144,7 +144,7 @@
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
         <columnAttribute name="ref_organism" displayName="Reference genome"/>
 	<columnAttribute name="ref_genome_filename" />
-	<columnAttribute name="ref_organism_formatted" displayName="%%sharedDisplayName_RefOrganism%%" 
+	<columnAttribute name="ref_organism_formatted" displayName="%%sharedDisplayName_RefGenome%%" 
           help="The genome that the data were aligned to, where applicable. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to release 72, reference genome information was not captured separately from organism information and may not be available as a distinct value."/>
       </attributeQueryRef>
 
