@@ -102,7 +102,7 @@
 		 WHEN accessibility = 'controlled' THEN 'Controlled'
             END as accessibility,
             days_for_approval,
-            TO_CHAR(creation_date, 'YYYY-MON-DD') || ', v1' as creation_date
+            TO_CHAR(creation_date, 'YYYY-MM-DD') || ', v1' as creation_date
           FROM  @VDI_CONTROL_SCHEMA@.dataset
         ]]>
       </sql>
