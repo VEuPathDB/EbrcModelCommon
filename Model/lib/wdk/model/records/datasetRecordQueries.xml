@@ -709,8 +709,8 @@
               , '' as target_type
               , '' as target_name
               , 'genomicsInternal' as link_type
-            FROM apidbtuning.GenomicsInternalHyperlink
-            WHERE url not like '%app/record/organism/%'
+            FROM apidbtuning.DatasetHyperlink
+            WHERE url like '/%'
           UNION
 		    SELECT dsp.dataset_presenter_id as dataset_id
 		       , '' as dataset_name
