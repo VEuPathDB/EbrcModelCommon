@@ -141,7 +141,7 @@
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
             AND  COALESCE(dd.category,'') != 'Link outs'
-	    -- TODO needs project filter
+	    AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')  -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -157,14 +157,14 @@
       <column name="dataset_id"/>
       <sql>
         <![CDATA[
-          SELECT DISTINCT ref.dataset_presenter_id as dataset_id,
+          SELECT DISTINCT dd.dataset_presenter_id as dataset_id,
                  ref.target_name, ref.record_type
           FROM apidbtuning.datasourcemodelref ref, apidbtuning.datasetdatasource dd, apidbtuning.datasetpresenter dsp
           WHERE dsp.dataset_presenter_id = dd.dataset_presenter_id
-	    and dd.dataset_datasource_id = ref.dataset_datasource_id
+	    and dd.dataset_datasource_id = ref.data_source_id
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
-	    -- TODO needs project filter
+	    AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@') -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -180,10 +180,11 @@
 
       <sql>
         <![CDATA[
-          SELECT DISTINCT dataset_presenter_id as dataset_id
-          FROM APIDBTUNING.datasetpresenter
-          WHERE dataset_presenter_id in ($$dataset_id$$)
-	    -- TODO needs project filter
+          SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
+            FROM APIDBTUNING.datasetpresenter dsp, apidbtuning.datasetdatasource dd
+          WHERE  dsp.dataset_presenter_id = dd.dataset_presenter_id
+            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND  dsp.dataset_presenter_id in ($$dataset_id$$)
         ]]>
       </sql>
     </sqlQuery>
