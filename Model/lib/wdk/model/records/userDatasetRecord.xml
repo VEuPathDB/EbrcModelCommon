@@ -65,13 +65,18 @@
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
       </attributeQueryRef>
+
       <attributeQueryRef ref="UserDatasetAttributes.VEuPathDBIdProject">
-        <columnAttribute name="veupathdb_id" displayName="VEuPathDB ID" />
-	<columnAttribute name="veupathdb_project" displayName="VEuPathDB project" />
+        <columnAttribute name="veupathdb_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>
+	<columnAttribute name="veupathdb_project" displayName="VEuPathDB project" help="VEuPathDB component website (ex: PlasmoDB, FungiDB, ToxoDB, etc.) where the dataset was integrated."/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OwnerInfo">
-	      <columnAttribute name="owner_name" displayName="Uploaded by" help="The person or organization who uploaded this dataset through the 'User Datasets workflow'. This field is not applicable to datasets integrated using the 'VEuPathDB workflow' pipeline."/>
+	<columnAttribute name="owner_name" displayName="Uploaded by" excludeProjects="ClinEpiDB"
+          help="The person or organization who uploaded this dataset through the 'User Datasets workflow'. This field is not applicable to datasets integrated using the 'VEuPathDB workflow' pipeline."/>
+        <columnAttribute name="owner_name" displayName="Uploaded by" includeProjects="ClinEpiDB"
+          help="The person or organization who uploaded this dataset through the User Datasets workflow."/>
+
         <columnAttribute name="owner_organization" displayName="Uploader organization" help="Organization of the dataset uploader."/>
         <columnAttribute name="owner_is_veupathdb_curator" displayName="Uploader is a VEuPathDB curator" help="Uploaded by VEuPathDB curatorial staff."/>
       </attributeQueryRef>
@@ -80,7 +85,7 @@
         <columnAttribute name="owner" displayName="Owner ID" help="User ID of the dataset owner."/>
 	<columnAttribute name="type_name"  /> <!-- internal name for category maybe used by client in record page based on ontology scope record-internal -->
         <columnAttribute name="type_version" displayName="Type Version" help=""/>
-        <columnAttribute name="category" displayName="%%sharedDisplayName_Category%%" help="The category classifies the dataset according to the biological characteristics and structure of the data it contains."/>
+	<columnAttribute name="category" displayName="%%sharedDisplayName_Category%%" help="%%sharedDisplayName_Category_help%%"/>
         <columnAttribute name="deleted_status" displayName="Deleted status"
                          help="0 = Active, 1 = Deleted and Uninstalled, 2 = Deleted but not yet Uninstalled"/>
         <columnAttribute name="accessibility" displayName="Download access" help="‘Open access’ datasets have no access restrictions and can be downloaded by anyone. ‘Restricted’ datasets can only be downloaded by the dataset owner and collaborators the owner has explicitly invited." />
@@ -88,12 +93,12 @@
                          help="‘Public’ datasets are findable and explorable by the research community. ‘Private’ datasets can only be discovered and explored by the dataset owner and collaborators the owner has explicitly invited." />
         <columnAttribute name="days_for_approval" displayName="Days for approval"
                          help="Number of days required for approval"/>
-       <columnAttribute name="creation_date" displayName="%%sharedDisplayName_DateVersion%%" help="The date when the dataset first appeared in VEuPathDB. " />
+       <columnAttribute name="creation_date" displayName="%%sharedDisplayName_DateVersion%%" help="%%sharedDisplayName_DateVersion_help%%" />
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryContact">
         <columnAttribute name="primary_contact_name" displayName="%%sharedDisplayName_PrimaryContact%%" help="The person or organization that serves as a source of information concerning this dataset."/>
-        <columnAttribute name="primary_affiliation" displayName="%%sharedDisplayName_ContactInstitution%%" help="The institution where the contact person is located."/>
+	<columnAttribute name="primary_affiliation" displayName="%%sharedDisplayName_ContactInstitution%%" help="%%sharedDisplayName_ContactInstitution_help%%"/>
         <columnAttribute name="primary_email" displayName="Contact email" help="The email address for the contact person or organization for this dataset."/>
       </attributeQueryRef>
 
@@ -112,7 +117,7 @@
         <columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false" help="A short description of the dataset"/>
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"
                          help="Free text entered by the author"/>
-        <columnAttribute name="disclaimer" displayName="%%sharedDisplayName_ReuseConsiderations%%" help="Any important caveats or limitations users should consider when interpreting or reusing this dataset, or requests from the data provider stipulating the proper use of unpublished data."/>
+	<columnAttribute name="disclaimer" displayName="%%sharedDisplayName_ReuseConsiderations%%" help="%%sharedDisplayName_ReuseConsiderations_help%%"/>
 	<columnAttribute name="program_name" displayName="Program" help="Program name"/>
 	<columnAttribute name="project_name" displayName="%%sharedDisplayName_Project%%" help="?"/>
         <columnAttribute name="short_attribution" displayName="%%sharedDisplayName_ShortAttribution%%" help="Short attribution text"/>
@@ -137,8 +142,7 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.ExpOrganism">
-        <columnAttribute name="exp_organism" displayName="%%sharedDisplayName_ExpOrganism%%" 
-          help="The organisms represented by biological data in this dataset. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to Release 72, organism and reference genome information was not captured separately and 'Organisms' may refer to the organism represented by the data, the reference genome used for mapping or analysis, or both."/>
+	      <columnAttribute name="exp_organism" displayName="%%sharedDisplayName_ExpOrganism%%" help="%%sharedDisplayName_ExpOrganism_help%%"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.RefOrganism" excludeProjects="ClinEpiDB">
@@ -150,7 +154,7 @@
 
    
       <attributeQueryRef ref="UserDatasetAttributes.PrimaryPublication">
-        <columnAttribute name="primary_publication" displayName="Primary publication" help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters. "/>
+	      <columnAttribute name="primary_publication" displayName="%%sharedDisplayName_PrimaryPublication%%" help="%%sharedDisplayName_PrimaryPublication_help%%"/>
       </attributeQueryRef>
      
    
@@ -159,15 +163,15 @@
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.CountriesList" includeProjects="ClinEpiDB">
-        <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%" help="For field studies and clinical trials: a list of the countries where data or samples were collected from the study population." />
+	      <columnAttribute name="countries_list" displayName="%%sharedDisplayName_Country%%" help="%%sharedDisplayName_Country_help%%"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.Characteristics" includeProjects="ClinEpiDB">
-        <columnAttribute name="study_design" displayName="%%sharedDisplayName_StudyDesign%%"/>
-        <columnAttribute name="study_type" displayName="%%sharedDisplayName_InvestigationType%%"/>
-        <columnAttribute name="participant_ages" displayName="%%sharedDisplayName_Age%%"/>
-        <columnAttribute name="sample_year_start" displayName="%%sharedDisplayName_StartYear%%"/>
-        <columnAttribute name="sample_year_end" displayName="%%sharedDisplayName_EndYear%%"/>
+        <columnAttribute name="study_design" displayName="%%sharedDisplayName_StudyDesign%%" help="%%sharedDisplayName_StudyDesign_help%%"/>
+        <columnAttribute name="study_type" displayName="%%sharedDisplayName_InvestigationType%%" help="%%sharedDisplayName_InvestigationType_help%%"/>
+        <columnAttribute name="participant_ages" displayName="%%sharedDisplayName_Age%%" help="%%sharedDisplayName_Age_help%%"/>
+        <columnAttribute name="sample_year_start" displayName="%%sharedDisplayName_StartYear%%" help="%%sharedDisplayName_StartYear_help%%"/>
+        <columnAttribute name="sample_year_end" displayName="%%sharedDisplayName_EndYear%%" help="%%sharedDisplayName_EndYear_help%%"/>
       </attributeQueryRef>
 
       <attributeQueryRef ref="UserDatasetAttributes.OutcomesList" includeProjects="ClinEpiDB">
