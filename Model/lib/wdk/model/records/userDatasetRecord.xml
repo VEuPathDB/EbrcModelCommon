@@ -22,7 +22,7 @@
       </primaryKey>
 
       <idAttribute name="primary_key" displayName="%%sharedDisplayName_PrimaryKey%%"
-                   help="Click a user dataset to open its associated page.">
+	      help="%%sharedDisplayName_PrimaryKey_help%%">
         <text>
           <![CDATA[ $$name$$ ]]>
         </text>

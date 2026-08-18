@@ -76,7 +76,7 @@
       </primaryKey>
 
       <idAttribute name="primary_key" displayName="%%sharedDisplayName_PrimaryKey%%"
-                   help="Click a dataset to go to the full dataset record">
+                   help="%%sharedDisplayName_PrimaryKey_help%%">
         <text>
           <![CDATA[ $$display_name$$ ]]>
         </text>
@@ -117,15 +117,15 @@
       <!-- =================================================================== -->
       <!-- =================================================================== -->
 
+      <!-- used internally for prim key only, in UD we call it name; here it is not included in the All query probably because of the complexity? -->
       <attributeQueryRef ref="DatasetAttributes.DatasetDisplayName">
-        <columnAttribute name="display_name" internal="true" displayName="%%sharedDisplayName_Name%%"/>
+        <columnAttribute name="display_name" internal="true"/>
       </attributeQueryRef>
 
 
       <attributeQueryRef ref="DatasetAttributes.All">
-        <columnAttribute name="dataset_name" internal="true" displayName="%%sharedDisplayName_Name%%" help="Name of the dataset."/>
+        <columnAttribute name="dataset_name" internal="true" />
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
-        <!--         <columnAttribute name="display_name" internal="true" displayName="Dataset Name" removable="false"/> -->
         <columnAttribute name="short_display_name" internal="true"/>
         <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
         <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
