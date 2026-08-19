@@ -180,7 +180,7 @@
       <!-- =================================================================== -->
       <!-- =================================================================== -->
 
-      <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB">
         <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_ExpOrganism%%"
           help="The organisms represented by biological data in this dataset. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to Release 72, organism and reference genome information was not captured separately and 'Organisms' may refer to the organism represented by the data, the reference genome used for mapping or analysis, or both."/>
       </attributeQueryRef>
@@ -404,7 +404,7 @@
              displayName="Associated Publications"
              queryRef="DatasetTables.Publications">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
+        <columnAttribute name="pmid"  internal="true"/>
         <columnAttribute name="citation" internal="true"/>
         <columnAttribute name="url" internal="true"/>
 
@@ -505,7 +505,7 @@
         <columnAttribute name="build" displayName="VEuPathDB Build"/>
         <columnAttribute name="release_date" displayName="Release Date"/>
         <columnAttribute name="release_number" displayName="Release"/>
-        <columnAttribute name="version" displayName="Dataset Version"/>
+        <columnAttribute name="version" displayName="External sources" help="Resource version from the providers repository."/>
         <columnAttribute name="note" displayName="Note"/>
       </table>
 
