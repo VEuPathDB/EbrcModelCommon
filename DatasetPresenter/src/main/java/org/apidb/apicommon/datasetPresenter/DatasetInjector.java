@@ -565,4 +565,15 @@ public abstract class DatasetInjector {
     public void setCategoryOverride(String categoryOverride) {
         this._categoryOverride = categoryOverride;
     }
+
+    /**
+     * Subclasses may override to name a default-hyperlink category (as declared
+     * in datasetLinks.xml) whose links should auto-load for this injector's
+     * dataset(s) when no explicit categoryOverride is set. Unlike
+     * getCategoryOverride(), this affects ONLY which default hyperlinks load —
+     * it has no effect on DatasetDatasource.category (search/facet behavior).
+     */
+    public String getDefaultLinkCategory() {
+        return null;
+    }
 }

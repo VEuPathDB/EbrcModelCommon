@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +39,8 @@ public class DatasetPresenterSetLoader {
 
   private Contacts allContacts;
   private HyperLinks defaultHyperLinks;
+  private final Map<Integer, String> orgAbbrevCache = new HashMap<>();
+  private final Map<Integer, String> defaultSequenceCache = new HashMap<>();
 
   private Connection dbConnection;
   private Configuration config;
@@ -383,9 +387,21 @@ public class DatasetPresenterSetLoader {
       loadInjectorPropValue(datasetPresenterId, name, pv.getKey(), dataValue, injectorPropertiesStmt);
     }
 
-    if (datasetInjector.getCategoryOverride() != null) {
-      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(datasetInjector.getCategoryOverride()))
-        loadLink(datasetPresenterId, link, linkStmt);
+    String linkCategory = datasetInjector.getCategoryOverride() != null
+        ? datasetInjector.getCategoryOverride()
+        : datasetInjector.getDefaultLinkCategory();
+
+    if (linkCategory != null) {
+      Collection<Datasource> targetDatasources = datasetInjector.getDatasourceName() != null
+          ? Collections.singleton(datasetPresenter.getDatasource(datasetInjector.getDatasourceName()))
+          : datasetPresenter.getDatasources();
+
+      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(linkCategory)) {
+        for (Datasource datasource : targetDatasources) {
+          if (datasource == null) continue;
+          loadSubstitutedLink(datasetPresenterId, link, datasource, datasetInjector.getDatasetName(), linkStmt);
+        }
+      }
     }
 
     for (ModelReference ref : datasetInjector.getModelReferences()) {
@@ -666,6 +682,94 @@ public class DatasetPresenterSetLoader {
     stmt.setString(4, link.getUrl());
     stmt.setString(5, link.getIsPublication());
     stmt.execute();
+  }
+
+  /**
+   * Loads a default (category-templated) hyperlink for one datasource, substituting
+   * DEFAULT_PROJECT/DEFAULT_DATASET_NAME/DEFAULT_ORG_ABBREV/DEFAULT_SEQUENCE placeholders
+   * with real values before insertion. The HyperLink instance passed in is shared (parsed
+   * once from datasetLinks.xml and reused across every dataset in its category), so it is
+   * never mutated here — only fresh, substituted copies of its text/url are built.
+   */
+  private void loadSubstitutedLink(String datasetPresenterId, HyperLink link, Datasource datasource,
+      String datasetName, PreparedStatement stmt) throws SQLException {
+    String text = link.getText();
+    String description = link.getDescription();
+    String url = link.getUrl();
+
+    String projectId = datasource.getProjectId();
+    text = replaceIfPresent(text, "DEFAULT_PROJECT", projectId);
+    url = replaceIfPresent(url, "DEFAULT_PROJECT", projectId);
+
+    String linkDatasetName = datasource.getName() != null ? datasource.getName() : datasetName;
+    text = replaceIfPresent(text, "DEFAULT_DATASET_NAME", linkDatasetName);
+    url = replaceIfPresent(url, "DEFAULT_DATASET_NAME", linkDatasetName);
+
+    if (contains(url, "DEFAULT_ORG_ABBREV") || contains(text, "DEFAULT_ORG_ABBREV")) {
+      String orgAbbrev = lookupOrgAbbrev(datasource.getTaxonId());
+      text = replaceIfPresent(text, "DEFAULT_ORG_ABBREV", orgAbbrev);
+      url = replaceIfPresent(url, "DEFAULT_ORG_ABBREV", orgAbbrev);
+    }
+
+    if (contains(url, "DEFAULT_SEQUENCE") || contains(text, "DEFAULT_SEQUENCE")) {
+      String defaultSeq = lookupDefaultTopLevelSequence(datasource.getTaxonId());
+      text = replaceIfPresent(text, "DEFAULT_SEQUENCE", defaultSeq);
+      url = replaceIfPresent(url, "DEFAULT_SEQUENCE", defaultSeq);
+    }
+
+    stmt.setString(1, datasetPresenterId);
+    stmt.setString(2, text);
+    stmt.setString(3, description);
+    stmt.setString(4, url);
+    stmt.setString(5, link.getIsPublication());
+    stmt.execute();
+  }
+
+  private static boolean contains(String s, String needle) {
+    return s != null && s.contains(needle);
+  }
+
+  private static String replaceIfPresent(String s, String placeholder, String value) {
+    return (s == null || value == null) ? s : s.replace(placeholder, value);
+  }
+
+  PreparedStatement getOrganismAbbrevStmt() throws SQLException {
+    return dbConnection.prepareStatement("SELECT public_abbrev FROM apidb.Organism WHERE taxon_id = ?");
+  }
+
+  PreparedStatement getDefaultTopLevelSequenceStmt() throws SQLException {
+    return dbConnection.prepareStatement(
+        "SELECT source_id FROM webready.GenomicSeqAttributes_p"
+      + " WHERE taxon_id = ? AND is_top_level = 1"
+      + " ORDER BY chromosome_order_num, length DESC LIMIT 1");
+  }
+
+  private String lookupOrgAbbrev(Integer taxonId) throws SQLException {
+    if (taxonId == null) return null;
+    if (orgAbbrevCache.containsKey(taxonId)) return orgAbbrevCache.get(taxonId);
+    String abbrev = null;
+    try (PreparedStatement stmt = getOrganismAbbrevStmt()) {
+      stmt.setInt(1, taxonId);
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) abbrev = rs.getString(1);
+      }
+    }
+    orgAbbrevCache.put(taxonId, abbrev);
+    return abbrev;
+  }
+
+  private String lookupDefaultTopLevelSequence(Integer taxonId) throws SQLException {
+    if (taxonId == null) return null;
+    if (defaultSequenceCache.containsKey(taxonId)) return defaultSequenceCache.get(taxonId);
+    String seq = null;
+    try (PreparedStatement stmt = getDefaultTopLevelSequenceStmt()) {
+      stmt.setInt(1, taxonId);
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) seq = rs.getString(1);
+      }
+    }
+    defaultSequenceCache.put(taxonId, seq);
+    return seq;
   }
 
 
