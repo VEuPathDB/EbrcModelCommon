@@ -128,7 +128,7 @@
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
         <columnAttribute name="short_display_name" internal="true"/>
         <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB" />
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>
@@ -140,7 +140,7 @@
         <columnAttribute name="integration" displayName="%%sharedDisplayName_Integration%%" help= "Datasets integrated using the 'VEuPathDB workflow' were processed using standardized internal methods prior to integration. Datasets integrated using the 'User Datasets workflow' were added through the My Datasets workspace and may vary in their level of processing, structure, annotation, and available analyses."/>
 	<columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
-	<columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" excludeProjects="ClinEpiDB" 
+	<columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" 
 		help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters."/>
 	<columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" 
 		help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters."/>
@@ -180,7 +180,7 @@
       <!-- =================================================================== -->
       <!-- =================================================================== -->
 
-      <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB,ClinEpiDB">
+      <attributeQueryRef ref="GenomeDatasetAttributes.Organisms"  excludeProjects="MicrobiomeDB">
         <columnAttribute  name="organism_prefix" displayName="%%sharedDisplayName_ExpOrganism%%"
           help="The organisms represented by biological data in this dataset. For legacy datasets integrated via the 'VEuPathDB workflow' pipeline prior to Release 72, organism and reference genome information was not captured separately and 'Organisms' may refer to the organism represented by the data, the reference genome used for mapping or analysis, or both."/>
       </attributeQueryRef>
@@ -206,7 +206,8 @@
 
       <!-- summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo" -->
       <attributesList 
-        summary="eupath_release, newcategory, organism_prefix, contact, pmids" sorting="eupath_release desc"
+        summary="eupath_release, newcategory, organism_prefix, pmids, contact" 
+        sorting="eupath_release desc"
         excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
       <!-- =================================================================== -->
@@ -302,7 +303,7 @@
       <!-- summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <!-- summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access" -->	
       <attributesList 
-        summary="eupath_release, contact, study_access, Study_Design"
+        summary="eupath_release, summary, pmids, contact, study_access"
         includeProjects="ClinEpiDB"/>
 
 
@@ -403,7 +404,7 @@
              displayName="Associated Publications"
              queryRef="DatasetTables.Publications">
         <columnAttribute name="dataset_id"  inReportMaker="false" internal="true"/>
-        <columnAttribute name="pmid" displayName="Pubmed ID" internal="true"/>
+        <columnAttribute name="pmid"  internal="true"/>
         <columnAttribute name="citation" internal="true"/>
         <columnAttribute name="url" internal="true"/>
 
@@ -504,7 +505,7 @@
         <columnAttribute name="build" displayName="VEuPathDB Build"/>
         <columnAttribute name="release_date" displayName="Release Date"/>
         <columnAttribute name="release_number" displayName="Release"/>
-        <columnAttribute name="version" displayName="Dataset Version"/>
+        <columnAttribute name="version" displayName="External sources" help="Resource version from the providers repository."/>
         <columnAttribute name="note" displayName="Note"/>
       </table>
 
@@ -574,7 +575,7 @@
       <!-- Genome History -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Dataset Release History"
+             displayName="Genome Release History"
              queryRef="GenomeDatasetTables.GenomeHistory">
         <description includeProjects="VectorBase"><![CDATA[<i>
                 On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 
