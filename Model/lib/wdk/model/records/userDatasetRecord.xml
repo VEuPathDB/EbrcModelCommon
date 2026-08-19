@@ -59,8 +59,14 @@
       <!-- =============================================================== -->
 
 
-      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_contact_name,accessibility"
-	      sorting="creation_date desc"/>
+      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_publication,primary_contact_name,accessibility,is_clinical_field"
+	      sorting="creation_date desc"
+	      includeProjects="ClinEpiDB"
+	      />
+      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_publication,primary_contact_name,accessibility"
+              sorting="creation_date desc"
+              excludeProjects="ClinEpiDB"
+	      />
 
       <attributeQueryRef ref="UserDatasetAttributes.EdaStudyMapping">
         <columnAttribute name="eda_study_id" displayName="VEuPathDB ID" help="A stable, unique identifier assigned by VEuPathDB and that be used to reference or cite this dataset."/>

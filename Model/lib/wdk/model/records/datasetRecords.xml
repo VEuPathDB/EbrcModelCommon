@@ -140,7 +140,7 @@
         <columnAttribute name="integration" displayName="%%sharedDisplayName_Integration%%" help= "Datasets integrated using the 'VEuPathDB workflow' were processed using standardized internal methods prior to integration. Datasets integrated using the 'User Datasets workflow' were added through the My Datasets workspace and may vary in their level of processing, structure, annotation, and available analyses."/>
 	<columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
-	<columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" excludeProjects="ClinEpiDB" 
+	<columnAttribute name="pmids" displayName="%%sharedDisplayName_PrimaryPublication%%" sortable="false" 
 		help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters."/>
 	<columnAttribute name="pmids_download" displayName="Publications" sortable="false"  excludeProjects="ClinEpiDB" 
 		help="The primary references for the dataset, including PubMed for scientific papers and DOIs for other resources, e.g. book chapters."/>
@@ -206,7 +206,8 @@
 
       <!-- summary="organism_prefix, version,eupath_release,newcategory,pmids,summary,contact,genome_version,annotation_version,functional_annotation_version,megabase_pairs,in_apollo" -->
       <attributesList 
-        summary="eupath_release, newcategory, organism_prefix, contact, pmids" sorting="eupath_release desc"
+        summary="eupath_release, newcategory, organism_prefix, pmids, contact" 
+        sorting="eupath_release desc"
         excludeProjects="MicrobiomeDB,ClinEpiDB"/>
 
       <!-- =================================================================== -->
@@ -302,7 +303,7 @@
       <!-- summary="disease,study_access,card_questions,eupath_release,total,approved,percent_approved"-->
       <!-- summary="analyze,disease,Study_Type,Study_Design,Part_count,Country,Years,study_access" -->	
       <attributesList 
-        summary="eupath_release, contact, study_access, Study_Design"
+        summary="eupath_release, summary, pmids, contact, study_access"
         includeProjects="ClinEpiDB"/>
 
 
