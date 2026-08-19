@@ -369,6 +369,26 @@ public class DatasetPresenterSetLoader {
     }
   }
 
+  /**
+   * The effective category of a datasource within a presenter, in precedence order:
+   * the injector's categoryOverride attribute, then the presenter's categoryOverride
+   * element, then the datasetClassCategory prop supplied by the dataset class prop file.
+   *
+   * This single value is BOTH what lands in DatasetDatasource.category (and so what the
+   * dataset record page displays) and the key used to look up default hyperlinks in
+   * datasetLinks.xml. Computing it in two places is what let the two drift: the hyperlink
+   * lookup used only the injector attribute, which just 3 presenters in all of
+   * ApiCommonPresenters declare, so category-driven links (including every genome-browser
+   * link) silently stopped loading for ~everything.
+   */
+  String getEffectiveCategory(DatasetPresenter datasetPresenter, DatasetInjector datasetInjector) {
+    if (datasetInjector != null && datasetInjector.getCategoryOverride() != null)
+      return datasetInjector.getCategoryOverride();
+    if (datasetPresenter.getCategoryOverride() != null)
+      return datasetPresenter.getCategoryOverride();
+    return datasetPresenter.getPropValue("datasetClassCategory");
+  }
+
   void loadDatasetInjector(DatasetPresenter datasetPresenter, DatasetInjector datasetInjector, String datasetPresenterId) throws SQLException {
 
 
@@ -383,8 +403,9 @@ public class DatasetPresenterSetLoader {
       loadInjectorPropValue(datasetPresenterId, name, pv.getKey(), dataValue, injectorPropertiesStmt);
     }
 
-    if (datasetInjector.getCategoryOverride() != null) {
-      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(datasetInjector.getCategoryOverride()))
+    String category = getEffectiveCategory(datasetPresenter, datasetInjector);
+    if (category != null && !category.isEmpty()) {
+      for (HyperLink link : defaultHyperLinks.getHyperLinksFromCategory(category))
         loadLink(datasetPresenterId, link, linkStmt);
     }
 
@@ -476,12 +497,9 @@ public class DatasetPresenterSetLoader {
 
     for (Datasource datasource : datasetPresenter.getDatasources()) {
       DatasetInjector di = datasetPresenter.findInjectorByName(datasource.getName());
-      String dpCategory = datasetPresenter.getPropValue("datasetClassCategory");
-      if (datasetPresenter.getCategoryOverride() != null) dpCategory = datasetPresenter.getCategoryOverride();
-      String diCategory = di == null || di.getCategoryOverride() == null? null : di.getCategoryOverride();
       loadDatasetDatasource(datasource.getDatasourceId(),
               datasetPresenterId,
-              diCategory == null? dpCategory : diCategory,
+              getEffectiveCategory(datasetPresenter, di),
               datasource.getProjectId(),
               datasource.getName(),
               datasource.getTaxonId()
