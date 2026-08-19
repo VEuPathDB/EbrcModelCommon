@@ -589,8 +589,18 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
       table used to do. Also picks up webready.PhyleticPattern's
       divide-by-zero guard on the percent columns, which this table
       previously lacked.
+
+      TEMPORARY: externalDependency below targets orthologgrouptaxon/
+      orthologgroup (what webready.PhyleticPattern is itself built from)
+      instead of webready.PhyleticPattern directly, because that table has
+      no modification_date column and the tuning manager's freshness check
+      (SELECT max(modification_date) FROM <dependency>) errors out on it.
+      Once PhyleticPattern.psql adds a modification_date column (matching
+      the convention used by most other webready/*.psql scripts), switch
+      this back to <externalDependency name="webready.PhyleticPattern"/>.
     </comment>
-    <externalDependency name="webready.PhyleticPattern"/>
+    <externalDependency name="ApiDB.OrthologGroupTaxon"/>
+    <externalDependency name="apidb.OrthologGroup"/>
 
     <sql>
       <![CDATA[
