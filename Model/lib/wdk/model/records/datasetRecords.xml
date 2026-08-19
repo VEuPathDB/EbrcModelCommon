@@ -128,7 +128,7 @@
         <columnAttribute name="dataset_name_pattern" internal="true" inReportMaker="false"/>
         <columnAttribute name="short_display_name" internal="true"/>
         <columnAttribute name="version" displayName="Dataset Version"  internal="true" includeProjects="MicrobiomeDB"/>
-        <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB,ClinEpiDB"/>
+        <columnAttribute name="version" displayName="%%sharedDisplayName_ExtSource%%" help="The dataset provider's version number or publication date, from the site the data was acquired. In the rare case neither is available, the download date." excludeProjects="MicrobiomeDB" />
         <columnAttribute name="description" displayName="%%sharedDisplayName_Description%%" sortable="false"/>
         <columnAttribute name="protocol" internal="true"/>
         <columnAttribute name="usage" displayName="Usage" internal="true"/>
@@ -575,7 +575,7 @@
       <!-- Genome History -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="GenomeHistory" excludeProjects="MicrobiomeDB,ClinEpiDB"
-             displayName="Dataset Release History"
+             displayName="Genome Release History"
              queryRef="GenomeDatasetTables.GenomeHistory">
         <description includeProjects="VectorBase"><![CDATA[<i>
                 On September 2019, VectorBase and EuPathDB merged into VEuPathDB. Starting with the VEuPathDB Build 47 release in Apr 2020, VectorBase and VEuPathDB share the same Build/Release numeric system. Before Apr 2020 the Release column reflects the legacy VectorBase nomenclature, e.g. VB-2016-06 (VectorBase June 2016 release). 

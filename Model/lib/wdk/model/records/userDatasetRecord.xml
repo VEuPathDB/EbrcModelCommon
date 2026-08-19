@@ -238,7 +238,7 @@
       <!-- Selected Publications -->
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <table name="Publications"
-             displayName="Selected Publications"
+             displayName="Associated Publications"
              queryRef="UserDatasetTables.Publications">
         <columnAttribute name="dataset_id" inReportMaker="false" internal="true"/>
         <columnAttribute name="external_id" displayName="ID" internal="true"/>
