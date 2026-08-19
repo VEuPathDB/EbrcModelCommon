@@ -223,7 +223,8 @@ JOIN (
                || 'record/gene/' || aas.source_id
 
           WHEN lower(ores.resource_name) = 'uniprot'
-          THEN REPLACE(ores.resource_url, 'EXTERNAL_ID_HERE', aas.source_id)
+          THEN REPLACE(ores.resource_url, 'EXTERNAL_ID_HERE',
+                        regexp_replace(aas.source_id, '^[^|]*\|', ''))
           ELSE ''
         END AS source_url,
 
