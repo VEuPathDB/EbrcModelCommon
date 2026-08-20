@@ -179,13 +179,24 @@
         <!-- Primary publication -->
     <sqlQuery name="PrimaryPublication" doNotTest="true">
       <column name="dataset_id"/>
-      <column name="primary_publication"/>
+      <column name="external_id"/>
+      <column name="type"/>
+      <column name="citation"/>
+      <column name="is_primary"/>
+      <column name="pub_url"/>
       <sql>
         <![CDATA[
-           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, primary_publication
+           SELECT CONCAT('EDAUD_', d.dataset_id) as dataset_id, citation,
+             type, external_id, is_primary, pub_url
 	   FROM @VDI_CONTROL_SCHEMA@.dataset d
 	   LEFT JOIN
-           (SELECT dataset_id, citation  as primary_publication
+           (SELECT dataset_id, regexp_replace(citation, '\s+<', ' <') AS citation,
+              type, external_id, is_primary,
+            CASE
+              WHEN type = 'pmid' THEN 'https://www.ncbi.nlm.nih.gov/pubmed/' || external_id
+              WHEN type = 'doi' THEN 'https://doi.org/' || external_id
+              ELSE NULL
+            END as pub_url
             FROM @VDI_CONTROL_SCHEMA@.dataset_publication
             WHERE is_primary is true
 	   ) prim on d.dataset_id = prim.dataset_id
@@ -448,8 +459,8 @@
             regexp_replace(citation, '\s+<', ' <') AS citation,
             CASE WHEN is_primary THEN 'Yes' ELSE 'No' END as is_primary,
             CASE
-              WHEN type = 'PubMed' THEN 'https://www.ncbi.nlm.nih.gov/pubmed/' || external_id
-              WHEN type = 'DOI' THEN 'https://doi.org/' || external_id
+              WHEN type = 'pmid' THEN 'https://www.ncbi.nlm.nih.gov/pubmed/' || external_id
+              WHEN type = 'doi' THEN 'https://doi.org/' || external_id
               ELSE NULL
             END as url
           FROM  @VDI_CONTROL_SCHEMA@.dataset_publication
