@@ -169,6 +169,12 @@ sub getPresenterFilePaths {
   push @filePaths, "$PROJECT_HOME/$primary_model_base/Model/config/datasetLinks.xml";
   push @filePaths, "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml";
 
+  # Add injector java files
+  my $dir = "$PROJECT_HOME/$primary_model_base/Model/src/main/java/org/apidb/apicommon/model/datasetInjector/";
+  push (@filePaths, glob ("$dir/*.java")) if (-e $dir);
+  $dir = "$PROJECT_HOME/EbrcModelCommon/Model/src/main/java/org/apidb/apicommon/model/datasetInjector/";
+  push (@filePaths, glob ("$dir/*.java")) if (-e $dir);
+
   return @filePaths;
 }
 
