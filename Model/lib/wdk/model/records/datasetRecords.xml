@@ -136,7 +136,7 @@
         <columnAttribute name="build_number_introduced" displayName="Build Number Introduced" type="number"/>
         <columnAttribute name="type" displayName="Type" internal="true"/>
 	<columnAttribute name="eupath_release" displayName="%%sharedDisplayName_DateVersion%%"
-                         help="The date, and VEuPathDB release number for 'VEuPathDB workflow' datasets, when the dataset first appeared in VEuPathDB. "/>
+		help="%%sharedDisplayName_DateVersion_help%%" />
         <columnAttribute name="integration" displayName="%%sharedDisplayName_Integration%%" help= "Datasets integrated using the 'VEuPathDB workflow' were processed using standardized internal methods prior to integration. Datasets integrated using the 'User Datasets workflow' were added through the My Datasets workspace and may vary in their level of processing, structure, annotation, and available analyses."/>
 	<columnAttribute name="summary" displayName="%%sharedDisplayName_Summary%%" sortable="false"
                          help= "A short description of the dataset."/>
