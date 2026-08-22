@@ -59,7 +59,7 @@
       <!-- =============================================================== -->
 
 
-      <attributesList summary="name,creation_date,category,exp_organism,summary,primary_publication,primary_contact_name,accessibility,is_clinical_field"
+      <attributesList summary="name,creation_date,exp_organism,summary,primary_publication,primary_contact_name,accessibility,is_clinical_field"
 	      sorting="creation_date desc"
 	      includeProjects="ClinEpiDB"
 	      />
