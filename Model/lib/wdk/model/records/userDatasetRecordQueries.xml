@@ -228,7 +228,7 @@
                                 || dataset_id
                        WHEN type_name = 'rnaseqrc'
                        THEN '/search/transcript/GenesByDESeqUserDataset?param.eda_dataset_id='
-                                || dataset_id
+		                || CONCAT('EDAUD_', dataset_id)
                        WHEN type_name = 'phenotype'
                        THEN '/search/transcript/GenesByPhenotypeUserDataset?param.eda_dataset_id='
 		                || CONCAT('EDAUD_', dataset_id)
