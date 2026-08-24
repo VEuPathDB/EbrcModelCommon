@@ -36,7 +36,7 @@ UserDatasetRecordClasses.UserDatasetRecordClass.Publications	topic_0219_synonym	
 UserDatasetRecordClasses.UserDatasetRecordClass.ExternalIds	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExternalIds					20	results	record	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.description	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	description					30		record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.disclaimer	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	disclaimer					65	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.disclaimer	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	disclaimer					55	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.exp_organism	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	exp_organism					35	results	record	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.DataSources	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	DataSources					50	results	record	download
@@ -121,7 +121,7 @@ DatasetRecordClasses.DatasetRecordClass.build_number_introduced	topic_0219_synon
 DatasetRecordClasses.DatasetRecordClass.type	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	type								download
 DatasetRecordClasses.DatasetRecordClass.eupath_release	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eupath_release					22	results	record-internal	download
 DatasetRecordClasses.DatasetRecordClass.summary	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	summary						results	record-internal	download
-DatasetRecordClasses.DatasetRecordClass.release_policy	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	release_policy					70	results	record	download
+DatasetRecordClasses.DatasetRecordClass.release_policy	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	release_policy					21	results	record	download
 DatasetRecordClasses.DatasetRecordClass.pmids	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	pmids					22	results		
 DatasetRecordClasses.DatasetRecordClass.pmids_download	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	pmids_download								download
 DatasetRecordClasses.DatasetRecordClass.contact	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	contact					20	results	record-internal	download
