@@ -271,9 +271,9 @@
         <columnAttribute name="sex" displayName="Sex"/>
         <columnAttribute name="Sample_Type" displayName="%%sharedDisplayName_SampleType%%"/>
          <!-- columnAttribute name="Participant_Type" displayName="Population included"/ -->
-        <columnAttribute name="Study_Type" displayName="%%sharedDisplayName_InvestigationType%%"/>
-        <columnAttribute name="Study_Design" displayName="%%sharedDisplayName_StudyDesign%%"/>
-        <columnAttribute name="Country" displayName="%%sharedDisplayName_Country%%"/>
+        <columnAttribute name="Study_Type" displayName="%%sharedDisplayName_InvestigationType%%" help="%%sharedDisplayName_InvestigationType_help%%"/>
+        <columnAttribute name="Study_Design" displayName="%%sharedDisplayName_StudyDesign%%" help="%%sharedDisplayName_StudyDesign_help%%"/>
+        <columnAttribute name="Country" displayName="%%sharedDisplayName_Country%%" help="%%sharedDisplayName_Country_help%%"/>
         <columnAttribute name="Years" displayName="Years"/>
         <columnAttribute name="Variable_count" displayName="Variables" type="number"/>
         <columnAttribute name="HH_count" displayName="Households" type="number"/>
@@ -281,7 +281,7 @@
         <columnAttribute name="Obser_count" displayName="Participant repeated measures" type="number"/>
         <columnAttribute name="Samp_count" displayName="Samples" type="number"/>
         <columnAttribute name="AdditionalData" displayName="Additional data"/>
-        <columnAttribute name="Age" displayName="%%sharedDisplayName_Age%%"/>
+        <columnAttribute name="Age" displayName="%%sharedDisplayName_Age%%" help="%%sharedDisplayName_Age_help%%"/>
         <columnAttribute name="WHO" displayName="WHO indicator subdomain"/>
         <columnAttribute name="ProjectName" displayName="%%sharedDisplayName_Project%%"/>
       </attributeQueryRef>
