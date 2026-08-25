@@ -17,7 +17,6 @@
          Find all datasets.
       </description>
       <attributesList  
-	      summary="creation_date,category,exp_organism,summary,primary_contact_name,accessibility,is_clinical_field"
               sorting="creation_date desc"
       />
     </question>
