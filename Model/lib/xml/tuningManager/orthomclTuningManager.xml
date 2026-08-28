@@ -291,6 +291,12 @@ WHERE aas.taxon_id IN (
       ]]>
     </sql>
 
+    <sql>
+      <![CDATA[
+        create index SeqAttrs_lowerFullId&1 ON SequenceAttributes&1 (lower(full_id))
+      ]]>
+    </sql>
+
   </tuningTable>
 
   <tuningTable name="GroupStatsWide">
