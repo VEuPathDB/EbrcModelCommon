@@ -709,7 +709,7 @@
               , '' as target_type
               , '' as target_name
               , 'genomicsInternal' as link_type
-            FROM apidbtuning.DatasetHyperlink
+            FROM apidbtuning.GenomicsInternalHyperlink
             WHERE url like '/%'
           UNION
 		    SELECT dsp.dataset_presenter_id as dataset_id
