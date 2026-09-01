@@ -678,12 +678,19 @@ public class DatasetPresenterSetLoader {
 
   private void loadLink(String datasetPresenterId, HyperLink link,
       PreparedStatement stmt) throws SQLException {
+    // skip blank <link><text/><url/></link> stubs left over in presenter XML;
+    // a row with neither text nor url is useless and renders as an empty bullet
+    if (isBlank(link.getText()) && isBlank(link.getUrl())) return;
     stmt.setString(1, datasetPresenterId);
     stmt.setString(2, link.getText());
     stmt.setString(3, link.getDescription());
     stmt.setString(4, link.getUrl());
     stmt.setString(5, link.getIsPublication());
     stmt.execute();
+  }
+
+  private static boolean isBlank(String s) {
+    return s == null || s.trim().isEmpty();
   }
 
 
