@@ -148,7 +148,7 @@ sub getPresenterFilePaths {
       # EDA databases include all three project types
       push @filePaths, "$PROJECT_HOME/MicrobiomePresenters/Model/lib/xml/datasetPresenters/MicrobiomeDB.xml";
       push @filePaths, "$PROJECT_HOME/ClinEpiPresenters/Model/lib/xml/datasetPresenters/ClinEpiDB.xml";
-      push @filePaths, "$PROJECT_HOME/ApiCommonPresenters/Model/lib/xml/datasetPresenters/VectorBase.xml";
+      push @filePaths, "$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetPresenters/VectorBase.xml";
       $primary_model_base = $model_project_base;
     } elsif ($lower_project_id =~ /microbiome/) {
       push @filePaths, "$PROJECT_HOME/MicrobiomePresenters/Model/lib/xml/datasetPresenters/${project_id}.xml";
@@ -157,17 +157,17 @@ sub getPresenterFilePaths {
       push @filePaths, "$PROJECT_HOME/ClinEpiPresenters/Model/lib/xml/datasetPresenters/${project_id}.xml";
       $primary_model_base = $model_project_base;
     } else {
-      push @filePaths, "$PROJECT_HOME/ApiCommonPresenters/Model/lib/xml/datasetPresenters/${project_id}.xml";
+      push @filePaths, "$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetPresenters/${project_id}.xml";
       $primary_model_base = $model_project_base;
     }
   }
 
   # Add shared resource files
-  push @filePaths, "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/global.xml";
+  push @filePaths, "$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetPresenters/global.xml";
   push @filePaths, "$PROJECT_HOME/EbrcModelCommon/DatasetPresenter/lib/xml/datasetPresenters/datasetPresenters.dtd";
   push @filePaths, "$PROJECT_HOME/$primary_model_base/Model/config/datasetReferences.tab";
   push @filePaths, "$PROJECT_HOME/$primary_model_base/Model/config/datasetLinks.xml";
-  push @filePaths, "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetPresenters/contacts/allContacts.xml";
+  push @filePaths, "$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetPresenters/contacts/allContacts.xml";
 
   # Add injector java files
   my $dir = "$PROJECT_HOME/$primary_model_base/Model/src/main/java/org/apidb/apicommon/model/datasetInjector/";
