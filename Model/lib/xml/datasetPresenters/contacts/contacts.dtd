@@ -1,3 +1,0 @@
- <!ELEMENT contacts (contact+)>
- <!ELEMENT contact (contactId, name, institution, email, address?, city?, state?, zip?, country?)>
- 

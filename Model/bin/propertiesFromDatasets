@@ -15,7 +15,7 @@ my ($classes, $datasetClassCategories);
 print "$PROJECT_HOME\n";
 print "$GUS_HOME\n";
 
-my $cmd = "validateXmlWithRng  $GUS_HOME/lib/rng/datasetClass.rng $PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml";
+my $cmd = "validateXmlWithRng  $GUS_HOME/lib/rng/datasetClass.rng $PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetClass/classes.xml";
 system($cmd) && die "failed running '$cmd'\n";
 
 my $dir = "$PROJECT_HOME/$project/Datasets/lib/xml/datasets/";
@@ -39,9 +39,9 @@ foreach my $datasetFile (@datasets) {
   if (! -e $propFilePath || (stat $datasetFilePath)[9] > $propFileModTime ||
       (stat $datasetCategoriesFilePath)[9] > $propFileModTime ||
       (stat $categoryNamesFilePath)[9] > $propFileModTime) {
-    my $classesFile = "$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml";
+    my $classesFile = "$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetClass/classes.xml";
     init($classesFile, $datasetCategoriesFilePath, $categoryNamesFilePath); # set $classes and $datasetClassCategories, if not already
-    print "workflowDataset2PropsFile \$PROJECT_HOME/$project/Datasets/lib/xml/datasets/$datasetFile \$PROJECT_HOME/EbrcModelCommon/Model/lib/xml/datasetClass/classes.xml\n";
+    print "workflowDataset2PropsFile \$PROJECT_HOME/$project/Datasets/lib/xml/datasets/$datasetFile \$PROJECT_HOME/VEuPathDatasets/Model/lib/xml/datasetClass/classes.xml\n";
     ReFlow::DatasetClass::Dataset2PropsFile->dataset2PropsFile($datasetFilePath, $classes, $datasetClassCategories);
 
   } else {
