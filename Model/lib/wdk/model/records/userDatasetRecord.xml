@@ -3,8 +3,8 @@
 <wdkModel>
 
 
-  <constant name="datasetRecordDisplayName">User Dataset</constant>
-  <constant name="datasetRecordDisplayNamePlural">User Datasets</constant>
+  <constant name="datasetRecordDisplayName">Dataset</constant>
+  <constant name="datasetRecordDisplayNamePlural">Datasets</constant>
 
 
   <recordClassSet name="UserDatasetRecordClasses">
