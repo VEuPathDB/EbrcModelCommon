@@ -1,9 +1,12 @@
  			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
 			eupath/eupath.owl#recordClassName	eupath/eupath.owl#targetType	eupath/eupath.owl#name	EUPATH_0000052	eupath/eupath.owl#shortDisplayName	eupath/eupath.owl#description	eupath/eupath.owl#geneOrTranscript	EUPATH_0000274	eupath/eupath.owl#scope	eupath/eupath.owl#scope	eupath/eupath.owl#scope
-topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	Data Provenance	DP	Data submission, annotation and curation		2	internal		
-topic_3077_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			characteristics	Field Study or Clinical Trial Characteristics	DH	Data acquisition		3	internal		
-topic_3308_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_context	Data Context	DC	Data context		5	internal		
-topic_3345_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			link_outs	Link Outs	LO	Link Outs		4	internal		
+data_0916_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Dataset record details				1	internal		
+topic_3305_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Dataset information				3	internal		
+topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Dataset provenance				5	internal		
+topic_3077_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Field study or Clinical trial characteristics				4	internal		
+topic_3315_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Related resources				6	internal		
+topic_3308_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Dataset contents				7	internal		
+topic_3345_synonym	http://www.w3.org/2002/07/owl#Thing	Thing				Use this dataset				2	internal		
 
 DatasetRecordClasses.DatasetReleaseNotes.primary_key			DatasetRecordClasses.DatasetReleaseNotes	attribute	primary_key						results	record	download
 DatasetRecordClasses.DatasetReleaseNotes.release_notes_id	topic_0219_synonym		DatasetRecordClasses.DatasetReleaseNotes	attribute	release_notes_id								
@@ -41,12 +44,12 @@ UserDatasetRecordClasses.UserDatasetRecordClass.exp_organism	topic_0219_synonym	
 
 UserDatasetRecordClasses.UserDatasetRecordClass.DataSources	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	DataSources					50	results	record	download
 UserDatasetRecordClasses.UserDatasetRecordClass.Contacts	topic_0219_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	Contacts					60	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					10	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteEDA	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteEDA					30		record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteSearches	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteSearches					25		record	download
-UserDatasetRecordClasses.UserDatasetRecordClass.bwFiles	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	bwFiles					350		record	
-UserDatasetRecordClasses.UserDatasetRecordClass.search_link	http://edamontology.org/topic_3345		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	search_link							record-internal	download
+UserDatasetRecordClasses.UserDatasetRecordClass.HyperLinks	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	HyperLinks					10	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.LinkedDatasets	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	LinkedDatasets					20	results	record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteEDA	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteEDA					30		record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.ExploreWebsiteSearches	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	table	ExploreWebsiteSearches					25		record	download
+UserDatasetRecordClasses.UserDatasetRecordClass.bwFiles	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	bwFiles					350		record	
+UserDatasetRecordClasses.UserDatasetRecordClass.search_link	topic_3345_synonym		UserDatasetRecordClasses.UserDatasetRecordClass	attribute	search_link							record-internal	download
 
 UserDatasetRecordClasses.UserDatasetRecordClass.dataFiles	topic_3308_synonym	Data context	UserDatasetRecordClasses.UserDatasetRecordClass	attribute	dataFiles					10	  record
 
@@ -78,8 +81,8 @@ DatasetRecordClasses.DatasetRecordClass.TranscriptTypeCounts	topic_3308_synonym	
 DatasetRecordClasses.DatasetRecordClass.GeneTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	GeneTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.SequenceTypeCounts	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	SequenceTypeCounts							record	download
 DatasetRecordClasses.DatasetRecordClass.Busco	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	table	Busco							record	download
-DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData							record	download
-DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	http://edamontology.org/topic_3345	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases							record	download
+DatasetRecordClasses.DatasetRecordClass.GenomeAssociatedData	topic_3345_synonym	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	GenomeAssociatedData							record	download
+DatasetRecordClasses.DatasetRecordClass.ExternalDatabases	topic_3345_synonym	Link Outs	DatasetRecordClasses.DatasetRecordClass	table	ExternalDatabases							record	download
 DatasetRecordClasses.DatasetRecordClass.DownloadVersion	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DownloadVersion					21		record-internal	
 DatasetRecordClasses.DatasetRecordClass.DatasetAlias	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DatasetAlias					22			download
 DatasetRecordClasses.DatasetRecordClass.Contacts	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Contacts					22	results	record	download
@@ -87,31 +90,31 @@ DatasetRecordClasses.DatasetRecordClass.Variables	topic_3308_synonym	Data contex
 DatasetRecordClasses.DatasetRecordClass.StudyCharacteristicTable	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	StudyCharacteristicTable					18	results	record	download
 DatasetRecordClasses.DatasetRecordClass.Isolates	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Isolates						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Publications	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Publications					19	results	record	download
-DatasetRecordClasses.DatasetRecordClass.HyperLinks	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	HyperLinks						results	record	download
-DatasetRecordClasses.DatasetRecordClass.AssociatedDatasets	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	AssociatedDatasets						results	record	download
+DatasetRecordClasses.DatasetRecordClass.HyperLinks	topic_3315_synonym	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	HyperLinks						results	record	download
+DatasetRecordClasses.DatasetRecordClass.AssociatedDatasets	topic_3315_synonym	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	AssociatedDatasets						results	record	download
 DatasetRecordClasses.DatasetRecordClass.GenomeHistory	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	GenomeHistory						results	record	download
 DatasetRecordClasses.DatasetRecordClass.DatasetHistory	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	DatasetHistory					70	results	record	download
-DatasetRecordClasses.DatasetRecordClass.References	http://edamontology.org/topic_3345	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	References						results	record	download
+DatasetRecordClasses.DatasetRecordClass.References	topic_3345_synonym	Linkouts	DatasetRecordClasses.DatasetRecordClass	table	References						results	record	download
 DatasetRecordClasses.DatasetRecordClass.Version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	Version							record-internal	download
 DatasetRecordClasses.DatasetRecordClass.AccessRequestStats	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	AccessRequestStats					23	results	record	download
 DatasetRecordClasses.DatasetRecordClass.AccessRequest	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	table	AccessRequest					24	results	record	download
-DatasetRecordClasses.DatasetRecordClass.DatasetGeneTable	http://edamontology.org/topic_3345	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	DatasetGeneTable								download
+DatasetRecordClasses.DatasetRecordClass.DatasetGeneTable	topic_3345_synonym	Data identity and mapping	DatasetRecordClasses.DatasetRecordClass	table	DatasetGeneTable								download
 DatasetRecordClasses.DatasetRecordClass.primary_key	topic_0219_synonym		DatasetRecordClasses.DatasetRecordClass	attribute	primary_key					1	results		download
 DatasetRecordClasses.DatasetRecordClass.bulk_download_url	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	bulk_download_url						results	record-internal	
-DatasetRecordClasses.DatasetRecordClass.organism_prefix	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	download
+DatasetRecordClasses.DatasetRecordClass.organism_prefix	topic_3305_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	organism_prefix						results	record	download
 DatasetRecordClasses.DatasetRecordClass.megabase_pairs	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	megabase_pairs							record-internal	
 DatasetRecordClasses.DatasetRecordClass.genome_version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	genome_version							record-internal	
 DatasetRecordClasses.DatasetRecordClass.annotation_version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	annotation_version							record-internal	
 DatasetRecordClasses.DatasetRecordClass.functional_annotation_version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	functional_annotation_version							record-internal	
 DatasetRecordClasses.DatasetRecordClass.project_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	project_id						results	record	download
-DatasetRecordClasses.DatasetRecordClass.newcategory	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	newcategory						results	record-internal	download
+DatasetRecordClasses.DatasetRecordClass.newcategory	data_0916_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	newcategory						results	record	download
 DatasetRecordClasses.DatasetRecordClass.version	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	version					19		record-internal	download
 DatasetRecordClasses.DatasetRecordClass.genecount	topic_3308_synonym	Data context	DatasetRecordClasses.DatasetRecordClass	attribute	genecount					19	results	record	download
 DatasetRecordClasses.DatasetRecordClass.dataset_id	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_id	Stable ID							download
 ##DatasetRecordClasses.DatasetRecordClass.dataset_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name								
 ##DatasetRecordClasses.DatasetRecordClass.dataset_name_pattern	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	dataset_name_pattern								
 ##DatasetRecordClasses.DatasetRecordClass.short_display_name	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	short_display_name								
-DatasetRecordClasses.DatasetRecordClass.description	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description					20		record	
+DatasetRecordClasses.DatasetRecordClass.description	topic_3305_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	description					20		record	
 ##DatasetRecordClasses.DatasetRecordClass.protocol	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	protocol								
 ##DatasetRecordClasses.DatasetRecordClass.usage	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	usage								
 DatasetRecordClasses.DatasetRecordClass.caveat	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	caveat							record-internal	
@@ -119,9 +122,9 @@ DatasetRecordClasses.DatasetRecordClass.acknowledgement	topic_0219_synonym	Curat
 ##DatasetRecordClasses.DatasetRecordClass.is_species_scope	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	is_species_scope								
 DatasetRecordClasses.DatasetRecordClass.build_number_introduced	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	build_number_introduced								download
 DatasetRecordClasses.DatasetRecordClass.type	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	type								download
-DatasetRecordClasses.DatasetRecordClass.eupath_release	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eupath_release					22	results	record-internal	download
+DatasetRecordClasses.DatasetRecordClass.eupath_release	data_0916_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	eupath_release					22	results	record	download
 DatasetRecordClasses.DatasetRecordClass.summary	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	summary						results	record-internal	download
-DatasetRecordClasses.DatasetRecordClass.release_policy	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	release_policy					21	results	record	download
+DatasetRecordClasses.DatasetRecordClass.release_policy	topic_3305_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	release_policy					21	results	record	download
 DatasetRecordClasses.DatasetRecordClass.pmids	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	pmids					22	results		
 DatasetRecordClasses.DatasetRecordClass.pmids_download	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	pmids_download								download
 DatasetRecordClasses.DatasetRecordClass.contact	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	contact					20	results	record-internal	download
