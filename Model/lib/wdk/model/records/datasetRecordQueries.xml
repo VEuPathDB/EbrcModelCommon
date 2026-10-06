@@ -66,7 +66,7 @@
         <![CDATA[
           select dataset_presenter_id as dataset_id, string_agg(DISTINCT category, ',') as newcategory
           from apidbtuning.datasetdatasource
-	  where (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+	  where (project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
 	  group by dataset_presenter_id
         ]]>
       </sql>
@@ -434,7 +434,7 @@
           FROM apidbtuning.datasetpresenter dsp
             LEFT JOIN apidbtuning.organismattributes oa ON dsp.name = oa.internal_abbrev || '_primary_genome_RSRC'
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
-          WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          WHERE (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
           AND  COALESCE(dd.category,'') != 'Link outs'
         ]]>
       </sql>
@@ -531,7 +531,7 @@
                     dsp.caveat, dsp.acknowledgement,
                    dsp.release_policy
             from apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            where (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            where (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
             ]]>
          </sql>
@@ -579,7 +579,7 @@
             JOIN apidbtuning.datasetdatasource dd ON dd.dataset_presenter_id = dsp.dataset_presenter_id
             LEFT JOIN ApidbTuning.DatasetContact dsc ON dsp.dataset_presenter_id = dsc.dataset_presenter_id
           WHERE dsc.is_primary_contact = true
-          AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -593,7 +593,7 @@
             SELECT distinct dsp.dataset_presenter_id as dataset_id,
                    dsp.dataset_presenter_id as old_dataset_id
             FROM apidbTuning.DatasetPresenter dsp, apidbtuning.datasetdatasource dd
-            WHERE (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            WHERE (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
 	    AND dd.dataset_presenter_id = dsp.dataset_presenter_id
           UNION
             SELECT dsp.dataset_presenter_id as dataset_id,
@@ -604,7 +604,7 @@
             WHERE dd.category = 'Genomes'
               AND dsp.dataset_presenter_id = dd.dataset_presenter_id
               AND oa.component_taxon_id = dd.taxon_id
-              AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+              AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
        -- To be FIXED if and when ebi datasets are loaded
        -- UNION
        --   SELECT dataset_presenter_id as dataset_id,
@@ -694,7 +694,7 @@
               INNER JOIN ApidbTuning.DatasetPresenter dsp
                 ON dsp.dataset_presenter_id = dds.dataset_presenter_id	
               WHERE NOT (dsp.name='_IEDB(.*)RSRC$' and '@PROJECT_ID@' = 'HostDB')
-              AND (dds.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+              AND (dds.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
               ORDER BY dsp.name
                 , ref.target_type
                 , ref.record_type
