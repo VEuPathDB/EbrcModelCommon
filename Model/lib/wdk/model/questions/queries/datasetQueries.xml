@@ -16,7 +16,7 @@
             SELECT distinct dd.dataset_presenter_id as dataset_id
             FROM apidbtuning.datasetdatasource dd
             WHERE (dd.category is null OR dd.category != 'Link outs')
-            AND (dd.project_id = '@PROJECT_ID@' or '@PROJECT_ID@' = 'UniDB')
+            AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
             EXCEPT
             SELECT dataset_presenter_id as dataset_id
               FROM apidbtuning.datasetproperty
@@ -57,7 +57,7 @@
         <![CDATA[
           SELECT distinct dataset_presenter_id as dataset_id
           FROM apidbTuning.DatasetDatasource
-          WHERE (project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+          WHERE (project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
         ]]>
       </sql>
     </sqlQuery>
@@ -141,7 +141,7 @@
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
             AND  COALESCE(dd.category,'') != 'Link outs'
-	    AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')  -- TODO needs project filter
+	    AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')  -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -164,7 +164,7 @@
 	    and dd.dataset_datasource_id = ref.data_source_id
             AND ref.target_name = $$reference_name$$
             AND ref.record_type = $$record_class$$
-	    AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@') -- TODO needs project filter
+	    AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@') -- TODO needs project filter
         ]]>
       </sql>
     </sqlQuery>
@@ -183,7 +183,7 @@
           SELECT DISTINCT dsp.dataset_presenter_id as dataset_id
             FROM APIDBTUNING.datasetpresenter dsp, apidbtuning.datasetdatasource dd
           WHERE  dsp.dataset_presenter_id = dd.dataset_presenter_id
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
             AND  dsp.dataset_presenter_id in ($$dataset_id$$)
         ]]>
       </sql>
@@ -203,7 +203,7 @@
           WHERE dsp.dataset_presenter_id = ref.dataset_presenter_id
             AND ref.target_name = $$question_name$$
             AND ref.target_type = 'question'
-            AND (dd.project_id = '@PROJECT_ID@' or 'UniDB' = '@PROJECT_ID@')
+            AND (dd.project_id in ('@PROJECT_ID@', 'GenomicsDB') or 'UniDB' = '@PROJECT_ID@')
             AND  COALESCE(dd.category,'') != 'Link outs'
 	    and dd.dataset_presenter_id = dsp.dataset_presenter_id
         ]]>
