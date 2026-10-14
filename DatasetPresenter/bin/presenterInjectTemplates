@@ -8,7 +8,14 @@ my $CLASSPATH = &FgpUtil::Util::CommandHelper::getJavaClasspath($GUS_HOME);
 my $sysProps = &FgpUtil::Util::CommandHelper::getSystemProps($GUS_HOME, 'presenterInjectTemplates');
 my $args = &FgpUtil::Util::CommandHelper::getJavaArgs(@ARGV);
 
-my $cmd = "java $sysProps -classpath $CLASSPATH org.apidb.apicommon.datasetPresenter.TemplatesInjector $args";
+# Forward GUSJVMOPTS so a caller can pass -D properties to this command, which is how the
+# dataset gate is configured (-Dpresenter.dataset.gate=...). Two callers, two routes:
+#   rebuilder --gusjvmopts '-D...'   parsed after rebuilder discards the environment, so its
+#                                    export survives into the build
+#   wb                               inherits GUSJVMOPTS from etc/setenv; wb does not scrub
+my $jvmOpts = $ENV{GUSJVMOPTS} || '';
+
+my $cmd = "java $jvmOpts $sysProps -classpath $CLASSPATH org.apidb.apicommon.datasetPresenter.TemplatesInjector $args";
 
 system($cmd);
 
