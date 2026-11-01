@@ -8,7 +8,7 @@
 
    <recordClass name="DatasourceRecordClass" urlName="datasource" useBasket="false" excludeProjects="ClinEpiDB, MicrobiomeDB">
 
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.alias.PassThroughPrimaryKeyAliasPlugin">
         <columnRef>datasource_id</columnRef>
       </primaryKey>
 

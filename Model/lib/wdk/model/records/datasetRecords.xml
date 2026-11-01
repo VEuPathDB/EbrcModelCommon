@@ -9,7 +9,7 @@
     <!-- ============== a class with only one member.  the primary key is always 111 ===========  -->
 
     <recordClass name="DatasetReleaseNotes" urlName="dataset-release-notes" displayName="Dataset Release Notes">
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.alias.PassThroughPrimaryKeyAliasPlugin">
         <columnRef>release_notes_id</columnRef>
       </primaryKey>
 
@@ -36,7 +36,7 @@
     <!-- ============== Internal class for tracking datasets from previous releases ===========  -->
 
     <recordClass name="LegacyDataset" urlName="legacy-dataset" displayName="Legacy Dataset" excludeProjects="MicrobiomeDB,ClinEpiDB">
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.alias.PassThroughPrimaryKeyAliasPlugin">
         <columnRef>dataset_presenter_id</columnRef>
         <columnRef>dataset_presenter_name</columnRef>
         <columnRef>project_name</columnRef>
