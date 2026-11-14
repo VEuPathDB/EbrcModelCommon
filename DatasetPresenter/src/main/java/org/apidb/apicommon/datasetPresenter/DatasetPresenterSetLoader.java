@@ -92,11 +92,13 @@ public class DatasetPresenterSetLoader {
       for (DatasetPresenter datasetPresenter : dps.getDatasetPresenters().values()) {
         getPresenterValuesFromDatasourceTable(datasetPresenter, datasourceTableStmt,
             datasetNamesFoundInDb);
-        if (!datasetPresenter.getFoundInDb())
-          presenterNamesNotInDb.add(datasetPresenter.getDatasetName());
 
-        datasetPresenter.getContacts(allContacts); // validate contacts
-        datasetPresenter.getModelReferences(); // validate model references
+        if (datasetPresenter.getFoundInDb()) {
+          datasetPresenter.getContacts(allContacts); // validate contacts
+          datasetPresenter.getModelReferences(); // validate model references (runs dataset injectors)
+        } else {
+          presenterNamesNotInDb.add(datasetPresenter.getDatasetName());
+        }
       }
 
       if (presenterNamesNotInDb.size() != 0) {
