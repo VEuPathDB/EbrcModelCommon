@@ -97,7 +97,10 @@ LEFT JOIN (
       <![CDATA[
 CREATE TABLE SequenceAttributes&1 AS
 SELECT
-    aas.source_id AS full_id,
+    CASE
+        WHEN lower(urls.resource_name) = 'uniprot' THEN aas.source_id
+        ELSE taxon.orthomcl_abbrev || '|' || COALESCE(ta.gene_source_id, aas.source_id)
+    END AS full_id,
     aas.source_id,
     aas.aa_sequence_id,
     length(aas.sequence) AS length,
@@ -213,6 +216,7 @@ JOIN (
 JOIN (
     SELECT
         aas.aa_sequence_id,
+        ores.resource_name,
         CASE
           WHEN ores.resource_name IN (
             'AmoebaDB','CryptoDB','FungiDB','GiardiaDB','HostDB',
@@ -509,11 +513,20 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
     <externalDependency name="apidb.OrthologGroupAaSequence"/>
     <externalDependency name="dots.AaSequence"/>
     <externalDependency name="apidb.interproresults"/>
+    <externalDependency name="apidb.Organism"/>
+    <externalDependency name="apidb.OrthomclResource"/>
+    <externalDependency name="dots.TranslatedAaFeature"/>
+    <externalDependency name="dots.Transcript"/>
+    <externalDependency name="dots.GeneFeature"/>
     <intermediateTable name="DomainIndex"/>
     <sql>
       <![CDATA[
         create table DomainAssignment&1 as
-        select aas.source_id as full_id,
+        select
+               CASE
+                   WHEN lower(ores.resource_name) = 'uniprot' THEN aas.source_id
+                   ELSE org.orthomcl_abbrev || '|' || COALESCE(gf.source_id, aas.source_id)
+               END as full_id,
                o.group_id as group_name,
                r.interpro_primary_id as accession,
                r.interpro_desc as description,
@@ -524,11 +537,18 @@ CREATE INDEX TypeAheadCounts_idx&1 ON TypeAheadCounts&1 (option_id)
         from dots.AASequence aas,
              apidb.orthologGroup o,
              apidb.orthologGroupAASequence ogseq,
-             apidb.interproresults r
+             apidb.interproresults r,
+             apidb.organism org,
+             apidb.orthomclresource ores
+             LEFT JOIN dots.translatedaafeature taf ON taf.aa_sequence_id = aas.aa_sequence_id
+             LEFT JOIN dots.transcript t ON t.na_feature_id = taf.na_feature_id
+             LEFT JOIN dots.genefeature gf ON gf.na_feature_id = t.parent_id
         where aas.aa_sequence_id = ogseq.aa_sequence_id
           and ogseq.group_id = o.group_id
           and aas.source_id = r.protein_source_id
           and upper(r.interpro_db_name) = 'PFAM'
+          and org.taxon_id = aas.taxon_id
+          and ores.orthomcl_taxon_id = aas.taxon_id
       ]]>
     </sql>
 
