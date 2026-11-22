@@ -73,7 +73,7 @@ foreach my $project (@projects) {
     $is_eda++;
     system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   } else {
-    $presentersProjectBase ="ApiCommonPresenters";
+    $presentersProjectBase ="VEuPathDatasets";
     $modelProjectBase ="ApiCommonModel";
     system("cp $PROJECT_HOME/$presentersProjectBase/Model/lib/xml/datasetPresenters/${projectXmlFile} $projectXmlPath");
   }
