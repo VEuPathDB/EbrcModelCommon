@@ -168,7 +168,7 @@
                           pi.name as project_id
                       FROM dots.ExternalNaSequence ens, sres.TaxonName tn, core.ProjectInfo pi
                       WHERE ens.taxon_id = tn.taxon_id
-                              and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %')
+                              and ((tn.name not like 'Bodo %' and tn.name not like 'Drosophila %' and tn.name not like 'Leishmania %')
                                     OR tn.name_class = 'scientific name')
                               and ens.row_project_id = pi.project_id
                           -- get names from apidb.Organism.family_name_for_files
