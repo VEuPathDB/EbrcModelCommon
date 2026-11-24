@@ -101,7 +101,19 @@ SELECT
         WHEN lower(urls.resource_name) = 'uniprot' THEN aas.source_id
         ELSE taxon.orthomcl_abbrev || '|' || COALESCE(ta.gene_source_id, aas.source_id)
     END AS full_id,
-    aas.source_id,
+
+    -- The id to show users for site search and linking out to the source
+    -- (uniprot, or the VEuPathDB gene record): the gene id for native
+    -- organisms, the bare (un-prefixed) uniprot id for uniprot organisms.
+    CASE
+        WHEN lower(urls.resource_name) = 'uniprot' THEN regexp_replace(aas.source_id, '^[^|]*\|', '')
+        ELSE COALESCE(ta.gene_source_id, aas.source_id)
+    END AS source_id,
+
+    -- The raw id as loaded into dots.aasequence and referenced by the ortho
+    -- tables (apidb.orthologgroupaasequence etc.) -- was previously called
+    -- "source_id"; renamed so that name is free for the user-facing id above.
+    aas.source_id AS aa_sequence_source_id,
     aas.aa_sequence_id,
     length(aas.sequence) AS length,
 
@@ -266,7 +278,7 @@ WHERE aas.taxon_id IN (
 
     <sql>
       <![CDATA[
-        create unique index SeqAttrs_idx&1 ON SequenceAttributes&1 (full_id, group_name, taxon_id, source_id)
+        create unique index SeqAttrs_idx&1 ON SequenceAttributes&1 (full_id, group_name, taxon_id, aa_sequence_source_id)
       ]]>
     </sql>
 
@@ -291,7 +303,7 @@ WHERE aas.taxon_id IN (
 
     <sql>
       <![CDATA[
-        create unique index SeqAttrs_idx4&1 ON SequenceAttributes&1 (source_id, full_id, group_name, taxon_id)
+        create unique index SeqAttrs_idx4&1 ON SequenceAttributes&1 (aa_sequence_source_id, full_id, group_name, taxon_id)
       ]]>
     </sql>
 
