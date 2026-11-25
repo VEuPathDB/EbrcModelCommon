@@ -95,6 +95,34 @@ LEFT JOIN (
     <sql>
       <!-- TODO:  urls and lenght are broken -->
       <![CDATA[
+-- full_id/source_id below both branch on organism type (uniprot vs.
+-- native) only because of a LOADING-time inconsistency, not because the
+-- two ever needed fundamentally different handling: the ortho workflow
+-- currently runs an id-reformatting step that prefixes a uniprot protein's
+-- own id with its orthomcl_abbrev ("abbrev|uniprot_id") BEFORE loading it
+-- into dots.aasequence.source_id, but does NOT do the equivalent for
+-- native VEuPathDB organisms -- their aas.source_id is loaded bare, with
+-- no abbrev prefix at all. That's the only reason aas.source_id means two
+-- different things depending on organism type, and the only reason the
+-- CASE expressions below need to detect which type they're looking at.
+--
+-- The plan is to remove that uniprot-specific id-reformatting step from
+-- the loading workflow next rebuild, so aas.source_id is loaded exactly
+-- as the source gives it to us for every organism, uniprot included (i.e.
+-- "aa_sequence_id/aas.source_id left alone from source, loaded into
+-- dots.aasequence" -- no ortho-specific reformatting in the load path at
+-- all). Once that's true:
+--   - source_id's uniprot branch no longer needs regexp_replace to strip
+--     a prefix that was never added in the first place -- it becomes
+--     COALESCE(ta.gene_source_id, aas.source_id) unconditionally, same as
+--     the native branch already is.
+--   - full_id collapses to a single unconditional
+--     taxon.orthomcl_abbrev || '|' || source_id for every organism type --
+--     no more CASE, no more organism-type detection needed here at all.
+-- Both CASE expressions should be revisited and simplified together once
+-- that workflow change lands, not before (removing the uniprot branch
+-- early, while the load-time prefixing is still happening, would double
+-- up the abbrev prefix for uniprot organisms).
 CREATE TABLE SequenceAttributes&1 AS
 SELECT
     CASE
@@ -105,6 +133,8 @@ SELECT
     -- The id to show users for site search and linking out to the source
     -- (uniprot, or the VEuPathDB gene record): the gene id for native
     -- organisms, the bare (un-prefixed) uniprot id for uniprot organisms.
+    -- See the comment above full_id -- this CASE exists only because of a
+    -- loading-time inconsistency that's planned to go away next rebuild.
     CASE
         WHEN lower(urls.resource_name) = 'uniprot' THEN regexp_replace(aas.source_id, '^[^|]*\|', '')
         ELSE COALESCE(ta.gene_source_id, aas.source_id)
